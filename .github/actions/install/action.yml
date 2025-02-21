@@ -1,0 +1,35 @@
+name: Setup project dependencies
+
+description: "Setup project dependencies"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4.0.0
+      id: pnpm-install
+      with:
+        run_install: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: ".nvmrc"
+        registry-url: "https://registry.npmjs.org"
+        cache: "pnpm"
+
+    - name: Cache dependencies
+      id: cache_dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.pnpm
+          ${{ github.workspace }}/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+
+    - name: Install dependencies
+      shell: bash
+      # if: steps.cache_dependencies.outputs.cache-hit != 'true'
+      run: pnpm install

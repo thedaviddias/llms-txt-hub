@@ -1,0 +1,44 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules
+
+# testing
+**/coverage
+
+# next.js
+.next/
+
+# production
+/build
+dist
+public/_pagefind
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+
+# local env files
+!.env.example
+.env.*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+/test-results/
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# Turbo Config File
+.turbo
+
+# Lychee
+lychee-out.md
+.lycheecache
