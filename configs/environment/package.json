@@ -1,0 +1,21 @@
+{
+  "name": "@thedaviddias/config-environment",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Environment variables used in the monorepo",
+  "sideEffects": false,
+  "main": "index.mjs",
+  "types": "index.d.ts",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules"
+  },
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.12.0",
+    "zod": "*"
+  },
+  "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  }
+}

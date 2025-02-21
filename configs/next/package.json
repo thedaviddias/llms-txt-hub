@@ -1,0 +1,22 @@
+{
+  "name": "@thedaviddias/config-next",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./index.mjs",
+  "module": "./index.mjs",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@next/bundle-analyzer": "^15.1.7",
+    "@t3-oss/env-core": "^0.12.0",
+    "@t3-oss/env-nextjs": "^0.12.0",
+    "zod": "*"
+  },
+  "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
+    "next": "15.1.7"
+  }
+}
