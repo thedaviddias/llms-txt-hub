@@ -1,0 +1,78 @@
+{
+  // -- Editor ----------
+
+  "editor.wordWrapColumn": 110,
+  "editor.minimap.enabled": false,
+  "editor.fontFamily": "Monaco, 'Courier New', monospace",
+  "editor.rulers": [110],
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+    "source.formatDocument.biome": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+
+  "prettier.enable": false,
+
+  // -- Search ----------
+
+  "search.exclude": {
+    ".git": true,
+    "pnpm-lock.yaml": true,
+    "**/CHANGELOG": true,
+    "**/.next": true,
+    "**/*.snap": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/node_modules": true,
+    "packages/design-system/components/shadcn": true
+  },
+
+  // -- Spell Check ----------
+
+  "spellright.language": ["en_US"],
+
+  // -- Markdown ----------
+
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+
+  // -- JavaScript ----------
+
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+
+  // -- TypeScript ----------
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+
+  // -- JSON ----------
+
+  "[json]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+
+  // -- Tailwind ----------
+  "tailwindCSS.experimental.configFile": "./configs/tailwind-config/config.ts",
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+
+  // -- Emmet ----------
+  "emmet.showExpandedAbbreviation": "never"
+}
