@@ -1,0 +1,26 @@
+pre-commit:
+  parallel: true
+  commands:
+    check:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      stage_fixed: true
+    sort-package-json:
+      glob: "**/{package.json}"
+      exclude: "node_modules/**"
+      run: pnpm dlx sort-package-json {staged_files}
+
+# Build commit messages interactively.
+# prepare-commit-msg:
+#   commands:
+#     commitzen:
+#       interactive: true
+#       run: pnpm commit
+#       env:
+#         LEFTHOOK: 0
+
+# Validate commit messages; can be used with or without cz.
+commit-msg:
+  commands:
+    "lint commit message":
+      run: pnpm commitlint --edit {1}

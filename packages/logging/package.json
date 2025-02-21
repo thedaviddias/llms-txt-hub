@@ -1,0 +1,20 @@
+{
+  "name": "@thedaviddias/logging",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Centralized logging utilities",
+  "sideEffects": false,
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@thedaviddias/config-environment": "workspace:*",
+    "@thedaviddias/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  }
+}
