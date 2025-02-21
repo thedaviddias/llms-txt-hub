@@ -1,0 +1,87 @@
+import type { WebsiteMetadata } from '@/lib/mdx'
+import { getRoute } from '@/lib/routes'
+import { Card } from '@thedaviddias/design-system/card'
+import { cn } from '@thedaviddias/design-system/lib/utils'
+import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
+import Image from 'next/image'
+import Link from 'next/link'
+import { LLMButton } from '../buttons/llm-button'
+
+interface LLMGridProps {
+  items: WebsiteMetadata[]
+  variant?: 'default' | 'compact'
+  className?: string
+}
+
+export function LLMGrid({ items = [], variant = 'default', className }: LLMGridProps) {
+  if (!items?.length) {
+    return null
+  }
+
+  if (variant === 'compact') {
+    return (
+      <div className={cn('space-y-4', className)}>
+        {items.map(item => {
+          if (!item?.slug) return null
+          return (
+            <Link
+              key={item.slug}
+              href={getRoute('project.detail', { slug: item.slug })}
+              className="block"
+            >
+              <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <Image
+                  src={getFaviconUrl(item.website) || '/placeholder.svg'}
+                  alt={`${item.name} logo`}
+                  width={32}
+                  height={32}
+                  className="rounded-lg"
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-medium truncate">{item.name}</h3>
+                  <p className="text-sm text-muted-foreground truncate">{item.description}</p>
+                </div>
+              </div>
+            </Link>
+          )
+        })}
+      </div>
+    )
+  }
+
+  return (
+    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4', className)}>
+      {items.map(item => {
+        return (
+          <Card key={item.slug} className="p-6 hover:bg-muted/50 transition-colors">
+            <div className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-start justify-between">
+                  <Image
+                    src={getFaviconUrl(item.website) || '/placeholder.svg'}
+                    alt={`${item.name} logo`}
+                    width={32}
+                    height={32}
+                    className="rounded-lg"
+                  />
+                </div>
+                <h3 className="font-semibold">
+                  <Link href={getRoute('project.detail', { slug: item.slug })} className="block">
+                    {item.name}
+                  </Link>
+                </h3>
+                <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
+              </div>
+              <div className="pt-2 space-x-2">
+                {item.llmsUrl && <LLMButton href={item.llmsUrl} type="llms" size="sm" />}
+                {item.llmsFullUrl && (
+                  <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />
+                )}
+              </div>
+            </div>
+          </Card>
+        )
+      })}
+    </div>
+  )
+}

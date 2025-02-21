@@ -1,0 +1,26 @@
+{
+  "name": "@thedaviddias/analytics",
+  "version": "1.0.0",
+  "private": true,
+  "sideEffects": false,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@next/third-parties": "^15.1.7",
+    "@thedaviddias/config-environment": "workspace:*",
+    "next": "15.1.7",
+    "next-plausible": "*",
+    "react": "^19.0.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
+    "@types/node": "^22.13.5",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "^19.0.4"
+  }
+}
