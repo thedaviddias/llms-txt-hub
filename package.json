@@ -1,0 +1,41 @@
+{
+  "name": "llms-txt-hub",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo build --cache-dir=.turbo",
+    "clean": "git clean -xdf node_modules dist .next",
+    "clean:workspaces": "turbo clean",
+    "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
+    "format": "biome format --write .",
+    "lint": "turbo lint && manypkg check",
+    "lint:fix": "turbo lint:fix && manypkg fix",
+    "typecheck": "turbo typecheck --cache-dir=.turbo",
+    "test": "turbo test --cache-dir=.turbo",
+    "update": "pnpm update -r",
+    "syncpack:list": "pnpm dlx syncpack list-mismatches",
+    "syncpack:fix": "pnpm dlx syncpack fix-mismatches",
+    "supabase:web:start": "pnpm --filter web supabase:start",
+    "supabase:web:stop": "pnpm --filter web supabase:stop",
+    "supabase:web:typegen": "pnpm --filter web supabase:typegen",
+    "supabase:web:reset": "pnpm --filter web supabase:reset",
+    "supabase:migrate": "supabase db reset && supabase db push",
+    "supabase:typegen": "pnpm --filter @thedaviddias/supabase supabase:typegen",
+    "supabase:migrate:prod": "supabase db push",
+    "supabase:seed": "supabase db reset --db-url=$DATABASE_URL",
+    "supabase:seed:users": "pnpm --filter @thedaviddias/supabase seed:users",
+    "lint-translations": "jsonlint-cli apps/web/public/locales/*.json",
+    "start": "turbo run start",
+    "sync-translations": "node packages/i18n/utils/syncTranslations.js"
+  },
+  "packageManager": "pnpm@10.4.1",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@manypkg/cli": "^0.23.0",
+    "@turbo/gen": "^2.4.2",
+    "cross-env": "^7.0.3",
+    "pnpm": "^9.15.5",
+    "turbo": "^2.4.2",
+    "typescript": "^5.7.3"
+  }
+}
