@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
+import { Card } from '@thedaviddias/design-system/card'
 
 interface TestimonialCardProps {
   quote: string
@@ -25,4 +25,3 @@ export function TestimonialCard({ quote, author, role, avatarSrc }: TestimonialC
     </Card>
   )
 }
-

@@ -1,14 +1,14 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { useAuth } from "@/contexts/auth-context"
-import { Heart } from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
-import { useRouter } from "next/navigation"
-import { favoriteProject } from "@/app/actions"
+import { favoriteProject } from '@/app/actions'
+import { useAuth } from '@/contexts/auth-context'
+import { Button } from '@thedaviddias/design-system/button'
+import { useToast } from '@thedaviddias/design-system/use-toast'
+import { Heart } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface FavoriteButtonProps {
   projectSlug: string
@@ -33,33 +33,37 @@ export function FavoriteButton({ projectSlug, initialFavorites }: FavoriteButton
 
     try {
       const formData = new FormData()
-      formData.append("projectSlug", projectSlug)
+      formData.append('projectSlug', projectSlug)
 
       const result = await favoriteProject(formData)
 
       if (result.success) {
         setFavorites(result.newFavoriteCount)
         toast({
-          title: "Project favorited",
-          description: "Thank you for your support!",
+          title: 'Project favorited',
+          description: 'Thank you for your support!',
         })
       } else {
         throw new Error(result.error)
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to favorite project. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to favorite project. Please try again.',
+        variant: 'destructive',
       })
     }
   }
 
   return (
-    <Button variant="ghost" size="sm" onClick={handleFavorite} className="z-20 relative hover:bg-background/80">
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={handleFavorite}
+      className="z-20 relative hover:bg-background/80"
+    >
       <Heart className="h-4 w-4 mr-1" />
-      <span>{isNaN(favorites) ? "0" : favorites.toString()}</span>
+      <span>{isNaN(favorites) ? '0' : favorites.toString()}</span>
     </Button>
   )
 }
-

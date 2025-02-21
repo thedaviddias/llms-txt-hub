@@ -1,10 +1,10 @@
-import { formatDate } from "@/lib/utils"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Github, Star } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-import type { GitHubProject } from "@/lib/github"
+import type { GitHubProject } from '@/lib/github'
+import { formatDate } from '@/lib/utils'
+import { Badge } from '@thedaviddias/design-system/badge'
+import { Card } from '@thedaviddias/design-system/card'
+import { ExternalLink, Github, Star } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface GitHubProjectCardProps {
   project: GitHubProject
@@ -18,7 +18,7 @@ export function GitHubProjectCard({ project }: GitHubProjectCardProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Image
-                src={project.owner.avatarUrl || "/placeholder.svg"}
+                src={project.owner.avatarUrl || '/placeholder.svg'}
                 alt={`${project.owner.login}'s avatar`}
                 width={24}
                 height={24}
@@ -52,4 +52,3 @@ export function GitHubProjectCard({ project }: GitHubProjectCardProps) {
     </Card>
   )
 }
-

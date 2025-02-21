@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card"
-import type { LucideIcon } from "lucide-react"
+import { Card } from '@thedaviddias/design-system/card'
+import type { LucideIcon } from 'lucide-react'
 
 interface StatCardProps {
   title: string
@@ -16,4 +16,3 @@ export function StatCard({ title, value, icon: Icon }: StatCardProps) {
     </Card>
   )
 }
-

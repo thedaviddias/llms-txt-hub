@@ -1,10 +1,9 @@
-import fs from "fs"
-import path from "path"
-import matter from "gray-matter"
-import { remark } from "remark"
-import html from "remark-html"
-
-const blogDirectory = path.join(process.cwd(), "content/blog")
+import fs from 'node:fs'
+import path from 'node:path'
+import { getContentFilePath, getContentPath } from '@thedaviddias/utils/content-paths'
+import matter from 'gray-matter'
+import { remark } from 'remark'
+import html from 'remark-html'
 
 export interface BlogPost {
   slug: string
@@ -16,15 +15,17 @@ export interface BlogPost {
 }
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
+  const blogDirectory = getContentPath('blog')
+
   if (!fs.existsSync(blogDirectory)) {
     fs.mkdirSync(blogDirectory, { recursive: true })
   }
 
   const fileNames = fs.readdirSync(blogDirectory)
   const posts = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.mdx$/, "")
-    const fullPath = path.join(blogDirectory, fileName)
-    const fileContents = fs.readFileSync(fullPath, "utf8")
+    const slug = fileName.replace(/\.mdx$/, '')
+    const fullPath = getContentFilePath('blog', fileName)
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
 
     return {
@@ -32,7 +33,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
       title: data.title,
       date: data.date,
       category: data.category,
-      excerpt: data.excerpt || content.slice(0, 150) + "...",
+      excerpt: data.excerpt || `${content.slice(0, 150)}...`,
       content: content,
     } as BlogPost
   })
@@ -41,13 +42,13 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  const fullPath = path.join(blogDirectory, `${slug}.mdx`)
+  const fullPath = getContentFilePath('blog', `${slug}.mdx`)
 
   if (!fs.existsSync(fullPath)) {
     return null
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8")
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
   // Process markdown content
@@ -63,4 +64,3 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     excerpt: data.excerpt,
   }
 }
-

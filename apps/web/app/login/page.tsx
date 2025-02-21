@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { useAuth } from "@/contexts/auth-context"
-import { Github } from "lucide-react"
+import { useAuth } from '@/contexts/auth-context'
+import { Button } from '@thedaviddias/design-system/button'
+import { Github } from 'lucide-react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function LoginPage() {
   const { user, signIn } = useAuth()
@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      const redirectTo = searchParams.get("redirectTo") || "/"
+      const redirectTo = searchParams.get('redirectTo') || '/'
       router.push(redirectTo)
     }
   }, [user, router, searchParams])
@@ -42,4 +42,3 @@ export default function LoginPage() {
     </div>
   )
 }
-

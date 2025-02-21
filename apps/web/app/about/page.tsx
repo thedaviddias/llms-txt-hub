@@ -1,12 +1,13 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { FileText, Code, Zap } from "lucide-react"
+import { Button } from '@thedaviddias/design-system/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@thedaviddias/design-system/card'
+import { Code, FileText, Zap } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: "About llms.txt hub",
-  description: "Learn about the llms.txt hub, its mission, and how it helps AI models better understand documentation.",
+  title: 'About llms.txt hub',
+  description:
+    'Learn about the llms.txt hub, its mission, and how it helps AI models better understand documentation.',
 }
 
 export default function AboutPage() {
@@ -16,24 +17,26 @@ export default function AboutPage() {
         <section className="space-y-4">
           <h1 className="text-4xl font-bold">About llms.txt hub</h1>
           <p className="text-xl text-muted-foreground">
-            Discover how llms.txt is revolutionizing AI-ready documentation and enhancing AI model interactions.
+            Discover how llms.txt is revolutionizing AI-ready documentation and enhancing AI model
+            interactions.
           </p>
         </section>
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">What is llms.txt?</h2>
           <p>
-            llms.txt is a standard file that helps AI models better understand and interact with your website's
-            documentation and content structure. Similar to how robots.txt guides search engines, llms.txt provides a
-            structured format for AI models to navigate and comprehend your site's information architecture.
+            llms.txt is a standard file that helps AI models better understand and interact with
+            your website's documentation and content structure. Similar to how robots.txt guides
+            search engines, llms.txt provides a structured format for AI models to navigate and
+            comprehend your site's information architecture.
           </p>
         </section>
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Our Mission</h2>
           <p>
-            At llms.txt hub, our mission is to create a central directory and resource center for websites and tools
-            implementing the llms.txt standard. We aim to:
+            At llms.txt hub, our mission is to create a central directory and resource center for
+            websites and tools implementing the llms.txt standard. We aim to:
           </p>
           <ul className="list-disc list-inside space-y-2">
             <li>Promote the adoption of the llms.txt standard across the web</li>
@@ -54,7 +57,10 @@ export default function AboutPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Add an llms.txt file to your website's root directory to define your content structure.</p>
+                <p>
+                  Add an llms.txt file to your website's root directory to define your content
+                  structure.
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -65,7 +71,10 @@ export default function AboutPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Follow the llms.txt specification to describe your site's content and AI interaction preferences.</p>
+                <p>
+                  Follow the llms.txt specification to describe your site's content and AI
+                  interaction preferences.
+                </p>
               </CardContent>
             </Card>
             <Card>
@@ -76,7 +85,10 @@ export default function AboutPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p>Improve how AI tools understand and interact with your website's content and documentation.</p>
+                <p>
+                  Improve how AI tools understand and interact with your website's content and
+                  documentation.
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -85,8 +97,8 @@ export default function AboutPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Join the Community</h2>
           <p>
-            Whether you're a developer, content creator, or AI enthusiast, there are many ways to get involved with the
-            llms.txt hub community:
+            Whether you're a developer, content creator, or AI enthusiast, there are many ways to
+            get involved with the llms.txt hub community:
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button asChild>
@@ -104,14 +116,14 @@ export default function AboutPage() {
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold">Contact Us</h2>
           <p>
-            Have questions or suggestions? We'd love to hear from you! Reach out to us at{" "}
+            Have questions or suggestions? We'd love to hear from you! Reach out to us at{' '}
             <a href="mailto:contact@llmstxthub.com" className="text-primary hover:underline">
               contact@llmstxthub.com
-            </a>{" "}
-            or visit our{" "}
+            </a>{' '}
+            or visit our{' '}
             <Link href="/contact" className="text-primary hover:underline">
               contact page
-            </Link>{" "}
+            </Link>{' '}
             for more information.
           </p>
         </section>
@@ -119,4 +131,3 @@ export default function AboutPage() {
     </div>
   )
 }
-

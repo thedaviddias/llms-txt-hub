@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { LLMGrid } from "@/components/llm-grid"
-import { ArrowRight } from "lucide-react"
-import type { ProjectMetadata } from "@/lib/project-utils"
+import { LLMGrid } from '@/components/llm-grid'
+import type { ProjectMetadata } from '@/lib/project-utils'
+import { Button } from '@thedaviddias/design-system/button'
+import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface FeaturedProjectsSectionProps {
   projects: ProjectMetadata[]
@@ -23,4 +23,3 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
     </section>
   )
 }
-

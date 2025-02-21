@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { categories } from "@/lib/categories"
+import { categories } from '@/lib/categories'
+import { Card, CardDescription, CardHeader, CardTitle } from '@thedaviddias/design-system/card'
+import Link from 'next/link'
 
 export function CategoryList() {
   return (
@@ -21,4 +21,3 @@ export function CategoryList() {
     </>
   )
 }
-

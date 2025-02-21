@@ -1,0 +1,1 @@
+export { SupabaseProvider } from './provider'

@@ -1,32 +1,40 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
-import { submitLlmsTxt } from "@/app/actions"
+import { submitLlmsTxt } from '@/app/actions'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button } from '@thedaviddias/design-system/button'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@thedaviddias/design-system/form'
+import { Input } from '@thedaviddias/design-system/input'
+import { useToast } from '@thedaviddias/design-system/use-toast'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+    message: 'Name must be at least 2 characters.',
   }),
   description: z.string().min(10, {
-    message: "Description must be at least 10 characters.",
+    message: 'Description must be at least 10 characters.',
   }),
   website: z.string().url({
-    message: "Please enter a valid URL.",
+    message: 'Please enter a valid URL.',
   }),
   llmsUrl: z.string().url({
-    message: "Please enter a valid llms.txt URL.",
+    message: 'Please enter a valid llms.txt URL.',
   }),
   llmsFullUrl: z
     .string()
     .url({
-      message: "Please enter a valid llms-full.txt URL.",
+      message: 'Please enter a valid llms-full.txt URL.',
     })
     .optional(),
 })
@@ -38,11 +46,11 @@ export function SubmitForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      website: "",
-      llmsUrl: "",
-      llmsFullUrl: "",
+      name: '',
+      description: '',
+      website: '',
+      llmsUrl: '',
+      llmsFullUrl: '',
     },
   })
 
@@ -58,7 +66,7 @@ export function SubmitForm() {
 
       if (result.success) {
         toast({
-          title: "Submission successful",
+          title: 'Submission successful',
           description: `Your PR has been created: ${result.prUrl}`,
         })
         form.reset()
@@ -67,9 +75,9 @@ export function SubmitForm() {
       }
     } catch (error) {
       toast({
-        title: "Submission failed",
-        description: "There was an error submitting your llms.txt. Please try again.",
-        variant: "destructive",
+        title: 'Submission failed',
+        description: 'There was an error submitting your llms.txt. Please try again.',
+        variant: 'destructive',
       })
     } finally {
       setIsSubmitting(false)
@@ -95,10 +103,9 @@ export function SubmitForm() {
         />
         {/* Add other form fields here */}
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Submit"}
+          {isSubmitting ? 'Submitting...' : 'Submit'}
         </Button>
       </form>
     </Form>
   )
 }
-

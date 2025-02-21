@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Star } from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
-import { useAuth } from "@/contexts/auth-context"
-import { useRouter } from "next/navigation"
-import { favoriteProject } from "@/app/actions"
-import { cn } from "@/lib/utils"
+import { favoriteProject } from '@/app/actions'
+import { useAuth } from '@/contexts/auth-context'
+import { cn } from '@/lib/utils'
+import { Button } from '@thedaviddias/design-system/button'
+import { useToast } from '@thedaviddias/design-system/use-toast'
+import { Star } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface FavoriteButtonProps {
   projectSlug: string
@@ -16,7 +16,12 @@ interface FavoriteButtonProps {
   className?: string
 }
 
-export function FavoriteButton({ projectSlug, initialFavorites, showText = false, className }: FavoriteButtonProps) {
+export function FavoriteButton({
+  projectSlug,
+  initialFavorites,
+  showText = false,
+  className,
+}: FavoriteButtonProps) {
   const [favorites, setFavorites] = useState(initialFavorites)
   const { toast } = useToast()
   const { user } = useAuth()
@@ -31,38 +36,37 @@ export function FavoriteButton({ projectSlug, initialFavorites, showText = false
 
     try {
       const formData = new FormData()
-      formData.append("projectSlug", projectSlug)
+      formData.append('projectSlug', projectSlug)
 
       const result = await favoriteProject(formData)
 
       if (result.success) {
         setFavorites(result.newFavoriteCount)
         toast({
-          title: "Project favorited",
-          description: "Thank you for your support!",
+          title: 'Project favorited',
+          description: 'Thank you for your support!',
         })
       } else {
         throw new Error(result.error)
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to favorite project. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to favorite project. Please try again.',
+        variant: 'destructive',
       })
     }
   }
 
   return (
-    <Button onClick={handleFavorite} variant="ghost" size="sm" className={cn("gap-2", className)}>
+    <Button onClick={handleFavorite} variant="ghost" size="sm" className={cn('gap-2', className)}>
       <Star className="h-4 w-4" />
       {showText && (
         <span className="text-sm">
-          {favorites} {favorites === 1 ? "Favorite" : "Favorites"}
+          {favorites} {favorites === 1 ? 'Favorite' : 'Favorites'}
         </span>
       )}
       {!showText && <span className="sr-only">Favorite ({favorites})</span>}
     </Button>
   )
 }
-

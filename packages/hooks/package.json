@@ -1,0 +1,20 @@
+{
+  "name": "@thedaviddias/hooks",
+  "version": "0.1.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "lint": "biome check .",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+  },
+  "exports": {
+    "./use-debounce": "./src/use-debounce.tsx"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "@types/react": "19.0.10"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

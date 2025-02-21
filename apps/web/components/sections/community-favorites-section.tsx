@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { LLMGrid } from "@/components/llm-grid"
-import { ArrowRight, Star } from "lucide-react"
-import type { ProjectMetadata } from "@/lib/project-utils"
+import { LLMGrid } from '@/components/llm-grid'
+import type { ProjectMetadata } from '@/lib/project-utils'
+import { Button } from '@thedaviddias/design-system/button'
+import { ArrowRight, Star } from 'lucide-react'
+import Link from 'next/link'
 
 interface CommunityFavoritesSectionProps {
   projects: ProjectMetadata[]
@@ -26,4 +26,3 @@ export function CommunityFavoritesSection({ projects }: CommunityFavoritesSectio
     </section>
   )
 }
-

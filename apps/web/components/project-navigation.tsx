@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button } from '@thedaviddias/design-system/button'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface ProjectNavigationProps {
   previousProject: { slug: string; name: string } | null
@@ -33,4 +33,3 @@ export function ProjectNavigation({ previousProject, nextProject }: ProjectNavig
     </div>
   )
 }
-

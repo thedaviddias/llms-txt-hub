@@ -28,3 +28,6 @@ Performance:
 - Optimize bundle sizes
 - Use code splitting
 - Implement proper lazy loading
+
+
+- Don't use barel files

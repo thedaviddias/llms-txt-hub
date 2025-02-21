@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import type React from "react"
-import { createContext, useContext, useEffect, useState } from "react"
-import type { User, Session } from "@supabase/supabase-js"
-import { supabase } from "@/lib/supabase-client"
-import { useRouter } from "next/navigation"
+import { supabase } from '@/lib/supabase-client'
+import type { Session, User } from '@supabase/supabase-js'
+import { useRouter } from 'next/navigation'
+import type React from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 type AuthContextType = {
   user: User | null
@@ -21,46 +21,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    if (typeof supabase.auth.onAuthStateChange === "function") {
-      const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-        if (event === "SIGNED_IN") {
-          // Redirect to the intended page after sign-in
-          const redirectTo = new URLSearchParams(window.location.search).get("redirectTo") || "/"
-          router.push(redirectTo)
-        }
-      })
+    if (typeof supabase.auth.onAuthStateChange !== 'function') {
+      console.warn(
+        'Auth state change listener is not available. Authentication features may not work properly.',
+      )
+      return
+    }
 
-      return () => {
-        if (authListener?.subscription?.unsubscribe) {
-          authListener.subscription.unsubscribe()
-        }
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      setSession(session)
+      setUser(session?.user ?? null)
+      if (event === 'SIGNED_IN') {
+        // Redirect to the intended page after sign-in
+        const redirectTo = new URLSearchParams(window.location.search).get('redirectTo') || '/'
+        router.push(redirectTo)
       }
-    } else {
-      console.warn("Auth state change listener is not available. Authentication features may not work properly.")
+    })
+
+    return () => {
+      if (authListener?.subscription?.unsubscribe) {
+        authListener.subscription.unsubscribe()
+      }
     }
   }, [router])
 
   const signIn = async () => {
-    if (typeof supabase.auth.signInWithOAuth === "function") {
+    if (typeof supabase.auth.signInWithOAuth === 'function') {
       await supabase.auth.signInWithOAuth({
-        provider: "github",
+        provider: 'github',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          scopes: 'read:user',
         },
       })
     } else {
-      console.warn("Sign in functionality is not available due to missing Supabase credentials.")
+      console.warn('Sign in functionality is not available due to missing Supabase credentials.')
     }
   }
 
   const signOut = async () => {
-    if (typeof supabase.auth.signOut === "function") {
+    if (typeof supabase.auth.signOut === 'function') {
       await supabase.auth.signOut()
-      router.push("/")
+      router.push('/')
     } else {
-      console.warn("Sign out functionality is not available due to missing Supabase credentials.")
+      console.warn('Sign out functionality is not available due to missing Supabase credentials.')
     }
   }
 
@@ -77,8 +81,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider")
+    throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
 }
-

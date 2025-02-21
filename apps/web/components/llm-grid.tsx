@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card"
-import Image from "next/image"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { FavoriteButton } from "@/components/favorite-button"
-import { LLMButton } from "@/components/llm-button"
+import { FavoriteButton } from '@/components/favorite-button'
+import { LLMButton } from '@/components/llm-button'
+import { cn } from '@/lib/utils'
+import { Card } from '@thedaviddias/design-system/card'
+import Image from 'next/image'
+import Link from 'next/link'
 
 interface LLMItem {
   name: string
@@ -17,7 +17,7 @@ interface LLMItem {
 
 interface LLMGridProps {
   items: LLMItem[]
-  variant?: "default" | "compact"
+  variant?: 'default' | 'compact'
   className?: string
 }
 
@@ -26,15 +26,15 @@ function getFaviconUrl(website: string) {
   return `https://www.google.com/s2/favicons?sz=32&domain=${domain}`
 }
 
-export function LLMGrid({ items, variant = "default", className }: LLMGridProps) {
-  if (variant === "compact") {
+export function LLMGrid({ items, variant = 'default', className }: LLMGridProps) {
+  if (variant === 'compact') {
     return (
-      <div className={cn("space-y-4", className)}>
+      <div className={cn('space-y-4', className)}>
         {items.map((item) => (
           <Link key={item.slug} href={`/project/${item.slug}`} className="block">
             <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
               <Image
-                src={getFaviconUrl(item.website) || "/placeholder.svg"}
+                src={getFaviconUrl(item.website) || '/placeholder.svg'}
                 alt={`${item.name} logo`}
                 width={32}
                 height={32}
@@ -52,7 +52,7 @@ export function LLMGrid({ items, variant = "default", className }: LLMGridProps)
   }
 
   return (
-    <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4", className)}>
+    <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4', className)}>
       {items.map((item) => (
         <Card key={item.slug} className="p-6 hover:bg-muted/50 transition-colors">
           <Link href={`/project/${item.slug}`} className="block">
@@ -60,7 +60,7 @@ export function LLMGrid({ items, variant = "default", className }: LLMGridProps)
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
                   <Image
-                    src={getFaviconUrl(item.website) || "/placeholder.svg"}
+                    src={getFaviconUrl(item.website) || '/placeholder.svg'}
                     alt={`${item.name} logo`}
                     width={32}
                     height={32}
@@ -76,7 +76,9 @@ export function LLMGrid({ items, variant = "default", className }: LLMGridProps)
               </div>
               <div className="pt-2 space-x-2">
                 <LLMButton href={item.llmsUrl} type="llms" size="sm" />
-                {item.llmsFullUrl && <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />}
+                {item.llmsFullUrl && (
+                  <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />
+                )}
               </div>
             </div>
           </Link>
@@ -85,4 +87,3 @@ export function LLMGrid({ items, variant = "default", className }: LLMGridProps)
     </div>
   )
 }
-

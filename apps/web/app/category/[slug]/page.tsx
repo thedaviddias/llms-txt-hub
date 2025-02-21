@@ -1,10 +1,10 @@
-import { notFound } from "next/navigation"
-import { ChevronRight } from "lucide-react"
-import Link from "next/link"
-import { getAllWebsites } from "@/lib/mdx"
-import { LLMGrid } from "@/components/llm-grid"
-import { categories } from "@/lib/categories"
-import type { Metadata } from "next"
+import { LLMGrid } from '@/components/llm-grid'
+import { categories } from '@/lib/categories'
+import { getAllWebsites } from '@/lib/mdx'
+import { ChevronRight } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 interface CategoryPageProps {
   params: {
@@ -13,23 +13,18 @@ interface CategoryPageProps {
 }
 
 export async function generateStaticParams() {
-  console.log(
-    "Generating static params for categories:",
-    categories.map((c) => c.slug),
-  )
   return categories.map((category) => ({
     slug: category.slug,
   }))
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  console.log("Generating metadata for category slug:", params.slug)
   const category = categories.find((c) => c.slug === params.slug)
 
   if (!category) {
-    console.log("Category not found for slug:", params.slug)
+    console.log('Category not found for slug:', params.slug)
     return {
-      title: "Category Not Found",
+      title: 'Category Not Found',
     }
   }
 
@@ -40,22 +35,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  console.log("Rendering category page for slug:", params.slug)
-
   const category = categories.find((c) => c.slug === params.slug)
 
   if (!category) {
-    console.log("Category not found, calling notFound()")
+    console.log('Category not found, calling notFound()')
     notFound()
   }
 
-  console.log("Category found:", category.name)
-
   const websites = await getAllWebsites()
-  console.log("Total websites:", websites.length)
 
   const categoryItems = websites.filter((website) => website.category === params.slug)
-  console.log("Websites in this category:", categoryItems.length)
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -94,4 +83,3 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     </div>
   )
 }
-

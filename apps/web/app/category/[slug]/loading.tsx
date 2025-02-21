@@ -1,6 +1,6 @@
-import { Skeleton } from "@/components/ui/skeleton"
-import { ChevronRight } from "lucide-react"
-import Link from "next/link"
+import { Skeleton } from '@thedaviddias/design-system/skeleton'
+import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Loading() {
   return (
@@ -36,4 +36,3 @@ export default function Loading() {
     </div>
   )
 }
-

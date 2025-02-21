@@ -1,6 +1,6 @@
-import { FolderOpen } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import { Button } from '@thedaviddias/design-system/button'
+import { FolderOpen } from 'lucide-react'
+import Link from 'next/link'
 
 interface EmptyStateProps {
   title: string
@@ -21,4 +21,3 @@ export function EmptyState({ title, description, actionLabel, actionHref }: Empt
     </div>
   )
 }
-

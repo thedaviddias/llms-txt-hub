@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { Button } from '@thedaviddias/design-system/button'
+import Link from 'next/link'
 
 export function HeroSection() {
   return (
@@ -23,4 +23,3 @@ export function HeroSection() {
     </section>
   )
 }
-

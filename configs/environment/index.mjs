@@ -16,7 +16,6 @@ const server = {
   SUPABASE_SERVICE_ROLE_KEY: token().optional(),
 
   // Security
-  ARCJET_KEY: token('ajkey_').optional(),
   FLAGS_SECRET: token().optional(),
 
   // Cache
@@ -31,17 +30,8 @@ const server = {
   SENTRY_ORG: token().optional(),
   SENTRY_PROJECT: token().optional(),
 
-  // AI
-  OPENAI_API_KEY: token('sk-').optional(),
-
   // MailerLite
   MAILERLITE_API_KEY: token(),
-
-  // Webhooks
-  SVIX_TOKEN: token().optional(),
-
-  // Cloudinary
-  CLOUDINARY_CLOUD_NAME: token().optional(),
 
   // Build
   ANALYZE: z.string().optional(),
@@ -53,25 +43,13 @@ const server = {
 const client = {
   // URLs
   NEXT_PUBLIC_WEB_URL: url(),
-  NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: url(),
 
   // Auth
   NEXT_PUBLIC_SUPABASE_URL: url().optional(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: token().optional(),
 
-  // Analytics
-  NEXT_PUBLIC_POSTHOG_KEY: token('phc_').optional(),
-  NEXT_PUBLIC_POSTHOG_HOST: url().optional(),
-  NEXT_PUBLIC_GA_MEASUREMENT_ID: token().optional(),
-
   // Monitoring
   NEXT_PUBLIC_MONITORING_PROVIDER: z.enum(['sentry']).optional(),
-
-  // Cloudinary
-  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: token().optional(),
-
-  // Mapbox
-  NEXT_PUBLIC_MAPBOX_TOKEN: token(),
 }
 
 export const env = createEnv({
@@ -88,7 +66,6 @@ export const env = createEnv({
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
 
     // Security
-    ARCJET_KEY: process.env.ARCJET_KEY,
     FLAGS_SECRET: process.env.FLAGS_SECRET,
 
     // Cache
@@ -102,38 +79,14 @@ export const env = createEnv({
     // Monitoring
     SENTRY_ORG: process.env.SENTRY_ORG,
     SENTRY_PROJECT: process.env.SENTRY_PROJECT,
-    BETTERSTACK_API_KEY: process.env.BETTERSTACK_API_KEY,
-    BETTERSTACK_URL: process.env.BETTERSTACK_URL,
-    NEXT_PUBLIC_MONITORING_PROVIDER: process.env.NEXT_PUBLIC_MONITORING_PROVIDER,
 
     // URLs
     NEXT_PUBLIC_WEB_URL: process.env.NEXT_PUBLIC_WEB_URL,
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    NEXT_PUBLIC_DOCS_URL: process.env.NEXT_PUBLIC_DOCS_URL,
-    NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL:
-      process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
 
     // Analytics
-    NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
-    NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-    NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
-
-    // AI
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 
     // MailerLite
     MAILERLITE_API_KEY: process.env.MAILERLITE_API_KEY,
-
-    // Webhooks
-    SVIX_TOKEN: process.env.SVIX_TOKEN,
-
-    // Cloudinary
-    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
-    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-
-    // Mapbox
-    NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
-
     // Build
     ANALYZE: process.env.ANALYZE,
 

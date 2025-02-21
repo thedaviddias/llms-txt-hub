@@ -1,25 +1,25 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
+import { Button } from '@thedaviddias/design-system/button'
+import { Input } from '@thedaviddias/design-system/input'
+import { useToast } from '@thedaviddias/design-system/use-toast'
+import { useState } from 'react'
 
 export function NewsletterForm() {
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState('')
   const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     // TODO: Implement newsletter subscription logic
-    console.log("Subscribing email:", email)
+    console.log('Subscribing email:', email)
     toast({
-      title: "Subscribed!",
-      description: "Thank you for subscribing to our newsletter.",
+      title: 'Subscribed!',
+      description: 'Thank you for subscribing to our newsletter.',
     })
-    setEmail("")
+    setEmail('')
   }
 
   return (
@@ -35,4 +35,3 @@ export function NewsletterForm() {
     </form>
   )
 }
-

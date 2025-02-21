@@ -1,8 +1,8 @@
-import { getAllBlogPosts, getBlogPost } from "@/lib/blog"
-import { formatDate } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { notFound } from "next/navigation"
-import type { Metadata } from "next"
+import { getAllBlogPosts, getBlogPost } from '@/lib/blog'
+import { formatDate } from '@/lib/utils'
+import { Badge } from '@thedaviddias/design-system/badge'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 interface BlogPostPageProps {
   params: {
@@ -60,4 +60,3 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     </div>
   )
 }
-

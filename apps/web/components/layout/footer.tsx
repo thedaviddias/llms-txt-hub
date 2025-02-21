@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Github, Twitter, Linkedin } from "lucide-react"
+import { Github, Linkedin, Twitter } from 'lucide-react'
+import Link from 'next/link'
 
 export function Footer() {
   return (
@@ -9,7 +9,8 @@ export function Footer() {
           <div className="space-y-3">
             <h3 className="font-semibold">llms.txt hub</h3>
             <p className="text-sm text-muted-foreground">
-              Discover AI-ready documentation and explore websites implementing the llms.txt standard.
+              Discover AI-ready documentation and explore websites implementing the llms.txt
+              standard.
             </p>
           </div>
           <div>
@@ -77,10 +78,9 @@ export function Footer() {
         </div>
         <div className="mt-8 pt-6 border-t flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
           <div>© {new Date().getFullYear()} llms.txt hub. All rights reserved.</div>
-          <div className="mt-4 md:mt-0">Made with ❤️ by the llms.txt hub team</div>
+          <div className="mt-4 md:mt-0">Made by David Dias with ❤️</div>
         </div>
       </div>
     </footer>
   )
 }
-

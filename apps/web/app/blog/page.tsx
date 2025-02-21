@@ -1,13 +1,20 @@
-import { getAllBlogPosts } from "@/lib/blog"
-import { formatDate } from "@/lib/utils"
-import Link from "next/link"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { Metadata } from "next"
+import { getAllBlogPosts } from '@/lib/blog'
+import { formatDate } from '@/lib/utils'
+import { Badge } from '@thedaviddias/design-system/badge'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@thedaviddias/design-system/card'
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: "Blog - llms.txt hub",
-  description: "Latest updates, guides, and news about llms.txt and AI documentation.",
+  title: 'Blog - llms.txt hub',
+  description: 'Latest updates, guides, and news about llms.txt and AI documentation.',
 }
 
 export default async function BlogPage() {
@@ -18,7 +25,9 @@ export default async function BlogPage() {
       <div className="max-w-[900px] mx-auto space-y-8">
         <div className="space-y-4">
           <h1 className="text-4xl font-bold">Blog</h1>
-          <p className="text-lg text-muted-foreground">Latest updates, guides, and news about llms.txt</p>
+          <p className="text-lg text-muted-foreground">
+            Latest updates, guides, and news about llms.txt
+          </p>
         </div>
 
         <div className="grid gap-6">
@@ -52,4 +61,3 @@ export default async function BlogPage() {
     </div>
   )
 }
-

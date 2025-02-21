@@ -1,10 +1,10 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Card } from "@/components/ui/card"
-import { ExternalLink, Rss } from "lucide-react"
-import Link from "next/link"
+import { Card } from '@thedaviddias/design-system/card'
+import { Skeleton } from '@thedaviddias/design-system/skeleton'
+import { ExternalLink, Rss } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 interface NewsItem {
   title: string
@@ -21,15 +21,15 @@ export function LatestNews() {
     async function fetchNews() {
       try {
         setIsLoading(true)
-        const response = await fetch("/api/rss-feed")
+        const response = await fetch('/api/rss-feed')
         if (!response.ok) {
-          throw new Error("Failed to fetch news")
+          throw new Error('Failed to fetch news')
         }
         const data = await response.json()
         setNews(data.items.slice(0, 3)) // Display only the 3 most recent items
       } catch (error) {
-        console.error("Failed to fetch news:", error)
-        setError("Failed to load latest news. Please try again later.")
+        console.error('Failed to fetch news:', error)
+        setError('Failed to load latest news. Please try again later.')
       } finally {
         setIsLoading(false)
       }
@@ -95,12 +95,19 @@ export function LatestNews() {
           news.map((item, index) => (
             <Card key={index} className="p-4">
               <h3 className="font-semibold">
-                <Link href={item.link} className="hover:underline" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href={item.link}
+                  className="hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {item.title}
                   <ExternalLink className="inline-block ml-2 h-4 w-4" />
                 </Link>
               </h3>
-              <p className="text-sm text-muted-foreground">{new Date(item.pubDate).toLocaleDateString()}</p>
+              <p className="text-sm text-muted-foreground">
+                {new Date(item.pubDate).toLocaleDateString()}
+              </p>
             </Card>
           ))
         ) : (
@@ -110,4 +117,3 @@ export function LatestNews() {
     </section>
   )
 }
-

@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import { useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { AlertCircle } from "lucide-react"
+import { Button } from '@thedaviddias/design-system/button'
+import { AlertCircle } from 'lucide-react'
+import { useEffect } from 'react'
 
 export default function Error({
   error,
@@ -12,7 +12,7 @@ export default function Error({
   reset: () => void
 }) {
   useEffect(() => {
-    console.error("News page error:", error)
+    console.error('News page error:', error)
   }, [error])
 
   return (
@@ -28,4 +28,3 @@ export default function Error({
     </div>
   )
 }
-

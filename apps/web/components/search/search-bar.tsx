@@ -1,16 +1,16 @@
-"use client"
+'use client'
 
-import { Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { useSearch } from "@/hooks/use-search"
+import { useSearch } from '@/hooks/use-search'
+import { Button } from '@thedaviddias/design-system/button'
+import { Input } from '@thedaviddias/design-system/input'
+import { Search } from 'lucide-react'
 
 interface SearchBarProps {
   className?: string
   placeholder?: string
 }
 
-export function SearchBar({ className = "", placeholder = "Search..." }: SearchBarProps) {
+export function SearchBar({ className = '', placeholder = 'Search...' }: SearchBarProps) {
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()
 
   return (
@@ -24,7 +24,12 @@ export function SearchBar({ className = "", placeholder = "Search..." }: SearchB
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <Button type="submit" size="sm" variant="ghost" className="absolute right-0 top-0 h-full px-3">
+          <Button
+            type="submit"
+            size="sm"
+            variant="ghost"
+            className="absolute right-0 top-0 h-full px-3"
+          >
             <Search className="h-4 w-4" />
             <span className="sr-only">Search</span>
           </Button>
@@ -33,4 +38,3 @@ export function SearchBar({ className = "", placeholder = "Search..." }: SearchB
     </div>
   )
 }
-

@@ -1,24 +1,24 @@
-import { getAllResources } from "@/lib/resources"
-import { fetchGitHubProjects } from "@/lib/github"
-import { formatDate } from "@/lib/utils"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, Book, Code, Video } from "lucide-react"
-import Link from "next/link"
-import { GitHubProjectCard } from "@/components/github-project-card"
-import { Button } from "@/components/ui/button"
-import { ResourcesSidebar } from "@/components/resources/sidebar"
+import { GitHubProjectCard } from '@/components/github-project-card'
+import { ResourcesSidebar } from '@/components/resources/sidebar'
+import { fetchGitHubProjects } from '@/lib/github'
+import { getAllResources } from '@/lib/resources'
+import { formatDate } from '@/lib/utils'
+import { Badge } from '@thedaviddias/design-system/badge'
+import { Button } from '@thedaviddias/design-system/button'
+import { Card } from '@thedaviddias/design-system/card'
+import { Book, Code, ExternalLink, Video } from 'lucide-react'
+import Link from 'next/link'
 
 const resourceTypes = [
-  { name: "All", icon: Book, slug: "all" },
-  { name: "Articles", icon: Book, slug: "articles" },
-  { name: "Tutorials", icon: Video, slug: "tutorials" },
-  { name: "Open Source Projects", icon: Code, slug: "open-source" },
+  { name: 'All', icon: Book, slug: 'all' },
+  { name: 'Articles', icon: Book, slug: 'articles' },
+  { name: 'Tutorials', icon: Video, slug: 'tutorials' },
+  { name: 'Open Source Projects', icon: Code, slug: 'open-source' },
 ]
 
 export default async function ResourcesPage() {
   const { articles, openSourceProjects } = await getAllResources()
-  const githubProjects = await fetchGitHubProjects("llms-txt")
+  const githubProjects = await fetchGitHubProjects('llms-txt')
 
   const allResources = [...articles, ...openSourceProjects]
 
@@ -31,7 +31,8 @@ export default async function ResourcesPage() {
           <div className="space-y-4">
             <h1 className="text-4xl font-bold">Resources</h1>
             <p className="text-lg text-muted-foreground">
-              Explore articles, tutorials, and open-source projects about llms.txt and AI documentation.
+              Explore articles, tutorials, and open-source projects about llms.txt and AI
+              documentation.
             </p>
           </div>
 
@@ -131,4 +132,3 @@ export default async function ResourcesPage() {
     </div>
   )
 }
-

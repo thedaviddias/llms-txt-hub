@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from '@thedaviddias/design-system/tabs'
 
 export function CategoryTabs() {
   return (
@@ -28,4 +28,3 @@ export function CategoryTabs() {
     </Tabs>
   )
 }
-

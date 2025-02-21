@@ -1,8 +1,8 @@
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink } from "lucide-react"
-import Link from "next/link"
-import { formatDate } from "@/lib/utils"
+import { formatDate } from '@/lib/utils'
+import { Badge } from '@thedaviddias/design-system/badge'
+import { Card } from '@thedaviddias/design-system/card'
+import { ExternalLink } from 'lucide-react'
+import Link from 'next/link'
 
 interface ResourceCardProps {
   resource: {
@@ -46,4 +46,3 @@ export function ResourceCard({ resource }: ResourceCardProps) {
     </Card>
   )
 }
-

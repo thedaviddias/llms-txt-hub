@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useState } from "react"
-import { ModeToggle } from "@/components/mode-toggle"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { SearchBar } from "@/components/search/search-bar"
-import { Search, X } from "lucide-react"
+import { ModeToggle } from '@/components/mode-toggle'
+import { SearchBar } from '@/components/search/search-bar'
+import { Button } from '@thedaviddias/design-system/button'
+import { Search, X } from 'lucide-react'
+import Link from 'next/link'
+import { useState } from 'react'
 
 export function Header() {
   const [showMobileSearch, setShowMobileSearch] = useState(false)
@@ -52,4 +52,3 @@ export function Header() {
     </header>
   )
 }
-

@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { FileText, Code2, Zap } from "lucide-react"
+import { Button } from '@thedaviddias/design-system/button'
+import { Code2, FileText, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 export function HowItWorksSection() {
   return (
@@ -31,4 +31,3 @@ export function HowItWorksSection() {
     </section>
   )
 }
-

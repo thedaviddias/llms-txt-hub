@@ -1,14 +1,14 @@
-import fs from "fs"
-import path from "path"
-import matter from "gray-matter"
-import { unified } from "unified"
-import remarkParse from "remark-parse"
-import remarkRehype from "remark-rehype"
-import rehypeSanitize from "rehype-sanitize"
-import rehypeStringify from "rehype-stringify"
-import rehypeRaw from "rehype-raw"
+import fs from 'fs'
+import path from 'path'
+import matter from 'gray-matter'
+import rehypeRaw from 'rehype-raw'
+import rehypeSanitize from 'rehype-sanitize'
+import rehypeStringify from 'rehype-stringify'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+import { unified } from 'unified'
 
-const websitesDirectory = path.join(process.cwd(), "content", "websites")
+const websitesDirectory = path.join(process.cwd(), '../../content', 'websites')
 
 export interface WebsiteMetadata {
   slug: string
@@ -24,32 +24,26 @@ export interface WebsiteMetadata {
 }
 
 export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
-  console.log("Attempting to read websites from:", websitesDirectory)
-
   if (!fs.existsSync(websitesDirectory)) {
-    console.error("Websites directory does not exist:", websitesDirectory)
+    console.error('Websites directory does not exist:', websitesDirectory)
     return []
   }
 
   const fileNames = fs.readdirSync(websitesDirectory)
-  console.log("Files found in websites directory:", fileNames)
 
   if (fileNames.length === 0) {
-    console.warn("No website files found in directory")
+    console.warn('No website files found in directory')
     return []
   }
 
   const websites = fileNames
-    .filter((fileName) => fileName.endsWith(".mdx"))
+    .filter((fileName) => fileName.endsWith('.mdx'))
     .map((fileName) => {
-      const slug = fileName.replace(/\.mdx$/, "")
+      const slug = fileName.replace(/\.mdx$/, '')
       const fullPath = path.join(websitesDirectory, fileName)
-      console.log("Reading file:", fullPath)
 
-      const fileContents = fs.readFileSync(fullPath, "utf8")
+      const fileContents = fs.readFileSync(fullPath, 'utf8')
       const { data } = matter(fileContents)
-
-      console.log("Parsed website data:", { slug, ...data })
 
       return {
         slug,
@@ -57,7 +51,6 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
       } as WebsiteMetadata
     })
 
-  console.log("Total websites parsed:", websites.length)
   return websites
 }
 
@@ -68,17 +61,17 @@ export async function getWebsiteBySlug(slug: string) {
     return null
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8")
+  const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
   // Remove the first heading that matches the project name
-  const lines = content.split("\n")
+  const lines = content.split('\n')
   const filteredLines = lines.filter((line) => {
     // Skip any line that is an h1 heading containing the project name
     const isH1WithProjectName = line.trim().match(new RegExp(`^#\\s+${data.name}\\s*$`))
     return !isH1WithProjectName
   })
-  const contentWithoutTitle = filteredLines.join("\n")
+  const contentWithoutTitle = filteredLines.join('\n')
 
   // Process markdown content
   const processedContent = await unified()
@@ -108,4 +101,3 @@ export async function getWebsiteBySlug(slug: string) {
     nextProject,
   }
 }
-

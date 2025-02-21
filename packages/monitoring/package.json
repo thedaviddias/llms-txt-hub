@@ -1,0 +1,35 @@
+{
+  "name": "@thedaviddias/monitoring",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Monitoring utilities for the monorepo",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./src/client.ts"
+    }
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@sentry/nextjs": "^9.1.0",
+    "@thedaviddias/config-environment": "workspace:*",
+    "@thedaviddias/config-typescript": "workspace:*",
+    "next": "15.1.7",
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/react": "19.0.10",
+    "typescript": "^5.7.3"
+  }
+}

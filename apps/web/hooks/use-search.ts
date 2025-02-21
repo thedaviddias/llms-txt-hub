@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { useDebounce } from "@/hooks/use-debounce"
+import { useDebounce } from '@thedaviddias/hooks/use-debounce'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export function useSearch() {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)
   const router = useRouter()
 
@@ -25,4 +25,3 @@ export function useSearch() {
     handleSearch,
   }
 }
-

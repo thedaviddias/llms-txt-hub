@@ -17,7 +17,8 @@
         "SUPABASE_URL",
         "SUPABASE_SERVICE_ROLE_KEY",
         "SUPABASE_JWT_SECRET",
-        "MAILERLITE_API_KEY"
+        "MAILERLITE_API_KEY",
+        "GITHUB_TOKEN"
       ]
     },
     "supabase:typegen": {

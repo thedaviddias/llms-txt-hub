@@ -1,17 +1,34 @@
 import withMDX from '@next/mdx'
+import { config as baseConfig } from '@thedaviddias/config-next'
+
+export const INTERNAL_PACKAGES = ['@thedaviddias/design-system', '@thedaviddias/analytics']
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+export const nextConfig = {
+  ...baseConfig,
+
+  transpilePackages: INTERNAL_PACKAGES,
+
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  pageExtensions: ['mdx', 'ts', 'tsx'],
+
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.google.com',
+        pathname: '/s2/favicons/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+        pathname: '/**',
+      },
+    ],
   },
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
 }
 
 export default withMDX()(nextConfig)

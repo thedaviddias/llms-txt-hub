@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { Rss } from "lucide-react"
+import { Button } from '@thedaviddias/design-system/button'
+import { Card } from '@thedaviddias/design-system/card'
+import { Skeleton } from '@thedaviddias/design-system/skeleton'
+import { Rss } from 'lucide-react'
 
 export default function Loading() {
   return (
@@ -32,4 +32,3 @@ export default function Loading() {
     </div>
   )
 }
-

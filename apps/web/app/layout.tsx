@@ -1,19 +1,18 @@
 import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import type React from 'react'
-import '../styles/globals.css'
-import { Footer } from '@/components/footer'
-import { Header } from '@/components/header'
+import '../../../packages/design-system/styles/globals.css'
+import { Footer } from '@/components/layout/footer'
+import { Header } from '@/components/layout/header'
 import { PageTransition } from '@/components/page-transition'
-import { ThemeProvider } from '@/components/theme-provider'
 import { AuthProvider } from '@/contexts/auth-context'
-import PlausibleProvider from 'next-plausible'
+import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 
-// const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-// const jetbrainsMono = JetBrains_Mono({
-//   subsets: ['latin'],
-//   variable: '--font-mono',
-// })
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+})
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
@@ -27,27 +26,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <PlausibleProvider domain="your-domain.com">
-        {/* <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}> */}
-        <body className={`font-sans`}>
+      <body className={`${inter.className} font-sans`}>
+        <DesignSystemProvider plausibleDomain="llmstxthub.com">
           <AuthProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">
-                  <PageTransition>{children}</PageTransition>
-                </main>
-                <Footer />
-              </div>
-            </ThemeProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <Footer />
+            </div>
           </AuthProvider>
-        </body>
-      </PlausibleProvider>
+        </DesignSystemProvider>
+      </body>
     </html>
   )
 }
