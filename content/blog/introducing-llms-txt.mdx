@@ -1,0 +1,37 @@
+---
+title: "Introducing llms.txt: A Standard for AI Documentation"
+date: "2024-02-20"
+category: "Announcement"
+excerpt: "Learn about the new llms.txt standard and how it helps AI models better understand your documentation."
+---
+
+The llms.txt standard is a new way to help AI tools better understand technical documentation. Similar to how robots.txt guides search engines, llms.txt helps AI models like ChatGPT, Claude, and others understand your documentation's structure and content.
+
+## Why llms.txt?
+
+As AI tools become more prevalent in development workflows, there's a growing need for standardized ways to communicate with these tools. The llms.txt standard addresses this need by providing a structured format for documentation that AI models can easily parse and understand.
+
+## Key Features
+
+1. **Machine-readable format**: Structured data that AI models can easily process
+2. **Human-friendly**: Simple markdown format that's easy to read and write
+3. **Flexible**: Adaptable to different types of documentation and content
+4. **Standardized**: Consistent format across different projects and platforms
+
+## Getting Started
+
+To implement llms.txt in your project, create a new file at the root of your documentation:
+
+```txt
+# Project Information
+name: Your Project
+description: A brief description of your project
+version: 1.0.0
+
+# Documentation Structure
+docs:
+  - path: /getting-started
+    title: Getting Started
+  - path: /api-reference
+    title: API Reference
+
