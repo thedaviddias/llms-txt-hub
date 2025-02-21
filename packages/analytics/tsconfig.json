@@ -1,0 +1,8 @@
+{
+  "extends": "@thedaviddias/config-typescript/react-library.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}

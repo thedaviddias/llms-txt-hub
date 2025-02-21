@@ -1,0 +1,12 @@
+{
+  "name": "@thedaviddias/config-typescript",
+  "version": "1.0.0",
+  "private": true,
+  "main": "base.json",
+  "files": [
+    "*.json"
+  ],
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@thedaviddias/utils",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./content-paths": "./content-paths.ts",
+    "./cookies": "./cookies.ts",
+    "./get-favicon-url": "./get-favicon-url.ts",
+    "./environment": "./constants/environment.ts"
+  },
+  "dependencies": {
+    "path": "^0.12.7"
+  }
+}
