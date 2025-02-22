@@ -1,5 +1,6 @@
 'use client'
 
+import { categories } from '@/lib/categories'
 import { Tabs, TabsList, TabsTrigger } from '@thedaviddias/design-system/tabs'
 
 export function CategoryTabs() {
@@ -9,21 +10,11 @@ export function CategoryTabs() {
         <TabsTrigger value="all" className="font-mono">
           All
         </TabsTrigger>
-        <TabsTrigger value="ai" className="font-mono">
-          AI
-        </TabsTrigger>
-        <TabsTrigger value="developer-tools" className="font-mono">
-          Developer Tools
-        </TabsTrigger>
-        <TabsTrigger value="finance" className="font-mono">
-          Finance
-        </TabsTrigger>
-        <TabsTrigger value="products" className="font-mono">
-          Products
-        </TabsTrigger>
-        <TabsTrigger value="websites" className="font-mono">
-          Websites
-        </TabsTrigger>
+        {categories.map(category => (
+          <TabsTrigger key={category.slug} value={category.slug} className="font-mono">
+            {category.name}
+          </TabsTrigger>
+        ))}
       </TabsList>
     </Tabs>
   )

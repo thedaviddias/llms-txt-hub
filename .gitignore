@@ -33,13 +33,12 @@ npm-debug.log*
 
 /test-results/
 
-.eslintcache
-
-repomix-output.txt
-
 # Sentry Config File
 .env.sentry-build-plugin
 
 # Turbo Config File
 .turbo
 
+# Lychee
+lychee-out.md
+.lycheecache

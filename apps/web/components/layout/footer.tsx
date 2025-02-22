@@ -1,3 +1,4 @@
+import { getRoute } from '@/lib/routes'
 import { Github, Linkedin, Twitter } from 'lucide-react'
 import Link from 'next/link'
 
@@ -17,22 +18,22 @@ export function Footer() {
             <h4 className="font-medium mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="hover:text-foreground">
+                <Link href={getRoute('about')} className="hover:text-foreground">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="hover:text-foreground">
+                <Link href={getRoute('blog')} className="hover:text-foreground">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/resources" className="hover:text-foreground">
+                <Link href={getRoute('resources')} className="hover:text-foreground">
                   Resources
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-foreground">
+                <Link href={getRoute('submit')} className="hover:text-foreground">
                   Submit llms.txt
                 </Link>
               </li>
@@ -42,17 +43,17 @@ export function Footer() {
             <h4 className="font-medium mb-3">Help</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/faq" className="hover:text-foreground">
+                <Link href={getRoute('faq')} className="hover:text-foreground">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-foreground">
+                <Link href={getRoute('privacy')} className="hover:text-foreground">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-foreground">
+                <Link href={getRoute('terms')} className="hover:text-foreground">
                   Terms of Service
                 </Link>
               </li>
@@ -61,24 +62,35 @@ export function Footer() {
           <div>
             <h4 className="font-medium mb-3">Connect</h4>
             <div className="flex space-x-4">
-              <Link href="https://github.com" className="hover:text-foreground">
+              <Link href="https://github.com/thedaviddias" className="hover:text-foreground">
                 <Github className="h-5 w-5" />
                 <span className="sr-only">GitHub</span>
               </Link>
-              <Link href="https://twitter.com" className="hover:text-foreground">
+              <Link href="https://x.com/thedaviddias" className="hover:text-foreground">
                 <Twitter className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </Link>
-              <Link href="https://linkedin.com" className="hover:text-foreground">
+              <Link href="https://linkedin.com/in/thedaviddias" className="hover:text-foreground">
                 <Linkedin className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </Link>
             </div>
           </div>
         </div>
-        <div className="mt-8 pt-6 border-t flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
+        <div className="mt-8 pt-6 border-t flex flex-col justify-between items-center text-sm text-muted-foreground">
           <div>© {new Date().getFullYear()} llms.txt hub. All rights reserved.</div>
-          <div className="mt-4 md:mt-0">Made by David Dias with ❤️</div>
+          <div className="mt-4 md:mt-0">
+            Made with ❤️ by{' '}
+            <a
+              href="https://ddias.link/blog"
+              className="font-bold underline dark:text-gray-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              David Dias
+            </a>{' '}
+            for the Open-Source Community.
+          </div>
         </div>
       </div>
     </footer>

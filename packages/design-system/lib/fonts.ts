@@ -1,9 +1,9 @@
 import { cn } from '@thedaviddias/design-system/lib/utils';
-import { GeistMono } from 'geist/font/mono';
-import { GeistSans } from 'geist/font/sans';
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const fonts = cn(
-  GeistSans.variable,
-  GeistMono.variable,
+  inter.className,
   'touch-manipulation font-sans antialiased'
 );

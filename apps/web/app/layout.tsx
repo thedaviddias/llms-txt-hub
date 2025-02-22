@@ -1,17 +1,12 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+
 import type React from 'react'
 import '../../../packages/design-system/styles/globals.css'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { PageTransition } from '@/components/page-transition'
+import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-mono'
-})
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
@@ -25,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} font-sans`}>
+      <body className={fonts}>
         <DesignSystemProvider plausibleDomain="llmstxthub.com">
           <div className="flex min-h-screen flex-col">
             <Header />

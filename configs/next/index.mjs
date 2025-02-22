@@ -3,7 +3,7 @@ import withBundleAnalyzer from '@next/bundle-analyzer'
 const otelRegex = /@opentelemetry\/instrumentation/
 
 /** @type {import('next').NextConfig} */
-export const config = {
+export const baseConfig = {
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp']

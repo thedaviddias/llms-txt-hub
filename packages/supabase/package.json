@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "exports": {
-    "./server-client": "./src/server-client.ts",
+    "./server-client": "./src/server-client.tsx",
     "./middleware-client": "./src/middleware-client.ts",
     "./server-component-client": "./src/server-component-client.ts",
     "./browser-client": "./src/browser-client.ts",

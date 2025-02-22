@@ -1,3 +1,4 @@
+import { getRoute } from '@/lib/routes'
 import { formatDate } from '@/lib/utils'
 import { Button } from '@thedaviddias/design-system/button'
 import { Card } from '@thedaviddias/design-system/card'
@@ -44,7 +45,7 @@ export default async function NewsPage() {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Latest News</h1>
-          <Link href="/rss.xml" className="inline-flex">
+          <Link href={getRoute('rss')} className="inline-flex">
             <Button variant="outline">
               <Rss className="mr-2 h-4 w-4" />
               Follow RSS Feed

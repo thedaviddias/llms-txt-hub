@@ -1,6 +1,7 @@
 'use client'
 
 import { SubmitForm } from '@/components/submit-form'
+import { getRoute } from '@/lib/routes'
 import { useAuth } from '@thedaviddias/auth'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
@@ -11,7 +12,7 @@ export default function SubmitPage() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/login?redirectTo=/submit')
+      router.push(`${getRoute('login')}?redirectTo=${getRoute('submit')}`)
     }
   }, [user, router])
 

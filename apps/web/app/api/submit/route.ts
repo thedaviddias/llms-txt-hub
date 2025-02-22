@@ -1,21 +1,19 @@
-import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { Octokit } from '@octokit/rest'
+import { auth } from '@thedaviddias/auth'
 import { NextResponse } from 'next/server'
 
 const owner = 'your-github-username'
 const repo = 'your-repo-name'
 
 export async function POST(req: Request) {
-  const supabase = createServerSupabaseClient()
-  const {
-    data: { session }
-  } = await supabase.auth.getSession()
+  const session = await auth()
 
   if (!session) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const { access_token } = session.provider_token
+  const provider_token = session.provider_token as unknown as { access_token: string }
+  const { access_token } = provider_token
 
   const octokit = new Octokit({ auth: access_token })
 
@@ -34,7 +32,6 @@ llmsUrl: ${llmsUrl}
 llmsFullUrl: ${llmsFullUrl || ''}
 lastUpdated: "${now}"
 score: 0
-favorites: 0
 ---
 
 # ${name}

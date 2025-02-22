@@ -5,7 +5,6 @@ export { auth, currentUser } from './server'
 export { createBrowserClient, type SupabaseClient } from './client'
 export { useAuth, type AuthProvider } from './client/context'
 export { useUser } from './client/hooks/use-user'
-export { SignIn } from './client/components/sign-in'
 
 // Core exports
 export { AuthProvider as AuthProviderComponent } from './core/provider'

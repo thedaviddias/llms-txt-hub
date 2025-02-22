@@ -1,17 +1,6 @@
-import { getAllWebsites } from './mdx'
+import { type WebsiteMetadata, getAllWebsites } from './mdx'
 
-export interface ProjectMetadata {
-  name: string
-  description: string
-  website: string
-  llmsUrl: string
-  llmsFullUrl?: string
-  lastUpdated: string
-  score: number
-  favorites: number
-}
-
-export async function calculateProjectScores(): Promise<ProjectMetadata[]> {
+export async function calculateProjectScores(): Promise<WebsiteMetadata[]> {
   const websites = await getAllWebsites()
   const now = new Date()
 
@@ -21,7 +10,6 @@ export async function calculateProjectScores(): Promise<ProjectMetadata[]> {
 
     // Calculate score based on various factors
     let score = 0
-    score += website.favorites * 10 // Each favorite is worth 10 points
     score += website.llmsFullUrl ? 50 : 0 // Bonus for having llms-full.txt
     score -= Math.min(daysSinceUpdate * 2, 100) // Penalize older entries, max 100 points
 
@@ -32,19 +20,15 @@ export async function calculateProjectScores(): Promise<ProjectMetadata[]> {
   })
 }
 
-export function getFeaturedProjects(projects: ProjectMetadata[], limit = 4): ProjectMetadata[] {
+export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 4): WebsiteMetadata[] {
   return projects.sort((a, b) => b.score - a.score).slice(0, limit)
 }
 
 export function getRecentlyUpdatedProjects(
-  projects: ProjectMetadata[],
+  projects: WebsiteMetadata[],
   limit = 4
-): ProjectMetadata[] {
+): WebsiteMetadata[] {
   return projects
     .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime())
     .slice(0, limit)
-}
-
-export function getCommunityFavorites(projects: ProjectMetadata[], limit = 4): ProjectMetadata[] {
-  return projects.sort((a, b) => b.favorites - a.favorites).slice(0, limit)
 }

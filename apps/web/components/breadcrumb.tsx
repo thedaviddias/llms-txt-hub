@@ -1,4 +1,5 @@
 import { JsonLd } from '@/components/json-ld'
+import { getRoute } from '@/lib/routes'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
@@ -17,7 +18,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       <nav aria-label="Breadcrumb" className="mb-4">
         <ol className="flex items-center space-x-2 text-sm text-muted-foreground">
           <li>
-            <Link href="/" className="hover:text-foreground">
+            <Link href={getRoute('home')} className="hover:text-foreground">
               Home
             </Link>
           </li>

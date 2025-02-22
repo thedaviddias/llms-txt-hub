@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 
 export default async function NotFound() {
@@ -22,7 +23,7 @@ export default async function NotFound() {
             </Link>
             .
           </p>
-          <Link href="/">
+          <Link href={getRoute('home')}>
             <Button className="mt-8">Back to homepage</Button>
           </Link>
         </div>

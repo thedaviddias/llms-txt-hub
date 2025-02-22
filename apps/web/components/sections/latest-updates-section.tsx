@@ -1,5 +1,6 @@
 import { LLMGrid } from '@/components/llm-grid'
 import type { ProjectMetadata } from '@/lib/project-utils'
+import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { ArrowRight, Clock } from 'lucide-react'
 import Link from 'next/link'
@@ -17,7 +18,7 @@ export function LatestUpdatesSection({ projects }: LatestUpdatesSectionProps) {
           Latest Updates
         </h2>
         <Button variant="ghost" asChild>
-          <Link href="/projects?filter=latest">
+          <Link href={getRoute('project.latest')}>
             View all <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>

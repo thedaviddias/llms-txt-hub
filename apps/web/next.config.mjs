@@ -1,10 +1,23 @@
 import withMDX from '@next/mdx'
-import { config as baseConfig } from '@thedaviddias/config-next'
+import { env } from '@thedaviddias/config-environment'
+import { baseConfig } from '@thedaviddias/config-next'
+import { withAnalyzer } from '@thedaviddias/config-next'
 
-export const INTERNAL_PACKAGES = ['@thedaviddias/design-system', '@thedaviddias/analytics']
+export const INTERNAL_PACKAGES = [
+  '@thedaviddias/design-system',
+  '@thedaviddias/analytics',
+  '@thedaviddias/auth',
+  '@thedaviddias/caching',
+  '@thedaviddias/config-environment',
+  '@thedaviddias/config-next',
+  '@thedaviddias/config-typescript',
+  '@thedaviddias/logging',
+  '@thedaviddias/supabase',
+  '@thedaviddias/utils'
+]
 
 /** @type {import('next').NextConfig} */
-export const nextConfig = {
+let nextConfig = {
   ...baseConfig,
 
   transpilePackages: INTERNAL_PACKAGES,
@@ -28,7 +41,19 @@ export const nextConfig = {
         pathname: '/**'
       }
     ]
+  },
+
+  webpack: config => {
+    config.resolve.extensionAlias = {
+      '.js': ['.js', '.ts', '.tsx']
+    }
+
+    return config
   }
+}
+
+if (env.ANALYZE === 'true') {
+  nextConfig = withAnalyzer(nextConfig)
 }
 
 export default withMDX()(nextConfig)

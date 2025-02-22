@@ -1,7 +1,6 @@
-import { getHomePageData } from '@/app/actions'
+import { getHomePageData } from '@/actions/actions'
 import { JsonLd } from '@/components/json-ld'
 import { CategoriesSection } from '@/components/sections/categories-section'
-import { CommunityFavoritesSection } from '@/components/sections/community-favorites-section'
 import { CommunityStatsSection } from '@/components/sections/community-stats-section'
 import { FAQSection } from '@/components/sections/faq-section'
 import { FeaturedProjectsSection } from '@/components/sections/featured-projects-section'
@@ -10,7 +9,6 @@ import { HowItWorksSection } from '@/components/sections/how-it-works-section'
 import { LatestNewsSection } from '@/components/sections/latest-news-section'
 import { LatestUpdatesSection } from '@/components/sections/latest-updates-section'
 import { NewsletterSection } from '@/components/sections/newsletter-section'
-import { TestimonialsSection } from '@/components/sections/testimonials-section'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -43,8 +41,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const { allProjects, featuredProjects, recentlyUpdatedProjects, communityFavorites } =
-    await getHomePageData()
+  const { allProjects, featuredProjects, recentlyUpdatedProjects } = await getHomePageData()
 
   return (
     <>
@@ -64,12 +61,10 @@ export default async function Home() {
         <HowItWorksSection />
         <div className="grid md:grid-cols-2 gap-12">
           <LatestUpdatesSection projects={recentlyUpdatedProjects} />
-          <CommunityFavoritesSection projects={communityFavorites} />
         </div>
         <LatestNewsSection />
         <FAQSection />
         <CommunityStatsSection allProjects={allProjects} />
-        <TestimonialsSection />
         <NewsletterSection />
         <CategoriesSection />
       </div>

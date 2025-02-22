@@ -1,5 +1,6 @@
 'use client'
 
+import { getRoute } from '@/lib/routes'
 import { Card } from '@thedaviddias/design-system/card'
 import { Skeleton } from '@thedaviddias/design-system/skeleton'
 import { ExternalLink, Rss } from 'lucide-react'
@@ -44,10 +45,16 @@ export function LatestNews() {
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold">Latest News</h2>
           <div className="flex items-center gap-2">
-            <Link href="/news" className="text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              href={getRoute('news')}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               View all
             </Link>
-            <Link href="/rss.xml" className="text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              href={getRoute('rss')}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               <Rss className="h-4 w-4" />
               <span className="sr-only">RSS Feed</span>
             </Link>
@@ -74,10 +81,16 @@ export function LatestNews() {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Latest News</h2>
         <div className="flex items-center gap-2">
-          <Link href="/news" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            href={getRoute('news')}
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
             View all
           </Link>
-          <Link href="/rss.xml" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            href={getRoute('rss')}
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
             <Rss className="h-4 w-4" />
             <span className="sr-only">RSS Feed</span>
           </Link>
