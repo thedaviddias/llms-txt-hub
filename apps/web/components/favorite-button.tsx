@@ -1,8 +1,8 @@
 'use client'
 
 import { favoriteProject } from '@/app/actions'
-import { useAuth } from '@/contexts/auth-context'
 import { cn } from '@/lib/utils'
+import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { useToast } from '@thedaviddias/design-system/use-toast'
 import { Star } from 'lucide-react'

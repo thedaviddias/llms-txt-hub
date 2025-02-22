@@ -1,19 +1,22 @@
 {
   "name": "@thedaviddias/auth",
+  "type": "module",
   "version": "0.0.0",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
   "exports": {
     ".": {
-      "types": "./index.ts",
-      "default": "./index.ts"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     }
+  },
+  "scripts": {
+    "typecheck": "turbo typecheck --cache-dir=.turbo"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "*",
     "@thedaviddias/config-environment": "workspace:*",
+    "@thedaviddias/supabase": "workspace:*",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19",

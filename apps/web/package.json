@@ -18,6 +18,7 @@
     "@thedaviddias/utils": "workspace:*",
     "@thedaviddias/monitoring": "workspace:*",
     "@thedaviddias/config-next": "workspace:*",
+    "@thedaviddias/auth": "workspace:*",
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "latest",
     "@mdx-js/loader": "latest",

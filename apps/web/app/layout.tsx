@@ -5,7 +5,6 @@ import '../../../packages/design-system/styles/globals.css'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { PageTransition } from '@/components/page-transition'
-import { AuthProvider } from '@/contexts/auth-context'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -28,15 +27,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} font-sans`}>
         <DesignSystemProvider plausibleDomain="llmstxthub.com">
-          <AuthProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">
-                <PageTransition>{children}</PageTransition>
-              </main>
-              <Footer />
-            </div>
-          </AuthProvider>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+          </div>
         </DesignSystemProvider>
       </body>
     </html>

@@ -9,9 +9,11 @@ export function FallbackProvider({ children }: PropsWithChildren) {
       value={{
         isLoaded: true,
         isSignedIn: false,
-        userId: null,
-        sessionId: null,
-        user: null
+        user: null,
+        signIn: async () => {},
+        signOut: async () => {},
+        getSession: async () => ({ user: null, isSignedIn: false }),
+        getUser: async () => null,
       }}
     >
       {children}
