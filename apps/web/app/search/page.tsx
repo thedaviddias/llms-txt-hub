@@ -1,4 +1,4 @@
-import { searchProjects } from '@/app/actions'
+import { searchProjects } from '@/actions/actions'
 import { JsonLd } from '@/components/json-ld'
 import { LLMGrid } from '@/components/llm-grid'
 import type { Metadata } from 'next'

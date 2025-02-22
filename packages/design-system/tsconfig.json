@@ -1,5 +1,5 @@
 {
-  "extends": "@thedaviddias/config-typescript/react-library.json",
+  "extends": "@thedaviddias/config-typescript/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
     "plugins": [

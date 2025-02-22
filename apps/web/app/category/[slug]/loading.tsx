@@ -1,3 +1,4 @@
+import { getRoute } from '@/lib/routes'
 import { Skeleton } from '@thedaviddias/design-system/skeleton'
 import { ChevronRight } from 'lucide-react'
 import Link from 'next/link'
@@ -8,11 +9,11 @@ export default function Loading() {
       <div className="max-w-[1200px] mx-auto space-y-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground">
+          <Link href={getRoute('home')} className="hover:text-foreground">
             Home
           </Link>
           <ChevronRight className="h-4 w-4" />
-          <Link href="/category" className="hover:text-foreground">
+          <Link href={getRoute('category.list')} className="hover:text-foreground">
             Categories
           </Link>
           <ChevronRight className="h-4 w-4" />

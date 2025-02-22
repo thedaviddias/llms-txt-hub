@@ -9,12 +9,14 @@ import { TooltipProvider } from './components/shadcn/tooltip'
 import { ThemeProvider } from './providers/theme'
 
 interface DesignSystemProviderProperties extends ThemeProviderProps {
-  plausibleDomain?: string
+  plausibleDomain: string
+  monitoringSampleRate?: number
 }
 
 export const DesignSystemProvider = ({
   children,
   plausibleDomain,
+  monitoringSampleRate,
   ...properties
 }: DesignSystemProviderProperties) => {
   return (

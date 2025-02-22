@@ -1,3 +1,4 @@
+import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import Link from 'next/link'
 
@@ -10,10 +11,10 @@ export default function NotFound() {
       </p>
       <div className="flex justify-center gap-4">
         <Button asChild>
-          <Link href="/">Go Home</Link>
+          <Link href={getRoute('home')}>Go Home</Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href="/category">View All Categories</Link>
+          <Link href={getRoute('category.list')}>View All Categories</Link>
         </Button>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { submitLlmsTxt } from '@/app/actions'
+import { submitLlmsTxt } from '@/actions/actions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@thedaviddias/design-system/button'
 import {

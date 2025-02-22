@@ -1,3 +1,4 @@
+import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import Link from 'next/link'
 
@@ -10,12 +11,12 @@ export function HeroSection() {
       </p>
       <div className="flex justify-center gap-4 flex-col sm:flex-row">
         <Button asChild size="lg">
-          <Link href="/submit" className="w-full sm:w-auto">
+          <Link href={getRoute('submit')} className="w-full sm:w-auto">
             Submit Your llms.txt
           </Link>
         </Button>
         <Button asChild variant="outline" size="lg">
-          <Link href="/about" className="w-full sm:w-auto">
+          <Link href={getRoute('about')} className="w-full sm:w-auto">
             Learn More
           </Link>
         </Button>

@@ -20,7 +20,6 @@ export interface WebsiteMetadata {
   category?: string
   lastUpdated: string
   score: number
-  favorites: number
 }
 
 export async function getAllWebsites(): Promise<WebsiteMetadata[]> {

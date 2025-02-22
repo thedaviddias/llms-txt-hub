@@ -1,6 +1,6 @@
-import { FavoriteButton } from '@/components/buttons/favorite-button'
 import { LLMButton } from '@/components/llm-button'
 import type { ProjectMetadata } from '@/lib/project-utils'
+import { getRoute } from '@/lib/routes'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@thedaviddias/design-system/badge'
 import {
@@ -33,7 +33,10 @@ export default function LLMGrid({ items, variant = 'default' }: LLMGridProps) {
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {items.map(item => (
         <Card key={item.slug} className="flex flex-col relative group">
-          <Link href={`/project/${item.slug}`} className="absolute inset-0 z-10">
+          <Link
+            href={getRoute('project.detail', { slug: item.slug })}
+            className="absolute inset-0 z-10"
+          >
             <span className="sr-only">View project</span>
           </Link>
           <CardHeader>
@@ -72,10 +75,6 @@ export default function LLMGrid({ items, variant = 'default' }: LLMGridProps) {
             <div className="flex items-center gap-2 z-20">
               <LLMButton href={item.llmsUrl} type="llms" size="sm" />
               {item.llmsFullUrl && <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />}
-              <FavoriteButton
-                projectSlug={item.slug}
-                initialFavorites={Number.isNaN(item.favorites) ? 0 : item.favorites}
-              />
             </div>
           </CardFooter>
         </Card>

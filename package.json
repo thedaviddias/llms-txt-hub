@@ -2,9 +2,11 @@
   "name": "llms-txt-hub",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo build --cache-dir=.turbo",
     "clean": "git clean -xdf node_modules dist .next",
+    "check:links": "lychee --config ./lychee.toml --verbose .",
     "clean:workspaces": "turbo clean",
     "commit": "cz",
     "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
@@ -26,18 +28,19 @@
     "syncpack:list": "pnpm dlx syncpack list-mismatches",
     "test": "turbo test --cache-dir=.turbo",
     "typecheck": "turbo typecheck --cache-dir=.turbo",
-    "update": "pnpm update -r"
+    "update": "pnpm update -r",
+    "update-llms-list": "node scripts/update-llms-list.js"
   },
   "devDependencies": {
     "@auto-it/all-contributors": "^11.3.0",
     "@auto-it/first-time-contributor": "^11.3.0",
     "@biomejs/biome": "1.9.4",
-    "@commitlint/cli": "^19.6.1",
-    "@commitlint/config-conventional": "^19.6.0",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
     "@manypkg/cli": "^0.23.0",
     "@turbo/gen": "^2.4.2",
     "cross-env": "^7.0.3",
-    "lefthook": "^1.10.1",
+    "lefthook": "^1.11.0",
     "turbo": "^2.4.2",
     "typescript": "^5.7.3"
   },

@@ -4,7 +4,7 @@ import { LoginButton } from '@/components/buttons/login-button'
 
 export default function LoginPage() {
   return (
-    <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-4rem)]">
+    <div className="container mx-auto px-4 py-8 flex flex-col items-center justify-center">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-bold tracking-tight">Sign in to llms.txt hub</h2>

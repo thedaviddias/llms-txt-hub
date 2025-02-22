@@ -1,8 +1,8 @@
-import { ErrorBoundary } from '@thedaviddias/monitoring/components'
-import { Alert, AlertDescription, AlertTitle } from 'components/shadcn/alert'
-import { Button } from 'components/shadcn/button'
 import { RefreshCw } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { Alert, AlertDescription, AlertTitle } from '../shadcn/alert'
+import { Button } from '../shadcn/button'
+import { ErrorBoundary } from './error-boundary'
 
 type ErrorBoundaryCustomProps = {
   children: ReactNode

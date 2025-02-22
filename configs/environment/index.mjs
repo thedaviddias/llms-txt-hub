@@ -49,7 +49,7 @@ const client = {
   NEXT_PUBLIC_SUPABASE_ANON_KEY: token().optional(),
 
   // Monitoring
-  NEXT_PUBLIC_MONITORING_PROVIDER: z.enum(['sentry']).optional()
+  NEXT_PUBLIC_SENTRY_DSN: url()
 }
 
 export const env = createEnv({
@@ -79,6 +79,7 @@ export const env = createEnv({
     // Monitoring
     SENTRY_ORG: process.env.SENTRY_ORG,
     SENTRY_PROJECT: process.env.SENTRY_PROJECT,
+    NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
 
     // URLs
     NEXT_PUBLIC_WEB_URL: process.env.NEXT_PUBLIC_WEB_URL,
@@ -87,6 +88,7 @@ export const env = createEnv({
 
     // MailerLite
     MAILERLITE_API_KEY: process.env.MAILERLITE_API_KEY,
+
     // Build
     ANALYZE: process.env.ANALYZE,
 

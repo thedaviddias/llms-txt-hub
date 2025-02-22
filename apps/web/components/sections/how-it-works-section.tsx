@@ -1,3 +1,4 @@
+import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { Code2, FileText, Zap } from 'lucide-react'
 import Link from 'next/link'
@@ -25,7 +26,7 @@ export function HowItWorksSection() {
       </div>
       <div className="text-center mt-8">
         <Button asChild>
-          <Link href="/docs/getting-started">Get Started with llms.txt</Link>
+          <Link href={getRoute('docs.gettingStarted')}>Get Started with llms.txt</Link>
         </Button>
       </div>
     </section>

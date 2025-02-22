@@ -1,6 +1,7 @@
 import { LLMGrid } from '@/components/llm-grid'
 import { categories } from '@/lib/categories'
 import { getAllWebsites } from '@/lib/mdx'
+import { getRoute } from '@/lib/routes'
 import { ChevronRight } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
@@ -50,11 +51,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-[1200px] mx-auto space-y-8">
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground">
+          <Link href={getRoute('home')} className="hover:text-foreground">
             Home
           </Link>
           <ChevronRight className="h-4 w-4" />
-          <Link href="/category" className="hover:text-foreground">
+          <Link href={getRoute('category.list')} className="hover:text-foreground">
             Categories
           </Link>
           <ChevronRight className="h-4 w-4" />
@@ -74,7 +75,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground">No projects found in this category yet.</p>
-            <Link href="/submit" className="text-sm hover:underline mt-2 inline-block">
+            <Link href={getRoute('submit')} className="text-sm hover:underline mt-2 inline-block">
               Submit the first one →
             </Link>
           </div>

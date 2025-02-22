@@ -1,11 +1,12 @@
 'use client'
 
 import { EmptyState } from '@/components/empty-state'
-import { LLMGrid } from '@/components/llm-grid'
 import { ProjectList } from '@/components/project-list'
 import { categories } from '@/lib/categories'
 import type { WebsiteMetadata } from '@/lib/mdx'
+import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
+import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
 import {
   Select,
   SelectContent,
@@ -16,9 +17,21 @@ import {
 import { Grid, List } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { LLMGrid } from './llm-grid'
 
 interface ClientProjectsListProps {
   initialProjects: WebsiteMetadata[]
+}
+
+function isValidProject(project: any): project is WebsiteMetadata {
+  return (
+    project &&
+    typeof project.slug === 'string' &&
+    typeof project.name === 'string' &&
+    typeof project.description === 'string' &&
+    typeof project.website === 'string' &&
+    typeof project.llmsUrl === 'string'
+  )
 }
 
 export function ClientProjectsList({ initialProjects }: ClientProjectsListProps) {
@@ -38,8 +51,6 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
       filteredProjects.sort(
         (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
       )
-    } else if (filter === 'favorites') {
-      filteredProjects.sort((a, b) => b.favorites - a.favorites)
     }
 
     if (categoryFilter !== 'all') {
@@ -52,11 +63,11 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
       )
     } else if (sortBy === 'name') {
       filteredProjects.sort((a, b) => a.name.localeCompare(b.name))
-    } else if (sortBy === 'favorites') {
-      filteredProjects.sort((a, b) => b.favorites - a.favorites)
     }
 
-    setProjects(filteredProjects)
+    // Validate projects after all filtering and sorting
+    const validProjects = filteredProjects.filter(isValidProject)
+    setProjects(validProjects)
   }, [initialProjects, filter, sortBy, categoryFilter])
 
   return (
@@ -99,7 +110,6 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
             <SelectContent>
               <SelectItem value="latest">Latest</SelectItem>
               <SelectItem value="name">Name</SelectItem>
-              <SelectItem value="favorites">Most Favorites</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -108,13 +118,17 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
         <EmptyState
           title="No projects found"
           description="There are no projects matching your current filters. Try adjusting your filters or add a new project."
-          actionLabel="Add a new project"
-          actionHref="/submit"
+          actionLabel="Submit llms.txt"
+          actionHref={getRoute('submit')}
         />
       ) : viewMode === 'grid' ? (
-        <LLMGrid items={projects} />
+        <ErrorBoundaryCustom>
+          <LLMGrid items={projects} />
+        </ErrorBoundaryCustom>
       ) : (
-        <ProjectList items={projects} />
+        <ErrorBoundaryCustom>
+          <ProjectList items={projects} />
+        </ErrorBoundaryCustom>
       )}
     </div>
   )

@@ -13,6 +13,7 @@
     "./button": "./components/shadcn/button.tsx",
     "./card": "./components/shadcn/card.tsx",
     "./dropdown-menu": "./components/shadcn/dropdown-menu.tsx",
+    "./error-boundary": "./components/custom/error-boundary-custom.tsx",
     "./form": "./components/shadcn/form.tsx",
     "./input": "./components/shadcn/input.tsx",
     "./label": "./components/shadcn/label.tsx",
@@ -69,7 +70,6 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@thedaviddias/auth": "workspace:*",
     "@thedaviddias/config-environment": "workspace:*",
-    "@thedaviddias/observability": "workspace:*",
     "@vercel/toolbar": "^0.1.31",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -95,7 +95,6 @@
   "devDependencies": {
     "@thedaviddias/analytics": "workspace:*",
     "@thedaviddias/config-typescript": "workspace:*",
-    "@thedaviddias/monitoring": "workspace:*",
     "@thedaviddias/utils": "workspace:*",
     "@types/node": "^22.13.4",
     "@types/react": "19.0.10",

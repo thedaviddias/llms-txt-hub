@@ -1,10 +1,7 @@
 {
   "extends": "@thedaviddias/config-typescript/nextjs.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@thedaviddias/*": ["../../packages/*/src"]
-    }
+    "baseUrl": "."
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]

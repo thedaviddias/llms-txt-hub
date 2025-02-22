@@ -1,8 +1,8 @@
-import { FavoriteButton } from '@/components/favorite-button'
 import { LLMButton } from '@/components/llm-button'
 import { LLMGrid } from '@/components/llm-grid'
 import { ProjectNavigation } from '@/components/project-navigation'
 import { getAllWebsites, getWebsiteBySlug } from '@/lib/mdx'
+import type { WebsiteMetadata } from '@/lib/mdx'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import type { Metadata } from 'next'
 import Image from 'next/image'
@@ -15,16 +15,19 @@ interface ProjectPageProps {
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = await getWebsiteBySlug(params.slug)
+  const project = (await getWebsiteBySlug(params.slug)) as WebsiteMetadata & {
+    content: string
+    relatedProjects: WebsiteMetadata[]
+    previousProject: WebsiteMetadata | null
+    nextProject: WebsiteMetadata | null
+  }
 
   if (!project) {
-    return {
-      title: 'Project Not Found'
-    }
+    return {}
   }
 
   return {
-    title: `${project.name} - llms.txt Directory`,
+    title: `${project.name} | llms.txt hub`,
     description: project.description
   }
 }
@@ -37,7 +40,12 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-  const project = await getWebsiteBySlug(params.slug)
+  const project = (await getWebsiteBySlug(params.slug)) as WebsiteMetadata & {
+    content: string
+    relatedProjects: WebsiteMetadata[]
+    previousProject: WebsiteMetadata | null
+    nextProject: WebsiteMetadata | null
+  }
 
   if (!project) {
     notFound()
@@ -46,22 +54,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto space-y-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Image
-              src={getFaviconUrl(project.website) || '/placeholder.svg'}
-              alt={`${project.name} favicon`}
-              width={32}
-              height={32}
-              className="rounded-sm"
-            />
-            <h1 className="text-3xl font-bold">{project.name}</h1>
-          </div>
-          <FavoriteButton
-            projectSlug={project.slug}
-            initialFavorites={project.favorites}
-            showText={true}
+        <div className="flex items-center gap-3">
+          <Image
+            src={getFaviconUrl(project.website) || '/placeholder.svg'}
+            alt={`${project.name} favicon`}
+            width={32}
+            height={32}
+            className="rounded-sm"
           />
+          <h1 className="text-3xl font-bold">{project.name}</h1>
         </div>
         <div className="flex flex-wrap gap-4">
           <LLMButton href={project.llmsUrl} type="llms" size="lg" />

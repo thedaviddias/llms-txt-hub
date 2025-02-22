@@ -18,7 +18,9 @@
         "SUPABASE_SERVICE_ROLE_KEY",
         "SUPABASE_JWT_SECRET",
         "MAILERLITE_API_KEY",
-        "GITHUB_TOKEN"
+        "GITHUB_TOKEN",
+        "SENTRY_ORG",
+        "SENTRY_PROJECT"
       ]
     },
     "supabase:typegen": {

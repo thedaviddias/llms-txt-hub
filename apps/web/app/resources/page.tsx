@@ -2,6 +2,7 @@ import { GitHubProjectCard } from '@/components/github-project-card'
 import { ResourcesSidebar } from '@/components/resources/sidebar'
 import { fetchGitHubProjects } from '@/lib/github'
 import { getAllResources } from '@/lib/resources'
+import { getRoute } from '@/lib/routes'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -101,7 +102,7 @@ export default async function ResourcesPage() {
               ))}
             </div>
             <Button variant="outline" asChild>
-              <Link href="/resources/articles">View all articles and tutorials</Link>
+              <Link href={getRoute('resources.articles')}>View all articles and tutorials</Link>
             </Button>
           </section>
 
@@ -124,7 +125,7 @@ export default async function ResourcesPage() {
               ))}
             </div>
             <Button variant="outline" asChild>
-              <Link href="/resources/open-source">View all open source projects</Link>
+              <Link href={getRoute('resources.openSource')}>View all open source projects</Link>
             </Button>
           </section>
         </main>

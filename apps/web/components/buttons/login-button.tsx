@@ -1,6 +1,6 @@
 'use client'
 
-import { SignIn } from '@thedaviddias/auth'
+import { SignIn } from '@/components/auth/sign-in'
 
 type LoginButtonProps = Parameters<typeof SignIn>[0]
 

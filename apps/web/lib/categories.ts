@@ -1,4 +1,4 @@
-import { Box, Brain, Code2, Cpu, Database, Globe, Shield, Wrench } from 'lucide-react'
+import { Brain, Code2, Cpu, Database, Lock, Workflow } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface Category {
@@ -12,49 +12,37 @@ export const categories: Category[] = [
   {
     name: 'AI & Machine Learning',
     slug: 'ai-ml',
-    description: 'AI models, machine learning frameworks, and related tools',
+    description: 'AI models, ML tools, and LLM platforms',
     icon: Brain
   },
   {
     name: 'Developer Tools',
     slug: 'developer-tools',
-    description: 'IDEs, code editors, and development utilities',
-    icon: Wrench
-  },
-  {
-    name: 'Frameworks',
-    slug: 'frameworks',
-    description: 'Web frameworks, libraries, and SDKs',
+    description: 'IDEs, CLIs, debugging and development tools',
     icon: Code2
   },
   {
-    name: 'Infrastructure',
-    slug: 'infrastructure',
-    description: 'Cloud services, hosting, and deployment platforms',
-    icon: Cpu
-  },
-  {
-    name: 'Security',
-    slug: 'security',
-    description: 'Security tools, authentication, and encryption',
-    icon: Shield
-  },
-  {
-    name: 'Databases',
-    slug: 'databases',
-    description: 'Database systems and data storage solutions',
+    name: 'Data & Analytics',
+    slug: 'data-analytics',
+    description: 'Databases, analytics platforms, and data processing tools',
     icon: Database
   },
   {
-    name: 'Products',
-    slug: 'products',
-    description: 'Commercial and open-source products',
-    icon: Box
+    name: 'Infrastructure & Cloud',
+    slug: 'infrastructure-cloud',
+    description: 'Hosting, deployment, and cloud services',
+    icon: Cpu
   },
   {
-    name: 'Websites',
-    slug: 'websites',
-    description: 'Websites and web applications',
-    icon: Globe
+    name: 'Security & Identity',
+    slug: 'security-identity',
+    description: 'Security tools, authentication, and compliance solutions',
+    icon: Lock
+  },
+  {
+    name: 'Integration & Automation',
+    slug: 'integration-automation',
+    description: 'API platforms, workflow automation, and integration tools',
+    icon: Workflow
   }
 ]
