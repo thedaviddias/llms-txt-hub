@@ -3,10 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "description": "Design System for the Monorepo",
-  "scripts": {
-    "clean": "git clean -xdf .cache .turbo dist node_modules",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
-  },
   "exports": {
     "./theme-provider": "./index.tsx",
     "./accordion": "./components/shadcn/accordion.tsx",
@@ -36,6 +32,10 @@
     "./use-mobile": "./hooks/use-mobile.tsx",
     "./use-toast": "./hooks/use-toast.tsx",
     "./globals": "./styles/globals.css"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@hookform/resolvers": "*",
@@ -67,6 +67,7 @@
     "@radix-ui/react-toggle": "^1.1.2",
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@thedaviddias/auth": "workspace:*",
     "@thedaviddias/config-environment": "workspace:*",
     "@thedaviddias/observability": "workspace:*",
     "@vercel/toolbar": "^0.1.31",

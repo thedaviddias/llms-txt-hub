@@ -16,13 +16,13 @@ export function LLMButton({ href, type, size = 'md', className }: LLMButtonProps
   const sizeClasses = {
     sm: 'text-xs px-2 py-1',
     md: 'text-sm px-3 py-1.5',
-    lg: 'text-base px-4 py-2',
+    lg: 'text-base px-4 py-2'
   }
 
   const iconSizes = {
     sm: 'h-3 w-3',
     md: 'h-4 w-4',
-    lg: 'h-5 w-5',
+    lg: 'h-5 w-5'
   }
 
   return (
@@ -35,9 +35,9 @@ export function LLMButton({ href, type, size = 'md', className }: LLMButtonProps
           className={cn(
             'inline-flex items-center rounded-md bg-muted hover:bg-muted/80 transition-colors z-20 relative',
             sizeClasses[size],
-            className,
+            className
           )}
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation()
           }}
         >

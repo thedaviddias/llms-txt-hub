@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server"
-import * as cheerio from "cheerio"
+import * as cheerio from 'cheerio'
+import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const domain = searchParams.get("domain")
+  const domain = searchParams.get('domain')
 
   if (!domain) {
-    return NextResponse.json({ error: "Domain is required" }, { status: 400 })
+    return NextResponse.json({ error: 'Domain is required' }, { status: 400 })
   }
 
   try {
@@ -16,16 +16,16 @@ export async function GET(request: Request) {
     const $ = cheerio.load(html)
 
     // Extract metadata
-    const name = $('meta[property="og:site_name"]').attr("content") || $("title").text() || ""
-    const description = $('meta[name="description"]').attr("content") || ""
+    const name = $('meta[property="og:site_name"]').attr('content') || $('title').text() || ''
+    const description = $('meta[name="description"]').attr('content') || ''
 
     // Check for llms.txt
-    const llmsUrl = `${domain}/llms.txt`.replace(/([^:]\/)\/+/g, "$1")
+    const llmsUrl = `${domain}/llms.txt`.replace(/([^:]\/)\/+/g, '$1')
     const llmsResponse = await fetch(llmsUrl)
     const llmsExists = llmsResponse.ok
 
     // Check for llms-full.txt
-    const llmsFullUrl = `${domain}/llms-full.txt`.replace(/([^:]\/)\/+/g, "$1")
+    const llmsFullUrl = `${domain}/llms-full.txt`.replace(/([^:]\/)\/+/g, '$1')
     const llmsFullResponse = await fetch(llmsFullUrl)
     const llmsFullExists = llmsFullResponse.ok
 
@@ -33,12 +33,11 @@ export async function GET(request: Request) {
       name,
       description,
       website: domain,
-      llmsUrl: llmsExists ? llmsUrl : "",
-      llmsFullUrl: llmsFullExists ? llmsFullUrl : "",
+      llmsUrl: llmsExists ? llmsUrl : '',
+      llmsFullUrl: llmsFullExists ? llmsFullUrl : ''
     })
   } catch (error) {
-    console.error("Error fetching metadata:", error)
-    return NextResponse.json({ error: "Failed to fetch metadata" }, { status: 500 })
+    console.error('Error fetching metadata:', error)
+    return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
   }
 }
-

@@ -7,7 +7,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'About llms.txt hub',
   description:
-    'Learn about the llms.txt hub, its mission, and how it helps AI models better understand documentation.',
+    'Learn about the llms.txt hub, its mission, and how it helps AI models better understand documentation.'
 }
 
 export default function AboutPage() {

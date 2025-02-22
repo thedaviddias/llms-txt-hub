@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { SubmitForm } from "@/components/submit-form"
-import { useAuth } from "@/contexts/auth-context"
+import { SubmitForm } from '@/components/submit-form'
+import { useAuth } from '@thedaviddias/auth'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function SubmitPage() {
   const { user } = useAuth()
@@ -11,7 +11,7 @@ export default function SubmitPage() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/login?redirectTo=/submit")
+      router.push('/login?redirectTo=/submit')
     }
   }, [user, router])
 
@@ -24,12 +24,11 @@ export default function SubmitPage() {
       <div className="max-w-2xl mx-auto space-y-8">
         <h1 className="text-3xl font-bold">Submit your llms.txt</h1>
         <p className="text-muted-foreground">
-          Enter your website's domain to automatically fetch your llms.txt information. You'll have a chance to review
-          and edit the details before submitting.
+          Enter your website's domain to automatically fetch your llms.txt information. You'll have
+          a chance to review and edit the details before submitting.
         </p>
         <SubmitForm />
       </div>
     </div>
   )
 }
-

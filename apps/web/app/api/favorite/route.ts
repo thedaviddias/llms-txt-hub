@@ -1,17 +1,17 @@
-import { NextResponse } from "next/server"
-import { createServerSupabaseClient } from "@/lib/supabase-server"
-import fs from "fs"
-import path from "path"
-import matter from "gray-matter"
+import fs from 'node:fs'
+import path from 'node:path'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
+import matter from 'gray-matter'
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   const supabase = createServerSupabaseClient()
   const {
-    data: { session },
+    data: { session }
   } = await supabase.auth.getSession()
 
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   try {
@@ -19,8 +19,8 @@ export async function POST(req: Request) {
     const userId = session.user.id
 
     // Update the project's MDX file
-    const filePath = path.join(process.cwd(), "content", "websites", `${projectSlug}.mdx`)
-    const fileContents = fs.readFileSync(filePath, "utf8")
+    const filePath = path.join(process.cwd(), 'content', 'websites', `${projectSlug}.mdx`)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(fileContents)
 
     data.favorites = (data.favorites || 0) + 1
@@ -29,12 +29,14 @@ export async function POST(req: Request) {
     fs.writeFileSync(filePath, updatedFileContents)
 
     // Store the user's favorite in the database
-    await supabase.from("favorites").upsert({ user_id: userId, project_slug: projectSlug })
+    await supabase.from('favorites').upsert({ user_id: userId, project_slug: projectSlug })
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Error favoriting project:", error)
-    return NextResponse.json({ success: false, error: "Failed to favorite project" }, { status: 500 })
+    console.error('Error favoriting project:', error)
+    return NextResponse.json(
+      { success: false, error: 'Failed to favorite project' },
+      { status: 500 }
+    )
   }
 }
-

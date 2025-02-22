@@ -4,4 +4,4 @@ module.exports = {
     'body-max-line-length': [0, 'always'],
     'footer-max-line-length': [0, 'always']
   }
-};
+}

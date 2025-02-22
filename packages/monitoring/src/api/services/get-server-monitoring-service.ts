@@ -10,10 +10,7 @@ const MONITORING_PROVIDER = getMonitoringProvider()
  */
 export async function getServerMonitoringService() {
   if (!MONITORING_PROVIDER) {
-    // biome-ignore lint: we want to log this
-    console.info(
-      'No instrumentation provider specified. Returning console service...'
-    )
+    console.info('No instrumentation provider specified. Returning console service...')
 
     return new ConsoleMonitoringService()
   }

@@ -22,7 +22,7 @@ export function SearchBar({ className = '', placeholder = 'Search...' }: SearchB
             className="pl-9 h-9 pr-12 bg-muted/50"
             placeholder={placeholder}
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
           />
           <Button
             type="submit"

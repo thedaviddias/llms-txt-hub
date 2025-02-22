@@ -11,7 +11,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
+  SelectValue
 } from '@thedaviddias/design-system/select'
 import { Grid, List } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
@@ -33,22 +33,22 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
     let filteredProjects = [...initialProjects]
 
     if (filter === 'featured') {
-      filteredProjects = filteredProjects.filter((project) => project.score > 50)
+      filteredProjects = filteredProjects.filter(project => project.score > 50)
     } else if (filter === 'latest') {
       filteredProjects.sort(
-        (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime(),
+        (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
       )
     } else if (filter === 'favorites') {
       filteredProjects.sort((a, b) => b.favorites - a.favorites)
     }
 
     if (categoryFilter !== 'all') {
-      filteredProjects = filteredProjects.filter((project) => project.category === categoryFilter)
+      filteredProjects = filteredProjects.filter(project => project.category === categoryFilter)
     }
 
     if (sortBy === 'latest') {
       filteredProjects.sort(
-        (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime(),
+        (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
       )
     } else if (sortBy === 'name') {
       filteredProjects.sort((a, b) => a.name.localeCompare(b.name))
@@ -85,7 +85,7 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {categories.map((category) => (
+              {categories.map(category => (
                 <SelectItem key={category.slug} value={category.slug}>
                   {category.name}
                 </SelectItem>

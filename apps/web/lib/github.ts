@@ -2,7 +2,7 @@ import { Octokit } from '@octokit/rest'
 
 const octokit = process.env.GITHUB_TOKEN
   ? new Octokit({
-      auth: process.env.GITHUB_TOKEN,
+      auth: process.env.GITHUB_TOKEN
     })
   : new Octokit() // Will work with rate-limited public access
 
@@ -29,15 +29,15 @@ export async function fetchGitHubProjects(tag: string): Promise<GitHubProject[]>
       q: `topic:${tag}`,
       sort: 'stars',
       order: 'desc',
-      per_page: 10,
+      per_page: 10
     })
 
     return response.data.items
       .filter(
         (item): item is typeof item & { owner: NonNullable<typeof item.owner> } =>
-          item.owner !== null,
+          item.owner !== null
       )
-      .map((item) => ({
+      .map(item => ({
         name: item.name,
         fullName: item.full_name,
         description: item.description || '',
@@ -46,8 +46,8 @@ export async function fetchGitHubProjects(tag: string): Promise<GitHubProject[]>
         lastUpdated: item.updated_at,
         owner: {
           login: item.owner.login,
-          avatarUrl: item.owner.avatar_url,
-        },
+          avatarUrl: item.owner.avatar_url
+        }
       }))
   } catch (error) {
     console.error('Error fetching GitHub projects:', error)

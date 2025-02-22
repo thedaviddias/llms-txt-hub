@@ -33,13 +33,13 @@ export const sentryConfig: Parameters<typeof withSentryConfig>[1] = {
    * https://docs.sentry.io/product/crons/
    * https://vercel.com/docs/cron-jobs
    */
-  automaticVercelMonitors: true,
+  automaticVercelMonitors: true
 }
 
 export const withSentry = (sourceConfig: object): object => {
   const configWithTranspile = {
     ...sourceConfig,
-    transpilePackages: ['@sentry/nextjs'],
+    transpilePackages: ['@sentry/nextjs']
   }
 
   return withSentryConfig(configWithTranspile, sentryConfig)

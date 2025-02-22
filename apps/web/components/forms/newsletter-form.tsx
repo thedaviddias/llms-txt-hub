@@ -17,7 +17,7 @@ export function NewsletterForm() {
     console.log('Subscribing email:', email)
     toast({
       title: 'Subscribed!',
-      description: 'Thank you for subscribing to our newsletter.',
+      description: 'Thank you for subscribing to our newsletter.'
     })
     setEmail('')
   }
@@ -28,7 +28,7 @@ export function NewsletterForm() {
         type="email"
         placeholder="Enter your email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={e => setEmail(e.target.value)}
         required
       />
       <Button type="submit">Subscribe</Button>

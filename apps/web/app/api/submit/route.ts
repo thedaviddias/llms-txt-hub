@@ -1,18 +1,18 @@
-import { NextResponse } from "next/server"
-import { Octokit } from "@octokit/rest"
-import { createServerSupabaseClient } from "@/lib/supabase-server"
+import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { Octokit } from '@octokit/rest'
+import { NextResponse } from 'next/server'
 
-const owner = "your-github-username"
-const repo = "your-repo-name"
+const owner = 'your-github-username'
+const repo = 'your-repo-name'
 
 export async function POST(req: Request) {
   const supabase = createServerSupabaseClient()
   const {
-    data: { session },
+    data: { session }
   } = await supabase.auth.getSession()
 
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   const { access_token } = session.provider_token
@@ -31,7 +31,7 @@ name: ${name}
 description: ${description}
 website: ${website}
 llmsUrl: ${llmsUrl}
-llmsFullUrl: ${llmsFullUrl || ""}
+llmsFullUrl: ${llmsFullUrl || ''}
 lastUpdated: "${now}"
 score: 0
 favorites: 0
@@ -45,7 +45,7 @@ ${description}
 
 - Website: [${website}](${website})
 - llms.txt: [View llms.txt](${llmsUrl})
-${llmsFullUrl ? `- llms-full.txt: [View llms-full.txt](${llmsFullUrl})` : ""}
+${llmsFullUrl ? `- llms-full.txt: [View llms-full.txt](${llmsFullUrl})` : ''}
 
 ## About
 
@@ -53,29 +53,29 @@ Add any additional information about ${name} here.
 `
 
     // Create a new branch
-    const branchName = `submit-${name.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`
+    const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
     const mainRef = await octokit.git.getRef({
       owner,
       repo,
-      ref: "heads/main",
+      ref: 'heads/main'
     })
 
     await octokit.git.createRef({
       owner,
       repo,
       ref: `refs/heads/${branchName}`,
-      sha: mainRef.data.object.sha,
+      sha: mainRef.data.object.sha
     })
 
     // Create the new MDX file in the new branch
-    const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, "-")}.mdx`
+    const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, '-')}.mdx`
     await octokit.repos.createOrUpdateFileContents({
       owner,
       repo,
       path: filePath,
       message: `Add ${name} to llms.txt directory`,
-      content: Buffer.from(content).toString("base64"),
-      branch: branchName,
+      content: Buffer.from(content).toString('base64'),
+      branch: branchName
     })
 
     // Create a pull request
@@ -84,22 +84,21 @@ Add any additional information about ${name} here.
       repo,
       title: `Add ${name} to llms.txt directory`,
       head: branchName,
-      base: "main",
+      base: 'main',
       body: `This PR adds ${name} to the llms.txt directory.
 
 Submitted by: @${githubUsername}
 
 Website: ${website}
 llms.txt: ${llmsUrl}
-${llmsFullUrl ? `llms-full.txt: ${llmsFullUrl}` : ""}
+${llmsFullUrl ? `llms-full.txt: ${llmsFullUrl}` : ''}
 
-Please review and merge if appropriate.`,
+Please review and merge if appropriate.`
     })
 
     return NextResponse.json({ success: true, prUrl: pr.data.html_url })
   } catch (error) {
-    console.error("Error creating PR:", error)
-    return NextResponse.json({ success: false, error: "Failed to create PR" }, { status: 500 })
+    console.error('Error creating PR:', error)
+    return NextResponse.json({ success: false, error: 'Failed to create PR' }, { status: 500 })
   }
 }
-

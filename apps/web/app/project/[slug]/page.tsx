@@ -19,20 +19,20 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) {
     return {
-      title: 'Project Not Found',
+      title: 'Project Not Found'
     }
   }
 
   return {
     title: `${project.name} - llms.txt Directory`,
-    description: project.description,
+    description: project.description
   }
 }
 
 export async function generateStaticParams() {
   const websites = await getAllWebsites()
-  return websites.map((website) => ({
-    slug: website.slug,
+  return websites.map(website => ({
+    slug: website.slug
   }))
 }
 
@@ -71,6 +71,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
         <div
           className="prose dark:prose-invert max-w-none"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: project.content }}
         />
         <ProjectNavigation

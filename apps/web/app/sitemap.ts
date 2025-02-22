@@ -8,8 +8,8 @@ const staticRoutes = [
   {
     route: '/',
     priority: 1.0,
-    changeFrequency: 'weekly' as const,
-  },
+    changeFrequency: 'weekly' as const
+  }
 ] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

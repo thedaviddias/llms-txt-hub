@@ -1,51 +1,51 @@
-import type { Metadata } from "next"
-import { LLMGrid } from "@/components/llm-grid"
-import { searchProjects } from "@/app/actions"
-import { JsonLd } from "@/components/json-ld"
+import { searchProjects } from '@/app/actions'
+import { JsonLd } from '@/components/json-ld'
+import { LLMGrid } from '@/components/llm-grid'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Search llms.txt Projects - llms.txt hub",
-  description: "Search for AI-ready projects and websites implementing the llms.txt standard.",
+  title: 'Search llms.txt Projects - llms.txt hub',
+  description: 'Search for AI-ready projects and websites implementing the llms.txt standard.',
   openGraph: {
-    title: "Search llms.txt Projects - llms.txt hub",
-    description: "Search for AI-ready projects and websites implementing the llms.txt standard.",
-    url: "https://llmstxthub.com/search",
-    siteName: "llms.txt hub",
+    title: 'Search llms.txt Projects - llms.txt hub',
+    description: 'Search for AI-ready projects and websites implementing the llms.txt standard.',
+    url: 'https://llmstxthub.com/search',
+    siteName: 'llms.txt hub',
     images: [
       {
-        url: "https://llmstxthub.com/og-image.png",
+        url: 'https://llmstxthub.com/og-image.png',
         width: 1200,
-        height: 630,
-      },
+        height: 630
+      }
     ],
-    locale: "en_US",
-    type: "website",
+    locale: 'en_US',
+    type: 'website'
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Search llms.txt Projects - llms.txt hub",
-    description: "Search for AI-ready projects and websites implementing the llms.txt standard.",
-    images: ["https://llmstxthub.com/og-image.png"],
-  },
+    card: 'summary_large_image',
+    title: 'Search llms.txt Projects - llms.txt hub',
+    description: 'Search for AI-ready projects and websites implementing the llms.txt standard.',
+    images: ['https://llmstxthub.com/og-image.png']
+  }
 }
 
 export default async function SearchPage({
-  searchParams,
+  searchParams
 }: {
   searchParams: { q: string }
 }) {
-  const query = searchParams.q || ""
+  const query = searchParams.q || ''
   const results = await searchProjects(query)
 
   return (
     <>
       <JsonLd
         data={{
-          "@context": "https://schema.org",
-          "@type": "SearchResultsPage",
+          '@context': 'https://schema.org',
+          '@type': 'SearchResultsPage',
           name: `Search Results for "${query}" - llms.txt hub`,
           description: `Search results for "${query}" on llms.txt hub`,
-          url: `https://llmstxthub.com/search?q=${encodeURIComponent(query)}`,
+          url: `https://llmstxthub.com/search?q=${encodeURIComponent(query)}`
         }}
       />
       <div className="container mx-auto px-4 py-8">
@@ -59,4 +59,3 @@ export default async function SearchPage({
     </>
   )
 }
-

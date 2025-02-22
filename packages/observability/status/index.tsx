@@ -11,14 +11,11 @@ export const Status = async () => {
   let statusLabel = 'Unable to fetch status'
 
   try {
-    const response = await fetch(
-      'https://uptime.betterstack.com/api/v2/monitors',
-      {
-        headers: {
-          Authorization: `Bearer ${env.BETTERSTACK_API_KEY}`
-        }
+    const response = await fetch('https://uptime.betterstack.com/api/v2/monitors', {
+      headers: {
+        Authorization: `Bearer ${env.BETTERSTACK_API_KEY}`
       }
-    )
+    })
 
     if (!response.ok) {
       throw new Error('Failed to fetch status')
@@ -26,9 +23,7 @@ export const Status = async () => {
 
     const { data } = (await response.json()) as BetterStackResponse
 
-    const status =
-      data.filter(monitor => monitor.attributes.status === 'up').length /
-      data.length
+    const status = data.filter(monitor => monitor.attributes.status === 'up').length / data.length
 
     if (status === 0) {
       statusColor = 'bg-destructive'
@@ -56,9 +51,7 @@ export const Status = async () => {
         <span
           className={`absolute inline-flex h-full w-full animate-ping rounded-full opacity-75 ${statusColor}`}
         />
-        <span
-          className={`relative inline-flex h-2 w-2 rounded-full ${statusColor}`}
-        />
+        <span className={`relative inline-flex h-2 w-2 rounded-full ${statusColor}`} />
       </span>
       <span className="text-muted-foreground">{statusLabel}</span>
     </a>

@@ -5,22 +5,21 @@ import '../../../packages/design-system/styles/globals.css'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { PageTransition } from '@/components/page-transition'
-import { AuthProvider } from '@/contexts/auth-context'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-mono',
+  variable: '--font-mono'
 })
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
-  description: 'A curated hub for AI-ready documentation implementing the llms.txt standard',
+  description: 'A curated hub for AI-ready documentation implementing the llms.txt standard'
 }
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode
 }) {
@@ -28,15 +27,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} font-sans`}>
         <DesignSystemProvider plausibleDomain="llmstxthub.com">
-          <AuthProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">
-                <PageTransition>{children}</PageTransition>
-              </main>
-              <Footer />
-            </div>
-          </AuthProvider>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">
+              <PageTransition>{children}</PageTransition>
+            </main>
+            <Footer />
+          </div>
         </DesignSystemProvider>
       </body>
     </html>

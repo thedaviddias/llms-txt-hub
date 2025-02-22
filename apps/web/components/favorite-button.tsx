@@ -1,8 +1,8 @@
 'use client'
 
 import { favoriteProject } from '@/app/actions'
-import { useAuth } from '@/contexts/auth-context'
 import { cn } from '@/lib/utils'
+import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { useToast } from '@thedaviddias/design-system/use-toast'
 import { Star } from 'lucide-react'
@@ -20,7 +20,7 @@ export function FavoriteButton({
   projectSlug,
   initialFavorites,
   showText = false,
-  className,
+  className
 }: FavoriteButtonProps) {
   const [favorites, setFavorites] = useState(initialFavorites)
   const { toast } = useToast()
@@ -44,7 +44,7 @@ export function FavoriteButton({
         setFavorites(result.newFavoriteCount)
         toast({
           title: 'Project favorited',
-          description: 'Thank you for your support!',
+          description: 'Thank you for your support!'
         })
       } else {
         throw new Error(result.error)
@@ -53,7 +53,7 @@ export function FavoriteButton({
       toast({
         title: 'Error',
         description: 'Failed to favorite project. Please try again.',
-        variant: 'destructive',
+        variant: 'destructive'
       })
     }
   }

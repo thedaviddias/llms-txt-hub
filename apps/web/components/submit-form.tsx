@@ -10,7 +10,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from '@thedaviddias/design-system/form'
 import { Input } from '@thedaviddias/design-system/input'
 import { useToast } from '@thedaviddias/design-system/use-toast'
@@ -20,23 +20,23 @@ import * as z from 'zod'
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+    message: 'Name must be at least 2 characters.'
   }),
   description: z.string().min(10, {
-    message: 'Description must be at least 10 characters.',
+    message: 'Description must be at least 10 characters.'
   }),
   website: z.string().url({
-    message: 'Please enter a valid URL.',
+    message: 'Please enter a valid URL.'
   }),
   llmsUrl: z.string().url({
-    message: 'Please enter a valid llms.txt URL.',
+    message: 'Please enter a valid llms.txt URL.'
   }),
   llmsFullUrl: z
     .string()
     .url({
-      message: 'Please enter a valid llms-full.txt URL.',
+      message: 'Please enter a valid llms-full.txt URL.'
     })
-    .optional(),
+    .optional()
 })
 
 export function SubmitForm() {
@@ -50,8 +50,8 @@ export function SubmitForm() {
       description: '',
       website: '',
       llmsUrl: '',
-      llmsFullUrl: '',
-    },
+      llmsFullUrl: ''
+    }
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -67,7 +67,7 @@ export function SubmitForm() {
       if (result.success) {
         toast({
           title: 'Submission successful',
-          description: `Your PR has been created: ${result.prUrl}`,
+          description: `Your PR has been created: ${result.prUrl}`
         })
         form.reset()
       } else {
@@ -77,7 +77,7 @@ export function SubmitForm() {
       toast({
         title: 'Submission failed',
         description: 'There was an error submitting your llms.txt. Please try again.',
-        variant: 'destructive',
+        variant: 'destructive'
       })
     } finally {
       setIsSubmitting(false)

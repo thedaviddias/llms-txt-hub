@@ -25,7 +25,7 @@ function getFaviconUrl(website: string) {
 export function ProjectList({ items }: ProjectListProps) {
   return (
     <div className="space-y-4">
-      {items.map((item) => (
+      {items.map(item => (
         <div
           key={item.slug}
           className="relative border rounded-lg p-4 hover:bg-muted/50 transition-colors group"

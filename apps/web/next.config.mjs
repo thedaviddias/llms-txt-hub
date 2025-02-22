@@ -10,7 +10,7 @@ export const nextConfig = {
   transpilePackages: INTERNAL_PACKAGES,
 
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: true
   },
 
   pageExtensions: ['mdx', 'ts', 'tsx'],
@@ -20,15 +20,15 @@ export const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.google.com',
-        pathname: '/s2/favicons/**',
+        pathname: '/s2/favicons/**'
       },
       {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
-        pathname: '/**',
-      },
-    ],
-  },
+        pathname: '/**'
+      }
+    ]
+  }
 }
 
 export default withMDX()(nextConfig)

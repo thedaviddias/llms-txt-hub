@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from '@thedaviddias/design-system/card'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -31,7 +31,7 @@ export default function LLMGrid({ items, variant = 'default' }: LLMGridProps) {
 
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {items.map((item) => (
+      {items.map(item => (
         <Card key={item.slug} className="flex flex-col relative group">
           <Link href={`/project/${item.slug}`} className="absolute inset-0 z-10">
             <span className="sr-only">View project</span>
@@ -74,7 +74,7 @@ export default function LLMGrid({ items, variant = 'default' }: LLMGridProps) {
               {item.llmsFullUrl && <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />}
               <FavoriteButton
                 projectSlug={item.slug}
-                initialFavorites={isNaN(item.favorites) ? 0 : item.favorites}
+                initialFavorites={Number.isNaN(item.favorites) ? 0 : item.favorites}
               />
             </div>
           </CardFooter>

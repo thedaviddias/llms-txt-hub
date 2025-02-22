@@ -7,14 +7,14 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from '@thedaviddias/design-system/card'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Blog - llms.txt hub',
-  description: 'Latest updates, guides, and news about llms.txt and AI documentation.',
+  description: 'Latest updates, guides, and news about llms.txt and AI documentation.'
 }
 
 export default async function BlogPage() {
@@ -31,7 +31,7 @@ export default async function BlogPage() {
         </div>
 
         <div className="grid gap-6">
-          {posts.map((post) => (
+          {posts.map(post => (
             <Card key={post.slug}>
               <CardHeader>
                 <div className="flex items-center justify-between">

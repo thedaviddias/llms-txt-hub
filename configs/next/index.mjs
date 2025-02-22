@@ -6,12 +6,12 @@ const otelRegex = /@opentelemetry\/instrumentation/
 export const config = {
   reactStrictMode: true,
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/avif', 'image/webp']
   },
 
   // Ignore ESLint because we use biome for linting
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true
   },
 
   webpack(config, { isServer }) {
@@ -24,7 +24,7 @@ export const config = {
     return config
   },
 
-  skipTrailingSlashRedirect: true,
+  skipTrailingSlashRedirect: true
 }
 
-export const withAnalyzer = (sourceConfig) => withBundleAnalyzer()(sourceConfig)
+export const withAnalyzer = sourceConfig => withBundleAnalyzer()(sourceConfig)

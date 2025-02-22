@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { ChevronRight } from "lucide-react"
-import { JsonLd } from "@/components/json-ld"
+import { JsonLd } from '@/components/json-ld'
+import { ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 interface BreadcrumbItem {
   name: string
@@ -37,25 +37,24 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
       </nav>
       <JsonLd
         data={{
-          "@context": "https://schema.org",
-          "@type": "BreadcrumbList",
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
           itemListElement: [
             {
-              "@type": "ListItem",
+              '@type': 'ListItem',
               position: 1,
-              name: "Home",
-              item: "https://llmstxthub.com",
+              name: 'Home',
+              item: 'https://llmstxthub.com'
             },
             ...items.map((item, index) => ({
-              "@type": "ListItem",
+              '@type': 'ListItem',
               position: index + 2,
               name: item.name,
-              item: `https://llmstxthub.com${item.href}`,
-            })),
-          ],
+              item: `https://llmstxthub.com${item.href}`
+            }))
+          ]
         }}
       />
     </>
   )
 }
-

@@ -13,7 +13,7 @@ const resourceTypes = [
   { name: 'All', icon: Book, slug: 'all' },
   { name: 'Articles', icon: Book, slug: 'articles' },
   { name: 'Tutorials', icon: Video, slug: 'tutorials' },
-  { name: 'Open Source Projects', icon: Code, slug: 'open-source' },
+  { name: 'Open Source Projects', icon: Code, slug: 'open-source' }
 ]
 
 export default async function ResourcesPage() {
@@ -53,7 +53,7 @@ export default async function ResourcesPage() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Badge variant="outline">{allResources[0].source}</Badge>
-                      {allResources[0].tags?.map((tag) => (
+                      {allResources[0].tags?.map(tag => (
                         <Badge key={tag} variant="secondary">
                           {tag}
                         </Badge>
@@ -72,7 +72,7 @@ export default async function ResourcesPage() {
           <section className="space-y-6">
             <h2 className="text-2xl font-semibold">Latest Articles and Tutorials</h2>
             <div className="grid gap-6">
-              {articles.slice(0, 5).map((resource) => (
+              {articles.slice(0, 5).map(resource => (
                 <Card key={resource.slug} className="p-6">
                   <article className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -90,7 +90,7 @@ export default async function ResourcesPage() {
                     <p className="text-muted-foreground">{resource.description}</p>
                     <div className="flex items-center gap-2">
                       <Badge variant="outline">{resource.source}</Badge>
-                      {resource.tags?.map((tag) => (
+                      {resource.tags?.map(tag => (
                         <Badge key={tag} variant="secondary">
                           {tag}
                         </Badge>
@@ -119,7 +119,7 @@ export default async function ResourcesPage() {
               </Link>
             </div>
             <div className="grid gap-6">
-              {githubProjects.slice(0, 3).map((project) => (
+              {githubProjects.slice(0, 3).map(project => (
                 <GitHubProjectCard key={project.fullName} project={project} />
               ))}
             </div>

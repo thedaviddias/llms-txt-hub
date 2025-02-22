@@ -22,7 +22,7 @@ export function getContentPath(contentType: 'blog' | 'resources' | 'websites'): 
 
 export function getContentFilePath(
   contentType: 'blog' | 'resources' | 'websites',
-  fileName: string,
+  fileName: string
 ): string {
   return path.join(getContentPath(contentType), fileName)
 }

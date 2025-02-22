@@ -2,7 +2,7 @@
 
 import type React from 'react'
 
-import { useAuth } from '@/contexts/auth-context'
+import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Github } from 'lucide-react'
 

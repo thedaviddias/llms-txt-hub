@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: ['/'],
-      disallow: ['/404', '/500', '/api/*'],
-    },
+      disallow: ['/404', '/500', '/api/*']
+    }
   }
 }

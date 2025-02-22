@@ -1,4 +1,4 @@
-import { CategoryList } from "@/components/category-list"
+import { CategoryList } from '@/components/category-list'
 
 export function CategoriesSection() {
   return (
@@ -10,4 +10,3 @@ export function CategoriesSection() {
     </section>
   )
 }
-

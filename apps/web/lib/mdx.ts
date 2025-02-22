@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import matter from 'gray-matter'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
@@ -37,8 +37,8 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
   }
 
   const websites = fileNames
-    .filter((fileName) => fileName.endsWith('.mdx'))
-    .map((fileName) => {
+    .filter(fileName => fileName.endsWith('.mdx'))
+    .map(fileName => {
       const slug = fileName.replace(/\.mdx$/, '')
       const fullPath = path.join(websitesDirectory, fileName)
 
@@ -47,7 +47,7 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
 
       return {
         slug,
-        ...data,
+        ...data
       } as WebsiteMetadata
     })
 
@@ -66,7 +66,7 @@ export async function getWebsiteBySlug(slug: string) {
 
   // Remove the first heading that matches the project name
   const lines = content.split('\n')
-  const filteredLines = lines.filter((line) => {
+  const filteredLines = lines.filter(line => {
     // Skip any line that is an h1 heading containing the project name
     const isH1WithProjectName = line.trim().match(new RegExp(`^#\\s+${data.name}\\s*$`))
     return !isH1WithProjectName
@@ -85,11 +85,11 @@ export async function getWebsiteBySlug(slug: string) {
   const htmlContent = processedContent.toString()
 
   const allWebsites = await getAllWebsites()
-  const currentIndex = allWebsites.findIndex((website) => website.slug === slug)
+  const currentIndex = allWebsites.findIndex(website => website.slug === slug)
   const previousProject = currentIndex > 0 ? allWebsites[currentIndex - 1] : null
   const nextProject = currentIndex < allWebsites.length - 1 ? allWebsites[currentIndex + 1] : null
   const relatedProjects = allWebsites
-    .filter((website) => website.category === data.category && website.slug !== slug)
+    .filter(website => website.category === data.category && website.slug !== slug)
     .slice(0, 4)
 
   return {
@@ -98,6 +98,6 @@ export async function getWebsiteBySlug(slug: string) {
     content: htmlContent,
     relatedProjects,
     previousProject,
-    nextProject,
+    nextProject
   }
 }

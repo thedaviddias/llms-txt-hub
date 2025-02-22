@@ -36,7 +36,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         <p className="text-muted-foreground">{resource.description}</p>
         <div className="flex items-center gap-2">
           <Badge variant="outline">{resource.source}</Badge>
-          {resource.tags?.map((tag) => (
+          {resource.tags?.map(tag => (
             <Badge key={tag} variant="secondary">
               {tag}
             </Badge>

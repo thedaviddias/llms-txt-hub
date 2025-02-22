@@ -1,8 +1,6 @@
 import * as Sentry from '@sentry/nextjs'
 
-type Parameters<T extends (args: never) => unknown> = T extends (
-  ...args: infer P
-) => unknown
+type Parameters<T extends (args: never) => unknown> = T extends (...args: infer P) => unknown
   ? P
   : never
 

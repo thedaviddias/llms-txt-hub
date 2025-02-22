@@ -22,7 +22,7 @@ export default async function NotFound() {
             </Link>
             .
           </p>
-          <Link href={`/`}>
+          <Link href="/">
             <Button className="mt-8">Back to homepage</Button>
           </Link>
         </div>

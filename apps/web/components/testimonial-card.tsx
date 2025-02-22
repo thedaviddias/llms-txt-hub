@@ -4,11 +4,11 @@ import { Card } from '@thedaviddias/design-system/card'
 interface TestimonialCardProps {
   quote: string
   author: string
-  role: string
+  position: string
   avatarSrc?: string
 }
 
-export function TestimonialCard({ quote, author, role, avatarSrc }: TestimonialCardProps) {
+export function TestimonialCard({ quote, author, position, avatarSrc }: TestimonialCardProps) {
   return (
     <Card className="p-6 space-y-4">
       <p className="italic">"{quote}"</p>
@@ -19,7 +19,7 @@ export function TestimonialCard({ quote, author, role, avatarSrc }: TestimonialC
         </Avatar>
         <div>
           <p className="font-semibold">{author}</p>
-          <p className="text-sm text-muted-foreground">{role}</p>
+          <p className="text-sm text-muted-foreground">{position}</p>
         </div>
       </div>
     </Card>

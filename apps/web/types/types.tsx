@@ -7,4 +7,3 @@ export interface LLM {
   avatarSrc?: string
   tags: string[]
 }
-

@@ -3,7 +3,7 @@
 import type React from 'react'
 
 import { favoriteProject } from '@/app/actions'
-import { useAuth } from '@/contexts/auth-context'
+import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { useToast } from '@thedaviddias/design-system/use-toast'
 import { Heart } from 'lucide-react'
@@ -41,7 +41,7 @@ export function FavoriteButton({ projectSlug, initialFavorites }: FavoriteButton
         setFavorites(result.newFavoriteCount)
         toast({
           title: 'Project favorited',
-          description: 'Thank you for your support!',
+          description: 'Thank you for your support!'
         })
       } else {
         throw new Error(result.error)
@@ -50,7 +50,7 @@ export function FavoriteButton({ projectSlug, initialFavorites }: FavoriteButton
       toast({
         title: 'Error',
         description: 'Failed to favorite project. Please try again.',
-        variant: 'destructive',
+        variant: 'destructive'
       })
     }
   }
@@ -63,7 +63,7 @@ export function FavoriteButton({ projectSlug, initialFavorites }: FavoriteButton
       className="z-20 relative hover:bg-background/80"
     >
       <Heart className="h-4 w-4 mr-1" />
-      <span>{isNaN(favorites) ? '0' : favorites.toString()}</span>
+      <span>{Number.isNaN(favorites) ? '0' : favorites.toString()}</span>
     </Button>
   )
 }

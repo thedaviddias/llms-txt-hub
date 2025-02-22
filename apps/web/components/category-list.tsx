@@ -5,7 +5,7 @@ import Link from 'next/link'
 export function CategoryList() {
   return (
     <>
-      {categories.map((category) => (
+      {categories.map(category => (
         <Link key={category.slug} href={`/category/${category.slug}`}>
           <Card className="h-full hover:bg-muted/50 transition-colors">
             <CardHeader>

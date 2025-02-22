@@ -7,7 +7,17 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["node_modules", "dist", ".turbo", ".next", ".env", ".env.local", "**/shadcn/**"]
+    "ignore": [
+      "**/node_modules/**",
+      "dist",
+      ".turbo",
+      ".next",
+      ".env",
+      ".env.local",
+      "**/shadcn/**",
+      "packages/design-system/lib/**",
+      "packages/design-system/hooks/**"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -22,22 +32,49 @@
     "enabled": true
   },
   "linter": {
-    "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "warn",
+        "useExhaustiveDependencies": "off",
+        "useJsxKeyInIterable": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useConst": "off",
+        "noUselessElse": "off",
+        "noParameterAssign": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off",
+        "noImplicitAnyLet": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "noForEach": "off"
+      }
     }
   },
+  "overrides": [
+    {
+      "include": ["packages/logging/**", "packages/monitoring/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsoleLog": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "formatter": {
-      "jsxQuoteStyle": "double",
-      "quoteProperties": "asNeeded",
-      "trailingCommas": "all",
+      "arrowParentheses": "asNeeded",
+      "trailingCommas": "none",
       "semicolons": "asNeeded",
-      "arrowParentheses": "always",
-      "bracketSpacing": true,
-      "bracketSameLine": false,
-      "quoteStyle": "single",
-      "attributePosition": "auto"
-    }
+      "quoteStyle": "single"
+    },
+    "jsxRuntime": "reactClassic"
   }
 }

@@ -30,7 +30,7 @@ export function LLMGrid({ items, variant = 'default', className }: LLMGridProps)
   if (variant === 'compact') {
     return (
       <div className={cn('space-y-4', className)}>
-        {items.map((item) => (
+        {items.map(item => (
           <Link key={item.slug} href={`/project/${item.slug}`} className="block">
             <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors">
               <Image
@@ -53,7 +53,7 @@ export function LLMGrid({ items, variant = 'default', className }: LLMGridProps)
 
   return (
     <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4', className)}>
-      {items.map((item) => (
+      {items.map(item => (
         <Card key={item.slug} className="p-6 hover:bg-muted/50 transition-colors">
           <Link href={`/project/${item.slug}`} className="block">
             <div className="space-y-4">

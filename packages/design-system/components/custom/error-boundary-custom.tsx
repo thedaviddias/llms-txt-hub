@@ -17,14 +17,9 @@ export const ErrorBoundaryCustom = ({ children }: ErrorBoundaryCustomProps) => {
             <AlertTitle>Something went wrong</AlertTitle>
             <AlertDescription className="mt-2">
               <p className="mb-4 text-muted-foreground">
-                We apologize for the inconvenience. Please try refreshing the
-                page.
+                We apologize for the inconvenience. Please try refreshing the page.
               </p>
-              <Button
-                onClick={() => window.location.reload()}
-                variant="outline"
-                className="gap-2"
-              >
+              <Button onClick={() => window.location.reload()} variant="outline" className="gap-2">
                 <RefreshCw className="h-4 w-4" />
                 Refresh Page
               </Button>

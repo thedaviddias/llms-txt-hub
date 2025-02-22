@@ -73,9 +73,7 @@ export class UpstashCache implements CacheInterface {
 
     if (options?.ttl) {
       await Promise.all(
-        namespacedEntries.map(([key]) =>
-          this.client.expire(key as string, options.ttl as number)
-        )
+        namespacedEntries.map(([key]) => this.client.expire(key as string, options.ttl as number))
       )
     }
   }

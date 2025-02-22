@@ -1,4 +1,3 @@
-import { env } from '@thedaviddias/config-environment'
 import type { ReactNode } from 'react'
 import { PlausibleAnalyticsComponent } from './providers/plausible'
 

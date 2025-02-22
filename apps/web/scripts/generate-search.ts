@@ -27,7 +27,7 @@ async function generateSearchIndex() {
       description: data.description,
       url: `/${file.replace(/\.mdx$/, '')}`,
       content: mdxContent,
-      category: data.category,
+      category: data.category
     })
   }
 

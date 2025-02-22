@@ -3,21 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
-    "@thedaviddias/analytics": "workspace:*",
-    "@thedaviddias/design-system": "workspace:*",
-    "@thedaviddias/caching": "workspace:*",
-    "@thedaviddias/config-typescript": "workspace:*",
-    "@thedaviddias/observability": "workspace:*",
-    "@thedaviddias/logging": "workspace:*",
-    "@thedaviddias/utils": "workspace:*",
-    "@thedaviddias/monitoring": "workspace:*",
-    "@thedaviddias/config-next": "workspace:*",
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "latest",
     "@mdx-js/loader": "latest",
@@ -27,6 +18,17 @@
     "@supabase/auth-helpers-nextjs": "latest",
     "@supabase/supabase-js": "latest",
     "@tailwindcss/typography": "latest",
+    "@thedaviddias/analytics": "workspace:*",
+    "@thedaviddias/auth": "workspace:*",
+    "@thedaviddias/caching": "workspace:*",
+    "@thedaviddias/config-next": "workspace:*",
+    "@thedaviddias/config-typescript": "workspace:*",
+    "@thedaviddias/design-system": "workspace:*",
+    "@thedaviddias/hooks": "workspace:*",
+    "@thedaviddias/logging": "workspace:*",
+    "@thedaviddias/monitoring": "workspace:*",
+    "@thedaviddias/observability": "workspace:*",
+    "@thedaviddias/utils": "workspace:*",
     "cheerio": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -62,8 +64,7 @@
     "tailwindcss-animate": "^1.0.7",
     "unified": "latest",
     "vaul": "^1.1.2",
-    "zod": "latest",
-    "@thedaviddias/hooks": "workspace:*"
+    "zod": "latest"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.7",

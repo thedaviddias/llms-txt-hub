@@ -12,7 +12,7 @@ const LOG_LEVELS: Record<LogLevel, number> = {
   debug: 0,
   info: 1,
   warn: 2,
-  error: 3,
+  error: 3
 }
 
 function getMinLogLevel(): LogLevel {
@@ -66,7 +66,6 @@ class Logger {
       return
     }
 
-    // biome-ignore lint: we want to use console here
     console.debug(this.formatMessage(message, { ...options, level: 'debug' }))
   }
 
@@ -75,7 +74,6 @@ class Logger {
       return
     }
 
-    // biome-ignore lint: we want to use console here
     console.info(this.formatMessage(message, { ...options, level: 'info' }))
   }
 
@@ -84,7 +82,6 @@ class Logger {
       return
     }
 
-    // biome-ignore lint: we want to use console here
     console.warn(this.formatMessage(message, { ...options, level: 'warn' }))
   }
 
@@ -93,10 +90,9 @@ class Logger {
     const errorMessage = message instanceof Error ? message.message : message
     const errorStack = message instanceof Error ? message.stack : undefined
 
-    // biome-ignore lint: we want to use console here
     console.error(
       this.formatMessage(errorMessage, { ...options, level: 'error' }),
-      errorStack ?? options?.data ?? '',
+      errorStack ?? options?.data ?? ''
     )
   }
 }

@@ -4,9 +4,9 @@ import { Button } from '@thedaviddias/design-system/button'
 import { AlertCircle } from 'lucide-react'
 import { useEffect } from 'react'
 
-export default function Error({
+export default function NewsError({
   error,
-  reset,
+  reset
 }: {
   error: Error & { digest?: string }
   reset: () => void

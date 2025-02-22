@@ -1,29 +1,29 @@
 const faqItems = [
   {
-    question: "What is llms.txt hub?",
+    question: 'What is llms.txt hub?',
     answer:
-      "llms.txt hub is a central directory and resource center for websites and tools implementing the llms.txt standard, which helps AI models better understand and interact with your website's documentation and content structure.",
+      "llms.txt hub is a central directory and resource center for websites and tools implementing the llms.txt standard, which helps AI models better understand and interact with your website's documentation and content structure."
   },
   {
-    question: "What is llms.txt?",
+    question: 'What is llms.txt?',
     answer:
-      "llms.txt is a standard file that helps AI models better understand and interact with your website's documentation and content structure.",
+      "llms.txt is a standard file that helps AI models better understand and interact with your website's documentation and content structure."
   },
   {
-    question: "How do I implement llms.txt?",
+    question: 'How do I implement llms.txt?',
     answer:
-      "To implement llms.txt, create a file named 'llms.txt' in your website's root directory and define your content structure and AI interaction preferences.",
+      "To implement llms.txt, create a file named 'llms.txt' in your website's root directory and define your content structure and AI interaction preferences."
   },
   {
-    question: "What are the benefits of using llms.txt?",
+    question: 'What are the benefits of using llms.txt?',
     answer:
-      "Using llms.txt can improve AI's understanding of your content, enhance search capabilities, and provide better responses when AI tools interact with your documentation.",
+      "Using llms.txt can improve AI's understanding of your content, enhance search capabilities, and provide better responses when AI tools interact with your documentation."
   },
   {
-    question: "How can I submit my website to llms.txt hub?",
+    question: 'How can I submit my website to llms.txt hub?',
     answer:
-      "You can submit your website by clicking the 'Submit Your llms.txt' button on our homepage and following the submission process. Make sure you have implemented llms.txt on your site before submitting.",
-  },
+      "You can submit your website by clicking the 'Submit Your llms.txt' button on our homepage and following the submission process. Make sure you have implemented llms.txt on your site before submitting."
+  }
 ]
 
 export function FAQ() {
@@ -41,4 +41,3 @@ export function FAQ() {
     </section>
   )
 }
-

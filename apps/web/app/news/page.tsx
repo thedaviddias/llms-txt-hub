@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Latest News - llms.txt hub',
-  description: 'Stay updated with the latest news and updates from the llms.txt community.',
+  description: 'Stay updated with the latest news and updates from the llms.txt community.'
 }
 
 interface NewsItem {
@@ -22,7 +22,7 @@ async function getNewsItems(): Promise<{ items: NewsItem[] }> {
 
   try {
     const res = await fetch(`${baseUrl}/api/rss-feed`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600 }
     })
 
     if (!res.ok) {

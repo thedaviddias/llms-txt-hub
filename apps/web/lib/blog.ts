@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import path from 'node:path'
 import { getContentFilePath, getContentPath } from '@thedaviddias/utils/content-paths'
 import matter from 'gray-matter'
 import { remark } from 'remark'
@@ -22,7 +21,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   }
 
   const fileNames = fs.readdirSync(blogDirectory)
-  const posts = fileNames.map((fileName) => {
+  const posts = fileNames.map(fileName => {
     const slug = fileName.replace(/\.mdx$/, '')
     const fullPath = getContentFilePath('blog', fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -34,7 +33,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
       date: data.date,
       category: data.category,
       excerpt: data.excerpt || `${content.slice(0, 150)}...`,
-      content: content,
+      content: content
     } as BlogPost
   })
 
@@ -61,6 +60,6 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
     title: data.title,
     date: data.date,
     category: data.category,
-    excerpt: data.excerpt,
+    excerpt: data.excerpt
   }
 }

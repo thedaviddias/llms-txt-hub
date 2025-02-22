@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
 
-import { motion } from "framer-motion"
+import { motion } from 'framer-motion'
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   return (
@@ -16,4 +16,3 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
     </motion.div>
   )
 }
-

@@ -19,14 +19,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
   return {
     title: post.title,
-    description: post.excerpt,
+    description: post.excerpt
   }
 }
 
 export async function generateStaticParams() {
   const posts = await getAllBlogPosts()
-  return posts.map((post) => ({
-    slug: post.slug,
+  return posts.map(post => ({
+    slug: post.slug
   }))
 }
 
@@ -54,6 +54,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
         <div
           className="prose prose-gray dark:prose-invert max-w-none"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
       </article>

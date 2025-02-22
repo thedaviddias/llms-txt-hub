@@ -13,29 +13,29 @@ interface CategoryPageProps {
 }
 
 export async function generateStaticParams() {
-  return categories.map((category) => ({
-    slug: category.slug,
+  return categories.map(category => ({
+    slug: category.slug
   }))
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const category = categories.find((c) => c.slug === params.slug)
+  const category = categories.find(c => c.slug === params.slug)
 
   if (!category) {
     console.log('Category not found for slug:', params.slug)
     return {
-      title: 'Category Not Found',
+      title: 'Category Not Found'
     }
   }
 
   return {
     title: `${category.name} - llms.txt Directory`,
-    description: category.description,
+    description: category.description
   }
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const category = categories.find((c) => c.slug === params.slug)
+  const category = categories.find(c => c.slug === params.slug)
 
   if (!category) {
     console.log('Category not found, calling notFound()')
@@ -44,7 +44,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const websites = await getAllWebsites()
 
-  const categoryItems = websites.filter((website) => website.category === params.slug)
+  const categoryItems = websites.filter(website => website.category === params.slug)
 
   return (
     <div className="container mx-auto px-4 py-8">

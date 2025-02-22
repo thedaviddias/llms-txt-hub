@@ -1,6 +1,6 @@
-import { ResourcesSidebar } from "@/components/resources/sidebar"
-import { getAllResources } from "@/lib/resources"
-import { ResourceCard } from "@/components/resource-card"
+import { ResourceCard } from '@/components/resource-card'
+import { ResourcesSidebar } from '@/components/resources/sidebar'
+import { getAllResources } from '@/lib/resources'
 
 export default async function TutorialsPage() {
   const { articles } = await getAllResources()
@@ -13,8 +13,8 @@ export default async function TutorialsPage() {
           <h1 className="text-3xl font-bold">Tutorials</h1>
           <div className="grid gap-6">
             {articles
-              .filter((article) => article.type === "Tutorial")
-              .map((tutorial) => (
+              .filter(article => article.type === 'Tutorial')
+              .map(tutorial => (
                 <ResourceCard key={tutorial.slug} resource={tutorial} />
               ))}
           </div>
@@ -23,4 +23,3 @@ export default async function TutorialsPage() {
     </div>
   )
 }
-

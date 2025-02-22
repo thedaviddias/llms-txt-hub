@@ -25,7 +25,7 @@ export async function getAllResources(): Promise<{
   }
 
   const fileNames = fs.readdirSync(resourcesDirectory)
-  const resources = fileNames.map((fileName) => {
+  const resources = fileNames.map(fileName => {
     const slug = fileName.replace(/\.mdx$/, '')
     const fullPath = getContentFilePath('resources', fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -33,19 +33,19 @@ export async function getAllResources(): Promise<{
 
     return {
       slug,
-      ...data,
+      ...data
     } as Resource
   })
 
   // Sort resources by date
   const sortedResources = resources.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
 
   // Separate articles and open-source projects
-  const articles = sortedResources.filter((resource) => resource.type !== 'Open Source Project')
+  const articles = sortedResources.filter(resource => resource.type !== 'Open Source Project')
   const openSourceProjects = sortedResources.filter(
-    (resource) => resource.type === 'Open Source Project',
+    resource => resource.type === 'Open Source Project'
   )
 
   return { articles, openSourceProjects }

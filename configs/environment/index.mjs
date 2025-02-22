@@ -5,7 +5,7 @@ import { z } from 'zod'
 const url = () => z.string().min(1).url()
 const email = () => z.string().min(1).email()
 const path = () => z.string().min(1).startsWith('/')
-const token = (prefix) => (prefix ? z.string().min(1).startsWith(prefix) : z.string().min(1))
+const token = prefix => (prefix ? z.string().min(1).startsWith(prefix) : z.string().min(1))
 
 const server = {
   // Runtime
@@ -37,7 +37,7 @@ const server = {
   ANALYZE: z.string().optional(),
 
   // Logging
-  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).optional(),
+  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).optional()
 }
 
 const client = {
@@ -49,7 +49,7 @@ const client = {
   NEXT_PUBLIC_SUPABASE_ANON_KEY: token().optional(),
 
   // Monitoring
-  NEXT_PUBLIC_MONITORING_PROVIDER: z.enum(['sentry']).optional(),
+  NEXT_PUBLIC_MONITORING_PROVIDER: z.enum(['sentry']).optional()
 }
 
 export const env = createEnv({
@@ -91,6 +91,6 @@ export const env = createEnv({
     ANALYZE: process.env.ANALYZE,
 
     // Logging
-    LOG_LEVEL: process.env.LOG_LEVEL,
-  },
+    LOG_LEVEL: process.env.LOG_LEVEL
+  }
 })

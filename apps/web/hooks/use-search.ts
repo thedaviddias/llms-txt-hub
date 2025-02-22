@@ -22,6 +22,6 @@ export function useSearch() {
     searchQuery,
     setSearchQuery,
     debouncedSearchQuery,
-    handleSearch,
+    handleSearch
   }
 }

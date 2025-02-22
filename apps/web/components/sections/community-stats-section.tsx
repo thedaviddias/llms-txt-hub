@@ -1,6 +1,6 @@
-import { StatCard } from "@/components/stat-card"
-import { Globe, FileCheck, Star } from "lucide-react"
-import type { ProjectMetadata } from "@/lib/project-utils"
+import { StatCard } from '@/components/stat-card'
+import type { ProjectMetadata } from '@/lib/project-utils'
+import { FileCheck, Globe, Star } from 'lucide-react'
 
 interface CommunityStatsSectionProps {
   allProjects: ProjectMetadata[]
@@ -14,7 +14,7 @@ export function CommunityStatsSection({ allProjects }: CommunityStatsSectionProp
         <StatCard title="Indexed Websites" value={allProjects.length} icon={Globe} />
         <StatCard
           title="AI-Ready Docs"
-          value={allProjects.filter((p) => p.llmsUrl && p.llmsFullUrl).length}
+          value={allProjects.filter(p => p.llmsUrl && p.llmsFullUrl).length}
           icon={FileCheck}
         />
         <StatCard
@@ -26,4 +26,3 @@ export function CommunityStatsSection({ allProjects }: CommunityStatsSectionProp
     </section>
   )
 }
-

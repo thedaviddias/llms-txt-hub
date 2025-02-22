@@ -1,1 +1,0 @@
-export { ClerkProvider } from './provider'

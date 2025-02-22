@@ -13,5 +13,4 @@ export function useMonitoring() {
     throw new Error('useMonitoring must be used within a MonitoringProvider')
   }
   return context
-
 }
