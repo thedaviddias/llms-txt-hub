@@ -33,9 +33,9 @@ AI-powered answering and automation platform
 
 ### [Anthropic](https://llmstxthub.com/websites/anthropic)
 
-AI safety and research company working to ensure that artificial general intelligence benefits humanity as a whole.
+AI research company developing safe and reliable AI systems for humanity's benefit
 
-<sub>[Website](https://www.anthropic.com) • [llms.txt](https://www.anthropic.com/llms.txt)</sub>
+<sub>[Website](https://docs.anthropic.com) • [llms.txt](https://docs.anthropic.com/llms.txt)</sub>
 
 ### [Aporia](https://llmstxthub.com/websites/aporia)
 
@@ -79,6 +79,12 @@ Calendar and scheduling solutions
 
 <sub>[Website](https://blog.calendarscripts.info)</sub>
 
+### [Campsite](https://llmstxthub.com/websites/campsite)
+
+Organized team communication platform that replaces chaotic chat with structured discussions
+
+<sub>[Website](https://developers.campsite.com) • [llms.txt](https://developers.campsite.com/llms.txt)</sub>
+
 ### [Clever Cloud](https://llmstxthub.com/websites/clever-cloud)
 
 Cloud platform for application deployment and hosting
@@ -90,6 +96,18 @@ Cloud platform for application deployment and hosting
 Digital asset custody and management platform
 
 <sub>[Website](https://cobo.com) • [llms.txt](https://www.cobo.com/developers/llms.txt)</sub>
+
+### [Codeium](https://llmstxthub.com/websites/codeium)
+
+Free AI-powered code autocomplete and context-aware coding assistant
+
+<sub>[Website](https://docs.codeium.com) • [llms.txt](https://docs.codeium.com/llms.txt)</sub>
+
+### [Conductor](https://llmstxthub.com/websites/conductor)
+
+Real-time API integration for QuickBooks Desktop with multi-language support
+
+<sub>[Website](https://docs.conductor.is) • [llms.txt](https://docs.conductor.is/llms.txt)</sub>
 
 ### [CrewAI](https://llmstxthub.com/websites/crewai)
 
@@ -403,6 +421,12 @@ AI-powered search and discovery platform
 
 <sub>[Website](https://perplexity.ai) • [llms.txt](https://docs.perplexity.ai/llms.txt)</sub>
 
+### [Pinata](https://llmstxthub.com/websites/pinata)
+
+Simple API platform for IPFS storage and decentralized file management
+
+<sub>[Website](https://docs.pinata.cloud) • [llms.txt](https://docs.pinata.cloud/llms.txt)</sub>
+
 ### [Pinecone](https://llmstxthub.com/websites/pinecone)
 
 Vector database and similarity search platform
@@ -480,6 +504,12 @@ Sales automation and management platform
 Fraud prevention and compliance platform
 
 <sub>[Website](https://sardine.ai) • [llms.txt](https://docs.sardine.ai/llms.txt)</sub>
+
+### [ScreenshotOne](https://llmstxthub.com/websites/screenshotone)
+
+Simple API for automated website screenshots without browser management complexity
+
+<sub>[Website](https://screenshotone.com) • [llms.txt](https://screenshotone.com/docs/llms.txt)</sub>
 
 ### [SkyDeck.ai](https://llmstxthub.com/websites/skydeck)
 
@@ -612,6 +642,12 @@ Modern terminal and development environment
 Web archiving and preservation platform
 
 <sub>[Website](https://webrecorder.net) • [llms.txt](https://webrecorder.net/llms.txt)</sub>
+
+### [WordLift](https://llmstxthub.com/websites/wordlift)
+
+AI-powered SEO platform that optimizes content visibility and search performance
+
+<sub>[Website](https://wordlift.io) • [llms.txt](https://wordlift.io/llms.txt)</sub>
 
 ### [Workflow](https://llmstxthub.com/websites/workflow)
 
