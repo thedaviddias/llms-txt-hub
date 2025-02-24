@@ -9,7 +9,7 @@
     "./alert": "./components/shadcn/alert.tsx",
     "./avatar": "./components/shadcn/avatar.tsx",
     "./badge": "./components/shadcn/badge.tsx",
-    "./breadcrumb": "./components/shadcn/breadcrumb.tsx",
+    "./breadcrumb": "./components/custom/breadcrumb.tsx",
     "./button": "./components/shadcn/button.tsx",
     "./card": "./components/shadcn/card.tsx",
     "./dropdown-menu": "./components/shadcn/dropdown-menu.tsx",

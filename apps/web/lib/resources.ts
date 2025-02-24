@@ -33,7 +33,6 @@ export const getAllResources = cache(
       try {
         fileNames = await readdir(resourcesDirectory)
       } catch (error) {
-        console.log('No resources directory found')
         return { articles: [], openSourceProjects: [] }
       }
 

@@ -4,6 +4,8 @@ import { components } from '@/components/mdx'
 import { ProjectNavigation } from '@/components/project-navigation'
 import { getAllWebsites, getWebsiteBySlug } from '@/lib/mdx'
 import type { WebsiteMetadata } from '@/lib/mdx'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -18,9 +20,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   const project = (await getWebsiteBySlug(slug)) as WebsiteMetadata & {
     content: string
-    relatedProjects: WebsiteMetadata[]
-    previousProject: WebsiteMetadata | null
-    nextProject: WebsiteMetadata | null
+    relatedWebsites: WebsiteMetadata[]
+    previousWebsite: WebsiteMetadata | null
+    nextWebsite: WebsiteMetadata | null
   }
 
   if (!project) {
@@ -57,6 +59,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto space-y-8">
+        <Breadcrumb
+          items={[
+            { name: 'Websites', href: '/website' },
+            { name: project.name, href: `/website/${slug}` }
+          ]}
+          baseUrl={getBaseUrl()}
+        />
         <div className="flex items-center gap-3">
           <img
             src={getFaviconUrl(project.website) || '/placeholder.svg'}

@@ -42,8 +42,6 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
   const filter = searchParams.get('filter')
   const [categoryFilter, setCategoryFilter] = useState('all')
 
-  console.log(websites)
-
   useEffect(() => {
     let filteredWebsites = [...initialWebsites]
 

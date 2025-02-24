@@ -5,8 +5,10 @@ import { getAllResources } from '@/lib/resources'
 import { getRoute } from '@/lib/routes'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@thedaviddias/design-system/badge'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { Card } from '@thedaviddias/design-system/card'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Book, Code, ExternalLink, Video } from 'lucide-react'
 import Link from 'next/link'
 
@@ -30,8 +32,9 @@ export default async function ResourcesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
         <ResourcesSidebar />
-        {/* Main content */}
+
         <main className="grow space-y-12">
+          <Breadcrumb items={[{ name: 'Resources', href: '/resources' }]} baseUrl={getBaseUrl()} />
           <div className="space-y-4">
             <h1 className="text-4xl font-bold">Resources</h1>
             <p className="text-lg text-muted-foreground">

@@ -1,4 +1,5 @@
-import { Breadcrumb } from '@/components/breadcrumb'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -44,7 +45,7 @@ export default function FAQPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Breadcrumb items={breadcrumbItems} />
+      <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
       <div className="max-w-3xl mx-auto space-y-8">
         <h1 className="text-3xl font-bold">Frequently Asked Questions</h1>
         <div className="space-y-6">

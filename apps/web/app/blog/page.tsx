@@ -1,6 +1,7 @@
 import { getAllBlogPosts } from '@/lib/blog'
 import { formatDate } from '@/lib/utils'
 import { Badge } from '@thedaviddias/design-system/badge'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import {
   Card,
   CardContent,
@@ -9,6 +10,7 @@ import {
   CardHeader,
   CardTitle
 } from '@thedaviddias/design-system/card'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -23,6 +25,7 @@ export default async function BlogPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-[900px] mx-auto space-y-8">
+        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }]} baseUrl={getBaseUrl()} />
         <div className="space-y-4">
           <h1 className="text-4xl font-bold">Blog</h1>
           <p className="text-lg text-muted-foreground">
