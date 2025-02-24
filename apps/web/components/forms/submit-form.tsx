@@ -121,7 +121,6 @@ export function SubmitForm() {
         if (value) formData.append(key, value)
       })
 
-      console.log('Submitting form data:', Object.fromEntries(formData.entries()))
       const result = await submitLlmsTxt(formData)
 
       if (result.success) {

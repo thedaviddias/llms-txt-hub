@@ -1,5 +1,6 @@
 'use server'
 
+import { categories } from '@/lib/categories'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import { revalidatePath } from 'next/cache'
@@ -7,6 +8,12 @@ import { revalidatePath } from 'next/cache'
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
 
+/**
+ * Submits a new LLMs entry via GitHub PR
+ *
+ * @param formData - Form data containing the entry details
+ * @returns Object containing success status and PR URL or error message
+ */
 export async function submitLlmsTxt(formData: FormData) {
   try {
     const session = await auth()
@@ -24,13 +31,24 @@ export async function submitLlmsTxt(formData: FormData) {
       throw new Error('Invalid session: Missing user metadata')
     }
 
-    const provider_token = session.provider_token as unknown as { access_token: string }
+    // Handle different possible token structures
+    let access_token: string
+    const provider_token = session.provider_token
 
-    if (!provider_token.access_token) {
+    if (typeof provider_token === 'string') {
+      access_token = provider_token
+    } else if (typeof provider_token === 'object' && provider_token !== null) {
+      // Cast to a type that includes possible token properties
+      const tokenObj = provider_token as { access_token?: string; token?: string }
+      access_token = tokenObj.access_token || tokenObj.token || ''
+    } else {
+      throw new Error('Invalid provider token format')
+    }
+
+    if (!access_token) {
       throw new Error('Invalid provider token: No access token found')
     }
 
-    const { access_token } = provider_token
     const octokit = new Octokit({ auth: access_token })
 
     // Validate form data
@@ -39,10 +57,16 @@ export async function submitLlmsTxt(formData: FormData) {
     const website = formData.get('website') as string
     const llmsUrl = formData.get('llmsUrl') as string
     const llmsFullUrl = formData.get('llmsFullUrl') as string
+    const categorySlug = formData.get('category') as string
     const githubUsername = session.user.user_metadata.user_name
 
-    if (!name || !description || !website || !llmsUrl) {
+    if (!name || !description || !website || !llmsUrl || !categorySlug) {
       throw new Error('Missing required form fields')
+    }
+
+    // Validate category
+    if (!categories.some(category => category.slug === categorySlug)) {
+      throw new Error('Invalid category selected')
     }
 
     // Create the content for the new MDX file
@@ -52,16 +76,12 @@ description: ${description}
 website: ${website}
 llmsUrl: ${llmsUrl}
 llmsFullUrl: ${llmsFullUrl || ''}
-score: 0
+category: ${categorySlug}
 ---
 
 # ${name}
 
 ${description}
-
-## About
-
-Add any additional information about ${name} here.
 `
 
     try {

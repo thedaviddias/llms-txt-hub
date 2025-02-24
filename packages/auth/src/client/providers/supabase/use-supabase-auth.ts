@@ -39,7 +39,7 @@ export function useSupabaseAuth(supabase: SupabaseClient): AuthProvider {
         provider: 'github',
         options: {
           redirectTo: `${window.location.origin}/`,
-          scopes: 'read:user'
+          scopes: 'read:user public_repo'
         }
       })
     } else {
