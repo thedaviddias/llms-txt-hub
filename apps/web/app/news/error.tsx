@@ -17,7 +17,7 @@ export default function NewsError({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto text-center space-y-4">
+      <div className="max-w-6xl mx-auto text-center space-y-4">
         <div className="flex justify-center">
           <AlertCircle className="h-12 w-12 text-destructive" />
         </div>

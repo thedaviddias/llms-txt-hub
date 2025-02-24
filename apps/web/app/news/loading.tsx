@@ -6,7 +6,7 @@ import { Rss } from 'lucide-react'
 export default function Loading() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <Skeleton className="h-10 w-48" />
           <Button variant="outline" disabled>

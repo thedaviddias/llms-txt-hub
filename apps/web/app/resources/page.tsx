@@ -29,10 +29,8 @@ export default async function ResourcesPage() {
   const allResources = [...articles, ...openSourceProjects]
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
-        <ResourcesSidebar />
-
         <main className="grow space-y-12">
           <Breadcrumb items={[{ name: 'Resources', href: '/resources' }]} baseUrl={getBaseUrl()} />
           <div className="space-y-4">
@@ -135,6 +133,8 @@ export default async function ResourcesPage() {
             </Button>
           </section>
         </main>
+
+        <ResourcesSidebar />
       </div>
     </div>
   )

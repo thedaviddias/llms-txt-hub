@@ -23,8 +23,8 @@ export default async function BlogPage() {
   const posts = await getAllBlogPosts()
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-[900px] mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="mx-auto space-y-8">
         <Breadcrumb items={[{ name: 'Blog', href: '/blog' }]} baseUrl={getBaseUrl()} />
         <div className="space-y-4">
           <h1 className="text-4xl font-bold">Blog</h1>

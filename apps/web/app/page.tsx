@@ -55,7 +55,7 @@ export default async function Home() {
             'Discover AI-Ready Documentation and explore websites implementing the llms.txt standard.'
         }}
       />
-      <div className="container mx-auto px-4 py-8 space-y-16">
+      <div className="max-w-6xl mx-auto px-4 py-8 space-y-16">
         <HeroSection />
         <FeaturedProjectsSection projects={featuredProjects} />
         <HowItWorksSection />

@@ -1,5 +1,6 @@
 import { getRoute } from '@/lib/routes'
 import { formatDate } from '@/lib/utils'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { Card } from '@thedaviddias/design-system/card'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
@@ -81,8 +82,9 @@ export default async function NewsPage() {
   const { items } = await getNewsItems()
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <Breadcrumb items={[{ name: 'News', href: '/news' }]} baseUrl={getBaseUrl()} />
+      <div className="mx-auto space-y-8">
         <div className="flex justify-between items-center">
           <h1 className="text-3xl font-bold">Latest News</h1>
           <Link href={getRoute('rss')} className="inline-flex">

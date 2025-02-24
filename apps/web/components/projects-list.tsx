@@ -72,6 +72,7 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
 
   return (
     <div>
+      <h2 className="text-2xl font-semibold mb-6">Browse Projects</h2>
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-2">
           <Button

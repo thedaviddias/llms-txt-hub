@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function Loading() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-[1200px] mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link href={getRoute('home')} className="hover:text-foreground">

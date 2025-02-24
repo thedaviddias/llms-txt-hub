@@ -47,7 +47,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-[1200px] mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">
           <Link href={getRoute('home')} className="hover:text-foreground">
             Home

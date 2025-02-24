@@ -13,9 +13,8 @@ export default async function OpenSourcePage() {
   const githubProjects = [...githubProjects1, ...githubProjects2]
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
-        <ResourcesSidebar />
         <main className="grow space-y-6">
           <h1 className="text-3xl font-bold">Open Source Projects</h1>
           <div className="grid gap-6">
@@ -27,6 +26,8 @@ export default async function OpenSourcePage() {
             ))}
           </div>
         </main>
+
+        <ResourcesSidebar />
       </div>
     </div>
   )
