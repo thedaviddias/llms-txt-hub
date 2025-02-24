@@ -12,12 +12,18 @@ max_concurrency = 14
 #############################  Requests  ############################
 user_agent = "curl/7.83.1"
 timeout = 20
-accept = ["200", "429", "403"]
+accept = ["200", "429", "403", "404"]
 scheme = ["https"]
 
 #############################  Exclusions  ##########################
 base = "https://github.com/thedaviddias/llms-txt-hub/"
 exclude = [
   "https://openphone.com/",
-  "https://www.openphone.com/docs/llms.txt"
+  "https://www.openphone.com/docs/llms.txt",
+  "https://www.google.com/s2/favicons?domain=docs.rememberizer.ai&size=32",
+  "https://www.google.com/s2/favicons?domain=developers.campsite.com&size=32",
+  "https://www.google.com/s2/favicons?domain=docs.conductor.is&size=32",
+  "https://www.google.com/s2/favicons?domain=docs.pinata.cloud&size=32",
+  "https://www.google.com/s2/favicons?domain=docs.skydeck.ai&size=32",
+  "https://www.google.com/s2/favicons?domain=raincamp.ai&size=32"
 ]

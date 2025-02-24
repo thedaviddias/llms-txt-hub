@@ -221,11 +221,3 @@ export function TestWrapper({ children }: { children: React.ReactNode }) {
   return <FallbackProvider>{children}</FallbackProvider>
 }
 ```
-
-## Contributing
-
-Please read our [Contributing Guide](../../CONTRIBUTING.md) before submitting a Pull Request to the project.
-
-## License
-
-See [LICENSE](../../LICENSE) for more information.
