@@ -3,14 +3,8 @@
 import { SubmitForm } from '@/components/forms/submit-form'
 import { getRoute } from '@/lib/routes'
 import { useAuth } from '@thedaviddias/auth'
-import type { Metadata } from 'next'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-
-export const metadata: Metadata = {
-  title: 'Submit your llms.txt',
-  description: 'Submit your llms.txt file to the llms.txt hub'
-}
 
 export default function SubmitPage() {
   const { user } = useAuth()
