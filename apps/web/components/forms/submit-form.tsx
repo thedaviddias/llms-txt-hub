@@ -1,5 +1,6 @@
 'use client'
 
+import { submitLlmsTxt } from '@/actions/actions'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@thedaviddias/design-system/button'
 import {
@@ -61,12 +62,7 @@ export function SubmitForm() {
         if (value) formData.append(key, value)
       })
 
-      // const result = await submitLlmsTxt(formData)
-      const result = {
-        success: true,
-        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/1',
-        error: ''
-      }
+      const result = await submitLlmsTxt(formData)
 
       if (result.success) {
         toast({
