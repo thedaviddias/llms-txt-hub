@@ -2,18 +2,10 @@
 
 import { EmptyState } from '@/components/empty-state'
 import { ProjectList } from '@/components/project-list'
-import { categories } from '@/lib/categories'
 import type { WebsiteMetadata } from '@/lib/mdx'
 import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@thedaviddias/design-system/select'
 import { Grid, List } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
@@ -90,7 +82,7 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
             <List className="h-4 w-4" />
           </Button>
         </div>
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <Select value={categoryFilter} onValueChange={setCategoryFilter}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Filter by Category" />
@@ -113,7 +105,7 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
               <SelectItem value="name">Name</SelectItem>
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
       </div>
       {websites.length === 0 ? (
         <EmptyState
