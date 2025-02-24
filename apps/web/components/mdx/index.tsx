@@ -65,8 +65,12 @@ export const components: MDXComponents = {
       {...props}
     />
   ),
-  img: ({ className, alt, ...props }) => (
-    // eslint-disable-next-line @next/next/no-img-element
+  img: ({
+    className,
+    alt,
+    ...props
+  }: { className?: string; alt: string } & React.ImgHTMLAttributes<HTMLImageElement>) => (
+    // biome-ignore lint/a11y/useAltText: <explanation>
     <img className={cn('rounded-md', className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,

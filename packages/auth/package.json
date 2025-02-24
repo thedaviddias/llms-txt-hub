@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "typecheck": "turbo typecheck --cache-dir=.turbo"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

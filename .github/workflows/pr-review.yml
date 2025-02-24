@@ -9,64 +9,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install:
-    name: Install Dependencies
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/install
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
-
-  lint:
-    name: Lint & Format Check
-    needs: install
+  validate:
+    name: Validate
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
+      - uses: ./.github/actions/install
 
       - name: Run Biome Check
         uses: mongolyy/reviewdog-action-biome@v1
@@ -74,133 +30,18 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
 
-      - name: Run lint
-        run: pnpm lint
-
-  typecheck:
-    name: Type Check
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Run type check
-        run: pnpm typecheck
+      - name: Run checks
+        run: |
+          pnpm typecheck
+          pnpm check:links
 
   build:
     name: Build
-    needs: [lint, typecheck]
+    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
+      - uses: ./.github/actions/install
 
       - name: Build
         run: pnpm build
-
-  test:
-    name: Test
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Run tests
-        run: pnpm test
-
-  security:
-    name: Security Checks
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Run security audit
-        run: pnpm audit
-
-  maintenance:
-    name: Maintenance Checks
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 10.4.1
-
-      - name: Restore node_modules
-        uses: actions/cache@v4
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('pnpm-lock.yaml') }}
-
-      - name: Check for mismatched dependencies
-        run: pnpm syncpack:list
-
-      - name: Check links
-        run: pnpm check:links

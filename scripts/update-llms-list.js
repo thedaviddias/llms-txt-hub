@@ -118,7 +118,7 @@ function groupLLMsByCategory(llmFiles) {
 function getFaviconUrl(url) {
   try {
     const domain = new URL(url).hostname
-    return `https://www.google.com/s2/favicons?domain=${domain}&size=16`
+    return `https://www.google.com/s2/favicons?domain=${domain}&size=32`
   } catch (error) {
     console.error(`Error getting favicon for ${url}:`, error)
     return ''
