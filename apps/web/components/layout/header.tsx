@@ -4,7 +4,6 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { GithubStars } from '@/components/stats/github-stars'
 import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
-import { Search, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -41,14 +40,6 @@ export function Header() {
         </div>
         <div className="flex items-center gap-4">
           <GithubStars />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setShowMobileSearch(!showMobileSearch)}
-          >
-            {showMobileSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-          </Button>
           <Button variant="default" size="sm" asChild>
             <Link href={getRoute('submit')}>Submit llms.txt</Link>
           </Button>

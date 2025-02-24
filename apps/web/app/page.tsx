@@ -59,9 +59,7 @@ export default async function Home() {
         <HeroSection />
         <FeaturedProjectsSection projects={featuredProjects} />
         <HowItWorksSection />
-        <div className="grid md:grid-cols-2 gap-12">
-          <LatestUpdatesSection projects={recentlyUpdatedProjects} />
-        </div>
+        <LatestUpdatesSection projects={recentlyUpdatedProjects} />
         <LatestNewsSection />
         <CategoriesSection />
         <FAQSection />
