@@ -282,6 +282,7 @@ Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hu
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+
 <div align="center">
 
 If you find this project useful, please consider giving it a ⭐️
