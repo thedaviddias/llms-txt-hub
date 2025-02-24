@@ -45,9 +45,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const project = (await getWebsiteBySlug(slug)) as WebsiteMetadata & {
     content: string
-    relatedProjects: WebsiteMetadata[]
-    previousProject: WebsiteMetadata | null
-    nextProject: WebsiteMetadata | null
+    relatedWebsites: WebsiteMetadata[]
+    previousWebsite: WebsiteMetadata | null
+    nextWebsite: WebsiteMetadata | null
   }
 
   if (!project) {
@@ -77,12 +77,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <MDXRemote source={project.content} components={components} />
         </div>
         <ProjectNavigation
-          previousProject={project.previousProject}
-          nextProject={project.nextProject}
+          previousWebsite={project.previousWebsite}
+          nextWebsite={project.nextWebsite}
         />
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-4">Related Projects</h2>
-          <LLMGrid items={project.relatedProjects || []} variant="compact" />
+          <LLMGrid items={project.relatedWebsites || []} variant="compact" />
         </div>
       </div>
     </div>

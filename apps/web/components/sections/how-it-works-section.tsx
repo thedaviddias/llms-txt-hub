@@ -1,7 +1,4 @@
-import { getRoute } from '@/lib/routes'
-import { Button } from '@thedaviddias/design-system/button'
 import { Code2, FileText, Zap } from 'lucide-react'
-import Link from 'next/link'
 
 export function HowItWorksSection() {
   return (
@@ -23,11 +20,6 @@ export function HowItWorksSection() {
           <h3 className="text-xl font-semibold">3. Enhance AI Interactions</h3>
           <p>Improve how AI tools understand and interact with your content.</p>
         </div>
-      </div>
-      <div className="text-center mt-8">
-        <Button asChild>
-          <Link href={getRoute('docs.gettingStarted')}>Get Started with llms.txt</Link>
-        </Button>
       </div>
     </section>
   )

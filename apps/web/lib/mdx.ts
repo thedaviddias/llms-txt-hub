@@ -57,20 +57,20 @@ export async function getWebsiteBySlug(slug: string) {
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
-  // Remove the first heading that matches the project name
+  // Remove the first heading that matches the website name
   const lines = content.split('\n')
   const filteredLines = lines.filter(line => {
-    // Skip any line that is an h1 heading containing the project name
-    const isH1WithProjectName = line.trim().match(new RegExp(`^#\\s+${data.name}\\s*$`))
-    return !isH1WithProjectName
+    // Skip any line that is an h1 heading containing the website name
+    const isH1WithWebsiteName = line.trim().match(new RegExp(`^#\\s+${data.name}\\s*$`))
+    return !isH1WithWebsiteName
   })
   const contentWithoutTitle = filteredLines.join('\n')
 
   const allWebsites = await getAllWebsites()
   const currentIndex = allWebsites.findIndex(website => website.slug === slug)
-  const previousProject = currentIndex > 0 ? allWebsites[currentIndex - 1] : null
-  const nextProject = currentIndex < allWebsites.length - 1 ? allWebsites[currentIndex + 1] : null
-  const relatedProjects = allWebsites
+  const previousWebsite = currentIndex > 0 ? allWebsites[currentIndex - 1] : null
+  const nextWebsite = currentIndex < allWebsites.length - 1 ? allWebsites[currentIndex + 1] : null
+  const relatedWebsites = allWebsites
     .filter(website => website.category === data.category && website.slug !== slug)
     .slice(0, 4)
 
@@ -78,8 +78,8 @@ export async function getWebsiteBySlug(slug: string) {
     ...data,
     slug,
     content: contentWithoutTitle,
-    relatedProjects,
-    previousProject,
-    nextProject
+    relatedWebsites,
+    previousWebsite,
+    nextWebsite
   }
 }

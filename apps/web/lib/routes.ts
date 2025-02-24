@@ -30,9 +30,6 @@ export const routes = {
   search: '/search',
   submit: '/submit',
   terms: '/terms',
-  docs: {
-    gettingStarted: '/docs/getting-started'
-  },
   rss: '/rss.xml'
 } as const
 
@@ -57,7 +54,6 @@ type StaticRoutes =
   | 'search'
   | 'submit'
   | 'terms'
-  | 'docs.gettingStarted'
   | 'rss'
 
 type DynamicRoutes = 'website.detail' | 'category.detail'

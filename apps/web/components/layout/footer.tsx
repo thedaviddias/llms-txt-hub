@@ -1,5 +1,5 @@
 import { getRoute } from '@/lib/routes'
-import { Github, Linkedin, Twitter } from 'lucide-react'
+import { Github, Linkedin, X } from 'lucide-react'
 import Link from 'next/link'
 
 export function Footer() {
@@ -72,7 +72,7 @@ export function Footer() {
                 <span className="sr-only">GitHub</span>
               </Link>
               <Link href="https://x.com/thedaviddias" className="hover:text-foreground">
-                <Twitter className="h-5 w-5" />
+                <X className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </Link>
               <Link href="https://linkedin.com/in/thedaviddias" className="hover:text-foreground">

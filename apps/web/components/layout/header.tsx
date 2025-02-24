@@ -19,6 +19,12 @@ export function Header() {
           </Link>
           <nav className="hidden md:flex items-center gap-4">
             <Link
+              href={getRoute('website.list')}
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Websites
+            </Link>
+            <Link
               href={getRoute('resources')}
               className="text-sm text-muted-foreground hover:text-foreground"
             >

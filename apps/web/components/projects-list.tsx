@@ -20,55 +20,57 @@ import { useEffect, useState } from 'react'
 import { LLMGrid } from './llm/llm-grid'
 
 interface ClientProjectsListProps {
-  initialProjects: WebsiteMetadata[]
+  initialWebsites: WebsiteMetadata[]
 }
 
-function isValidProject(project: any): project is WebsiteMetadata {
+function isValidWebsite(website: any): website is WebsiteMetadata {
   return (
-    project &&
-    typeof project.slug === 'string' &&
-    typeof project.name === 'string' &&
-    typeof project.description === 'string' &&
-    typeof project.website === 'string' &&
-    typeof project.llmsUrl === 'string'
+    website &&
+    typeof website.slug === 'string' &&
+    typeof website.name === 'string' &&
+    typeof website.description === 'string' &&
+    typeof website.website === 'string' &&
+    typeof website.llmsUrl === 'string'
   )
 }
 
-export function ClientProjectsList({ initialProjects }: ClientProjectsListProps) {
+export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [sortBy, setSortBy] = useState('latest')
-  const [projects, setProjects] = useState(initialProjects)
+  const [websites, setWebsites] = useState(initialWebsites)
   const searchParams = useSearchParams()
   const filter = searchParams.get('filter')
   const [categoryFilter, setCategoryFilter] = useState('all')
 
+  console.log(websites)
+
   useEffect(() => {
-    let filteredProjects = [...initialProjects]
+    let filteredWebsites = [...initialWebsites]
 
     if (filter === 'featured') {
-      filteredProjects = filteredProjects.filter(project => project.score > 50)
+      filteredWebsites = filteredWebsites.filter(website => website.score > 50)
     } else if (filter === 'latest') {
-      filteredProjects.sort(
+      filteredWebsites.sort(
         (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
       )
     }
 
     if (categoryFilter !== 'all') {
-      filteredProjects = filteredProjects.filter(project => project.category === categoryFilter)
+      filteredWebsites = filteredWebsites.filter(website => website.category === categoryFilter)
     }
 
     if (sortBy === 'latest') {
-      filteredProjects.sort(
+      filteredWebsites.sort(
         (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
       )
     } else if (sortBy === 'name') {
-      filteredProjects.sort((a, b) => a.name.localeCompare(b.name))
+      filteredWebsites.sort((a, b) => a.name.localeCompare(b.name))
     }
 
-    // Validate projects after all filtering and sorting
-    const validProjects = filteredProjects.filter(isValidProject)
-    setProjects(validProjects)
-  }, [initialProjects, filter, sortBy, categoryFilter])
+    // Validate websites after all filtering and sorting
+    const validWebsites = filteredWebsites.filter(isValidWebsite)
+    setWebsites(validWebsites)
+  }, [initialWebsites, filter, sortBy, categoryFilter])
 
   return (
     <div>
@@ -114,20 +116,20 @@ export function ClientProjectsList({ initialProjects }: ClientProjectsListProps)
           </Select>
         </div>
       </div>
-      {projects.length === 0 ? (
+      {websites.length === 0 ? (
         <EmptyState
-          title="No projects found"
-          description="There are no projects matching your current filters. Try adjusting your filters or add a new project."
+          title="No websites found"
+          description="There are no websites matching your current filters. Try adjusting your filters or add a new website."
           actionLabel="Submit llms.txt"
           actionHref={getRoute('submit')}
         />
       ) : viewMode === 'grid' ? (
         <ErrorBoundaryCustom>
-          <LLMGrid items={projects} />
+          <LLMGrid items={websites} />
         </ErrorBoundaryCustom>
       ) : (
         <ErrorBoundaryCustom>
-          <ProjectList items={projects} />
+          <ProjectList items={websites} />
         </ErrorBoundaryCustom>
       )}
     </div>
