@@ -44,7 +44,7 @@ export function ProjectList({ items = [] }: ProjectListProps) {
                     <h3 className="text-lg font-semibold group-hover:underline">
                       <Link
                         href={getRoute('website.detail', { slug: item.slug })}
-                        className="absolute inset-0 z-10 after:absolute after:inset-0 after:content-[''] z-10"
+                        className="z-10 after:absolute after:inset-0 after:content-[''] z-10"
                       >
                         {item.name}
                       </Link>
