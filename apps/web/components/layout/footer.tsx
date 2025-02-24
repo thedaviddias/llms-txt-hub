@@ -1,6 +1,7 @@
 import { getRoute } from '@/lib/routes'
 import { Github, Linkedin, X } from 'lucide-react'
 import Link from 'next/link'
+import { ModeToggle } from '../mode-toggle'
 
 export function Footer() {
   return (
@@ -14,6 +15,7 @@ export function Footer() {
               Discover AI-ready documentation and explore websites implementing the llms.txt
               standard.
             </p>
+            <ModeToggle />
           </div>
           <div>
             <h4 className="font-medium mb-3">Quick Links</h4>

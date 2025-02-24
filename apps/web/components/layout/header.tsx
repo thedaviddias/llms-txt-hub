@@ -1,6 +1,4 @@
 'use client'
-
-import { ModeToggle } from '@/components/mode-toggle'
 import { GithubStars } from '@/components/stats/github-stars'
 import { getRoute } from '@/lib/routes'
 import Link from 'next/link'
@@ -47,11 +45,10 @@ export function Header() {
           <GithubStars />
           <Link
             href={getRoute('submit')}
-            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
+            className="inline-flex justify-center rounded-lg text-sm font-semibold py-2 px-3 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
           >
             Submit llms.txt
           </Link>
-          <ModeToggle />
         </div>
       </div>
     </header>
