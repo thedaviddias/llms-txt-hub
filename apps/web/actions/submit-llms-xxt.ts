@@ -24,13 +24,24 @@ export async function submitLlmsTxt(formData: FormData) {
       throw new Error('Invalid session: Missing user metadata')
     }
 
-    const provider_token = session.provider_token as unknown as { access_token: string }
+    // Handle different possible token structures
+    let access_token: string
+    const provider_token = session.provider_token
 
-    if (!provider_token.access_token) {
+    if (typeof provider_token === 'string') {
+      access_token = provider_token
+    } else if (typeof provider_token === 'object' && provider_token !== null) {
+      // Cast to a type that includes possible token properties
+      const tokenObj = provider_token as { access_token?: string; token?: string }
+      access_token = tokenObj.access_token || tokenObj.token || ''
+    } else {
+      throw new Error('Invalid provider token format')
+    }
+
+    if (!access_token) {
       throw new Error('Invalid provider token: No access token found')
     }
 
-    const { access_token } = provider_token
     const octokit = new Octokit({ auth: access_token })
 
     // Validate form data
