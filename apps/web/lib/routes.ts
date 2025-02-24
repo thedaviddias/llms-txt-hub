@@ -9,8 +9,8 @@ export const routes = {
   website: {
     list: '/website',
     detail: (slug: string) => `/website/${slug}`,
-    featured: '/website?filter=featured',
-    latest: '/website?filter=latest'
+    featured: '/website',
+    latest: '/website'
   },
   about: '/about',
   blog: '/blog',

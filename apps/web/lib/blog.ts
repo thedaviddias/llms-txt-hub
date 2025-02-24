@@ -28,7 +28,6 @@ export const getAllBlogPosts = cache(async (): Promise<BlogPost[]> => {
     try {
       fileNames = await readdir(blogDirectory)
     } catch (error) {
-      console.log('No blog posts directory found')
       return []
     }
 

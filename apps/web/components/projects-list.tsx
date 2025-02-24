@@ -16,7 +16,7 @@ import {
 } from '@thedaviddias/design-system/select'
 import { Grid, List } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { LLMGrid } from './llm/llm-grid'
 
 interface ClientProjectsListProps {
@@ -42,33 +42,33 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
   const filter = searchParams.get('filter')
   const [categoryFilter, setCategoryFilter] = useState('all')
 
-  useEffect(() => {
-    let filteredWebsites = [...initialWebsites]
+  // useEffect(() => {
+  //   let filteredWebsites = [...initialWebsites]
 
-    if (filter === 'featured') {
-      filteredWebsites = filteredWebsites.filter(website => website.score > 50)
-    } else if (filter === 'latest') {
-      filteredWebsites.sort(
-        (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
-      )
-    }
+  //   if (filter === 'featured') {
+  //     filteredWebsites = filteredWebsites.filter(website => website.score > 50)
+  //   } else if (filter === 'latest') {
+  //     filteredWebsites.sort(
+  //       (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+  //     )
+  //   }
 
-    if (categoryFilter !== 'all') {
-      filteredWebsites = filteredWebsites.filter(website => website.category === categoryFilter)
-    }
+  //   if (categoryFilter !== 'all') {
+  //     filteredWebsites = filteredWebsites.filter(website => website.category === categoryFilter)
+  //   }
 
-    if (sortBy === 'latest') {
-      filteredWebsites.sort(
-        (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
-      )
-    } else if (sortBy === 'name') {
-      filteredWebsites.sort((a, b) => a.name.localeCompare(b.name))
-    }
+  //   if (sortBy === 'latest') {
+  //     filteredWebsites.sort(
+  //       (a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime()
+  //     )
+  //   } else if (sortBy === 'name') {
+  //     filteredWebsites.sort((a, b) => a.name.localeCompare(b.name))
+  //   }
 
-    // Validate websites after all filtering and sorting
-    const validWebsites = filteredWebsites.filter(isValidWebsite)
-    setWebsites(validWebsites)
-  }, [initialWebsites, filter, sortBy, categoryFilter])
+  //   // Validate websites after all filtering and sorting
+  //   const validWebsites = filteredWebsites.filter(isValidWebsite)
+  //   setWebsites(validWebsites)
+  // }, [initialWebsites, filter, sortBy, categoryFilter])
 
   return (
     <div>
