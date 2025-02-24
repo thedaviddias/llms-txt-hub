@@ -11,13 +11,13 @@ export function HeroSection() {
       <div className="flex justify-center gap-4 flex-col sm:flex-row">
         <Link
           href={getRoute('submit')}
-          className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 bg-slate-900 text-white hover:bg-slate-700"
+          className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:ring-2 hover:slate-900"
         >
           Submit Your llms.txt
         </Link>
         <Link
           href={getRoute('about')}
-          className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 ring-1 ring-slate-900/10 hover:bg-white/25 hover:ring-slate-900/15 "
+          className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 ring-1 ring-slate-900/10 hover:bg-white/25 hover:ring-slate-900/15 dark:text-white dark:ring-white/10"
         >
           Learn More
         </Link>

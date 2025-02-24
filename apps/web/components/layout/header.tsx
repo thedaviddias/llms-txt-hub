@@ -3,7 +3,6 @@
 import { ModeToggle } from '@/components/mode-toggle'
 import { GithubStars } from '@/components/stats/github-stars'
 import { getRoute } from '@/lib/routes'
-import { Button } from '@thedaviddias/design-system/button'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -46,9 +45,12 @@ export function Header() {
         </div>
         <div className="flex items-center gap-4">
           <GithubStars />
-          <Button variant="default" size="sm" asChild>
-            <Link href={getRoute('submit')}>Submit llms.txt</Link>
-          </Button>
+          <Link
+            href={getRoute('submit')}
+            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
+          >
+            Submit llms.txt
+          </Link>
           <ModeToggle />
         </div>
       </div>
