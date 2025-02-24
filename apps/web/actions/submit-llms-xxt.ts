@@ -26,8 +26,6 @@ export async function submitLlmsTxt(formData: FormData) {
   const llmsFullUrl = formData.get('llmsFullUrl') as string
   const githubUsername = session.user.user_metadata.user_name
 
-  const now = new Date().toISOString()
-
   // Create the content for the new MDX file
   const content = `---
 name: ${name}
@@ -35,19 +33,12 @@ description: ${description}
 website: ${website}
 llmsUrl: ${llmsUrl}
 llmsFullUrl: ${llmsFullUrl || ''}
-lastUpdated: "${now}"
 score: 0
 ---
 
 # ${name}
 
 ${description}
-
-## Links
-
-- Website: [${website}](${website})
-- llms.txt: [View llms.txt](${llmsUrl})
-${llmsFullUrl ? `- llms-full.txt: [View llms-full.txt](${llmsFullUrl})` : ''}
 
 ## About
 

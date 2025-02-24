@@ -1,4 +1,4 @@
-import { getHomePageData } from '@/actions/getHomePageData'
+import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { CategoriesSection } from '@/components/sections/categories-section'
 import { CommunityStatsSection } from '@/components/sections/community-stats-section'
