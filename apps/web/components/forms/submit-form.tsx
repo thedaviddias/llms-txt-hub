@@ -42,6 +42,7 @@ const step2Schema = z.object({
       message: 'Please enter a valid llms-full.txt URL.'
     })
     .optional()
+    .or(z.literal(''))
 })
 
 type Step1Data = z.infer<typeof step1Schema>
@@ -120,6 +121,7 @@ export function SubmitForm() {
         if (value) formData.append(key, value)
       })
 
+      console.log('Submitting form data:', Object.fromEntries(formData.entries()))
       const result = await submitLlmsTxt(formData)
 
       if (result.success) {
@@ -131,12 +133,16 @@ export function SubmitForm() {
         step2Form.reset()
         setStep(1)
       } else {
-        throw new Error(result.error)
+        throw new Error(result.error || 'Unknown error occurred')
       }
     } catch (error) {
+      console.error('Form submission error:', error)
       toast({
         title: 'Submission failed',
-        description: 'There was an error submitting your llms.txt. Please try again.',
+        description:
+          error instanceof Error
+            ? error.message
+            : 'There was an error submitting your llms.txt. Please try again.',
         variant: 'destructive'
       })
     } finally {
