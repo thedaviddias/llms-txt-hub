@@ -5,6 +5,7 @@
 
 export const routes = {
   home: '/',
+  llmsTxt: '/llms.txt',
   website: {
     list: '/website',
     detail: (slug: string) => `/website/${slug}`,
@@ -39,6 +40,7 @@ type ParentRoutes = 'category' | 'resources'
 
 type StaticRoutes =
   | 'home'
+  | 'llmsTxt'
   | 'website.list'
   | 'website.featured'
   | 'website.latest'

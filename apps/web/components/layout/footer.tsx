@@ -33,6 +33,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href={getRoute('llmsTxt')} className="hover:text-foreground">
+                  llms.txt file
+                </Link>
+              </li>
+              <li>
                 <Link href={getRoute('submit')} className="hover:text-foreground">
                   Submit llms.txt
                 </Link>
