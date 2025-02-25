@@ -36,7 +36,9 @@ export function SignIn({ redirectUrl = '/', onSignIn, children }: SignInProps) {
   const { user, signIn } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const hasSupabaseConfig = Boolean(keys().url && keys().anonKey)
+  const hasSupabaseConfig = Boolean(
+    keys().NEXT_PUBLIC_SUPABASE_URL && keys().NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
 
   useEffect(() => {
     if (user) {

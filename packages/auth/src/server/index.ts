@@ -7,18 +7,22 @@ import { keys } from '@thedaviddias/supabase/keys'
 import { cookies } from 'next/headers'
 
 export async function auth() {
-  if (!keys().url || !keys().anonKey) {
+  if (!keys().NEXT_PUBLIC_SUPABASE_URL || !keys().NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return null
   }
 
-  const supabase = createServerClient(keys().url, keys().anonKey, {
-    cookies: {
-      async get(name: string) {
-        const cookieStore = await cookies()
-        return cookieStore.get(name)?.value
+  const supabase = createServerClient(
+    keys().NEXT_PUBLIC_SUPABASE_URL,
+    keys().NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+      cookies: {
+        async get(name: string) {
+          const cookieStore = await cookies()
+          return cookieStore.get(name)?.value
+        }
       }
     }
-  })
+  )
 
   const {
     data: { session }

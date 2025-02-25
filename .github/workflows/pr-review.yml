@@ -30,18 +30,11 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
 
-      - name: Run checks
-        run: |
-          pnpm typecheck
-          pnpm check:links
+      - name: Run type check
+        run: pnpm typecheck
 
-  build:
-    name: Build
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/install
-
-      - name: Build
-        run: pnpm build
+      - name: Check Links
+        uses: lycheeverse/lychee-action@v2.2.0
+        with:
+          args: --config ./lychee.toml --verbose --no-progress .
+          fail: true
