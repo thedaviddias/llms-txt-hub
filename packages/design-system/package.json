@@ -70,6 +70,7 @@
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@thedaviddias/auth": "workspace:*",
+    "@thedaviddias/observability": "workspace:*",
     "@vercel/toolbar": "^0.1.32",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -90,7 +91,7 @@
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "vaul": "^1.1.2",
-    "zod": "*"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@thedaviddias/analytics": "workspace:*",
