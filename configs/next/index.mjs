@@ -1,5 +1,6 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withVercelToolbar from '@vercel/toolbar/plugins/next'
+import { withPlausibleProxy } from 'next-plausible'
 
 const otelRegex = /@opentelemetry\/instrumentation/
 
@@ -27,3 +28,5 @@ export const baseConfig = {
 export const withAnalyzer = sourceConfig => withBundleAnalyzer()(sourceConfig)
 
 export const withVercelToolbarConfig = sourceConfig => withVercelToolbar(sourceConfig)
+
+export const withPlausibleProxyConfig = sourceConfig => withPlausibleProxy(sourceConfig)

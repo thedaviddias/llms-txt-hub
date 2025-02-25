@@ -1,6 +1,11 @@
 import withMDX from '@next/mdx'
 import { env } from '@thedaviddias/config-environment'
-import { baseConfig, withAnalyzer, withVercelToolbarConfig } from '@thedaviddias/config-next'
+import {
+  baseConfig,
+  withAnalyzer,
+  withPlausibleProxyConfig,
+  withVercelToolbarConfig
+} from '@thedaviddias/config-next'
 
 export const INTERNAL_PACKAGES = [
   '@thedaviddias/design-system',
@@ -44,5 +49,7 @@ nextConfig = withVercelToolbarConfig(nextConfig)
 if (env.ANALYZE === 'true') {
   nextConfig = withAnalyzer(nextConfig)
 }
+
+nextConfig = withPlausibleProxyConfig(nextConfig)
 
 export default withMDX()(nextConfig)
