@@ -1,5 +1,5 @@
-import { env } from '@thedaviddias/config-environment'
 import { IS_DEVELOPMENT } from '@thedaviddias/utils/environment'
+import { keys } from './keys'
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
@@ -23,7 +23,7 @@ function getMinLogLevel(): LogLevel {
   }
 
   // Server-side: use environment variable
-  return (env.LOG_LEVEL ?? 'error') as LogLevel
+  return (keys().LOG_LEVEL ?? 'error') as LogLevel
 }
 
 class Logger {

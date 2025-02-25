@@ -2,9 +2,6 @@
   "name": "@thedaviddias/config-next",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
-  "main": "./index.mjs",
-  "module": "./index.mjs",
   "scripts": {
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"

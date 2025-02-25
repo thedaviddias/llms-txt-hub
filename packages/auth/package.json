@@ -15,7 +15,6 @@
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.48.1",
-    "@thedaviddias/config-environment": "workspace:*",
     "@thedaviddias/supabase": "workspace:*",
     "next": "15.1.7",
     "react": "^19.0.0",

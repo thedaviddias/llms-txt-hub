@@ -1,6 +1,6 @@
-import { env } from '@thedaviddias/config-environment'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { env } from '../../../env'
 
 export async function POST(req: NextRequest) {
   try {

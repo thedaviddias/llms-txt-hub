@@ -7,10 +7,12 @@ import { Header } from '@/components/layout/header'
 import { PageTransition } from '@/components/page-transition'
 import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
-  description: 'A curated hub for AI-ready documentation implementing the llms.txt standard'
+  description: 'A curated hub for AI-ready documentation implementing the llms.txt standard',
+  metadataBase: new URL(getBaseUrl())
 }
 
 type RootLayoutProps = {

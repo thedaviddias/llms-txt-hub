@@ -24,8 +24,7 @@
     "supabase:typegen": "supabase gen types typescript --local > ./src/types:database.types.ts"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.48.1",
-    "@thedaviddias/config-environment": "workspace:*"
+    "@supabase/supabase-js": "^2.48.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.5.0",
