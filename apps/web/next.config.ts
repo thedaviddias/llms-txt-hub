@@ -6,6 +6,7 @@ import {
   withPlausibleProxyConfig,
   withVercelToolbarConfig
 } from '@thedaviddias/config-next'
+import { withSentry } from '@thedaviddias/observability/next-config'
 import type { NextConfig } from 'next'
 
 export const INTERNAL_PACKAGES = [
@@ -43,12 +44,14 @@ let nextConfig: NextConfig = {
   }
 }
 
+nextConfig = withPlausibleProxyConfig(nextConfig)
+
 nextConfig = withVercelToolbarConfig(nextConfig)
+
+nextConfig = withSentry(nextConfig)
 
 if (env.ANALYZE === 'true') {
   nextConfig = withAnalyzer(nextConfig)
 }
-
-nextConfig = withPlausibleProxyConfig(nextConfig)
 
 export default withMDX()(nextConfig)

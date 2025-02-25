@@ -50,6 +50,9 @@ importers:
       '@hookform/resolvers':
         specifier: ^4.1.1
         version: 4.1.1(react-hook-form@7.54.2(react@19.0.0))
+      '@icons-pack/react-simple-icons':
+        specifier: ^12.0.0
+        version: 12.0.0(react@19.0.0)
       '@mdx-js/loader':
         specifier: ^3.1.0
         version: 3.1.0(acorn@8.14.0)(webpack@5.98.0)
@@ -171,7 +174,7 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5
       zod:
-        specifier: '*'
+        specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
       '@tailwindcss/postcss':
@@ -208,7 +211,7 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.7.3)(zod@3.24.2)
       zod:
-        specifier: '*'
+        specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
       '@thedaviddias/config-typescript':
@@ -396,6 +399,9 @@ importers:
       '@thedaviddias/auth':
         specifier: workspace:*
         version: link:../auth
+      '@thedaviddias/observability':
+        specifier: workspace:*
+        version: link:../observability
       '@vercel/toolbar':
         specifier: ^0.1.32
         version: 0.1.32(next@15.1.7(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)
@@ -457,7 +463,7 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       zod:
-        specifier: '*'
+        specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
       '@thedaviddias/analytics':
@@ -534,7 +540,7 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0
       zod:
-        specifier: '*'
+        specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
       '@thedaviddias/config-typescript':
@@ -587,7 +593,7 @@ importers:
         specifier: ^5.7.3
         version: 5.7.3
       zod:
-        specifier: '*'
+        specifier: ^3.24.2
         version: 3.24.2
 
   packages/utils:
@@ -1035,6 +1041,11 @@ packages:
     resolution: {integrity: sha512-S9YN1RgNWG+klUz5uQaV6rjE4pr6Py2tamj7ekshzLcMyg+/Pal1KZAYgGszV0+doiy41dUiQgXL3uRS9stndQ==}
     peerDependencies:
       react-hook-form: ^7.0.0
+
+  '@icons-pack/react-simple-icons@12.0.0':
+    resolution: {integrity: sha512-7MqCY27RLQqzGAGYAcmsIIy/CU64TaFeTIFaFwEMkyeA6FWptg5AXWFm6UV9kvrCDwXYbzcWLz/cbhutLfcUUg==}
+    peerDependencies:
+      react: ^16.13 || ^17 || ^18 || ^19
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -6668,6 +6679,10 @@ snapshots:
     dependencies:
       caniuse-lite: 1.0.30001700
       react-hook-form: 7.54.2(react@19.0.0)
+
+  '@icons-pack/react-simple-icons@12.0.0(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

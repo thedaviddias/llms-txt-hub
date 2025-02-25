@@ -6,22 +6,16 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
-        "POSTGRES_URL",
-        "POSTGRES_PRISMA_URL",
-        "POSTGRES_URL_NON_POOLING",
-        "POSTGRES_USER",
-        "POSTGRES_HOST",
-        "POSTGRES_PASSWORD",
-        "POSTGRES_DATABASE",
-        "SUPABASE_ANON_KEY",
-        "SUPABASE_URL",
-        "SUPABASE_SERVICE_ROLE_KEY",
-        "SUPABASE_JWT_SECRET",
-        "MAILERLITE_API_KEY",
         "GITHUB_TOKEN",
+        "MAILERLITE_API_KEY",
+        "RSS_FEED_URL",
+        "SENTRY_AUTH_TOKEN",
         "SENTRY_ORG",
         "SENTRY_PROJECT",
-        "RSS_FEED_URL"
+        "SUPABASE_ANON_KEY",
+        "SUPABASE_JWT_SECRET",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "SUPABASE_URL"
       ]
     },
     "supabase:typegen": {
