@@ -12,14 +12,14 @@
  * ```
  */
 export function getBaseUrl(): string {
-  // Vercel deployment URL
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`
-  }
-
   // Custom domain URL
   if (process.env.NEXT_PUBLIC_WEB_URL) {
     return process.env.NEXT_PUBLIC_WEB_URL
+  }
+
+  // Vercel deployment URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`
   }
 
   // Development URL

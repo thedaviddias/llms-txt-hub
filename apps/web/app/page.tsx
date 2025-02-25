@@ -9,6 +9,7 @@ import { HowItWorksSection } from '@/components/sections/how-it-works-section'
 import { LatestNewsSection } from '@/components/sections/latest-news-section'
 import { LatestUpdatesSection } from '@/components/sections/latest-updates-section'
 import { NewsletterSection } from '@/components/sections/newsletter-section'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     siteName: 'llms.txt hub',
     images: [
       {
-        url: 'https://llmstxthub.com/og-image.png',
+        url: `${getBaseUrl()}/opengraph-image.png`,
         width: 1200,
         height: 630
       }
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     title: 'llms.txt hub - Discover AI-Ready Documentation',
     description:
       'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
-    images: ['https://llmstxthub.com/og-image.png']
+    images: [`${getBaseUrl()}/opengraph-image.png`]
   }
 }
 
