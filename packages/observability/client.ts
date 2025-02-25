@@ -5,25 +5,29 @@
  */
 
 import { init, replayIntegration } from '@sentry/nextjs'
+import { IS_DEVELOPMENT } from '@thedaviddias/utils/environment'
 import { keys } from './keys'
 
 export const initializeSentry = (): ReturnType<typeof init> =>
   init({
     dsn: keys().NEXT_PUBLIC_SENTRY_DSN,
 
-    // Adjust this value in production, or use tracesSampler for greater control
-    tracesSampleRate: 1,
+    // Set the environment
+    environment: process.env.VERCEL_ENV || (IS_DEVELOPMENT ? 'development' : 'production'),
+
+    // Adjust sampling rates based on environment
+    tracesSampleRate: IS_DEVELOPMENT ? 1.0 : 0.1,
 
     // Setting this option to true will print useful information to the console while you're setting up Sentry.
-    debug: false,
+    debug: IS_DEVELOPMENT,
 
-    replaysOnErrorSampleRate: 1,
+    replaysOnErrorSampleRate: 1.0,
 
     /*
      * This sets the sample rate to be 10%. You may want this to be 100% while
      * in development and sample at a lower rate in production
      */
-    replaysSessionSampleRate: 0.1,
+    replaysSessionSampleRate: IS_DEVELOPMENT ? 1.0 : 0.1,
 
     // You can remove this option if you're not planning to use the Sentry Session Replay feature:
     integrations: [
@@ -32,5 +36,12 @@ export const initializeSentry = (): ReturnType<typeof init> =>
         maskAllText: true,
         blockAllMedia: true
       })
-    ]
+    ],
+
+    // Include environment in initial scope
+    initialScope: {
+      tags: {
+        environment: process.env.VERCEL_ENV || (IS_DEVELOPMENT ? 'development' : 'production')
+      }
+    }
   })

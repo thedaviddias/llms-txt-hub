@@ -7,8 +7,8 @@ import { Header } from '@/components/layout/header'
 import { PageTransition } from '@/components/page-transition'
 import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
+import { SentryUserProvider } from '@thedaviddias/observability/providers'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-
 export const metadata: Metadata = {
   title: 'llms.txt hub',
   description: 'A curated hub for AI-ready documentation implementing the llms.txt standard',
@@ -24,13 +24,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <body className={fonts}>
         <DesignSystemProvider plausibleDomain="llmstxthub.com">
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">
-              <PageTransition>{children}</PageTransition>
-            </main>
-            <Footer />
-          </div>
+          <SentryUserProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">
+                <PageTransition>{children}</PageTransition>
+              </main>
+              <Footer />
+            </div>
+          </SentryUserProvider>
         </DesignSystemProvider>
       </body>
     </html>

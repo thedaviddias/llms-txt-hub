@@ -13,8 +13,10 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@thedaviddias/auth": "workspace:*",
     "@thedaviddias/config-typescript": "workspace:*",
     "@thedaviddias/logging": "workspace:*",
+    "@thedaviddias/utils": "workspace:*",
     "@types/node": "^22.13.5",
     "@types/react": "19.0.10",
     "@types/react-dom": "^19.0.4",

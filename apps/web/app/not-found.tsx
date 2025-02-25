@@ -16,7 +16,7 @@ export default async function NotFound() {
             The page you are looking for does not exist. <br /> But don&apos;t worry, we&apos;ve got
             you covered. You can{' '}
             <Link
-              href="https://github.com/thedaviddias/david-dias-world/issues/new/choose"
+              href="https://github.com/thedaviddias/llms-txt-hub/issues/new/choose"
               className="text-foreground"
             >
               contact us or report an issue

@@ -543,12 +543,18 @@ importers:
         specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
+      '@thedaviddias/auth':
+        specifier: workspace:*
+        version: link:../auth
       '@thedaviddias/config-typescript':
         specifier: workspace:*
         version: link:../../configs/typescript
       '@thedaviddias/logging':
         specifier: workspace:*
         version: link:../logging
+      '@thedaviddias/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@types/node':
         specifier: ^22.13.5
         version: 22.13.5
