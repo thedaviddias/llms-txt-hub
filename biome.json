@@ -16,7 +16,8 @@
       ".env.local",
       "**/shadcn/**",
       "packages/design-system/lib/**",
-      "packages/design-system/hooks/**"
+      "packages/design-system/hooks/**",
+      "apps/web/public/search/**"
     ]
   },
   "formatter": {

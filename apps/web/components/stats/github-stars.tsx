@@ -36,7 +36,6 @@ export const GithubStars = ({ variant = 'default' }: StarsProps) => {
         aria-label="Star on GitHub"
       >
         <SiGithub className="w-4 h-4" aria-hidden="true" />
-        {variant === 'default' && <span className="hidden lg:inline">Star on GitHub</span>}
         <span className="inline-flex items-center px-2 py-1 rounded bg-neutral-100 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
           <StarIcon className="w-4 h-4 mr-1" aria-hidden="true" />
           {stars}

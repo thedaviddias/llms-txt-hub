@@ -25,8 +25,7 @@ export interface WebsiteMetadata {
   website: string
   llmsUrl: string
   llmsFullUrl?: string
-  category?: string
-  score: number
+  category: string
 }
 
 export async function getAllWebsites(): Promise<WebsiteMetadata[]> {

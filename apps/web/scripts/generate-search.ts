@@ -31,9 +31,24 @@ async function generateSearchIndex() {
     })
   }
 
-  // Write the search index to the public directory
-  const searchIndexPath = path.join(process.cwd(), 'public', 'search-index.json')
+  // Write the search index to the apps/web/public directory instead of the root public directory
+  const searchIndexPath = path.join(
+    process.cwd(),
+    'apps',
+    'web',
+    'public',
+    'search',
+    'search-index.json'
+  )
+
+  // Ensure the directory exists
+  const searchIndexDir = path.dirname(searchIndexPath)
+  if (!fs.existsSync(searchIndexDir)) {
+    fs.mkdirSync(searchIndexDir, { recursive: true })
+  }
+
   fs.writeFileSync(searchIndexPath, JSON.stringify(entries))
+  console.log(`Search index generated at ${searchIndexPath}`)
 }
 
 generateSearchIndex().catch(console.error)
