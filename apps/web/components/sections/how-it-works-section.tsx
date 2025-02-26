@@ -11,7 +11,7 @@ export function HowItWorksSection() {
           </div>
           <h3 className="text-xl font-semibold text-foreground">1. Create llms.txt</h3>
           <p className="text-muted-foreground">
-            Add an llms.txt file to your website's root directory.
+            Add an llms.txt file to your website's root directory, similar to robots.txt.
           </p>
         </div>
         <div className="text-center space-y-3 bg-background/50 p-6 rounded-lg border border-border/50 hover:border-primary/20 hover:shadow-md transition-all">
@@ -20,7 +20,7 @@ export function HowItWorksSection() {
           </div>
           <h3 className="text-xl font-semibold text-foreground">2. Define Structure</h3>
           <p className="text-muted-foreground">
-            Specify your documentation structure and AI preferences.
+            Specify your website's content structure and documentation paths.
           </p>
         </div>
         <div className="text-center space-y-3 bg-background/50 p-6 rounded-lg border border-border/50 hover:border-primary/20 hover:shadow-md transition-all">
@@ -29,7 +29,7 @@ export function HowItWorksSection() {
           </div>
           <h3 className="text-xl font-semibold text-foreground">3. Enhance AI Interactions</h3>
           <p className="text-muted-foreground">
-            Improve how AI tools understand and interact with your content.
+            Help AI models better understand and navigate your website's content.
           </p>
         </div>
       </div>
