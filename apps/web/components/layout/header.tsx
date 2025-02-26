@@ -4,7 +4,30 @@ import { useSearch } from '@/hooks/use-search'
 import { getRoute } from '@/lib/routes'
 import { Search } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+
+interface NavLinkProps {
+  href: string
+  children: React.ReactNode
+  exact?: boolean
+}
+
+function NavLink({ href, children, exact = false }: NavLinkProps) {
+  const pathname = usePathname()
+  const isActive = exact ? pathname === href : pathname.startsWith(href)
+
+  return (
+    <Link
+      href={href}
+      className={`text-sm transition-colors ${
+        isActive ? 'text-foreground font-medium' : 'text-muted-foreground hover:text-foreground'
+      }`}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export function Header() {
   const [showMobileSearch, setShowMobileSearch] = useState(false)
@@ -26,35 +49,15 @@ export function Header() {
             llms.txt hub
           </Link>
           <nav className="hidden md:flex items-center gap-4">
-            <Link
-              href={getRoute('website.list')}
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              Websites
-            </Link>
-            <Link
-              href={getRoute('resources')}
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              Resources
-            </Link>
-            <Link
-              href={getRoute('blog')}
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              Blog
-            </Link>
-            <Link
-              href={getRoute('news')}
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              News
-            </Link>
+            <NavLink href={getRoute('website.list')}>Websites</NavLink>
+            <NavLink href={getRoute('resources')}>Resources</NavLink>
+            <NavLink href={getRoute('blog')}>Blog</NavLink>
+            <NavLink href={getRoute('news')}>News</NavLink>
           </nav>
         </div>
 
-        {/* Search Bar */}
-        <div className="hidden md:block flex-1 max-w-xs mx-4">
+        <div className="flex items-center gap-4">
+          {/* Search Bar */}
           <form onSubmit={onSubmit} className="relative">
             <input
               type="text"
@@ -71,9 +74,6 @@ export function Header() {
               <Search className="h-4 w-4" />
             </button>
           </form>
-        </div>
-
-        <div className="flex items-center gap-4">
           {/* Mobile search icon */}
           <button
             type="button"
