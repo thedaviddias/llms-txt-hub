@@ -1,7 +1,7 @@
 import { XMLParser } from 'fast-xml-parser'
 import { NextResponse } from 'next/server'
 
-const RSS_FEED_URL = process.env.RSS_FEED_URL || 'https://bg.raindrop.io/rss/public/52790163'
+export const RSS_FEED_URL = process.env.RSS_FEED_URL || 'https://bg.raindrop.io/rss/public/52790163'
 
 // Segment Config
 export const dynamic = 'force-dynamic'
