@@ -5,6 +5,7 @@ import type React from 'react'
 import { Button } from '@thedaviddias/design-system/button'
 import { Input } from '@thedaviddias/design-system/input'
 import { useToast } from '@thedaviddias/design-system/use-toast'
+import { MailIcon } from 'lucide-react'
 import { useState } from 'react'
 
 /**
@@ -55,17 +56,27 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
-      <Input
-        type="email"
-        placeholder="Enter your email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        className=""
-        required
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+      <div className="relative flex-1">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+          <MailIcon className="h-5 w-5" />
+        </div>
+        <Input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className="pl-10 h-11 bg-muted/50 border-input focus-visible:ring-2"
+          required
+          disabled={isLoading}
+          aria-label="Email address"
+        />
+      </div>
+      <Button
+        type="submit"
         disabled={isLoading}
-      />
-      <Button type="submit" disabled={isLoading}>
+        className="h-11 px-6 font-medium bg-primary text-primary-foreground hover:bg-primary/90 border border-primary/20"
+      >
         {isLoading ? 'Subscribing...' : 'Subscribe'}
       </Button>
     </form>
