@@ -4,6 +4,22 @@ import { ResourcesSidebar } from '@/components/resources/sidebar'
 import { fetchGitHubProjects } from '@/lib/github'
 import { getAllResources } from '@/lib/resources'
 
+export const GithubTopics = () => {
+  return (
+    <p className="text-sm text-muted-foreground">
+      Simply add a the{' '}
+      <a href="https://github.com/topics/llms-txt" className="dark:text-white underline">
+        llms-txt
+      </a>{' '}
+      or{' '}
+      <a href="https://github.com/topics/llmstxt" className="dark:text-white underline">
+        llmstxt
+      </a>{' '}
+      topic to your Github repository to automatically be featured here.
+    </p>
+  )
+}
+
 export default async function OpenSourcePage() {
   const { openSourceProjects } = await getAllResources()
 
@@ -17,6 +33,7 @@ export default async function OpenSourcePage() {
       <div className="flex flex-col md:flex-row gap-8">
         <main className="grow space-y-6">
           <h1 className="text-3xl font-bold">Open Source Projects</h1>
+          <GithubTopics />
           <div className="grid gap-6">
             {openSourceProjects.map(project => (
               <ResourceCard key={project.slug} resource={project} />

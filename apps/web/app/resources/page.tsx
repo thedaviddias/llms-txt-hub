@@ -11,6 +11,7 @@ import { Card } from '@thedaviddias/design-system/card'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Book, Code, ExternalLink, Video } from 'lucide-react'
 import Link from 'next/link'
+import { GithubTopics } from './open-source/page'
 
 const resourceTypes = [
   { name: 'All', icon: Book, slug: 'all' },
@@ -123,6 +124,7 @@ export default async function ResourcesPage() {
                 <ExternalLink className="inline-block ml-1 h-3 w-3" />
               </Link>
             </div>
+            <GithubTopics />
             <div className="grid gap-6">
               {githubProjects.slice(0, 5).map(project => (
                 <GitHubProjectCard key={project.fullName} project={project} />

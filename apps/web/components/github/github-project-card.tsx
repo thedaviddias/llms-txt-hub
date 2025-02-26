@@ -1,8 +1,8 @@
 import type { GitHubProject } from '@/lib/github'
 import { formatDate } from '@/lib/utils'
-import { Badge } from '@thedaviddias/design-system/badge'
 import { Card } from '@thedaviddias/design-system/card'
-import { ExternalLink, Github, Star } from 'lucide-react'
+import { Github, Star } from 'lucide-react'
+import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 
 interface GitHubProjectCardProps {
@@ -36,10 +36,6 @@ export function GitHubProjectCard({ project }: GitHubProjectCardProps) {
           </time>
         </div>
         <p className="text-muted-foreground">{project.description}</p>
-        <div className="flex items-center gap-2">
-          <Badge variant="outline">GitHub</Badge>
-          <Badge variant="secondary">llms-txt</Badge>
-        </div>
       </article>
     </Card>
   )

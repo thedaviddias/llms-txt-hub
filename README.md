@@ -4,8 +4,7 @@
 
 A comprehensive collection of llms.txt implementations and resources for LLM-powered tools and services.
 
-[![Contributors](https://img.shields.io/github/contributors/thedaviddias/llms-txt-hub)](https://github.com/thedaviddias/llms-txt-hub/graphs/contributors)
-[![Stars](https://img.shields.io/github/stars/thedaviddias/llms-txt-hub)](https://github.com/thedaviddias/llms-txt-hub/stargazers)
+![Screenshot of the llms.txt hub website page](https://raw.githubusercontent.com/thedaviddias/llms-txt-hub/refs/heads/main/apps/web/public/img/llms-txt-hub.jpeg)
 
 </div>
 
