@@ -165,6 +165,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Cloudflare",
+    "description": "Make employees, applications and networks faster and more secure everywhere, while reducing complexity and cost.",
+    "url": "/cloudflare",
+    "content": "# Cloudflare\n\nCloudflare is a global cloud services provider that delivers a broad range of security, performance, and reliability solutions for websites, applications, and networks.\n\n## Key Focus Areas\n\n- Network Security\n- Content Delivery\n- Edge Computing\n- Zero Trust Security\n- Developer Platform\n- AI Services\n\n## Core Features\n\n- DDoS protection and mitigation\n- Web Application Firewall (WAF)\n- Global content delivery network (CDN)\n- Serverless computing with Workers\n- AI inference with Workers AI\n- Object storage with R2\n- DNS management and resolution\n- Zero Trust network access\n- Bot management\n- Load balancing and traffic optimization\n- SSL/TLS encryption\n\n## About llms.txt Implementation\n\nCloudflare's llms.txt documentation outlines their AI capabilities, including Workers AI platform for deploying and running AI models at the edge, integration options for developers, and guidelines for responsible AI usage within their ecosystem.",
+    "category": "infrastructure-cloud",
+    "slug": "cloudflare",
+    "website": "https://www.cloudflare.com/",
+    "llmsUrl": "https://developers.cloudflare.com/llms.txt",
+    "llmsFullUrl": "https://developers.cloudflare.com/llms-full.txt"
+  },
+  {
     "name": "Cobo",
     "description": "Digital asset custody and management platform",
     "url": "/cobo",
