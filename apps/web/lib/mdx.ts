@@ -1,8 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import { resolveFromRoot } from './utils'
 
-const websitesDirectory = path.join(process.cwd(), '../../content', 'websites')
+const websitesDirectory = resolveFromRoot('content/websites')
 
 export interface WebsiteMetadata {
   slug: string
