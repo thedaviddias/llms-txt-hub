@@ -1,13 +1,10 @@
 'use server'
 
-import {
-  calculateProjectScores,
-  getFeaturedProjects,
-  getRecentlyUpdatedProjects
-} from '@/lib/project-utils'
+import { getAllWebsites } from '@/lib/mdx'
+import { getFeaturedProjects, getRecentlyUpdatedProjects } from '@/lib/project-utils'
 
 export async function getHomePageData() {
-  const allProjects = await calculateProjectScores()
+  const allProjects = await getAllWebsites()
   const featuredProjects = getFeaturedProjects(allProjects, 4)
   const recentlyUpdatedProjects = getRecentlyUpdatedProjects(allProjects, 5)
 

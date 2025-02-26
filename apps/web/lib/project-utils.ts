@@ -21,7 +21,18 @@ export async function calculateProjectScores(): Promise<WebsiteMetadata[]> {
 }
 
 export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 4): WebsiteMetadata[] {
-  return projects.sort((a, b) => b.score - a.score).slice(0, limit)
+  // Create a copy of all projects
+  const availableProjects = [...projects]
+  const selectedProjects: WebsiteMetadata[] = []
+
+  // Randomly select 'limit' number of projects
+  while (selectedProjects.length < limit && availableProjects.length > 0) {
+    const randomIndex = Math.floor(Math.random() * availableProjects.length)
+    selectedProjects.push(availableProjects[randomIndex])
+    availableProjects.splice(randomIndex, 1)
+  }
+
+  return selectedProjects
 }
 
 export function getRecentlyUpdatedProjects(
