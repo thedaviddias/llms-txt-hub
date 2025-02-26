@@ -41,6 +41,12 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                   </Link>
                 </h3>
                 <p className="text-sm text-muted-foreground truncate">{item.description}</p>
+                <div className="pt-2 space-x-2">
+                  {item.llmsUrl && <LLMButton href={item.llmsUrl} type="llms" size="sm" />}
+                  {item.llmsFullUrl && (
+                    <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />
+                  )}
+                </div>
               </div>
             </div>
           )

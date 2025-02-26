@@ -13,6 +13,8 @@ interface NewsItem {
   pubDate: string
 }
 
+const NUMBER_OF_NEWS_ITEMS = 5
+
 export function LatestNews() {
   const [news, setNews] = useState<NewsItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -27,7 +29,7 @@ export function LatestNews() {
           throw new Error('Failed to fetch news')
         }
         const data = await response.json()
-        setNews(data.items.slice(0, 3)) // Display only the 3 most recent items
+        setNews(data.items.slice(0, NUMBER_OF_NEWS_ITEMS))
       } catch (error) {
         console.error('Failed to fetch news:', error)
         setError('Failed to load latest news. Please try again later.')
@@ -61,7 +63,7 @@ export function LatestNews() {
           </div>
         </div>
         <div className="grid gap-4">
-          {Array.from({ length: 3 }).map((_, index) => (
+          {Array.from({ length: NUMBER_OF_NEWS_ITEMS }).map((_, index) => (
             <Card key={index} className="p-4">
               <Skeleton className="h-4 w-3/4 mb-2" />
               <Skeleton className="h-4 w-1/2" />
@@ -98,7 +100,7 @@ export function LatestNews() {
       </div>
       <div className="grid gap-4">
         {isLoading ? (
-          Array.from({ length: 3 }).map((_, index) => (
+          Array.from({ length: NUMBER_OF_NEWS_ITEMS }).map((_, index) => (
             <Card key={index} className="p-4">
               <Skeleton className="h-4 w-3/4 mb-2" />
               <Skeleton className="h-4 w-1/2" />
