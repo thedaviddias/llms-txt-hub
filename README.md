@@ -232,7 +232,7 @@ pnpm clean
 
 ### Adding Your Project
 
-There are two ways to add your project to the list:
+There are three ways to add your project to the list:
 
 #### Option 1: Web Interface (Recommended)
 
@@ -241,7 +241,23 @@ There are two ways to add your project to the list:
 3. Submit your website through our user-friendly form
 4. Your submission will automatically submit a pull request to this repository
 
-#### Option 2: Manual Pull Request
+#### Option 2: Using the Generator
+
+1. Run the generator command:
+```bash
+pnpm generate:website
+```
+2. Follow the prompts to enter your website information:
+   - Name of the website/tool
+   - Brief description
+   - Website URL
+   - llms.txt URL
+   - Full llms.txt URL (optional)
+   - Category (select from available options)
+3. The generator will create an MDX file in the correct location
+4. Submit a pull request with your changes
+
+#### Option 3: Manual Pull Request
 
 1. Fork this repository
 2. Create a new MDX file in the appropriate category directory
