@@ -1,12 +1,28 @@
+import { execSync } from 'node:child_process'
+import path from 'node:path'
 import { type WebsiteMetadata, getAllWebsites } from './mdx'
+import { resolveFromRoot } from './utils'
+
+function getGitLastModified(slug: string): Date {
+  try {
+    const filePath = path.join(resolveFromRoot('content/websites'), `${slug}.mdx`)
+    const gitDate = execSync(`git log -1 --format=%cd --date=iso ${filePath}`, {
+      encoding: 'utf-8'
+    }).trim()
+    return new Date(gitDate)
+  } catch (error) {
+    console.error('Error getting git history:', error)
+    return new Date() // Fallback to current date
+  }
+}
 
 export async function calculateProjectScores(): Promise<WebsiteMetadata[]> {
   const websites = await getAllWebsites()
   const now = new Date()
 
   return websites.map(website => {
-    const lastUpdated = new Date(website.lastUpdated)
-    const daysSinceUpdate = (now.getTime() - lastUpdated.getTime()) / (1000 * 3600 * 24)
+    const lastModified = getGitLastModified(website.slug)
+    const daysSinceUpdate = (now.getTime() - lastModified.getTime()) / (1000 * 3600 * 24)
 
     // Calculate score based on various factors
     let score = 0
@@ -40,6 +56,11 @@ export function getRecentlyUpdatedProjects(
   limit = 4
 ): WebsiteMetadata[] {
   return projects
-    .sort((a, b) => new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime())
+    .map(project => ({
+      ...project,
+      lastModified: getGitLastModified(project.slug)
+    }))
+    .sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime())
     .slice(0, limit)
+    .map(({ lastModified, ...project }) => project)
 }

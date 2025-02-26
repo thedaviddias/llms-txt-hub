@@ -1,9 +1,25 @@
+import { execSync } from 'node:child_process'
+import path from 'node:path'
 import { type BlogPost, getAllBlogPosts } from '@/lib/blog'
 import { type WebsiteMetadata, getAllWebsites } from '@/lib/mdx'
 import { type Resource, getAllResources } from '@/lib/resources'
 import { getRoute, routes } from '@/lib/routes'
+import { resolveFromRoot } from '@/lib/utils'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
+
+function getGitLastModified(slug: string): string {
+  try {
+    const filePath = path.join(resolveFromRoot('content/websites'), `${slug}.mdx`)
+    const gitDate = execSync(`git log -1 --format=%cd --date=iso ${filePath}`, {
+      encoding: 'utf-8'
+    }).trim()
+    return gitDate
+  } catch (error) {
+    console.error('Error getting git history:', error)
+    return new Date().toISOString() // Fallback to current date
+  }
+}
 
 /**
  * Represents a feed item in the RSS feed
@@ -44,7 +60,7 @@ async function getAllContent(): Promise<FeedItem[]> {
       title: site.name,
       slug: site.slug,
       description: site.description,
-      date: site.lastUpdated,
+      date: getGitLastModified(site.slug),
       type: 'website' as const,
       url: getRoute('website.detail', { slug: site.slug }),
       categories: ['Website', site.category || 'Uncategorized']

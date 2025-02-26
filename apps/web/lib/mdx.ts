@@ -1,9 +1,22 @@
+import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
 import { resolveFromRoot } from './utils'
 
 const websitesDirectory = resolveFromRoot('content/websites')
+
+function getGitLastModified(filePath: string): string {
+  try {
+    const gitDate = execSync(`git log -1 --format=%cd --date=iso ${filePath}`, {
+      encoding: 'utf-8'
+    }).trim()
+    return gitDate
+  } catch (error) {
+    console.error('Error getting git history:', error)
+    return new Date().toISOString()
+  }
+}
 
 export interface WebsiteMetadata {
   slug: string
@@ -13,7 +26,6 @@ export interface WebsiteMetadata {
   llmsUrl: string
   llmsFullUrl?: string
   category?: string
-  lastUpdated: string
   score: number
 }
 
@@ -31,11 +43,10 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
   }
 
   const websites = fileNames
-    .filter(fileName => fileName.endsWith('.mdx'))
-    .map(fileName => {
+    .filter((fileName: string) => fileName.endsWith('.mdx'))
+    .map((fileName: string) => {
       const slug = fileName.replace(/\.mdx$/, '')
       const fullPath = path.join(websitesDirectory, fileName)
-
       const fileContents = fs.readFileSync(fullPath, 'utf8')
       const { data } = matter(fileContents)
 
@@ -48,7 +59,15 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
   return websites
 }
 
-export async function getWebsiteBySlug(slug: string) {
+export async function getWebsiteBySlug(slug: string): Promise<
+  | (WebsiteMetadata & {
+      content: string
+      relatedWebsites: WebsiteMetadata[]
+      previousWebsite: WebsiteMetadata | null
+      nextWebsite: WebsiteMetadata | null
+    })
+  | null
+> {
   const fullPath = path.join(websitesDirectory, `${slug}.mdx`)
 
   if (!fs.existsSync(fullPath)) {
@@ -82,5 +101,10 @@ export async function getWebsiteBySlug(slug: string) {
     relatedWebsites,
     previousWebsite,
     nextWebsite
+  } as WebsiteMetadata & {
+    content: string
+    relatedWebsites: WebsiteMetadata[]
+    previousWebsite: WebsiteMetadata | null
+    nextWebsite: WebsiteMetadata | null
   }
 }
