@@ -27,12 +27,11 @@
     "./stats-card": "./components/shadcn/stats-card.tsx",
     "./switch": "./components/shadcn/switch.tsx",
     "./tabs": "./components/shadcn/tabs.tsx",
-    "./toast": "./components/shadcn/toast.tsx",
+    "./toast": "./components/shadcn/sonner.tsx",
     "./toggle-group": "./components/shadcn/toggle-group.tsx",
     "./toggle": "./components/shadcn/toggle.tsx",
     "./tooltip": "./components/shadcn/tooltip.tsx",
     "./use-mobile": "./hooks/use-mobile.tsx",
-    "./use-toast": "./hooks/use-toast.tsx",
     "./globals": "./styles/globals.css"
   },
   "scripts": {

@@ -4,9 +4,9 @@ import type React from 'react'
 
 import { Button } from '@thedaviddias/design-system/button'
 import { Input } from '@thedaviddias/design-system/input'
-import { useToast } from '@thedaviddias/design-system/use-toast'
 import { MailIcon } from 'lucide-react'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 /**
  * Newsletter subscription form component
@@ -16,7 +16,6 @@ import { useState } from 'react'
 export function NewsletterForm() {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -37,19 +36,11 @@ export function NewsletterForm() {
         throw new Error(data.message || 'Failed to subscribe')
       }
 
-      toast({
-        title: 'Success!',
-        description: 'Thank you for subscribing to our newsletter.',
-        variant: 'default'
-      })
+      toast.success('Thank you for subscribing to our newsletter.')
 
       setEmail('')
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to subscribe to newsletter',
-        variant: 'destructive'
-      })
+      toast.error(error instanceof Error ? error.message : 'Failed to subscribe to newsletter')
     } finally {
       setIsLoading(false)
     }

@@ -12,9 +12,9 @@ import {
   FormMessage
 } from '@thedaviddias/design-system/form'
 import { Input } from '@thedaviddias/design-system/input'
-import { useToast } from '@thedaviddias/design-system/use-toast'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import * as z from 'zod'
 
 const step1Schema = z.object({
@@ -51,7 +51,6 @@ type Step2Data = z.infer<typeof step2Schema>
 export function SubmitForm() {
   const [step, setStep] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
 
   const step1Form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -98,16 +97,9 @@ export function SubmitForm() {
       })
 
       setStep(2)
-      toast({
-        title: 'Website info fetched',
-        description: 'Please review and complete the submission.'
-      })
+      toast.success('Website info fetched')
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to fetch website information. Please try again.',
-        variant: 'destructive'
-      })
+      toast.error('Failed to fetch website information. Please try again.')
     } finally {
       setIsLoading(false)
     }
@@ -124,10 +116,7 @@ export function SubmitForm() {
       const result = await submitLlmsTxt(formData)
 
       if (result.success) {
-        toast({
-          title: 'Submission successful',
-          description: `Your PR has been created: ${result.prUrl}`
-        })
+        toast.success(`Your PR has been created: ${result.prUrl}`)
         step1Form.reset()
         step2Form.reset()
         setStep(1)
@@ -136,14 +125,11 @@ export function SubmitForm() {
       }
     } catch (error) {
       console.error('Form submission error:', error)
-      toast({
-        title: 'Submission failed',
-        description:
-          error instanceof Error
-            ? error.message
-            : 'There was an error submitting your llms.txt. Please try again.',
-        variant: 'destructive'
-      })
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'There was an error submitting your llms.txt. Please try again.'
+      )
     } finally {
       setIsLoading(false)
     }
