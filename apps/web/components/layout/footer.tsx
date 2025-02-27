@@ -41,8 +41,13 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href={getRoute('resources')} className="hover:text-foreground">
-                    Resources
+                  <Link href={getRoute('guides.list')} className="hover:text-foreground">
+                    Guides
+                  </Link>
+                </li>
+                <li>
+                  <Link href={getRoute('projects')} className="hover:text-foreground">
+                    Projects
                   </Link>
                 </li>
                 <li>

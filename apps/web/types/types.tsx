@@ -7,3 +7,14 @@ export interface LLM {
   avatarSrc?: string
   tags: string[]
 }
+
+export interface Guide {
+  title: string
+  description: string
+  slug: string
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  category: 'getting-started' | 'implementation' | 'best-practices' | 'integration'
+  icon?: string
+  published: boolean
+  publishedAt: string
+}

@@ -18,22 +18,22 @@ export const routes = {
     list: '/category',
     detail: (slug: string) => `/category/${slug}`
   },
+  guides: {
+    list: '/guides',
+    guide: (slug: string) => `/guides/${slug}`
+  },
   faq: '/faq',
   login: '/login',
   news: '/news',
   privacy: '/privacy',
-  resources: {
-    list: '/resources',
-    articles: '/resources/articles',
-    openSource: '/resources/open-source'
-  },
+  projects: '/projects',
   search: '/search',
   submit: '/submit',
   terms: '/terms',
   rss: '/rss.xml'
 } as const
 
-type ParentRoutes = 'category' | 'resources'
+type ParentRoutes = 'category' | 'guides'
 
 type StaticRoutes =
   | 'home'
@@ -44,19 +44,18 @@ type StaticRoutes =
   | 'about'
   | 'blog'
   | 'category.list'
+  | 'guides.list'
   | 'faq'
   | 'login'
   | 'news'
   | 'privacy'
-  | 'resources.list'
-  | 'resources.articles'
-  | 'resources.openSource'
+  | 'projects'
   | 'search'
   | 'submit'
   | 'terms'
   | 'rss'
 
-type DynamicRoutes = 'website.detail' | 'category.detail'
+type DynamicRoutes = 'website.detail' | 'category.detail' | 'guides.guide'
 
 type RoutePaths = StaticRoutes | DynamicRoutes | ParentRoutes
 

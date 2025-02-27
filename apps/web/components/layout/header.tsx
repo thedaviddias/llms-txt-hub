@@ -50,15 +50,16 @@ export function Header() {
           </Link>
           <nav className="hidden md:flex items-center gap-4">
             <NavLink href={getRoute('website.list')}>Websites</NavLink>
-            <NavLink href={getRoute('resources')}>Resources</NavLink>
+            <NavLink href={getRoute('guides.list')}>Guides</NavLink>
+            <NavLink href={getRoute('projects')}>Projects</NavLink>
             <NavLink href={getRoute('blog')}>Blog</NavLink>
             <NavLink href={getRoute('news')}>News</NavLink>
           </nav>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {/* Search Bar */}
-          <form onSubmit={onSubmit} className="relative">
+          <form onSubmit={onSubmit} className="hidden md:block relative">
             <input
               type="text"
               placeholder="Search..."
@@ -87,7 +88,7 @@ export function Header() {
           <GithubStars />
           <Link
             href={getRoute('submit')}
-            className="inline-flex justify-center rounded-lg text-sm font-semibold py-2 px-3 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
+            className="inline-flex justify-center rounded-lg text-sm font-semibold py-1.5 px-3 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
           >
             <span className="hidden md:inline">Submit llms.txt</span>
             <span className="md:hidden">Submit</span>

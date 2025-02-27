@@ -1,0 +1,128 @@
+import { GitHubProjectCard } from '@/components/github/github-project-card'
+import { fetchGitHubProjects } from '@/lib/github'
+import { getRoute } from '@/lib/routes'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { Button } from '@thedaviddias/design-system/button'
+import { Card } from '@thedaviddias/design-system/card'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import { Code, ExternalLink, Star } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'llms.txt Projects - Open Source Projects and Tools',
+  description:
+    'Explore open-source projects, tools, and libraries implementing the llms.txt standard.',
+  openGraph: {
+    title: 'llms.txt Projects - Open Source Projects and Tools',
+    description:
+      'Explore open-source projects, tools, and libraries implementing the llms.txt standard.',
+    url: `${getBaseUrl()}/projects`,
+    images: [
+      {
+        url: `${getBaseUrl()}/opengraph-image.png`,
+        width: 1200,
+        height: 630
+      }
+    ]
+  }
+}
+
+export default async function ProjectsPage() {
+  const githubProjects1 = await fetchGitHubProjects('llms-txt')
+  const githubProjects2 = await fetchGitHubProjects('llmstxt')
+  const githubProjects = [...githubProjects1, ...githubProjects2]
+
+  // Sort projects by stars
+  const sortedProjects = githubProjects.sort((a, b) => b.stars - a.stars)
+
+  // Featured project is the one with most stars
+  const featuredProject = sortedProjects[0]
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="space-y-12">
+        <Breadcrumb items={[{ name: 'Projects', href: '/projects' }]} baseUrl={getBaseUrl()} />
+
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold">Open Source Projects</h1>
+          <p className="text-lg text-muted-foreground">
+            Discover open-source projects, tools, and libraries implementing the llms.txt standard.
+          </p>
+        </div>
+
+        {/* Featured Project */}
+        {featuredProject && (
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">Featured Project</h2>
+            <Card className="p-6">
+              <article className="space-y-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <Code className="h-6 w-6" />
+                    <h3 className="text-2xl font-bold">
+                      <Link href={featuredProject.url} className="hover:underline" target="_blank">
+                        {featuredProject.fullName}
+                        <ExternalLink className="inline-block ml-2 h-5 w-5" />
+                      </Link>
+                    </h3>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4" />
+                    <span>{featuredProject.stars}</span>
+                  </div>
+                </div>
+                <p className="text-lg text-muted-foreground">{featuredProject.description}</p>
+                <div className="flex items-center gap-2">
+                  <Button asChild>
+                    <Link href={featuredProject.url} target="_blank">
+                      View Project
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="https://github.com/topics/llms-txt" target="_blank">
+                      Browse All Projects
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </article>
+            </Card>
+          </section>
+        )}
+
+        {/* All Projects */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-semibold">All Projects</h2>
+          <div className="grid gap-6">
+            {sortedProjects.slice(1).map(project => (
+              <GitHubProjectCard key={project.fullName} project={project} />
+            ))}
+          </div>
+        </section>
+
+        {/* Submit Project CTA */}
+        <section className="rounded-lg bg-muted p-8 text-center">
+          <div className="mx-auto max-w-2xl space-y-4">
+            <h2 className="text-2xl font-bold">Have a Project to Share?</h2>
+            <p className="text-muted-foreground">
+              Add the 'llms-txt' topic to your GitHub repository to have it listed here.
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button asChild>
+                <Link href="https://github.com/topics/llms-txt" target="_blank">
+                  Browse GitHub Topic
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href={getRoute('submit')}>Submit Project</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  )
+}

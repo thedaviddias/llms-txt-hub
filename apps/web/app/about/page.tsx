@@ -115,7 +115,7 @@ export default function AboutPage() {
               <Link href={getRoute('submit')}>Submit Your llms.txt</Link>
             </Button>
             <Button asChild variant="outline">
-              <Link href={getRoute('resources')}>Explore Resources</Link>
+              <Link href={getRoute('projects')}>Explore Resources</Link>
             </Button>
             <Button asChild variant="outline">
               <Link href={getRoute('blog')}>Read Our Blog</Link>
