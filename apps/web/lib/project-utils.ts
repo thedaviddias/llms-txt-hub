@@ -1,4 +1,5 @@
 import { execSync } from 'node:child_process'
+import fs from 'node:fs'
 import path from 'node:path'
 import { type WebsiteMetadata, getAllWebsites } from './mdx'
 import { resolveFromRoot } from './utils'
@@ -12,7 +13,15 @@ function getGitLastModified(slug: string): Date {
     return new Date(gitDate)
   } catch (error) {
     console.error('Error getting git history:', error)
-    return new Date() // Fallback to current date
+    // Use file system stats as fallback instead of current date
+    try {
+      const filePath = path.join(resolveFromRoot('content/websites'), `${slug}.mdx`)
+      const stats = fs.statSync(filePath)
+      return stats.mtime // Use file's modification time
+    } catch (fsError) {
+      console.error('Error getting file stats:', fsError)
+      return new Date(0) // Last resort: use epoch time to sort these last
+    }
   }
 }
 
