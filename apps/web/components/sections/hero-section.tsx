@@ -19,8 +19,8 @@ export async function HeroSection() {
       </Link>
       <h1 className="text-5xl font-bold tracking-tight md:text-6xl">Welcome to llms.txt hub</h1>
       <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-        The directory for AI-ready documentation and tools implementing the proposed llms.txt
-        standard.
+        The largest directory for AI-ready documentation and tools implementing the proposed
+        llms.txt standard
       </p>
       <div className="flex justify-center gap-4 flex-col sm:flex-row">
         <Link
