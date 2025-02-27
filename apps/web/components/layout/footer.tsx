@@ -51,11 +51,6 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href={getRoute('blog')} className="hover:text-foreground">
-                    Blog
-                  </Link>
-                </li>
-                <li>
                   <Link href={getRoute('faq')} className="hover:text-foreground">
                     FAQ
                   </Link>

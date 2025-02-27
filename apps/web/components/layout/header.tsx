@@ -52,7 +52,6 @@ export function Header() {
             <NavLink href={getRoute('website.list')}>Websites</NavLink>
             <NavLink href={getRoute('guides.list')}>Guides</NavLink>
             <NavLink href={getRoute('projects')}>Projects</NavLink>
-            <NavLink href={getRoute('blog')}>Blog</NavLink>
             <NavLink href={getRoute('news')}>News</NavLink>
           </nav>
         </div>

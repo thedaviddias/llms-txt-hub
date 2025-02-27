@@ -16,12 +16,12 @@ function getMonorepoRoot(): string {
 
 const MONOREPO_ROOT = getMonorepoRoot()
 
-export function getContentPath(contentType: 'blog' | 'resources' | 'websites'): string {
+export function getContentPath(contentType: 'resources' | 'websites'): string {
   return path.join(MONOREPO_ROOT, 'content', contentType)
 }
 
 export function getContentFilePath(
-  contentType: 'blog' | 'resources' | 'websites',
+  contentType: 'resources' | 'websites',
   fileName: string
 ): string {
   return path.join(getContentPath(contentType), fileName)

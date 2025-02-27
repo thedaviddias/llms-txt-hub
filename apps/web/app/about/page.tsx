@@ -117,9 +117,6 @@ export default function AboutPage() {
             <Button asChild variant="outline">
               <Link href={getRoute('projects')}>Explore Resources</Link>
             </Button>
-            <Button asChild variant="outline">
-              <Link href={getRoute('blog')}>Read Our Blog</Link>
-            </Button>
           </div>
         </section>
 

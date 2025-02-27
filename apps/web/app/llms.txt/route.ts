@@ -15,13 +15,6 @@ interface Website {
   slug: string
 }
 
-interface BlogPost {
-  title: string
-  description: string
-  date: string
-  slug: string
-}
-
 interface Resource {
   title: string
   description: string
@@ -52,25 +45,6 @@ function getWebsites(): Website[] {
   })
 }
 
-function getBlogPosts(): BlogPost[] {
-  const blogPath = path.join(contentDirectory, 'blog')
-  const files = fs.readdirSync(blogPath).filter(file => file.endsWith('.mdx'))
-
-  return files.map(file => {
-    const fullPath = path.join(blogPath, file)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data } = matter(fileContents)
-    const slug = file.replace('.mdx', '')
-
-    return {
-      title: data.title || '',
-      description: data.description || '',
-      date: data.date || '',
-      slug
-    }
-  })
-}
-
 function getResources(): Resource[] {
   const resourcesPath = path.join(contentDirectory, 'resources')
   const files = fs.readdirSync(resourcesPath).filter(file => file.endsWith('.mdx'))
@@ -93,7 +67,7 @@ function getResources(): Resource[] {
 
 export async function GET(request: Request) {
   try {
-    const [websites, blogPosts, resources] = [getWebsites(), getBlogPosts(), getResources()]
+    const [websites, resources] = [getWebsites(), getResources()]
 
     // Get base URL
     const baseUrl =
@@ -119,13 +93,6 @@ The following websites have implemented llms.txt:\n\n`
       if (website.llmsFullUrl) {
         content += `  - Full Documentation: ${website.llmsFullUrl}\n`
       }
-    }
-
-    // Add blog posts
-    content += '\n## Blog Posts\n'
-    for (const post of blogPosts) {
-      const postUrl = `${baseUrl}/blog/${post.slug}`
-      content += `- [${post.title}](${postUrl})${post.description ? `: ${post.description}` : ''} (${post.date})\n`
     }
 
     // Add resources

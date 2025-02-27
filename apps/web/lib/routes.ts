@@ -13,7 +13,6 @@ export const routes = {
     latest: '/website'
   },
   about: '/about',
-  blog: '/blog',
   category: {
     list: '/category',
     detail: (slug: string) => `/category/${slug}`
@@ -42,7 +41,6 @@ type StaticRoutes =
   | 'website.featured'
   | 'website.latest'
   | 'about'
-  | 'blog'
   | 'category.list'
   | 'guides.list'
   | 'faq'

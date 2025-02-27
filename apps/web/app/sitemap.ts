@@ -45,7 +45,7 @@ function getContentPages(dir: string, baseDir = ''): string[] {
  */
 function getPriority(path: string): number {
   if (!path) return 1 // Homepage
-  if (path.startsWith('blog/')) return 0.8
+  if (path.startsWith('guides/')) return 0.8
   if (path.startsWith('resources/')) return 0.7
   return 0.5 // Other pages
 }
