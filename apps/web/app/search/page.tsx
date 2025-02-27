@@ -1,13 +1,32 @@
 import { SearchResults } from '@/components/search/search-results'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
-export default function SearchPage() {
+// Generate dynamic metadata based on search params
+export async function generateMetadata({
+  searchParams
+}: { searchParams: { q?: string } }): Promise<Metadata> {
+  const query = searchParams.q || ''
+
+  return {
+    title: query ? `Search Results for "${query}" | llms.txt hub` : 'Search | llms.txt hub',
+    description: query
+      ? `Search results for "${query}" in the llms.txt hub database.`
+      : 'Search for AI-ready websites and tools in the llms.txt hub.'
+  }
+}
+
+export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
+  const query = searchParams.q || ''
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <Breadcrumb items={[{ name: 'Search', href: '/search' }]} baseUrl={getBaseUrl()} />
-      <h1 className="text-3xl font-bold mb-6">Search Results</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        {query ? `Search Results for "${query}"` : 'Search Results'}
+      </h1>
 
       <Suspense
         fallback={

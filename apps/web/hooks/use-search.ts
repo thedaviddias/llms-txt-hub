@@ -13,9 +13,19 @@ export function useSearch() {
   const router = useRouter()
 
   const handleSearch = useCallback(
-    (searchQuery: string) => {
-      if (!searchQuery.trim()) return
-      router.push(`${getRoute('search')}?q=${encodeURIComponent(searchQuery)}`)
+    async (searchQuery: string): Promise<void> => {
+      if (!searchQuery.trim()) return Promise.resolve()
+
+      return new Promise<void>(resolve => {
+        const searchUrl = `${getRoute('search')}?q=${encodeURIComponent(searchQuery)}`
+        router.push(searchUrl)
+
+        // Use setTimeout to give the router time to start the navigation
+        // This is a workaround since Next.js router doesn't provide a callback
+        setTimeout(() => {
+          resolve()
+        }, 100)
+      })
     },
     [router]
   )

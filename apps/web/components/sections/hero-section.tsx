@@ -22,6 +22,12 @@ export async function HeroSection() {
         The largest directory for AI-ready documentation and tools implementing the proposed
         llms.txt standard
       </p>
+
+      {/* Hero Search Bar */}
+      {/* <div className="py-2">
+        <HeroSearch />
+      </div> */}
+
       <div className="flex justify-center gap-4 flex-col sm:flex-row">
         <Link
           href={getRoute('submit')}
