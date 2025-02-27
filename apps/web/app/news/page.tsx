@@ -1,4 +1,4 @@
-import { getRoute } from '@/lib/routes'
+import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
 import { formatDate } from '@/lib/utils'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
@@ -20,8 +20,6 @@ interface NewsItem {
   pubDate: string
   description: string
 }
-
-const RSS_FEED_URL = process.env.RSS_FEED_URL || 'https://bg.raindrop.io/rss/public/52790163'
 const isBuildTime = () => process.env.NODE_ENV === 'production'
 
 async function getNewsItems(): Promise<{ items: NewsItem[] }> {
@@ -86,8 +84,14 @@ export default async function NewsPage() {
       <Breadcrumb items={[{ name: 'News', href: '/news' }]} baseUrl={getBaseUrl()} />
       <div className="mx-auto space-y-8">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Latest News</h1>
-          <Link href={getRoute('rss')} className="inline-flex">
+          <div className="space-y-4">
+            <h1 className="text-4xl font-bold">Latest News</h1>
+            <p className="text-lg text-muted-foreground">
+              Stay updated with the latest news and updates from the llms.txt community.
+            </p>
+          </div>
+
+          <Link href={RSS_FEED_URL} className="inline-flex">
             <Button variant="outline">
               <Rss className="mr-2 h-4 w-4" />
               Follow RSS Feed
