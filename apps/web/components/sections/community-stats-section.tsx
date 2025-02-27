@@ -21,7 +21,6 @@ interface CommunityStatsSectionProps {
  * ```
  */
 export function CommunityStatsSection({ allProjects }: CommunityStatsSectionProps) {
-  // Calculate metrics
   const basicImplementations = allProjects.filter(p => p.llmsUrl).length
   const enhancedImplementations = allProjects.filter(p => p.llmsFullUrl).length
 
