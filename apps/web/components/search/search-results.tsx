@@ -20,6 +20,7 @@ type SearchIndexEntry = {
   website?: string
   llmsUrl?: string
   llmsFullUrl?: string
+  publishedAt?: string
 }
 
 function canTransformToWebsiteMetadata(entry: SearchIndexEntry): boolean {
@@ -60,7 +61,8 @@ function transformToWebsiteMetadata(entry: SearchIndexEntry): WebsiteMetadata {
       website: entry.website || entry.url || '#',
       llmsUrl: entry.llmsUrl || '#', // Default to # if not available
       llmsFullUrl: entry.llmsFullUrl,
-      category: entry.category || ''
+      category: entry.category || '',
+      publishedAt: entry.publishedAt || ''
     }
   } catch (error) {
     console.error('Error in transformToWebsiteMetadata:', error, 'Entry:', entry)
@@ -71,7 +73,8 @@ function transformToWebsiteMetadata(entry: SearchIndexEntry): WebsiteMetadata {
       description: '',
       website: '#',
       llmsUrl: '#',
-      category: ''
+      category: '',
+      publishedAt: ''
     }
   }
 }
@@ -233,7 +236,8 @@ export function SearchResults() {
                 description: '',
                 website: '#',
                 llmsUrl: '#',
-                category: ''
+                category: '',
+                publishedAt: ''
               }
             }
           })

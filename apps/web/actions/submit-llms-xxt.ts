@@ -58,9 +58,10 @@ export async function submitLlmsTxt(formData: FormData) {
     const llmsUrl = formData.get('llmsUrl') as string
     const llmsFullUrl = formData.get('llmsFullUrl') as string
     const categorySlug = formData.get('category') as string
+    const publishedAt = formData.get('publishedAt') as string
     const githubUsername = session.user.user_metadata.user_name
 
-    if (!name || !description || !website || !llmsUrl || !categorySlug) {
+    if (!name || !description || !website || !llmsUrl || !categorySlug || !publishedAt) {
       throw new Error('Missing required form fields')
     }
 
@@ -77,6 +78,7 @@ website: ${website}
 llmsUrl: ${llmsUrl}
 llmsFullUrl: ${llmsFullUrl || ''}
 category: ${categorySlug}
+publishedAt: '${publishedAt}'
 ---
 
 # ${name}
