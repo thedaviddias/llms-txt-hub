@@ -60,7 +60,7 @@ export async function submitLlmsTxt(formData: FormData) {
     const categorySlug = formData.get('category') as string
     const githubUsername = session.user.user_metadata.user_name
 
-    if (!name || !description || !website || !llmsUrl) {
+    if (!name || !description || !website || !llmsUrl || !categorySlug) {
       throw new Error('Missing required form fields')
     }
 
@@ -99,14 +99,10 @@ ${description}
         })
 
       const defaultBranch = repo_info.data.default_branch
-      console.log('Default branch:', defaultBranch)
 
       // Create a new branch
       const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
       const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, '-')}.mdx`
-
-      console.log('Attempting GitHub operations with username:', githubUsername)
-      console.log('Creating new branch:', branchName)
 
       const mainRef = await octokit.git
         .getRef({
@@ -154,18 +150,20 @@ ${description}
         .create({
           owner,
           repo,
-          title: `Add ${name} to llms.txt directory`,
+          title: `feat: add ${name} to llms.txt hub`,
           head: branchName,
           base: defaultBranch,
-          body: `This PR adds ${name} to the llms.txt directory.
+          body: `This PR adds ${name} to the llms.txt hub.
 
 Submitted by: @${githubUsername}
 
 Website: ${website}
 llms.txt: ${llmsUrl}
 ${llmsFullUrl ? `llms-full.txt: ${llmsFullUrl}` : ''}
+${categorySlug ? `Category: ${categorySlug}` : ''}
 
-Please review and merge if appropriate.`
+
+Please review your PR, a reviewer will merge it if appropriate.`
         })
         .catch(error => {
           throw new Error(

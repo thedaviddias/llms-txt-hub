@@ -31,6 +31,7 @@
     "./toggle-group": "./components/shadcn/toggle-group.tsx",
     "./toggle": "./components/shadcn/toggle.tsx",
     "./tooltip": "./components/shadcn/tooltip.tsx",
+    "./textarea": "./components/shadcn/textarea.tsx",
     "./use-mobile": "./hooks/use-mobile.tsx",
     "./globals": "./styles/globals.css"
   },

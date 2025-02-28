@@ -1,5 +1,7 @@
+import { getAllWebsites } from '@/lib/mdx'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
+import normalizeUrl from 'normalize-url'
 
 function cleanTitle(title: string): string {
   // Remove common suffixes and clean up the title
@@ -11,6 +13,34 @@ function cleanTitle(title: string): string {
 
 async function fetchMetadata(url: string) {
   try {
+    // Check for duplicate websites
+    const existingWebsites = await getAllWebsites()
+
+    const normalizedNewUrl = normalizeUrl(url, {
+      stripProtocol: true,
+      stripWWW: true,
+      removeTrailingSlash: true,
+      removeQueryParameters: true
+    })
+
+    const duplicateWebsite = existingWebsites.find(website => {
+      const normalizedExisting = normalizeUrl(website.website, {
+        stripProtocol: true,
+        stripWWW: true,
+        removeTrailingSlash: true,
+        removeQueryParameters: true
+      })
+
+      // Check if either URL is a base path of the other
+      return (
+        normalizedExisting.startsWith(normalizedNewUrl) ||
+        normalizedNewUrl.startsWith(normalizedExisting)
+      )
+    })
+
+    if (duplicateWebsite) {
+      return { isDuplicate: true, existingWebsite: duplicateWebsite }
+    }
     // Fetch the main page
     const response = await fetch(url)
     const html = await response.text()
@@ -36,11 +66,14 @@ async function fetchMetadata(url: string) {
     const llmsFullExists = llmsFullResponse.ok
 
     return {
-      name,
-      description,
-      website: url,
-      llmsUrl: llmsExists ? llmsUrl : '',
-      llmsFullUrl: llmsFullExists ? llmsFullUrl : ''
+      isDuplicate: false,
+      metadata: {
+        name,
+        description,
+        website: url,
+        llmsUrl: llmsExists ? llmsUrl : '',
+        llmsFullUrl: llmsFullExists ? llmsFullUrl : ''
+      }
     }
   } catch (error) {
     console.error('Error fetching metadata:', error)
