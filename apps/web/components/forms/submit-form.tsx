@@ -87,7 +87,21 @@ const step2Schema = z.object({
     .default(''),
   category: z.enum(validCategorySlugs, {
     errorMap: () => ({ message: 'Please select a valid category' })
-  })
+  }),
+  publishedAt: z.string().refine(
+    value => {
+      // First check if it's a valid date
+      const date = new Date(value)
+      if (Number.isNaN(date.getTime())) {
+        return false
+      }
+      // Then check if it matches the exact format YYYY-MM-DD
+      return /^\d{4}-\d{2}-\d{2}$/.test(value)
+    },
+    {
+      message: 'Please enter a valid date in the format YYYY-MM-DD'
+    }
+  )
 })
 
 type Step1Data = z.infer<typeof step1Schema>
@@ -113,7 +127,8 @@ export function SubmitForm() {
       website: '',
       llmsUrl: '',
       llmsFullUrl: '',
-      category: ''
+      category: '',
+      publishedAt: new Date().toISOString().split('T')[0]
     }
   })
 
@@ -165,9 +180,17 @@ export function SubmitForm() {
     setIsLoading(true)
     try {
       const formData = new FormData()
+      // Set current date for publishedAt
+      const currentDate = new Date().toISOString().split('T')[0]
+
+      // Add all form values except publishedAt
       Object.entries(values).forEach(([key, value]) => {
-        if (value) formData.append(key, value)
+        if (key !== 'publishedAt' && value) {
+          formData.append(key, value)
+        }
       })
+      // Add the current date as publishedAt
+      formData.append('publishedAt', currentDate)
 
       const result = await submitLlmsTxt(formData)
 

@@ -62,7 +62,7 @@ async function getNewsItems(): Promise<{ items: NewsItem[] }> {
     // During runtime, use the API route
     const baseUrl = getBaseUrl()
     const res = await fetch(`${baseUrl}/api/rss-feed`, {
-      next: { revalidate: 3600 }
+      next: { revalidate: 172800 }
     })
 
     if (!res.ok) {
@@ -94,7 +94,7 @@ export default async function NewsPage() {
           <Link href={RSS_FEED_URL} className="inline-flex">
             <Button variant="outline">
               <Rss className="mr-2 h-4 w-4" />
-              Follow RSS Feed
+              RSS Feed
             </Button>
           </Link>
         </div>

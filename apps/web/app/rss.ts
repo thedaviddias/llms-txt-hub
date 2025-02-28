@@ -30,7 +30,7 @@ interface RSSFeedOptions {
 const DEFAULT_OPTIONS: Required<RSSFeedOptions> = {
   feedUrl: process.env.RSS_FEED_URL || 'https://bg.raindrop.io/rss/public/52790163',
   retries: 3,
-  revalidateTime: 3600,
+  revalidateTime: 172800,
   userAgent: 'Mozilla/5.0 (compatible; RSS-Reader/1.0)'
 }
 

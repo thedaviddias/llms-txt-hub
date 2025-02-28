@@ -12,7 +12,7 @@ async function fetchWithRetry(url: string, retries = 3): Promise<Response> {
   for (let i = 0; i < retries; i++) {
     try {
       const response = await fetch(url, {
-        next: { revalidate: 3600 },
+        next: { revalidate: 172800 },
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; RSS-Reader/1.0)'
         }

@@ -14,6 +14,7 @@ export interface WebsiteMetadata {
   llmsUrl: string
   llmsFullUrl?: string
   category: string
+  publishedAt: string
 }
 
 export interface GuideMetadata {
