@@ -3,6 +3,7 @@
 import { categories } from '@/lib/categories'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
+import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
 
 const owner = 'thedaviddias'
@@ -71,15 +72,25 @@ export async function submitLlmsTxt(formData: FormData) {
     }
 
     // Create the content for the new MDX file
+    const frontmatterData = {
+      name,
+      description,
+      website,
+      llmsUrl,
+      llmsFullUrl: llmsFullUrl || '',
+      category: categorySlug,
+      publishedAt
+    }
+
+    const yamlContent = yaml.dump(frontmatterData, {
+      quotingType: "'",
+      forceQuotes: true,
+      indent: 2,
+      lineWidth: -1
+    })
+
     const content = `---
-name: ${name}
-description: ${description}
-website: ${website}
-llmsUrl: ${llmsUrl}
-llmsFullUrl: ${llmsFullUrl || ''}
-category: ${categorySlug}
-publishedAt: '${publishedAt}'
----
+${yamlContent}---
 
 # ${name}
 

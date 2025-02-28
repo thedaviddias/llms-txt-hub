@@ -51,10 +51,11 @@ async function checkFrontmatter(filePath?: string) {
         if (!data[field]) {
           console.log(chalk.yellow(`\nMissing required field '${field}' in ${file}`))
           if (field === 'publishedAt') {
-            data[field] = '2024-02-24'
+            const currentDate = new Date().toISOString().split('T')[0]
+            data[field] = currentDate
             needsUpdate = true
             hasFixed = true
-            console.log(chalk.green('Added default publishedAt date: 2024-02-24'))
+            console.log(chalk.green(`Added default publishedAt date: ${currentDate}`))
           } else {
             hasErrors = true
           }
@@ -79,7 +80,7 @@ async function checkFrontmatter(filePath?: string) {
       // If we made any changes, update the file
       if (needsUpdate) {
         const newYamlContent = yaml.dump(data, {
-          quotingType: '"',
+          quotingType: "'",
           forceQuotes: true,
           indent: 2,
           lineWidth: -1
