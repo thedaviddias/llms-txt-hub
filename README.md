@@ -302,6 +302,19 @@ You are welcome to contribute to this project!
 Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hub/blob/main/.github/CONTRIBUTING.md) before submitting a pull request.
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jharrell"><img src="https://avatars.githubusercontent.com/u/4829245?v=4?s=100" width="100px;" alt="Jon Harrell"/><br /><sub><b>Jon Harrell</b></sub></a><br /><a href="#content-jharrell" title="Content">🖋</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 
