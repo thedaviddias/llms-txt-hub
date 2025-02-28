@@ -52,7 +52,7 @@ function getPriority(path: string): number {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = []
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llms-txt-hub.vercel.app'
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
   const contentDir = join(process.cwd(), '../../content')
 
   try {
