@@ -4,6 +4,8 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 
+export const dynamic = 'force-dynamic'
+
 // Generate dynamic metadata based on search params
 export async function generateMetadata({
   searchParams
