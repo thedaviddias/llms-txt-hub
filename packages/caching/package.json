@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "typescript": "^5.8.2"
+    "typescript": "^5.7.3"
   }
 }
