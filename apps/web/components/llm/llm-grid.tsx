@@ -23,7 +23,10 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
         {items.map(item => {
           if (!item?.slug) return null
           return (
-            <div className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors relative">
+            <div
+              className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors relative"
+              key={item.slug}
+            >
               <img
                 src={getFaviconUrl(item.website) || '/placeholder.svg'}
                 alt={`${item.name} logo`}

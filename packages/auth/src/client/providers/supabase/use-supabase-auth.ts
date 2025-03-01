@@ -13,19 +13,29 @@ export function useSupabaseAuth(supabase: SupabaseClient): AuthProvider {
   useEffect(() => {
     const {
       data: { subscription }
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setIsLoaded(true)
       setIsSignedIn(!!session)
-      setUser(
-        session?.user
-          ? {
-              id: session.user.id,
-              email: session.user.email,
-              name: session.user.user_metadata?.name,
-              imageUrl: session.user.user_metadata?.avatar_url
-            }
-          : null
-      )
+
+      if (session?.user) {
+        // Verify user data with server
+        const {
+          data: { user: verifiedUser }
+        } = await supabase.auth.getUser()
+        if (verifiedUser) {
+          setUser({
+            id: verifiedUser.id,
+            email: verifiedUser.email,
+            name: verifiedUser.user_metadata?.name,
+            imageUrl: verifiedUser.user_metadata?.avatar_url
+          })
+        } else {
+          setUser(null)
+          setIsSignedIn(false)
+        }
+      } else {
+        setUser(null)
+      }
     })
 
     return () => {
@@ -57,18 +67,19 @@ export function useSupabaseAuth(supabase: SupabaseClient): AuthProvider {
 
   const getSession = async () => {
     const {
-      data: { session }
-    } = await supabase.auth.getSession()
+      data: { user }
+    } = await supabase.auth.getUser()
+
     return {
-      user: session?.user
+      user: user
         ? {
-            id: session.user.id,
-            email: session.user.email,
-            name: session.user.user_metadata?.name,
-            imageUrl: session.user.user_metadata?.avatar_url
+            id: user.id,
+            email: user.email,
+            name: user.user_metadata?.name,
+            imageUrl: user.user_metadata?.avatar_url
           }
         : null,
-      isSignedIn: !!session
+      isSignedIn: !!user
     }
   }
 
