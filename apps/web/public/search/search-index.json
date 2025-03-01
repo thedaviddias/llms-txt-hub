@@ -121,6 +121,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Bucket",
+    "description": "Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
+    "url": "/bucket",
+    "content": "# Bucket\n\nWelcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
+    "category": "developer-tools",
+    "slug": "bucket",
+    "website": "https://docs.bucket.co/",
+    "llmsUrl": "https://docs.bucket.co/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Campsite",
     "description": "Organized team communication platform that replaces chaotic chat with structured discussions",
     "url": "/campsite",
@@ -218,6 +229,17 @@
     "website": "https://datafold.com",
     "llmsUrl": "https://docs.datafold.com/llms.txt",
     "llmsFullUrl": "https://docs.datafold.com/llms-full.txt"
+  },
+  {
+    "name": "DevHub",
+    "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
+    "url": "/dev-hub",
+    "content": "# DevHub\n\nDevHub provides a comprehensive location-focused enterprise marketing platform that enables brands to manage and optimize their marketing efforts across multiple locations efficiently.\n\n## Key Focus Areas\n\n- Location-Based Marketing\n- Enterprise Brand Management\n- Marketing Automation\n\n## About llms.txt Implementation\n\nDevHub's llms.txt documentation provides detailed information about their API capabilities and integration options for location-based marketing automation.",
+    "category": "developer-tools",
+    "slug": "dev-hub",
+    "website": "https://www.devhub.com/",
+    "llmsUrl": "https://api-docs.devhub.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Dopp Finance",
@@ -847,6 +869,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Raycast",
+    "description": "A collection of powerful productivity tools all within an extendable launcher.",
+    "url": "/raycast",
+    "content": "# Raycast\n\nRaycast is a blazingly fast, totally extendable launcher that lets you complete tasks, calculate, share common links, and much more through a powerful keyboard-driven interface.\n\n## Key Focus Areas\n\n- Productivity Enhancement\n- Extension Ecosystem\n- Developer Workflows\n\n## About llms.txt Implementation\n\nRaycast's llms.txt documentation provides comprehensive information about their extension API and integration capabilities, enabling developers to create powerful productivity tools within the Raycast ecosystem.",
+    "category": "developer-tools",
+    "slug": "raycast",
+    "website": "https://www.raycast.com/",
+    "llmsUrl": "https://raw.githubusercontent.com/raycast/extensions/refs/heads/gh-pages/llms-full.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Rememberizer",
     "description": "Memory and knowledge management platform",
     "url": "/rememberizer",
@@ -1164,6 +1197,17 @@
     "website": "https://sdk.vercel.ai",
     "llmsUrl": "https://sdk.vercel.ai/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "viem",
+    "description": "Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js.",
+    "url": "/viem",
+    "content": "# viem\n\nviem is a TypeScript interface for Ethereum that provides low-level stateless primitives for interacting with Ethereum. It offers a modern, efficient, and lightweight alternative to traditional Ethereum libraries like ethers.js.\n\n## Key Focus Areas\n\n- Lightweight & Efficient (35kB bundle size)\n- Type-safe Ethereum Interactions\n- Modular & Composable Architecture\n- Clear API Design with TypeScript Support\n- Performance-optimized Implementation\n\n## About llms.txt Implementation\n\nviem's llms.txt documentation provides comprehensive information about its API capabilities, focusing on:\n\n- Public Actions for blockchain data reading\n- Wallet Actions for transaction management\n- Contract Interactions with type safety\n- WebSocket and HTTP transport layers\n- Chain-specific configurations",
+    "category": "developer-tools",
+    "slug": "viem",
+    "website": "https://viem.sh/",
+    "llmsUrl": "https://viem.sh/llms.txt",
+    "llmsFullUrl": "https://viem.sh/llms-full.txt"
   },
   {
     "name": "Vital",

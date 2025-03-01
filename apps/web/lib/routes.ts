@@ -8,18 +8,15 @@ export const routes = {
   llmsTxt: '/llms.txt',
   website: {
     list: '/website',
-    detail: (slug: string) => `/website/${slug}`,
+    detail: '/website/[slug]',
     featured: '/website',
-    latest: '/website'
+    latest: '/website?sort=latest',
+    withCategory: '/website?category=[category]'
   },
   about: '/about',
-  category: {
-    list: '/category',
-    detail: (slug: string) => `/category/${slug}`
-  },
   guides: {
     list: '/guides',
-    guide: (slug: string) => `/guides/${slug}`
+    guide: '/guides/[slug]'
   },
   faq: '/faq',
   login: '/login',
@@ -32,7 +29,7 @@ export const routes = {
   rss: '/rss.xml'
 } as const
 
-type ParentRoutes = 'category' | 'guides'
+type ParentRoutes = 'guides'
 
 type StaticRoutes =
   | 'home'
@@ -41,7 +38,6 @@ type StaticRoutes =
   | 'website.featured'
   | 'website.latest'
   | 'about'
-  | 'category.list'
   | 'guides.list'
   | 'faq'
   | 'login'
@@ -53,41 +49,36 @@ type StaticRoutes =
   | 'terms'
   | 'rss'
 
-type DynamicRoutes = 'website.detail' | 'category.detail' | 'guides.guide'
+type DynamicRoutes = 'website.detail' | 'website.withCategory' | 'guides.guide'
 
-type RoutePaths = StaticRoutes | DynamicRoutes | ParentRoutes
+type Routes = StaticRoutes | DynamicRoutes
+
+type DynamicRouteParams = {
+  'website.detail': { slug: string }
+  'website.withCategory': { category: string }
+  'guides.guide': { slug: string }
+}
 
 /**
- * Type-safe route getter
- * @param path - Dot notation path to the route (e.g. 'website.detail')
- * @param params - Optional parameters for dynamic routes
+ * Get the URL for a route
+ * @param route - Route name
+ * @param params - Route parameters (for dynamic routes)
  */
-export function getRoute(path: RoutePaths, params?: Record<string, string>): string {
-  const parts = path.split('.')
-  let route: any = routes
-
-  // Handle parent routes, but not for 'website'
-  if (parts.length === 1 && parts[0] !== 'website' && route[parts[0]]?.list) {
-    return route[parts[0]].list
-  }
+export function getRoute<T extends Routes>(
+  route: T,
+  params?: T extends keyof DynamicRouteParams ? DynamicRouteParams[T] : never
+): string {
+  const parts = route.split('.')
+  let current: any = routes
 
   for (const part of parts) {
-    if (!route || !route[part]) {
-      throw new Error(`Invalid route path: ${path}`)
-    }
-    route = route[part]
+    current = current[part]
   }
 
-  if (typeof route === 'function') {
-    if (!params?.slug) {
-      throw new Error(`Missing required slug parameter for route: ${path}`)
-    }
-    return route(params.slug)
+  if (typeof current === 'string' && params) {
+    const param = Object.entries(params)[0]
+    return current.replace(`[${param[0]}]`, param[1])
   }
 
-  if (typeof route === 'string') {
-    return route
-  }
-
-  throw new Error(`Invalid route path: ${path}`)
+  return current
 }
