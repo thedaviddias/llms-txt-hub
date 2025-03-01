@@ -62,15 +62,15 @@ export default async function Home() {
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-16">
         <HeroSection />
         <FeaturedProjectsSection projects={featuredProjects} />
-        <HowItWorksSection />
         <FeaturedGuidesSection guides={featuredGuides} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <LatestUpdatesSection projects={recentlyUpdatedProjects} />
           <LatestNewsSection />
         </div>
-        <FAQSection />
         <CategoriesSection />
+        <HowItWorksSection />
         <CommunityStatsSection allProjects={allProjects} />
+        <FAQSection />
         <NewsletterSection />
       </div>
     </>

@@ -39,7 +39,7 @@ export function FeaturedGuidesSection({ guides }: FeaturedGuidesSectionProps) {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Link href={getRoute('guides')} className="flex items-center">
+          <Link href={getRoute('guides.list')} className="flex items-center">
             View all <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </div>
