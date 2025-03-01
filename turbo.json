@@ -47,11 +47,19 @@
       "cache": false,
       "dependsOn": ["^build"]
     },
-    "test:ui": {
+    "test:watch": {
       "cache": false,
       "dependsOn": ["^build"]
     },
-    "test:debug": {
+    "test:e2e": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:e2e:ui": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:e2e:debug": {
       "cache": false,
       "dependsOn": ["^build"]
     }

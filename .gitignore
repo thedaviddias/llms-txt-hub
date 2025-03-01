@@ -22,8 +22,9 @@ public/_pagefind
 npm-debug.log*
 
 # local env files
-!.env.example
 .env.*
+!.env.example
+!.env.test
 
 # vercel
 .vercel
