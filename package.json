@@ -30,6 +30,9 @@
     "syncpack:fix": "pnpm dlx syncpack fix-mismatches",
     "syncpack:list": "pnpm dlx syncpack list-mismatches",
     "test": "turbo test --cache-dir=.turbo",
+    "test:e2e": "turbo test --filter=e2e",
+    "test:e2e:ui": "turbo test:ui --filter=e2e",
+    "test:e2e:debug": "turbo test:debug --filter=e2e",
     "typecheck": "turbo typecheck",
     "update": "pnpm update -r",
     "update-llms-list": "node scripts/update-llms-list.js"

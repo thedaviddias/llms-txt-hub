@@ -42,6 +42,18 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:ui": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:debug": {
+      "cache": false,
+      "dependsOn": ["^build"]
     }
   }
 }
