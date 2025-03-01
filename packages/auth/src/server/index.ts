@@ -25,6 +25,15 @@ export async function auth() {
   )
 
   const {
+    data: { user }
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    return null
+  }
+
+  // Get session for additional context if needed
+  const {
     data: { session }
   } = await supabase.auth.getSession()
 

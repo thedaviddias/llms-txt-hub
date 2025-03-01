@@ -87,21 +87,7 @@ const step2Schema = z.object({
     .default(''),
   category: z.enum(validCategorySlugs, {
     errorMap: () => ({ message: 'Please select a valid category' })
-  }),
-  publishedAt: z.string().refine(
-    value => {
-      // First check if it's a valid date
-      const date = new Date(value)
-      if (Number.isNaN(date.getTime())) {
-        return false
-      }
-      // Then check if it matches the exact format YYYY-MM-DD
-      return /^\d{4}-\d{2}-\d{2}$/.test(value)
-    },
-    {
-      message: 'Please enter a valid date in the format YYYY-MM-DD'
-    }
-  )
+  })
 })
 
 type Step1Data = z.infer<typeof step1Schema>
@@ -127,8 +113,7 @@ export function SubmitForm() {
       website: '',
       llmsUrl: '',
       llmsFullUrl: '',
-      category: '',
-      publishedAt: new Date().toISOString().split('T')[0]
+      category: ''
     }
   })
 
@@ -250,7 +235,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -276,7 +261,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -290,7 +275,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -304,7 +289,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -318,7 +303,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -332,7 +317,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -361,7 +346,7 @@ export function SubmitForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
