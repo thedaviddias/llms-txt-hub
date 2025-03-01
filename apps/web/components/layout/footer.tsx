@@ -1,5 +1,5 @@
 import { getRoute } from '@/lib/routes'
-import { SiGithub, SiX } from '@icons-pack/react-simple-icons'
+import { SiGithub, SiReddit, SiX } from '@icons-pack/react-simple-icons'
 import Link from 'next/link'
 import { ModeToggle } from '../mode-toggle'
 
@@ -24,9 +24,13 @@ export function Footer() {
                   <SiGithub className="h-5 w-5" />
                   <span className="sr-only">GitHub</span>
                 </Link>
-                <Link href="https://x.com/thedaviddias" className="hover:text-foreground">
+                <Link href="https://www.reddit.com/r/llmstxt/" className="hover:text-foreground">
+                  <SiReddit className="h-5 w-5" />
+                  <span className="sr-only">Reddit</span>
+                </Link>
+                <Link href="https://x.com/llmstxthub" className="hover:text-foreground">
                   <SiX className="h-5 w-5" />
-                  <span className="sr-only">Twitter</span>
+                  <span className="sr-only">X (Twitter)</span>
                 </Link>
               </div>
             </div>
