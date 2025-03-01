@@ -19,6 +19,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Check Frontmatter
+        run: pnpm check:frontmatter
+
       - name: Run Biome Check
         uses: mongolyy/reviewdog-action-biome@v1
         with:

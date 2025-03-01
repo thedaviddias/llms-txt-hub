@@ -83,7 +83,10 @@ async function checkFrontmatter(filePath?: string) {
           quotingType: "'",
           forceQuotes: true,
           indent: 2,
-          lineWidth: -1
+          lineWidth: 80,
+          styles: {
+            '!!str': 'style > 80'
+          }
         })
         return `---\n${newYamlContent}---\n${parts[2] || ''}`
       }
