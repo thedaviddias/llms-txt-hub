@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "pnpm dlx generate-search-index && turbo build",
+    "build": "node scripts/search-index-generator.js && turbo build",
     "check:frontmatter": "tsx scripts/check-frontmatter.ts",
     "check:links": "lychee --config ./lychee.toml --verbose .",
     "clean": "git clean -xdf node_modules dist .next",
@@ -30,9 +30,10 @@
     "syncpack:fix": "pnpm dlx syncpack fix-mismatches",
     "syncpack:list": "pnpm dlx syncpack list-mismatches",
     "test": "turbo test --cache-dir=.turbo",
-    "test:e2e": "turbo test --filter=e2e",
-    "test:e2e:ui": "turbo test:ui --filter=e2e",
-    "test:e2e:debug": "turbo test:debug --filter=e2e",
+    "test:watch": "turbo test:watch --cache-dir=.turbo",
+    "test:e2e": "turbo test:e2e --filter=e2e",
+    "test:e2e:ui": "turbo test:e2e:ui --filter=e2e",
+    "test:e2e:debug": "turbo test:e2e:debug --filter=e2e",
     "typecheck": "turbo typecheck",
     "update": "pnpm update -r",
     "update-llms-list": "node scripts/update-llms-list.js"

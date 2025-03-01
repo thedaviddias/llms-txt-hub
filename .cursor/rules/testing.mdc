@@ -1,0 +1,226 @@
+---
+description: Rules for writing Jest tests in TypeScript
+globs: *.test.ts, *.test.tsx, **/__tests__/*.ts, **/__tests__/*.tsx
+alwaysApply: true
+---
+# Jest Testing Guidelines
+
+## File Organization
+
+- Place tests next to the file being tested with `.test.ts(x)` extension
+- Or use `__tests__` directory in the same folder as the tested file
+- Match the folder structure of the source code
+
+## Test Setup
+
+### Custom Test Renderer
+
+Always use the custom test renderer to ensure consistent provider wrapping and test utilities located in test/test-utils.tsx
+
+```
+
+// Re-export everything
+export * from '@testing-library/react'
+export { render }
+```
+
+Usage in tests:
+```typescript
+import { render, screen } from '@/test/test-utils'
+
+describe('Component', () => {
+  it('should render correctly', () => {
+    render(<Component />)
+    // ... rest of test
+  })
+})
+```
+
+## Test Structure
+
+Follow this structure for all tests:
+
+```typescript
+describe('ComponentName or FunctionName', () => {
+  describe('specific functionality or scenario', () => {
+    it('should describe expected behavior', () => {
+      // Arrange
+      // Act
+      // Assert
+    })
+  })
+})
+```
+
+### Example of Good Test Structure
+
+```typescript
+// Good: Clear structure and naming
+describe('useAuth', () => {
+  describe('when user logs in', () => {
+    it('should update authentication state', () => {
+      // Arrange
+      const credentials = {
+        email: 'test@example.com',
+        password: 'password123'
+      }
+      
+      // Act
+      const result = login(credentials)
+      
+      // Assert
+      expect(result.isAuthenticated).toBe(true)
+    })
+  })
+})
+```
+
+## React Testing Library Best Practices
+
+### Component Testing
+
+```typescript
+import { render, screen } from '@/test/test-utils'
+import userEvent from '@testing-library/user-event'
+
+describe('Component', () => {
+  it('should interact correctly', async () => {
+    // Arrange
+    render(<Component />)
+    
+    // Act
+    await userEvent.click(screen.getByRole('button'))
+    
+    // Assert
+    expect(screen.getByText('Expected Result')).toBeInTheDocument()
+  })
+})
+```
+
+### Query Priority
+
+Always use queries in this order:
+1. getByRole
+2. getByLabelText
+3. getByPlaceholderText
+4. getByText
+5. getByDisplayValue
+6. getByAltText
+7. getByTitle
+8. getByTestId
+
+## Mocking
+
+### Module Mocking
+
+```typescript
+// Mock modules
+jest.mock('./path/to/module', () => ({
+  someFunction: jest.fn()
+}))
+
+// Mock API calls
+global.fetch = jest.fn(() => 
+  Promise.resolve({
+    json: () => Promise.resolve(mockData)
+  })
+) as jest.Mock
+```
+
+## Next.js Specific Testing
+
+### Server Components
+
+```typescript
+import { render } from '@/test/test-utils'
+
+describe('ServerComponent', () => {
+  it('should render server content', async () => {
+    const props = await getServerSideProps()
+    render(<ServerComponent {...props} />)
+    // Assert rendered content
+  })
+})
+```
+
+### API Routes
+
+```typescript
+import { createMocks } from 'node-mocks-http'
+
+describe('API Route', () => {
+  it('should handle requests correctly', async () => {
+    const { req, res } = createMocks({
+      method: 'POST',
+      body: { data: 'test' }
+    })
+    
+    await handler(req, res)
+    expect(res._getStatusCode()).toBe(200)
+  })
+})
+```
+
+### Custom Hooks
+
+```typescript
+import { renderHook, act } from '@testing-library/react'
+
+describe('useCustomHook', () => {
+  it('should manage state correctly', () => {
+    const { result } = renderHook(() => useCustomHook())
+    
+    act(() => {
+      result.current.someFunction()
+    })
+    
+    expect(result.current.value).toBe('expected')
+  })
+})
+```
+
+## Error Handling
+
+Always test both success and error cases:
+
+```typescript
+describe('Form submission', () => {
+  it('handles successful submission', async () => {
+    render(<Form />)
+    await userEvent.click(screen.getByRole('button'))
+    expect(screen.getByText('Success')).toBeInTheDocument()
+  })
+
+  it('handles submission errors', async () => {
+    server.use(
+      rest.post('/api/submit', (req, res, ctx) =>
+        res(ctx.status(500))
+      )
+    )
+    
+    render(<Form />)
+    await userEvent.click(screen.getByRole('button'))
+    expect(screen.getByText('Error')).toBeInTheDocument()
+  })
+})
+```
+
+## Coverage Requirements
+
+- Aim for minimum 80% coverage
+- Focus on business logic and user interactions
+- Test error states and edge cases
+- Run coverage reports regularly: `jest --coverage`
+
+## Best Practices Summary
+
+1. Use the custom render function from test-utils.tsx
+2. Follow AAA pattern (Arrange, Act, Assert)
+3. Test both success and error cases
+4. Use meaningful test descriptions
+5. Keep tests focused and isolated
+6. Mock external dependencies
+7. Use proper cleanup in afterEach when needed
+8. Prefer userEvent over fireEvent for user interactions
+9. Use proper async/await for asynchronous tests
+10. Maintain test structure that mirrors component structure
