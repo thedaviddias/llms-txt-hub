@@ -10,7 +10,9 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata({
   searchParams
 }: { searchParams: { q?: string } }): Promise<Metadata> {
-  const query = searchParams.q || ''
+  const { q } = await searchParams
+
+  const query = q || ''
 
   return {
     title: query ? `Search Results for "${query}" | llms.txt hub` : 'Search | llms.txt hub',
@@ -20,8 +22,10 @@ export async function generateMetadata({
   }
 }
 
-export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
-  const query = searchParams.q || ''
+export default async function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
+  const { q } = await searchParams
+
+  const query = q || ''
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
