@@ -41,6 +41,16 @@ let nextConfig: NextConfig = {
         pathname: '/u/**'
       }
     ]
+  },
+
+  redirects: async () => {
+    return [
+      {
+        source: '/website/:path*',
+        destination: '/websites/:path*',
+        permanent: true
+      }
+    ]
   }
 }
 

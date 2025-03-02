@@ -39,7 +39,7 @@ export async function GET() {
     items: [
       ...websitesData.map((site: WebsiteMetadata) => ({
         id: site.slug,
-        url: `${baseUrl}/website/${site.slug}`,
+        url: `${baseUrl}/websites/${site.slug}`,
         title: site.name,
         content_html: site.description,
         date_published: getGitLastModified(site.slug),

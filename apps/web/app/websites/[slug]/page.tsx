@@ -66,8 +66,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <div className="max-w-3xl mx-auto space-y-8">
         <Breadcrumb
           items={[
-            { name: 'Websites', href: '/website' },
-            { name: project.name, href: `/website/${slug}` }
+            { name: 'Websites', href: '/websites' },
+            { name: project.name, href: `/websites/${slug}` }
           ]}
           baseUrl={getBaseUrl()}
         />

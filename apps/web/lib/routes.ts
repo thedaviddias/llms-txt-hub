@@ -7,11 +7,11 @@ export const routes = {
   home: '/',
   llmsTxt: '/llms.txt',
   website: {
-    list: '/website',
-    detail: '/website/[slug]',
-    featured: '/website',
-    latest: '/website?sort=latest',
-    withCategory: '/website?category=[category]'
+    list: '/websites',
+    detail: '/websites/[slug]',
+    featured: '/websites',
+    latest: '/websites?sort=latest',
+    withCategory: '/websites?category=[category]'
   },
   about: '/about',
   guides: {
