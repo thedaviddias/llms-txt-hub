@@ -11,6 +11,8 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
+    # Skip if the push is from the bot itself
+    if: github.actor != 'github-actions[bot]'
     permissions:
       contents: write
       pull-requests: write
@@ -25,6 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - name: Install dependencies
         uses: ./.github/actions/install
 

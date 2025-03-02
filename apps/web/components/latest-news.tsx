@@ -14,7 +14,7 @@ interface NewsItem {
   pubDate: string
 }
 
-const NUMBER_OF_NEWS_ITEMS = 5
+const NUMBER_OF_NEWS_ITEMS = 4
 
 export function LatestNews() {
   const [news, setNews] = useState<NewsItem[]>([])

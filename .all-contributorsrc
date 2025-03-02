@@ -4,5 +4,16 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": ["README.md"],
-  "contributors": []
+  "contributors": [
+    {
+      "login": "jharrell",
+      "name": "Jon Harrell",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4829245?v=4",
+      "profile": "https://github.com/jharrell",
+      "contributions": ["content"]
+    }
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7
 }

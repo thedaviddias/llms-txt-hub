@@ -1,7 +1,6 @@
 import { execSync } from 'node:child_process'
 import path from 'node:path'
 import { type WebsiteMetadata, getAllWebsites } from '@/lib/mdx'
-import { type Resource, getAllResources } from '@/lib/resources'
 import { resolveFromRoot } from '@/lib/utils'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
@@ -21,7 +20,6 @@ function getGitLastModified(slug: string): string {
 
 export async function GET() {
   const websitesData = await getAllWebsites()
-  const resourcesData = await getAllResources()
 
   const feed = {
     version: 'https://jsonfeed.org/version/1',
@@ -53,21 +51,6 @@ export async function GET() {
           }
         ],
         categories: ['Website', site.category || 'Uncategorized']
-      })),
-      ...resourcesData.map((resource: Resource) => ({
-        id: resource.slug,
-        url: `${baseUrl}/resources/${resource.slug}`,
-        title: resource.title,
-        content_html: resource.description,
-        date_published: getGitLastModified(`resources/${resource.slug}`),
-        date_modified: getGitLastModified(`resources/${resource.slug}`),
-        authors: [
-          {
-            name: 'David Dias',
-            url: 'https://thedaviddias.com'
-          }
-        ],
-        categories: ['Resource', resource.type || 'Uncategorized']
       }))
     ]
   }

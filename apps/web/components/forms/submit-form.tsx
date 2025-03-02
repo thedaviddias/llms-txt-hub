@@ -165,9 +165,17 @@ export function SubmitForm() {
     setIsLoading(true)
     try {
       const formData = new FormData()
+      // Set current date for publishedAt
+      const currentDate = new Date().toISOString().split('T')[0]
+
+      // Add all form values except publishedAt
       Object.entries(values).forEach(([key, value]) => {
-        if (value) formData.append(key, value)
+        if (key !== 'publishedAt' && value) {
+          formData.append(key, value)
+        }
       })
+      // Add the current date as publishedAt
+      formData.append('publishedAt', currentDate)
 
       const result = await submitLlmsTxt(formData)
 
@@ -227,7 +235,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -253,7 +261,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -267,7 +275,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -281,7 +289,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -295,7 +303,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -309,7 +317,7 @@ export function SubmitForm() {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -338,7 +346,7 @@ export function SubmitForm() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>
               )}
             />

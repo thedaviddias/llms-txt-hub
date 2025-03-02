@@ -13,19 +13,47 @@ export function useSupabaseAuth(supabase: SupabaseClient): AuthProvider {
   useEffect(() => {
     const {
       data: { subscription }
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      try {
+        if (session?.user) {
+          const userData = {
+            id: session.user.id,
+            email: session.user.email,
+            name: session.user.user_metadata?.name,
+            imageUrl: session.user.user_metadata?.avatar_url
+          }
+
+          // Update all auth states atomically
+          setUser(userData)
+          setIsSignedIn(true)
+          setIsLoaded(true)
+        } else {
+          // Clear auth state atomically
+          setUser(null)
+          setIsSignedIn(false)
+          setIsLoaded(true)
+        }
+      } catch (error) {
+        // Handle any errors by clearing auth state
+        console.error('Error handling auth state change:', error)
+        setUser(null)
+        setIsSignedIn(false)
+        setIsLoaded(true)
+      }
+    })
+
+    // Initial session check
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser({
+          id: session.user.id,
+          email: session.user.email,
+          name: session.user.user_metadata?.name,
+          imageUrl: session.user.user_metadata?.avatar_url
+        })
+        setIsSignedIn(true)
+      }
       setIsLoaded(true)
-      setIsSignedIn(!!session)
-      setUser(
-        session?.user
-          ? {
-              id: session.user.id,
-              email: session.user.email,
-              name: session.user.user_metadata?.name,
-              imageUrl: session.user.user_metadata?.avatar_url
-            }
-          : null
-      )
     })
 
     return () => {
@@ -35,10 +63,14 @@ export function useSupabaseAuth(supabase: SupabaseClient): AuthProvider {
 
   const signIn = async () => {
     if (typeof supabase.auth.signInWithOAuth === 'function') {
+      // Get redirectTo from URL parameters or current path
+      const params = new URLSearchParams(window.location.search)
+      const redirectTo = params.get('redirectTo') || window.location.pathname
+
       await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${window.location.origin}/`,
+          redirectTo: `${window.location.origin}${redirectTo}`,
           scopes: 'read:user public_repo'
         }
       })
@@ -57,18 +89,19 @@ export function useSupabaseAuth(supabase: SupabaseClient): AuthProvider {
 
   const getSession = async () => {
     const {
-      data: { session }
-    } = await supabase.auth.getSession()
+      data: { user }
+    } = await supabase.auth.getUser()
+
     return {
-      user: session?.user
+      user: user
         ? {
-            id: session.user.id,
-            email: session.user.email,
-            name: session.user.user_metadata?.name,
-            imageUrl: session.user.user_metadata?.avatar_url
+            id: user.id,
+            email: user.email,
+            name: user.user_metadata?.name,
+            imageUrl: user.user_metadata?.avatar_url
           }
         : null,
-      isSignedIn: !!session
+      isSignedIn: !!user
     }
   }
 

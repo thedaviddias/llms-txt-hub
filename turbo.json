@@ -42,6 +42,26 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:watch": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:e2e": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:e2e:ui": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "test:e2e:debug": {
+      "cache": false,
+      "dependsOn": ["^build"]
     }
   }
 }

@@ -40,10 +40,12 @@ export function SignIn({ redirectUrl = '/', onSignIn, children }: SignInProps) {
     keys().NEXT_PUBLIC_SUPABASE_URL && keys().NEXT_PUBLIC_SUPABASE_ANON_KEY
   )
 
+  // We don't need the useEffect redirect anymore since it's handled by Supabase OAuth
+  // The only case we need to handle is if the user is already signed in
   useEffect(() => {
     if (user) {
       const finalRedirect = searchParams.get('redirectTo') || redirectUrl
-      router.push(finalRedirect)
+      router.replace(finalRedirect)
     }
   }, [user, router, searchParams, redirectUrl])
 

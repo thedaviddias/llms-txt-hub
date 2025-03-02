@@ -1,6 +1,7 @@
 ---
 description: Shared rules accross all packages
 globs: **/*
+alwaysApply: true
 ---
 TypeScript Conventions:
 - Use interfaces over types when possible

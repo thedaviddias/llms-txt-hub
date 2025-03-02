@@ -40,6 +40,7 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 
 ### 🤖 ai ml
 
+- ![AI Squared favicon](https://www.google.com/s2/favicons?domain=squared.ai&size=32) **[AI Squared](https://squared.ai)** - AI integration platform for enterprise applications <sub>[llms.txt](https://docs.squared.ai/llms.txt) • [llms-full.txt](https://docs.squared.ai/llms-full.txt)</sub>
 - ![Answer.AI favicon](https://www.google.com/s2/favicons?domain=answer.ai&size=32) **[Answer.AI](https://answer.ai)** - AI-powered answering and automation platform <sub>[llms.txt](https://www.answer.ai/llms.txt)</sub>
 - ![Anthropic favicon](https://www.google.com/s2/favicons?domain=docs.anthropic.com&size=32) **[Anthropic](https://docs.anthropic.com)** - AI research company developing safe and reliable AI systems for humanity's benefit <sub>[llms.txt](https://docs.anthropic.com/llms.txt) • [llms-full.txt](https://docs.anthropic.com/llms-full.txt)</sub>
 - ![Aporia favicon](https://www.google.com/s2/favicons?domain=aporia.com&size=32) **[Aporia](https://aporia.com)** - ML observability and monitoring platform <sub>[llms.txt](https://gr-docs.aporia.com/llms.txt)</sub>
@@ -72,7 +73,7 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 - ![Axiom favicon](https://www.google.com/s2/favicons?domain=axiom.co&size=32) **[Axiom](https://axiom.co)** - Cloud-native observability and log management platform <sub>[llms.txt](https://axiom.co/docs/llms.txt) • [llms-full.txt](https://axiom.co/docs/llms-full.txt)</sub>
 - ![BaseHub favicon](https://www.google.com/s2/favicons?domain=basehub.com&size=32) **[BaseHub](https://basehub.com)** - Database and data infrastructure platform <sub>[llms.txt](https://docs.basehub.com/llms.txt)</sub>
 - ![Datafold favicon](https://www.google.com/s2/favicons?domain=datafold.com&size=32) **[Datafold](https://datafold.com)** - Data reliability and testing platform <sub>[llms.txt](https://docs.datafold.com/llms.txt) • [llms-full.txt](https://docs.datafold.com/llms-full.txt)</sub>
-- ![DuckDB favicon](https://www.google.com/s2/favicons?domain=duckdb.org&size=32) **[DuckDB](https://duckdb.org)** - In-process SQL OLAP database management system <sub>[llms-full.txt](https://duckdb.org/duckdb-docs.md)</sub>
+- ![DuckDB favicon](https://www.google.com/s2/favicons?domain=duckdb.org&size=32) **[DuckDB](https://duckdb.org)** - In-process SQL OLAP database management system <sub>[llms.txt](https://duckdb.org/duckdb-docs.md)</sub>
 - ![Flatfile favicon](https://www.google.com/s2/favicons?domain=flatfile.com&size=32) **[Flatfile](https://flatfile.com)** - Data onboarding and import platform <sub>[llms.txt](https://flatfile.com/docs/llms.txt) • [llms-full.txt](https://flatfile.com/docs/llms-full.txt)</sub>
 - ![Galileo favicon](https://www.google.com/s2/favicons?domain=rungalileo.io&size=32) **[Galileo](https://rungalileo.io)** - AI-powered data quality and monitoring platform <sub>[llms.txt](https://docs.rungalileo.io/llms.txt) • [llms-full.txt](https://docs.rungalileo.io/llms-full.txt)</sub>
 - ![Hyperline favicon](https://www.google.com/s2/favicons?domain=hyperline.co&size=32) **[Hyperline](https://hyperline.co)** - Data pipeline and integration platform <sub>[llms.txt](https://docs.hyperline.co/llms.txt) • [llms-full.txt](https://docs.hyperline.co/llms-full.txt)</sub>
@@ -94,7 +95,10 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 
 ### 💻 developer tools
 
+- ![Better Auth favicon](https://www.google.com/s2/favicons?domain=www.better-auth.com&size=32) **[Better Auth](https://www.better-auth.com)** - The most comprehensive authentication library for TypeScript. <sub>[llms.txt](https://www.better-auth.com/llms.txt)</sub>
+- ![Bucket favicon](https://www.google.com/s2/favicons?domain=docs.bucket.co&size=32) **[Bucket](https://docs.bucket.co/)** - Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS. <sub>[llms.txt](https://docs.bucket.co/llms.txt)</sub>
 - ![Cursor favicon](https://www.google.com/s2/favicons?domain=cursor.com&size=32) **[Cursor](https://cursor.com)** - AI-powered code editor and development environment <sub>[llms.txt](https://docs.cursor.com/llms.txt) • [llms-full.txt](https://docs.cursor.com/llms-full.txt)</sub>
+- ![DevHub favicon](https://www.google.com/s2/favicons?domain=www.devhub.com&size=32) **[DevHub](https://www.devhub.com/)** - 'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.' <sub>[llms.txt](https://api-docs.devhub.com/llms.txt)</sub>
 - ![dotenvx favicon](https://www.google.com/s2/favicons?domain=dotenvx.com&size=32) **[dotenvx](https://dotenvx.com)** - Environment variable management tool <sub>[llms.txt](https://dotenvx.com/llms.txt) • [llms-full.txt](https://dotenvx.com/llms-full.txt)</sub>
 - ![Dub favicon](https://www.google.com/s2/favicons?domain=dub.co&size=32) **[Dub](https://dub.co)** - Link management and URL shortening platform <sub>[llms.txt](https://dub.co/docs/llms.txt) • [llms-full.txt](https://dub.co/docs/llms-full.txt)</sub>
 - ![Evan Boehs favicon](https://www.google.com/s2/favicons?domain=boehs.org&size=32) **[Evan Boehs](https://boehs.org)** - Personal website and development portfolio <sub>[llms.txt](https://boehs.org/llms.txt)</sub>
@@ -102,8 +106,10 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 - ![Frigade favicon](https://www.google.com/s2/favicons?domain=frigade.com&size=32) **[Frigade](https://frigade.com)** - User onboarding and product adoption platform <sub>[llms.txt](https://docs.frigade.com/llms.txt)</sub>
 - ![Hypermode favicon](https://www.google.com/s2/favicons?domain=hypermode.com&size=32) **[Hypermode](https://hypermode.com)** - High-performance application development platform <sub>[llms.txt](https://docs.hypermode.com/llms.txt)</sub>
 - ![Mintlify favicon](https://www.google.com/s2/favicons?domain=mintlify.com&size=32) **[Mintlify](https://mintlify.com)** - Modern documentation platform and tools <sub>[llms.txt](https://mintlify.com/docs/llms.txt) • [llms-full.txt](https://mintlify.com/docs/llms-full.txt)</sub>
+- ![Prisma favicon](https://www.google.com/s2/favicons?domain=prisma.io&size=32) **[Prisma](https://prisma.io)** - TypeScript ORM and hosted PostgreSQL database platform <sub>[llms.txt](https://prisma.io/docs/llms.txt) • [llms-full.txt](https://prisma.io/docs/llms-full.txt)</sub>
 - ![RainbowKit favicon](https://www.google.com/s2/favicons?domain=rainbowkit.com&size=32) **[RainbowKit](https://rainbowkit.com)** - Web3 wallet integration toolkit <sub>[llms.txt](https://rainbowkit.com/llms.txt) • [llms-full.txt](https://rainbowkit.com/llms-full.txt)</sub>
 - ![raincamp favicon](https://www.google.com/s2/favicons?domain=raincamp.ai&size=32) **[raincamp](https://raincamp.ai)** - AI-powered development and deployment platform <sub>[llms.txt](https://raincamp.ai/llms.txt)</sub>
+- ![Raycast favicon](https://www.google.com/s2/favicons?domain=www.raycast.com&size=32) **[Raycast](https://www.raycast.com/)** - A collection of powerful productivity tools all within an extendable launcher. <sub>[llms.txt](https://raw.githubusercontent.com/raycast/extensions/refs/heads/gh-pages/llms-full.txt)</sub>
 - ![Roc favicon](https://www.google.com/s2/favicons?domain=roc-lang.org&size=32) **[Roc](https://roc-lang.org)** - Fast and safe programming language <sub>[llms.txt](https://www.roc-lang.org/llms.txt)</sub>
 - ![ScreenshotOne favicon](https://www.google.com/s2/favicons?domain=screenshotone.com&size=32) **[ScreenshotOne](https://screenshotone.com)** - Simple API for automated website screenshots without browser management complexity <sub>[llms.txt](https://screenshotone.com/docs/llms.txt) • [llms-full.txt](https://screenshotone.com/docs/llms-full.txt)</sub>
 - ![Sourcegraph favicon](https://www.google.com/s2/favicons?domain=sourcegraph.com&size=32) **[Sourcegraph](https://sourcegraph.com)** - Code intelligence and search platform <sub>[llms.txt](https://docs.sourcegraph.com/llms.txt)</sub>
@@ -111,6 +117,7 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 - ![Svelte favicon](https://www.google.com/s2/favicons?domain=svelte.dev&size=32) **[Svelte](https://svelte.dev)** - Modern web application framework <sub>[llms.txt](https://svelte.dev/llms.txt) • [llms-full.txt](https://svelte.dev/llms-full.txt)</sub>
 - ![Turbo favicon](https://www.google.com/s2/favicons?domain=turbo.build&size=32) **[Turbo](https://turbo.build)** - Turbo is an incremental bundler and build system optimized for JavaScript and TypeScript, written in Rust. <sub>[llms.txt](https://turbo.build/llms.txt)</sub>
 - ![UX Patterns for Devs favicon](https://www.google.com/s2/favicons?domain=uxpatterns.dev&size=32) **[UX Patterns for Devs](https://uxpatterns.dev/en)** - A collection of UX patterns for developers to build effective, accessible, and usable UI components. <sub>[llms.txt](https://uxpatterns.dev/en/llms.txt) • [llms-full.txt](https://uxpatterns.dev/en/llms-full.txt)</sub>
+- ![viem favicon](https://www.google.com/s2/favicons?domain=viem.sh&size=32) **[viem](https://viem.sh/)** - Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js. <sub>[llms.txt](https://viem.sh/llms.txt) • [llms-full.txt](https://viem.sh/llms-full.txt)</sub>
 - ![Warp favicon](https://www.google.com/s2/favicons?domain=www.warp.dev&size=32) **[Warp](https://www.warp.dev)** - Modern terminal and development environment <sub>[llms.txt](https://docs.warp.dev/llms.txt) • [llms-full.txt](https://docs.warp.dev/llms-full.txt)</sub>
 
 ### ☁️ infrastructure cloud
@@ -119,7 +126,6 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 - ![Cloudflare favicon](https://www.google.com/s2/favicons?domain=www.cloudflare.com&size=32) **[Cloudflare](https://www.cloudflare.com/)** - Make employees, applications and networks faster and more secure everywhere, while reducing complexity and cost. <sub>[llms.txt](https://developers.cloudflare.com/llms.txt) • [llms-full.txt](https://developers.cloudflare.com/llms-full.txt)</sub>
 - ![Envoyer favicon](https://www.google.com/s2/favicons?domain=envoyer.io&size=32) **[Envoyer](https://envoyer.io)** - Zero downtime PHP deployment platform <sub>[llms.txt](https://docs.envoyer.io/llms.txt) • [llms-full.txt](https://docs.envoyer.io/llms-full.txt)</sub>
 - ![IonQ favicon](https://www.google.com/s2/favicons?domain=ionq.com&size=32) **[IonQ](https://ionq.com)** - Quantum computing platform and infrastructure <sub>[llms.txt](https://docs.ionq.com/llms.txt) • [llms-full.txt](https://docs.ionq.com/llms-full.txt)</sub>
-- ![Micro1 favicon](https://www.google.com/s2/favicons?domain=micro1.ai&size=32) **[Micro1](https://micro1.ai)** - AI-powered microservices platform
 - ![Pinata favicon](https://www.google.com/s2/favicons?domain=docs.pinata.cloud&size=32) **[Pinata](https://docs.pinata.cloud)** - Simple API platform for IPFS storage and decentralized file management <sub>[llms.txt](https://docs.pinata.cloud/llms.txt) • [llms-full.txt](https://docs.pinata.cloud/llms-full.txt)</sub>
 - ![PrimeV favicon](https://www.google.com/s2/favicons?domain=primev.xyz&size=32) **[PrimeV](https://primev.xyz)** - Cloud infrastructure and virtualization platform <sub>[llms.txt](https://docs.primev.xyz/llms.txt) • [llms-full.txt](https://docs.primev.xyz/llms-full.txt)</sub>
 
@@ -155,10 +161,6 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 - ![Vital favicon](https://www.google.com/s2/favicons?domain=tryvital.io&size=32) **[Vital](https://tryvital.io)** - Health data integration platform <sub>[llms.txt](https://docs.tryvital.io/llms.txt) • [llms-full.txt](https://docs.tryvital.io/llms-full.txt)</sub>
 - ![Workflow favicon](https://www.google.com/s2/favicons?domain=workflow.design&size=32) **[Workflow](https://workflow.design)** - Design and workflow automation platform <sub>[llms.txt](https://docs.workflow.design/llms.txt)</sub>
 - ![Zapier favicon](https://www.google.com/s2/favicons?domain=zapier.com&size=32) **[Zapier](https://zapier.com)** - Workflow automation and integration platform <sub>[llms.txt](https://docs.zapier.com/llms.txt) • [llms-full.txt](https://docs.zapier.com/llms-full.txt)</sub>
-
-### 🔍 other
-
-- ![AI Squared favicon](https://www.google.com/s2/favicons?domain=squared.ai&size=32) **[AI Squared](https://squared.ai)** - AI integration platform for enterprise applications <sub>[llms.txt](https://docs.squared.ai/llms.txt) • [llms-full.txt](https://docs.squared.ai/llms-full.txt)</sub>
 
 ### 🔒 security identity
 
@@ -241,10 +243,10 @@ There are three ways to add your project to the list:
 
 #### Option 1: Web Interface (Recommended)
 
-1. Visit our website
-2. Log in with your GitHub account
+1. [Visit our website](https://llmstxt.com)
+2. Log in with your GitHub account (the scope is `public_repo`, which is required to submit a pull request)
 3. Submit your website through our user-friendly form
-4. Your submission will automatically submit a pull request to this repository
+4. Your submission will automatically submit a pull request to this repository and you will get the direct link to your pull request.
 
 #### Option 2: Using the Generator
 
@@ -265,11 +267,9 @@ pnpm generate:website
 #### Option 3: Manual Pull Request
 
 1. Fork this repository
-2. Create a new MDX file in the appropriate category directory
+2. Create a new MDX file in the /content/websites directory
 3. Ensure your entry includes:
-   - Project name with favicon
-   - Brief description
-   - Link to your llms.txt file
+   - Project name, description, website URL, llms.txt URL, and category
 4. Submit a pull request
 
 Both methods will go through our validation process to ensure:
@@ -300,6 +300,19 @@ You are welcome to contribute to this project!
 Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hub/blob/main/.github/CONTRIBUTING.md) before submitting a pull request.
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jharrell"><img src="https://avatars.githubusercontent.com/u/4829245?v=4?s=100" width="100px;" alt="Jon Harrell"/><br /><sub><b>Jon Harrell</b></sub></a><br /><a href="#content-jharrell" title="Content">🖋</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 

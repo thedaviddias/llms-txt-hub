@@ -13,7 +13,10 @@ interface SearchEntry {
 
 async function generateSearchIndex() {
   const websitesDirectory = getContentPath('websites')
-  const files = fs.readdirSync(websitesDirectory)
+  const allFiles = fs.readdirSync(websitesDirectory)
+
+  // Only process .mdx files
+  const files = allFiles.filter(file => file.endsWith('.mdx'))
 
   const entries: SearchEntry[] = []
 

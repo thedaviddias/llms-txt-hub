@@ -39,6 +39,12 @@ type WebsiteCategory = (typeof CATEGORIES)[number]
  * @returns void
  */
 export default function generator(plop: PlopTypes.NodePlopAPI): void {
+  // Add helper for current date in YYYY-MM-DD format
+  plop.setHelper('currentDate', () => {
+    const date = new Date()
+    return date.toISOString().split('T')[0]
+  })
+
   plop.setGenerator('website', {
     description: 'Generate a new website entry',
     prompts: [

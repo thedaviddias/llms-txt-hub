@@ -1,6 +1,7 @@
 ---
 description: Rules for the main website
-globs: apps/web
+globs: apps/web/**
+alwaysApply: true
 ---
 Instructions:
 - Follow Next.js 15 App Router best practices

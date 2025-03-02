@@ -14,6 +14,7 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getRoute } from '@/lib/routes'
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>
@@ -100,7 +101,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
                 {project.category && (
                   <Link
-                    href={`/category/${project.category}`}
+                    href={getRoute('website.withCategory', { category: project.category })}
                     className="inline-flex items-center hover:opacity-80 transition-opacity"
                   >
                     <Badge

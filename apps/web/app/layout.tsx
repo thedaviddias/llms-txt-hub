@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-
 import type React from 'react'
 import '../../../packages/design-system/styles/globals.css'
 import { Footer } from '@/components/layout/footer'
@@ -9,6 +8,7 @@ import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 import { SentryUserProvider } from '@thedaviddias/observability/providers'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+
 export const metadata: Metadata = {
   title: 'llms.txt hub',
   description: 'A curated hub for AI-ready documentation implementing the llms.txt standard',

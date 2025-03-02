@@ -1,27 +1,5 @@
 [
   {
-    "name": "",
-    "description": "",
-    "url": "/terms",
-    "content": "# Terms of Service\n\nLast updated: February 23th, 2015\n\nPlease read these Terms of Service (\"Terms\", \"Terms of Service\") carefully before using the llms.txt hub website (llmstxthub.com) operated by llms.txt hub (\"us\", \"we\", or \"our\").\n\n## 1. Terms\n\nBy accessing the website, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any part of these terms, you may not use our website.\n\n## 2. Use License\n\nPermission is granted to temporarily download one copy of the materials (information or software) on llms.txt hub's website for personal, non-commercial transitory viewing only.\n\n## 3. Disclaimer\n\nThe materials on llms.txt hub's website are provided on an 'as is' basis. llms.txt hub makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.\n\n## 4. Limitations\n\nIn no event shall llms.txt hub or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on llms.txt hub's website.\n\n## 5. Revisions and Errata\n\nThe materials appearing on llms.txt hub's website could include technical, typographical, or photographic errors. llms.txt hub does not warrant that any of the materials on its website are accurate, complete or current.\n\n## 6. Links\n\nllms.txt hub has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by llms.txt hub of the site. Use of any such linked website is at the user's own risk.\n\n## 7. Modifications\n\nllms.txt hub may revise these terms of service for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms of Service.\n\n## 8. Governing Law\n\nThese terms and conditions are governed by and construed in accordance with the laws of [Your Country/State] and you irrevocably submit to the exclusive jurisdiction of the courts in that State or location.",
-    "category": "",
-    "slug": "terms",
-    "website": "",
-    "llmsUrl": "",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "",
-    "description": "",
-    "url": "/privacy",
-    "content": "# Privacy Policy\n\nLast updated: February 23th, 2015\n\nThis Privacy Policy describes how llms.txt hub (\"we\", \"us\", or \"our\") collects, uses, and shares your personal information when you use our website (llmstxthub.com) and services.\n\n## Information We Collect\n\nWe collect information you provide directly to us, such as when you create an account, submit content, or contact us for support. This may include your name, email address, and any other information you choose to provide.\n\n## How We Use Your Information\n\nWe use the information we collect to provide, maintain, and improve our services, to communicate with you, and to comply with legal obligations.\n\n## Information Sharing and Disclosure\n\nWe do not sell your personal information. We may share your information with third-party service providers who perform services on our behalf, such as hosting and analytics.\n\n## Your Rights and Choices\n\nYou have the right to access, correct, or delete your personal information. You can do this by logging into your account or contacting us directly.\n\n## Changes to This Policy\n\nWe may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.\n\n## Contact Us\n\nIf you have any questions about this Privacy Policy, please contact us at privacy@llmstxthub.com.",
-    "category": "",
-    "slug": "privacy",
-    "website": "",
-    "llmsUrl": "",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "Activepieces",
     "description": "Open source no-code business automation tool",
     "url": "/activepieces",
@@ -37,7 +15,7 @@
     "description": "AI integration platform for enterprise applications",
     "url": "/ai-squared",
     "content": "# AI Squared\n\nAI Squared provides solutions for integrating AI capabilities into existing enterprise applications, making AI implementation more accessible and efficient.\n\n## Key Focus Areas\n\n- Enterprise AI Integration\n- AI Implementation\n- Business Solutions\n\n## About llms.txt Implementation\n\nAI Squared's documentation through llms.txt provides detailed information about their AI integration platform and enterprise solutions.",
-    "category": "",
+    "category": "ai-ml",
     "slug": "ai-squared",
     "website": "https://squared.ai",
     "llmsUrl": "https://docs.squared.ai/llms.txt",
@@ -132,14 +110,25 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "CalendarScripts",
-    "description": "Calendar and scheduling solutions",
-    "url": "/calendarscripts",
-    "content": "# CalendarScripts\n\nCalendarScripts provides calendar and scheduling solutions for web applications.\n\n## Key Focus Areas\n\n- Calendar Management\n- Scheduling Tools\n- Time Management\n\n## About llms.txt Implementation\n\nCalendarScripts focuses on providing efficient calendar and scheduling functionality.",
-    "category": "integration-automation",
-    "slug": "calendarscripts",
-    "website": "https://blog.calendarscripts.info",
-    "llmsUrl": "",
+    "name": "Better Auth",
+    "description": "The most comprehensive authentication library for TypeScript.",
+    "url": "/better-auth",
+    "content": "# Better Auth\n\nThe most comprehensive authentication library for TypeScript.",
+    "category": "developer-tools",
+    "slug": "better-auth",
+    "website": "https://www.better-auth.com",
+    "llmsUrl": "https://www.better-auth.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Bucket",
+    "description": "Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
+    "url": "/bucket",
+    "content": "# Bucket\n\nWelcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
+    "category": "developer-tools",
+    "slug": "bucket",
+    "website": "https://docs.bucket.co/",
+    "llmsUrl": "https://docs.bucket.co/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -242,6 +231,17 @@
     "llmsFullUrl": "https://docs.datafold.com/llms-full.txt"
   },
   {
+    "name": "DevHub",
+    "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
+    "url": "/dev-hub",
+    "content": "# DevHub\n\nDevHub provides a comprehensive location-focused enterprise marketing platform that enables brands to manage and optimize their marketing efforts across multiple locations efficiently.\n\n## Key Focus Areas\n\n- Location-Based Marketing\n- Enterprise Brand Management\n- Marketing Automation\n\n## About llms.txt Implementation\n\nDevHub's llms.txt documentation provides detailed information about their API capabilities and integration options for location-based marketing automation.",
+    "category": "developer-tools",
+    "slug": "dev-hub",
+    "website": "https://www.devhub.com/",
+    "llmsUrl": "https://api-docs.devhub.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Dopp Finance",
     "description": "Decentralized finance and trading platform",
     "url": "/dopp-finance",
@@ -282,8 +282,8 @@
     "category": "data-analytics",
     "slug": "duckdb",
     "website": "https://duckdb.org",
-    "llmsUrl": "",
-    "llmsFullUrl": "https://duckdb.org/duckdb-docs.md"
+    "llmsUrl": "https://duckdb.org/duckdb-docs.md",
+    "llmsFullUrl": ""
   },
   {
     "name": "Dynamic",
@@ -449,17 +449,6 @@
     "website": "https://rungalileo.io",
     "llmsUrl": "https://docs.rungalileo.io/llms.txt",
     "llmsFullUrl": "https://docs.rungalileo.io/llms-full.txt"
-  },
-  {
-    "name": "Getting Started with llms.txt",
-    "description": "Learn how to implement llms.txt in your website or documentation",
-    "url": "/getting-started-llms-txt",
-    "content": "# Getting Started with llms.txt\n\n<p className=\"mt-2 text-xl text-muted-foreground\">Learn how to implement llms.txt in your website or documentation</p>\n\n![A white outline of a document icon with \"llms.txt\" text inside it, displayed on a bright yellow/orange background.](/guides/llms-txt-ai-format-standard.webp)\n\n## What is llms.txt?\n\nThe `llms.txt` file is a proposed standard that helps AI models better understand and interact with your website's content. Unlike robots.txt or sitemap.xml, it's specifically designed to enhance AI interactions by providing structured content overviews and navigation paths.\n\n### Purpose and Benefits\n\n- **Enhanced AI Understanding**: Provides a structured overview of your website content, helping AI systems understand your site quickly and accurately\n- **Efficient Information Retrieval**: Enables AI systems to locate and retrieve relevant information efficiently\n- **Improved Contextual Understanding**: Reduces misinterpretation by providing context and relationships between content\n- **Better User Experience**: Leads to more accurate, context-aware responses when users interact with AI about your content\n- **Overcoming Context Limitations**: Helps AI systems work within their context window limitations by providing streamlined content access\n\n## How llms.txt Differs from robots.txt and sitemap.xml\n\nWhile these files might seem similar, they serve distinct purposes:\n\n- **robots.txt**: Focuses on controlling search engine crawler access but doesn't help with content understanding\n- **sitemap.xml**: Lists all indexable pages without providing context or helping with content processing\n- **llms.txt**: Specifically addresses AI-related challenges by providing content structure in a format optimized for AI processing\n\n## The llms.txt Specification\n\nThe specification defines two distinct files:\n\n- **/llms.txt**: A streamlined view of documentation navigation to help AI systems quickly understand a site's structure\n- **/llms-full.txt**: A comprehensive file containing all documentation in one place\n\nBoth files use Markdown formatting, which provides a natural hierarchy that AI models can easily parse.\n\n## Basic Implementation Guide\n\n### 1. Create the File Structure\n\nThe llms.txt file uses Markdown with a specific structure:\n\n```markdown\n# Your Website/Project Name\n\n> A brief description of your website or project\n\n## Documentation\n\n- [Getting Started](/docs/getting-started) - Guide for new users\n- [API Reference](/docs/api) - Complete API documentation\n- [Tutorials](/docs/tutorials) - Step-by-step guides\n\n## Examples\n\n- [Basic Implementation](/examples/basic) - Simple integration example\n- [Advanced Features](/examples/advanced) - Using advanced capabilities\n\n## Optional Resources\n\n- [Community Forum](/community) - Get help from other users\n- [Change Log](/changelog) - Track updates and changes\n```\n\n### 2. Place the File in the Correct Location\n\nSave the file as `llms.txt` in your website's root directory, ensuring it's accessible at `yourwebsite.com/llms.txt`. If you're creating a comprehensive version with all your documentation, save it as `llms-full.txt`.\n\n### 3. Add HTTP Headers (Optional but Recommended)\n\nAdd the following HTTP header to your server configuration:\n\n```\nX-Robots-Tag: llms-txt\n```\n\n### 4. Verify Implementation\n\nTest your implementation by:\n1. Accessing `yourwebsite.com/llms.txt`\n2. Checking HTTP headers\n3. Validating the file format\n\n## Using llms.txt with AI Systems\n\nCurrently, most AI models don't automatically discover and index llms.txt files. To use your llms.txt file with AI systems:\n\n1. **Direct Link**: Provide the AI with a link to your llms.txt file\n2. **Manual Copy**: Copy the contents of your llms.txt file directly into your prompt\n3. **File Upload**: Use the AI tool's file upload feature if available\n\nAs adoption increases, more AI systems will likely integrate automatic discovery of llms.txt files.\n\n## Where To Find a list of all llms.txt files?\n\n![Screenshot of the llms.txt hub website showing a dark-themed interface with navigation menu, welcome message explaining the platform for AI-ready documentation, featured websites section (Warp, Galileo, raincamp, Dopp Finance), and a three-step guide explaining how the llms.txt standard works.](/guides/llms-txt-hub-homepage.webp)\n\n[llms.txt hub](https://llmstxthub.com) is rapidly becoming a popular open-source hub tracking all the websites that have implemented the llms.txt and llms-full.txt standards. Updated regularly, this comprehensive directory allows you to:\n- Discover real-world implementations across various industries and platforms\n- Study how leading organizations structure their llms.txt files\n- Access the latest news and developments related to the standard\n- Find open-source tools, plugins, and resources for implementing llms.txt on your own website\n\nBy exploring this directory, developers and content creators can observe implementation patterns, stay informed about best practices, and connect with the growing community of websites optimizing their content for AI systems through the llms.txt standard.\n\n## Generation Tools\n\nSeveral tools can help you generate llms.txt files:\n\n- [llmstxt by dotenv](https://github.com/dotenvx/llmstxt): Open source CLI tool that generates `llms.txt` based on a site's `sitemap.xml` file.\n- [llmstxt by Firecrawl](https://llmstxt.firecrawl.dev/): Uses Firecrawl to generate a llms.txt file.\n- [Mintlify](https://mintlify.com/blog/simplifying-docs-with-llms-txt): Documentation platform with llms.txt generation\n\n![The image shows a dark-themed web interface titled \"LLMs.txt generator\" with the tagline \"Generate consolidated text files from websites for LLM training and inference - Powered by Firecrawl 🔥\". The interface has a URL input field labeled \"Enter a URL\", a toggle switch for \"Full generation\", and an orange \"Generate\" button. Below this is a message stating \"Please provide a URL to generate a llms.txt file. For a better experience, use an API key from Firecrawl 🔥](/guides/llms-generator-firescrawl.webp)\n\n## Real-World Examples\n\nMany organizations have already adopted the llms.txt proposed standard:\n\n- [Cloudflare](https://llmstxthub.com/website/cloudflare): Impressive and extensive documentation about all the Cloudflare services\n- [Anthropic's llms.txt](https://llmstxthub.com/website/anthropic): All their documentation and prompt library\n- [Perplexity's llms-full.txt](https://llmstxthub.com/website/perplexity): A comprehensive implementation all their documentation and content website\n- [ElevenLabs](https://llmstxthub.com/website/elevenlabs): All the documenation about their API and product guides\n\n\n## Best Practices\n\n1. **Keep it Updated**: Regularly update your llms.txt file as your website structure changes to ensure AI systems have the most current information.\n\n2. **Use Clear Markdown Structure**:\n   - Start with an H1 project name\n   - Include a blockquote summary\n   - Use H2 headers to organize documentation links\n   - Provide brief descriptions for each link\n\n3. **Be Selective**: Focus on the most important resources in llms.txt, using the Optional section for less critical content.\n\n4. **Test with AI Systems**: Verify that AI models correctly interpret and navigate your content based on your llms.txt file.\n\n5. **Optimize for AI Processing**: Remove non-essential markup and scripts in llms-full.txt to help AI models focus on the important content.\n\n## Resources\n\n- [llms.txt Standard Proposal](https://llmstxt.org)\n- [GitHub Repository](https://github.com/thedaviddias/llms-txt-hub)\n- [Community Forum](https://github.com/thedaviddias/llms-txt-hub/discussions)",
-    "category": "getting-started",
-    "slug": "getting-started-llms-txt",
-    "website": "",
-    "llmsUrl": "",
-    "llmsFullUrl": ""
   },
   {
     "name": "Goody",
@@ -638,17 +627,6 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "llms.txt",
-    "description": "A proposal to standardise on using an /llms.txt file to provide information to help LLMs use a website at inference time.",
-    "url": "/llms-txt",
-    "content": "",
-    "category": "ai-ml",
-    "slug": "llms-txt",
-    "website": "https://llmstxt.org/",
-    "llmsUrl": "https://llmstxt.org/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "Loops",
     "description": "Customer communication and engagement platform",
     "url": "/loops",
@@ -713,17 +691,6 @@
     "website": "https://methodfi.com",
     "llmsUrl": "https://docs.methodfi.com/llms.txt",
     "llmsFullUrl": "https://docs.methodfi.com/llms-full.txt"
-  },
-  {
-    "name": "Micro1",
-    "description": "AI-powered microservices platform",
-    "url": "/micro1",
-    "content": "# Micro1\n\nMicro1 provides AI-powered microservices platform for modern application development.\n\n## Key Focus Areas\n\n- Microservices\n- AI Integration\n- Application Development\n\n## About llms.txt Implementation\n\nMicro1's platform focuses on AI-powered microservices architecture and development capabilities.",
-    "category": "infrastructure-cloud",
-    "slug": "micro1",
-    "website": "https://micro1.ai",
-    "llmsUrl": "",
-    "llmsFullUrl": ""
   },
   {
     "name": "Mintlify",
@@ -847,6 +814,17 @@
     "llmsFullUrl": "https://docs.primev.xyz/llms-full.txt"
   },
   {
+    "name": "Prisma",
+    "description": "TypeScript ORM and hosted PostgreSQL database platform",
+    "url": "/prisma",
+    "content": "# Prisma\n\nPrisma is best known for the Prisma ORM, a TypeScript ORM. Prisma also offers products that range from caching and connection pooling for databases to a hosted PostgreSQL solution.\n\n## Key Focus Areas\n\n- Serverless Database Infrastructure\n- ORM and Data Access\n- Productivity Enhancement\n\n## About llms.txt Implementation\n\nPrisma's llms.txt documentation details their next-generation ORM ecosystem and offers extensive setup and integration guidance in the full documentation.",
+    "category": "developer-tools",
+    "slug": "prisma",
+    "website": "https://prisma.io",
+    "llmsUrl": "https://prisma.io/docs/llms.txt",
+    "llmsFullUrl": "https://prisma.io/docs/llms-full.txt"
+  },
+  {
     "name": "ProjectDiscovery",
     "description": "Security and vulnerability scanning platform",
     "url": "/projectdiscovery",
@@ -888,6 +866,17 @@
     "slug": "raincamp",
     "website": "https://raincamp.ai",
     "llmsUrl": "https://raincamp.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Raycast",
+    "description": "A collection of powerful productivity tools all within an extendable launcher.",
+    "url": "/raycast",
+    "content": "# Raycast\n\nRaycast is a blazingly fast, totally extendable launcher that lets you complete tasks, calculate, share common links, and much more through a powerful keyboard-driven interface.\n\n## Key Focus Areas\n\n- Productivity Enhancement\n- Extension Ecosystem\n- Developer Workflows\n\n## About llms.txt Implementation\n\nRaycast's llms.txt documentation provides comprehensive information about their extension API and integration capabilities, enabling developers to create powerful productivity tools within the Raycast ecosystem.",
+    "category": "developer-tools",
+    "slug": "raycast",
+    "website": "https://www.raycast.com/",
+    "llmsUrl": "https://raw.githubusercontent.com/raycast/extensions/refs/heads/gh-pages/llms-full.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1208,6 +1197,17 @@
     "website": "https://sdk.vercel.ai",
     "llmsUrl": "https://sdk.vercel.ai/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "viem",
+    "description": "Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js.",
+    "url": "/viem",
+    "content": "# viem\n\nviem is a TypeScript interface for Ethereum that provides low-level stateless primitives for interacting with Ethereum. It offers a modern, efficient, and lightweight alternative to traditional Ethereum libraries like ethers.js.\n\n## Key Focus Areas\n\n- Lightweight & Efficient (35kB bundle size)\n- Type-safe Ethereum Interactions\n- Modular & Composable Architecture\n- Clear API Design with TypeScript Support\n- Performance-optimized Implementation\n\n## About llms.txt Implementation\n\nviem's llms.txt documentation provides comprehensive information about its API capabilities, focusing on:\n\n- Public Actions for blockchain data reading\n- Wallet Actions for transaction management\n- Contract Interactions with type safety\n- WebSocket and HTTP transport layers\n- Chain-specific configurations",
+    "category": "developer-tools",
+    "slug": "viem",
+    "website": "https://viem.sh/",
+    "llmsUrl": "https://viem.sh/llms.txt",
+    "llmsFullUrl": "https://viem.sh/llms-full.txt"
   },
   {
     "name": "Vital",
