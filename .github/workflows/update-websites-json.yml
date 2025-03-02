@@ -1,0 +1,48 @@
+name: Update websites.json
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "content/websites/**"
+
+jobs:
+  update-websites-json:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        uses: ./.github/actions/install
+
+      - name: Generate websites.json
+        run: |
+          pnpm generate-websites
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git diff --quiet data/websites.json || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        if: steps.git-check.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/websites.json
+          git commit -m "chore: update websites.json [skip ci]"
+          git push

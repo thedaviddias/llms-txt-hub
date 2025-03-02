@@ -2,6 +2,7 @@
   "name": "llms-txt-hub",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "node scripts/search-index-generator.js && turbo build",
     "check:frontmatter": "tsx scripts/check-frontmatter.ts",
@@ -12,6 +13,7 @@
     "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
     "format": "biome check --write .",
     "generate-search-index": "node scripts/search-index-generator.js",
+    "generate-websites": "tsx scripts/generate-websites.ts",
     "generate:website": "turbo gen website",
     "postinstall": "manypkg fix",
     "lint": "turbo lint && manypkg check",

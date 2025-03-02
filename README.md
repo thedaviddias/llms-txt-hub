@@ -243,10 +243,10 @@ There are three ways to add your project to the list:
 
 #### Option 1: Web Interface (Recommended)
 
-1. Visit our website
-2. Log in with your GitHub account
+1. [Visit our website](https://llmstxt.com)
+2. Log in with your GitHub account (the scope is `public_repo`, which is required to submit a pull request)
 3. Submit your website through our user-friendly form
-4. Your submission will automatically submit a pull request to this repository
+4. Your submission will automatically submit a pull request to this repository and you will get the direct link to your pull request.
 
 #### Option 2: Using the Generator
 
@@ -267,11 +267,9 @@ pnpm generate:website
 #### Option 3: Manual Pull Request
 
 1. Fork this repository
-2. Create a new MDX file in the appropriate category directory
+2. Create a new MDX file in the /content/websites directory
 3. Ensure your entry includes:
-   - Project name with favicon
-   - Brief description
-   - Link to your llms.txt file
+   - Project name, description, website URL, llms.txt URL, and category
 4. Submit a pull request
 
 Both methods will go through our validation process to ensure:

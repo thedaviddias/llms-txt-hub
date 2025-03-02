@@ -21,7 +21,7 @@ If you prefer to contribute directly through GitHub:
 
 1. Fork the repository
 2. Create a new branch for your addition: `git checkout -b add/your-website-name`
-3. Create a new MDX file in the appropriate category directory
+3. Create a new MDX file in the content/websites directory
 4. Add your website information following our template format
 5. Test your changes thoroughly
 6. Commit your changes with clear, descriptive commit messages
