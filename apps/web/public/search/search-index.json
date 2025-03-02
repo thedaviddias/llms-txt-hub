@@ -15,7 +15,7 @@
     "description": "AI integration platform for enterprise applications",
     "url": "/ai-squared",
     "content": "# AI Squared\n\nAI Squared provides solutions for integrating AI capabilities into existing enterprise applications, making AI implementation more accessible and efficient.\n\n## Key Focus Areas\n\n- Enterprise AI Integration\n- AI Implementation\n- Business Solutions\n\n## About llms.txt Implementation\n\nAI Squared's documentation through llms.txt provides detailed information about their AI integration platform and enterprise solutions.",
-    "category": "ai-llm",
+    "category": "ai-ml",
     "slug": "ai-squared",
     "website": "https://squared.ai",
     "llmsUrl": "https://docs.squared.ai/llms.txt",
