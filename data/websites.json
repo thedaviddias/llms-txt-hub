@@ -153,6 +153,15 @@
     "favicon": "https://www.google.com/s2/favicons?domain=docs.conductor.is&sz=128"
   },
   {
+    "name": "Convex",
+    "domain": "https://convex.dev",
+    "description": "The missing half of your React app: Convex is the open-source reactive database for app developers.",
+    "llmsTxtUrl": "https://convex.dev/llms.txt",
+    "llmsFullTxtUrl": "https://docs.convex.dev/llms.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=convex.dev&sz=128"
+  },
+  {
     "name": "CrewAI",
     "domain": "https://crewai.com",
     "description": "AI-powered team collaboration platform",
