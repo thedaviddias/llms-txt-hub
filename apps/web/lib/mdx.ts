@@ -57,7 +57,13 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
 
       return {
         slug,
-        ...data
+        name: data.name,
+        description: data.description,
+        website: data.website,
+        llmsUrl: data.llmsUrl,
+        llmsFullUrl: data.llmsFullUrl,
+        category: data.category,
+        publishedAt: data.publishedAt
       } as WebsiteMetadata
     })
 

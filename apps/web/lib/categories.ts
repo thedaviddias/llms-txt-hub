@@ -45,4 +45,10 @@ export const categories: Category[] = [
     description: 'API platforms, workflow automation, and integration tools',
     icon: Workflow
   }
+  // {
+  //   name: 'Blogs',
+  //   slug: 'blogs',
+  //   description: 'Personal tech blogs and developer portfolio websites',
+  //   icon: Book
+  // }
 ]

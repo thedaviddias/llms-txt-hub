@@ -7,18 +7,12 @@ import type { WebsiteMetadata } from '@/lib/mdx'
 import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@thedaviddias/design-system/select'
-import { Grid, List } from 'lucide-react'
+import {} from '@thedaviddias/design-system/select'
+import { Grid, List, Clock, SortAsc } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { LLMGrid } from './llm/llm-grid'
 import { useWebsiteFilters } from '@/hooks/use-website-filters'
+import { ToggleGroup, ToggleGroupItem } from '@thedaviddias/design-system/toggle-group'
 
 interface ClientProjectsListProps {
   initialWebsites: WebsiteMetadata[]
@@ -31,14 +25,29 @@ interface ClientProjectsListProps {
  * @returns True if object is a valid WebsiteMetadata
  */
 function isValidWebsite(website: any): website is WebsiteMetadata {
-  return (
+  const isValid =
     website &&
     typeof website.slug === 'string' &&
     typeof website.name === 'string' &&
     typeof website.description === 'string' &&
     typeof website.website === 'string' &&
-    typeof website.llmsUrl === 'string'
-  )
+    typeof website.llmsUrl === 'string' &&
+    typeof website.category === 'string' &&
+    typeof website.publishedAt === 'string'
+
+  if (!isValid) {
+    console.log('Invalid website:', website?.name, {
+      hasSlug: typeof website?.slug === 'string',
+      hasName: typeof website?.name === 'string',
+      hasDescription: typeof website?.description === 'string',
+      hasWebsite: typeof website?.website === 'string',
+      hasLlmsUrl: typeof website?.llmsUrl === 'string',
+      hasCategory: typeof website?.category === 'string',
+      hasPublishedAt: typeof website?.publishedAt === 'string'
+    })
+  }
+
+  return isValid
 }
 
 /**
@@ -68,10 +77,12 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
   // Update filtered and sorted websites when filters or initial websites change
   useEffect(() => {
     let filteredWebsites = [...initialWebsites]
+    console.log('Initial websites:', filteredWebsites.length)
 
     // Filter by category if selected
     if (categoryFilter !== 'all') {
       filteredWebsites = filteredWebsites.filter(website => website.category === categoryFilter)
+      console.log('After category filter:', filteredWebsites.length, 'Category:', categoryFilter)
     }
 
     // Sort by selected criteria
@@ -82,21 +93,53 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
     } else if (sortBy === 'name') {
       filteredWebsites.sort((a, b) => a.name.localeCompare(b.name))
     }
+    console.log('After sorting:', filteredWebsites.length)
 
     // Validate websites after all filtering and sorting
     const validWebsites = filteredWebsites.filter(isValidWebsite)
+    console.log('After validation:', validWebsites.length)
+    console.log(
+      'Invalid websites:',
+      filteredWebsites.filter(w => !isValidWebsite(w)).map(w => (w as WebsiteMetadata).name)
+    )
     setWebsites(validWebsites)
   }, [initialWebsites, categoryFilter, sortBy])
 
   return (
     <div>
-      <h1 className="text-4xl font-bold tracking-tight mb-8">{currentCategoryName}</h1>
+      <h1 className="text-4xl font-bold tracking-tight mb-4">{currentCategoryName}</h1>
+
+      <div className="mb-8">
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant={categoryFilter === 'all' ? 'default' : 'secondary'}
+            size="sm"
+            onClick={() => setCategoryFilter('all')}
+            className="rounded-full hover:cursor-pointer"
+          >
+            All Categories
+          </Button>
+          {categories.map(category => (
+            <Button
+              key={category.slug}
+              variant={categoryFilter === category.slug ? 'default' : 'secondary'}
+              size="sm"
+              onClick={() => setCategoryFilter(category.slug)}
+              className="rounded-full hover:cursor-pointer"
+            >
+              {category.name}
+            </Button>
+          ))}
+        </div>
+      </div>
+
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center space-x-2">
           <Button
             variant={viewMode === 'grid' ? 'default' : 'outline'}
             size="sm"
             onClick={() => setViewMode('grid')}
+            className="hover:cursor-pointer"
           >
             <Grid className="h-4 w-4" />
           </Button>
@@ -104,43 +147,28 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
             variant={viewMode === 'list' ? 'default' : 'outline'}
             size="sm"
             onClick={() => setViewMode('list')}
+            className="hover:cursor-pointer"
           >
             <List className="h-4 w-4" />
           </Button>
         </div>
-        <div className="flex items-center space-x-2">
-          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-            <SelectTrigger className="h-10 px-3 py-2 text-sm bg-background border rounded-md border-input hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-              <SelectValue className="text-sm" placeholder="Filter by Category" />
-            </SelectTrigger>
-            <SelectContent
-              className="z-50 min-w-[180px] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-              position="popper"
-            >
-              <SelectGroup className="p-3">
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map(category => (
-                  <SelectItem key={category.slug} value={category.slug}>
-                    {category.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px] h-10 px-3 py-2 text-sm bg-background border rounded-md border-input hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
-              <SelectValue className="text-sm" placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent
-              className="z-50 min-w-[180px] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-              position="popper"
-            >
-              <SelectGroup className="p-3">
-                <SelectItem value="latest">Latest</SelectItem>
-                <SelectItem value="name">Name</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Sort by:</span>
+          <ToggleGroup
+            type="single"
+            value={sortBy}
+            onValueChange={(value: string) => value && setSortBy(value)}
+            className="bg-background border rounded-md"
+          >
+            <ToggleGroupItem value="latest" className="px-3 py-2 h-10 data-[state=on]:bg-accent">
+              <Clock className="h-4 w-4 mr-2" />
+              <span className="text-sm">Latest</span>
+            </ToggleGroupItem>
+            <ToggleGroupItem value="name" className="px-3 py-2 h-10 data-[state=on]:bg-accent">
+              <SortAsc className="h-4 w-4 mr-2" />
+              <span className="text-sm">Name</span>
+            </ToggleGroupItem>
+          </ToggleGroup>
         </div>
       </div>
       {websites.length === 0 ? (

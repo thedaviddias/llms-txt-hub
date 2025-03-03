@@ -17,7 +17,7 @@ export function ProjectNavigation({ previousWebsite, nextWebsite }: ProjectNavig
         >
           <ChevronLeft className="mr-2 h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors" />
           <div className="flex flex-col">
-            <span className="text-sm text-muted-foreground">Previous</span>
+            <span className="text-sm text-muted-foreground">Previous </span>
             <span className="font-medium group-hover:text-foreground transition-colors">
               {previousWebsite.name}
             </span>
@@ -32,7 +32,7 @@ export function ProjectNavigation({ previousWebsite, nextWebsite }: ProjectNavig
           className="flex items-center p-2 -mr-2 hover:bg-muted rounded-md transition-colors group text-right"
         >
           <div className="flex flex-col">
-            <span className="text-sm text-muted-foreground">Next</span>
+            <span className="text-sm text-muted-foreground">Next </span>
             <span className="font-medium group-hover:text-foreground transition-colors">
               {nextWebsite.name}
             </span>

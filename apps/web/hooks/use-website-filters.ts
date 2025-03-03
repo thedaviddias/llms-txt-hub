@@ -87,7 +87,7 @@ export function useWebsiteFilters({
   // Handle sort changes
   const setSortBy = useCallback(
     (sort: string) => {
-      setSortByState(sort)
+      setSortByState(sort as string)
       updateUrl(categoryFilter, sort)
     },
     [categoryFilter, updateUrl]
@@ -103,7 +103,7 @@ export function useWebsiteFilters({
     }
 
     if (sortFromUrl !== sortBy) {
-      setSortByState(sortFromUrl || initialSort)
+      setSortByState((sortFromUrl as string) || initialSort)
     }
   }, [searchParams, initialCategory, initialSort])
 
