@@ -6,7 +6,8 @@
     "llmsTxtUrl": "https://www.activepieces.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://www.activepieces.com/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=activepieces.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=activepieces.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "AI Squared",
@@ -15,7 +16,8 @@
     "llmsTxtUrl": "https://docs.squared.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.squared.ai/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=squared.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=squared.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Answer.AI",
@@ -23,7 +25,8 @@
     "description": "AI-powered answering and automation platform",
     "llmsTxtUrl": "https://www.answer.ai/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=answer.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=answer.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Anthropic",
@@ -32,7 +35,8 @@
     "llmsTxtUrl": "https://docs.anthropic.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.anthropic.com/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.anthropic.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.anthropic.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Aporia",
@@ -40,7 +44,8 @@
     "description": "ML observability and monitoring platform",
     "llmsTxtUrl": "https://gr-docs.aporia.com/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=aporia.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=aporia.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Aptible",
@@ -49,7 +54,8 @@
     "llmsTxtUrl": "https://www.aptible.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://www.aptible.com/docs/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=aptible.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=aptible.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Argil AI",
@@ -57,7 +63,8 @@
     "description": "AI development and deployment platform",
     "llmsTxtUrl": "https://docs.argil.ai/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=argil.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=argil.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Axiom",
@@ -66,7 +73,8 @@
     "llmsTxtUrl": "https://axiom.co/docs/llms.txt",
     "llmsFullTxtUrl": "https://axiom.co/docs/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=axiom.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=axiom.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Axle",
@@ -74,7 +82,8 @@
     "description": "Insurance technology platform",
     "llmsTxtUrl": "https://docs.axle.insure/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=axle.insure&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=axle.insure&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "BaseHub",
@@ -82,7 +91,8 @@
     "description": "Database and data infrastructure platform",
     "llmsTxtUrl": "https://docs.basehub.com/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=basehub.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=basehub.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Better Auth",
@@ -90,7 +100,8 @@
     "description": "The most comprehensive authentication library for TypeScript.",
     "llmsTxtUrl": "https://www.better-auth.com/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.better-auth.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.better-auth.com&sz=128",
+    "publishedAt": "2024-02-27"
   },
   {
     "name": "Bucket",
@@ -98,7 +109,8 @@
     "description": "Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
     "llmsTxtUrl": "https://docs.bucket.co/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.bucket.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.bucket.co&sz=128",
+    "publishedAt": "2025-03-01"
   },
   {
     "name": "Campsite",
@@ -106,7 +118,8 @@
     "description": "Organized team communication platform that replaces chaotic chat with structured discussions",
     "llmsTxtUrl": "https://developers.campsite.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=developers.campsite.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=developers.campsite.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Clever Cloud",
@@ -114,7 +127,8 @@
     "description": "Cloud platform for application deployment and hosting",
     "llmsTxtUrl": "https://www.clever-cloud.com/developers/llms.txt",
     "category": "infrastructure-cloud",
-    "favicon": "https://www.google.com/s2/favicons?domain=clever-cloud.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=clever-cloud.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Cloudflare",
@@ -123,7 +137,8 @@
     "llmsTxtUrl": "https://developers.cloudflare.com/llms.txt",
     "llmsFullTxtUrl": "https://developers.cloudflare.com/llms-full.txt",
     "category": "infrastructure-cloud",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.cloudflare.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.cloudflare.com&sz=128",
+    "publishedAt": "2024-02-26"
   },
   {
     "name": "Cobo",
@@ -132,7 +147,8 @@
     "llmsTxtUrl": "https://www.cobo.com/developers/llms.txt",
     "llmsFullTxtUrl": "https://www.cobo.com/developers/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=cobo.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=cobo.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Codeium",
@@ -141,7 +157,8 @@
     "llmsTxtUrl": "https://docs.codeium.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.codeium.com/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.codeium.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.codeium.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Conductor",
@@ -150,7 +167,8 @@
     "llmsTxtUrl": "https://docs.conductor.is/llms.txt",
     "llmsFullTxtUrl": "https://docs.conductor.is/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.conductor.is&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.conductor.is&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Convex",
@@ -168,7 +186,8 @@
     "llmsTxtUrl": "https://docs.crewai.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.crewai.com/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=crewai.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=crewai.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Cursor",
@@ -177,7 +196,8 @@
     "llmsTxtUrl": "https://docs.cursor.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.cursor.com/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=cursor.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=cursor.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Datafold",
@@ -186,7 +206,8 @@
     "llmsTxtUrl": "https://docs.datafold.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.datafold.com/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=datafold.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=datafold.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "DevHub",
@@ -194,7 +215,8 @@
     "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
     "llmsTxtUrl": "https://api-docs.devhub.com/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.devhub.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.devhub.com&sz=128",
+    "publishedAt": "2025-03-01"
   },
   {
     "name": "Dopp Finance",
@@ -202,7 +224,8 @@
     "description": "Decentralized finance and trading platform",
     "llmsTxtUrl": "https://docs.dopp.finance/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=dopp.finance&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=dopp.finance&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "dotenvx",
@@ -211,7 +234,8 @@
     "llmsTxtUrl": "https://dotenvx.com/llms.txt",
     "llmsFullTxtUrl": "https://dotenvx.com/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=dotenvx.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=dotenvx.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Dub",
@@ -220,7 +244,8 @@
     "llmsTxtUrl": "https://dub.co/docs/llms.txt",
     "llmsFullTxtUrl": "https://dub.co/docs/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=dub.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=dub.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "DuckDB",
@@ -228,7 +253,8 @@
     "description": "In-process SQL OLAP database management system",
     "llmsTxtUrl": "https://duckdb.org/duckdb-docs.md",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=duckdb.org&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=duckdb.org&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Dynamic",
@@ -237,7 +263,8 @@
     "llmsTxtUrl": "https://docs.dynamic.xyz/llms.txt",
     "llmsFullTxtUrl": "https://docs.dynamic.xyz/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=dynamic.xyz&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=dynamic.xyz&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "ElevenLabs",
@@ -246,7 +273,8 @@
     "llmsTxtUrl": "https://elevenlabs.io/docs/llms.txt",
     "llmsFullTxtUrl": "https://elevenlabs.io/docs/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=elevenlabs.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Emailgic",
@@ -254,7 +282,8 @@
     "description": "Email automation and management platform",
     "llmsTxtUrl": "https://emailgic.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=emailgic.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=emailgic.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "EmbedChain",
@@ -263,7 +292,8 @@
     "llmsTxtUrl": "https://docs.embedchain.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.embedchain.ai/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=embedchain.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=embedchain.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Envoyer",
@@ -272,7 +302,8 @@
     "llmsTxtUrl": "https://docs.envoyer.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.envoyer.io/llms-full.txt",
     "category": "infrastructure-cloud",
-    "favicon": "https://www.google.com/s2/favicons?domain=envoyer.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=envoyer.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Evan Boehs",
@@ -280,7 +311,8 @@
     "description": "Personal website and development portfolio",
     "llmsTxtUrl": "https://boehs.org/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=boehs.org&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=boehs.org&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Fabric",
@@ -289,7 +321,8 @@
     "llmsTxtUrl": "https://developer.fabric.inc/llms.txt",
     "llmsFullTxtUrl": "https://developer.fabric.inc/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=fabric.inc&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=fabric.inc&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "FastHTML",
@@ -297,7 +330,8 @@
     "description": "High-performance HTML templating engine",
     "llmsTxtUrl": "https://docs.fastht.ml/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=fastht.ml&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=fastht.ml&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Finch",
@@ -305,7 +339,8 @@
     "description": "Universal API for employment systems",
     "llmsTxtUrl": "https://developer.tryfinch.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=tryfinch.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=tryfinch.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Fireworks AI",
@@ -314,7 +349,8 @@
     "llmsTxtUrl": "https://docs.fireworks.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.fireworks.ai/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=fireworks.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=fireworks.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Flatfile",
@@ -323,7 +359,8 @@
     "llmsTxtUrl": "https://flatfile.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://flatfile.com/docs/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=flatfile.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=flatfile.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "FlowX",
@@ -332,7 +369,8 @@
     "llmsTxtUrl": "https://docs.flowx.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.flowx.ai/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=flowx.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=flowx.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "FractalPay",
@@ -340,7 +378,8 @@
     "description": "Modern payment processing platform",
     "llmsTxtUrl": "https://docs.fractalpay.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=fractalpay.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=fractalpay.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Frigade",
@@ -348,7 +387,8 @@
     "description": "User onboarding and product adoption platform",
     "llmsTxtUrl": "https://docs.frigade.com/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=frigade.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=frigade.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Galileo",
@@ -357,7 +397,8 @@
     "llmsTxtUrl": "https://docs.rungalileo.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.rungalileo.io/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=rungalileo.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=rungalileo.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Goody",
@@ -365,7 +406,8 @@
     "description": "Corporate gifting and rewards platform",
     "llmsTxtUrl": "https://developer.ongoody.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=ongoody.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=ongoody.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Helicone",
@@ -373,7 +415,8 @@
     "description": "LLM observability and monitoring platform",
     "llmsTxtUrl": "https://www.helicone.ai/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=helicone.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=helicone.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hugging Face Accelerate",
@@ -381,7 +424,8 @@
     "description": "Library for training and optimizing machine learning models",
     "llmsTxtUrl": "https://huggingface-projects-docs-llms-txt.hf.space/accelerate/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hugging Face Diffusers",
@@ -389,7 +433,8 @@
     "description": "State-of-the-art diffusion models for image and audio generation",
     "llmsTxtUrl": "https://huggingface-projects-docs-llms-txt.hf.space/diffusers/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hugging Face Hub",
@@ -397,7 +442,8 @@
     "description": "Platform for sharing and discovering machine learning models",
     "llmsTxtUrl": "https://huggingface-projects-docs-llms-txt.hf.space/hub/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hugging Face Hub Python Library",
@@ -405,7 +451,8 @@
     "description": "Python library for interacting with the Hugging Face Hub",
     "llmsTxtUrl": "https://huggingface-projects-docs-llms-txt.hf.space/huggingface_hub/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hugging Face Transformers",
@@ -413,7 +460,8 @@
     "description": "State-of-the-art Natural Language Processing library",
     "llmsTxtUrl": "https://huggingface-projects-docs-llms-txt.hf.space/transformers/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hyperline",
@@ -422,7 +470,8 @@
     "llmsTxtUrl": "https://docs.hyperline.co/llms.txt",
     "llmsFullTxtUrl": "https://docs.hyperline.co/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=hyperline.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=hyperline.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Hypermode",
@@ -430,7 +479,8 @@
     "description": "High-performance application development platform",
     "llmsTxtUrl": "https://docs.hypermode.com/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=hypermode.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=hypermode.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Infisical",
@@ -439,7 +489,8 @@
     "llmsTxtUrl": "https://infisical.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://infisical.com/docs/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=infisical.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=infisical.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Inkeep",
@@ -447,7 +498,8 @@
     "description": "AI-powered documentation and knowledge base platform",
     "llmsTxtUrl": "https://docs.inkeep.com/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=inkeep.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=inkeep.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Intuned",
@@ -455,7 +507,8 @@
     "description": "Product analytics and user behavior platform",
     "llmsTxtUrl": "https://docs.intunedhq.com/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=intunedhq.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=intunedhq.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "IonQ",
@@ -464,7 +517,8 @@
     "llmsTxtUrl": "https://docs.ionq.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.ionq.com/llms-full.txt",
     "category": "infrastructure-cloud",
-    "favicon": "https://www.google.com/s2/favicons?domain=ionq.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=ionq.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Lago",
@@ -473,7 +527,8 @@
     "llmsTxtUrl": "https://getlago.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://getlago.com/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=getlago.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=getlago.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Langfuse",
@@ -481,7 +536,8 @@
     "description": "LLM observability and analytics platform",
     "llmsTxtUrl": "https://langfuse.com/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=langfuse.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=langfuse.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "llms.txt",
@@ -489,7 +545,8 @@
     "description": "Documentation standard for LLM-powered applications",
     "llmsTxtUrl": "https://llmstxt.org/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=llmstxt.org&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=llmstxt.org&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Loops",
@@ -498,7 +555,8 @@
     "llmsTxtUrl": "https://loops.so/docs/llms.txt",
     "llmsFullTxtUrl": "https://loops.so/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=loops.so&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=loops.so&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Lots of CSVs",
@@ -506,7 +564,8 @@
     "description": "CSV data management and processing platform",
     "llmsTxtUrl": "https://lotsofcsvs.com/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=lotsofcsvs.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=lotsofcsvs.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "LuxAlgo",
@@ -515,7 +574,8 @@
     "llmsTxtUrl": "https://docs.luxalgo.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.luxalgo.com/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=luxalgo.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=luxalgo.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Mangopay",
@@ -524,7 +584,8 @@
     "llmsTxtUrl": "https://docs.mangopay.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.mangopay.com/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=mangopay.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=mangopay.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "MeshConnect",
@@ -533,7 +594,8 @@
     "llmsTxtUrl": "https://docs.meshconnect.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.meshconnect.com/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=meshconnect.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=meshconnect.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Method Financial",
@@ -542,7 +604,8 @@
     "llmsTxtUrl": "https://docs.methodfi.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.methodfi.com/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=methodfi.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=methodfi.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Mintlify",
@@ -551,7 +614,8 @@
     "llmsTxtUrl": "https://mintlify.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://mintlify.com/docs/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=mintlify.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=mintlify.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Mystery-o-matic",
@@ -559,7 +623,8 @@
     "description": "Interactive mystery and game generation platform",
     "llmsTxtUrl": "https://mystery-o-matic.com/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=mystery-o-matic.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=mystery-o-matic.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "OpenPhone",
@@ -567,7 +632,8 @@
     "description": "Modern business phone system and communication platform",
     "llmsTxtUrl": "https://www.openphone.com/docs/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=openphone.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=openphone.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "OpenPipe",
@@ -576,7 +642,8 @@
     "llmsTxtUrl": "https://docs.openpipe.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.openpipe.ai/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=openpipe.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=openpipe.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Oxla",
@@ -585,7 +652,8 @@
     "llmsTxtUrl": "https://docs.oxla.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.oxla.com/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=oxla.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=oxla.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Perplexity",
@@ -594,7 +662,8 @@
     "llmsTxtUrl": "https://docs.perplexity.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.perplexity.ai/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Pinata",
@@ -603,7 +672,8 @@
     "llmsTxtUrl": "https://docs.pinata.cloud/llms.txt",
     "llmsFullTxtUrl": "https://docs.pinata.cloud/llms-full.txt",
     "category": "infrastructure-cloud",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.pinata.cloud&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.pinata.cloud&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Pinecone",
@@ -612,7 +682,8 @@
     "llmsTxtUrl": "https://docs.pinecone.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.pinecone.io/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=pinecone.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=pinecone.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Plain",
@@ -621,7 +692,8 @@
     "llmsTxtUrl": "https://www.plain.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://www.plain.com/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=plain.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=plain.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "POPSMASH",
@@ -630,7 +702,8 @@
     "llmsTxtUrl": "https://www.popsmash.com/llms.txt",
     "llmsFullTxtUrl": "https://www.popsmash.com/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.popsmash.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.popsmash.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "PrimeV",
@@ -639,7 +712,8 @@
     "llmsTxtUrl": "https://docs.primev.xyz/llms.txt",
     "llmsFullTxtUrl": "https://docs.primev.xyz/llms-full.txt",
     "category": "infrastructure-cloud",
-    "favicon": "https://www.google.com/s2/favicons?domain=primev.xyz&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=primev.xyz&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Prisma",
@@ -648,7 +722,8 @@
     "llmsTxtUrl": "https://prisma.io/docs/llms.txt",
     "llmsFullTxtUrl": "https://prisma.io/docs/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=prisma.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=prisma.io&sz=128",
+    "publishedAt": "2024-02-27"
   },
   {
     "name": "ProjectDiscovery",
@@ -657,7 +732,8 @@
     "llmsTxtUrl": "https://docs.projectdiscovery.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.projectdiscovery.io/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=projectdiscovery.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=projectdiscovery.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Quill",
@@ -665,7 +741,8 @@
     "description": "SQL query builder and database management platform",
     "llmsTxtUrl": "https://docs.quillsql.com/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=quillsql.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=quillsql.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "RainbowKit",
@@ -674,7 +751,8 @@
     "llmsTxtUrl": "https://rainbowkit.com/llms.txt",
     "llmsFullTxtUrl": "https://rainbowkit.com/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=rainbowkit.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=rainbowkit.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "raincamp",
@@ -682,7 +760,8 @@
     "description": "AI-powered development and deployment platform",
     "llmsTxtUrl": "https://raincamp.ai/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=raincamp.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=raincamp.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Raycast",
@@ -690,7 +769,8 @@
     "description": "A collection of powerful productivity tools all within an extendable launcher.",
     "llmsTxtUrl": "https://raw.githubusercontent.com/raycast/extensions/refs/heads/gh-pages/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.raycast.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.raycast.com&sz=128",
+    "publishedAt": "2025-03-01"
   },
   {
     "name": "Rememberizer",
@@ -699,7 +779,8 @@
     "llmsTxtUrl": "https://llm.rememberizer.ai/llms.txt",
     "llmsFullTxtUrl": "https://llm.rememberizer.ai/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.rememberizer.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.rememberizer.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Resend",
@@ -708,7 +789,8 @@
     "llmsTxtUrl": "https://resend.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://resend.com/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=resend.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=resend.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Roc",
@@ -716,7 +798,8 @@
     "description": "Fast and safe programming language",
     "llmsTxtUrl": "https://www.roc-lang.org/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=roc-lang.org&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=roc-lang.org&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Salesbricks",
@@ -725,7 +808,8 @@
     "llmsTxtUrl": "https://docs.salesbricks.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.salesbricks.com/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=salesbricks.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=salesbricks.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Sardine",
@@ -734,7 +818,8 @@
     "llmsTxtUrl": "https://docs.sardine.ai/llms.txt",
     "llmsFullTxtUrl": "https://docs.sardine.ai/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=sardine.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=sardine.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "ScreenshotOne",
@@ -743,7 +828,8 @@
     "llmsTxtUrl": "https://screenshotone.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://screenshotone.com/docs/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=screenshotone.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=screenshotone.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "SkyDeck.ai",
@@ -752,7 +838,8 @@
     "llmsTxtUrl": "https://llm.skydeck.ai/llms.txt",
     "llmsFullTxtUrl": "https://llm.skydeck.ai/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=docs.skydeck.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.skydeck.ai&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Smartcar",
@@ -761,7 +848,8 @@
     "llmsTxtUrl": "https://smartcar.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://smartcar.com/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=smartcar.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=smartcar.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Solid",
@@ -769,7 +857,8 @@
     "description": "Banking and financial infrastructure platform",
     "llmsTxtUrl": "https://docs.solidfi.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=solidfi.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=solidfi.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Sourcegraph",
@@ -777,7 +866,8 @@
     "description": "Code intelligence and search platform",
     "llmsTxtUrl": "https://docs.sourcegraph.com/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=sourcegraph.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=sourcegraph.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Stedi",
@@ -786,7 +876,8 @@
     "llmsTxtUrl": "https://www.stedi.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://www.stedi.com/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=stedi.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=stedi.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Supabase",
@@ -794,7 +885,8 @@
     "description": "Build production-grade applications with a Postgres database, Authentication, instant APIs, Realtime, Functions, Storage and Vector embeddings. Start for free.",
     "llmsTxtUrl": "https://supabase.com/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=supabase.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=supabase.com&sz=128",
+    "publishedAt": "2024-02-25"
   },
   {
     "name": "Svelte",
@@ -803,7 +895,8 @@
     "llmsTxtUrl": "https://svelte.dev/llms.txt",
     "llmsFullTxtUrl": "https://svelte.dev/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=svelte.dev&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=svelte.dev&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Tavus",
@@ -812,7 +905,8 @@
     "llmsTxtUrl": "https://docs.tavus.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.tavus.io/llms-full.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.tavus.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tavus.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "The Data Driven Marketer",
@@ -820,7 +914,8 @@
     "description": "Data-driven marketing insights and tools",
     "llmsTxtUrl": "https://datadrivenmarketer.me/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=datadrivenmarketer.me&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=datadrivenmarketer.me&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "TheirStack",
@@ -829,7 +924,8 @@
     "llmsTxtUrl": "https://theirstack.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://theirstack.com/docs/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=theirstack.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=theirstack.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Tinybird",
@@ -838,7 +934,8 @@
     "llmsTxtUrl": "https://www.tinybird.co/docs/llms.txt",
     "llmsFullTxtUrl": "https://www.tinybird.co/docs/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=tinybird.co&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=tinybird.co&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Trackingplan",
@@ -846,7 +943,8 @@
     "description": "Analytics monitoring and validation platform",
     "llmsTxtUrl": "https://www.trackingplan.com/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.trackingplan.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.trackingplan.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Trail of Bits",
@@ -855,7 +953,8 @@
     "llmsTxtUrl": "https://www.trailofbits.com/llms.txt",
     "llmsFullTxtUrl": "https://www.trailofbits.com/llms-full.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.trailofbits.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.trailofbits.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Trigger.dev",
@@ -864,7 +963,8 @@
     "llmsTxtUrl": "https://trigger.dev/docs/llms.txt",
     "llmsFullTxtUrl": "https://trigger.dev/docs/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=trigger.dev&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=trigger.dev&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Turbo",
@@ -872,7 +972,8 @@
     "description": "Turbo is an incremental bundler and build system optimized for JavaScript and TypeScript, written in Rust.",
     "llmsTxtUrl": "https://turbo.build/llms.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=turbo.build&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=turbo.build&sz=128",
+    "publishedAt": "2024-02-25"
   },
   {
     "name": "Turso",
@@ -881,7 +982,8 @@
     "llmsTxtUrl": "https://docs.turso.tech/llms.txt",
     "llmsFullTxtUrl": "https://docs.turso.tech/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=turso.tech&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=turso.tech&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "UnifyGTM",
@@ -889,7 +991,8 @@
     "description": "Go-to-market strategy and execution platform",
     "llmsTxtUrl": "https://docs.unifygtm.com/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=unifygtm.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=unifygtm.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Unkey",
@@ -897,7 +1000,8 @@
     "description": "API key management and authentication platform",
     "llmsTxtUrl": "https://www.unkey.com/docs/llms.txt",
     "category": "security-identity",
-    "favicon": "https://www.google.com/s2/favicons?domain=unkey.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=unkey.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Unstructured",
@@ -906,7 +1010,8 @@
     "llmsTxtUrl": "https://docs.unstructured.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.unstructured.io/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=unstructured.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=unstructured.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Upstash",
@@ -915,7 +1020,8 @@
     "llmsTxtUrl": "https://upstash.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://upstash.com/docs/llms-full.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=upstash.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=upstash.com&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "UX Patterns for Devs",
@@ -924,7 +1030,8 @@
     "llmsTxtUrl": "https://uxpatterns.dev/en/llms.txt",
     "llmsFullTxtUrl": "https://uxpatterns.dev/en/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=uxpatterns.dev/en&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=uxpatterns.dev/en&sz=128",
+    "publishedAt": "2024-02-26"
   },
   {
     "name": "Velt",
@@ -933,7 +1040,8 @@
     "llmsTxtUrl": "https://docs.velt.dev/llms.txt",
     "llmsFullTxtUrl": "https://docs.velt.dev/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=velt.dev&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=velt.dev&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Vercel's AI SDK",
@@ -941,7 +1049,8 @@
     "description": "From the creators of Next.js, the AI SDK is a free open-source library that gives you the tools you need to build AI-powered products.",
     "llmsTxtUrl": "https://sdk.vercel.ai/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=sdk.vercel.ai&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=sdk.vercel.ai&sz=128",
+    "publishedAt": "2024-02-26"
   },
   {
     "name": "viem",
@@ -950,7 +1059,8 @@
     "llmsTxtUrl": "https://viem.sh/llms.txt",
     "llmsFullTxtUrl": "https://viem.sh/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=viem.sh&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=viem.sh&sz=128",
+    "publishedAt": "2025-03-01"
   },
   {
     "name": "Vital",
@@ -959,7 +1069,8 @@
     "llmsTxtUrl": "https://docs.tryvital.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.tryvital.io/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=tryvital.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=tryvital.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Warp",
@@ -968,7 +1079,8 @@
     "llmsTxtUrl": "https://docs.warp.dev/llms.txt",
     "llmsFullTxtUrl": "https://docs.warp.dev/llms-full.txt",
     "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.warp.dev&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=www.warp.dev&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Webrecorder",
@@ -976,7 +1088,8 @@
     "description": "Web archiving and preservation platform",
     "llmsTxtUrl": "https://webrecorder.net/llms.txt",
     "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=webrecorder.net&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=webrecorder.net&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "WordLift",
@@ -984,7 +1097,8 @@
     "description": "AI-powered SEO platform that optimizes content visibility and search performance",
     "llmsTxtUrl": "https://wordlift.io/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=wordlift.io&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=wordlift.io&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Workflow",
@@ -992,7 +1106,8 @@
     "description": "Design and workflow automation platform",
     "llmsTxtUrl": "https://docs.workflow.design/llms.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=workflow.design&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=workflow.design&sz=128",
+    "publishedAt": "2024-02-24"
   },
   {
     "name": "Zapier",
@@ -1001,6 +1116,7 @@
     "llmsTxtUrl": "https://docs.zapier.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.zapier.com/llms-full.txt",
     "category": "integration-automation",
-    "favicon": "https://www.google.com/s2/favicons?domain=zapier.com&sz=128"
+    "favicon": "https://www.google.com/s2/favicons?domain=zapier.com&sz=128",
+    "publishedAt": "2024-02-24"
   }
 ]

@@ -72,7 +72,8 @@ function generateWebsitesJson(): void {
       llmsTxtUrl: data.llmsUrl,
       ...(data.llmsFullUrl && { llmsFullTxtUrl: data.llmsFullUrl }),
       category: data.category,
-      favicon: getFaviconUrl(data.website)
+      favicon: getFaviconUrl(data.website),
+      publishedAt: data.publishedAt
     }
   })
 
