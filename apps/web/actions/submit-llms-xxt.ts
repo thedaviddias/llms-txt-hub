@@ -39,7 +39,6 @@ export async function submitLlmsTxt(formData: FormData) {
     if (typeof provider_token === 'string') {
       access_token = provider_token
     } else if (typeof provider_token === 'object' && provider_token !== null) {
-      // Cast to a type that includes possible token properties
       const tokenObj = provider_token as { access_token?: string; token?: string }
       access_token = tokenObj.access_token || tokenObj.token || ''
     } else {
@@ -113,10 +112,48 @@ ${description}
 
       const defaultBranch = repo_info.data.default_branch
 
-      // Create a new branch
+      // Create or get fork
+      console.log('Creating fork...')
+      const fork = await octokit.repos
+        .createFork({
+          owner,
+          repo
+        })
+        .catch(async error => {
+          // If fork already exists, get it
+          if (error.status === 422) {
+            const forks = await octokit.repos.listForks({
+              owner,
+              repo
+            })
+            const existingFork = forks.data.find(f => f.owner.login === githubUsername)
+            if (existingFork) {
+              return { data: existingFork }
+            }
+          }
+          throw new Error(`Failed to create fork: ${error.message}`)
+        })
+
+      // Wait for fork to be ready
+      const waitForFork = async (retries = 5, delay = 2000): Promise<void> => {
+        if (retries === 0) throw new Error('Fork not ready after maximum retries')
+        try {
+          await octokit.repos.get({
+            owner: githubUsername,
+            repo
+          })
+        } catch (error) {
+          await new Promise(resolve => setTimeout(resolve, delay))
+          await waitForFork(retries - 1, delay)
+        }
+      }
+      await waitForFork()
+
+      // Create a new branch in the fork
       const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
       const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, '-')}.mdx`
 
+      // Get the reference from the original repo
       const mainRef = await octokit.git
         .getRef({
           owner,
@@ -129,23 +166,23 @@ ${description}
           )
         })
 
+      // Create branch in fork
       await octokit.git
         .createRef({
-          owner,
+          owner: githubUsername,
           repo,
           ref: `refs/heads/${branchName}`,
           sha: mainRef.data.object.sha
         })
         .catch(error => {
-          throw new Error(
-            `Failed to create new branch: ${error.message}. This might be due to insufficient permissions.`
-          )
+          throw new Error(`Failed to create new branch in fork: ${error.message}`)
         })
 
+      // Create file in fork
       console.log('Creating new file:', filePath)
       await octokit.repos
         .createOrUpdateFileContents({
-          owner,
+          owner: githubUsername,
           repo,
           path: filePath,
           message: `Add ${name} to llms.txt directory`,
@@ -153,18 +190,17 @@ ${description}
           branch: branchName
         })
         .catch(error => {
-          throw new Error(
-            `Failed to create file: ${error.message}. This might be due to insufficient permissions.`
-          )
+          throw new Error(`Failed to create file in fork: ${error.message}`)
         })
 
+      // Create pull request from fork
       console.log('Creating pull request')
       const pr = await octokit.pulls
         .create({
           owner,
           repo,
           title: `feat: add ${name} to llms.txt hub`,
-          head: branchName,
+          head: `${githubUsername}:${branchName}`,
           base: defaultBranch,
           body: `This PR adds ${name} to the llms.txt hub.
 
@@ -179,9 +215,7 @@ ${categorySlug ? `Category: ${categorySlug}` : ''}
 Please review your PR, a reviewer will merge it if appropriate.`
         })
         .catch(error => {
-          throw new Error(
-            `Failed to create pull request: ${error.message}. This might be due to insufficient permissions.`
-          )
+          throw new Error(`Failed to create pull request: ${error.message}`)
         })
 
       revalidatePath('/')
