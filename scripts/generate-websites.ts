@@ -81,7 +81,7 @@ function generateWebsitesJson(): void {
   websites.sort((a, b) => a.name.localeCompare(b.name))
 
   // Write to JSON file
-  writeFileSync(outputFile, JSON.stringify(websites, null, 2))
+  writeFileSync(outputFile, JSON.stringify(websites))
 }
 
 generateWebsitesJson()
