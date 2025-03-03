@@ -3,6 +3,14 @@ import { join } from 'node:path'
 import type { MetadataRoute } from 'next'
 
 /**
+ * Map of content paths that should be overridden to different URLs
+ */
+const URL_OVERRIDES: Record<string, string> = {
+  'legal/privacy': 'privacy',
+  'legal/terms': 'terms'
+}
+
+/**
  * Recursively get all MDX pages from a directory
  *
  * @param dir - Directory to scan
@@ -26,7 +34,11 @@ function getContentPages(dir: string, baseDir = ''): string[] {
         }
       } else if (item.endsWith('.mdx') && !item.startsWith('_')) {
         // Remove .mdx extension and index becomes empty string
-        const pagePath = item === 'index.mdx' ? baseDir : join(baseDir, item.replace('.mdx', ''))
+        let pagePath = item === 'index.mdx' ? baseDir : join(baseDir, item.replace('.mdx', ''))
+
+        // Check if this path should be overridden
+        pagePath = URL_OVERRIDES[pagePath] || pagePath
+
         pages.push(pagePath)
       }
     }

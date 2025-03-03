@@ -29,8 +29,6 @@ export const routes = {
   rss: '/rss.xml'
 } as const
 
-type ParentRoutes = 'guides'
-
 type StaticRoutes =
   | 'home'
   | 'llmsTxt'

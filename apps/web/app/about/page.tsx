@@ -38,7 +38,7 @@ export default function AboutPage() {
           <p>
             Created by{' '}
             <a
-              href="https://ddias.link/blog"
+              href="https://thedaviddias.com"
               className="font-bold underline dark:text-gray-300"
               target="_blank"
               rel="noopener noreferrer"
