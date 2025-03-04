@@ -14,6 +14,7 @@ import { ToolsSection } from '@/components/sections/tools-section'
 import { getAllGuides } from '@/lib/mdx'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
+import { CommunitiesSection } from '@/components/sections/communities-section'
 
 export const metadata: Metadata = {
   title: 'llms.txt hub - Discover AI-Ready Documentation',
@@ -74,6 +75,7 @@ export default async function Home() {
         <CommunityStatsSection allProjects={allProjects} />
         <FAQSection />
         <NewsletterSection />
+        <CommunitiesSection />
       </div>
     </>
   )
