@@ -7,8 +7,8 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - llms.txt hub',
-  description: 'Terms of service for the llms.txt hub website.'
+  title: 'Terms of Service - llms.txt Hub',
+  description: 'Terms of service for the llms.txt Hub website.'
 }
 
 export default async function TermsOfServicePage() {

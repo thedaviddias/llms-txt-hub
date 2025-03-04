@@ -1,4 +1,6 @@
 import { getAllGuides } from '@/lib/mdx'
+import { generateGuideSchema } from '@/lib/schema'
+import { JsonLd } from '@/components/json-ld'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { format } from 'date-fns'
@@ -6,10 +8,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Guides - llms.txt',
+  title: 'Guides - llms.txt Hub',
   description: 'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
   openGraph: {
-    title: 'Guides - llms.txt',
+    title: 'Guides - llms.txt Hub',
     description:
       'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
     url: `${getBaseUrl()}/guides`,
@@ -28,6 +30,12 @@ export default async function GuidesPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@graph': guides.map(guide => generateGuideSchema(guide))
+        }}
+      />
       <div className="space-y-12">
         <Breadcrumb items={[{ name: 'Guides', href: '/guides' }]} baseUrl={getBaseUrl()} />
 
