@@ -10,6 +10,7 @@ import { HowItWorksSection } from '@/components/sections/how-it-works-section'
 import { LatestNewsSection } from '@/components/sections/latest-news-section'
 import { LatestUpdatesSection } from '@/components/sections/latest-updates-section'
 import { NewsletterSection } from '@/components/sections/newsletter-section'
+import { ToolsSection } from '@/components/sections/tools-section'
 import { getAllGuides } from '@/lib/mdx'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
@@ -67,6 +68,7 @@ export default async function Home() {
           <LatestUpdatesSection projects={recentlyUpdatedProjects} />
           <LatestNewsSection />
         </div>
+        <ToolsSection />
         <CategoriesSection />
         <HowItWorksSection />
         <CommunityStatsSection allProjects={allProjects} />

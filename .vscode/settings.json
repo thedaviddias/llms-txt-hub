@@ -12,8 +12,8 @@
   },
   "editor.defaultFormatter": "biomejs.biome",
   // "editor.formatOnPaste": true,
-  // "editor.formatOnSave": true,
-  // "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
 
   "prettier.enable": false,
 

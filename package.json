@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/search-index-generator.js && turbo build",
+    "build": "node scripts/search-index-generator.cjs && turbo build",
     "check:frontmatter": "tsx scripts/check-frontmatter.ts",
     "check:links": "lychee --config ./lychee.toml --verbose .",
     "clean": "git clean -xdf node_modules dist .next",

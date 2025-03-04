@@ -198,6 +198,17 @@
     "llmsFullUrl": "https://docs.conductor.is/llms-full.txt"
   },
   {
+    "name": "Convex",
+    "description": "The missing half of your React app: Convex is the open-source reactive database for app developers.",
+    "url": "/convex",
+    "content": "# Convex\n\nConvex is the open source, reactive database where queries are TypeScript code running right in the\ndatabase. Just like React components react to state changes, Convex queries react to database changes.\n\nConvex provides a database, a place to write your server functions, and client libraries. It makes\nit easy to build and scale dynamic live-updating apps.\n\n## Key Focus Areas\n\n- Realtime Sync Engine\n- Application Database\n- TypeScript\n- Workflows\n- Vector Database\n- Text Search\n- File Storage\n- Authentication\n- Scheduling\n- Self-hosting\n\n## About llms.txt Implementation\n\nConvex's llms.txt documentation details their platform's features, with comprehensive coverage in their full documentation.",
+    "category": "infrastructure-cloud",
+    "slug": "convex",
+    "website": "https://convex.dev",
+    "llmsUrl": "https://convex.dev/llms.txt",
+    "llmsFullUrl": "https://docs.convex.dev/llms.txt"
+  },
+  {
     "name": "CrewAI",
     "description": "AI-powered team collaboration platform",
     "url": "/crewai",
