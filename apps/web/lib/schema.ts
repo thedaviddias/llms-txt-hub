@@ -1,4 +1,5 @@
 import type { WebsiteMetadata } from './mdx'
+import type { GuideMetadata } from './mdx'
 
 export interface SchemaOrg {
   '@context': 'https://schema.org'
@@ -30,6 +31,33 @@ export interface CollectionPageSchema extends SchemaOrg {
   name: string
   description: string
   hasPart: WebsiteSchema[]
+}
+
+export interface GuideSchema extends SchemaOrg {
+  '@type': 'TechArticle'
+  headline: string
+  description: string
+  datePublished: string
+  author: {
+    '@type': 'Person'
+    name: string
+    url?: string
+  }
+  articleSection: string
+  timeRequired: string
+  difficulty: string
+}
+
+export interface FAQPageSchema extends SchemaOrg {
+  '@type': 'FAQPage'
+  mainEntity: Array<{
+    '@type': 'Question'
+    name: string
+    acceptedAnswer: {
+      '@type': 'Answer'
+      text: string
+    }
+  }>
 }
 
 /**
@@ -82,5 +110,52 @@ export function generateCollectionSchema(websites: WebsiteMetadata[]): Collectio
     name: 'LLMs.txt Implementations',
     description: 'Directory of websites implementing llms.txt specification',
     hasPart: websites.map(site => generateWebsiteSchema(site))
+  }
+}
+
+/**
+ * Generates schema.org structured data for a guide
+ *
+ * @param guide - Guide metadata
+ * @returns Schema.org TechArticle structured data
+ */
+export function generateGuideSchema(guide: GuideMetadata): GuideSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: guide.title,
+    description: guide.description,
+    datePublished: guide.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: guide.authors[0].name,
+      ...(guide.authors[0].url && { url: guide.authors[0].url })
+    },
+    articleSection: guide.category,
+    timeRequired: `PT${Math.ceil(guide.readingTime)}M`,
+    difficulty: guide.difficulty
+  }
+}
+
+/**
+ * Generates schema.org structured data for FAQ page
+ *
+ * @param items - Array of FAQ items with questions and answers
+ * @returns Schema.org FAQPage structured data
+ */
+export function generateFAQSchema(
+  items: Array<{ question: string; answer: string }>
+): FAQPageSchema {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
   }
 }
