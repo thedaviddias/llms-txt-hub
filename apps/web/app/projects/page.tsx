@@ -1,5 +1,5 @@
 import { GitHubProjectCard } from '@/components/github/github-project-card'
-import { fetchGitHubProjects } from '@/lib/github'
+import { fetchGitHubProjects, type GitHubProject } from '@/lib/github'
 import { getRoute } from '@/lib/routes'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
@@ -29,12 +29,21 @@ export const metadata: Metadata = {
 }
 
 export default async function ProjectsPage() {
-  const githubProjects1 = await fetchGitHubProjects('llms-txt')
-  const githubProjects2 = await fetchGitHubProjects('llmstxt')
-  const githubProjects = [...githubProjects1, ...githubProjects2]
+  // Fetch projects with both topics
+  const projects1 = await fetchGitHubProjects('llms-txt')
+  const projects2 = await fetchGitHubProjects('llmstxt')
 
-  // Sort projects by stars
-  const sortedProjects = githubProjects.sort((a, b) => b.stars - a.stars)
+  // Create a Map to deduplicate projects by full name
+  const projectsMap = new Map<string, GitHubProject>()
+
+  // Add all projects to the map, with full name as key
+  const allProjects = [...projects1, ...projects2]
+  allProjects.forEach(project => {
+    projectsMap.set(project.fullName, project)
+  })
+
+  // Convert map back to array and sort by stars
+  const sortedProjects = Array.from(projectsMap.values()).sort((a, b) => b.stars - a.stars)
 
   // Featured project is the one with most stars
   const featuredProject = sortedProjects[0]
@@ -48,6 +57,24 @@ export default async function ProjectsPage() {
           <h1 className="text-4xl font-bold">Open Source Projects</h1>
           <p className="text-lg text-muted-foreground">
             Discover open-source projects, tools, and libraries implementing the llms.txt standard.
+            <br />
+            To list your project here, add either the{' '}
+            <Link
+              href="https://github.com/topics/llms-txt"
+              className="underline hover:text-primary"
+              target="_blank"
+            >
+              llms-txt
+            </Link>{' '}
+            or{' '}
+            <Link
+              href="https://github.com/topics/llmstxt"
+              className="underline hover:text-primary"
+              target="_blank"
+            >
+              llmstxt
+            </Link>{' '}
+            topic to your GitHub repository.
           </p>
         </div>
 
