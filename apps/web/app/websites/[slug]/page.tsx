@@ -4,6 +4,8 @@ import { components } from '@/components/mdx'
 import { ProjectNavigation } from '@/components/project-navigation'
 import { getAllWebsites, getWebsiteBySlug } from '@/lib/mdx'
 import type { WebsiteMetadata } from '@/lib/mdx'
+import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
+import { JsonLd } from '@/components/json-ld'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Card, CardContent, CardHeader } from '@thedaviddias/design-system/card'
@@ -61,16 +63,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound()
   }
 
+  const breadcrumbItems = [
+    { name: 'Websites', href: '/websites' },
+    { name: project.name, href: `/websites/${slug}` }
+  ]
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@graph': [generateWebsiteSchema(project), generateArticleSchema(project)]
+        }}
+      />
       <div className="max-w-3xl mx-auto space-y-8">
-        <Breadcrumb
-          items={[
-            { name: 'Websites', href: '/websites' },
-            { name: project.name, href: `/websites/${slug}` }
-          ]}
-          baseUrl={getBaseUrl()}
-        />
+        <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
         <Card>
           <CardHeader className="border-b pb-8">
             <div className="flex items-start gap-4">
