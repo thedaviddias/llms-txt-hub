@@ -2,9 +2,9 @@ import { Section } from '../layout/section'
 
 export const faqItems = [
   {
-    question: 'What is llms.txt Hub?',
+    question: 'What is llms.txt hub?',
     answer:
-      "llms.txt Hub is a central directory and resource center for websites and tools implementing the llms.txt standard, which helps AI models better understand and interact with your website's documentation and content structure."
+      "llms.txt hub is a central directory and resource center for websites and tools implementing the llms.txt standard, which helps AI models better understand and interact with your website's documentation and content structure."
   },
   {
     question: 'What is llms.txt?',
@@ -22,7 +22,7 @@ export const faqItems = [
       "Using llms.txt can improve AI's understanding of your content, enhance search capabilities, and provide better responses when AI tools interact with your documentation."
   },
   {
-    question: 'How can I submit my website to llms.txt Hub?',
+    question: 'How can I submit my website to llms.txt hub?',
     answer:
       "You can submit your website by clicking the 'Submit Your llms.txt' button on our homepage and following the submission process. Make sure you have implemented llms.txt on your site before submitting."
   },
@@ -32,14 +32,14 @@ export const faqItems = [
       "While llms.txt is not mandatory, it's highly recommended for websites that want to optimize their content for AI interactions. It's especially useful for documentation sites, blogs, and content-heavy platforms."
   },
   {
-    question: 'How can I submit my website to the llms.txt Hub?',
+    question: 'How can I submit my website to the llms.txt hub?',
     answer:
       "You can submit your website by clicking the 'Submit Your llms.txt' button on our homepage and following the submission process. Make sure you have implemented llms.txt on your site before submitting."
   },
   {
-    question: 'Is the llms.txt Hub open source?',
+    question: 'Is the llms.txt hub open source?',
     answer:
-      "Yes, the llms.txt Hub is an open-source project. You can find our repository on GitHub and contribute to the project if you're interested."
+      "Yes, the llms.txt hub is an open-source project. You can find our repository on GitHub and contribute to the project if you're interested."
   }
 ]
 

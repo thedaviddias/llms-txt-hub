@@ -199,10 +199,10 @@ ${description}
         .create({
           owner,
           repo,
-          title: `feat: add ${name} to llms.txt Hub`,
+          title: `feat: add ${name} to llms.txt hub`,
           head: `${githubUsername}:${branchName}`,
           base: defaultBranch,
-          body: `This PR adds ${name} to the llms.txt Hub.
+          body: `This PR adds ${name} to the llms.txt hub.
 
 Submitted by: @${githubUsername}
 

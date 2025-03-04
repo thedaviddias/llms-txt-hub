@@ -15,10 +15,10 @@ export async function generateMetadata({
   const query = q || ''
 
   return {
-    title: query ? `Search Results for "${query}" | llms.txt Hub` : 'Search | llms.txt Hub',
+    title: query ? `Search Results for "${query}" | llms.txt hub` : 'Search | llms.txt hub',
     description: query
-      ? `Search results for "${query}" in the llms.txt Hub database.`
-      : 'Search for AI-ready websites and tools in the llms.txt Hub.'
+      ? `Search results for "${query}" in the llms.txt hub database.`
+      : 'Search for AI-ready websites and tools in the llms.txt hub.'
   }
 }
 

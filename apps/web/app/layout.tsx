@@ -10,7 +10,7 @@ import { SentryUserProvider } from '@thedaviddias/observability/providers'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 
 export const metadata: Metadata = {
-  title: 'llms.txt Hub',
+  title: 'llms.txt hub',
   description: 'A curated hub for AI-ready documentation implementing the llms.txt standard',
   metadataBase: new URL(getBaseUrl())
 }
