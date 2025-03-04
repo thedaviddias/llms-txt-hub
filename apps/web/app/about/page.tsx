@@ -6,9 +6,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About llms.txt Hub',
+  title: 'About llms.txt hub',
   description:
-    'Learn about the llms.txt Hub, its mission, and how it helps AI models better understand documentation.'
+    'Learn about the llms.txt hub, its mission, and how it helps AI models better understand documentation.'
 }
 
 export default function AboutPage() {
@@ -16,7 +16,7 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto space-y-8">
         <section className="space-y-4">
-          <h1 className="text-4xl font-bold">About llms.txt Hub</h1>
+          <h1 className="text-4xl font-bold">About llms.txt hub</h1>
           <p className="text-xl text-muted-foreground">
             Discover how llms.txt is revolutionizing AI-ready documentation and enhancing AI model
             interactions.
@@ -45,7 +45,7 @@ export default function AboutPage() {
             >
               David Dias
             </a>
-            , llms.txt Hub has the mission to create a central directory and resource center for
+            , llms.txt hub has the mission to create a central directory and resource center for
             websites and tools implementing the llms.txt standard. It aim to:
           </p>
           <ul className="list-disc list-inside space-y-2">
@@ -108,7 +108,7 @@ export default function AboutPage() {
           <h2 className="text-2xl font-semibold">Join the Community</h2>
           <p>
             Whether you're a developer, content creator, or AI enthusiast, there are many ways to
-            get involved with the llms.txt Hub community:
+            get involved with the llms.txt hub community:
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Button asChild>

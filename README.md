@@ -4,7 +4,7 @@
 
 A comprehensive collection of llms.txt implementations and resources for LLM-powered tools and services.
 
-![Screenshot of the llms.txt Hub website page](https://raw.githubusercontent.com/thedaviddias/llms-txt-hub/refs/heads/main/apps/web/public/img/llms-txt-hub.jpeg)
+![Screenshot of the llms.txt hub website page](https://raw.githubusercontent.com/thedaviddias/llms-txt-hub/refs/heads/main/apps/web/public/img/llms-txt-hub.jpeg)
 
 </div>
 

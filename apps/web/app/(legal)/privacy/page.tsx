@@ -7,8 +7,8 @@ import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy - llms.txt Hub',
-  description: 'Privacy policy for the llms.txt Hub website.'
+  title: 'Privacy Policy - llms.txt hub',
+  description: 'Privacy policy for the llms.txt hub website.'
 }
 
 export default async function PrivacyPolicyPage() {
