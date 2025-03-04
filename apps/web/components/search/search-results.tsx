@@ -285,9 +285,9 @@ export function SearchResults() {
 
   useEffect(() => {
     if (query) {
-      document.title = `Search Results for "${query}" | llms.txt hub`
+      document.title = `Search Results for "${query}" | llms.txt Hub`
     } else {
-      document.title = 'Search | llms.txt hub'
+      document.title = 'Search | llms.txt Hub'
     }
   }, [query])
 

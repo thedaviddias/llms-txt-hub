@@ -10,7 +10,7 @@ export function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
           <div className="space-y-3 md:col-span-2">
-            <h3 className="font-semibold">llms.txt hub</h3>
+            <h3 className="font-semibold">llms.txt Hub</h3>
             <p className="text-sm text-muted-foreground">
               Discover AI-ready documentation and explore websites implementing the proposed{' '}
               <a href="https://llmstxt.org/" className="underline">
@@ -99,7 +99,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-6 border-t flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <div>© {new Date().getFullYear()} llms.txt hub. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} llms.txt Hub. All rights reserved.</div>
           <div className="mt-4 md:mt-0">
             Made with ❤️ by{' '}
             <a

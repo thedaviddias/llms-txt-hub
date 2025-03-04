@@ -10,7 +10,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Latest News - llms.txt hub',
+  title: 'Latest News - llms.txt Hub',
   description: 'Stay updated with the latest news and updates from the llms.txt community.'
 }
 

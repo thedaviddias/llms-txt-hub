@@ -17,7 +17,7 @@ export async function HeroSection() {
         </div>
         Websites in list
       </Link>
-      <h1 className="text-5xl font-bold tracking-tight md:text-6xl">Welcome to llms.txt hub</h1>
+      <h1 className="text-5xl font-bold tracking-tight md:text-6xl">Welcome to llms.txt Hub</h1>
       <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
         The largest directory for AI-ready documentation and tools implementing the proposed
         llms.txt standard

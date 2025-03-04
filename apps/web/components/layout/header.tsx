@@ -55,7 +55,7 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href={getRoute('home')} className="font-medium">
-            llms.txt hub
+            llms.txt Hub
           </Link>
           <nav className="hidden md:flex items-center gap-4">
             <NavLink href={getRoute('website.list')}>Websites</NavLink>
