@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 
   return {
-    title: `${project.name} | llms.txt hub`,
+    title: `${project.name} | llms.txt Hub`,
     description: project.description
   }
 }

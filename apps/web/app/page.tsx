@@ -17,15 +17,15 @@ import type { Metadata } from 'next'
 import { CommunitiesSection } from '@/components/sections/communities-section'
 
 export const metadata: Metadata = {
-  title: 'llms.txt hub - Discover AI-Ready Documentation',
+  title: 'llms.txt Hub - Discover AI-Ready Documentation',
   description:
     'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
   openGraph: {
-    title: 'llms.txt hub - Discover AI-Ready Documentation',
+    title: 'llms.txt Hub - Discover AI-Ready Documentation',
     description:
       'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
     url: 'https://llmstxthub.com',
-    siteName: 'llms.txt hub',
+    siteName: 'llms.txt Hub',
     images: [
       {
         url: `${getBaseUrl()}/opengraph-image.png`,
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'llms.txt hub - Discover AI-Ready Documentation',
+    title: 'llms.txt Hub - Discover AI-Ready Documentation',
     description:
       'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
     images: [`${getBaseUrl()}/opengraph-image.png`]
@@ -55,7 +55,7 @@ export default async function Home() {
         data={{
           '@context': 'https://schema.org',
           '@type': 'WebSite',
-          name: 'llms.txt hub',
+          name: 'llms.txt Hub',
           url: 'https://llmstxthub.com',
           description:
             'Discover AI-Ready Documentation and explore websites implementing the llms.txt standard.'

@@ -6,7 +6,7 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'FAQ - llms.txt',
+  title: 'FAQ - llms.txt Hub',
   description: 'Frequently asked questions about llms.txt and its implementation.',
   alternates: {
     canonical: `${getBaseUrl()}/faq`

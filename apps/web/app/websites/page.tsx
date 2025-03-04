@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = getBaseUrl()
 
   return {
-    title: 'Websites - llms.txt hub',
+    title: 'Websites - llms.txt Hub',
     description: 'Discover a curated list of websites that implement the llms.txt standard.',
     alternates: {
       canonical: `${baseUrl}/websites`

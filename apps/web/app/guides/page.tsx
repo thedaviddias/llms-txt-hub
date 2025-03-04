@@ -8,10 +8,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Guides - llms.txt',
+  title: 'Guides - llms.txt Hub',
   description: 'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
   openGraph: {
-    title: 'Guides - llms.txt',
+    title: 'Guides - llms.txt Hub',
     description:
       'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
     url: `${getBaseUrl()}/guides`,

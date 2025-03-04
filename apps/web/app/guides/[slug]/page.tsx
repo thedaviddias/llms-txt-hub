@@ -14,18 +14,10 @@ interface GuidePageProps {
   }
 }
 
-async function getGuideFromParams(slug: string) {
-  const guide = await getGuideBySlug(slug)
-
-  if (!guide) {
-    null
-  }
-
-  return guide
-}
-
 export async function generateMetadata({ params }: GuidePageProps): Promise<Metadata> {
-  const guide = await getGuideBySlug(params.slug)
+  const { slug } = await params
+
+  const guide = await getGuideBySlug(slug)
 
   if (!guide) {
     return {}
@@ -34,10 +26,10 @@ export async function generateMetadata({ params }: GuidePageProps): Promise<Meta
   const baseUrl = getBaseUrl()
 
   return {
-    title: `${guide.title} - llms.txt`,
+    title: `${guide.title} - llms.txt Hub`,
     description: guide.description,
     alternates: {
-      canonical: `${baseUrl}/guides/${params.slug}`
+      canonical: `${baseUrl}/guides/${slug}`
     }
   }
 }
@@ -50,7 +42,9 @@ export async function generateStaticParams(): Promise<GuidePageProps['params'][]
 }
 
 export default async function GuidePage({ params }: GuidePageProps) {
-  const guide = await getGuideBySlug(params.slug)
+  const { slug } = await params
+
+  const guide = await getGuideBySlug(slug)
 
   if (!guide) {
     notFound()
