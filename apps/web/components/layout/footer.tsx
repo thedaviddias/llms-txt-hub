@@ -64,11 +64,11 @@ export function Footer() {
             <div>
               <h4 className="font-medium mb-3">Features</h4>
               <ul className="space-y-2 text-sm">
-                <li>
+                {/* <li>
                   <Link href={getRoute('llmsTxt')} className="hover:text-foreground">
                     llms.txt file
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href={getRoute('submit')} className="hover:text-foreground">
                     Submit llms.txt
