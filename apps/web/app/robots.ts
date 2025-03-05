@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: ['/'],
-      disallow: ['/404', '/500', '/submit', '/api/*']
+      disallow: ['/404', '/500', '/submit', '/api/*', '/sort=*', '/search=*', '/category=*']
     }
   }
 }
