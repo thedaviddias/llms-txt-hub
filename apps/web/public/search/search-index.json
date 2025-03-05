@@ -275,6 +275,17 @@
     "llmsFullUrl": "https://dotenvx.com/llms-full.txt"
   },
   {
+    "name": "Drizzle ORM",
+    "description": "\"Headless TypeScript ORM with a head. Runs on Node, Bun and Deno. Lives on the Edge and yes, it's a JavaScript ORM too\"",
+    "url": "/drizzle-orm",
+    "content": "# Drizzle\n\nDrizzle is a modern TypeScript ORM developers wanna use in their next project. It is lightweight at only ~7.4kb minified+gzipped, and it's tree shakeable with exactly 0 dependencies. It supports every PostgreSQL, MySQL, SQLite, SingleStore and Gel databases and is serverless-ready by design.\n\n## Key Focus Areas\n\n- Type-Safe Query Building\n- Performance & Flexibility\n- Developer Experience & Ergonomics\n- Schema Migrations & Data management\n\n## About llms.txt Implementation\n\ndrizzle-orm's llms.txt documentation outlines the library's type-safe query and schema migration features, with comprehensive details available in their full documentation.",
+    "category": "developer-tools",
+    "slug": "drizzle-orm",
+    "website": "https://orm.drizzle.team",
+    "llmsUrl": "https://orm.drizzle.team/llms.txt",
+    "llmsFullUrl": "https://orm.drizzle.team/llms-full.txt"
+  },
+  {
     "name": "Dub",
     "description": "Link management and URL shortening platform",
     "url": "/dub",

@@ -3,6 +3,9 @@ import { getAllWebsites } from '@/lib/mdx'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
+import { getRoute } from '@/lib/routes'
+import { JsonLd } from '@/components/json-ld'
+import { generateCollectionSchema } from '@/lib/schema'
 
 export async function generateMetadata(): Promise<Metadata> {
   const baseUrl = getBaseUrl()
@@ -19,9 +22,15 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ProjectsPage() {
   const websites = await getAllWebsites()
 
+  const baseUrl = getBaseUrl()
+
+  const breadcrumbItems = [{ name: 'Websites', href: getRoute('website.list') }]
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <Breadcrumb items={[{ name: 'Websites', href: '/website' }]} baseUrl={getBaseUrl()} />
+      <JsonLd data={generateCollectionSchema(websites)} />
+      <Breadcrumb items={breadcrumbItems} baseUrl={baseUrl} />
+
       <ClientProjectsList initialWebsites={websites} />
     </div>
   )

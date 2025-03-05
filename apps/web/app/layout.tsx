@@ -3,7 +3,6 @@ import type React from 'react'
 import '../../../packages/design-system/styles/globals.css'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
-import { PageTransition } from '@/components/page-transition'
 import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 import { SentryUserProvider } from '@thedaviddias/observability/providers'
@@ -27,9 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <SentryUserProvider>
             <div className="flex min-h-screen flex-col">
               <Header />
-              <main className="flex-1">
-                <PageTransition>{children}</PageTransition>
-              </main>
+              <main className="flex-1">{children}</main>
               <Footer />
             </div>
           </SentryUserProvider>

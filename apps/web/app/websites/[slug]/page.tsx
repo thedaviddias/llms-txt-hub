@@ -15,6 +15,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getRoute } from '@/lib/routes'
+import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
+import { JsonLd } from '@/components/json-ld'
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>
@@ -61,16 +63,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound()
   }
 
+  const breadcrumbItems = [
+    { name: 'Websites', href: getRoute('website.list') },
+    { name: project.name, href: getRoute('website.detail', { slug }) }
+  ]
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-3xl mx-auto space-y-8">
-        <Breadcrumb
-          items={[
-            { name: 'Websites', href: '/websites' },
-            { name: project.name, href: `/websites/${slug}` }
-          ]}
-          baseUrl={getBaseUrl()}
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@graph': [generateWebsiteSchema(project), generateArticleSchema(project)]
+          }}
         />
+        <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
         <Card>
           <CardHeader className="border-b pb-8">
             <div className="flex items-start gap-4">
