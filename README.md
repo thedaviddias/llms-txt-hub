@@ -307,8 +307,9 @@ Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hu
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jharrell"><img src="https://avatars.githubusercontent.com/u/4829245?v=4?s=100" width="100px;" alt="Jon Harrell"/><br /><sub><b>Jon Harrell</b></sub></a><br /><a href="#content-jharrell" title="Content">🖋</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Anulo2"><img src="https://avatars.githubusercontent.com/u/28984474?v=4?s=100" width="100px;" alt="_Zaizen_"/><br /><sub><b>_Zaizen_</b></sub></a><br /><a href="#content-Anulo2" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://drizzle.team"><img src="https://avatars.githubusercontent.com/u/29543764?v=4?s=100" width="100px;" alt="Andrii Sherman"/><br /><sub><b>Andrii Sherman</b></sub></a><br /><a href="#content-AndriiSherman" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Anulo2"><img src="https://avatars.githubusercontent.com/u/28984474?v=4?s=100" width="100px;" alt="_Zaizen_"/><br /><sub><b>_Zaizen_</b></sub></a><br /><a href="#content-Anulo2" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://alexatallah.com"><img src="https://avatars.githubusercontent.com/u/1011391?v=4?s=100" width="100px;" alt="Alex Atallah"/><br /><sub><b>Alex Atallah</b></sub></a><br /><a href="#content-alexanderatallah" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
