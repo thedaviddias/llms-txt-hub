@@ -42,18 +42,11 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     publisher: 'llms.txt hub',
     category: project.category,
     classification: project.category,
-    pagination: {
-      previous: project.previousWebsite?.slug
-        ? `${getBaseUrl()}/websites/${project.previousWebsite.slug}`
-        : null,
-      next: project.nextWebsite?.slug
-        ? `${getBaseUrl()}/websites/${project.nextWebsite.slug}`
-        : null
-    },
     openGraph: {
       title: `${project.name} | llms.txt hub`,
       description: project.description,
-      url: `${getBaseUrl()}/websites/${project.slug}`
+      url: `${getBaseUrl()}/websites/${project.slug}`,
+      type: 'website'
     }
   }
 }
