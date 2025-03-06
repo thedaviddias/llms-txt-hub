@@ -11,6 +11,11 @@ const URL_OVERRIDES: Record<string, string> = {
 }
 
 /**
+ * Static routes that should be included in the sitemap
+ */
+const STATIC_ROUTES = ['faq', 'projects', 'websites', 'news', 'guides', 'about']
+
+/**
  * Recursively get all MDX pages from a directory
  *
  * @param dir - Directory to scan
@@ -59,7 +64,23 @@ function getPriority(path: string): number {
   if (!path) return 1 // Homepage
   if (path.startsWith('guides/')) return 0.8
   if (path.startsWith('resources/')) return 0.7
+  if (STATIC_ROUTES.includes(path)) return 0.9 // High priority for main static routes
   return 0.5 // Other pages
+}
+
+/**
+ * Generate sitemap entries for static routes
+ *
+ * @param baseUrl - Base URL of the website
+ * @returns Array of sitemap entries for static routes
+ */
+function getStaticRoutes(baseUrl: string): MetadataRoute.Sitemap {
+  return STATIC_ROUTES.map(route => ({
+    url: `${baseUrl}/${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: getPriority(route)
+  }))
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -68,9 +89,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const contentDir = join(process.cwd(), '../../content')
 
   try {
-    const pages = getContentPages(contentDir)
+    // Add static routes
+    routes.push(...getStaticRoutes(baseUrl))
 
     // Add content pages
+    const pages = getContentPages(contentDir)
     pages.forEach(page => {
       routes.push({
         url: `${baseUrl}/${page}`,
