@@ -242,6 +242,17 @@
     "llmsFullUrl": "https://docs.datafold.com/llms-full.txt"
   },
   {
+    "name": "Demo Time",
+    "description": "Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
+    "url": "/demo-time",
+    "content": "# Demo Time\n\nScript your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
+    "category": "developer-tools",
+    "slug": "demo-time",
+    "website": "https://demotime.elio.dev",
+    "llmsUrl": "https://demotime.elio.dev/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "DevHub",
     "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
     "url": "/dev-hub",
@@ -278,7 +289,7 @@
     "name": "Drizzle ORM",
     "description": "\"Headless TypeScript ORM with a head. Runs on Node, Bun and Deno. Lives on the Edge and yes, it's a JavaScript ORM too\"",
     "url": "/drizzle-orm",
-    "content": "# Drizzle\n\nDrizzle is a modern TypeScript ORM developers wanna use in their next project. It is lightweight at only ~7.4kb minified+gzipped, and it's tree shakeable with exactly 0 dependencies. It supports every PostgreSQL, MySQL, SQLite, SingleStore and Gel databases and is serverless-ready by design.\n\n## Key Focus Areas\n\n- Type-Safe Query Building\n- Performance & Flexibility\n- Developer Experience & Ergonomics\n- Schema Migrations & Data management\n\n## About llms.txt Implementation\n\ndrizzle-orm's llms.txt documentation outlines the library's type-safe query and schema migration features, with comprehensive details available in their full documentation.",
+    "content": "# Drizzle ORM\n\nDrizzle is a modern TypeScript ORM developers wanna use in their next project. It is lightweight at only ~7.4kb minified+gzipped, and it's tree shakeable with exactly 0 dependencies. It supports every PostgreSQL, MySQL, SQLite, SingleStore and Gel databases and is serverless-ready by design.\n\n## Key Focus Areas\n\n- Type-Safe Query Building\n- Performance & Flexibility\n- Developer Experience & Ergonomics\n- Schema Migrations & Data management\n\n## About llms.txt Implementation\n\ndrizzle-orm's llms.txt documentation outlines the library's type-safe query and schema migration features, with comprehensive details available in their full documentation.",
     "category": "developer-tools",
     "slug": "drizzle-orm",
     "website": "https://orm.drizzle.team",
@@ -459,6 +470,17 @@
     "slug": "frigade",
     "website": "https://frigade.com",
     "llmsUrl": "https://docs.frigade.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Front Matter CMS - a CMS in your VS Code editor",
+    "description": "Front Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
+    "url": "/front-matter-cms---a-cms-in-your-vs-code-editor",
+    "content": "# Front Matter CMS - a CMS in your VS Code editor\n\nFront Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
+    "category": "developer-tools",
+    "slug": "front-matter-cms---a-cms-in-your-vs-code-editor",
+    "website": "https://frontmatter.codes",
+    "llmsUrl": "https://frontmatter.codes/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -759,6 +781,17 @@
     "llmsFullUrl": "https://docs.openpipe.ai/llms-full.txt"
   },
   {
+    "name": "OpenRouter",
+    "description": "A unified interface for LLMs. Find the best models & prices for your prompts.",
+    "url": "/openrouter",
+    "content": "# OpenRouter\n\nA unified interface for LLMs. Find the best models & prices for your prompts.",
+    "category": "developer-tools",
+    "slug": "openrouter",
+    "website": "https://openrouter.ai/",
+    "llmsUrl": "https://openrouter.ai/docs/llms.txt",
+    "llmsFullUrl": "https://openrouter.ai/docs/llms-full.txt"
+  },
+  {
     "name": "Oxla",
     "description": "Data processing and analytics platform",
     "url": "/oxla",
@@ -790,17 +823,6 @@
     "website": "https://docs.pinata.cloud",
     "llmsUrl": "https://docs.pinata.cloud/llms.txt",
     "llmsFullUrl": "https://docs.pinata.cloud/llms-full.txt"
-  },
-  {
-    "name": "Pinecone",
-    "description": "Vector database and similarity search platform",
-    "url": "/pinecone",
-    "content": "# Pinecone\n\nPinecone provides vector database solutions for AI applications and similarity search.\n\n## Key Focus Areas\n\n- Vector Database\n- Similarity Search\n- AI Infrastructure\n\n## About llms.txt Implementation\n\nPinecone's llms.txt documentation details their vector database features, with comprehensive coverage in their full documentation.",
-    "category": "data-analytics",
-    "slug": "pinecone",
-    "website": "https://pinecone.io",
-    "llmsUrl": "https://docs.pinecone.io/llms.txt",
-    "llmsFullUrl": "https://docs.pinecone.io/llms-full.txt"
   },
   {
     "name": "Plain",
