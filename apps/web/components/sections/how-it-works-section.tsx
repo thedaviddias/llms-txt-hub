@@ -11,7 +11,8 @@ export function HowItWorksSection() {
           </div>
           <h3 className="text-xl font-semibold text-foreground">1. Create llms.txt</h3>
           <p className="text-muted-foreground">
-            Add an llms.txt file to your website's root directory, similar to robots.txt.
+            Add a llms.txt file to your website's root directory with markdown format, similar to
+            robots.txt.
           </p>
         </div>
         <div className="text-center space-y-3 bg-background/50 p-6 rounded-lg border border-border/50 hover:border-primary/20 hover:shadow-md transition-all">

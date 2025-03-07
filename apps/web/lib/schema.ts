@@ -7,12 +7,16 @@ export interface SchemaOrg {
 }
 
 export interface WebsiteSchema extends SchemaOrg {
-  '@type': 'SoftwareApplication'
+  '@type': 'Service'
   name: string
   description: string
   url: string
-  applicationCategory: string
-  operatingSystem: string
+  provider: {
+    '@type': 'Organization'
+    name: string
+    url: string
+  }
+  category: string
 }
 
 export interface ArticleSchema extends SchemaOrg {
@@ -45,7 +49,6 @@ export interface GuideSchema extends SchemaOrg {
   }
   articleSection: string
   timeRequired: string
-  difficulty: string
 }
 
 export interface FAQPageSchema extends SchemaOrg {
@@ -64,17 +67,21 @@ export interface FAQPageSchema extends SchemaOrg {
  * Generates schema.org structured data for a website
  *
  * @param website - Website metadata
- * @returns Schema.org SoftwareApplication structured data
+ * @returns Schema.org Service structured data
  */
 export function generateWebsiteSchema(website: WebsiteMetadata): WebsiteSchema {
   return {
     '@context': 'https://schema.org',
-    '@type': 'SoftwareApplication',
+    '@type': 'Service',
     name: website.name,
     description: website.description,
     url: website.website,
-    applicationCategory: website.category || 'Application',
-    operatingSystem: 'Web'
+    provider: {
+      '@type': 'Organization',
+      name: website.name,
+      url: website.website
+    },
+    category: website.category || 'DeveloperAPI'
   }
 }
 

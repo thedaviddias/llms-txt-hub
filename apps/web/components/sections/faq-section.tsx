@@ -9,12 +9,12 @@ export const faqItems = [
   {
     question: 'What is llms.txt?',
     answer:
-      "llms.txt is a proposed standard file that helps AI models better understand and interact with your website's documentation and content structure. It's similar to robots.txt, but specifically designed for AI language models."
+      "llms.txt is a proposed standard file that helps Large Language Models (LLMs) better understand and interact with your website's documentation and content structure. It's similar to robots.txt, but specifically designed for AI language models and in markdown format."
   },
   {
     question: 'How do I implement llms.txt?',
     answer:
-      "To implement llms.txt, create a file named 'llms.txt' in your website's root directory and define your content structure and AI interaction preferences."
+      "To implement llms.txt, create a plain text file named 'llms.txt' in your website's root directory and define your content structure and AI interaction preferences."
   },
   {
     question: 'What are the benefits of using llms.txt?',
