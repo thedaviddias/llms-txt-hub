@@ -163,27 +163,20 @@ export async function getGuideBySlug(
     const fullPath = path.join(guidesDirectory, `${slug}.mdx`)
 
     if (!fs.existsSync(fullPath)) {
-      console.error('Guide file does not exist:', fullPath)
       return null
     }
 
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const { data, content } = matter(fileContents)
 
-    // Calculate reading time
-    const words = content.trim().split(/\s+/).length
-    const readingTime = Math.ceil(words / 200)
-
     // Map the date to publishedAt if not provided
-    const publishedAt = data.publishedAt || data.date
+    const publishedAt = data.date
 
     return {
       ...data,
       slug,
       content,
-      readingTime,
-      publishedAt,
-      published: data.published ?? true // Default to true if not specified
+      publishedAt
     } as GuideMetadata & { content: string }
   } catch (error) {
     console.error('Error getting guide by slug:', error)

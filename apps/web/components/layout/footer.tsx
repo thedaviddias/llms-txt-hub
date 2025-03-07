@@ -20,7 +20,10 @@ export function Footer() {
             <div className="flex space-x-4 mt-6">
               <ModeToggle />
               <div className="flex space-x-4">
-                <Link href="https://github.com/thedaviddias" className="hover:text-foreground">
+                <Link
+                  href="https://github.com/thedaviddias/llms-txt-hub"
+                  className="hover:text-foreground"
+                >
                   <SiGithub className="h-5 w-5" />
                   <span className="sr-only">GitHub</span>
                 </Link>

@@ -59,7 +59,7 @@ export function FeaturedGuidesSection({ guides }: FeaturedGuidesSectionProps) {
               <CardTitle className="line-clamp-2 mt-2">
                 <Link
                   href={getRoute('guides.guide', { slug: guide.slug })}
-                  className="block after:absolute after:inset-0 after:content-[''] z-10"
+                  className="leading-6 block after:absolute after:inset-0 after:content-[''] z-10"
                 >
                   {guide.title}
                 </Link>
