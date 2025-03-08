@@ -2,11 +2,8 @@
   "name": "@thedaviddias/caching",
   "version": "1.0.0",
   "private": true,
-  "exports": {
-    ".": "./index.ts",
-    "./upstash": "./upstash.ts"
-  },
   "dependencies": {
+    "@t3-oss/env-nextjs": "^0.12.0",
     "@upstash/redis": "^1.34.4"
   },
   "devDependencies": {

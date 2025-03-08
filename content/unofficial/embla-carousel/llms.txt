@@ -1,0 +1,31 @@
+# https://www.embla-carousel.com/ llms.txt
+
+- [Embla Carousel](https://www.embla-carousel.com/): Lightweight carousel library with customizable features and examples.
+- [Embla Carousel Plugins](https://www.embla-carousel.com/plugins/): Explore various plugins to enhance Embla Carousel functionality.
+- [Embla Carousel Guides](https://www.embla-carousel.com/guides/): Step-by-step guides for customizing Embla Carousel features.
+- [Embla Carousel API](https://www.embla-carousel.com/api/): Explore the extensible Embla Carousel API for customization.
+- [Embla Carousel Examples](https://www.embla-carousel.com/examples/): Explore various Embla Carousel example setups for customization.
+- [Embla Autoplay Plugin](https://www.embla-carousel.com/plugins/autoplay/): Embla Carousel plugin for autoplay functionality and options.
+- [Embla Carousel Methods](https://www.embla-carousel.com/api/methods/): Explore Embla Carousel's extensible methods for carousels.
+- [Embla Carousel Plugins](https://www.embla-carousel.com/api/plugins/): Explore Embla carousel plugins for installation and usage.
+- [Carousel Breakpoints Guide](https://www.embla-carousel.com/guides/breakpoints/): Learn to customize carousels for different screen sizes.
+- [Carousel Generator](https://www.embla-carousel.com/examples/generator/): Create custom carousels easily with various settings options.
+- [Carousel Examples](https://www.embla-carousel.com/examples/predefined/): Explore pre-made carousel examples and customization options.
+- [Embla Carousel Events](https://www.embla-carousel.com/api/events/): Learn about Embla Carousel events and usage examples.
+- [Embla Carousel Options](https://www.embla-carousel.com/api/options/): Customize Embla Carousel options for various functionalities.
+- [Embla Carousel Fade](https://www.embla-carousel.com/plugins/fade/): Plugin for Embla Carousel with fade transition effects.
+- [Embla Carousel Guide](https://www.embla-carousel.com/get-started/): Lightweight, dependency-free carousel library for modern web development.
+- [Embla Carousel for React](https://www.embla-carousel.com/get-started/react/): Learn to integrate Embla Carousel with React easily.
+- [Embla Carousel Class Names](https://www.embla-carousel.com/plugins/class-names/): Class name toggle utility for Embla Carousel plugin.
+- [Embla Carousel Setup](https://www.embla-carousel.com/get-started/module/): Learn to set up and customize Embla Carousel easily.
+- [Embla Carousel Svelte](https://www.embla-carousel.com/get-started/svelte/): Integrate Embla Carousel with Svelte for seamless functionality.
+- [Wheel Gestures Plugin](https://www.embla-carousel.com/plugins/wheel-gestures/): Navigate Embla Carousel using mouse or trackpad wheel gestures.
+- [Slide Container Setup](https://www.embla-carousel.com/guides/slide-container/): Guide to setting up slide containers using flexbox and CSS Grid.
+- [Embla Carousel Auto Scroll](https://www.embla-carousel.com/plugins/auto-scroll/): Plugin for Embla Carousel enabling automatic scrolling features.
+- [Embla Carousel Vue](https://www.embla-carousel.com/get-started/vue/): Integrate Embla Carousel with Vue for seamless functionality.
+- [Embla Carousel CDN Setup](https://www.embla-carousel.com/get-started/cdn/): Learn to set up Embla Carousel using CDN scripts.
+- [Customizing Slide Sizes](https://www.embla-carousel.com/guides/slide-sizes/): Learn to customize slide sizes for carousels effectively.
+- [Embla Carousel with Solid](https://www.embla-carousel.com/get-started/solid/): Integrate Embla Carousel with Solid for seamless functionality.
+- [Managing Slide Gaps](https://www.embla-carousel.com/guides/slide-gaps/): Learn to manage slide gaps in Embla Carousel effectively.
+- [Auto Height Plugin](https://www.embla-carousel.com/plugins/auto-height/): Plugin for Embla Carousel that adjusts height automatically.
+- [Embla Carousel Navigation](https://www.embla-carousel.com/guides/previous-and-next-buttons/): Learn to add previous and next buttons to Embla Carousel.

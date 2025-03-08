@@ -14,6 +14,7 @@
     "format": "biome check --write .",
     "generate-search-index": "node scripts/search-index-generator.js",
     "generate-websites": "tsx scripts/generate-websites.ts",
+    "generate:llms": "pnpm --filter generator start",
     "generate:website": "turbo gen website",
     "postinstall": "manypkg fix",
     "lint": "turbo lint && manypkg check",

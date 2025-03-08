@@ -106,7 +106,7 @@ function createMockPointerEvent(type: string, props: PointerEventInit = {}): Poi
   Object.assign(event, {
     button: props.button ?? 0,
     ctrlKey: props.ctrlKey ?? false,
-    pointerType: props.pointerType ?? "mouse",
+    pointerType: props.pointerType ?? 'mouse'
   })
   return event
 }
@@ -118,5 +118,5 @@ window.PointerEvent = createMockPointerEvent as any
 Object.assign(window.HTMLElement.prototype, {
   scrollIntoView: jest.fn(),
   releasePointerCapture: jest.fn(),
-  hasPointerCapture: jest.fn(),
+  hasPointerCapture: jest.fn()
 })

@@ -5,6 +5,7 @@ import { resolveFromRoot } from './utils'
 
 const websitesDirectory = resolveFromRoot('content/websites')
 const guidesDirectory = resolveFromRoot('content/guides')
+const unofficialDirectory = resolveFromRoot('content/unofficial')
 
 export interface WebsiteMetadata {
   slug: string
@@ -15,6 +16,7 @@ export interface WebsiteMetadata {
   llmsFullUrl?: string
   category: string
   publishedAt: string
+  isUnofficial?: boolean
 }
 
 export interface GuideMetadata {
@@ -35,37 +37,58 @@ export interface GuideMetadata {
 }
 
 export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
-  if (!fs.existsSync(websitesDirectory)) {
-    console.error('Websites directory does not exist:', websitesDirectory)
-    return []
+  const websites: WebsiteMetadata[] = []
+
+  // Helper function to process MDX files from a directory
+  const processDirectory = (directory: string, isUnofficial = false) => {
+    if (!fs.existsSync(directory)) {
+      console.error('Directory does not exist:', directory)
+      return []
+    }
+
+    const fileNames = fs.readdirSync(directory)
+
+    if (fileNames.length === 0) {
+      console.warn('No files found in directory:', directory)
+      return []
+    }
+
+    return fileNames
+      .filter((fileName: string) => fileName.endsWith('.mdx'))
+      .map((fileName: string) => {
+        const slug = fileName.replace(/\.mdx$/, '')
+        const fullPath = path.join(directory, fileName)
+        const fileContents = fs.readFileSync(fullPath, 'utf8')
+        const { data } = matter(fileContents)
+
+        return {
+          slug,
+          name: data.name,
+          description: data.description,
+          website: data.website,
+          llmsUrl: data.llmsUrl,
+          llmsFullUrl: data.llmsFullUrl,
+          category: data.category,
+          publishedAt: data.publishedAt,
+          isUnofficial
+        } as WebsiteMetadata
+      })
   }
 
-  const fileNames = fs.readdirSync(websitesDirectory)
+  // Process official websites
+  websites.push(...processDirectory(websitesDirectory))
 
-  if (fileNames.length === 0) {
-    console.warn('No website files found in directory')
-    return []
+  // Process unofficial websites from subdirectories
+  if (fs.existsSync(unofficialDirectory)) {
+    const unofficialDirs = fs
+      .readdirSync(unofficialDirectory, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => path.join(unofficialDirectory, dirent.name))
+
+    for (const dir of unofficialDirs) {
+      websites.push(...processDirectory(dir, true))
+    }
   }
-
-  const websites = fileNames
-    .filter((fileName: string) => fileName.endsWith('.mdx'))
-    .map((fileName: string) => {
-      const slug = fileName.replace(/\.mdx$/, '')
-      const fullPath = path.join(websitesDirectory, fileName)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const { data } = matter(fileContents)
-
-      return {
-        slug,
-        name: data.name,
-        description: data.description,
-        website: data.website,
-        llmsUrl: data.llmsUrl,
-        llmsFullUrl: data.llmsFullUrl,
-        category: data.category,
-        publishedAt: data.publishedAt
-      } as WebsiteMetadata
-    })
 
   return websites
 }
@@ -106,6 +129,34 @@ export async function getAllGuides(): Promise<GuideMetadata[]> {
   return guides
 }
 
+/**
+ * Finds the full path to a website's MDX file by searching in both official and unofficial directories
+ */
+function findWebsiteFile(slug: string): string | null {
+  // First check official directory
+  const officialPath = path.join(websitesDirectory, `${slug}.mdx`)
+  if (fs.existsSync(officialPath)) {
+    return officialPath
+  }
+
+  // If not found, check unofficial directories
+  if (fs.existsSync(unofficialDirectory)) {
+    const unofficialDirs = fs
+      .readdirSync(unofficialDirectory, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => path.join(unofficialDirectory, dirent.name))
+
+    for (const dir of unofficialDirs) {
+      const unofficialPath = path.join(dir, `${slug}.mdx`)
+      if (fs.existsSync(unofficialPath)) {
+        return unofficialPath
+      }
+    }
+  }
+
+  return null
+}
+
 export async function getWebsiteBySlug(slug: string): Promise<
   | (WebsiteMetadata & {
       content: string
@@ -115,14 +166,17 @@ export async function getWebsiteBySlug(slug: string): Promise<
     })
   | null
 > {
-  const fullPath = path.join(websitesDirectory, `${slug}.mdx`)
+  const fullPath = findWebsiteFile(slug)
 
-  if (!fs.existsSync(fullPath)) {
+  if (!fullPath) {
     return null
   }
 
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
+
+  // Check if the file is from the unofficial directory
+  const isUnofficial = fullPath.includes('/unofficial/')
 
   // Remove the first heading that matches the website name
   const lines = content.split('\n')
@@ -147,7 +201,8 @@ export async function getWebsiteBySlug(slug: string): Promise<
     content: contentWithoutTitle,
     relatedWebsites,
     previousWebsite,
-    nextWebsite
+    nextWebsite,
+    isUnofficial
   } as WebsiteMetadata & {
     content: string
     relatedWebsites: WebsiteMetadata[]
