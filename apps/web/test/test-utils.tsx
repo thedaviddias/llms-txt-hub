@@ -3,7 +3,12 @@ import React from 'react'
 import { Toaster } from 'sonner'
 
 // Mock implementations
-const MockThemeProvider = ({ children, attribute, defaultTheme, enableSystem }: {
+const MockThemeProvider = ({
+  children,
+  attribute,
+  defaultTheme,
+  enableSystem
+}: {
   children: React.ReactNode
   attribute?: string
   defaultTheme?: string
@@ -30,11 +35,10 @@ export const mockThemeContext = {
   setTheme: jest.fn()
 }
 
-function render(ui: React.ReactElement, {
-  authContext = mockAuthContext,
-  themeContext = mockThemeContext,
-  ...options
-} = {}) {
+function render(
+  ui: React.ReactElement,
+  { authContext = mockAuthContext, themeContext = mockThemeContext, ...options } = {}
+) {
   function Wrapper({ children }: { children: React.ReactNode }) {
     return (
       <MockThemeProvider attribute="class" defaultTheme="system" enableSystem>

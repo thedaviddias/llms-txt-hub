@@ -102,6 +102,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 flex-wrap">
                       <h1 className="text-3xl font-bold">{project.name}</h1>
+                      {project.isUnofficial && (
+                        <Badge
+                          variant="outline"
+                          className="text-sm border-yellow-500/20 bg-yellow-500/10 dark:border-yellow-400/30 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-500/20 dark:hover:bg-yellow-400/20 transition-colors"
+                        >
+                          Unofficial
+                        </Badge>
+                      )}
                       <Link
                         href={project.website}
                         target="_blank"

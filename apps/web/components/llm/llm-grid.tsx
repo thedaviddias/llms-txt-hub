@@ -5,6 +5,7 @@ import { cn } from '@thedaviddias/design-system/lib/utils'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import Link from 'next/link'
 import { LLMButton } from '../buttons/llm-button'
+import { Badge } from '@thedaviddias/design-system/badge'
 
 interface LLMGridProps {
   items: WebsiteMetadata[]
@@ -35,14 +36,24 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                 className="rounded-lg"
               />
               <div className="flex-1 min-w-0">
-                <h3 className="font-medium truncate">
-                  <Link
-                    href={getRoute('website.detail', { slug: item.slug })}
-                    className="block after:absolute after:inset-0 after:content-[''] z-10"
-                  >
-                    {item.name}
-                  </Link>
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-medium truncate">
+                    <Link
+                      href={getRoute('website.detail', { slug: item.slug })}
+                      className="block after:absolute after:inset-0 after:content-[''] z-10"
+                    >
+                      {item.name}
+                    </Link>
+                  </h3>
+                  {item.isUnofficial && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-yellow-500/20 bg-yellow-500/10 dark:border-yellow-400/30 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-500/20 dark:hover:bg-yellow-400/20 transition-colors"
+                    >
+                      Unofficial
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-sm text-muted-foreground truncate">{item.description}</p>
                 <div className="pt-2 space-x-2">
                   {item.llmsUrl && <LLMButton href={item.llmsUrl} type="llms" size="sm" />}
@@ -74,14 +85,24 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                     className="rounded-lg"
                   />
                 </div>
-                <h3 className="font-semibold">
-                  <Link
-                    href={getRoute('website.detail', { slug: item.slug })}
-                    className="block after:absolute after:inset-0 after:content-[''] z-10"
-                  >
-                    {item.name}
-                  </Link>
-                </h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold">
+                    <Link
+                      href={getRoute('website.detail', { slug: item.slug })}
+                      className="block after:absolute after:inset-0 after:content-[''] z-10"
+                    >
+                      {item.name}
+                    </Link>
+                  </h3>
+                  {item.isUnofficial && (
+                    <Badge
+                      variant="outline"
+                      className="text-xs border-yellow-500/20 bg-yellow-500/10 dark:border-yellow-400/30 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-500/20 dark:hover:bg-yellow-400/20 transition-colors"
+                    >
+                      Unofficial
+                    </Badge>
+                  )}
+                </div>
                 <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
               </div>
               <div className="pt-2 space-x-2">

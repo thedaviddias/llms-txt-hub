@@ -1,19 +1,15 @@
 import { Redis } from '@upstash/redis'
 import type { CacheInterface, CacheOptions } from './interfaces'
-
-export interface UpstashConfig {
-  url: string
-  token: string
-}
+import { keys } from './keys'
 
 export class UpstashCache implements CacheInterface {
   private client: Redis
   private defaultNamespace?: string
 
-  constructor(config: UpstashConfig, defaultNamespace?: string) {
+  constructor(defaultNamespace?: string) {
     this.client = new Redis({
-      url: config.url,
-      token: config.token
+      url: keys().UPSTASH_REDIS_REST_URL,
+      token: keys().UPSTASH_REDIS_REST_TOKEN
     })
     this.defaultNamespace = defaultNamespace
   }
@@ -69,7 +65,9 @@ export class UpstashCache implements CacheInterface {
       value
     ])
 
-    await this.client.mset(namespacedEntries as [string, unknown][])
+    // Convert array of tuples to Record<string, unknown>
+    const record = Object.fromEntries(namespacedEntries)
+    await this.client.mset(record)
 
     if (options?.ttl) {
       await Promise.all(
