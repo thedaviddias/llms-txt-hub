@@ -33,6 +33,7 @@
     "@thedaviddias/hooks": "workspace:*",
     "@thedaviddias/logging": "workspace:*",
     "@thedaviddias/observability": "workspace:*",
+    "@thedaviddias/rate-limiting": "workspace:*",
     "@thedaviddias/supabase": "workspace:*",
     "@thedaviddias/utils": "workspace:*",
     "cheerio": "^1.0.0",

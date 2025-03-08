@@ -1,7 +1,6 @@
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { CategoriesSection } from '@/components/sections/categories-section'
-import { CommunityStatsSection } from '@/components/sections/community-stats-section'
 import { FAQSection } from '@/components/sections/faq-section'
 import { FeaturedGuidesSection } from '@/components/sections/featured-guides-section'
 import { FeaturedProjectsSection } from '@/components/sections/featured-projects-section'
@@ -46,7 +45,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Home() {
-  const { featuredProjects, allProjects, recentlyUpdatedProjects } = await getHomePageData()
+  const { featuredProjects, recentlyUpdatedProjects } = await getHomePageData()
   const featuredGuides = await getAllGuides()
 
   return (
@@ -72,10 +71,10 @@ export default async function Home() {
         <ToolsSection />
         <CategoriesSection />
         <HowItWorksSection />
-        <CommunityStatsSection allProjects={allProjects} />
+        {/* <CommunityStatsSection allProjects={allProjects} /> */}
         <FAQSection />
-        <NewsletterSection />
         <CommunitiesSection />
+        <NewsletterSection />
       </div>
     </>
   )

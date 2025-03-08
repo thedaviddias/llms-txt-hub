@@ -13,6 +13,7 @@ interface ProjectListProps {
     llmsUrl: string
     llmsFullUrl?: string
     category?: string
+    isUnofficial?: boolean
   }>
 }
 
@@ -41,14 +42,24 @@ export function ProjectList({ items = [] }: ProjectListProps) {
               <div className="grow">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-lg font-semibold group-hover:underline">
-                      <Link
-                        href={getRoute('website.detail', { slug: item.slug })}
-                        className="z-10 after:absolute after:inset-0 after:content-[''] z-10"
-                      >
-                        {item.name}
-                      </Link>
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-lg font-semibold group-hover:underline">
+                        <Link
+                          href={getRoute('website.detail', { slug: item.slug })}
+                          className="z-10 after:absolute after:inset-0 after:content-[''] z-10"
+                        >
+                          {item.name}
+                        </Link>
+                      </h3>
+                      {item.isUnofficial && (
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-yellow-500/20 bg-yellow-500/10 dark:border-yellow-400/30 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-500/20 dark:hover:bg-yellow-400/20 transition-colors"
+                        >
+                          Unofficial
+                        </Badge>
+                      )}
+                    </div>
                     <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
                   </div>
                 </div>

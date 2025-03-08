@@ -69,7 +69,9 @@ export class UpstashCache implements CacheInterface {
       value
     ])
 
-    await this.client.mset(namespacedEntries as [string, unknown][])
+    // Convert array of tuples to Record<string, unknown>
+    const record = Object.fromEntries(namespacedEntries)
+    await this.client.mset(record)
 
     if (options?.ttl) {
       await Promise.all(
