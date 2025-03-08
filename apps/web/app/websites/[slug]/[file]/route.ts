@@ -1,7 +1,6 @@
 import { resolveFromRoot } from '@/lib/utils'
 import { createRateLimiter, slidingWindow } from '@thedaviddias/rate-limiting'
 import { UpstashCache } from '@thedaviddias/caching/upstash'
-import { env } from '@/env'
 import * as Sentry from '@sentry/nextjs'
 import { NextResponse } from 'next/server'
 import fs from 'node:fs'
@@ -9,19 +8,8 @@ import path from 'node:path'
 
 const CACHE_TTL = 3600 // 1 hour in seconds
 
-// Validate required environment variables
-if (!env.UPSTASH_REDIS_REST_URL || !env.UPSTASH_REDIS_REST_TOKEN) {
-  throw new Error('Missing required Upstash Redis environment variables')
-}
-
 // Initialize file content cache with namespace
-const fileCache = new UpstashCache(
-  {
-    url: env.UPSTASH_REDIS_REST_URL,
-    token: env.UPSTASH_REDIS_REST_TOKEN
-  },
-  'file_content'
-)
+const fileCache = new UpstashCache('file_content')
 
 // Create rate limiters with different limits for each file type
 const llmsRateLimiter = createRateLimiter({

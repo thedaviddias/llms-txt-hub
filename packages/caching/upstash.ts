@@ -1,19 +1,15 @@
 import { Redis } from '@upstash/redis'
 import type { CacheInterface, CacheOptions } from './interfaces'
-
-export interface UpstashConfig {
-  url: string
-  token: string
-}
+import { keys } from './keys'
 
 export class UpstashCache implements CacheInterface {
   private client: Redis
   private defaultNamespace?: string
 
-  constructor(config: UpstashConfig, defaultNamespace?: string) {
+  constructor(defaultNamespace?: string) {
     this.client = new Redis({
-      url: config.url,
-      token: config.token
+      url: keys().UPSTASH_REDIS_REST_URL,
+      token: keys().UPSTASH_REDIS_REST_TOKEN
     })
     this.defaultNamespace = defaultNamespace
   }
