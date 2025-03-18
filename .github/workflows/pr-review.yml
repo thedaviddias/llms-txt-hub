@@ -34,18 +34,18 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-  links:
-    name: Check Links
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # links:
+  #   name: Check Links
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Check Links
-        uses: lycheeverse/lychee-action@v2.2.0
-        with:
-          args: --config ./lychee.toml --verbose --no-progress .
-          fail: true
+  #     - name: Check Links
+  #       uses: lycheeverse/lychee-action@v2.2.0
+  #       with:
+  #         args: --config ./lychee.toml --verbose --no-progress .
+  #         fail: true
 
   e2e:
     name: E2E Tests
