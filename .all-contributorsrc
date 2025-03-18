@@ -3,28 +3,36 @@
   "projectOwner": "thedaviddias",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "contributors": [
     {
       "login": "jharrell",
       "name": "Jon Harrell",
       "avatar_url": "https://avatars.githubusercontent.com/u/4829245?v=4",
       "profile": "https://github.com/jharrell",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "AndriiSherman",
       "name": "Andrii Sherman",
       "avatar_url": "https://avatars.githubusercontent.com/u/29543764?v=4",
       "profile": "https://drizzle.team",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "Anulo2",
       "name": "_Zaizen_",
       "avatar_url": "https://avatars.githubusercontent.com/u/28984474?v=4",
       "profile": "https://github.com/Anulo2",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "alexanderatallah",
@@ -40,7 +48,18 @@
       "name": "Elio Struyf",
       "avatar_url": "https://avatars.githubusercontent.com/u/2900833?v=4",
       "profile": "https://www.eliostruyf.com",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "merloxx",
+      "name": "merloxx",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12734661?v=4",
+      "profile": "https://merloxx.dev",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "commitType": "docs",
