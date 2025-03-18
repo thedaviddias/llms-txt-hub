@@ -313,6 +313,7 @@ Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hu
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Anulo2"><img src="https://avatars.githubusercontent.com/u/28984474?v=4?s=100" width="100px;" alt="_Zaizen_"/><br /><sub><b>_Zaizen_</b></sub></a><br /><a href="#content-Anulo2" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://alexatallah.com"><img src="https://avatars.githubusercontent.com/u/1011391?v=4?s=100" width="100px;" alt="Alex Atallah"/><br /><sub><b>Alex Atallah</b></sub></a><br /><a href="#content-alexanderatallah" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.eliostruyf.com"><img src="https://avatars.githubusercontent.com/u/2900833?v=4?s=100" width="100px;" alt="Elio Struyf"/><br /><sub><b>Elio Struyf</b></sub></a><br /><a href="#content-estruyf" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://merloxx.dev"><img src="https://avatars.githubusercontent.com/u/12734661?v=4?s=100" width="100px;" alt="merloxx"/><br /><sub><b>merloxx</b></sub></a><br /><a href="#content-merloxx" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
