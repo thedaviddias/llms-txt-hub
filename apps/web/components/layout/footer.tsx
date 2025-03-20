@@ -17,7 +17,7 @@ export function Footer() {
                 llms.txt standard.
               </a>
             </p>
-            <div className="flex space-x-4 mt-6">
+            <div className="flex space-x-4 my-6">
               <ModeToggle />
               <div className="flex space-x-4">
                 <Link
@@ -37,6 +37,17 @@ export function Footer() {
                 </Link>
               </div>
             </div>
+            <a
+              title="Install llms-txt Raycast Extension"
+              href="https://www.raycast.com/thedaviddias/llms-txt"
+            >
+              <img
+                src="https://www.raycast.com/thedaviddias/llms-txt/install_button@2x.png"
+                height={64}
+                alt="Install llms-txt Raycast Extension"
+                style={{ height: '64px' }}
+              />
+            </a>
           </div>
           <div className="md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
