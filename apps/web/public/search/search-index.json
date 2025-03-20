@@ -132,6 +132,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Bun",
+    "description": "Bun is a new JavaScript runtime with a native bundler, transpiler, task runner, and npm client built-in.",
+    "url": "/bun",
+    "content": "# Bun — A fast all\n\nBun is a new JavaScript runtime with a native bundler, transpiler, task runner, and npm client built-in.",
+    "category": "developer-tools",
+    "slug": "bun",
+    "website": "https://bun.sh",
+    "llmsUrl": "https://bun.sh/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Campsite",
     "description": "Organized team communication platform that replaces chaotic chat with structured discussions",
     "url": "/campsite",
@@ -141,6 +152,17 @@
     "website": "https://developers.campsite.com",
     "llmsUrl": "https://developers.campsite.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Chakra UI",
+    "description": "Chakra UI is a component system for building products with speed",
+    "url": "/chakra-ui",
+    "content": "# Chakra UI\n\nChakra UI is a powerful and accessible component library that provides the essential building blocks for creating modern React applications. It combines simplicity with flexibility, offering a comprehensive set of components that prioritize accessibility, customization, and developer experience.\n\n## Key Focus Areas\n\n- Accessible Components\n- Modular Design System\n- Theme Customization\n- React Server Components Support\n- Developer Experience\n\n## About llms.txt Implementation\n\nChakra UI's llms.txt documentation provides detailed information about their component system, including implementation guidelines, accessibility features, and theming capabilities. The full documentation (llms-full.txt) offers comprehensive examples, advanced usage patterns, and integration guides for various frameworks.\n\nThe library also provides specialized documentation files for different aspects of the system:\n\n- [llms-components.txt](https://chakra-ui.com/llms-components.txt): Complete documentation for all available components\n- [llms-component/[component].txt](https://chakra-ui.com/llms-component/%5Bcomponent%5D.txt): Individual component-specific documentation\n- [llms-styling.txt](https://chakra-ui.com/llms-styling.txt): Dedicated styling system documentation\n- [llms-theming.txt](https://chakra-ui.com/llms-theming.txt): Comprehensive theming system documentation\n- [llms-migration.txt](https://chakra-ui.com/llms-migration.txt): Guide for migrating from version 2 to version 3",
+    "category": "developer-tools",
+    "slug": "chakra-ui",
+    "website": "https://chakra-ui.com/",
+    "llmsUrl": "https://chakra-ui.com/llms.txt",
+    "llmsFullUrl": "https://chakra-ui.com/llms-full.txt"
   },
   {
     "name": "Clever Cloud",
@@ -495,6 +517,17 @@
     "llmsFullUrl": "https://docs.rungalileo.io/llms-full.txt"
   },
   {
+    "name": "Glama",
+    "description": "Enterprise-grade security, privacy, with features like agents, MCP, prompt templates, and more.",
+    "url": "/glama",
+    "content": "# Glama\n\nEnterprise-grade security, privacy, with features like agents, MCP, prompt templates, and more.",
+    "category": "infrastructure-cloud",
+    "slug": "glama",
+    "website": "https://glama.ai",
+    "llmsUrl": "https://glama.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Goody",
     "description": "Corporate gifting and rewards platform",
     "url": "/goody",
@@ -746,6 +779,17 @@
     "website": "https://mintlify.com",
     "llmsUrl": "https://mintlify.com/docs/llms.txt",
     "llmsFullUrl": "https://mintlify.com/docs/llms-full.txt"
+  },
+  {
+    "name": "Model Context Protocol (MCP)",
+    "description": "MCP is an open protocol that standardizes how applications provide context to LLMs.",
+    "url": "/model-context-protocol",
+    "content": "# Model Context Protocol (MCP)\n\nThe Model Context Protocol (MCP) is an open standard that defines how applications can effectively communicate context and requirements to Large Language Models (LLMs). It provides a structured way for applications to share information, constraints, and expectations with LLMs, ensuring consistent and reliable interactions.\n\n## Key Focus Areas\n\n- Context Standardization\n- LLM Integration\n- Application Communication\n- Protocol Specifications\n\n## About llms.txt Implementation\n\nThe Model Context Protocol's llms.txt documentation provides comprehensive details about the protocol specifications, integration guidelines, and best practices for implementing MCP in applications. The full documentation (llms-full.txt) includes additional examples, use cases, and advanced implementation scenarios.",
+    "category": "developer-tools",
+    "slug": "model-context-protocol",
+    "website": "https://modelcontextprotocol.io",
+    "llmsUrl": "https://modelcontextprotocol.io/llms.txt",
+    "llmsFullUrl": "https://modelcontextprotocol.io/llms-full.txt"
   },
   {
     "name": "Mystery-o-matic",
@@ -1045,6 +1089,17 @@
     "llmsFullUrl": "https://www.stedi.com/docs/llms-full.txt"
   },
   {
+    "name": "Stripe",
+    "description": "Stripe powers online and in-person payment processing and financial solutions for businesses of all sizes. Accept payments, send payouts, and automate financial processes with a suite of APIs and no-code tools.",
+    "url": "/stripe",
+    "content": "# Stripe\n\nStripe is a comprehensive payment processing platform that enables businesses to accept payments, manage subscriptions, and handle complex financial operations. With its robust API-first approach, Stripe provides developers with powerful tools to build custom payment solutions.\n\n## Key Features\n\n- **Payment Processing**: Accept credit cards, digital wallets, and local payment methods\n- **Subscription Management**: Handle recurring billing and subscription lifecycles\n- **Connect Platform**: Build marketplace and platform payment solutions\n- **Financial Reporting**: Access detailed financial reports and analytics\n- **Fraud Prevention**: Utilize machine learning-powered fraud detection",
+    "category": "integration-automation",
+    "slug": "stripe",
+    "website": "https://stripe.com",
+    "llmsUrl": "http://docs.stripe.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Supabase",
     "description": "Build production-grade applications with a Postgres database, Authentication, instant APIs, Realtime, Functions, Storage and Vector embeddings. Start for free.",
     "url": "/supabase",
@@ -1306,6 +1361,17 @@
     "slug": "workflow",
     "website": "https://workflow.design",
     "llmsUrl": "https://docs.workflow.design/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "ZAPHYR PHP Framework",
+    "description": "ZAPHYR is a breath of fresh air in the PHP ecosystem, providing a flexible, modular, and lightweight open source framework for web development.",
+    "url": "/zaphyr-php-framework",
+    "content": "# ZAPHYR PHP Framework\n\nZAPHYR is a breath of fresh air in the PHP ecosystem, providing a flexible, modular, and lightweight open source framework for web development.",
+    "category": "developer-tools",
+    "slug": "zaphyr-php-framework",
+    "website": "https://zaphyr.org",
+    "llmsUrl": "https://zaphyr.org/llms.txt",
     "llmsFullUrl": ""
   },
   {
