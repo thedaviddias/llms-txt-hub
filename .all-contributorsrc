@@ -60,6 +60,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "sean-roberts",
+      "name": "Sean Roberts",
+      "avatar_url": "https://avatars.githubusercontent.com/u/950274?v=4",
+      "profile": "https://github.com/sean-roberts",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "commitType": "docs",
