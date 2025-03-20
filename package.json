@@ -2,7 +2,6 @@
   "name": "llms-txt-hub",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "build": "node scripts/search-index-generator.cjs && turbo build",
     "check:frontmatter": "tsx scripts/check-frontmatter.ts",

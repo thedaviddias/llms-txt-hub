@@ -17,6 +17,7 @@ import { notFound } from 'next/navigation'
 import { getRoute } from '@/lib/routes'
 import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
 import { JsonLd } from '@/components/json-ld'
+import { ToolsSection } from '@/components/sections/tools-section'
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>
@@ -152,6 +153,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="prose dark:prose-invert max-w-none">
           <MDXRemote source={project.content} components={components} />
         </div>
+
+        <ToolsSection layout="compact" />
         <ProjectNavigation
           previousWebsite={project.previousWebsite}
           nextWebsite={project.nextWebsite}
