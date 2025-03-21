@@ -4,7 +4,6 @@ import { Card } from '@thedaviddias/design-system/card'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import Link from 'next/link'
-import { LLMButton } from '../buttons/llm-button'
 import { Badge } from '@thedaviddias/design-system/badge'
 
 interface LLMGridProps {
@@ -54,13 +53,7 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground truncate">{item.description}</p>
-                <div className="pt-2 space-x-2">
-                  {item.llmsUrl && <LLMButton href={item.llmsUrl} type="llms" size="sm" />}
-                  {item.llmsFullUrl && (
-                    <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />
-                  )}
-                </div>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
               </div>
             </div>
           )
@@ -104,12 +97,6 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                   )}
                 </div>
                 <p className="text-sm text-muted-foreground line-clamp-2">{item.description}</p>
-              </div>
-              <div className="pt-2 space-x-2">
-                {item.llmsUrl && <LLMButton href={item.llmsUrl} type="llms" size="sm" />}
-                {item.llmsFullUrl && (
-                  <LLMButton href={item.llmsFullUrl} type="llms-full" size="sm" />
-                )}
               </div>
             </div>
           </Card>
