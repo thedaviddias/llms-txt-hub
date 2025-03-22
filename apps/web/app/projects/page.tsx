@@ -86,7 +86,7 @@ export default async function ProjectsPage() {
               <article className="space-y-6">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <Code className="h-6 w-6" />
+                    <Code className="size-6" />
                     <h3 className="text-2xl font-bold">
                       <Link href={featuredProject.url} className="hover:underline" target="_blank">
                         {featuredProject.fullName}
@@ -95,7 +95,7 @@ export default async function ProjectsPage() {
                     </h3>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4" />
+                    <Star className="size-4" />
                     <span>{featuredProject.stars}</span>
                   </div>
                 </div>
@@ -104,13 +104,13 @@ export default async function ProjectsPage() {
                   <Button asChild>
                     <Link href={featuredProject.url} target="_blank">
                       View Project
-                      <ExternalLink className="ml-2 h-4 w-4" />
+                      <ExternalLink className="ml-2 size-4" />
                     </Link>
                   </Button>
                   <Button variant="outline" asChild>
                     <Link href="https://github.com/topics/llms-txt" target="_blank">
                       Browse All Projects
-                      <ExternalLink className="ml-2 h-4 w-4" />
+                      <ExternalLink className="ml-2 size-4" />
                     </Link>
                   </Button>
                 </div>
@@ -140,7 +140,7 @@ export default async function ProjectsPage() {
               <Button asChild>
                 <Link href="https://github.com/topics/llms-txt" target="_blank">
                   Browse GitHub Topic
-                  <ExternalLink className="ml-2 h-4 w-4" />
+                  <ExternalLink className="ml-2 size-4" />
                 </Link>
               </Button>
               <Button variant="outline" asChild>

@@ -21,7 +21,7 @@ export function AuthCheck({ children }: AuthCheckProps) {
           You need to be signed in with GitHub to submit your llms.txt file.
         </p>
         <Button onClick={signIn} className="w-full max-w-sm">
-          <Github className="mr-2 h-4 w-4" />
+          <Github className="mr-2 size-4" />
           Sign in with GitHub
         </Button>
       </div>

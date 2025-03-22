@@ -20,7 +20,7 @@ export const ErrorBoundaryCustom = ({ children }: ErrorBoundaryCustomProps) => {
                 We apologize for the inconvenience. Please try refreshing the page.
               </p>
               <Button onClick={() => window.location.reload()} variant="outline" className="gap-2">
-                <RefreshCw className="h-4 w-4" />
+                <RefreshCw className="size-4" />
                 Refresh Page
               </Button>
             </AlertDescription>

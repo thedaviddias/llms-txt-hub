@@ -14,7 +14,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Featured Websites</h2>
         <Link href={getRoute('website.featured')} className="flex items-center">
-          View all <ArrowRight className="ml-2 h-4 w-4" />
+          View all <ArrowRight className="ml-2 size-4" />
         </Link>
       </div>
       <LLMGrid items={projects} />

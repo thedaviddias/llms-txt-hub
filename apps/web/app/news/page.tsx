@@ -93,7 +93,7 @@ export default async function NewsPage() {
 
           <Link href={RSS_FEED_URL} className="inline-flex">
             <Button variant="outline">
-              <Rss className="mr-2 h-4 w-4" />
+              <Rss className="mr-2 size-4" />
               RSS Feed
             </Button>
           </Link>
@@ -117,7 +117,7 @@ export default async function NewsPage() {
                       rel="noopener noreferrer"
                     >
                       {item.title}
-                      <ExternalLink className="inline-block ml-2 h-4 w-4" />
+                      <ExternalLink className="inline-block ml-2 size-4" />
                     </Link>
                   </h2>
                   <p className="text-muted-foreground">{item.description}</p>

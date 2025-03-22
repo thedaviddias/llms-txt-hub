@@ -62,10 +62,8 @@ export function GuideCard({ guide }: GuideCardProps) {
       </CardHeader>
       <CardContent className="flex-1">
         <div className="flex items-center gap-2">
-          {guide.category === 'getting-started' && <Book className="h-4 w-4 text-primary" />}
-          {guide.category === 'implementation' && (
-            <GraduationCap className="h-4 w-4 text-primary" />
-          )}
+          {guide.category === 'getting-started' && <Book className="size-4 text-primary" />}
+          {guide.category === 'implementation' && <GraduationCap className="size-4 text-primary" />}
           <span className="text-sm text-muted-foreground capitalize">
             {guide.category.replace('-', ' ')}
           </span>

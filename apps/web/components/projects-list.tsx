@@ -141,7 +141,7 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
             onClick={() => setViewMode('grid')}
             className="hover:cursor-pointer"
           >
-            <Grid className="h-4 w-4" />
+            <Grid className="size-4" />
           </Button>
           <Button
             variant={viewMode === 'list' ? 'default' : 'outline'}
@@ -149,7 +149,7 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
             onClick={() => setViewMode('list')}
             className="hover:cursor-pointer"
           >
-            <List className="h-4 w-4" />
+            <List className="size-4" />
           </Button>
         </div>
         <div className="flex items-center gap-2">
@@ -161,11 +161,11 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
             className="bg-background border rounded-md"
           >
             <ToggleGroupItem value="latest" className="px-3 py-2 h-10 data-[state=on]:bg-accent">
-              <Clock className="h-4 w-4 mr-2" />
+              <Clock className="size-4 mr-2" />
               <span className="text-sm">Latest</span>
             </ToggleGroupItem>
             <ToggleGroupItem value="name" className="px-3 py-2 h-10 data-[state=on]:bg-accent">
-              <SortAsc className="h-4 w-4 mr-2" />
+              <SortAsc className="size-4 mr-2" />
               <span className="text-sm">Name</span>
             </ToggleGroupItem>
           </ToggleGroup>

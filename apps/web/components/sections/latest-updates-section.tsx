@@ -18,12 +18,12 @@ export function LatestUpdatesSection({ projects }: LatestUpdatesSectionProps) {
             href={getRoute('rss')}
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            <Rss className="h-4 w-4" />
+            <Rss className="size-4" />
             <span className="sr-only">RSS Feed for latest updates</span>
           </Link>
         </div>
         <Link href={getRoute('website.latest')} className="flex items-center">
-          View all <ArrowRight className="ml-2 h-4 w-4" />
+          View all <ArrowRight className="ml-2 size-4" />
         </Link>
       </div>
       <LLMGrid items={projects} variant="compact" />

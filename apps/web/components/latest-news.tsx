@@ -52,13 +52,13 @@ export function LatestNews() {
               href={RSS_FEED_URL}
               className="text-sm text-muted-foreground hover:text-foreground"
             >
-              <Rss className="h-4 w-4" />
+              <Rss className="size-4" />
               <span className="sr-only">RSS Feed for latest news</span>
             </Link>
           </div>
           <div className="flex items-center gap-2">
             <Link href={getRoute('news')} className="flex items-center">
-              View all <ArrowRight className="ml-2 h-4 w-4" />
+              View all <ArrowRight className="ml-2 size-4" />
             </Link>
           </div>
         </div>
@@ -84,13 +84,13 @@ export function LatestNews() {
         <div className="flex items-center gap-2">
           <h2 className="text-2xl font-bold">Latest News</h2>
           <Link href={RSS_FEED_URL} className="text-sm text-muted-foreground hover:text-foreground">
-            <Rss className="h-4 w-4" />
+            <Rss className="size-4" />
             <span className="sr-only">RSS Feed for latest news</span>
           </Link>
         </div>
         <div className="flex items-center gap-2">
           <Link href={getRoute('news')} className="flex items-center">
-            View all <ArrowRight className="ml-2 h-4 w-4" />
+            View all <ArrowRight className="ml-2 size-4" />
           </Link>
         </div>
       </div>
@@ -113,7 +113,7 @@ export function LatestNews() {
                   rel="noopener noreferrer"
                 >
                   {item.title}
-                  <ExternalLink className="inline-block ml-2 h-4 w-4" />
+                  <ExternalLink className="inline-block ml-2 size-4" />
                 </Link>
               </h3>
               <p className="text-sm text-muted-foreground">

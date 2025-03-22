@@ -10,7 +10,7 @@ export default function Loading() {
         <div className="flex justify-between items-center">
           <Skeleton className="h-10 w-48" />
           <Button variant="outline" disabled>
-            <Rss className="mr-2 h-4 w-4" />
+            <Rss className="mr-2 size-4" />
             Follow RSS Feed
           </Button>
         </div>

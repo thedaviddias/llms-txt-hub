@@ -31,7 +31,7 @@ export function ToolsSection({ layout = 'default' }: ToolsSectionProps) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 leading-5">
                   LLMs.txt Checker Chrome Extension
-                  <ExternalLink className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ExternalLink className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
                 </CardTitle>
                 <CardDescription>
                   Check if websites implement llms.txt and llms-full.txt files
@@ -62,7 +62,7 @@ export function ToolsSection({ layout = 'default' }: ToolsSectionProps) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 leading-5">
                   LLMS.txt VSCode Extension
-                  <ExternalLink className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ExternalLink className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
                 </CardTitle>
                 <CardDescription>
                   Search and explore llms.txt files directly in VS Code
@@ -93,7 +93,7 @@ export function ToolsSection({ layout = 'default' }: ToolsSectionProps) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 leading-5">
                   MCP LLMS.txt Explorer
-                  <ExternalLink className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ExternalLink className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
                 </CardTitle>
                 <CardDescription>Explore and analyze llms.txt files using MCP</CardDescription>
               </CardHeader>
@@ -122,7 +122,7 @@ export function ToolsSection({ layout = 'default' }: ToolsSectionProps) {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 leading-5">
                   LLMs Txt Raycast Extension
-                  <ExternalLink className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <ExternalLink className="size-4 opacity-0 transition-opacity group-hover:opacity-100" />
                 </CardTitle>
                 <CardDescription>
                   Search and explore llms.txt files directly in Raycast

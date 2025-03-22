@@ -21,13 +21,13 @@ export function GitHubProjectCard({ project }: GitHubProjectCardProps) {
                 <h3 className="text-xl font-bold">
                   <Link href={project.url} className="hover:underline" target="_blank">
                     {project.fullName}
-                    <ExternalLink className="inline-block ml-2 h-4 w-4" />
+                    <ExternalLink className="inline-block ml-2 size-4" />
                   </Link>
                 </h3>
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <Star className="h-4 w-4" />
+              <Star className="size-4" />
               <span>{project.stars.toLocaleString()}</span>
             </div>
           </div>

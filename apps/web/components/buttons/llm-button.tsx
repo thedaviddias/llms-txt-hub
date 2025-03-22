@@ -20,7 +20,7 @@ export function LLMButton({ href, type, size = 'md', className }: LLMButtonProps
 
   const iconSizes = {
     sm: 'h-3 w-3',
-    md: 'h-4 w-4',
+    md: 'size-4',
     lg: 'h-5 w-5'
   }
 

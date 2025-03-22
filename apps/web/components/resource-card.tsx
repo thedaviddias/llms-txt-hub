@@ -30,7 +30,7 @@ export function ResourceCard({ resource }: ResourceCardProps) {
         <h3 className="text-xl font-bold">
           <Link href={resource.url} className="hover:underline" target="_blank">
             {resource.title}
-            <ExternalLink className="inline-block ml-2 h-4 w-4" />
+            <ExternalLink className="inline-block ml-2 size-4" />
           </Link>
         </h3>
         <p className="text-muted-foreground">{resource.description}</p>
