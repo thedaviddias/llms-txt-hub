@@ -1,13 +1,14 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import { resolveFromRoot } from './utils'
 
 // This module runs at build time only!
 // It loads all content files and prepares them for use in the application
 
-// Define the base directories
-const contentBase = path.join(process.cwd(), '..', '..', 'content')
-const dataDir = path.join(process.cwd(), '..', '..', 'data')
+// Define the base directories using safer path resolution
+const contentBase = resolveFromRoot('content')
+const dataDir = resolveFromRoot('data')
 
 // Structure to store the loaded content
 interface ContentStore {
@@ -40,8 +41,24 @@ function loadWebsites() {
     if (!fs.existsSync(websitesDir)) {
       console.warn(`Websites directory not found at ${websitesDir}, falling back to JSON`)
       // Fall back to the JSON file if no directory
-      const jsonPath = path.join(dataDir, 'websites.json')
-      if (fs.existsSync(jsonPath)) {
+      // Try multiple possible locations for the websites.json file
+      const possiblePaths = [
+        path.join(dataDir, 'websites.json'),
+        path.join(process.cwd(), 'data', 'websites.json'),
+        path.join(process.cwd(), 'apps/web/data', 'websites.json'),
+        path.join(process.cwd(), 'apps', 'web', 'data', 'websites.json')
+      ]
+
+      let jsonPath: string | null = null
+      for (const p of possiblePaths) {
+        if (fs.existsSync(p)) {
+          jsonPath = p
+          console.log(`Found websites.json at: ${p}`)
+          break
+        }
+      }
+
+      if (jsonPath && fs.existsSync(jsonPath)) {
         const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
         contentStore.websites = jsonData.map((item: any) => ({
           slug: item.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
@@ -126,8 +143,24 @@ function loadWebsites() {
     console.error('Error loading websites:', error)
     // Attempt to load from JSON as fallback
     try {
-      const jsonPath = path.join(dataDir, 'websites.json')
-      if (fs.existsSync(jsonPath)) {
+      // Try multiple possible locations for the websites.json file
+      const possiblePaths = [
+        path.join(dataDir, 'websites.json'),
+        path.join(process.cwd(), 'data', 'websites.json'),
+        path.join(process.cwd(), 'apps/web/data', 'websites.json'),
+        path.join(process.cwd(), 'apps', 'web', 'data', 'websites.json')
+      ]
+
+      let jsonPath: string | null = null
+      for (const p of possiblePaths) {
+        if (fs.existsSync(p)) {
+          jsonPath = p
+          console.log(`Found websites.json at: ${p}`)
+          break
+        }
+      }
+
+      if (jsonPath && fs.existsSync(jsonPath)) {
         const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
         contentStore.websites = jsonData.map((item: any) => ({
           slug: item.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
@@ -214,6 +247,9 @@ function loadLegalContent() {
 
 // Load all content at build time
 console.log('Loading content at build time...')
+console.log('Current working directory:', process.cwd())
+console.log('Content base path:', contentBase)
+console.log('Data directory path:', dataDir)
 loadWebsites()
 loadGuides()
 loadLegalContent()
