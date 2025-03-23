@@ -22,7 +22,8 @@ public/_pagefind
 npm-debug.log*
 
 # local env files
-.env.*
+**/.env
+**/.env.*
 !.env.example
 !.env.test
 
@@ -43,3 +44,4 @@ npm-debug.log*
 # Lychee
 lychee-out.md
 .lycheecache
+.env*.local

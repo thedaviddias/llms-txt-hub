@@ -30,6 +30,7 @@
     "@thedaviddias/config-next": "workspace:*",
     "@thedaviddias/config-typescript": "workspace:*",
     "@thedaviddias/design-system": "workspace:*",
+    "@thedaviddias/flags": "workspace:*",
     "@thedaviddias/hooks": "workspace:*",
     "@thedaviddias/logging": "workspace:*",
     "@thedaviddias/observability": "workspace:*",
