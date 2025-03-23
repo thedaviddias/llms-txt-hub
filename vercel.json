@@ -1,3 +1,7 @@
 {
-  "public": true
+  "public": true,
+  "github": {
+    "silent": true
+  },
+  "ignoreCommand": "if [[ \"$VERCEL_GIT_COMMIT_MESSAGE\" == docs:* ]] || [[ \"$VERCEL_GIT_COMMIT_MESSAGE\" == *\"[skip ci]\"* ]] || [[ \"$VERCEL_GIT_COMMIT_MESSAGE\" == *\"[skip vercel]\"* ]]; then echo \"🔎 Commit message contains skip pattern. Skipping build.\"; exit 0; else exit 1; fi"
 }

@@ -1,4 +1,5 @@
 import path from 'node:path'
+import fs from 'node:fs'
 import { type ClassValue, clsx } from 'clsx'
 import { format } from 'date-fns'
 import { twMerge } from 'tailwind-merge'
@@ -24,8 +25,22 @@ export function formatDate(dateString: string): string {
 export function resolveFromRoot(relativePath: string): string {
   // Check if running on Vercel
   if (process.env.VERCEL) {
-    return path.join(process.cwd(), relativePath)
+    // Try the direct path first (content at root level)
+    const directPath = path.join(process.cwd(), relativePath);
+    if (fs.existsSync(directPath)) {
+      return directPath;
+    }
+    
+    // Try the app-relative path next (content inside apps/web)
+    const appPath = path.join(process.cwd(), 'apps', 'web', relativePath);
+    if (fs.existsSync(appPath)) {
+      return appPath;
+    }
+    
+    // Default to direct path even if it doesn't exist
+    return directPath;
   }
+  
   // Local development path
-  return path.join(process.cwd(), '..', '..', relativePath)
+  return path.join(process.cwd(), '..', '..', relativePath);
 }
