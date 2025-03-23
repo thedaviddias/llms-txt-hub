@@ -78,6 +78,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "HerringtonDarkholme",
+      "name": "Herrington Darkholme",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2883231?v=4",
+      "profile": "https://github.com/HerringtonDarkholme",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "commitType": "docs",
