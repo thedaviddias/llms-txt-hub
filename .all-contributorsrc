@@ -87,6 +87,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "sxzz",
+      "name": "Kevin Deng 三咲智子",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6481596?v=4",
+      "profile": "https://sxzz.moe",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "commitType": "docs",
