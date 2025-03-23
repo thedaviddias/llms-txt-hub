@@ -12,6 +12,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
+    "@ai-sdk/react": "^1.1.23",
+    "@ai-sdk/xai": "^1.1.16",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.1.7",
@@ -22,6 +24,7 @@
     "@thedaviddias/observability": "workspace:*",
     "@thedaviddias/supabase": "workspace:*",
     "@thedaviddias/utils": "workspace:*",
+    "ai": "^4.1.61",
     "axios": "^1.6.5",
     "cheerio": "^1.0.0",
     "clsx": "^2.1.1",

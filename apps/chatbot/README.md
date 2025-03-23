@@ -5,9 +5,9 @@ A dedicated chatbot for exploring the llms.txt ecosystem, allowing users to inte
 ## Features
 
 - Chat-based interface for exploring llms.txt content
-- Filter results by category
-- View formatted llms.txt content with syntax highlighting
-- Responsive design for all devices
+- Tool-based architecture for specialized information retrieval
+- Syntax highlighted code blocks for llms.txt content
+- Responsive design that works on all devices
 - Dark mode support
 
 ## Getting Started
@@ -31,17 +31,21 @@ pnpm dev --filter=chatbot
 
 The chatbot consists of:
 
-1. A Next.js application with server-side API
-2. A content index generator that fetches and processes llms.txt files
-3. Client-side components for conversational interface
-4. Fuzzy search implementation with Fuse.js for improved results
+1. A Next.js application with modern UI inspired by Vercel's AI SDK starter
+2. A set of specialized tools for retrieving llms.txt information:
+   - `searchLlmsTxtTool`: Searches across llms.txt files
+   - `getLlmsTxtFileTool`: Retrieves specific provider files
+   - `getLlmsTxtCategoriesTool`: Organizes providers by category
+3. A simulated chat API that will later be connected to a real LLM
+4. A clean, minimalist UI with Markdown rendering support
 
 ## Development Roadmap
 
-- [ ] Conversational UI with chat-like interface
-- [ ] Natural language processing for better understanding of queries
-- [ ] Advanced filtering options (date, file type, etc.)
-- [ ] Syntax highlighting improvements for llms.txt files
-- [ ] Comparison view for multiple llms.txt files
-- [ ] Analytics for popular queries
+- [ ] Integrate with a real LLM API (Claude, OpenAI, etc.)
+- [ ] Implement proper streaming for responses
+- [ ] Add real-time llms.txt file fetching
+- [ ] Create a more sophisticated search/retrieval system
+- [ ] Display visualizations for context window sizes and other metrics
+- [ ] Compare multiple llms.txt files side-by-side
+- [ ] Advanced filtering options by capabilities
 - [ ] API for third-party access to the chatbot

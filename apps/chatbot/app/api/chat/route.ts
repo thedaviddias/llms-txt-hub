@@ -1,135 +1,121 @@
 import { NextResponse } from 'next/server'
-import path from 'path'
-import { promises as fs } from 'fs'
-import Fuse from 'fuse.js'
+import type { Message } from 'ai'
 
-// Define the type for our search index data
-type LlmsTxtData = {
-  url: string
-  name: string
-  content: string
-  type: 'llms.txt' | 'llms-full.txt'
-  category?: string
-  description?: string
-  website?: string
-  lastFetched: string
+// Helper function to extract tools results
+function extractToolResults(content: string) {
+  // In a real implementation, this would parse tool results from the AI response
+  // For now, we'll simulate this by searching in provided content
+  const hasSearchResults = content.includes('search results') || content.includes('I found')
+  const hasProviderInfo = content.includes('provider') || content.includes('file content')
+  const hasCategoryInfo = content.includes('category') || content.includes('categories')
+
+  return {
+    usedTools: {
+      search: hasSearchResults,
+      provider: hasProviderInfo,
+      category: hasCategoryInfo
+    }
+  }
 }
 
-// Mock data for initial development - will be replaced by actual data from index
-const MOCK_LLMS_DATA: LlmsTxtData[] = [
-  {
-    url: 'https://docs.anthropic.com/llms.txt',
-    name: 'Anthropic',
-    content: '# Anthropic Claude\nLLM platform for AI assistants with safety focus\nMODELS: claude-3-opus, claude-3-sonnet, claude-3-haiku\nCONTEXT_WINDOW: 200K tokens\n',
-    type: 'llms.txt',
-    category: 'ai-ml',
-    lastFetched: '2025-03-23'
-  },
-  {
-    url: 'https://docs.anthropic.com/llms-full.txt',
-    name: 'Anthropic',
-    content: '# Anthropic Claude\nFull LLM platform for AI assistants with safety focus\nMODELS: claude-3-opus, claude-3-sonnet, claude-3-haiku\nCONTEXT_WINDOW: 200K tokens\nAPI_ENDPOINTS: /v1/messages, /v1/completions\nDOCUMENTATION: https://docs.anthropic.com/claude/reference/\n',
-    type: 'llms-full.txt',
-    category: 'ai-ml',
-    lastFetched: '2025-03-23'
-  },
-  {
-    url: 'https://openrouter.ai/docs/llms.txt',
-    name: 'OpenRouter',
-    content: '# OpenRouter\nAPI aggregator for multiple LLM providers\nMODELS: multiple from various providers\nCONTEXT_WINDOW: varies by model\n',
-    type: 'llms.txt',
-    category: 'infrastructure-cloud',
-    lastFetched: '2025-03-23'
-  },
-  {
-    url: 'https://llmstxt.org/llms.txt',
-    name: 'LLMsTxt.org',
-    content: '# llms.txt\nThe official llms.txt documentation site\nSPECIFICATION: v1.0\n',
-    type: 'llms.txt',
-    category: 'developer-tools',
-    lastFetched: '2025-03-23'
-  }
-]
+// Sample bot messages for simulation
+const SAMPLE_RESPONSES: Record<string, string> = {
+  default:
+    "I'm sorry, I couldn't find specific information about that. Could you try rephrasing your question or asking about a specific LLM provider?",
 
-// Try to load the search index from file, falling back to mock data
-async function getSearchData(): Promise<LlmsTxtData[]> {
-  try {
-    const filePath = path.join(process.cwd(), 'public/search-index.json')
-    const fileData = await fs.readFile(filePath, 'utf8')
-    const data = JSON.parse(fileData)
-    return Array.isArray(data) ? data : MOCK_LLMS_DATA
-  } catch (error) {
-    console.log('Error loading search index, using mock data:', error)
-    return MOCK_LLMS_DATA
-  }
+  anthropic: `I found information about Anthropic's models:
+
+\`\`\`
+# Anthropic Claude
+LLM platform for AI assistants with safety focus
+MODELS: claude-3-opus, claude-3-sonnet, claude-3-haiku
+CONTEXT_WINDOW: 200K tokens
+\`\`\`
+
+Anthropic offers three main Claude models:
+- claude-3-opus: Their most powerful model
+- claude-3-sonnet: A balanced model for most tasks
+- claude-3-haiku: Their fastest and most cost-effective model
+
+All of these models support a context window of up to 200,000 tokens, which is among the largest in the industry.`,
+
+  openrouter: `Here's the llms.txt information for OpenRouter:
+
+\`\`\`
+# OpenRouter
+API aggregator for multiple LLM providers
+MODELS: multiple from various providers
+CONTEXT_WINDOW: varies by model
+\`\`\`
+
+OpenRouter is unique because it acts as an aggregator for multiple LLM providers, giving you access to various models through a single API. The context window varies depending on which underlying model you're using through their service.`,
+
+  context: `Based on the llms.txt files I've analyzed, here are the providers with the largest context windows:
+
+1. Anthropic Claude: 200K tokens
+2. OpenRouter: varies by model, but supports some models with large context windows
+
+Context windows are important because they determine how much text the AI can "see" at once. Larger context windows allow for more comprehensive understanding of documents and conversations.`,
+
+  categories: `I've found llms.txt files in several categories:
+
+1. AI/ML (ai-ml): Anthropic
+2. Infrastructure/Cloud (infrastructure-cloud): OpenRouter
+3. Developer Tools (developer-tools): LLMsTxt.org
+
+These categories reflect the different focus areas of companies implementing the llms.txt standard. Would you like more information about any specific category?`
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const messages = body.messages || []
-    
+    const messages: Message[] = body.messages || []
+
     if (!messages || messages.length === 0) {
-      return NextResponse.json(
-        { error: 'No messages provided' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'No messages provided' }, { status: 400 })
     }
-    
+
     const latestMessage = messages[messages.length - 1]
-    
+
     if (latestMessage.role !== 'user') {
-      return NextResponse.json(
-        { error: 'Last message must be from user' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'Last message must be from user' }, { status: 400 })
     }
-    
-    const userQuery = latestMessage.content
-    
-    // Get llms.txt data
-    const searchData = await getSearchData()
-    
-    // Set up Fuse.js for fuzzy searching
-    const fuse = new Fuse(searchData, {
-      keys: ['content', 'name', 'url', 'category'],
-      includeScore: true,
-      threshold: 0.4
-    })
-    
-    // Search with Fuse.js
-    const searchResults = fuse.search(userQuery)
-    
-    // Extract the items
-    const results = searchResults.map(result => result.item)
-    
-    let response = ''
-    
-    if (results.length === 0) {
-      response = "I couldn't find any llms.txt files matching your query. You could try asking about specific LLM models, context windows, or API endpoints. For example, try asking about Claude, OpenRouter, or llms.txt specifications."
+
+    const userQuery = latestMessage.content.toLowerCase()
+
+    // Simulate AI processing with delay for realism
+    await new Promise(resolve => setTimeout(resolve, 1500))
+
+    // Simple keyword matching for demo purposes
+    // In a real implementation, this would use a proper AI model
+    let response: string
+
+    if (userQuery.includes('anthropic') || userQuery.includes('claude')) {
+      response = SAMPLE_RESPONSES.anthropic
+    } else if (userQuery.includes('openrouter')) {
+      response = SAMPLE_RESPONSES.openrouter
+    } else if (userQuery.includes('context window') || userQuery.includes('largest context')) {
+      response = SAMPLE_RESPONSES.context
+    } else if (userQuery.includes('category') || userQuery.includes('categories')) {
+      response = SAMPLE_RESPONSES.categories
     } else {
-      // Generate a response based on search results
-      response = `Here's what I found about "${userQuery}":\n\n`
-      
-      const topResults = results.slice(0, 3)
-      
-      topResults.forEach((result, idx) => {
-        response += `${idx + 1}. **${result.name}** (${result.type}):\n\`\`\`\n${result.content.slice(0, 300)}${result.content.length > 300 ? '...' : ''}\n\`\`\`\n\n`
-      })
-      
-      if (results.length > 3) {
-        response += `I found ${results.length - 3} more results. Would you like me to show more or refine your search?`
-      }
+      response = SAMPLE_RESPONSES.default
     }
-    
-    // Simulate a brief delay for a more realistic experience
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    return NextResponse.json({ response })
+
+    // Extract tool results
+    const toolResults = extractToolResults(response)
+
+    return NextResponse.json({
+      response,
+      toolResults
+    })
   } catch (error) {
     console.error('Chat API error:', error)
     return NextResponse.json(
-      { error: 'Internal server error', message: error instanceof Error ? error.message : 'Unknown error' },
+      {
+        error: 'Internal server error',
+        message: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 }
     )
   }

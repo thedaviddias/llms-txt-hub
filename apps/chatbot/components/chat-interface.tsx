@@ -38,7 +38,7 @@ export default function ChatInterface() {
       content: input.trim(),
       timestamp: new Date()
     }
-    
+
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsLoading(true)
@@ -63,7 +63,7 @@ export default function ChatInterface() {
       }
 
       const data = await response.json()
-      
+
       // Add assistant message
       const assistantMessage: Message = {
         id: Date.now().toString(),
@@ -71,7 +71,7 @@ export default function ChatInterface() {
         content: data.response,
         timestamp: new Date()
       }
-      
+
       setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
       console.error('Error fetching response:', error)
@@ -95,7 +95,7 @@ export default function ChatInterface() {
     e.target.style.height = 'auto'
     e.target.style.height = `${e.target.scrollHeight}px`
   }
-  
+
   // Clear chat
   const clearChat = () => {
     setMessages([])
@@ -112,15 +112,16 @@ export default function ChatInterface() {
           <Bot className="w-5 h-5" />
           <span>LLMs.txt Chatbot</span>
         </h2>
-        <button 
-          onClick={clearChat} 
+        <button
+          type="button"
+          onClick={clearChat}
           className="p-2 text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200"
           aria-label="Clear chat"
         >
           <Trash2 className="w-5 h-5" />
         </button>
       </div>
-      
+
       {/* Chat messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 ? (
@@ -131,14 +132,14 @@ export default function ChatInterface() {
           </div>
         ) : (
           messages.map(message => (
-            <div 
-              key={message.id} 
+            <div
+              key={message.id}
               className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div 
+              <div
                 className={`max-w-[80%] rounded-lg p-4 ${
-                  message.role === 'user' 
-                    ? 'bg-blue-600 text-white' 
+                  message.role === 'user'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-neutral-200 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100'
                 }`}
               >
@@ -165,18 +166,30 @@ export default function ChatInterface() {
                 <span className="text-xs opacity-75">LLMs.txt Bot</span>
               </div>
               <div className="flex space-x-2">
-                <div className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                <div
+                  className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce"
+                  style={{ animationDelay: '0ms' }}
+                />
+                <div
+                  className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce"
+                  style={{ animationDelay: '150ms' }}
+                />
+                <div
+                  className="w-2 h-2 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-bounce"
+                  style={{ animationDelay: '300ms' }}
+                />
               </div>
             </div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
-      
+
       {/* Input form */}
-      <form onSubmit={handleSubmit} className="border-t border-neutral-200 dark:border-neutral-800 p-4">
+      <form
+        onSubmit={handleSubmit}
+        className="border-t border-neutral-200 dark:border-neutral-800 p-4"
+      >
         <div className="relative">
           <textarea
             ref={inputRef}
