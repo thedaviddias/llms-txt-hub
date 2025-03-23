@@ -29,9 +29,14 @@ import { toast } from 'sonner'
 import * as z from 'zod'
 
 const step1Schema = z.object({
-  website: z.string().url({
-    message: 'Please enter a valid URL.'
-  })
+  website: z
+    .string()
+    .url({
+      message: 'Please enter a valid URL.'
+    })
+    .refine(value => !value.toLowerCase().includes('llms.txt'), {
+      message: 'Please enter your website URL, not the path to your llms.txt file'
+    })
 })
 
 // Extract valid category slugs from categories array
@@ -43,8 +48,8 @@ const step2Schema = z.object({
     .min(2, {
       message: 'Name must be at least 2 characters.'
     })
-    .max(50, {
-      message: 'Name must be less than 50 characters for optimal display and SEO.'
+    .max(40, {
+      message: 'Name must be less than 40 characters for optimal display and SEO.'
     })
     .refine(value => !value.endsWith('.'), {
       message: 'Name should not end with a period.'
@@ -60,9 +65,14 @@ const step2Schema = z.object({
     .refine(value => value.endsWith('.'), {
       message: 'Description should end with a period.'
     }),
-  website: z.string().url({
-    message: 'Please enter a valid URL.'
-  }),
+  website: z
+    .string()
+    .url({
+      message: 'Please enter a valid URL.'
+    })
+    .refine(value => !value.toLowerCase().includes('llms.txt'), {
+      message: 'Please enter your website URL, not the path to your llms.txt file'
+    }),
   llmsUrl: z
     .string()
     .url({
@@ -168,8 +178,14 @@ export function SubmitForm() {
       // Set current date for publishedAt
       const currentDate = new Date().toISOString().split('T')[0]
 
+      // Process values before adding to formData
+      const processedValues = {
+        ...values,
+        name: values.name.trim() // Trim title/name
+      }
+
       // Add all form values except publishedAt
-      Object.entries(values).forEach(([key, value]) => {
+      Object.entries(processedValues).forEach(([key, value]) => {
         if (key !== 'publishedAt' && value) {
           formData.append(key, value)
         }
