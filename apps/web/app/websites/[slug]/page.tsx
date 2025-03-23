@@ -2,8 +2,7 @@ import { LLMButton } from '@/components/buttons/llm-button'
 import { LLMGrid } from '@/components/llm/llm-grid'
 import { components } from '@/components/mdx'
 import { ProjectNavigation } from '@/components/project-navigation'
-import { getAllWebsites, getWebsiteBySlug } from '@/lib/mdx'
-import type { WebsiteMetadata } from '@/lib/mdx'
+import { getWebsites, getWebsiteBySlug } from '@/lib/content-loader'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Card, CardContent, CardHeader } from '@thedaviddias/design-system/card'
@@ -20,18 +19,12 @@ import { JsonLd } from '@/components/json-ld'
 import { ToolsSection } from '@/components/sections/tools-section'
 
 interface ProjectPageProps {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params
-
-  const project = (await getWebsiteBySlug(slug)) as WebsiteMetadata & {
-    content: string
-    relatedWebsites: WebsiteMetadata[]
-    previousWebsite: WebsiteMetadata | null
-    nextWebsite: WebsiteMetadata | null
-  }
+  const project = await getWebsiteBySlug(slug)
 
   if (!project) {
     return {}
@@ -53,7 +46,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 }
 
 export async function generateStaticParams() {
-  const websites = await getAllWebsites()
+  const websites = await getWebsites()
   return websites.map(website => ({
     slug: website.slug
   }))
@@ -61,13 +54,7 @@ export async function generateStaticParams() {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params
-
-  const project = (await getWebsiteBySlug(slug)) as WebsiteMetadata & {
-    content: string
-    relatedWebsites: WebsiteMetadata[]
-    previousWebsite: WebsiteMetadata | null
-    nextWebsite: WebsiteMetadata | null
-  }
+  const project = await getWebsiteBySlug(slug)
 
   if (!project) {
     notFound()
@@ -151,7 +138,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </CardContent>
         </Card>
         <div className="prose dark:prose-invert max-w-none">
-          <MDXRemote source={project.content} components={components} />
+          <MDXRemote source={project.content || ''} components={components} />
         </div>
 
         <ToolsSection layout="compact" />

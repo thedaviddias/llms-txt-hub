@@ -96,8 +96,8 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
     }
   }
 
-  // Process official websites
   try {
+    // Process official websites
     websites.push(...processDirectory(websitesDirectory))
 
     // Process unofficial websites from subdirectories
@@ -115,16 +115,66 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
         console.error('Error processing unofficial directories:', error)
       }
     }
+
+    // If we found websites, return them
+    if (websites.length > 0) {
+      return websites
+    }
+
+    // If no websites were found from MDX files, try loading from the JSON file as fallback
+    console.warn('No websites found from MDX files, trying to load from JSON file')
   } catch (error) {
-    console.error('Error processing websites:', error)
+    console.error('Error processing websites from directories:', error)
   }
 
-  return websites
+  // Attempt to load websites from the JSON file as fallback
+  try {
+    // Try both possible locations for the websites.json file
+    const possiblePaths = [
+      path.join(process.cwd(), 'data/websites.json'),
+      path.join(process.cwd(), '../..', 'data/websites.json'),
+      path.join(process.cwd(), 'apps/web', 'data/websites.json')
+    ]
+
+    let websitesData = null
+    for (const jsonPath of possiblePaths) {
+      try {
+        if (fs.existsSync(jsonPath)) {
+          const jsonContent = fs.readFileSync(jsonPath, 'utf8')
+          websitesData = JSON.parse(jsonContent)
+          break
+        }
+      } catch (e) {
+        console.warn(`Failed to load websites from ${jsonPath}:`, e)
+      }
+    }
+
+    if (websitesData && Array.isArray(websitesData)) {
+      // Map the JSON structure to WebsiteMetadata
+      return websitesData.map(item => ({
+        slug: item.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        name: item.name,
+        description: item.description,
+        website: item.domain,
+        llmsUrl: item.llmsTxtUrl,
+        llmsFullUrl: item.llmsFullTxtUrl,
+        category: item.category,
+        publishedAt: item.publishedAt,
+        isUnofficial: false
+      }))
+    }
+  } catch (error) {
+    console.error('Error loading websites from JSON fallback:', error)
+  }
+
+  // If all else fails, return an empty array
+  console.error('Failed to load websites from any source')
+  return []
 }
 
 export async function getAllGuides(): Promise<GuideMetadata[]> {
-  let fileNames: string[] = [];
-  
+  let fileNames: string[] = []
+
   try {
     if (!fs.existsSync(guidesDirectory)) {
       console.error('Guides directory does not exist:', guidesDirectory)

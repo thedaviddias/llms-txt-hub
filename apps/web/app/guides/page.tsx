@@ -1,4 +1,4 @@
-import { getAllGuides } from '@/lib/mdx'
+import { getGuides } from '@/lib/content-loader'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { format } from 'date-fns'
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 }
 
 export default async function GuidesPage() {
-  const guides = await getAllGuides()
+  const guides = await getGuides()
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">

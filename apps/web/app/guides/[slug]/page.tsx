@@ -1,4 +1,4 @@
-import { getAllGuides, getGuideBySlug } from '@/lib/mdx'
+import { getGuides, getGuideBySlug } from '@/lib/content-loader'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
@@ -7,7 +7,6 @@ import { JsonLd } from '@/components/json-ld'
 import { generateGuideSchema } from '@/lib/schema'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getRoute } from '@/lib/routes'
-import { Suspense } from 'react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { components } from '@/components/mdx'
 
@@ -19,7 +18,6 @@ interface GuidePageProps {
 
 export async function generateMetadata(props: GuidePageProps): Promise<Metadata> {
   const { slug } = await props.params
-
   const guide = await getGuideBySlug(slug)
 
   if (!guide) {
@@ -36,7 +34,7 @@ export async function generateMetadata(props: GuidePageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams(): Promise<GuidePageProps['params'][]> {
-  const guides = await getAllGuides()
+  const guides = await getGuides()
 
   return guides.map(guide => ({
     slug: guide.slug
@@ -45,7 +43,6 @@ export async function generateStaticParams(): Promise<GuidePageProps['params'][]
 
 export default async function GuidePage({ params }: GuidePageProps) {
   const { slug } = await params
-
   const guide = await getGuideBySlug(slug)
 
   if (!guide) {
@@ -63,9 +60,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
       <GuideHeader {...guide} />
       <article>
-        <Suspense fallback={<div className="animate-pulse h-96 bg-muted rounded-lg" />}>
-          <MDXRemote source={guide.content} components={components} />
-        </Suspense>
+        <MDXRemote source={guide.content || ''} components={components} />
       </article>
     </article>
   )
