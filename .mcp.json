@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/david.dias/Projects"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "env": {
+        "MEMORY_FILE_PATH": "/Users/david.dias/Projects/llms-txt-hub-memory.json"
+      }
+    },
+    "webresearch": {
+      "command": "npx",
+      "args": ["-y", "@mzxrai/mcp-webresearch@latest"]
+    },
+    "docs-manager": {
+      "command": "npx",
+      "args": ["-y", "mcp-docs-service"]
+    },
+    "mcp-installer": {
+      "command": "npx",
+      "args": ["@anaisbetts/mcp-installer"]
+    }
+  }
+}

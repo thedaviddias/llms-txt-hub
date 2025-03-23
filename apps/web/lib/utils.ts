@@ -22,5 +22,10 @@ export function formatDate(dateString: string): string {
  * @returns Absolute path from the monorepo root
  */
 export function resolveFromRoot(relativePath: string): string {
+  // Check if running on Vercel
+  if (process.env.VERCEL) {
+    return path.join(process.cwd(), relativePath)
+  }
+  // Local development path
   return path.join(process.cwd(), '..', '..', relativePath)
 }
