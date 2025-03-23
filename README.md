@@ -94,6 +94,7 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 
 ### 💻 developer tools
 
+- ![ast-grep favicon](https://www.google.com/s2/favicons?domain=ast-grep.github.io&size=128) **[ast-grep](https://ast-grep.github.io)** - ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale. <sub>[llms.txt](https://ast-grep.github.io/llms.txt) • [llms-full.txt](https://ast-grep.github.io/llms-full.txt)</sub>
 - ![Better Auth favicon](https://www.google.com/s2/favicons?domain=www.better-auth.com&size=128) **[Better Auth](https://www.better-auth.com)** - The most comprehensive authentication library for TypeScript. <sub>[llms.txt](https://www.better-auth.com/llms.txt)</sub>
 - ![Bucket favicon](https://www.google.com/s2/favicons?domain=docs.bucket.co&size=128) **[Bucket](https://docs.bucket.co/)** - Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS. <sub>[llms.txt](https://docs.bucket.co/llms.txt)</sub>
 - ![Bun favicon](https://www.google.com/s2/favicons?domain=bun.sh&size=128) **[Bun](https://bun.sh)** - Bun is a new JavaScript runtime with a native bundler, transpiler, task runner, and npm client built-in. <sub>[llms.txt](https://bun.sh/llms.txt)</sub>
