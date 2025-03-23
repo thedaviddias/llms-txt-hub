@@ -77,6 +77,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "ast-grep",
+    "description": "ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.",
+    "url": "/ast-grep",
+    "content": "# ast-grep \n\nast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.",
+    "category": "developer-tools",
+    "slug": "ast-grep",
+    "website": "https://ast-grep.github.io",
+    "llmsUrl": "https://ast-grep.github.io/llms.txt",
+    "llmsFullUrl": "https://ast-grep.github.io/llms-full.txt"
+  },
+  {
     "name": "Axiom",
     "description": "Cloud-native observability and log management platform",
     "url": "/axiom",
@@ -233,10 +244,10 @@
   {
     "name": "Creative Handbook Production Resource Directory",
     "description": "Creative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
-    "url": "/creative-handbook-production-resource-directory",
+    "url": "/creative-handbook",
     "content": "# Creative Handbook Production Resource Directory\n\nCreative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
     "category": "data-analytics",
-    "slug": "creative-handbook-production-resource-directory",
+    "slug": "creative-handbook",
     "website": "https://www.creativehandbook.com",
     "llmsUrl": "https://www.creativehandbook.com/llms.txt",
     "llmsFullUrl": ""
@@ -508,10 +519,10 @@
   {
     "name": "Front Matter CMS - a CMS in your VS Code editor",
     "description": "Front Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
-    "url": "/front-matter-cms---a-cms-in-your-vs-code-editor",
+    "url": "/front-matter-cms",
     "content": "# Front Matter CMS - a CMS in your VS Code editor\n\nFront Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
     "category": "developer-tools",
-    "slug": "front-matter-cms---a-cms-in-your-vs-code-editor",
+    "slug": "front-matter-cms",
     "website": "https://frontmatter.codes",
     "llmsUrl": "https://frontmatter.codes/llms.txt",
     "llmsFullUrl": ""
@@ -1351,6 +1362,17 @@
     "website": "https://tryvital.io",
     "llmsUrl": "https://docs.tryvital.io/llms.txt",
     "llmsFullUrl": "https://docs.tryvital.io/llms-full.txt"
+  },
+  {
+    "name": "Vue Macros",
+    "description": "Vue Macros\r\nModern Way to Writing Vue App - explore more macros and syntax sugar to Vue.",
+    "url": "/vue-macros",
+    "content": "# Vue Macros\r\n\r\nVue Macros - Modern Way to Writing Vue App - Explore more macros and syntax sugar to Vue.",
+    "category": "developer-tools",
+    "slug": "vue-macros",
+    "website": "https://vue-macros.dev/",
+    "llmsUrl": "https://vue-macros.dev/llms.txt",
+    "llmsFullUrl": "https://vue-macros.dev/llms-full.txt"
   },
   {
     "name": "Warp",

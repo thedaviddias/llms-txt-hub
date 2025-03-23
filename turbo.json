@@ -7,7 +7,6 @@
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
         "GITHUB_TOKEN",
-        "MAILERLITE_API_KEY",
         "RSS_FEED_URL",
         "SENTRY_AUTH_TOKEN",
         "SENTRY_ORG",

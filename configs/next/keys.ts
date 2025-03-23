@@ -9,16 +9,11 @@ export const keys = () =>
       ANALYZE: z.string().optional(),
 
       // Added by Vercel
-      NEXT_RUNTIME: z.enum(['nodejs']).optional(),
-
-      // Newsletter
-      MAILERLITE_API_KEY: z.string().min(1)
+      NEXT_RUNTIME: z.enum(['nodejs']).optional()
     },
     runtimeEnv: {
       ANALYZE: process.env.ANALYZE,
 
-      NEXT_RUNTIME: process.env.NEXT_RUNTIME,
-
-      MAILERLITE_API_KEY: process.env.MAILERLITE_API_KEY
+      NEXT_RUNTIME: process.env.NEXT_RUNTIME
     }
   })
