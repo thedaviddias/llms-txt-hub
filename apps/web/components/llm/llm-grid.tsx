@@ -26,6 +26,7 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
             <div
               className="flex items-center gap-4 p-3 rounded-lg hover:bg-muted/50 transition-colors relative"
               key={item.slug}
+              data-testid="website-card"
             >
               <img
                 src={getFaviconUrl(item.website) || '/placeholder.svg'}
@@ -66,7 +67,11 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
     <div className={cn('grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4', className)}>
       {items.map(item => {
         return (
-          <Card key={item.slug} className="p-6 hover:bg-muted/50 transition-colors relative">
+          <Card
+            key={item.slug}
+            className="p-6 hover:bg-muted/50 transition-colors relative"
+            data-testid="website-card"
+          >
             <div className="space-y-4">
               <div className="space-y-3">
                 <div className="flex items-start justify-between">
