@@ -329,6 +329,7 @@ Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hu
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://bendersej.com"><img src="https://avatars.githubusercontent.com/u/10613140?v=4?s=100" width="100px;" alt="Benjamin André-Micolon"/><br /><sub><b>Benjamin André-Micolon</b></sub></a><br /><a href="#content-bendersej" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/HerringtonDarkholme"><img src="https://avatars.githubusercontent.com/u/2883231?v=4?s=100" width="100px;" alt="Herrington Darkholme"/><br /><sub><b>Herrington Darkholme</b></sub></a><br /><a href="#content-HerringtonDarkholme" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://sxzz.moe"><img src="https://avatars.githubusercontent.com/u/6481596?v=4?s=100" width="100px;" alt="Kevin Deng 三咲智子"/><br /><sub><b>Kevin Deng 三咲智子</b></sub></a><br /><a href="#content-sxzz" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
