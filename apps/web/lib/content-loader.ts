@@ -16,6 +16,15 @@ interface ContentStore {
   legal: Record<string, string>
 }
 
+// Define guide metadata interface for TypeScript
+interface GuideMetadata {
+  slug: string
+  content: string
+  readingTime: number
+  date?: string // Make date optional
+  [key: string]: any // Allow for other properties
+}
+
 // Initialize the content store
 const contentStore: ContentStore = {
   websites: [],
@@ -165,9 +174,14 @@ function loadGuides() {
           ...data,
           readingTime,
           content
-        }
+        } as GuideMetadata
       })
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => {
+        // Make sure date exists before using it
+        const dateA = a.date ? new Date(a.date).getTime() : 0
+        const dateB = b.date ? new Date(b.date).getTime() : 0
+        return dateB - dateA
+      })
 
     contentStore.guides = guides
   } catch (error) {
