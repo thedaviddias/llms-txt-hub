@@ -39,7 +39,6 @@ export default defineConfig({
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     env: {
-      MAILERLITE_API_KEY: 'dummy_key',
       NEXT_PUBLIC_SUPABASE_URL: 'https://dummy.supabase.co',
       NEXT_PUBLIC_SUPABASE_ANON_KEY: 'dummy_anon_key',
       NEXT_PUBLIC_SENTRY_DSN: 'https://dummy@dummy.ingest.sentry.io/123',

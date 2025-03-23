@@ -34,34 +34,34 @@ export function resolveFromRoot(relativePath: string): string {
       path.join(process.cwd(), '..', relativePath),
       // For app-specific locations
       path.join(process.cwd(), 'apps', 'web', relativePath)
-    ];
-    
+    ]
+
     for (const p of possibleDataPaths) {
       if (fs.existsSync(p)) {
-        console.log(`Found ${relativePath} at: ${p}`);
-        return p;
+        console.log(`Found ${relativePath} at: ${p}`)
+        return p
       }
     }
   }
-  
+
   // Standard path resolution logic
   if (process.env.VERCEL) {
     // Try the direct path first (content at root level)
-    const directPath = path.join(process.cwd(), relativePath);
+    const directPath = path.join(process.cwd(), relativePath)
     if (fs.existsSync(directPath)) {
-      return directPath;
+      return directPath
     }
-    
+
     // Try the app-relative path next (content inside apps/web)
-    const appPath = path.join(process.cwd(), 'apps', 'web', relativePath);
+    const appPath = path.join(process.cwd(), 'apps', 'web', relativePath)
     if (fs.existsSync(appPath)) {
-      return appPath;
+      return appPath
     }
-    
+
     // Default to direct path even if it doesn't exist
-    return directPath;
+    return directPath
   }
-  
+
   // Local development path
-  return path.join(process.cwd(), '..', '..', relativePath);
+  return path.join(process.cwd(), '..', '..', relativePath)
 }
