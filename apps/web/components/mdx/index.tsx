@@ -3,12 +3,10 @@ import type { MDXComponents } from 'mdx/types'
 import Link from 'next/link'
 
 export const components: MDXComponents = {
-  h1: ({ className, ...props }) => (
-    <h1
-      className={cn('mt-2 scroll-m-20 text-4xl font-bold tracking-tight', className)}
-      {...props}
-    />
-  ),
+  h1: () => {
+    // Return null to skip rendering the H1 from markdown
+    return null
+  },
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
