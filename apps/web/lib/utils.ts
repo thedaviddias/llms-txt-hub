@@ -23,7 +23,28 @@ export function formatDate(dateString: string): string {
  * @returns Absolute path from the monorepo root
  */
 export function resolveFromRoot(relativePath: string): string {
-  // Check if running on Vercel
+  // Special case for data directory which might be at project root
+  if (relativePath === 'data' || relativePath.startsWith('data/')) {
+    // Check multiple possible locations for the data directory
+    const possibleDataPaths = [
+      // For Vercel environments
+      path.join(process.cwd(), relativePath),
+      // For monorepo root
+      path.join(process.cwd(), '..', '..', relativePath),
+      path.join(process.cwd(), '..', relativePath),
+      // For app-specific locations
+      path.join(process.cwd(), 'apps', 'web', relativePath)
+    ];
+    
+    for (const p of possibleDataPaths) {
+      if (fs.existsSync(p)) {
+        console.log(`Found ${relativePath} at: ${p}`);
+        return p;
+      }
+    }
+  }
+  
+  // Standard path resolution logic
   if (process.env.VERCEL) {
     // Try the direct path first (content at root level)
     const directPath = path.join(process.cwd(), relativePath);

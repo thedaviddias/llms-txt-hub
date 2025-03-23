@@ -11,8 +11,9 @@ const opts = {
   // Adjust sampling rates based on environment
   tracesSampleRate: IS_DEVELOPMENT ? 1.0 : 0.1,
 
-  // Setting this option to true will print useful information to the console while you're setting up Sentry.
-  debug: IS_DEVELOPMENT
+  // Only enable debug in development and when explicitly required
+  // This fixes the "Cannot initialize SDK with `debug` option using a non-debug bundle" error
+  debug: false
 }
 
 export const initializeSentry = () => {

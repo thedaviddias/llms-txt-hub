@@ -45,6 +45,8 @@ function loadWebsites() {
       const possiblePaths = [
         path.join(dataDir, 'websites.json'),
         path.join(process.cwd(), 'data', 'websites.json'),
+        path.join(process.cwd(), '..', '..', 'data', 'websites.json'),
+        path.join(process.cwd(), '..', 'data', 'websites.json'),
         path.join(process.cwd(), 'apps/web/data', 'websites.json'),
         path.join(process.cwd(), 'apps', 'web', 'data', 'websites.json')
       ]
@@ -147,6 +149,8 @@ function loadWebsites() {
       const possiblePaths = [
         path.join(dataDir, 'websites.json'),
         path.join(process.cwd(), 'data', 'websites.json'),
+        path.join(process.cwd(), '..', '..', 'data', 'websites.json'),
+        path.join(process.cwd(), '..', 'data', 'websites.json'),
         path.join(process.cwd(), 'apps/web/data', 'websites.json'),
         path.join(process.cwd(), 'apps', 'web', 'data', 'websites.json')
       ]
@@ -244,12 +248,13 @@ function loadLegalContent() {
     console.error('Error loading legal content:', error)
   }
 }
+;[
+  path.join(dataDir, 'websites.json'),
+  path.join(process.cwd(), 'data', 'websites.json'),
+  path.join(process.cwd(), '..', '..', 'data', 'websites.json'),
+  path.join(process.cwd(), '..', 'data', 'websites.json')
+].forEach(p => console.log(`- ${p} exists: ${fs.existsSync(p)}`))
 
-// Load all content at build time
-console.log('Loading content at build time...')
-console.log('Current working directory:', process.cwd())
-console.log('Content base path:', contentBase)
-console.log('Data directory path:', dataDir)
 loadWebsites()
 loadGuides()
 loadLegalContent()
