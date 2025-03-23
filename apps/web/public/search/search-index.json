@@ -231,6 +231,17 @@
     "llmsFullUrl": "https://docs.convex.dev/llms.txt"
   },
   {
+    "name": "Creative Handbook Production Resource Directory",
+    "description": "Creative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
+    "url": "/creative-handbook-production-resource-directory",
+    "content": "# Creative Handbook Production Resource Directory\n\nCreative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
+    "category": "data-analytics",
+    "slug": "creative-handbook-production-resource-directory",
+    "website": "https://www.creativehandbook.com",
+    "llmsUrl": "https://www.creativehandbook.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "CrewAI",
     "description": "AI-powered team collaboration platform",
     "url": "/crewai",
@@ -803,6 +814,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Netlify",
+    "description": "Learn how to develop and host fast and reliable websites and apps with our enterprise-ready composable web platform.",
+    "url": "/netlify",
+    "content": "# Netlify\n\nLearn how to develop and host fast and reliable websites and apps with our enterprise-ready composable web platform.",
+    "category": "infrastructure-cloud",
+    "slug": "netlify",
+    "website": "https://docs.netlify.com",
+    "llmsUrl": "https://docs.netlify.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "OpenPhone",
     "description": "Modern business phone system and communication platform",
     "url": "/openphone",
@@ -1032,6 +1054,17 @@
     "website": "https://screenshotone.com",
     "llmsUrl": "https://screenshotone.com/docs/llms.txt",
     "llmsFullUrl": "https://screenshotone.com/docs/llms-full.txt"
+  },
+  {
+    "name": "SimplePDF",
+    "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
+    "url": "/simplepdf",
+    "content": "# SimplePDF\n\nPDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
+    "category": "developer-tools",
+    "slug": "simplepdf",
+    "website": "https://simplepdf.com",
+    "llmsUrl": "https://simplepdf.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "SkyDeck.ai",

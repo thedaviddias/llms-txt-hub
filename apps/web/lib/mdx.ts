@@ -3,9 +3,19 @@ import path from 'node:path'
 import matter from 'gray-matter'
 import { resolveFromRoot } from './utils'
 
-const websitesDirectory = resolveFromRoot('content/websites')
-const guidesDirectory = resolveFromRoot('content/guides')
-const unofficialDirectory = resolveFromRoot('content/unofficial')
+// Define content directories with fallback handling
+function safeResolveDirectory(path: string): string {
+  try {
+    return resolveFromRoot(path)
+  } catch (error) {
+    console.warn(`Warning: Failed to resolve directory: ${path}`, error)
+    return path // Return the path as-is, which will likely fail downstream with a more specific error
+  }
+}
+
+const websitesDirectory = safeResolveDirectory('content/websites')
+const guidesDirectory = safeResolveDirectory('content/guides')
+const unofficialDirectory = safeResolveDirectory('content/unofficial')
 
 export interface WebsiteMetadata {
   slug: string
@@ -41,89 +51,121 @@ export async function getAllWebsites(): Promise<WebsiteMetadata[]> {
 
   // Helper function to process MDX files from a directory
   const processDirectory = (directory: string, isUnofficial = false) => {
-    if (!fs.existsSync(directory)) {
-      console.error('Directory does not exist:', directory)
+    try {
+      if (!fs.existsSync(directory)) {
+        console.error('Directory does not exist:', directory)
+        return []
+      }
+
+      const fileNames = fs.readdirSync(directory)
+
+      if (fileNames.length === 0) {
+        console.warn('No files found in directory:', directory)
+        return []
+      }
+
+      return fileNames
+        .filter((fileName: string) => fileName.endsWith('.mdx'))
+        .map((fileName: string) => {
+          try {
+            const slug = fileName.replace(/\.mdx$/, '')
+            const fullPath = path.join(directory, fileName)
+            const fileContents = fs.readFileSync(fullPath, 'utf8')
+            const { data } = matter(fileContents)
+
+            return {
+              slug,
+              name: data.name,
+              description: data.description,
+              website: data.website,
+              llmsUrl: data.llmsUrl,
+              llmsFullUrl: data.llmsFullUrl,
+              category: data.category,
+              publishedAt: data.publishedAt,
+              isUnofficial
+            } as WebsiteMetadata
+          } catch (error) {
+            console.error(`Error processing website file ${fileName}:`, error)
+            return null
+          }
+        })
+        .filter((website): website is WebsiteMetadata => website !== null)
+    } catch (error) {
+      console.error(`Error accessing directory ${directory}:`, error)
       return []
     }
-
-    const fileNames = fs.readdirSync(directory)
-
-    if (fileNames.length === 0) {
-      console.warn('No files found in directory:', directory)
-      return []
-    }
-
-    return fileNames
-      .filter((fileName: string) => fileName.endsWith('.mdx'))
-      .map((fileName: string) => {
-        const slug = fileName.replace(/\.mdx$/, '')
-        const fullPath = path.join(directory, fileName)
-        const fileContents = fs.readFileSync(fullPath, 'utf8')
-        const { data } = matter(fileContents)
-
-        return {
-          slug,
-          name: data.name,
-          description: data.description,
-          website: data.website,
-          llmsUrl: data.llmsUrl,
-          llmsFullUrl: data.llmsFullUrl,
-          category: data.category,
-          publishedAt: data.publishedAt,
-          isUnofficial
-        } as WebsiteMetadata
-      })
   }
 
   // Process official websites
-  websites.push(...processDirectory(websitesDirectory))
+  try {
+    websites.push(...processDirectory(websitesDirectory))
 
-  // Process unofficial websites from subdirectories
-  if (fs.existsSync(unofficialDirectory)) {
-    const unofficialDirs = fs
-      .readdirSync(unofficialDirectory, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => path.join(unofficialDirectory, dirent.name))
+    // Process unofficial websites from subdirectories
+    if (fs.existsSync(unofficialDirectory)) {
+      try {
+        const unofficialDirs = fs
+          .readdirSync(unofficialDirectory, { withFileTypes: true })
+          .filter(dirent => dirent.isDirectory())
+          .map(dirent => path.join(unofficialDirectory, dirent.name))
 
-    for (const dir of unofficialDirs) {
-      websites.push(...processDirectory(dir, true))
+        for (const dir of unofficialDirs) {
+          websites.push(...processDirectory(dir, true))
+        }
+      } catch (error) {
+        console.error('Error processing unofficial directories:', error)
+      }
     }
+  } catch (error) {
+    console.error('Error processing websites:', error)
   }
 
   return websites
 }
 
 export async function getAllGuides(): Promise<GuideMetadata[]> {
-  if (!fs.existsSync(guidesDirectory)) {
-    console.error('Guides directory does not exist:', guidesDirectory)
-    return []
-  }
+  let fileNames: string[] = [];
+  
+  try {
+    if (!fs.existsSync(guidesDirectory)) {
+      console.error('Guides directory does not exist:', guidesDirectory)
+      return []
+    }
 
-  const fileNames = fs.readdirSync(guidesDirectory)
+    fileNames = fs.readdirSync(guidesDirectory)
 
-  if (fileNames.length === 0) {
-    console.warn('No guide files found in directory')
+    if (fileNames.length === 0) {
+      console.warn('No guide files found in directory')
+      return []
+    }
+  } catch (error) {
+    console.error('Error accessing guides directory:', error)
     return []
   }
 
   const guides = fileNames
     .filter((fileName: string) => fileName.endsWith('.mdx'))
     .map((fileName: string) => {
-      const slug = fileName.replace(/\.mdx$/, '')
-      const fullPath = path.join(guidesDirectory, fileName)
-      const fileContents = fs.readFileSync(fullPath, 'utf8')
-      const { data, content } = matter(fileContents)
+      try {
+        const slug = fileName.replace(/\.mdx$/, '')
+        const fullPath = path.join(guidesDirectory, fileName)
+        const fileContents = fs.readFileSync(fullPath, 'utf8')
+        const { data, content } = matter(fileContents)
 
-      // Calculate reading time (assuming average reading speed of 200 words per minute)
-      const words = content.trim().split(/\s+/).length
-      const readingTime = Math.ceil(words / 200)
+        // Calculate reading time (assuming average reading speed of 200 words per minute)
+        const words = content.trim().split(/\s+/).length
+        const readingTime = Math.ceil(words / 200)
 
-      return {
-        slug,
-        ...data,
-        readingTime
-      } as GuideMetadata
+        return {
+          slug,
+          ...data,
+          readingTime
+        } as GuideMetadata
+      } catch (error) {
+        console.error(`Error processing guide file ${fileName}:`, error)
+        return null
+      }
     })
+    .filter((guide): guide is GuideMetadata => guide !== null)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return guides
