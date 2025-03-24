@@ -3,77 +3,108 @@
   "projectOwner": "thedaviddias",
   "repoType": "github",
   "repoHost": "https://github.com",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "contributors": [
     {
       "login": "jharrell",
       "name": "Jon Harrell",
       "avatar_url": "https://avatars.githubusercontent.com/u/4829245?v=4",
       "profile": "https://github.com/jharrell",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "AndriiSherman",
       "name": "Andrii Sherman",
       "avatar_url": "https://avatars.githubusercontent.com/u/29543764?v=4",
       "profile": "https://drizzle.team",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "Anulo2",
       "name": "_Zaizen_",
       "avatar_url": "https://avatars.githubusercontent.com/u/28984474?v=4",
       "profile": "https://github.com/Anulo2",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "alexanderatallah",
       "name": "Alex Atallah",
       "avatar_url": "https://avatars.githubusercontent.com/u/1011391?v=4",
       "profile": "https://alexatallah.com",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "estruyf",
       "name": "Elio Struyf",
       "avatar_url": "https://avatars.githubusercontent.com/u/2900833?v=4",
       "profile": "https://www.eliostruyf.com",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "merloxx",
       "name": "merloxx",
       "avatar_url": "https://avatars.githubusercontent.com/u/12734661?v=4",
       "profile": "https://merloxx.dev",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "sean-roberts",
       "name": "Sean Roberts",
       "avatar_url": "https://avatars.githubusercontent.com/u/950274?v=4",
       "profile": "https://github.com/sean-roberts",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "bendersej",
       "name": "Benjamin André-Micolon",
       "avatar_url": "https://avatars.githubusercontent.com/u/10613140?v=4",
       "profile": "https://bendersej.com",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "HerringtonDarkholme",
       "name": "Herrington Darkholme",
       "avatar_url": "https://avatars.githubusercontent.com/u/2883231?v=4",
       "profile": "https://github.com/HerringtonDarkholme",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
     },
     {
       "login": "sxzz",
       "name": "Kevin Deng 三咲智子",
       "avatar_url": "https://avatars.githubusercontent.com/u/6481596?v=4",
       "profile": "https://sxzz.moe",
-      "contributions": ["content"]
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "peturgeorgievv",
+      "name": "Petar Georgiev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50354476?v=4",
+      "profile": "http://peturgeorgievv.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "commitType": "docs",
