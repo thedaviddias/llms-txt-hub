@@ -1,0 +1,21 @@
+# Quill
+
+## Docs
+
+- [Chart](https://docs.quillsql.com/components/chart.md): The Chart view of a Quill Report
+- [Dashboard](https://docs.quillsql.com/components/dashboard.md): A list of Quill Reports grouped into Metrics, Charts, and Tables.
+- [useFormat](https://docs.quillsql.com/components/format.md): A simple way to format data from Quill
+- [Quickstart](https://docs.quillsql.com/components/quickstart.md): Add Quill to your app in less than a minute
+- [QuillProvider](https://docs.quillsql.com/components/quill-provider.md): A context provider that wraps all quill components
+- [ReportBuilder](https://docs.quillsql.com/components/report-builder.md): A UI component for creating and editing Quill Reports
+- [SQLEditor](https://docs.quillsql.com/components/sql-editor.md): A UI component for creating and editing Quill Reports with SQL
+- [Table](https://docs.quillsql.com/components/table.md): The Tabular view of a Quill Report
+- [Custom Themes](https://docs.quillsql.com/components/themes.md): Customize your dashboard by passing a custom theme
+- [useExport](https://docs.quillsql.com/components/use-export.md): A simple way to export data from Quill
+- [useQuill](https://docs.quillsql.com/components/use-quill.md): A pragmatic data API for your data
+- [Create a chart](https://docs.quillsql.com/portal/chart.md): Build your first chart with Quill in less than a minute
+- [Create a dashboard](https://docs.quillsql.com/portal/dashboard.md): Build your first dashboard with Quill in less than a minute
+- [Quickstart](https://docs.quillsql.com/portal/quickstart.md): Get up and running with Quill in less than a minute
+- [Create a view](https://docs.quillsql.com/portal/view.md): Add a SQL view with Quill in less than a minute
+- [Data Cache](https://docs.quillsql.com/selfhost/cache.md): Load dashboards fast by saving frequently used queries
+- [Quickstart](https://docs.quillsql.com/selfhost/quickstart.md): Get up and running with Quill on your own server in 10 minutes

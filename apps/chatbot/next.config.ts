@@ -14,17 +14,7 @@ let nextConfig: NextConfig = {
 
   transpilePackages: INTERNAL_PACKAGES,
 
-  pageExtensions: ['ts', 'tsx'],
-
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'www.google.com',
-        pathname: '/s2/favicons/**'
-      }
-    ]
-  }
+  pageExtensions: ['ts', 'tsx']
 }
 
 if (env.ANALYZE === 'true') {

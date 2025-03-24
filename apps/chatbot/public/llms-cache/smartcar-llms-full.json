@@ -1,0 +1,10 @@
+{
+  "name": "Smartcar",
+  "description": "Connected car API platform",
+  "website": "https://smartcar.com",
+  "url": "https://smartcar.com/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/smartcar-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

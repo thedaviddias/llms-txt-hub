@@ -1,0 +1,10 @@
+{
+  "name": "Mangopay",
+  "description": "Payment infrastructure and marketplace solutions",
+  "website": "https://mangopay.com",
+  "url": "https://docs.mangopay.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/mangopay-llms.txt",
+  "lastFetched": "2025-03-24"
+}

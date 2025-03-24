@@ -1,0 +1,10 @@
+{
+  "name": "Prisma",
+  "description": "TypeScript ORM and hosted PostgreSQL database platform",
+  "website": "https://prisma.io",
+  "url": "https://prisma.io/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/prisma-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

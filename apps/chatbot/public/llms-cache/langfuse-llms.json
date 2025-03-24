@@ -1,0 +1,10 @@
+{
+  "name": "Langfuse",
+  "description": "LLM observability and analytics platform",
+  "website": "https://langfuse.com",
+  "url": "https://langfuse.com/llms.txt",
+  "type": "llms.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/langfuse-llms.txt",
+  "lastFetched": "2025-03-24"
+}

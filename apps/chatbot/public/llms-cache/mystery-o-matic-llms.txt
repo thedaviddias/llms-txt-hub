@@ -1,0 +1,309 @@
+# mystery-o-matic puzzle of the day
+
+🕵️ Welcome Detective!
+
+Our mission is to solve a murder mystery by uncovering who the killer is, which weapon was used, and when the crime occurred. It’s up to you to piece together the puzzle by examining the following key elements:
+
+The suspects: you'll meet a colorful cast of characters including Alice, Bob, Carol, Dave, Frida and Eddie. One of them has met an unfortunate end while some of the others are our prime suspects. Spoiler alert: in this tutorial, poor Alice is our victim so we'll focus on Bob and Carol as suspects.
+
+The crime: a gruesome murder has taken place, and we need to determine how it happened. Once the fatal act occurs, the victim's body remains exactly where they fell–this is a crucial detail for your investigation.
+
+The location: each place can be connected with the others, allowing characters to move freely. For this tutorial, we’ll explore a chilling mystery set in an eerie Victorian mansion, where people have been mysteriously disappearing from time to time. The layout changes from case to case, with three to five rooms to explore. For our tutorial, here's how the rooms connect:
+  - The kitchen is connected with the dining room and the bedroom.
+  - The dining room is only connected with the kitchen.
+  - The bedroom is connected with the kitchen and the bathroom.
+  - The bathroom is only connected with the bedroom.
+
+The weapons: various weapons are scattered throughout the rooms and the killer will pick up one of the weapons before the crime, but don't expect them to be where they "should" be. That hammer? It might be in the bathroom instead of a workshop. Logic won't help you here!
+
+The timeline: the murder occurred within a specific time window (e.g., between 8:00 and 9:30). You'll need to reconstruct the movements of the suspects and identify when the fatal blow was struck. There is, however, one important detail that separates these puzzles from other logic whodunit games. Our puzzles try to mimic real life, where statements and clues are often chaotic, redundant or incomplete. In that sense, reconstructing the complete timeline is not necessarily to solve the murder, and often it is impossible!.
+
+The statements: you'll get statements from suspects and evidence from the scene. Everyone will be telling the truth, but not necessarily the whole story. You will need to carefully deduce and combine facts in order to uncover the truth.
+
+🕗 Using the Timeline Board
+
+The Timeline Board is a grid that allows you to keep track of key events, movements, and deductions as you piece together the story behind the murder. Think of it as your detective's whiteboard – it's where all the magic happens. It’s up to you to fill in the board with what you’ve deduced. In this tutorial, Alice has been murdered before 9:30 in the mansion, her body found in the kitchen. We’ll use the Timeline Board to reconstruct this crime. Let’s start with some basic facts we know for sure:
+
+We know where everyone was at 9:30:
+ - Alice's body was in the kitchen
+ - Bob was in the bathroom
+ - Carol was in the dining room
+
+The list of initial clues describe where each character was at 9:30, the end of the timeline. It is your job to deduce, using the suspect statements and other clues, who the killer is, which weapon was used, and when the crime occurred. We can mark the timeline with three simple symbols: ✓ means someone was there, ✗ means they weren't, and ? means we're not sure.
+
+At the bottom of the timeline board lies the weapon section, which shows where each available weapon was located. For instance, the killer took the murderer weapon from one of the following locations:
+
+- The hammer (🔨) from the dining room (🪑)
+- The pistol (🔫) from the bedroom (🛏️)
+- The scissors (✂️) from the kitchen (🍲)
+- The rope (🪢) from the bathroom (🚽)
+
+🎓 Understanding Clues and Making Basic Deductions
+
+Here's where it gets fun! Our suspects may move between rooms every 15 minutes (they're suspiciously punctual), following the location's layout.
+
+They can only move to directly connected rooms during each 15-minute interval - no shortcuts allowed! Think of it like moving across a chessboard - you have to pass through the squares one at a time.
+
+For example, if Alice wants to go from the dining room to the bathroom, she must:
+
+1. Move from the dining room to the bedroom during one 15-minute interval.
+
+2. Stay there for any number of 15-minutes intervals (even if other suspects are also there).
+
+3. Move from the bedroom to the bathroom during another 15-minute interval.
+
+She cannot teleport directly from the dining room to the bathroom, even though they might seem close. This rule is crucial for making deductions - if you know where and when someone started and ended up, you can often figure out where they must have been in between!
+
+Once the movement rules are clarified, let's start this case, with the following statement:
+
+In our murder mystery, characters move between rooms every 15 minutes, allowing us to track their locations over time through their statements.
+
+For example, let's say we have the following clue:
+
+☞ Bob: "I saw Alice when I arrived in the bedroom (🛏️) at 8:15"
+
+What can we deduce? Quite a lot actually:
+
+🔎 Alice was in the bedroom at 8:15
+🔎 Bob was also in the bedroom at 8:15
+🔎 Bob was NOT in the bedroom at 8:00
+
+The second we finish adding these into the timetable, other deductions start popping up! Since our suspects haven't mastered the art of being in two places at once, we can also figure out where they weren't:
+
+🔎 Alice was not in the bathroom, kitchen, or dining room at 8:15
+🔎 Bob was not in the bathroom, kitchen, or dining room at 8:15
+
+But where was Bob at 8:00? This is where our room layout comes in handy.
+
+Since the bedroom connects to both the kitchen and bathroom, Bob could have come from either one. But here's a solid deduction – Bob couldn't have been in the dining room at 8:00 because it doesn't connect to the bedroom!
+
+🔎 Bob was not in the dining room at 8:00
+
+Other types of clues describe when the suspects spend some time. For instance:
+
+☞ Carol: "I was in the dining room (🪑) from 8:00 to 8:45"
+
+This tells us:
+
+🔎 Carol was in the dining room from 8:00 to 8:45
+🔎 Carol was NOT in any of the other rooms from 8:00 to 8:45
+🔎 Carol was NOT in the dining room at 9:00
+
+Where was Carol at 9:00? Let's go back to the mansion map to figure it out.
+
+Looking at our room layout, Carol must have headed to the kitchen at 9:00 (and therefore, she is not somewhere else!) – it's the only place she could reach from the dining room!
+
+🔎 Carol was in the kitchen at 9:00
+🔎 Carol was NOT in bedroom, dining room or bathroom at 9:00
+
+Here's another juicy clue type:
+
+☞ Bob: "Saw nobody when I arrived to the bathroom (🚽) at 9:00"
+
+Let's break it down:
+
+🔎 Bob was in the bathroom at 9:00
+🔎 Bob was NOT in the kitchen, bedroom or dining room at 9:00
+🔎 Neither Alice or Carol were in the bathroom at 9:00
+
+What else can we get from this clue? Let's take another look at the location graph.
+
+Not only does this clue place Bob in the bathroom at 9:00, but we can backtrack – he must have been in the bedroom at 8:45 since it's the only way to reach the bathroom! In other words:
+
+🔎 Bob was in the bedroom at 8:45
+🔎 Bob was NOT in the kitchen, dining room or bathroom at 8:45
+
+Finally, sometimes we get somehow vague clues from suspects:
+
+☞ Carol: "I heard someone washing the dishes at 8:45"
+
+This clue tells us that someone was in the kitchen. Wait a minute, can you wash dishes in the bathroom? Nope, absolutely ridiculous (looking at you The Sims™). Let's review what we deduced so far:
+
+🔎 Someone was (alive!) at the kitchen at 8:45
+🔎 Carol was NOT in the kitchen at 8:45
+
+It can be tempting to try to guess where Carol was, but this is not possible. Characters sometimes can hear or see someone in other rooms, but their location cannot be inferred from this kind of clue. However, what we can deduce using our previous observation is who was in the kitchen. Clearly, it was not Carol (she was elsewhere at 8:45 actually!). Also, we know that Bob was in the bedroom, which means that Alice was in the kitchen at 8:45.
+
+Our first attempt to deduce facts was not great, so let's review our previous deduction and refine them:
+
+🔎 Alice was in the kitchen at 8:45
+🔎 Alice was NOT in the bedroom, dining room or bathroom at 8:45
+🔎 Carol was NOT in the kitchen at 8:45
+
+⌛ Determining Time of Death
+
+Once we have a good idea of where everyone was at different times, we can start narrowing down the time of death. This is a crucial step in solving the mystery, as it can help us identify the killer. Sometimes we get helpful clues like this:
+
+☞ A blood-curdling scream from the victim was heard between 8:45 and 9:00
+
+Since our suspects move every 15 minutes like clockwork, the murder had to happen either at 8:45 or 9:00. However, we already know that Alice was alive at 8:45 (and happily washing the dishes). So the only option here is that murder happened at 9:00. Remember that once the killer strikes, the victim's body is never moved, so can easily complete Alice's timeline until 9:30.
+
+🔎 Alice was killed at 9:00 in the kitchen
+🔎 Alice's body is in the kitchen from 9:15 to 9:30
+
+🔪 Finding the smoking gun
+
+Following characters around is not enough. We need to figure out the murder weapon! Fortunately, on occasion, you will come across a clue related to the wounds inflicted on the victim that will help you discard a certain kind of weapon. For example:
+
+☞ Inspecting the body reveals no signs of stabbing
+
+To discard a particular weapon we need to know what kind of wound they produce. Just click on the type of wound described in the clue (e.g. "stabbing") and you will see a list of potential weapons:
+
+  🔪 A classic choice for chefs... and assassins. Sharp, sleek, and perfect for slicing more than just vegetables.
+  🪓 Lumberjacks love it. So do people with unresolved anger issues.
+  ✂️ Snip, snip! Whether you’re crafting or ... cutting ties permanently, they’re sharp enough for the job.
+  🪛 Good for assembling furniture, opening paint cans, and, apparently, creating unsolvable crime scenes.
+  🗡️ Like a knife, but fancier and with more flair. Great for stabbing ... and looking cool while doing it.
+  ⚔️ Chivalry isn’t dead, but someone might be after this gets unsheathed. Elegant, deadly, and hard to conceal.
+  🔱 Why settle for one point when you can have three? Poseidon approves, and so will your suspect.
+
+Using this list, we can discard the scissors from the list of potential weapons in this case.
+
+🎓 Solving your first case
+
+Time to put it all together and solve our very first murder.  Think for a while and then click to reveal each solution:
+
+1. Who was the killer?
+
+Either Bob and Carol are suspects. Well, Bob's got a solid alibi – he wasn't even at the crime scene when it happened (either 8:45 or 9:00). That leaves Carol as the killer.
+
+2. Which weapon was used?
+
+We can rule out the scissors, leaving us with the gun, hammer, or rope. But wait – we know Carol's our killer, and she was only in the dining room before the murder. That means the murder weapon was the hammer!
+
+3. When the murder was committed?
+
+The victim's scream narrows it down to either 8:45 or 9:00. Since Carol (our now-confirmed killer) wasn't at the scene at 8:45 and we know that Alice was alive before 9:00, so the murder was committed at 9:00.
+
+You know what's really clever about this approach? While we've pieced together most of the timeline, there's still some mystery about Alice's movements - like where she was at 8:30. And that's not an oversight - it's actually showing us something important! Remember that early note about how "reconstructing all the timeline is not necessary to solve the murder, and often it is impossible"? Well, we're seeing that principle in action. We solved the case conclusively (Carol did it with the hammer at 9:00) without needing to track every single place Alice visited. It's a perfect example of how these puzzles mirror a more realistic detective work.
+
+Case closed! Ready to tackle a real one?
+
+## Daily mystery
+
+Once the tutorial is over, let's solve the murder mystery for the day.
+
+## Initial Clues
+
+Frida, Bob, Eddie and Carol are transported into the future to a high-tech space station orbiting an unknown planet!
+
+* Eddie was murdered in the airlock module at some time between 2:00 and 4:30
+* The murderer was alone with their victim, and the body remained unmoved
+* The murderer wasn't caught with the body
+* The killer retrieved the murder weapon from one of these places:
+    - The wrench from the airlock module
+    - The pistol from the garden module
+    - The poison from the sleeping module
+    - The rope from the lab module
+    - The scissors from the command module
+
+* No one saw the killer retrieving the murder weapon
+* We know where everyone was at 4:30:
+    - Frida was in the garden module
+    - Bob was in the sleeping module
+    - Eddie's body was in the airlock module
+    - Carol was in the sleeping module
+
+* No one else was present in the location.
+
+
+## Locations
+
+* The airlock module is connected with sleeping module, lab module, command module
+* The garden module is connected with lab module, command module
+* The sleeping module is connected with airlock module, lab module, command module
+* The lab module is connected with airlock module, garden module, sleeping module
+* The command module is connected with airlock module, garden module, sleeping module
+
+
+## Statements & Clues
+
+The daily mystery comes in two flavors, the first set of clues corresponds does not allow lies in suspects or the killer:
+
+* Bob: "While I was in the airlock module at 3:15, Carol was nowhere to be seen."
+* A blood-curdling scream from the victim was heard between 3:15 and 3:45
+* Frida: "I saw someone mixing glowing chemicals in the lab module  at 3:00"
+* Frida: "I heard a voice coming from the airlock module  at 4:00"
+* Carol: "Spotted Bob when I arrived at the sleeping module at 4:15"
+* Bob: "Saw Carol when I arrived at the sleeping module at 3:30"
+* Inspecting the crime scene reveals that the victim was alive at 3:30
+* Inspecting the body reveals no signs of contusion.
+* Inspecting the body reveals no signs of strangulation.
+* Carol: "Saw Bob when I was leaving the sleeping module at 3:30"
+* Carol: "Eddie was not with me in the sleeping module at 4:15"
+* Frida: "Saw Eddie leaving the garden module at 2:30"
+* Frida: "I did not move from the lab module between 2:00 and 2:15"
+* Bob: "I was in the sleeping module at 3:30 but Frida was not there with me."
+* Frida: "I heard a voice coming from the airlock module  at 3:15"
+* Bob: "Spotted somebody when I was leaving the airlock module at 3:15"
+* Carol: "While I was in the sleeping module at 4:15, Frida was nowhere to be seen."
+* Bob: "Saw Eddie arriving to the airlock module at 3:15"
+* Frida: "Carol was not with me in the garden module at 2:30"
+* Carol: "I did not move from the sleeping module between 2:00 and 3:30"
+* Frida: "Spotted somebody when I arrived at the garden module at 2:30"
+* Carol: "I was in the sleeping module at 3:30 but Frida wasn't around."
+* Frida: "Stayed in the garden module from 2:30 to 4:30"
+* Bob: "I'm sure Frida was not with me in the airlock module at 3:15"
+* A fingerprint of Carol was found in the airlock module. It looks very fresh
+* A fingerprint of Eddie was found in the lab module. It looks very fresh
+* Bob: "Eddie definitely was not with me in the sleeping module at 3:30"
+* Bob: "I was in the sleeping module from 3:30 to 4:30"
+* Carol: "I was in the sleeping module from 4:15 to 4:30"
+* Inspecting the body reveals there are no projectile holes.
+* Inspecting the body reveals no signs of stabbing.
+* Bob: "Stayed in the airlock module from 2:00 to 3:15"
+* A close examination of the body reveals that the victim was alive at 3:15
+* Frida: "While I was in the garden module at 2:30, Bob was nowhere to be seen."
+* Frida: "I heard someone snoring in the sleeping module  at 3:30"
+* Frida: "The lab module was empty when I left it at 2:15"
+* Carol: "I'm sure Eddie was not with me in the sleeping module at 3:30"
+
+
+In the second set of clues, the killer can lie in their statements. However, they will only do it if it somehow helps to cover their tracks during the time and place of the murder.
+
+* Frida: "I heard a voice coming from the airlock module  at 3:15"
+* Carol: "Frida definitely was not with me in the sleeping module at 3:30"
+* Bob: "Saw Eddie arriving to the airlock module at 3:15"
+* Frida: "I saw someone mixing glowing chemicals in the lab module  at 3:00"
+* Carol: "I did not move from the sleeping module between 2:00 and 3:30"
+* Bob: "I was in the sleeping module at 3:30 but Eddie was not there with me."
+* Bob: "I was in the airlock module at 3:15 but Carol wasn't around."
+* Bob: "Frida was not with me in the airlock module at 3:15"
+* Carol: "Saw Bob when I was leaving the sleeping module at 3:30"
+* Carol: "The garden module was empty when I arrived at 3:45"
+* Bob: "Stayed in the sleeping module from 3:30 to 4:30"
+* A blood-curdling scream from the victim was heard between 3:15 and 3:45
+* The body shows no signs of contusion.
+* Frida: "Spotted somebody when I arrived at the garden module at 2:30"
+* Frida: "Saw Eddie leaving the garden module at 2:30"
+* Carol: "I was in the sleeping module at 4:15 but Eddie was not there with me."
+* Bob: "I was in the sleeping module at 3:30 but Frida wasn't around."
+* Carol: "I did not move from the sleeping module between 4:15 and 4:30"
+* Carol: "While I was in the sleeping module at 3:30, Eddie was nowhere to be seen."
+* Frida: "I heard a voice coming from the airlock module  at 4:00"
+* Carol: "I'm sure Frida was not with me in the sleeping module at 4:15"
+* A close examination of the body reveals that the victim was alive at 3:15
+* Frida: "I was in the garden module at 2:30 but Bob was not there with me."
+* A recent footprint matching Carol's shoe was found in the airlock module
+* Frida: "I heard someone snoring in the sleeping module  at 3:30"
+* The inspection of the body indicates there are no projectile holes.
+* A strand of hair matching Eddie was found in the lab module, indicating that they were recently there
+* Bob: "I was in the airlock module from 2:00 to 3:15"
+* Carol: "I was in the garden module from 3:45 to 4:00"
+* Carol: "Spotted Bob when I arrived at the sleeping module at 4:15"
+* Frida: "Stayed in the lab module from 2:00 to 2:15"
+* Bob: "Noticed somebody when I was leaving the airlock module at 3:15"
+* The body shows no signs of strangulation.
+* Frida: "I was in the garden module from 2:30 to 4:30"
+* Bob: "Saw Carol when I arrived at the sleeping module at 3:30"
+* Inspecting the crime scene reveals that the victim was alive at 3:30
+* The body shows no signs of stabbing.
+* Frida: "The lab module was empty when I left it at 2:15"
+* Frida: "While I was in the garden module at 2:30, Carol was nowhere to be seen."
+
+
+Determinate who did it, which weapon was used and the time of the murder. Do not make any extra assumptions, except the ones following the tutorial. If you are not completely sure about the solution, let me know and I will give you more clues.
+
+## Solution
+
+carol-poison-3:45

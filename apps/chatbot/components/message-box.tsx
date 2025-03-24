@@ -123,8 +123,8 @@ export default function MessageBox() {
           </p>
           <div className="grid grid-cols-1 gap-2">
             <ExampleButton
-              text="What model types does Anthropic support?"
-              onClick={() => setInput('What model types does Anthropic support?')}
+              text="What models does ElevenLabs support?"
+              onClick={() => setInput('What models does ElevenLabs support?')}
             />
             <ExampleButton
               text="Which providers have the largest context windows?"
@@ -133,6 +133,10 @@ export default function MessageBox() {
             <ExampleButton
               text="Show me the llms.txt structure for OpenRouter"
               onClick={() => setInput('Show me the llms.txt structure for OpenRouter')}
+            />
+            <ExampleButton
+              text="What UX patterns for devs are available?"
+              onClick={() => setInput('What UX patterns for devs are available?')}
             />
           </div>
         </div>

@@ -8,4 +8,7 @@ export const model = customProvider({
   }
 })
 
+// Direct export of the Grok model for simpler use
+export const grokModel = xai('grok-2-1212')
+
 export type modelID = Parameters<(typeof model)['languageModel']>['0']

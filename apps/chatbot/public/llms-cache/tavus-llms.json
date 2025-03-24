@@ -1,0 +1,10 @@
+{
+  "name": "Tavus",
+  "description": "AI-powered video personalization platform",
+  "website": "https://www.tavus.io",
+  "url": "https://docs.tavus.io/llms.txt",
+  "type": "llms.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/tavus-llms.txt",
+  "lastFetched": "2025-03-24"
+}

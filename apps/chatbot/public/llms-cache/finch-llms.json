@@ -1,0 +1,10 @@
+{
+  "name": "Finch",
+  "description": "Universal API for employment systems",
+  "website": "https://tryfinch.com",
+  "url": "https://developer.tryfinch.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/finch-llms.txt",
+  "lastFetched": "2025-03-24"
+}

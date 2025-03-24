@@ -1,0 +1,10 @@
+{
+  "name": "Lago",
+  "description": "Open-source metering and usage-based billing platform",
+  "website": "https://getlago.com",
+  "url": "https://getlago.com/docs/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/lago-llms.txt",
+  "lastFetched": "2025-03-24"
+}

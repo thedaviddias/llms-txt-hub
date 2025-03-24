@@ -1,0 +1,10 @@
+{
+  "name": "Trigger.dev",
+  "description": "Background job and workflow automation platform",
+  "website": "https://trigger.dev",
+  "url": "https://trigger.dev/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/trigger-dev-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Galileo",
+  "description": "AI-powered data quality and monitoring platform",
+  "website": "https://rungalileo.io",
+  "url": "https://docs.rungalileo.io/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/galileo-llms.txt",
+  "lastFetched": "2025-03-24"
+}

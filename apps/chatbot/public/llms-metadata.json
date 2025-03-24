@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2025-03-24T00:13:01.113Z",
+  "totalProviders": 129,
+  "successCount": 201,
+  "errorCount": 3,
+  "categories": [
+    "integration-automation",
+    "ai-ml",
+    "security-identity",
+    "developer-tools",
+    "data-analytics",
+    "infrastructure-cloud"
+  ],
+  "errors": [
+    {
+      "name": "Anthropic",
+      "type": "llms.txt",
+      "url": "https://docs.anthropic.com/llms.txt",
+      "error": "Request failed with status code 403"
+    },
+    {
+      "name": "Anthropic",
+      "type": "llms-full.txt",
+      "url": "https://docs.anthropic.com/llms-full.txt",
+      "error": "Request failed with status code 403"
+    },
+    {
+      "name": "FastHTML",
+      "type": "llms.txt",
+      "url": "https://docs.fastht.ml/llms.txt",
+      "error": "Hostname/IP does not match certificate's altnames: Host: docs.fastht.ml. is not in the cert's altnames: DNS:*.github.io, DNS:*.github.com, DNS:*.githubusercontent.com, DNS:github.com, DNS:github.io, DNS:githubusercontent.com, DNS:www.github.com"
+    }
+  ]
+}

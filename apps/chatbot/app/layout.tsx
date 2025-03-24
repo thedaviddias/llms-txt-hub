@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={fonts}>
-        <DesignSystemProvider plausibleDomain="llmstxthub.com">
+        <DesignSystemProvider plausibleDomain="chatbot.llmstxthub.com">
           <main className="min-h-screen bg-white dark:bg-neutral-950">{children}</main>
         </DesignSystemProvider>
       </body>

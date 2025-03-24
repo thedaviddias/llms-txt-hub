@@ -1,0 +1,10 @@
+{
+  "name": "The Data Driven Marketer",
+  "description": "Data-driven marketing insights and tools",
+  "website": "https://datadrivenmarketer.me",
+  "url": "https://datadrivenmarketer.me/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/the-data-driven-marketer-llms.txt",
+  "lastFetched": "2025-03-24"
+}

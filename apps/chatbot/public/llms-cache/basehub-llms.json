@@ -1,0 +1,10 @@
+{
+  "name": "BaseHub",
+  "description": "Database and data infrastructure platform",
+  "website": "https://basehub.com",
+  "url": "https://docs.basehub.com/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/basehub-llms.txt",
+  "lastFetched": "2025-03-24"
+}

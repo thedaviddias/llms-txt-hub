@@ -1,0 +1,10 @@
+{
+  "name": "Cloudflare",
+  "description": "Make employees, applications and networks faster and more secure everywhere, while reducing complexity and cost.",
+  "website": "https://www.cloudflare.com/",
+  "url": "https://developers.cloudflare.com/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "infrastructure-cloud",
+  "cachePath": "apps/chatbot/public/llms-cache/cloudflare-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

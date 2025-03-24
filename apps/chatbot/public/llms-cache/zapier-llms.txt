@@ -1,0 +1,458 @@
+# Zapier
+
+## Docs
+
+- [Get Action Details](https://docs.zapier.com/ai-actions/api-reference/actions/get-action-details.md): Get details of a specific action, including its needs, gives, and a sample of the action.
+- [Get Prefill Choices](https://docs.zapier.com/ai-actions/api-reference/actions/get-prefill-choices.md): Get prefill choices for an app's prefill.
+- [Search Actions](https://docs.zapier.com/ai-actions/api-reference/actions/search-actions.md): Search for Zapier actions by app, ordered by relevancy.
+- [Create AI Action](https://docs.zapier.com/ai-actions/api-reference/ai-actions/create-ai-action.md): Create a new AI Action that can be executed by the user later.
+- [Delete AI Action](https://docs.zapier.com/ai-actions/api-reference/ai-actions/delete-ai-action.md): Delete an AI Action.
+
+Returns `true` if the action was deleted, `false` if it was not found.
+- [Get AI Action](https://docs.zapier.com/ai-actions/api-reference/ai-actions/get-ai-action.md): Get the details of a specific AI Action.
+- [List AI Actions](https://docs.zapier.com/ai-actions/api-reference/ai-actions/list-ai-actions.md): List all the current actions for the current user.
+- [Update AI Action](https://docs.zapier.com/ai-actions/api-reference/ai-actions/update-ai-action.md): Update an existing AI Action.
+- [Get App Details](https://docs.zapier.com/ai-actions/api-reference/apps/get-app-details.md)
+- [List Authentications For App](https://docs.zapier.com/ai-actions/api-reference/apps/list-authentications-for-app.md): Get list of Zapier authentications associated with the requesting user and account.
+- [Search Apps](https://docs.zapier.com/ai-actions/api-reference/apps/search-apps.md): Search through all Zapier apps.
+- [Check User Auth](https://docs.zapier.com/ai-actions/api-reference/auth/check-user-auth.md): Test that the API and auth are working.
+- [Get Account List](https://docs.zapier.com/ai-actions/api-reference/auth/get-account-list.md): Get a list of Zapier accounts for the current user.
+- [Get Oauth Login Link](https://docs.zapier.com/ai-actions/api-reference/auth/get-oauth-login-link.md): This will create a link that can be used for "quick account creation" followed by OAuth login for a user.
+
+When going to this link, if the provided email already has a Zapier account, the user will be asked to log in.
+If the email does not have a Zapier account, the user will be asked to create an account with the provided email and name.
+
+Upon creating an account or logging in, the user will be taken to
+
+The user will get a Zapier account, be brought to AI Actions where they will see the OAuth consent screen, and then will be brought back to your site
+with an OAuth `code` that can be used with `https://actions.zapier.com/oauth/token/` with the following data in the body with `Content-Type: application/x-www-form-urlencoded`:
+    - client_id: Your AI Actions OAuth client ID
+    - grant_type: `authorization_code`
+    - code_verifier: The verifier stored for your user when generating the login URL
+    - redirect_uri: The same URL you used for the `redirect_uri` in the previous step.
+    - code: The code in the query parameters of the URL that the user was redirected to.
+- [Get User Login Link](https://docs.zapier.com/ai-actions/api-reference/auth/get-user-login-link.md): This will create a link that can be used for "quick account creation" for a user.
+
+When going to this link, if the provided email already has a Zapier account, the user will be asked to log in.
+If the email does not have a Zapier account, the user will be asked to create an account with the provided email and name.
+
+Upon creating an account or logging in, the user will be taken to the `redirect_to` URL.
+
+A suggested flow for this is:
+- Check if you have an AI Actions OAuth token for a user
+- If you do not, send the user to a page on your site for initiating PKCE OAuth flow, storing the `code_verifier` for them securely.
+- Use this endpoint, with a `redirect_to` of `https://actions.zapier.com/oauth/authorize/` with the following query parameters:
+    - client_id: Your AI Actions OAuth client ID
+    - scope: `openid nla:exposed_actions:execute`
+    - response_type: `code`
+    - redirect_uri: The URL on your site that will handle the OAuth callback, must be in the list of allowed redirect URIs for your AI Actions OAuth client.
+    - code_challenge: The SHA256 hash of the `code_verifier` from the previous step.
+    - code_challenge_method: `S256`
+
+The user will get a Zapier account, be brought to AI Actions where they will see the OAuth consent screen, and then will be brought back to your site
+with an OAuth `code` that can be used with `https://actions.zapier.com/oauth/token/` with the following data in the body with `Content-Type: application/x-www-form-urlencoded`:
+    - client_id: Your AI Actions OAuth client ID
+    - grant_type: `authorization_code`
+    - code_verifier: The verifier stored for your user when generating the login URL
+    - redirect_uri: The same URL you used for the `redirect_uri` in the previous step.
+    - code: The code in the query parameters of the URL that the user was redirected to.
+- [Execute Stateless AI Action](https://docs.zapier.com/ai-actions/api-reference/execution/execute-stateless-ai-action.md)
+- [Execute Stored AI Action](https://docs.zapier.com/ai-actions/api-reference/execution/execute-stored-ai-action.md): Given an action ID and instructions, this will execute the action and return the results.
+- [Preview Stored AI Action](https://docs.zapier.com/ai-actions/api-reference/execution/preview-stored-ai-action.md)
+- [Rate Execution Log](https://docs.zapier.com/ai-actions/api-reference/execution/rate-execution-log.md): Rate a specific execution log given feedback from the user.
+
+Rating should either be `-1` (bad, thumbs down), `0` (neutral, the default), or `1` (good, thumbs up).
+
+You can also provide plain text feedback provided by the user. Supplied rating/feedback are patched onto execution log, so you can progressively call this endpoint.
+- [App Health Check](https://docs.zapier.com/ai-actions/api-reference/system/app-health-check.md): Check that the app is up and running.
+- [Guess Actions](https://docs.zapier.com/ai-actions/api-reference/utilities/guess-actions.md)
+- [Shrink Result](https://docs.zapier.com/ai-actions/api-reference/utilities/shrink-result.md): **WARNING: This endpoint is not officially supported, and is subject to be changed or removed at any time.**
+
+Shrinks the given result payload to git into a specified token budget.
+
+This tries its best to keep around more important values and truncate less important ones.
+
+The intent of this endpoint is that after executing an AI Action, you can pass the result into this to get a smaller result that can be passed in to LLMs without hitting the token limit.
+- [API Key](https://docs.zapier.com/ai-actions/developer-resources/keys.md)
+- [API Logs](https://docs.zapier.com/ai-actions/developer-resources/logs.md)
+- [OpenAPI Specification](https://docs.zapier.com/ai-actions/developer-resources/openapi.md)
+- [Submit an issue](https://docs.zapier.com/ai-actions/help/bug.md)
+- [Join our Community](https://docs.zapier.com/ai-actions/help/community.md)
+- [Zapier account list](https://docs.zapier.com/ai-actions/how-tos/account-list.md): Get a list of Zapier accounts for the current user.
+- [Get action details and needs](https://docs.zapier.com/ai-actions/how-tos/action-info/action-details.md): Get details of a specific action, including its needs, gives, and a sample of the action.
+- [Choose authentication](https://docs.zapier.com/ai-actions/how-tos/action-info/choose-auth.md): Get list of Zapier authentications associated with the requesting user and account.
+- [Find an action](https://docs.zapier.com/ai-actions/how-tos/action-info/find-action.md): Search for Zapier actions by app, ordered by relevancy.
+- [Find an app](https://docs.zapier.com/ai-actions/how-tos/action-info/find-app.md): Search through all Zapier apps.
+- [Introduction](https://docs.zapier.com/ai-actions/how-tos/action-info/introduction.md)
+- [Get prefill choices](https://docs.zapier.com/ai-actions/how-tos/action-info/prefill-choices.md): Get prefill choices for an app's prefill.
+- [Authentication](https://docs.zapier.com/ai-actions/how-tos/auth.md): Test that the API and auth are working.
+- [Stored Vs. Stateless Actions](https://docs.zapier.com/ai-actions/how-tos/stateless-vs-stored.md)
+- [Stateless actions introduction](https://docs.zapier.com/ai-actions/how-tos/stateless/intro.md)
+- [Run a Stateless Action](https://docs.zapier.com/ai-actions/how-tos/stateless/run-stateless-action.md)
+- [Configure stored actions in the AI Actions UI](https://docs.zapier.com/ai-actions/how-tos/stored/action-configuration.md)
+- [Stored actions introduction](https://docs.zapier.com/ai-actions/how-tos/stored/intro.md)
+- [List stored Actions](https://docs.zapier.com/ai-actions/how-tos/stored/list-actions.md): List all the current actions for the current user.
+- [Create stored action](https://docs.zapier.com/ai-actions/how-tos/stored/manage/create-action.md): Create a new AI Action that can be executed by the user later.
+- [Delete stored action](https://docs.zapier.com/ai-actions/how-tos/stored/manage/delete-action.md): Delete an AI Action.
+
+Returns `true` if the action was deleted, `false` if it was not found.
+- [Get stored action](https://docs.zapier.com/ai-actions/how-tos/stored/manage/get-action.md): Get the details of a specific AI Action.
+- [Update stored action](https://docs.zapier.com/ai-actions/how-tos/stored/manage/update-action.md): Update an existing AI Action.
+- [Run a stored action](https://docs.zapier.com/ai-actions/how-tos/stored/run-stored-action.md): Given an action ID and instructions, this will execute the action and return the results.
+- [Introduction](https://docs.zapier.com/ai-actions/intro.md): AI Actions exposes Zapier's 7,000+ apps and 30,000+ actions, for selected partners, to build your own custom AI assistants.
+- [Authentication](https://docs.zapier.com/ai-actions/libraries/nodejs/authentication.md)
+- [Getting started](https://docs.zapier.com/ai-actions/libraries/nodejs/getting-started.md)
+- [Next.js](https://docs.zapier.com/ai-actions/libraries/nodejs/nextjs-reccommendation.md)
+- [Usage examples](https://docs.zapier.com/ai-actions/libraries/nodejs/usage.md)
+- [ActionList](https://docs.zapier.com/ai-actions/libraries/react/action-list.md)
+- [AiActionsProvider](https://docs.zapier.com/ai-actions/libraries/react/ai-actions-provider.md)
+- [EditAction and CreateAction](https://docs.zapier.com/ai-actions/libraries/react/edit-action.md)
+- [Getting started](https://docs.zapier.com/ai-actions/libraries/react/getting-started.md)
+- [StatelessActionCreator](https://docs.zapier.com/ai-actions/libraries/react/stateless-creator.md)
+- [Quickstart](https://docs.zapier.com/ai-actions/quickstart.md): Learn how to kick-start AI Actions by obtaining a partner key, setting up allowed actions, and executing an action through our API.
+- [Stateless action creator/runner](https://docs.zapier.com/ai-actions/tools/stateless-action.md)
+- [Create Account](https://docs.zapier.com/partner-solutions/accounts/create-account.md): Create a new user and obtain an access token. See our Quick Account Creation guide to get started.
+- [User Profile](https://docs.zapier.com/partner-solutions/accounts/user-profile.md): This endpoint returns the authenticated user information
+
+#### OAuth
+
+This endpoint requires the `profile` OAuth scope.
+- [Get Actions](https://docs.zapier.com/partner-solutions/actions/get-actions.md): Fetch the available actions for the provided App. It's typical to filter by type so that only actions that make sense for a particular step are shown. Action IDs may not be reused, see our documentation for how to hardcode a particular action.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Get Choices](https://docs.zapier.com/partner-solutions/actions/get-choices.md): Get the possible values for a `SELECT` Input Field.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Get Input Fields](https://docs.zapier.com/partner-solutions/actions/get-input-fields.md): Get the Input Fields for a particular Action, using the provided authentication and inputs. See the fields and fieldsets guide for more information.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Get Output Fields](https://docs.zapier.com/partner-solutions/actions/get-output-fields.md): Get the Output Fields for a particular Action, using the provided authentication and inputs.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Step Test](https://docs.zapier.com/partner-solutions/actions/step-test.md): Tests the action (step) in the third party api, using the provided authentication and inputs.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Create Account](https://docs.zapier.com/partner-solutions/api-reference/accounts/create-account.md): Create a new user and obtain an access token. See our Quick Account Creation guide to get started.
+- [User Profile](https://docs.zapier.com/partner-solutions/api-reference/accounts/user-profile.md): This endpoint returns the authenticated user information
+
+#### OAuth
+
+This endpoint requires the `profile` OAuth scope.
+- [Get Actions](https://docs.zapier.com/partner-solutions/api-reference/actions/get-actions.md): Fetch the available actions for the provided App. It's typical to filter by type so that only actions that make sense for a particular step are shown. Action IDs may not be reused, see our documentation for how to hardcode a particular action.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Get Choices](https://docs.zapier.com/partner-solutions/api-reference/actions/get-choices.md): Get the possible values for a `SELECT` Input Field.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Get Input Fields](https://docs.zapier.com/partner-solutions/api-reference/actions/get-input-fields.md): Get the Input Fields for a particular Action, using the provided authentication and inputs. See the fields and fieldsets guide for more information.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Get Output Fields](https://docs.zapier.com/partner-solutions/api-reference/actions/get-output-fields.md): Get the Output Fields for a particular Action, using the provided authentication and inputs.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Step Test](https://docs.zapier.com/partner-solutions/api-reference/actions/step-test.md): Tests the action (step) in the third party api, using the provided authentication and inputs.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Get Apps [v1]](https://docs.zapier.com/partner-solutions/api-reference/apps/get-apps-[v1].md): This endpoint returns a list of apps sorted popularity. See the List Apps guide to get started.
+- [Get Apps [v2]](https://docs.zapier.com/partner-solutions/api-reference/apps/get-apps-[v2].md): This endpoint returns a list of apps sorted by popularity.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Zapier Authentication](https://docs.zapier.com/partner-solutions/api-reference/authentication.md): Authenticate with The Zapier Workflow API
+- [Create Authentication](https://docs.zapier.com/partner-solutions/api-reference/authentications/create-authentication.md): Creates a new Authentication for the provided App. See our Adding an Authentication guide to get started.
+
+#### OAuth
+
+This endpoint requires the `authentication:write` OAuth scope.
+- [Get Authentications](https://docs.zapier.com/partner-solutions/api-reference/authentications/get-authentications.md): Fetch the available Authentications for the provided App. This will only return Authentications that are owned by the user and not those that are shared with them, since it's not possible to create Zaps with Authentications you don't own.
+
+#### OAuth
+
+This endpoint requires the `authentication` OAuth scope.
+- [Get Categories](https://docs.zapier.com/partner-solutions/api-reference/categories/get-categories.md): List of Zap categories
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/action.md)
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/app.md)
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/authentication.md)
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/choice.md)
+- [Errors](https://docs.zapier.com/partner-solutions/api-reference/common-types/errors.md): Errors in the API follow the <a href="https://jsonapi.org/format/#error-objects" target="_blank">recommendation</a> from the JSON API spec.
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/fieldset.md)
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/infoField.md)
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/inputField.md)
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/outputField.md)
+- [Pagination](https://docs.zapier.com/partner-solutions/api-reference/common-types/pagination.md)
+- [Requests](https://docs.zapier.com/partner-solutions/api-reference/common-types/requests.md)
+- [Responses](https://docs.zapier.com/partner-solutions/api-reference/common-types/responses.md): Responses for the API follow the <a href="https://jsonapi.org/format/#fetching-resources-responses-200" target="_blank">JSON API spec</a> for fetching resources.
+- [null](https://docs.zapier.com/partner-solutions/api-reference/common-types/zap.md)
+- [Create a Workflow step](https://docs.zapier.com/partner-solutions/api-reference/experimental/create-a-workflow-step.md): Creates a new Workflow Step based on a single provided step and returns a webhook URL that can be used to invoke the Workflow Step and retrieve a response. When creating a Workflow write action step, field values can be hardcoded, or they can contain mapped values. The mapped values should be surrounded with double curly braces.
+
+In the example request body the Workflow Step contains the field values `email`, `name`, `phone`, and `address` in double curly braces. Then the webhook URL returned can be called with a `POST` request containing a JSON body in the following format:
+
+```
+{
+"email": "user@example.com",
+"name": "John Doe",
+"phone": "1234567890",
+"address": "123 Maple Lane"
+}
+```
+
+Note that authentications may become invalid over time, and if this occurs, users will be notified by email to fix their authentication. If the authentication is not fixed, trying to run the Workflow Step will time out. Workflow Steps are also (for now) visible and editable as Zaps at https://zapier.com/app/zaps. If a user turns off a Workflow Step Zap, the request will similarly time out. Finally, it is possible that a user can edit the Workflow Step Zap such that it returns unexpected outputs.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Rate Limiting](https://docs.zapier.com/partner-solutions/api-reference/rate-limiting.md): Rate limits when accessing the Workflow API   
+- [Get Zap Templates](https://docs.zapier.com/partner-solutions/api-reference/zap-templates/get-zap-templates.md): List popular Zap Templates using your app. See our List Zap Templates guide to get started.
+- [Create a Zap](https://docs.zapier.com/partner-solutions/api-reference/zaps/create-a-zap.md): This URL creates a Zap based on the given steps and title.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Get Zaps [v1]](https://docs.zapier.com/partner-solutions/api-reference/zaps/get-zaps-[v1].md): This endpoint returns a list of Zaps for the authenticated Zapier user.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Get Zaps [v2]](https://docs.zapier.com/partner-solutions/api-reference/zaps/get-zaps-[v2].md): This endpoint returns a list of Zaps for the authenticated Zapier user.
+
+The `expand` array can be used to expand selected fields into full objects in the response.  Inputs with keys can
+also be passed to filter Zaps by certain criteria.
+
+#### OAuth
+
+This endpoint requires the `zap`, `zap:all`, or `zap:account:all` OAuth scope.
+- [Guess a Zap [Beta]](https://docs.zapier.com/partner-solutions/api-reference/zaps/guess-a-zap.md): This endpoint returns a suggested Zap and pre-filled URL to Zapier from a given prompt.
+- [Get Apps [v1]](https://docs.zapier.com/partner-solutions/apps/get-apps-[v1].md): This endpoint returns a list of apps sorted popularity. See the List Apps guide to get started.
+- [Get Apps [v2]](https://docs.zapier.com/partner-solutions/apps/get-apps-[v2].md): This endpoint returns a list of apps sorted by popularity.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Create Authentication](https://docs.zapier.com/partner-solutions/authentications/create-authentication.md): Creates a new Authentication for the provided App. See our Adding an Authentication guide to get started.
+
+#### OAuth
+
+This endpoint requires the `authentication:write` OAuth scope.
+- [Get Authentications](https://docs.zapier.com/partner-solutions/authentications/get-authentications.md): Fetch the available Authentications for the provided App. This will only return Authentications that are owned by the user and not those that are shared with them, since it's not possible to create Zaps with Authentications you don't own.
+
+#### OAuth
+
+This endpoint requires the `authentication` OAuth scope.
+- [Get Categories](https://docs.zapier.com/partner-solutions/categories/get-categories.md): List of Zap categories
+- [Element Security](https://docs.zapier.com/partner-solutions/elements-security.md): Keeping our elements secure and usable is critical at Zapier
+- [Embed Insights](https://docs.zapier.com/partner-solutions/embed-insights.md): Insights are available to review the performance of your embed, and track usage growth.
+- [Create a Workflow step](https://docs.zapier.com/partner-solutions/experimental/create-a-workflow-step.md): Creates a new Workflow Step based on a single provided step and returns a webhook URL that can be used to invoke the Workflow Step and retrieve a response. When creating a Workflow write action step, field values can be hardcoded, or they can contain mapped values. The mapped values should be surrounded with double curly braces.
+
+In the example request body the Workflow Step contains the field values `email`, `name`, `phone`, and `address` in double curly braces. Then the webhook URL returned can be called with a `POST` request containing a JSON body in the following format:
+
+```
+{
+"email": "user@example.com",
+"name": "John Doe",
+"phone": "1234567890",
+"address": "123 Maple Lane"
+}
+```
+
+Note that authentications may become invalid over time, and if this occurs, users will be notified by email to fix their authentication. If the authentication is not fixed, trying to run the Workflow Step will time out. Workflow Steps are also (for now) visible and editable as Zaps at https://zapier.com/app/zaps. If a user turns off a Workflow Step Zap, the request will similarly time out. Finally, it is possible that a user can edit the Workflow Step Zap such that it returns unexpected outputs.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Get Zap Runs](https://docs.zapier.com/partner-solutions/experimental/get-zap-runs.md): This endpoint returns runs for the specified Zaps and provides basic yet essential details about their execution. As the initial version, it serves foundational information, with plans for continuous enhancement to expand its capabilities and improve data output over time.
+
+#### OAuth
+
+This endpoint requires the `zap:runs` OAuth scope.
+- [Zapier Partner Solutions](https://docs.zapier.com/partner-solutions/getting-started.md): Add automation to your product with Zapier.
+- [Pre-filled Zaps](https://docs.zapier.com/partner-solutions/pre-filled-zaps.md): Prefills allow you to define the input fields on behalf of the user, simplying the experience of setting up their Zap.
+- [Quick Account Creation](https://docs.zapier.com/partner-solutions/quick-account-creation.md): Quick Account Creation is a seamless, accelerated sign-up feature allowing first time Zapier users to skip the standard sign-up procedure and onboarding survey. Enabling Quick Account Creation as part of your embed tool code helps provide a more frictionless experience for end users.
+- [How to Build a Workflow](https://docs.zapier.com/partner-solutions/workflow-api/Building-a-Zap.md): This guide walks through the entire process of building an automated workflow for your users to use -- from picking apps, adding authentication, filling inputs and publishing.
+- [Fields and Fieldsets](https://docs.zapier.com/partner-solutions/workflow-api/Fields-and-Fieldsets.md)
+- [Hardcoding an Action](https://docs.zapier.com/partner-solutions/workflow-api/Hardcoding-an-Action.md): To help focus the user experience, it can be helpful to hardcode a certain Action to guide users in selecting the most appropriate action for their use-case.
+- [Selecting an Action](https://docs.zapier.com/partner-solutions/workflow-api/Selecting-an-Action.md): An Action is an operation that can be performed against a third-party API; either a `READ` or a `WRITE`.
+- [Selecting an Authentication](https://docs.zapier.com/partner-solutions/workflow-api/Selecting-an-Authentication.md): Support users in selecting 3rd party authentications, either through an existing authentication or by adding new.
+- [Adding an Authentication to your app](https://docs.zapier.com/partner-solutions/workflow-api/adding-an-authentication.md): Reduce friction when adding an authentication to your own app.
+- [Embedding the Zapier Editor](https://docs.zapier.com/partner-solutions/workflow-api/embed-zap-editor.md): With an embedded Zap editor in your product, your users can create and edit their Zaps without leaving your app.
+- [Integrate the Workflow API](https://docs.zapier.com/partner-solutions/workflow-api/intro.md): Our most powerful tool for building native workflows in your product
+- [Known Limitations](https://docs.zapier.com/partner-solutions/workflow-api/limitations.md): Creating workflows using the Zapier Workflow API is a recent addition, and there are some known limitations.
+- [Retrieving Apps on Zapier](https://docs.zapier.com/partner-solutions/workflow-api/list-apps.md): Listing apps available on Zapier is a simple way to show users all of what's possible on Zapier
+- [Retrieving Zap Templates](https://docs.zapier.com/partner-solutions/workflow-api/list-zap-templates.md): Zap templates are pre-made Zaps that help users discover popular use cases for automating their work. Each template features a specific use case and the apps needed for it to work.
+- [Retrieving a list of users Zaps](https://docs.zapier.com/partner-solutions/workflow-api/list-zaps.md): Listing a users zaps reveals existing workflows created by users.
+- [Testing a Step](https://docs.zapier.com/partner-solutions/workflow-api/testing-a-step.md): Step testing allows for the validation of a configured step, executing any `READ` or `WRITE` actions.
+- [Embed the Workflow Element](https://docs.zapier.com/partner-solutions/workflow-element/intro.md): The Workflow Element is a prebuilt UI component that offers the quickest—and easiest—way to surface your Zapier integration directly within your own product.
+- [Get Zap Templates](https://docs.zapier.com/partner-solutions/zap-templates/get-zap-templates.md): List popular Zap Templates using your app. See our List Zap Templates guide to get started.
+- [Create a Zap](https://docs.zapier.com/partner-solutions/zaps/create-a-zap.md): This URL creates a Zap based on the given steps and title.
+
+#### OAuth
+
+This endpoint requires the `zap:write` OAuth scope.
+- [Get Zaps [v1]](https://docs.zapier.com/partner-solutions/zaps/get-zaps-[v1].md): This endpoint returns a list of Zaps for the authenticated Zapier user.
+
+#### OAuth
+
+This endpoint requires the `zap` OAuth scope.
+- [Get Zaps [v2]](https://docs.zapier.com/partner-solutions/zaps/get-zaps-[v2].md): This endpoint returns a list of Zaps for the authenticated Zapier user.
+
+The `expand` array can be used to expand selected fields into full objects in the response.  Inputs with keys can
+also be passed to filter Zaps by certain criteria.
+
+#### OAuth
+
+This endpoint requires the `zap`, `zap:all`, or `zap:account:all` OAuth scope.
+- [Guess a Zap [Beta]](https://docs.zapier.com/partner-solutions/zaps/guess-a-zap-[beta].md): This endpoint returns a suggested Zap and pre-filled URL to Zapier from a given prompt.
+- [Core Reference](https://docs.zapier.com/platform/build-cli/core.md): Reference for `zapier-platform-core`
+- [Dynamic Dropdowns](https://docs.zapier.com/platform/build-cli/dynamic-dropdowns.md)
+- [Frequently Asked Questions](https://docs.zapier.com/platform/build-cli/faqs.md)
+- [Input Field Configuration](https://docs.zapier.com/platform/build-cli/input-fields.md)
+- [Build with CLI](https://docs.zapier.com/platform/build-cli/overview.md): Zapier is a platform for creating integrations and workflows. This CLI is your gateway to creating custom applications on the Zapier platform.
+- [Action](https://docs.zapier.com/platform/build/action.md): Every Zap starts with a single trigger that watches for new or updated data, starting the user's workflow. Action steps then make use of that data.
+- [Add input fields to triggers and actions](https://docs.zapier.com/platform/build/add-fields.md): When building in the Platform UI, you'll use the Input Designer to create the form users will input data into, to send to your app's API.
+- [Add authentication with API Key](https://docs.zapier.com/platform/build/apikeyauth.md): API Key authentication passes along a user-entered API Key with every API call. In your Zapier integration using API Key authentication, the API key—and optionally any other data your API needs—is included every time a Zap step runs.
+- [Authentication](https://docs.zapier.com/platform/build/auth.md): Connecting an app to Zapier starts with authentication. Users select an app they wish to use in their Zap, authenticating their account with that app to allow Zapier to access their data.
+- [Add authentication with Basic Authentication](https://docs.zapier.com/platform/build/basicauth.md): APIs using Basic Authentication will authenticate users with a username and password. In your Zapier integration using Basic Auth, Zapier includes the username and password credentials in the API request bundle every time Zapier polls an API endpoint for new data or posts new data to an API endpoint.
+- [Reference user-entered details with data bundles](https://docs.zapier.com/platform/build/bundle.md): Zapier stores data from users' authentication and input forms for API calls in the `bundle` object. You can reference that data in your integration using `{{bundle.bundleName.field}}` text in API requests and connection labels, replacing `bundleName` with the bundle name and `field` with the input field key or API response field key you need.
+- [Add an instant trigger using REST Hooks in Zapier Platform CLI](https://docs.zapier.com/platform/build/cli-hook-trigger.md): REST Hooks are an alternative to polling. The main differences are allowing your customers' Zaps to trigger instantly; and avoiding polling triggers' numerous - and sometimes unnecessary - requests to your API's endpoints to check for new data.
+- [Use Code Mode to refine your API call](https://docs.zapier.com/platform/build/code-mode.md)
+- [Use computed fields in OAuth or Session Authentication](https://docs.zapier.com/platform/build/computed-fields.md): When adding a field in your integration's authentication configuration, Zapier offers two field type options; field and computed field. The field option allows users to enter account information needed for authentication.
+- [Compute a field from the data of the Test API call](https://docs.zapier.com/platform/build/computed-test-field.md): Zapier doesn't store the responses from the test API call for OAuth v2 and session authentication. Using computed fields, you can use data from a test API call later in your Zapier integration.
+- [Add a connection label](https://docs.zapier.com/platform/build/connection-label.md): Zapier users can authenticate multiple accounts for any app. By default, every new app account added to Zapier is identified by the app's name, followed by a number (#2, #3, …) for accounts connected after the first.
+- [Add a create action](https://docs.zapier.com/platform/build/create.md)
+- [How deduplication works in Zapier](https://docs.zapier.com/platform/build/deduplication.md): Zapier automatically deduplicates incoming trigger data for your integration, so that Zaps do not run multiple times on the same data. Consider the following requirements for your “New Item” and “Updated Item” triggers to work as users expect.
+- [Add authentication with Digest Authentication](https://docs.zapier.com/platform/build/digestauth.md): Digest Auth prompts users to enter their username and password, optionally along with any additional data your API requires for authentication. Zapier makes an unauthenticated API call to get the nonce from your server, and uses it to encrypt and pass the authentication data to your server with each API call.
+- [Send or receive dynamic user-defined fields through your API](https://docs.zapier.com/platform/build/dynamic-field.md): Dynamic fields are a type of field built from an API call. Custom code runs to show fields based on other input field data. These are especially useful with project management apps, CRM apps, databases, and any other app where users can add custom, user-defined fields.
+- [Use environment variables in your API call](https://docs.zapier.com/platform/build/env.md): Integrations can define environment variables that are available when the app's code executes. They are useful when you have data like an OAuth client ID and secret that you don't want to commit to source control. Environment variables can also be used as a way to toggle between a staging and production environment during app development and this would be recommended instead of the use of an independent integration for staging purposes.
+- [Error: An array is expected](https://docs.zapier.com/platform/build/error-array-expected.md): When you add a polling trigger or search action to your integration, the Zapier platform [expects a bare array of new or found items returned](/platform/build/response-types), sorted in reverse chronological order. An API may instead return a result _object_ that contains the array of items the trigger/search needs.
+- [Error: Got a non-object result, expected an object from create](https://docs.zapier.com/platform/build/error-non-object.md)
+- [Error: Got a non-object result in the array, expected only objects](https://docs.zapier.com/platform/build/error-non-object-array.md): When using a REST Hook trigger, the data returned by the perform must be an array.
+- [Add error response handling](https://docs.zapier.com/platform/build/errors.md): If your API returns responses with a status code above 400 that should not automatically throw an error then Zapier recommends enabling skipThrowForStatus.
+- [Field types](https://docs.zapier.com/platform/build/field-definitions.md)
+- [Use form mode to setup your API calls](https://docs.zapier.com/platform/build/form-mode.md): In the Platform UI, when building your authentication, triggers and actions, the default setting under _API Configuration_ is to create each component of your integration using Form Mode.
+- [Add a REST Hook trigger](https://docs.zapier.com/platform/build/hook-trigger.md): Set up your REST Hook trigger in the Platform UI with the Settings, Input Designer and API Configuration tabs.
+- [Use hydration in Platform CLI](https://docs.zapier.com/platform/build/hydration-cli.md): The best answer to this lives in our [CLI docs](https://docs.zapier.com/platform/reference/cli-docs#dehydration):
+- [Hydration/dehydration limits](https://docs.zapier.com/platform/build/hydration-limits.md): [File dehydration](https://github.com/zapier/zapier-platform/blob/main/packages/cli/README.md#dehydration) is an extremely useful tool to remain within time and size constraints for Zapier triggers and actions. However, it does have its own limits.
+- [Add line item group field to actions](https://docs.zapier.com/platform/build/line-items.md): Input fields in Zapier add one item each time the Zap runs. But, if you want users to be able to add multiple items in a single Zap run, then this can be achieved by using a line item group. This group takes line items, which are comma-separated values, and adds each instance of the values to the app in a single Zap run.
+- [Add authentication with OAuth v2](https://docs.zapier.com/platform/build/oauth.md): OAuth v2 authentication matches in appearance the login process users expect from most modern apps.
+- [Zapier operating constraints](https://docs.zapier.com/platform/build/operating-constraints.md): Zapier offers a relatively unique run-time environment for your integration and its requests to your API. The environment is stateless and restricts both execution time and payload size to offer normalized reliability and running time. There are three distinct contexts of this run-time that your integration will need to consider.
+- [Use pagination in triggers](https://docs.zapier.com/platform/build/pagination-trigger.md): By default, Zapier triggers fetch new or recently updated data to start Zaps, and only need to find the most recently added items. Triggers can also be used to populate [dynamic dropdown fields](/platform/build/add-fields#dynamic-dropdown), and there they need to find all possible items to populate the field.
+- [Add a polling trigger](https://docs.zapier.com/platform/build/polling-trigger.md): Set up your polling trigger in the Platform UI with the Settings, Input Designer and API Configuration tabs.
+- [Reduce requests to your API](https://docs.zapier.com/platform/build/reduce-api-requests.md)
+- [Reorder or remove action](https://docs.zapier.com/platform/build/reorder-action.md): Whenever a user selects your app's integration in a Zapier action step, they'll see every _create_ and _search_ action in your integration. 
+- [Reorder or remove triggers](https://docs.zapier.com/platform/build/reorder-trigger.md): Triggers are listed in alphabetical order in the Zap editor and this order cannot be changed.
+- [Add authentication fields to Request Template](https://docs.zapier.com/platform/build/requesttemplate.md): The Request Template is a request editor that lets users set static values that apply to all requests made by this integration. Users can configure the URL params, HTTP headers and request body. This is the perfect place to set authentication fields.
+- [Response types Zapier expects](https://docs.zapier.com/platform/build/response-types.md): With every API call, Zapier expects the response data to be returned in a specific response type. This can vary depending on what part of your integration you're working on. Use the table below to identify the correct response type to use
+- [Output data, defining sample data and output fields](https://docs.zapier.com/platform/build/sample-data.md): This guide will explain what output data, sample data and output fields are and how to modify them in your triggers or actions.
+- [Add a search action](https://docs.zapier.com/platform/build/search.md)
+- [Add a search or create action](https://docs.zapier.com/platform/build/search-or-create.md): When adding a _search_ action type, you'll see the option to _Pair an existing search and a create to enable “Find or Create” functionality_ in the _Settings_ page. This embeds the _create_ inside the _search_ step to find or create items in one step of the Zap.
+- [Add authentication with Session Authentication](https://docs.zapier.com/platform/build/sessionauth.md): Session authentication has elements of Basic authentication — where Zapier requests a username and password, and OAuth v2 — where Zapier redirects users to the app's site to allow access. User credentials are exchanged for a token used to authenticate subsequent API calls.
+- [Enable static IP address connection for customers](https://docs.zapier.com/platform/build/static-ip.md): To enable customers to access your integration by static IP address, all outbound traffic from Zapier to your integration will need to be routed through a smaller set of consistent IP addresses. Any app owner/developer can request to enable the static IP address feature on a private or public app.
+- [Validate domain and subdomain input fields during authentication](https://docs.zapier.com/platform/build/subdomain-validation.md): When adding a subdomain input field, commonly used in OAuth implementations, additional validation is strongly recommended to prevent a potential security vulnerability. If not taken into account, an attacker could utilize a maliciously constructed subdomain field (like `attacker-domain.com/`) in order to redirect OAuth connection requests to that attacker-controlled domain (because `attacker-domain.com/.your-domain.com` resolves to the attacker's domain instead of the expected one). Taking the following steps prevents the potential for an attacker to access your integration's sensitive authentication information, such as the OAuth client ID or secret.
+- [Test authentication](https://docs.zapier.com/platform/build/test-auth.md): Testing a user's authentication is crucially important, as it is later used to test subsequent trigger and action steps when built.
+- [Test and monitor your integration in your Zapier account](https://docs.zapier.com/platform/build/test-monitoring.md): Testing inside the Platform UI is crucial during the building process. To ensure users can benefit from your integration's features, it is equally crucial to test your integration within the Zap editor. This is the best way to notice details that might have been overlooked while building your integration.
+- [Testing Tools](https://docs.zapier.com/platform/build/test-tools.md): The Zapier platform provides a set of tools to help inform and validate your integration before pushing changes out to users.
+- [Test triggers or actions](https://docs.zapier.com/platform/build/test-triggers-actions.md): Once authentication is tested, trigger and action steps are easy to test inside Zapier visual builder. Set up the trigger or action settings and API calls, then as the last step the familiar _Test Your API Response_ box appears. It will show any accounts you added to your integration previously during the authentication testing.
+- [Trigger](https://docs.zapier.com/platform/build/trigger.md)
+- [Troubleshoot action request or response payload size](https://docs.zapier.com/platform/build/troubleshoot-action-payload.md)
+- [Troubleshoot action timeouts](https://docs.zapier.com/platform/build/troubleshoot-action-timeouts.md)
+- [Troubleshoot custom fields](https://docs.zapier.com/platform/build/troubleshoot-custom-fields.md)
+- [Troubleshoot throttles](https://docs.zapier.com/platform/build/troubleshoot-throttles.md)
+- [Troubleshoot trigger request or response payload sizes](https://docs.zapier.com/platform/build/troubleshoot-trigger-payload.md)
+- [Troubleshoot trigger timeouts](https://docs.zapier.com/platform/build/troubleshoot-trigger-timeouts.md)
+- [Developer Platform Login](https://docs.zapier.com/platform/dev-platform-login.md)
+- [Partner Solutions Documentation](https://docs.zapier.com/platform/embed/partner-solutions.md): Our partner solutions are the easiest ways to embed Zapier and surface integrations within your product.
+- [Welcome](https://docs.zapier.com/platform/home.md)
+- [Active users retention](https://docs.zapier.com/platform/manage/active-users.md): At Zapier, churn means a user used your integration in their Zaps 29 - 56 days ago, but hasn't run a successful task in one of those Zaps in the past 28 days. This user is considered to have churned from the integration. Maybe they switched to using a competing integration or their workflow had a more periodic or seasonal cadence.
+- [Invite team members to your integration](https://docs.zapier.com/platform/manage/add-team.md): Integrations do not have a dedicated owner, instead they are managed by a team that can be modified as needed. Add team members to your integration to collaborate, contribute, and view analytics data for your integration on the Developer Platform. Your integration team can have up to 200 team members, regardless of whether your integration is Private or Public.
+- [null](https://docs.zapier.com/platform/manage/api-outage.md): Zapier recognizes that temporary unavailability is sometimes inevitable for your API.
+- [Change authentication field keys](https://docs.zapier.com/platform/manage/auth-keys.md)
+- [Add required authentication field](https://docs.zapier.com/platform/manage/auth-required.md)
+- [Change authentication type](https://docs.zapier.com/platform/manage/auth-scheme.md): If your API's authentication method changes, you would need to change the method Zapier uses to authenticate user accounts.
+- [Changes to your API can impact your integration](https://docs.zapier.com/platform/manage/change-api.md)
+- [Change trigger or action key](https://docs.zapier.com/platform/manage/change-keys.md)
+- [Update perform method for polling trigger](https://docs.zapier.com/platform/manage/change-perform.md)
+- [Change trigger from polling to REST Hook](https://docs.zapier.com/platform/manage/change-trigger.md)
+- [Clone a version](https://docs.zapier.com/platform/manage/clone.md): Cloning allows you to duplicate an existing version of your integration. This is particularly useful when you want to introduce new features or fixes without altering the original integration. When a previous version of your integration has more than 5 active users, you will need to clone that version to make modifications.
+- [Deprecate or delete a version](https://docs.zapier.com/platform/manage/deprecate.md): Deprecation is an optional process that allows you to set a date from which a non-public version of your integration will no longer be updated. Deprecation is only recommended if the older integration version will eventually stop working, such as if the related API will be removed. Zapier is normally a “set it and forget it” experience for users, so use this feature carefully. Only if the older version will no longer function, should it be deprecated. Please note that deprecating a version is significantly more disruptive to our mutual users than migrating to the latest promoted version, or than leaving users on an older (now) private version if migration is not possible.
+- [Embed activation rates](https://docs.zapier.com/platform/manage/embed-activation.md): Consider all the user clicks on Zap Templates surfaced in your embeds. The embed activation rate is the percentage of those Zaps that actually activated within 24 hours of creation, meaning the Zap ran at least one successful task. It measures the efefctiveness of the Zapier embeds in your product at converting user clicks on Zap Templates to Zap activations.
+- [Embed insights definitions](https://docs.zapier.com/platform/manage/embed-insights.md): Embed features are available for public integrations.
+- [Improve error response handling](https://docs.zapier.com/platform/manage/error-handling.md): Errors from your API cause pain for users at two vital points:
+- [Essential tips for integrating quality health practices](https://docs.zapier.com/platform/manage/essential-tips-iq.md): Our shared customers rely on Zapier and your integration for business-critical workflows. Addressing feedback early and often ensures users have the best experience, both with Zapier's platform and yours. Follow these tips on how. 
+- [Export integration to Platform CLI](https://docs.zapier.com/platform/manage/export-cli.md): The Zapier Platform CLI (Command Line Interface) is a toolset you install and run in your local development environment. It allows you to build, test, and manage your Zapier integration through JavaScript code and terminal commands.
+- [Export integration to Platform UI](https://docs.zapier.com/platform/manage/export-ui.md): The Zapier Platform UI is the easiest way for anyone with API experience to build Zapier integrations. It is for users more comfortable with a visual form editor.
+- [Change input form field key](https://docs.zapier.com/platform/manage/input-key.md)
+- [Integration insights definitions](https://docs.zapier.com/platform/manage/integration-insights.md): Integration quality on Zapier boils down to two main pillars: **Health** and **Depth**.
+- [Migrate users to a new version](https://docs.zapier.com/platform/manage/migrate.md): If this isn't the first time you've promoted your app - you might have users on older versions.
+- [Change output data response](https://docs.zapier.com/platform/manage/output.md)
+- [Change output field key](https://docs.zapier.com/platform/manage/output-key.md)
+- [Planning and implementing integration changes](https://docs.zapier.com/platform/manage/planning-changes.md): Before making updates to your integration, it's important to consider the potential impact on user migration and existing Zaps. Ensuring your API and Zapier integration remains backwards compatible is crucial to avoid disruption to users. However, we acknowledge certain changes are sometimes necessary and unavoidable. In such cases, consider the best practice for implementation.
+- [Promote a version](https://docs.zapier.com/platform/manage/promote.md): After your integration has entered the beta or public status, you can set a new default version for public use. This process is called promoting a version.
+- [Add new required input field](https://docs.zapier.com/platform/manage/required-input.md)
+- [Share your integration](https://docs.zapier.com/platform/manage/sharing.md): Once an integration is public, all users would have access to it when searching for an app's name in the Zap Editor, or in the [Zapier App Directory](https://zapier.com/apps).
+- [Respond to user feedback and bugs](https://docs.zapier.com/platform/manage/user-feedback.md): For public integrations, Zapier's Support team logs user requests and reported problems in Zapier's issue tracker, that your team can see from the _Bug & Feature Requests_ page in the Manage section.
+- [Versions](https://docs.zapier.com/platform/manage/versions.md): Versions in Developer Platform allow developers to create multiple iterations of their integration to experiment with and implement new features without affecting existing users. Each integration can have many versions, but only one version can have a public status at a one time.
+- [Manage a legacy integration](https://docs.zapier.com/platform/manage/versions-legacy.md)
+- [Zap activation rates](https://docs.zapier.com/platform/manage/zap-activation.md): Consider all of the Zaps that users try to create with your integration's triggers, actions, or searches. The Zap activation rate is the percentage of those Zaps that actually activated within 24 hours of creation, meaning the Zap ran at least one successful task.
+- [Add or modify integration branding and details](https://docs.zapier.com/platform/publish/add-or-modify-branding.md): When creating a new integration in the Platform UI from the link `https://developer.zapier.com/app/new`, you'll be prompted to add the app name, description, homepage URL and logo.
+- [A Guide to Zapier Partner Program Benefits: Accelerate your integration's growth and reach](https://docs.zapier.com/platform/publish/benefits-guide.md): Zapier offers a variety of marketing and support benefits to partners. This cheat sheet is designed to help you understand when and how you can access each of these benefits as you unlock them.
+- [Best practices for showcasing your integration](https://docs.zapier.com/platform/publish/best-practices.md): Sharing well-crafted content about your Zapier integration can help you improve user adoption, highlight key use cases, and simplify integration processes. Need some inspiration? The following examples show how some of our partners are effectively communicating their Zapier integrations across different platforms.
+- [Add integration branding in Platform CLI](https://docs.zapier.com/platform/publish/branding-cli.md): When you make a new integration in Zapier CLI, you can add the app's name, description, and homepage to the `package.json` file.
+- [Integration branding guidelines](https://docs.zapier.com/platform/publish/branding-guidelines.md): When creating your integration, you'll add your app’s name, logo, description, category, and primary brand color. Consistent branding is essential for helping users recognize and discover your app on Zapier.
+- [Integration build guidelines](https://docs.zapier.com/platform/publish/integration-build-guidelines.md): Before publishing your integration on Zapier, it is essential to ensure that your integration is well-prepared to provide a seamless and efficient user experience. The following guidelines are designed to assist you in refining your integration before submitting it for review. Adhering to these guidelines will help enhance the functionality and user interaction with your integration and will provide you with the best value and opportunities to harness Zapier as a method of obtaining new users and most commonly, boosting the lifetime value of your current customers.
+- [Integration check reference](https://docs.zapier.com/platform/publish/integration-checks-reference.md): Before you can submit your integration for publishing, it runs through a set of automated checks to ensure it's working properly and giving our users (and yours) the best possible experience.
+- [Integration publishing requirements](https://docs.zapier.com/platform/publish/integration-publishing-requirements.md): We're excited you are creating an integration for the [Zapier Platform](https://zapier.com/developer-platform). We're here to help you understand our platform and its requirements so that you can successfully prepare your Zapier integration for publishing. Thousands of partners have built integrations on the Zapier Platform that enable our mutual users to set up Zaps as easily and quickly as possible.
+- [Integration success strategies](https://docs.zapier.com/platform/publish/partner-faq.md): With 7,000+ public integration partners on Zapier, use these 10 tried-and-true tactics from our top partners to skyrocket your growth and earn you more [benefits from the Partner Program](https://zapier.com/developer-platform/partner-program).
+- [Partner Program](https://docs.zapier.com/platform/publish/partner-program.md): The [Zapier Partner Program](https://zapier.com/developer-platform/partner-program) is a program for Zapier's [6,000+ integration partners](https://zapier.com/apps). It is designed to give all partners a clear path to success for their integrations and reward them with benefits along the way.
+- [Build your first public integration on Zapier](https://docs.zapier.com/platform/publish/public-integration.md): This guide gives an overview of the process to publishing a public integration.
+- [Create help documentation for your users](https://docs.zapier.com/platform/publish/user-help.md): The Zapier team provide frontline support for your integration, and in order to provide the best experience for your users, help documentation about using your integration in Zaps is hosted in the [Zapier Help Center](https://help.zapier.com/hc/en-us).
+- [Zap templates](https://docs.zapier.com/platform/publish/zap-templates.md): Zapier empowers apps to do together what they can't on their own. With a bit of inspiration and creativity, your users can pull dozens of apps together into unique workflows to get more done with your app in far less time.
+- [Zapier Partner Sandbox](https://docs.zapier.com/platform/publish/zps.md): Zapier Partner Sandbox is a workspace for people in your organization who are on your integration team.
+- [Build your integration on Zapier](https://docs.zapier.com/platform/quickstart/build-integration.md): This guide will walk you through what steps you need to take to build an integration from start to finish. There are no fees to build an integration with Zapier.
+- [Platform CLI tutorial](https://docs.zapier.com/platform/quickstart/cli-tutorial.md): This tutorial walks you through the process of building, testing, and pushing an example app to Zapier using Platform CLI. We'll use a mock API for recipes in this tutorial, but for production Zapier apps, you'd want to connect to a real API.
+- [Get help with the Zapier Platform](https://docs.zapier.com/platform/quickstart/get-help.md): Get help building your app integration through the following channels:
+- [Zapier Glossary](https://docs.zapier.com/platform/quickstart/glossary.md)
+- [How Zapier works](https://docs.zapier.com/platform/quickstart/how-zapier-works.md): [Zapier is a tool](https://zapier.com/how-it-works) that helps you automate repetitive tasks between two or more apps, no code necessary. Our customers use Zapier to move information from one app to another automatically rather than manually. Each Zap you create starts with a trigger (something that happens in one app) and then one or more actions (something else that happens in another app).
+- [Private vs public integrations](https://docs.zapier.com/platform/quickstart/private-vs-public-integrations.md): When building an integration on the Zapier Platform, you must specify the intended audience.
+- [Recommended triggers and actions](https://docs.zapier.com/platform/quickstart/recommended-triggers-and-actions.md): Whether you’re just starting to scope out a new Zapier integration build or have successfully launched your app in the Zapier App Directory, it’s helpful to know what features users find the most valuable and are the most widely used across Zapier’s various [app categories](https://zapier.com/apps). Ensuring your integration covers the foundational triggers, actions, and searches applicable to your app will provide more utility to your users.
+- [Zapier trusted app developers](https://docs.zapier.com/platform/quickstart/trusted-developers.md): If you don't have the time/resources to dedicate towards building and launching your own integration, there are Zapier trusted developers who may be able to assist you. These are individuals/groups who have demonstrated their capabilities by satisfying our requirements for building apps on our Developer Platform, and we recommend as a substitute for building your integration in-house.
+- [Platform UI tutorial](https://docs.zapier.com/platform/quickstart/ui-tutorial.md): This tutorial walks you through the process of building an integration on Zapier with authentication, a trigger and an action using the Platform UI.
+- [Platform UI vs Platform CLI](https://docs.zapier.com/platform/quickstart/ui-vs-cli.md): There are two different developer tools to build either private or public integrations with on the Zapier Developer Platform: Platform UI or Platform CLI.
+- [Zapier integration structure](https://docs.zapier.com/platform/quickstart/zapier-integration-structure.md): [Zapier's Developer Platform](https://developer.zapier.com/) includes everything needed to build and manage a new Zapier integration. When you access your integration project by name, you'll see the left sidebar outlines the core project structure.
+- [AI Actions](https://docs.zapier.com/platform/reference/ai-actions.md): Zapier's [AI Actions](https://actions.zapier.com/) is an AI alpha product designed to work with natural language-based products. It leverages the Zapier platform, with over [6000 apps](https://zapier.com/apps). You can include the capabilities of Zapier's platform in your own product.
+- [Zapier integration structure for an AI app](https://docs.zapier.com/platform/reference/ai-app.md): AI app integrations built on Zapier allow users to automate tasks using AI capabilities. Here are some common pain points and recommendations when building AI apps on Zapier.
+- [Changelog](https://docs.zapier.com/platform/reference/changelog.md)
+- [CLI Reference](https://docs.zapier.com/platform/reference/cli.md)
+- [Zapier integration structure for a CRM app](https://docs.zapier.com/platform/reference/crm-app.md): CRM (customer relationship management) apps are detailed databases that link contacts with companies, companies with deals, and more.
+- [Custom Actions and API Requests Actions](https://docs.zapier.com/platform/reference/custom-actions-api-requests.md): [Custom Actions](https://help.zapier.com/hc/en-us/articles/16276574838925-App-Extensions-in-Zapier) and [API Requests](https://help.zapier.com/hc/en-us/articles/12899607716493-Set-up-an-API-request-action#prerequisites-0-0) are features that have been developed internally at Zapier, designed to help our mutual customers achieve the most value out of your app integration.
+- [Zapier integration structure for a forms app](https://docs.zapier.com/platform/reference/forms-app.md): Form and survey app integrations built on Zapier allow users to connect mobile data collection forms to send the responses into other apps as new contacts, document templates, messages, and more.
+- [Scripting in converted Legacy Web Builder Integrations](https://docs.zapier.com/platform/reference/legacy-scripting.md): This guide provides instructions on editing and maintaining existing scripting methods for legacy web builder integrations that have been converted to either the Platform UI or Platform CLI.
+- [Zapier integration structure for a project management app](https://docs.zapier.com/platform/reference/project-app.md): While you can't automate project work, you can automatically add tasks, create new projects, and keep track of progress via an app integration on Zapier.
+- [Schema Reference](https://docs.zapier.com/platform/reference/schema.md)
+- [Transfer](https://docs.zapier.com/platform/reference/transfer.md): [Transfer](https://help.zapier.com/hc/en-us/articles/8496274335885) is a Zapier functionality that enables users to perform bulk operations using their historical data.
+
+
+## Optional
+
+- [Community](https://community.zapier.com/)
+- [Blog](https://zapier.com/blog/)
+- [Contact Us](https://developer.zapier.com/contact)

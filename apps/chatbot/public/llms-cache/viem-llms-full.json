@@ -1,0 +1,10 @@
+{
+  "name": "viem",
+  "description": "Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js.",
+  "website": "https://viem.sh/",
+  "url": "https://viem.sh/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/viem-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

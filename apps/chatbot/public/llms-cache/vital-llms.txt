@@ -1,0 +1,349 @@
+# Junction
+
+## Docs
+
+- [Authentication](https://docs.tryvital.io/api-details/authentication.md)
+- [Data Flow](https://docs.tryvital.io/api-details/data_flow.md)
+- [Rate Limiting](https://docs.tryvital.io/api-details/rate_limiting.md)
+- [Regions](https://docs.tryvital.io/api-details/regions.md)
+- [Raw](https://docs.tryvital.io/api-reference/data/activity/get-raw.md): Get raw activity summary for user_id
+- [Summary](https://docs.tryvital.io/api-reference/data/activity/get-summary.md): Get activity summary for user_id
+- [Raw](https://docs.tryvital.io/api-reference/data/body/get-raw.md): Get raw Body summary for user_id
+- [Summary](https://docs.tryvital.io/api-reference/data/body/get-summary.md): Get Body summary for user_id
+- [Summary](https://docs.tryvital.io/api-reference/data/electrocardiogram/get-summary.md): Get electrocardiogram summary for user_id
+- [Introspect Historical Pulls](https://docs.tryvital.io/api-reference/data/introspection/historical-pulls.md)
+- [Introspect Resources](https://docs.tryvital.io/api-reference/data/introspection/user-resources.md)
+- [Summary](https://docs.tryvital.io/api-reference/data/meal/get-summary.md): Get user's meals
+- [Summary](https://docs.tryvital.io/api-reference/data/menstrual-cycle/get-summary.md)
+- [Raw](https://docs.tryvital.io/api-reference/data/profile/get-raw.md): Get raw profile for user_id
+- [Summary](https://docs.tryvital.io/api-reference/data/profile/get-summary.md): Get profile for user_id
+- [Summary](https://docs.tryvital.io/api-reference/data/sleep-cycle/get-summary.md): Get sleep cycle for user_id
+- [Raw](https://docs.tryvital.io/api-reference/data/sleep/get-raw.md): Get raw sleep summary for user_id
+- [Summary](https://docs.tryvital.io/api-reference/data/sleep/get-summary.md): Get sleep summary for user_id
+- [Afib Burden](https://docs.tryvital.io/api-reference/data/timeseries/afib-burden.md)
+- [Blood Oxygen](https://docs.tryvital.io/api-reference/data/timeseries/blood-oxygen.md)
+- [Blood Pressure](https://docs.tryvital.io/api-reference/data/timeseries/blood-pressure.md)
+- [Body Fat](https://docs.tryvital.io/api-reference/data/timeseries/body-fat.md)
+- [Body Temperature](https://docs.tryvital.io/api-reference/data/timeseries/body-temperature.md)
+- [Body Temperature Delta](https://docs.tryvital.io/api-reference/data/timeseries/body-temperature-delta.md)
+- [Body Weight](https://docs.tryvital.io/api-reference/data/timeseries/body-weight.md)
+- [Caffeine](https://docs.tryvital.io/api-reference/data/timeseries/caffeine.md)
+- [Calories Active](https://docs.tryvital.io/api-reference/data/timeseries/calories-active.md)
+- [Calories Basal](https://docs.tryvital.io/api-reference/data/timeseries/calories-basal.md)
+- [Carbohydrates](https://docs.tryvital.io/api-reference/data/timeseries/carbohydrates.md)
+- [Cholesterol](https://docs.tryvital.io/api-reference/data/timeseries/cholesterol.md)
+- [Distance](https://docs.tryvital.io/api-reference/data/timeseries/distance.md)
+- [Electrocardiogram Voltage](https://docs.tryvital.io/api-reference/data/timeseries/electrocardiogram-voltage.md)
+- [Floors Climbed](https://docs.tryvital.io/api-reference/data/timeseries/floors-climbed.md)
+- [Glucose](https://docs.tryvital.io/api-reference/data/timeseries/glucose.md)
+- [Heart Rate Alert](https://docs.tryvital.io/api-reference/data/timeseries/heart-rate-alert.md)
+- [Heart Rate](https://docs.tryvital.io/api-reference/data/timeseries/heartrate.md)
+- [Heart Rate Variability](https://docs.tryvital.io/api-reference/data/timeseries/hrv.md)
+- [Ige](https://docs.tryvital.io/api-reference/data/timeseries/ige.md)
+- [Igg](https://docs.tryvital.io/api-reference/data/timeseries/igg.md)
+- [Insulin Injection](https://docs.tryvital.io/api-reference/data/timeseries/insulin-injection.md)
+- [Mindfulness Minutes](https://docs.tryvital.io/api-reference/data/timeseries/mindfulness-minutes.md)
+- [Note](https://docs.tryvital.io/api-reference/data/timeseries/note.md)
+- [Respiratory Rate](https://docs.tryvital.io/api-reference/data/timeseries/respiratory-rate.md)
+- [Steps](https://docs.tryvital.io/api-reference/data/timeseries/steps.md)
+- [Stress Level](https://docs.tryvital.io/api-reference/data/timeseries/stress-level.md)
+- [Vo2 Max](https://docs.tryvital.io/api-reference/data/timeseries/vo2-max.md)
+- [Water](https://docs.tryvital.io/api-reference/data/timeseries/water.md)
+- [Workout Duration](https://docs.tryvital.io/api-reference/data/timeseries/workout-duration.md)
+- [Raw](https://docs.tryvital.io/api-reference/data/workouts/get-raw.md): Get raw workout summary for user_id
+- [Stream](https://docs.tryvital.io/api-reference/data/workouts/get-stream.md)
+- [Summary](https://docs.tryvital.io/api-reference/data/workouts/get-summary.md): Get workout summary for user_id
+- [Get Area Info](https://docs.tryvital.io/api-reference/lab-testing/area-info.md): GET information about an area with respect to lab-testing.
+
+Information returned:
+* Whether a given zip code is served by our Phlebotomy network.
+* List of Lab locations in the area.
+- [Get Order Appointment Availability](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/appointment-availability.md): Return the available time slots to book an appointment with a phlebotomist
+for the given address and order.
+- [Book Phlebotomy Appointment](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/appointment-booking.md): Book an at-home phlebotomy appointment.
+- [Get Phlebotomy Appointment Cancellation Reasons](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/appointment-cancellation-reasons.md): Get the list of reasons for cancelling an at-home phlebotomy appointment.
+- [Cancel Phlebotomy Appointment](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/appointment-cancelling.md): Cancel a previously booked at-home phlebotomy appointment.
+- [Request Phlebotomy Appointment](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/appointment-request.md): Request an at-home phlebotomy appointment.
+- [Reschedule Phlebotomy Appointment](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/appointment-rescheduling.md): Reschedule a previously booked at-home phlebotomy appointment.
+- [Get Phlebotomy Appointment](https://docs.tryvital.io/api-reference/lab-testing/at-home-phlebotomy/get-appointment.md): Get the appointment associated with an order.
+- [Get Available Biomarkers](https://docs.tryvital.io/api-reference/lab-testing/biomarkers.md): GET all the markers for the given lab.
+- [Cancel Order](https://docs.tryvital.io/api-reference/lab-testing/cancel-order.md): POST cancel order
+- [Create Order](https://docs.tryvital.io/api-reference/lab-testing/create-order.md): POST create new order
+- [Create Unregistered Testkit Order](https://docs.tryvital.io/api-reference/lab-testing/create-unregistered-order.md): Creates an order for an unregistered testkit
+- [Get Order](https://docs.tryvital.io/api-reference/lab-testing/get-order.md): GET individual order by ID.
+- [Get Orders](https://docs.tryvital.io/api-reference/lab-testing/get-orders.md): GET many orders with filters.
+- [Search Diagnosis](https://docs.tryvital.io/api-reference/lab-testing/insurance/search-diagnosis.md)
+- [Search Insurance Payor Information](https://docs.tryvital.io/api-reference/lab-testing/insurance/search-payor-get.md)
+- [Get Markers for Lab Test](https://docs.tryvital.io/api-reference/lab-testing/lab-test-markers.md)
+- [Get Labels PDF](https://docs.tryvital.io/api-reference/lab-testing/labels-pdf.md): This endpoint returns the printed labels for the order.
+- [Get All Available Labs](https://docs.tryvital.io/api-reference/lab-testing/labs.md): GET all the labs.
+- [Get Order Psc Info](https://docs.tryvital.io/api-reference/lab-testing/order-psc-info.md)
+- [Get Markers for Order Set](https://docs.tryvital.io/api-reference/lab-testing/order-set-marker.md)
+- [Create a Test](https://docs.tryvital.io/api-reference/lab-testing/post-test.md)
+- [Get Psc Info](https://docs.tryvital.io/api-reference/lab-testing/psc-info.md)
+- [PSC Appointment Availability](https://docs.tryvital.io/api-reference/lab-testing/psc-schedulling/appointment-psc-availability.md)
+- [Book PSC Appointment](https://docs.tryvital.io/api-reference/lab-testing/psc-schedulling/appointment-psc-booking.md)
+- [PSC Appointment Cancellation Reasons](https://docs.tryvital.io/api-reference/lab-testing/psc-schedulling/appointment-psc-cancellation-reasons.md)
+- [Cancel PSC Appointment](https://docs.tryvital.io/api-reference/lab-testing/psc-schedulling/appointment-psc-cancelling.md)
+- [Reschedule PSC Appointment](https://docs.tryvital.io/api-reference/lab-testing/psc-schedulling/appointment-psc-rescheduling.md)
+- [Get PSC Appointment](https://docs.tryvital.io/api-reference/lab-testing/psc-schedulling/get-psc-appointment.md): Get the appointment associated with an order.
+- [Register Testkit Order](https://docs.tryvital.io/api-reference/lab-testing/register-order.md)
+- [Get Requisition Form PDF](https://docs.tryvital.io/api-reference/lab-testing/requisition-pdf.md): GET requisition pdf for an order
+- [Get Results](https://docs.tryvital.io/api-reference/lab-testing/results/get-results.md): Return both metadata and raw json test data
+- [Get Results Metadata](https://docs.tryvital.io/api-reference/lab-testing/results/get-results-metadata.md): Return metadata related to order results, such as lab metadata,
+provider and sample dates.
+- [Get Results PDF](https://docs.tryvital.io/api-reference/lab-testing/results/get-results-pdf.md): This endpoint returns the lab results for the order.
+- [Simulate Order](https://docs.tryvital.io/api-reference/lab-testing/simulate-order.md): Simulate order lifecycle - Sandbox Only
+- [Get Available Tests](https://docs.tryvital.io/api-reference/lab-testing/tests.md): GET all the lab tests the team has access to.
+- [Get Available Tests](https://docs.tryvital.io/api-reference/lab-testing/tests-paginated.md): GET lab tests the team has access to as a paginated list.
+- [Complete Password Provider MFA](https://docs.tryvital.io/api-reference/link/complete-password-provider-mfa.md): This connects auth providers that are password based.
+- [Create Code](https://docs.tryvital.io/api-reference/link/create-code.md): Generate a token to invite a user of Vital mobile app to your team
+- [Generate a link token](https://docs.tryvital.io/api-reference/link/generate-link-token.md): Endpoint to generate a user link token, to be used throughout the vital
+link process. The vital link token is a one time use token, that
+expires after 10 minutes. If you would like vital-link widget to launch
+with a specific provider, pass in a provider in the body. If you would
+like to redirect to a custom url after successful or error connection,
+pass in your own custom redirect_url parameter.
+- [Link Demo provider](https://docs.tryvital.io/api-reference/link/link-demo-provider.md): POST Connect the given Vital user to a demo provider.
+- [Link Email provider](https://docs.tryvital.io/api-reference/link/link-email-provider.md): This connects auth providers that are email based.
+- [Link OAuth provider](https://docs.tryvital.io/api-reference/link/link-oauth-provider.md): This endpoint generates an OAuth link for oauth provider
+- [Link Password provider](https://docs.tryvital.io/api-reference/link/link-password-provider.md): This connects auth providers that are password based.
+- [Create or Resend Invite](https://docs.tryvital.io/api-reference/org-management/invite/create-or-resend-invite.md)
+- [List Invites](https://docs.tryvital.io/api-reference/org-management/invite/list-invites.md)
+- [Revoke Invite](https://docs.tryvital.io/api-reference/org-management/invite/revoke-invite.md)
+- [List Members](https://docs.tryvital.io/api-reference/org-management/member/list-members.md)
+- [Delete Member](https://docs.tryvital.io/api-reference/org-management/member/remove-member.md)
+- [Get Org](https://docs.tryvital.io/api-reference/org-management/org/get-org.md)
+- [Update Org](https://docs.tryvital.io/api-reference/org-management/org/update-org.md)
+- [Create Team API Key](https://docs.tryvital.io/api-reference/org-management/team-api-keys/create-team-api-key.md)
+- [Delete Team API Keys](https://docs.tryvital.io/api-reference/org-management/team-api-keys/delete-team-api-keys.md)
+- [List Team API Keys](https://docs.tryvital.io/api-reference/org-management/team-api-keys/list-team-api-keys.md)
+- [Delete Team Custom Credentials](https://docs.tryvital.io/api-reference/org-management/team-custom-credentials/delete-team-custom-credentials.md)
+- [Get Team Custom Credentials](https://docs.tryvital.io/api-reference/org-management/team-custom-credentials/get-team-custom-credentials.md)
+- [Prepare Team Custom Credentials](https://docs.tryvital.io/api-reference/org-management/team-custom-credentials/prepare-team-custom-credentials.md)
+- [Set Team Custom Credentials](https://docs.tryvital.io/api-reference/org-management/team-custom-credentials/upsert-team-custom-credentials.md)
+- [Delete Team Data Pull Preferences](https://docs.tryvital.io/api-reference/org-management/team-data-pull-preferences/delete-team-data-pull-preferences.md)
+- [Get Team Data Pull Preferences](https://docs.tryvital.io/api-reference/org-management/team-data-pull-preferences/get-team-data-pull-preferences.md)
+- [Post Team Data Pull Preferences](https://docs.tryvital.io/api-reference/org-management/team-data-pull-preferences/upsert-team-data-pull-preferences.md)
+- [Delete Team ETL Pipelines](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/delete-team-etl-pipelines.md)
+- [Get Team ETL Pipelines](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/get-team-etl-pipelines.md)
+- [Set Team ETL Pipelines](https://docs.tryvital.io/api-reference/org-management/team-etl-pipeline/upsert-team-etl-pipelines.md)
+- [Get Team Scope Requirements](https://docs.tryvital.io/api-reference/org-management/team-scope-requirements/get-team-scope-requirements.md)
+- [Set Team Scope Requirements](https://docs.tryvital.io/api-reference/org-management/team-scope-requirements/upsert-team-scope-requirements.md)
+- [Create Team](https://docs.tryvital.io/api-reference/org-management/team/create-team.md)
+- [Delete Team](https://docs.tryvital.io/api-reference/org-management/team/delete-team.md)
+- [Get Team](https://docs.tryvital.io/api-reference/org-management/team/get-team.md)
+- [List Teams](https://docs.tryvital.io/api-reference/org-management/team/list-teams.md)
+- [Update Team](https://docs.tryvital.io/api-reference/org-management/team/update-team.md)
+- [List of Providers](https://docs.tryvital.io/api-reference/providers.md): Get Provider list
+- [Create Insurance](https://docs.tryvital.io/api-reference/user/create-insurance.md)
+- [Create Sign-In Token](https://docs.tryvital.io/api-reference/user/create-sign-in-token.md)
+- [Create User](https://docs.tryvital.io/api-reference/user/create-user.md): POST Create a Vital user given a client_user_id and returns the user_id.
+- [Delete User](https://docs.tryvital.io/api-reference/user/delete-user.md)
+- [Deregister Connection](https://docs.tryvital.io/api-reference/user/deregister-a-provider.md)
+- [Get User Demographcis](https://docs.tryvital.io/api-reference/user/get-info-latest.md)
+- [Get Latest Insurance](https://docs.tryvital.io/api-reference/user/get-latest-insurance.md)
+- [Get User](https://docs.tryvital.io/api-reference/user/get-user.md): GET User details given the user_id.
+- [Get Teams Users](https://docs.tryvital.io/api-reference/user/get-users.md): GET All users for team.
+- [Get User Connections](https://docs.tryvital.io/api-reference/user/get-users-connected-providers.md): GET Users connected providers
+- [Patch User](https://docs.tryvital.io/api-reference/user/patch-user.md)
+- [Refresh User Data](https://docs.tryvital.io/api-reference/user/refresh-user-data.md): Trigger a manual refresh for a specific user
+- [Get User by Client User ID](https://docs.tryvital.io/api-reference/user/resolve-user.md): Get User by their `client_user_id`.
+- [Undo User Deletion](https://docs.tryvital.io/api-reference/user/undo-delete-user.md)
+- [Create User Demographics](https://docs.tryvital.io/api-reference/user/upsert-info.md)
+- [API](https://docs.tryvital.io/changelog/core/api.md)
+- [Dashboard](https://docs.tryvital.io/changelog/core/dashboard.md)
+- [API](https://docs.tryvital.io/changelog/lab-testing/api.md)
+- [Deprecations](https://docs.tryvital.io/changelog/lab-testing/deprecations.md)
+- [API](https://docs.tryvital.io/changelog/wearables/api.md)
+- [Deprecations](https://docs.tryvital.io/changelog/wearables/deprecations.md)
+- [Provider and Resources](https://docs.tryvital.io/changelog/wearables/providers.md)
+- [daily.data.activity.created](https://docs.tryvital.io/event-catalog/daily.data.activity.created.md)
+- [daily.data.activity.updated](https://docs.tryvital.io/event-catalog/daily.data.activity.updated.md)
+- [daily.data.blood_oxygen.created](https://docs.tryvital.io/event-catalog/daily.data.blood_oxygen.created.md)
+- [daily.data.blood_oxygen.updated](https://docs.tryvital.io/event-catalog/daily.data.blood_oxygen.updated.md)
+- [daily.data.blood_pressure.created](https://docs.tryvital.io/event-catalog/daily.data.blood_pressure.created.md)
+- [daily.data.blood_pressure.updated](https://docs.tryvital.io/event-catalog/daily.data.blood_pressure.updated.md)
+- [daily.data.body.created](https://docs.tryvital.io/event-catalog/daily.data.body.created.md)
+- [daily.data.body.updated](https://docs.tryvital.io/event-catalog/daily.data.body.updated.md)
+- [daily.data.body_temperature.created](https://docs.tryvital.io/event-catalog/daily.data.body_temperature.created.md)
+- [daily.data.body_temperature.updated](https://docs.tryvital.io/event-catalog/daily.data.body_temperature.updated.md)
+- [daily.data.body_temperature_delta.created](https://docs.tryvital.io/event-catalog/daily.data.body_temperature_delta.created.md)
+- [daily.data.body_temperature_delta.updated](https://docs.tryvital.io/event-catalog/daily.data.body_temperature_delta.updated.md)
+- [daily.data.caffeine.created](https://docs.tryvital.io/event-catalog/daily.data.caffeine.created.md)
+- [daily.data.caffeine.updated](https://docs.tryvital.io/event-catalog/daily.data.caffeine.updated.md)
+- [daily.data.calories_active.created](https://docs.tryvital.io/event-catalog/daily.data.calories_active.created.md)
+- [daily.data.calories_active.updated](https://docs.tryvital.io/event-catalog/daily.data.calories_active.updated.md)
+- [daily.data.calories_basal.created](https://docs.tryvital.io/event-catalog/daily.data.calories_basal.created.md)
+- [daily.data.calories_basal.updated](https://docs.tryvital.io/event-catalog/daily.data.calories_basal.updated.md)
+- [daily.data.carbohydrates.created](https://docs.tryvital.io/event-catalog/daily.data.carbohydrates.created.md)
+- [daily.data.carbohydrates.updated](https://docs.tryvital.io/event-catalog/daily.data.carbohydrates.updated.md)
+- [daily.data.cholesterol.created](https://docs.tryvital.io/event-catalog/daily.data.cholesterol.created.md)
+- [daily.data.cholesterol.updated](https://docs.tryvital.io/event-catalog/daily.data.cholesterol.updated.md)
+- [daily.data.distance.created](https://docs.tryvital.io/event-catalog/daily.data.distance.created.md)
+- [daily.data.distance.updated](https://docs.tryvital.io/event-catalog/daily.data.distance.updated.md)
+- [daily.data.electrocardiogram_voltage.created](https://docs.tryvital.io/event-catalog/daily.data.electrocardiogram_voltage.created.md)
+- [daily.data.electrocardiogram_voltage.updated](https://docs.tryvital.io/event-catalog/daily.data.electrocardiogram_voltage.updated.md)
+- [daily.data.fat.created](https://docs.tryvital.io/event-catalog/daily.data.fat.created.md)
+- [daily.data.fat.updated](https://docs.tryvital.io/event-catalog/daily.data.fat.updated.md)
+- [daily.data.floors_climbed.created](https://docs.tryvital.io/event-catalog/daily.data.floors_climbed.created.md)
+- [daily.data.floors_climbed.updated](https://docs.tryvital.io/event-catalog/daily.data.floors_climbed.updated.md)
+- [daily.data.glucose.created](https://docs.tryvital.io/event-catalog/daily.data.glucose.created.md)
+- [daily.data.glucose.updated](https://docs.tryvital.io/event-catalog/daily.data.glucose.updated.md)
+- [daily.data.heartrate.created](https://docs.tryvital.io/event-catalog/daily.data.heartrate.created.md)
+- [daily.data.heartrate.updated](https://docs.tryvital.io/event-catalog/daily.data.heartrate.updated.md)
+- [daily.data.hrv.created](https://docs.tryvital.io/event-catalog/daily.data.hrv.created.md)
+- [daily.data.hrv.updated](https://docs.tryvital.io/event-catalog/daily.data.hrv.updated.md)
+- [daily.data.ige.created](https://docs.tryvital.io/event-catalog/daily.data.ige.created.md)
+- [daily.data.ige.updated](https://docs.tryvital.io/event-catalog/daily.data.ige.updated.md)
+- [daily.data.igg.created](https://docs.tryvital.io/event-catalog/daily.data.igg.created.md)
+- [daily.data.igg.updated](https://docs.tryvital.io/event-catalog/daily.data.igg.updated.md)
+- [daily.data.insulin_injection.created](https://docs.tryvital.io/event-catalog/daily.data.insulin_injection.created.md)
+- [daily.data.insulin_injection.updated](https://docs.tryvital.io/event-catalog/daily.data.insulin_injection.updated.md)
+- [daily.data.meal.created](https://docs.tryvital.io/event-catalog/daily.data.meal.created.md)
+- [daily.data.meal.updated](https://docs.tryvital.io/event-catalog/daily.data.meal.updated.md)
+- [daily.data.menstrual_cycle.created](https://docs.tryvital.io/event-catalog/daily.data.menstrual_cycle.created.md)
+- [daily.data.menstrual_cycle.updated](https://docs.tryvital.io/event-catalog/daily.data.menstrual_cycle.updated.md)
+- [daily.data.mindfulness_minutes.created](https://docs.tryvital.io/event-catalog/daily.data.mindfulness_minutes.created.md)
+- [daily.data.mindfulness_minutes.updated](https://docs.tryvital.io/event-catalog/daily.data.mindfulness_minutes.updated.md)
+- [daily.data.note.created](https://docs.tryvital.io/event-catalog/daily.data.note.created.md)
+- [daily.data.note.updated](https://docs.tryvital.io/event-catalog/daily.data.note.updated.md)
+- [daily.data.profile.created](https://docs.tryvital.io/event-catalog/daily.data.profile.created.md)
+- [daily.data.respiratory_rate.created](https://docs.tryvital.io/event-catalog/daily.data.respiratory_rate.created.md)
+- [daily.data.respiratory_rate.updated](https://docs.tryvital.io/event-catalog/daily.data.respiratory_rate.updated.md)
+- [daily.data.sleep.created](https://docs.tryvital.io/event-catalog/daily.data.sleep.created.md)
+- [daily.data.sleep.updated](https://docs.tryvital.io/event-catalog/daily.data.sleep.updated.md)
+- [daily.data.sleep_cycle.created](https://docs.tryvital.io/event-catalog/daily.data.sleep_cycle.created.md)
+- [daily.data.sleep_cycle.updated](https://docs.tryvital.io/event-catalog/daily.data.sleep_cycle.updated.md)
+- [daily.data.steps.created](https://docs.tryvital.io/event-catalog/daily.data.steps.created.md)
+- [daily.data.steps.updated](https://docs.tryvital.io/event-catalog/daily.data.steps.updated.md)
+- [daily.data.stress_level.created](https://docs.tryvital.io/event-catalog/daily.data.stress_level.created.md)
+- [daily.data.stress_level.updated](https://docs.tryvital.io/event-catalog/daily.data.stress_level.updated.md)
+- [daily.data.vo2_max.created](https://docs.tryvital.io/event-catalog/daily.data.vo2_max.created.md)
+- [daily.data.vo2_max.updated](https://docs.tryvital.io/event-catalog/daily.data.vo2_max.updated.md)
+- [daily.data.water.created](https://docs.tryvital.io/event-catalog/daily.data.water.created.md)
+- [daily.data.water.updated](https://docs.tryvital.io/event-catalog/daily.data.water.updated.md)
+- [daily.data.weight.created](https://docs.tryvital.io/event-catalog/daily.data.weight.created.md)
+- [daily.data.weight.updated](https://docs.tryvital.io/event-catalog/daily.data.weight.updated.md)
+- [daily.data.workout_duration.created](https://docs.tryvital.io/event-catalog/daily.data.workout_duration.created.md)
+- [daily.data.workout_duration.updated](https://docs.tryvital.io/event-catalog/daily.data.workout_duration.updated.md)
+- [daily.data.workout_stream.created](https://docs.tryvital.io/event-catalog/daily.data.workout_stream.created.md)
+- [daily.data.workout_stream.updated](https://docs.tryvital.io/event-catalog/daily.data.workout_stream.updated.md)
+- [daily.data.workouts.created](https://docs.tryvital.io/event-catalog/daily.data.workouts.created.md)
+- [daily.data.workouts.updated](https://docs.tryvital.io/event-catalog/daily.data.workouts.updated.md)
+- [historical.data.activity.created](https://docs.tryvital.io/event-catalog/historical.data.activity.created.md)
+- [historical.data.blood_oxygen.created](https://docs.tryvital.io/event-catalog/historical.data.blood_oxygen.created.md)
+- [historical.data.blood_pressure.created](https://docs.tryvital.io/event-catalog/historical.data.blood_pressure.created.md)
+- [historical.data.body.created](https://docs.tryvital.io/event-catalog/historical.data.body.created.md)
+- [historical.data.body_temperature.created](https://docs.tryvital.io/event-catalog/historical.data.body_temperature.created.md)
+- [historical.data.body_temperature_delta.created](https://docs.tryvital.io/event-catalog/historical.data.body_temperature_delta.created.md)
+- [historical.data.caffeine.created](https://docs.tryvital.io/event-catalog/historical.data.caffeine.created.md)
+- [historical.data.calories_active.created](https://docs.tryvital.io/event-catalog/historical.data.calories_active.created.md)
+- [historical.data.calories_basal.created](https://docs.tryvital.io/event-catalog/historical.data.calories_basal.created.md)
+- [historical.data.carbohydrates.created](https://docs.tryvital.io/event-catalog/historical.data.carbohydrates.created.md)
+- [historical.data.distance.created](https://docs.tryvital.io/event-catalog/historical.data.distance.created.md)
+- [historical.data.electrocardiogram_voltage.created](https://docs.tryvital.io/event-catalog/historical.data.electrocardiogram_voltage.created.md)
+- [historical.data.fat.created](https://docs.tryvital.io/event-catalog/historical.data.fat.created.md)
+- [historical.data.floors_climbed.created](https://docs.tryvital.io/event-catalog/historical.data.floors_climbed.created.md)
+- [historical.data.glucose.created](https://docs.tryvital.io/event-catalog/historical.data.glucose.created.md)
+- [historical.data.heartrate.created](https://docs.tryvital.io/event-catalog/historical.data.heartrate.created.md)
+- [historical.data.hrv.created](https://docs.tryvital.io/event-catalog/historical.data.hrv.created.md)
+- [historical.data.insulin_injection.created](https://docs.tryvital.io/event-catalog/historical.data.insulin_injection.created.md)
+- [historical.data.meal.created](https://docs.tryvital.io/event-catalog/historical.data.meal.created.md)
+- [historical.data.menstrual_cycle.created](https://docs.tryvital.io/event-catalog/historical.data.menstrual_cycle.created.md)
+- [historical.data.mindfulness_minutes.created](https://docs.tryvital.io/event-catalog/historical.data.mindfulness_minutes.created.md)
+- [historical.data.note.created](https://docs.tryvital.io/event-catalog/historical.data.note.created.md)
+- [historical.data.profile.created](https://docs.tryvital.io/event-catalog/historical.data.profile.created.md)
+- [historical.data.respiratory_rate.created](https://docs.tryvital.io/event-catalog/historical.data.respiratory_rate.created.md)
+- [historical.data.sleep.created](https://docs.tryvital.io/event-catalog/historical.data.sleep.created.md)
+- [historical.data.sleep_cycle.created](https://docs.tryvital.io/event-catalog/historical.data.sleep_cycle.created.md)
+- [historical.data.steps.created](https://docs.tryvital.io/event-catalog/historical.data.steps.created.md)
+- [historical.data.stress_level.created](https://docs.tryvital.io/event-catalog/historical.data.stress_level.created.md)
+- [historical.data.vo2_max.created](https://docs.tryvital.io/event-catalog/historical.data.vo2_max.created.md)
+- [historical.data.water.created](https://docs.tryvital.io/event-catalog/historical.data.water.created.md)
+- [historical.data.weight.created](https://docs.tryvital.io/event-catalog/historical.data.weight.created.md)
+- [historical.data.workout_duration.created](https://docs.tryvital.io/event-catalog/historical.data.workout_duration.created.md)
+- [historical.data.workouts.created](https://docs.tryvital.io/event-catalog/historical.data.workouts.created.md)
+- [labtest.appointment.updated](https://docs.tryvital.io/event-catalog/labtest.appointment.updated.md)
+- [labtest.order.created](https://docs.tryvital.io/event-catalog/labtest.order.created.md)
+- [labtest.order.updated](https://docs.tryvital.io/event-catalog/labtest.order.updated.md)
+- [labtest.result.critical](https://docs.tryvital.io/event-catalog/labtest.result.critical.md)
+- [provider.connection.created](https://docs.tryvital.io/event-catalog/provider.connection.created.md)
+- [provider.connection.error](https://docs.tryvital.io/event-catalog/provider.connection.error.md)
+- [Environments](https://docs.tryvital.io/home/environments.md)
+- [Getting Support](https://docs.tryvital.io/home/getting-support.md)
+- [Libraries](https://docs.tryvital.io/home/libraries.md)
+- [Quickstart](https://docs.tryvital.io/home/quickstart.md): A quick introduction to building with Vital
+- [Welcome to our Docs](https://docs.tryvital.io/home/welcome.md): Here you'll find guides, resources, and references to build using Junction's APIs and SDKs.
+- [Communications](https://docs.tryvital.io/lab/at-home-phlebotomy/communications.md)
+- [Order and Appointment Lifecycle](https://docs.tryvital.io/lab/at-home-phlebotomy/order-appointment-lifecycle.md)
+- [Overview](https://docs.tryvital.io/lab/at-home-phlebotomy/overview.md)
+- [Phlebotomy Service Tiers](https://docs.tryvital.io/lab/at-home-phlebotomy/service-tiers.md)
+- [Webhooks](https://docs.tryvital.io/lab/at-home-phlebotomy/webhooks.md)
+- [Insurance Ordering](https://docs.tryvital.io/lab/overview/insurance.md)
+- [Introduction](https://docs.tryvital.io/lab/overview/introduction.md)
+- [Order and Follow-up Physician](https://docs.tryvital.io/lab/overview/physicians.md)
+- [Quickstart](https://docs.tryvital.io/lab/overview/quickstart.md)
+- [Testing in Sandbox](https://docs.tryvital.io/lab/overview/sandbox.md)
+- [Testing Modalities](https://docs.tryvital.io/lab/overview/testing-modalities.md)
+- [Critical Results](https://docs.tryvital.io/lab/results/critical-results.md)
+- [null](https://docs.tryvital.io/lab/results/follow-up.md)
+- [Result Formats](https://docs.tryvital.io/lab/results/result-formats.md)
+- [Communications](https://docs.tryvital.io/lab/testkits/communications.md)
+- [Order Lifecycle](https://docs.tryvital.io/lab/testkits/order-lifecycle.md)
+- [Overview](https://docs.tryvital.io/lab/testkits/overview.md)
+- [Webhooks](https://docs.tryvital.io/lab/testkits/webhooks.md)
+- [Communications](https://docs.tryvital.io/lab/walk-in/communications.md)
+- [Patient Service Centers and Appointments](https://docs.tryvital.io/lab/walk-in/locations.md)
+- [Order and Appointment Lifecycle](https://docs.tryvital.io/lab/walk-in/order-lifecycle.md)
+- [Overview](https://docs.tryvital.io/lab/walk-in/overview.md)
+- [Webhooks](https://docs.tryvital.io/lab/walk-in/webhooks.md)
+- [Ask on Order Entry (AOE)](https://docs.tryvital.io/lab/workflow/aoe.md)
+- [Cancelling an Order](https://docs.tryvital.io/lab/workflow/cancelling-an-order.md)
+- [Creating a Lab Test](https://docs.tryvital.io/lab/workflow/create-test.md)
+- [Lab Test Lifecycle](https://docs.tryvital.io/lab/workflow/lab-test-lifecycle.md)
+- [Ordering a Registrable Testkit](https://docs.tryvital.io/lab/workflow/order-registrable-testkit.md)
+- [Order Requirements](https://docs.tryvital.io/lab/workflow/order-requirements.md)
+- [Ordering](https://docs.tryvital.io/lab/workflow/ordering.md)
+- [Partial Result Notifications](https://docs.tryvital.io/lab/workflow/partials.md)
+- [Scheduled Orders](https://docs.tryvital.io/lab/workflow/scheduled-orders.md)
+- [Provider Types](https://docs.tryvital.io/wearables/connecting-providers/auth_types.md)
+- [Bring Your Own OAuth](https://docs.tryvital.io/wearables/connecting-providers/bring-your-own-oauth/overview.md)
+- [Sharing Credentials](https://docs.tryvital.io/wearables/connecting-providers/bring-your-own-oauth/sharing-credentials.md)
+- [Building a Custom Widget](https://docs.tryvital.io/wearables/connecting-providers/custom_widget.md)
+- [Link Errors](https://docs.tryvital.io/wearables/connecting-providers/errors.md)
+- [Introduction to Link](https://docs.tryvital.io/wearables/connecting-providers/introduction.md)
+- [Launching Link](https://docs.tryvital.io/wearables/connecting-providers/launching_link.md)
+- [Link Flow](https://docs.tryvital.io/wearables/connecting-providers/link_flow.md)
+- [Abbott LibreView](https://docs.tryvital.io/wearables/guides/abbott-libreview.md): For Abbott CGMs, e.g. Freestyle Libre.
+- [Android Health Connect](https://docs.tryvital.io/wearables/guides/android-health-connect.md)
+- [Apple HealthKit](https://docs.tryvital.io/wearables/guides/apple-healthkit.md)
+- [Dexcom (G6 and older)](https://docs.tryvital.io/wearables/guides/dexcom.md)
+- [Dexcom (OAuth based)](https://docs.tryvital.io/wearables/guides/dexcom_v3.md)
+- [Fitbit](https://docs.tryvital.io/wearables/guides/fitbit.md)
+- [Garmin](https://docs.tryvital.io/wearables/guides/garmin.md)
+- [Google Fit](https://docs.tryvital.io/wearables/guides/google_fit.md)
+- [Omron](https://docs.tryvital.io/wearables/guides/omron.md)
+- [Polar](https://docs.tryvital.io/wearables/guides/polar.md)
+- [WHOOP](https://docs.tryvital.io/wearables/guides/whoop.md)
+- [Data Attributions](https://docs.tryvital.io/wearables/providers/data-attributions.md)
+- [Data Ingestion Bounds](https://docs.tryvital.io/wearables/providers/data-ingestion-bounds.md)
+- [Primary Key](https://docs.tryvital.io/wearables/providers/data-primary-key.md)
+- [Heart Rate Zones](https://docs.tryvital.io/wearables/providers/heart-rate-zones.md)
+- [Supported providers](https://docs.tryvital.io/wearables/providers/introduction.md)
+- [Resources](https://docs.tryvital.io/wearables/providers/resources.md)
+- [Synthetic Data (Sandbox)](https://docs.tryvital.io/wearables/providers/test_data.md): Using demo users to build and test your Vital integration
+- [Timestamps and Time Zones](https://docs.tryvital.io/wearables/providers/timestamps-and-time-zones.md)
+- [Mobile SDK Authentication](https://docs.tryvital.io/wearables/sdks/authentication.md)
+- [Installation](https://docs.tryvital.io/wearables/sdks/installation.md)
+- [Vital Core SDK](https://docs.tryvital.io/wearables/sdks/vital-core.md)
+- [Vital Devices SDK](https://docs.tryvital.io/wearables/sdks/vital-devices.md)
+- [Vital Health SDK](https://docs.tryvital.io/wearables/sdks/vital-health.md)
+- [Introduction](https://docs.tryvital.io/wearables/vital-app/introduction.md)
+- [Debugging](https://docs.tryvital.io/webhooks/debugging.md)
+- [Azure Event Hubs](https://docs.tryvital.io/webhooks/etl-pipelines/azure-event-hubs.md)
+- [Google Cloud Pub/Sub](https://docs.tryvital.io/webhooks/etl-pipelines/google-cloud-pubsub.md)
+- [ETL Pipelines](https://docs.tryvital.io/webhooks/etl-pipelines/overview.md)
+- [RabbitMQ](https://docs.tryvital.io/webhooks/etl-pipelines/rabbitmq.md)
+- [Event Structure](https://docs.tryvital.io/webhooks/event-structure.md)
+- [Introduction](https://docs.tryvital.io/webhooks/introduction.md)

@@ -1,0 +1,221 @@
+# Stedi
+
+## Docs
+
+- [Accounts and billing](https://stedi.com/docs/accounts-and-billing/index.md)
+- [Get Execution](https://stedi.com/docs/api-reference/edi-platform/core/get-executions.md): Retrieve the file execution details for a given executionId.
+- [Get Execution Input](https://stedi.com/docs/api-reference/edi-platform/core/get-executions-input.md): This endpoint retrieves an execution's input document before it passes through any translation and mappings.
+- [Get Execution Metadata](https://stedi.com/docs/api-reference/edi-platform/core/get-executions-metadata.md): This endpoint retrieves an execution's metadata document.
+- [Get Execution Output](https://stedi.com/docs/api-reference/edi-platform/core/get-executions-output.md): This endpoint retrieves an execution's output document.
+- [Get Execution Transactions](https://stedi.com/docs/api-reference/edi-platform/core/get-executions-transactions.md): Fetch a list of transactions for a given file execution, sorted by the date they were created from newest to oldest. Includes the full transaction details.
+- [List Executions](https://stedi.com/docs/api-reference/edi-platform/core/get-list-executions.md): Fetch a list of executions, sorted by the date they were created from newest to oldest.
+- [List Transactions](https://stedi.com/docs/api-reference/edi-platform/core/get-list-transactions.md): Fetch a list of transactions, sorted by the date they were created from newest to oldest.
+Generally this endpoint is used to display a list of transactions in a UI.
+If you are looking to regularly fetch and check for new transactions for programmatic usage, you should use the `ListPollingTransactions` operation instead.
+- [Poll Executions](https://stedi.com/docs/api-reference/edi-platform/core/get-pollingexecutions.md): This endpoint is used to regularly poll for new executions that have been processed by Stedi.
+
+You must define one of `startDateTime` or `pageToken` when making a request.
+
+You may optionally define a `pageSize`. The minimum `pageSize` is 1, and the maximum `pageSize` is 1000. The default is 100.
+
+`startDateTime` takes a string in ISO 8601 format. (ex: `2023-08-10T18:00:00Z`). 
+`startDateTime` must be set to at least 1 minute in the past.
+
+The results will contain executions that occurred after this `startDateTime`. Starting from the oldest to newest executions ordered by the `processedAt` field. Note, this is _exclusive_ of the `startDateTime`, a execution occuring at exactly `2023-08-10T18:00:00Z` for instance, would not be included. In addition, there is a 15 second window where newly created executions will not be included to account for any network latency or clock drifts within the systems to ensure you do not miss any executions.
+
+Each request will _always_ return a `nextPageToken`, regardless of whether there are new executions or not.
+
+We DO NOT recommend trying to roll your own polling strategy leveraging `startDateTime` only. There are edge cases around two executions occuring at the _exact_ same time and being on the edge of a pagination which could cause you to miss one due to the exclusive nature of `startDateTime`. We recommend using `pageToken`'s instead.
+
+When making subsequent polling requests (not initiating with `startDateTime`), the `pageToken` can be used to continue iterating through pages of executions. Usage of the `pageToken` guaruntees you will not miss any executions on the stream. If at any point there are no more new executions in the `item` array, you will still receive a `nextPageToken`. Continue to use this token to poll for new executions. Once there are new executions, they will be returned in the `item` array.
+
+`pageToken`'s you have retrieved can serve as checkpoints. They do not expire, and you can always start from that point in the execution stream again if you need to catch a system up or recover from a failure. Storing `pageToken`'s as part of your polling process is encouraged.
+
+`pageToken`'s are unique per request, opaque, and should not be parsed or modified in any way. They are not guaranteed to be in any particular format, and may change in the future.
+
+- [Poll transactions](https://stedi.com/docs/api-reference/edi-platform/core/get-pollingtransactions.md): This endpoint is used to regularly poll for new transactions that have been processed in Core.
+
+You must define one of `startDateTime` or `pageToken` when making a request.
+
+You may optionally define a `pageSize`. The minimum `pageSize` is 1, and the maximum `pageSize` is 1000. The default is 100.
+
+`startDateTime` takes a string in ISO 8601 format. (ex: `2023-08-10T18:00:00Z`). 
+`startDateTime` must be set to at least 1 minute in the past.
+
+The results will contain transactions that occurred after this `startDateTime`. Starting from the oldest to newest transactions ordered by the `processedAt` field. Note, this is _exclusive_ of the `startDateTime`, a transaction occuring at exactly `2023-08-10T18:00:00Z` for instance, would not be included. In addition, there is a 15 second window where newly created transactions will not be included to account for any network latency or clock drifts within the systems to ensure you do not miss any transactions.
+
+Each request will _always_ return a `nextPageToken`, regardless of whether there are new transactions or not.
+
+We DO NOT recommend trying to roll your own polling strategy leveraging `startDateTime` only. There are edge cases around two transactions occuring at the _exact_ same time and being on the edge of a pagination which could cause you to miss one due to the exclusive nature of `startDateTime`. We recommend using `pageToken`'s instead.
+
+When making subsequent polling requests (not initiating with `startDateTime`), the `pageToken` can be used to continue iterating through pages of transactions. Usage of the `pageToken` guaruntees you will not miss any transactions on the stream. If at any point there are no more new transactions in the `item` array, you will still receive a `nextPageToken`. Continue to use this token to poll for new transactions. Once there are new transactions, they will be returned in the `item` array.
+
+`pageToken`'s you have retrieved can serve as checkpoints. They do not expire, and you can always start from that point in the transaction stream again if you need to catch a system up or recover from a failure. Storing `pageToken`'s as part of your polling process is encouraged.
+
+`pageToken`'s are unique per request, opaque, and should not be parsed or modified in any way. They are not guaranteed to be in any particular format, and may change in the future.
+
+- [Get Fragment](https://stedi.com/docs/api-reference/edi-platform/core/get-transaction-fragment-detail.md): This endpoint fetches a fragment by its index for a given transaction.
+- [Get Fragment Output](https://stedi.com/docs/api-reference/edi-platform/core/get-transaction-fragment-output.md): This endpoint retrieves a transaction fragment's output document after it has been translated.
+- [Get Transaction](https://stedi.com/docs/api-reference/edi-platform/core/get-transactions.md): Fetch a single transaction by its ID.
+- [Get Transaction Input](https://stedi.com/docs/api-reference/edi-platform/core/get-transactions-input.md): This endpoint retrieves a transaction's input document before it passes through any translation and mappings.
+- [Get Transaction Output](https://stedi.com/docs/api-reference/edi-platform/core/get-transactions-output.md): This endpoint retrieves a transaction's output document after it has been translated.
+- [Stage fragment](https://stedi.com/docs/api-reference/edi-platform/core/post-fragments.md): This endpoint stages a fragment for outbound delivery.
+- [Stage transactions](https://stedi.com/docs/api-reference/edi-platform/core/stage-transactions.md): This endpoint stages a transaction for outbound delivery.
+- [Map Transaction Output](https://stedi.com/docs/api-reference/edi-platform/get-map-transaction-output.md): Retrieve a mapped transaction's output document
+
+- [Retry events](https://stedi.com/docs/api-reference/edi-platform/post-events-retry.md): This endpoint retriggers the specified processing event.
+- [Create Outbound Interchange](https://stedi.com/docs/api-reference/edi-platform/post-generate-edi.md): This endpoint generates and delivers fully-formed EDI files to your trading partners.
+- [Invoke Mapping](https://stedi.com/docs/api-reference/edi-platform/post-invoke-mapping.md): Maps the provided JSON to a different shape according to the specified mapping definition.
+- [Deliver Transaction Group](https://stedi.com/docs/api-reference/edi-platform/post-transaction-group.md): This endpoint generates and delivers a fully-formed EDI file containing the staged transactions in the specified transaction group.
+- [Create Outbound Transaction](https://stedi.com/docs/api-reference/edi-platform/post-transactions.md): This endpoint generates and delivers fully-formed EDI files containing a single transaction. It is the simplest way to generate EDI with Stedi.
+- [Delete Enrollment](https://stedi.com/docs/api-reference/healthcare/delete-enrollment.md)
+- [Delete Provider](https://stedi.com/docs/api-reference/healthcare/delete-enrollment-provider.md)
+- [Enrollment](https://stedi.com/docs/api-reference/healthcare/get-enrollment.md)
+- [List Enrollments](https://stedi.com/docs/api-reference/healthcare/get-enrollment-list-enrollments.md)
+- [List Providers](https://stedi.com/docs/api-reference/healthcare/get-enrollment-list-providers.md)
+- [Provider](https://stedi.com/docs/api-reference/healthcare/get-enrollment-provider.md)
+- [Poll Batch Eligibility Checks](https://stedi.com/docs/api-reference/healthcare/get-healthcare-polling-eligibility.md)
+- [277CA Report](https://stedi.com/docs/api-reference/healthcare/get-healthcare-reports-277.md)
+- [835 ERA Report](https://stedi.com/docs/api-reference/healthcare/get-healthcare-reports-835.md)
+- [Insurance Discovery Check Results](https://stedi.com/docs/api-reference/healthcare/get-insurance-discovery-results.md)
+- [List Payers](https://stedi.com/docs/api-reference/healthcare/get-payers.md)
+- [CMS-1500 PDF: Transaction ID](https://stedi.com/docs/api-reference/healthcare/get-pdf-1500.md)
+- [CMS-1500 PDF: Business Identifier](https://stedi.com/docs/api-reference/healthcare/get-pdf-1500-business-identifier.md)
+- [Eligibility mock requests](https://stedi.com/docs/api-reference/healthcare/mock-requests-eligibility-checks.md)
+- [Coordination of Benefits Check](https://stedi.com/docs/api-reference/healthcare/post-coordination-of-benefits.md)
+- [Create Enrollment](https://stedi.com/docs/api-reference/healthcare/post-enrollment-create-enrollment.md)
+- [Create Provider](https://stedi.com/docs/api-reference/healthcare/post-enrollment-create-provider.md)
+- [Update Enrollment](https://stedi.com/docs/api-reference/healthcare/post-enrollment-update-enrollment.md)
+- [Update Provider](https://stedi.com/docs/api-reference/healthcare/post-enrollment-update-provider.md)
+- [Batch Eligibility Check](https://stedi.com/docs/api-reference/healthcare/post-healthcare-batch-eligibility.md)
+- [Real-Time Claim Status](https://stedi.com/docs/api-reference/healthcare/post-healthcare-claim-status.md)
+- [Real-Time Claim Status Raw X12](https://stedi.com/docs/api-reference/healthcare/post-healthcare-claim-status-raw-x12.md)
+- [Professional Claims](https://stedi.com/docs/api-reference/healthcare/post-healthcare-claims.md)
+- [Professional Claims Raw X12](https://stedi.com/docs/api-reference/healthcare/post-healthcare-claims-raw-x12.md)
+- [Dental Claims](https://stedi.com/docs/api-reference/healthcare/post-healthcare-dental-claims.md)
+- [Dental Claims Raw X12](https://stedi.com/docs/api-reference/healthcare/post-healthcare-dental-claims-raw-x12.md)
+- [Real-Time Eligibility Check](https://stedi.com/docs/api-reference/healthcare/post-healthcare-eligibility.md)
+- [Real-Time Eligibility Check Raw X12](https://stedi.com/docs/api-reference/healthcare/post-healthcare-eligibility-raw-x12.md)
+- [Institutional Claims](https://stedi.com/docs/api-reference/healthcare/post-healthcare-institutional-claims.md)
+- [Insurance Discovery Check](https://stedi.com/docs/api-reference/healthcare/post-insurance-discovery.md)
+- [API Reference](https://stedi.com/docs/api-reference/index.md)
+- [Configure destinations](https://stedi.com/docs/edi-platform/configure/destinations/configure-destinations.md)
+- [Destinations error handling and limitations](https://stedi.com/docs/edi-platform/configure/destinations/error-handling-destinations.md)
+- [Destinations overview](https://stedi.com/docs/edi-platform/configure/destinations/index.md)
+- [EDI settings](https://stedi.com/docs/edi-platform/configure/global-settings.md)
+- [Configuration overview](https://stedi.com/docs/edi-platform/configure/index.md)
+- [Message Disposition Notifications (MDNs)](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/as2/as2-mdn-response.md)
+- [AS2 Connections](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/as2/as2-overview.md)
+- [AS2 requirements](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/as2/as2-requirements.md)
+- [Configure AS2 connections](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/as2/configure-as2.md)
+- [Bucket Connections](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/buckets.md)
+- [Choosing a connection type](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/choosing-the-right-connection-type.md)
+- [Connections overview](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/index.md)
+- [Remote SFTP/FTPS Connections](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/remote-ftp.md)
+- [Stedi SFTP/FTPS Connections](https://stedi.com/docs/edi-platform/configure/trading-partners/connections/stedi-ftp.md)
+- [Acknowledgments](https://stedi.com/docs/edi-platform/configure/trading-partners/functional-acknowledgments.md)
+- [Partnerships](https://stedi.com/docs/edi-platform/configure/trading-partners/profiles-and-partnerships.md)
+- [Transaction settings](https://stedi.com/docs/edi-platform/configure/trading-partners/transaction-settings.md)
+- [Configure webhooks](https://stedi.com/docs/edi-platform/configure/webhooks/configure-webhooks.md)
+- [Webhooks error handling and limitations](https://stedi.com/docs/edi-platform/configure/webhooks/error-handling-webhooks.md)
+- [Webhooks overview](https://stedi.com/docs/edi-platform/configure/webhooks/index.md)
+- [Glossary](https://stedi.com/docs/edi-platform/edi-essentials/glossary.md)
+- [What is EDI?](https://stedi.com/docs/edi-platform/edi-essentials/what-is-edi.md)
+- [Element data types in X12 EDI](https://stedi.com/docs/edi-platform/edi-essentials/x12/elements/element-data-types-in-x12-edi.md)
+- [Element Requirements in X12 EDI](https://stedi.com/docs/edi-platform/edi-essentials/x12/elements/element-requirements-in-x12-edi.md)
+- [Relational conditions in X12 EDI](https://stedi.com/docs/edi-platform/edi-essentials/x12/elements/relational-conditions-in-x12-edi.md)
+- [What is an element in X12 EDI?](https://stedi.com/docs/edi-platform/edi-essentials/x12/elements/what-is-an-element.md)
+- [X12 HIPAA](https://stedi.com/docs/edi-platform/edi-essentials/x12/hipaa/index.md)
+- [Segment repetition in X12 EDI"](https://stedi.com/docs/edi-platform/edi-essentials/x12/segments/segment-repetition-in-x12-edi.md)
+- [Segment requirements in X12 EDI](https://stedi.com/docs/edi-platform/edi-essentials/x12/segments/segment-requirements-in-x12-edi.md)
+- [What is a segment in X12 EDI?](https://stedi.com/docs/edi-platform/edi-essentials/x12/segments/what-is-a-segment.md)
+- [Split inbound EDI files with fragments](https://stedi.com/docs/edi-platform/fragments/inbound-fragments.md)
+- [Fragments: Split transactions into smaller chunks](https://stedi.com/docs/edi-platform/fragments/index.md)
+- [Generate outbound EDI files with fragments](https://stedi.com/docs/edi-platform/fragments/outbound-fragments.md)
+- [Integration steps](https://stedi.com/docs/edi-platform/getting-started/first-integration.md)
+- [Gather requirements](https://stedi.com/docs/edi-platform/getting-started/gather-requirements.md)
+- [EDI platform overview](https://stedi.com/docs/edi-platform/getting-started/index.md)
+- [Advanced: Build Stedi guides](https://stedi.com/docs/edi-platform/guides/customize-guides.md)
+- [Import Stedi Guides](https://stedi.com/docs/edi-platform/guides/import-guides.md)
+- [Guides overview](https://stedi.com/docs/edi-platform/guides/index.md)
+- [Public Guides](https://stedi.com/docs/edi-platform/guides/public-guides.md)
+- [What is an EDI guide?](https://stedi.com/docs/edi-platform/guides/what-is-a-stedi-guide.md)
+- [Mappings - Transform JSON](https://stedi.com/docs/edi-platform/mappings/index.md)
+- [Common Mapping Expressions](https://stedi.com/docs/edi-platform/mappings/jsonata/common-mapping-expressions.md)
+- [JSONata Cheatsheet](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-cheatsheet.md)
+- [Aggregation functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/aggregation.md)
+- [Array functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/array.md)
+- [Boolean functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/boolean.md)
+- [Date/time functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/date-time.md)
+- [Higher order functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/higher-order.md)
+- [JSONata Functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/index.md)
+- [Numeric functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/numeric.md)
+- [Object functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/object.md)
+- [Other functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/other.md)
+- [String functions](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-functions/string.md)
+- [Boolean Operators](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-operators/boolean.md)
+- [Comparison Operators](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-operators/comparison.md)
+- [JSONata Operators](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-operators/index.md)
+- [Numeric Operators](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-operators/numeric.md)
+- [Other Operators](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-operators/other.md)
+- [Path Operators](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-operators/path.md)
+- [JSONata Playground](https://stedi.com/docs/edi-platform/mappings/jsonata/jsonata-playground.md)
+- [Mappings limits](https://stedi.com/docs/edi-platform/mappings/limits.md)
+- [Manage mapping definitions with the API](https://stedi.com/docs/edi-platform/mappings/manage-mappings/api-guide.md)
+- [Mapping Definition Overview](https://stedi.com/docs/edi-platform/mappings/manage-mappings/mapping-definition.md)
+- [Mappings UI Builder](https://stedi.com/docs/edi-platform/mappings/manage-mappings/ui-guide.md)
+- [Invoke mappings](https://stedi.com/docs/edi-platform/mappings/transform-json-documents.md)
+- [Events types and structure](https://stedi.com/docs/edi-platform/operate/event-types.md)
+- [Failures and retries](https://stedi.com/docs/edi-platform/operate/failures-and-retries.md)
+- [File processing overview](https://stedi.com/docs/edi-platform/operate/file-processing-overview.md)
+- [Customize the ISA and GS headers](https://stedi.com/docs/edi-platform/operate/generate-edi/envelope-overrides.md)
+- [Create outbound transaction](https://stedi.com/docs/edi-platform/operate/generate-edi/index.md)
+- [Generate test files in your browser](https://stedi.com/docs/edi-platform/operate/generate-test-files.md)
+- [Parse EDI](https://stedi.com/docs/edi-platform/operate/parse-edi.md)
+- [Monitor transactions](https://stedi.com/docs/edi-platform/operate/transaction-data.md)
+- [Guide JSON format](https://stedi.com/docs/edi-platform/operate/transform-json/guide-json.md)
+- [Choose a transformation approach](https://stedi.com/docs/edi-platform/operate/transform-json/transformation-approaches.md)
+- [Overview - Transform Guide JSON](https://stedi.com/docs/edi-platform/operate/transform-json/transforming-data.md)
+- [Batch refresh checks](https://stedi.com/docs/healthcare/batch-refresh-eligibility-checks.md)
+- [Interpret benefit response](https://stedi.com/docs/healthcare/benefit-response.md)
+- [Check claim status](https://stedi.com/docs/healthcare/check-claim-status.md)
+- [Claims code lists](https://stedi.com/docs/healthcare/claims-code-lists.md)
+- [Interpret COB response](https://stedi.com/docs/healthcare/cob-response.md)
+- [COB troubleshooting](https://stedi.com/docs/healthcare/cob-troubleshooting.md)
+- [Configure webhooks](https://stedi.com/docs/healthcare/configure-webhooks.md)
+- [Coordination of benefits (COB) checks](https://stedi.com/docs/healthcare/coordination-of-benefits.md)
+- [Eligibility code lists](https://stedi.com/docs/healthcare/eligibility-code-lists.md)
+- [Eligibility Manager](https://stedi.com/docs/healthcare/eligibility-manager.md)
+- [Eligibility troubleshooting](https://stedi.com/docs/healthcare/eligibility-troubleshooting.md)
+- [Overview](https://stedi.com/docs/healthcare/eligibility-workflows-overview.md)
+- [Enhanced claim validation](https://stedi.com/docs/healthcare/enhanced-claim-validation.md)
+- [Enrollment types](https://stedi.com/docs/healthcare/enrollment-types.md)
+- [The Stedi clearinghouse](https://stedi.com/docs/healthcare/index.md): Automate transactions with the only API-first clearinghouse
+- [Insurance Discovery](https://stedi.com/docs/healthcare/insurance-discovery.md)
+- [Overview](https://stedi.com/docs/healthcare/intro-eligibility-checks.md)
+- [Overview](https://stedi.com/docs/healthcare/intro-to-claims-processing.md)
+- [Medicare Beneficiary Identifier (MBI) lookup](https://stedi.com/docs/healthcare/mbi-lookup.md)
+- [Get and correlate acknowledgments and ERAs](https://stedi.com/docs/healthcare/receive-claim-responses.md)
+- [Sandbox accounts](https://stedi.com/docs/healthcare/sandbox-account.md)
+- [Eligibility checks](https://stedi.com/docs/healthcare/send-eligibility-checks.md)
+- [Submit claims through SFTP](https://stedi.com/docs/healthcare/submit-claims-sftp-connection.md)
+- [Submit dental claims](https://stedi.com/docs/healthcare/submit-dental-claims.md)
+- [Submit institutional claims](https://stedi.com/docs/healthcare/submit-institutional-claims.md)
+- [Submit professional claims](https://stedi.com/docs/healthcare/submit-professional-claims.md)
+- [Supported payers](https://stedi.com/docs/healthcare/supported-payers.md)
+- [Test mode](https://stedi.com/docs/healthcare/test-mode.md)
+- [Transaction Enrollment](https://stedi.com/docs/healthcare/transaction-enrollment.md)
+- [Acceptable Use Policy](https://stedi.com/docs/legal/acceptable-use-policy.md)
+- [Cookie Notice](https://stedi.com/docs/legal/cookie-notice.md)
+- [Customer Agreement](https://stedi.com/docs/legal/customer-agreement.md)
+- [Privacy Notice](https://stedi.com/docs/legal/privacy-notice.md)
+- [Service Terms](https://stedi.com/docs/legal/service-terms.md)
+- [Site Terms](https://stedi.com/docs/legal/site-terms.md)
+- [Service Level Agreement](https://stedi.com/docs/legal/slas/stedi-sla.md)
+- [Trust Center](https://stedi.com/docs/security-and-compliance/trust-center.md)
+- [Support](https://stedi.com/docs/support/index.md)
+
+
+## Optional
+
+- [Changelog](https://www.stedi.com/changelog)

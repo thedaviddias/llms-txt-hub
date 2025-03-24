@@ -1,0 +1,104 @@
+# Loops
+
+## Docs
+
+- [Change your login email](https://loops.so/docs/account/changing-your-email.md): How to update the email address you use to log in to Loops.
+- [Free plan](https://loops.so/docs/account/free-plan.md): Learn about our free plan.
+- [Notifications](https://loops.so/docs/account/notifications.md): Learn how to receive notifications about new Loops contacts in external tools.
+- [Team members](https://loops.so/docs/account/team-members.md): How to add and manage team members in your Loops account.
+- [Team switcher](https://loops.so/docs/account/team-switcher.md): Learn how to create and connect multiple Loops accounts with one email address.
+- [CSV Upload](https://loops.so/docs/add-users/csv-upload.md): Easily add contacts to Loops by uploading a CSV file.
+- [Integrations](https://loops.so/docs/add-users/integrations.md): Connect Loops to external platforms to automatically add contacts to your audience.
+- [API](https://loops.so/docs/add-users/loops-api.md): Loops provides a REST API to manage your contacts.
+- [API key](https://loops.so/docs/api-reference/api-key.md): Test that an API key is valid.
+- [API Changelog](https://loops.so/docs/api-reference/changelog.md): Stay up-to-date with changes to our API.
+- [Create contact](https://loops.so/docs/api-reference/create-contact.md): Create a new contact with an email address and any other contact properties.
+- [Create contact property](https://loops.so/docs/api-reference/create-contact-property.md): Create a new contact property.
+- [Delete contact](https://loops.so/docs/api-reference/delete-contact.md): Delete a contact by email address or user ID.
+- [Find contact](https://loops.so/docs/api-reference/find-contact.md): Find a contact by email address or user ID.
+- [API Introduction](https://loops.so/docs/api-reference/intro.md): The Loops REST API lets you manage your contacts, send events and send transactional email.
+- [List contact properties](https://loops.so/docs/api-reference/list-contact-properties.md): Retrieve a list of your account's contact properties.
+- [List mailing lists](https://loops.so/docs/api-reference/list-mailing-lists.md): Retrieve a list of your account's mailing lists.
+- [List transactional emails](https://loops.so/docs/api-reference/list-transactional-emails.md): Retrieve a list of your transactional emails.
+- [Send event](https://loops.so/docs/api-reference/send-event.md): Send events to trigger emails in Loops.
+- [Send transactional email](https://loops.so/docs/api-reference/send-transactional-email.md): Send a transactional email to a contact.
+- [Update contact](https://loops.so/docs/api-reference/update-contact.md): Update or create a contact.
+- [Contact activity timeline](https://loops.so/docs/contacts/contact-activity.md): The contact activity timeline is a great way to see all the activity for a specific contact.
+- [Delete contacts](https://loops.so/docs/contacts/delete-contacts.md): Remove contacts from your audience.
+- [Email blocklist](https://loops.so/docs/contacts/email-blocklist.md): Stop certain email addresses or domains from being added to your audience.
+- [Filters and Segments](https://loops.so/docs/contacts/filters-segments.md): How to send emails to specific groups of contacts and save segments for future use.
+- [List management](https://loops.so/docs/contacts/mailing-lists.md): Organise contacts and offer a subscriber preference center with mailing lists.
+- [Contact properties](https://loops.so/docs/contacts/properties.md): How to add, edit and delete contact properties.
+- [Components](https://loops.so/docs/creating-emails/components.md): Create re-usable elements for your emails.
+- [Duplicating emails](https://loops.so/docs/creating-emails/duplicating-emails.md): Re-use basic elements of an email or create email templates.
+- [Adding content](https://loops.so/docs/creating-emails/editor.md): Learn how to edit emails in the Loops editor.
+- [Font support](https://loops.so/docs/creating-emails/font-support.md): Font support via Google Fonts is now available in Loops.
+- [Personalizing emails](https://loops.so/docs/creating-emails/personalizing-emails.md): Add context and personalization to emails.
+- [Sending settings](https://loops.so/docs/creating-emails/sending-settings.md)
+- [Managing styles](https://loops.so/docs/creating-emails/styles.md): Learn how to edit emails in the Loops editor.
+- [Uploading a custom email](https://loops.so/docs/creating-emails/uploading-custom-email.md): Use Loops with Emailify, Email Love or MJML.
+- [Add a sending avatar](https://loops.so/docs/deliverability/adding-a-sending-avatar.md): Set up your email sending avatar through third-party platforms like Gmail and Outlook.
+- [Insights from Google Postmaster](https://loops.so/docs/deliverability/gaining-insights.md): Gmail doesn't report spam reports to Loops, so setting up Google Postmaster is key to getting an idea of your deliverability performance in Gmail.
+- [Improve your inbox placement](https://loops.so/docs/deliverability/improving-inbox-placement.md): If your emails are not landing in the inbox folder you expect, here are some tips to improve your inbox placement.
+- [Maintaining a clean list](https://loops.so/docs/deliverability/maintaining-a-clean-list.md): A clean list is a happy list. Here’s how to keep your list clean and your emails deliverable.
+- [Deliverability optimization](https://loops.so/docs/deliverability/optimization.md): How we monitor sends to increase the deliverability of your emails.
+- [Subdomains vs root domains](https://loops.so/docs/deliverability/sending-from-subdomain.md): Most email services (including Loops) prefer sending emails from subdomains (hey.company.com) over root domains (company.com).
+- [Building your sender reputation](https://loops.so/docs/deliverability/sending-reputation.md): Understanding how to build your sender reputation.
+- [Sending to large audiences](https://loops.so/docs/deliverability/sending-to-large-audience.md): Tips for sending emails to a large group of new contacts.
+- [Email open rates](https://loops.so/docs/deliverability/understanding-email-open-rates.md): Understand how open rates can be affected by clients and networks.
+- [Events](https://loops.so/docs/events.md): Events let you trigger emails when something happens in an external platform.
+- [Event properties](https://loops.so/docs/events/properties.md): Learn how to use event properties to personalize your emails.
+- [Custom form](https://loops.so/docs/forms/custom-form.md): Integrate with Loops via a form endpoint, which will work with any type of custom form solution you have set up.
+- [Simple form](https://loops.so/docs/forms/simple-form.md): Collect signups from any web page with a customizable form.
+- [Sending emails to Apple “Hide my email” addresses](https://loops.so/docs/guides/apple-hide-my-email.md)
+- [Bubble API Connector](https://loops.so/docs/guides/bubble-api-connector.md): Send data to Loops from Bubble using the API Connector plugin.
+- [Set up a welcome email sequence for new Ghost members](https://loops.so/docs/guides/ghost-email-sequence.md): Send automated email sequences to new Ghost subscribers using Zapier and Loops.
+- [Guides](https://loops.so/docs/guides/intro.md)
+- [How to set up customer lifecycle emails in Loops](https://loops.so/docs/guides/lifecycle-emails.md): How to send onboarding, dunning and churn emails to your customers with Loops.
+- [Your first onboarding emails](https://loops.so/docs/guides/onboarding-emails.md): Some best practices for building your sender reputation with onboarding emails.
+- [Open rates are a vanity metric](https://loops.so/docs/guides/open-rates.md): And why that’s okay.
+- [Product updates](https://loops.so/docs/guides/product-updates.md): Our updated, definitive guide for sending product updates.
+- [How to create a scheduled email with Loops](https://loops.so/docs/guides/scheduled-digest-email.md): How to send a daily, weekly or monthly email with a summary of what's happened in your app.
+- [How to resend a campaign to new subscribers](https://loops.so/docs/guides/send-again.md): A quick guide for sending a campaign to subscribers who signed up since you sent it out.
+- [What is BIMI?](https://loops.so/docs/guides/what-is-bimi.md): And why does it matter?
+- [What is DNS?](https://loops.so/docs/guides/what-is-dns.md): A Beginner's Guide
+- [Integrations](https://loops.so/docs/integrations.md): Loops integrates with thousands of other platforms so you can sync contacts and trigger emails from around the internet.
+- [Auth0](https://loops.so/docs/integrations/auth0.md): Send Auth0 authentication emails with Loops.
+- [Auth.js](https://loops.so/docs/integrations/authjs.md): Send Auth.js magic link emails with Loops.
+- [Auto BCC](https://loops.so/docs/integrations/auto-bcc.md): Import emails and contacts to your CRM by adding a BCC address to your marketing emails.
+- [Bubble](https://loops.so/docs/integrations/bubble.md): Integrate the Loops API into your Bubble app with our plugin.
+- [Carrd](https://loops.so/docs/integrations/carrd.md): Enable sign ups to Loops using a native Carrd form.
+- [Census](https://loops.so/docs/integrations/census.md): Send user data from your data warehouse to Loops.
+- [Clerk](https://loops.so/docs/integrations/clerk.md): Sync contacts and send emails triggered by events in Clerk.
+- [Framer](https://loops.so/docs/integrations/framer.md): Enable signups from your Framer site using an in-built or custom Loops component.
+- [Incoming webhooks](https://loops.so/docs/integrations/incoming-webhooks.md): Send data to Loops from supported platforms using webhooks.
+- [Integrately](https://loops.so/docs/integrations/integrately.md): Connect Loops to over a thousand apps.
+- [Make](https://loops.so/docs/integrations/make.md): Utilize our official Make integration to manage contacts and send email.
+- [Novu](https://loops.so/docs/integrations/novu.md): Send Novu email notifications with Loops SMTP.
+- [Posthog](https://loops.so/docs/integrations/posthog.md): Send events and contacts data to Loops from Posthog.
+- [Segment](https://loops.so/docs/integrations/segment.md): Utilize our official Segment integration to manage contacts and send email.
+- [Stripe](https://loops.so/docs/integrations/stripe.md): Sync contacts and send emails triggered by events in Stripe.
+- [Supabase](https://loops.so/docs/integrations/supabase.md): Configure your Supabase account to send authentication emails with Loops.
+- [Webflow](https://loops.so/docs/integrations/webflow.md): Enable signups from your site using a native Webflow form.
+- [Zapier](https://loops.so/docs/integrations/zapier.md): Connect Loops to thousands of apps to manage contacts and send email.
+- [Loop builder](https://loops.so/docs/loop-builder.md): Loops let you send emails based on something happening, like a contact property updating, a new contact being created or an external event happening in another platform.
+- [Branching Loops](https://loops.so/docs/loop-builder/branching-loops.md): Branching loops allow you to send different emails based on a contact's properties within a single Loop.
+- [Triggering Loops](https://loops.so/docs/loop-builder/loop-triggers.md): Learn how to trigger a Loop to start sending emails.
+- [Pausing Loops](https://loops.so/docs/loop-builder/pausing-loops.md): Learn how to pause and stop a Loop to control the sending of emails.
+- [Quickstart](https://loops.so/docs/quickstart.md): Welcome to Loops, the platform for SaaS email.
+- [SDKs](https://loops.so/docs/sdks.md)
+- [JavaScript SDK](https://loops.so/docs/sdks/javascript.md): The official Loops SDK for JavaScript, with full TypeScript support.
+- [Set up Loops in Next.js](https://loops.so/docs/sdks/javascript/nextjs.md): How to send email from your Next.js project with Loops.
+- [Nuxt module](https://loops.so/docs/sdks/nuxt.md): The official Loops Nuxt module.
+- [Ruby SDK](https://loops.so/docs/sdks/ruby.md): The official Loops SDK for Ruby.
+- [Setting up your domain](https://loops.so/docs/sending-domain.md): Steps for adding a sending domain to your account.
+- [Sending your first email](https://loops.so/docs/sending-first-email.md): A guide for creating and sending emails with Loops.
+- [Send with SMTP](https://loops.so/docs/smtp.md): Send Loops emails over SMTP.
+- [Django](https://loops.so/docs/smtp/django.md): Send transactional emails from your Django project using Loops' SMTP service.
+- [Laravel](https://loops.so/docs/smtp/laravel.md): Send transactional emails from your Laravel project using Loops' SMTP service.
+- [Ruby on Rails](https://loops.so/docs/smtp/rails.md): Send transactional emails from your Rails project using Loops' SMTP service.
+- [Introduction to transactional email](https://loops.so/docs/transactional.md): Learn about sending transactional email with Loops.
+- [Attachments](https://loops.so/docs/transactional/attachments.md): How to send attachments with your transactional email.
+- [Transactional email guide](https://loops.so/docs/transactional/guide.md): How to send transactional email with Loops.
+- [Types of emails](https://loops.so/docs/types-of-emails.md): Learn about the three types of emails that you can send with Loops: Campaigns, Loops, and Transactional.
+- [Webhooks](https://loops.so/docs/webhooks.md): Receive event notifications with webhooks.

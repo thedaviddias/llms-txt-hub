@@ -1,0 +1,10 @@
+{
+  "name": "SkyDeck.ai",
+  "description": "AI-powered business intelligence platform",
+  "website": "https://docs.skydeck.ai",
+  "url": "https://llm.skydeck.ai/llms.txt",
+  "type": "llms.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/skydeck-ai-llms.txt",
+  "lastFetched": "2025-03-24"
+}

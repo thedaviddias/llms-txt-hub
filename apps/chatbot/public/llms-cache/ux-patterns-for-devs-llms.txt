@@ -1,0 +1,74 @@
+# UX Patterns for Developers
+
+## Overview
+This is an automatically generated overview of all UX patterns documented in this project.
+
+## Pattern Categories
+
+### Content-management
+- [accordion](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/accordion): Expand and collapse content sections [complete]
+- [carousel](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/carousel): Display multiple items in a rotating view [complete]
+- [drag-and-drop](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/drag-and-drop): Allow users to reorder items intuitively [coming soon]
+- [expandable-text](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/expandable-text): Show or hide additional text content on demand [complete]
+- [modal](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/modal): Display focused content or actions [complete]
+- [popover](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/popover): Display focused content or actions [complete]
+- [tooltip](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/content-management/tooltip): Provide additional context on hover or focus [complete]
+
+### Forms
+- [autocomplete](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/autocomplete): Suggest options as users type [complete]
+- [button](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/button): Trigger actions and submit forms [complete]
+- [checkbox](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/checkbox): Enable single or multiple selections [coming soon]
+- [code-confirmation](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/code-confirmation): Verify codes with segmented input [coming soon]
+- [color-picker](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/color-picker) [coming soon]
+- [currency-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/currency-input): Enter and format monetary values [coming soon]
+- [date-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/date-input): Enter dates in a structured text format [coming soon]
+- [date-picker](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/date-picker): Select dates from a calendar interface [coming soon]
+- [date-range](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/date-range): Select a range between two dates [coming soon]
+- [file-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/file-input): Upload and handle files [coming soon]
+- [form-validation](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/form-validation): Validate and provide feedback [coming soon]
+- [input-selection-guide](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/input-selection-guide): Choose the right input type for your form [coming soon]
+- [multi-select-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/multi-select-input): Choose multiple items from a list [coming soon]
+- [password](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/password): Secure password entry with feedback [complete]
+- [phone-number](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/phone-number): Format and validate phone numbers [coming soon]
+- [radio](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/radio): Select a single option from a group [coming soon]
+- [rating-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/rating-input): Rate something with a number of stars [coming soon]
+- [rich-text-editor](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/rich-text-editor): Edit and format text content [coming soon]
+- [search-field](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/search-field): Search through content efficiently [coming soon]
+- [selection-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/selection-input): Choose from predefined options [complete]
+- [signature-pad](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/signature-pad): Allow users to sign their name [coming soon]
+- [slider](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/slider): Select values from a range [coming soon]
+- [tag-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/tag-input): Enter and format tags [coming soon]
+- [text-field](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/text-field): Enter and edit text content [complete]
+- [textarea](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/textarea): Multi-line text input for longer content [coming soon]
+- [time-input](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/time-input): Enter time in a structured format [coming soon]
+- [toggle](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/forms/toggle): Switch between two states [coming soon]
+
+### Navigation
+- [back-to-top](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/back-to-top): Quickly navigate back to the top of the page [complete]
+- [breadcrumb](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/breadcrumb): Help users understand their current location [complete]
+- [hambuger-menu](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/hambuger-menu): Display a menu icon for mobile devices [coming soon]
+- [infinite-scroll](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/infinite-scroll): Loads additional content automatically as users scroll down. [complete]
+- [load-more](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/load-more): Load additional content on user demand [complete]
+- [megamenu](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/megamenu): Display a large number of links in a single menu [coming soon]
+- [navigation-menu](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/navigation-menu): Organize and structure site navigation [coming soon]
+- [pagination](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/pagination): Navigate through multiple pages of content [complete]
+- [sidebar](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/sidebar): Organize and structure site navigation [coming soon]
+- [tabs](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/navigation/tabs): Switch between different views [coming soon]
+
+### User-feedback
+- [cookie-consent](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/user-feedback/cookie-consent): Inform users about the use of cookies [coming soon]
+- [empty-states](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/user-feedback/empty-states): Guide users when no content is available [coming soon]
+- [loading-indicator](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/user-feedback/loading-indicator): Show users that content is being loaded [coming soon]
+- [notification](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/user-feedback/notification): Inform users about important updates [coming soon]
+- [progress-indicator](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/user-feedback/progress-indicator): Show completion status of an operation [coming soon]
+- [skeleton](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/patterns/user-feedback/skeleton): Show users that content is being loaded [coming soon]
+
+## Additional Resources
+- [Blog posts and articles about UX patterns](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/blog)
+- [Comprehensive glossary of UX terms](https://ux-patterns-for-developers-khahu0xl3.vercel.app/en/glossary)
+
+## Technical Implementation
+- Built with Next.js and TypeScript
+- MDX-based pattern documentation
+- Accessibility-first approach
+- Comprehensive testing guidelines

@@ -1,0 +1,10 @@
+{
+  "name": "Model Context Protocol (MCP)",
+  "description": "MCP is an open protocol that standardizes how applications provide context to LLMs.",
+  "website": "https://modelcontextprotocol.io",
+  "url": "https://modelcontextprotocol.io/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/model-context-protocol--mcp--llms.txt",
+  "lastFetched": "2025-03-24"
+}

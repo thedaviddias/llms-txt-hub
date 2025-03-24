@@ -1,0 +1,50 @@
+# WordLift
+
+> WordLift is an AI-powered Enterprise SEO platform that leverages Knowledge Graphs and Large Language Models to enhance website visibility, AI discovery and content relevance.
+
+**Overview**
+
+WordLift integrates advanced AI technologies, including Knowledge Graphs and Large Language Models, to automate SEO and marketing tasks and generate high-quality content at scale. Our platform serves various industries, offering tailored solutions to boost online presence and engagement.
+
+**Key Resources**
+
+**Platform Solutions**
+
+- [Visibility](https://wordlift.io/#reach): Expand digital presence across all search platforms.
+- [Product Performance](https://wordlift.io/#engage): Enhance engagement with products and content.
+- [Conversion](https://wordlift.io/#convert): Enable meaningful brand-customer dialogues through AI technology.
+- [Intelligence and Training](https://wordlift.io/#learn): Transform data into actionable insights for business growth.
+
+**Industries Served**
+
+- [E-commerce & Retail](https://wordlift.io/#e-commerce-retail): Boost sales with AI-driven marketing solutions.
+- [News & Media](https://wordlift.io/#news-media): Expand readership and optimize information accessibility.
+- [Travel & Tourism](https://wordlift.io/#travel-tourism): Increase bookings through AI-enhanced visibility and engagement.
+- [Legal](https://wordlift.io/#legal): Establish online authority to attract more clients.
+- [SEO Management Service](https://wordlift.io/#seo-management-service): Grow organic traffic with a fully managed SEO strategy.
+
+**Resources**
+
+- [Blog](https://wordlift.io/blog/): Trends, research, and best practices on Content Marketing & SEO.
+- [Case Studies](https://wordlift.io/case-studies/): Success stories of our customers.
+- [Academy](https://wordlift.io/academy/): Tutorials and webinars on basic and advanced SEO tips.
+- [Free AI SEO Tools](https://wordlift.io/free-ai-seo-tools/): Suite of free tools to elevate SEO.
+
+**Developer Documentation**
+
+- [Documentation](https://docs.wordlift.io/): Get started with WordLift products and API.
+- [Developer Guides](https://docs.wordlift.io/dev-guides/): Comprehensive documentation for integrating our solutions.
+- [API Status](https://docs.wordlift.io/api-status/): Real-time updates on API performance and availability.
+
+**Company Information**
+
+- [About Us](https://wordlift.io/about-us/): Our story, mission, team, and values.
+- [Press](https://wordlift.io/press/): Latest news and media coverage.
+- [Careers](https://wordlift.io/careers/): Join our innovative team.
+- [Partnership](https://wordlift.io/partnership/): Collaborate and grow with us.
+
+**Optional Resources**
+
+- [Pricing](https://wordlift.io/pricing/): Information on our pricing plans.
+- [Contact Us](https://wordlift.io/contact-us/): Get in touch with our team.
+- [Login](https://my.wordlift.io/): Access your WordLift account.

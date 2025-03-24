@@ -18,7 +18,13 @@ interface ChatViewProps {
   onSubmit: (e: React.FormEvent) => Promise<void>
 }
 
-export default function ChatView({ messages, input, setInput, isLoading, onSubmit }: ChatViewProps) {
+export default function ChatView({
+  messages,
+  input,
+  setInput,
+  isLoading,
+  onSubmit
+}: ChatViewProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -45,11 +51,13 @@ export default function ChatView({ messages, input, setInput, isLoading, onSubmi
       <div className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[500px]">
         {messages.map(message => (
           <div key={message.id} className="flex items-start gap-3">
-            <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-              message.role === 'user' 
-                ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300' 
-                : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300'
-            }`}>
+            <div
+              className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                message.role === 'user'
+                  ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300'
+                  : 'bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300'
+              }`}
+            >
               {message.role === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
             </div>
             <div className="flex-1 overflow-hidden">
@@ -62,16 +70,14 @@ export default function ChatView({ messages, input, setInput, isLoading, onSubmi
             </div>
           </div>
         ))}
-        
+
         {isLoading && (
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 flex items-center justify-center">
               <Bot className="w-4 h-4" />
             </div>
             <div className="flex-1">
-              <div className="text-sm font-medium mb-1">
-                llms.txt Bot
-              </div>
+              <div className="text-sm font-medium mb-1">llms.txt Bot</div>
               <div className="flex items-center gap-1">
                 <Loader2 className="w-4 h-4 animate-spin text-neutral-400" />
                 <span className="text-sm text-neutral-400">Thinking...</span>
@@ -79,10 +85,10 @@ export default function ChatView({ messages, input, setInput, isLoading, onSubmi
             </div>
           </div>
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
-      
+
       {/* Input form */}
       <div className="border-t border-neutral-200 dark:border-neutral-800 p-4">
         <form onSubmit={onSubmit} className="relative">
@@ -100,7 +106,7 @@ export default function ChatView({ messages, input, setInput, isLoading, onSubmi
               }
             }}
           />
-          <button 
+          <button
             type="submit"
             disabled={isLoading || !input.trim()}
             aria-label="Send message"

@@ -1,0 +1,10 @@
+{
+  "name": "Hyperline",
+  "description": "Data pipeline and integration platform",
+  "website": "https://hyperline.co",
+  "url": "https://docs.hyperline.co/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/hyperline-llms.txt",
+  "lastFetched": "2025-03-24"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "PrimeV",
+  "description": "Cloud infrastructure and virtualization platform",
+  "website": "https://primev.xyz",
+  "url": "https://docs.primev.xyz/llms.txt",
+  "type": "llms.txt",
+  "category": "infrastructure-cloud",
+  "cachePath": "apps/chatbot/public/llms-cache/primev-llms.txt",
+  "lastFetched": "2025-03-24"
+}

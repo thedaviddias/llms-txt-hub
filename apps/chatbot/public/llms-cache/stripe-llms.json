@@ -1,0 +1,10 @@
+{
+  "name": "Stripe",
+  "description": "Stripe powers online and in-person payment processing and financial solutions for businesses of all sizes. Accept payments, send payouts, and automate financial processes with a suite of APIs and no-code tools.",
+  "website": "https://stripe.com",
+  "url": "http://docs.stripe.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/stripe-llms.txt",
+  "lastFetched": "2025-03-24"
+}

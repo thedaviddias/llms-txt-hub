@@ -1,0 +1,10 @@
+{
+  "name": "Demo Time",
+  "description": "Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
+  "website": "https://demotime.elio.dev",
+  "url": "https://demotime.elio.dev/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/demo-time-llms.txt",
+  "lastFetched": "2025-03-24"
+}

@@ -1,0 +1,80 @@
+# Demo Time - Live demos & slides in VS Code
+
+> Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.
+
+## Actions
+
+- [Supported actions | Demo Time](https://demotime.elio.dev/actions/): List of all supported actions in Demo Time
+- [File actions | Demo Time](https://demotime.elio.dev/actions/file/): File actions are used to open, create, or preview files in the editor.
+- [Patch actions | Demo Time](https://demotime.elio.dev/actions/patch/): File patch actions can be used to insert code based on a snapshot of the file and a patch file.
+- [Preview actions | Demo Time](https://demotime.elio.dev/actions/preview/): Preview actions are used to preview files like Markdown and images in the editor.
+- [Setting actions | Demo Time](https://demotime.elio.dev/actions/setting/): Perform setting actions in your demos like update settings, change themes, and more.
+- [Snippet actions | Demo Time](https://demotime.elio.dev/actions/snippet/): Snippets can be used when you have steps that you want to reuse in multiple demos.
+- [Terminal actions | Demo Time](https://demotime.elio.dev/actions/terminal/): Perform terminal actions in your demos like running commands, clearing the terminal, and more.
+- [Text actions | Demo Time](https://demotime.elio.dev/actions/text/): Text actions are used to insert, replace, highlight, delete or unselect text in the editor.
+- [Time actions | Demo Time](https://demotime.elio.dev/actions/time/): Perform time actions in your demos like waiting for a specific time, waiting for user input, and more.
+- [Visual Studio Code actions | Demo Time](https://demotime.elio.dev/actions/vscode/): Perform Visual Studio Code actions in your demos like executing commands or showing an information message.
+
+## Adding-demos
+
+- [Adding demos | Demo Time](https://demotime.elio.dev/adding-demos/): Add your demos to your demo time configuration.
+
+## Contribute
+
+- [Contributing | Demo Time](https://demotime.elio.dev/contribute/): Learn how you can contribute to the development of Demo Time.
+
+## Examples
+
+- [Projects | Demo Time](https://demotime.elio.dev/examples/): Examples of projects that you can use to learn and understand how to use the extension.
+- [Showcases | Demo Time](https://demotime.elio.dev/examples/showcases/): Showcases of where Demo Time is used.
+
+## Getting-started
+
+- [Getting started | Demo Time](https://demotime.elio.dev/getting-started/): Get started with Demo Time
+
+## Integrations
+
+- [Slidev | Demo Time](https://demotime.elio.dev/integrations/slidev/): Learn more about how to integrate Slidev with Demo Time
+
+## Presentation-mode
+
+- [Presentation Mode | Demo Time](https://demotime.elio.dev/presentation-mode/): Learn how to enter presentation mode to make it easier to present your demos.
+
+## References
+
+- [API | Demo Time](https://demotime.elio.dev/references/api/): Demo Time provides an API to control the extension programmatically.
+- [Commands | Demo Time](https://demotime.elio.dev/references/commands/): Overview of all the Demo Time commands available in the editor.
+- [JSON schema | Demo Time](https://demotime.elio.dev/references/json-schema/): JSON schema for the Demo Time configuration.
+- [Settings | Demo Time](https://demotime.elio.dev/references/settings/): Customize the settings of Demo Time to fit your needs.
+
+## Slides
+
+- [Present your slides | Demo Time](https://demotime.elio.dev/slides/): From Markdown to slides - present your slides with Demo Time
+- [Slide layouts | Demo Time](https://demotime.elio.dev/slides/layouts/): Learn about the different slide layouts available in Demo Time
+- [Slide themes | Demo Time](https://demotime.elio.dev/slides/themes/): Learn about the different slide themes available in Demo Time
+- [Default theme | Demo Time](https://demotime.elio.dev/slides/themes/default/): Overview of the default theme in Demo Time.
+- [Minimal theme | Demo Time](https://demotime.elio.dev/slides/themes/minimal/): Overview of the minimal theme in Demo Time.
+- [Monomi theme | Demo Time](https://demotime.elio.dev/slides/themes/monomi/): Overview of the Monomi theme in Demo Time.
+- [Unnamed theme | Demo Time](https://demotime.elio.dev/slides/themes/unnamed/): Overview of the Unnamed theme in Demo Time.
+
+## Snippets
+
+- [Snippets | Demo Time](https://demotime.elio.dev/snippets/): Snippets that you can use to automate some tasks in your demo.
+
+## Support
+
+- [Support | Demo Time](https://demotime.elio.dev/support/): Learn how you can support the development of Demo Time.
+
+## Tips
+
+- [Adding Content | Demo Time](https://demotime.elio.dev/tips/adding-content/): Learn how to add content to a file in Demo Time.
+- [Adding new steps to a demo | Demo Time](https://demotime.elio.dev/tips/adding-steps/): Learn how you can add new steps to a demo in Demo Time.
+- [Highlighting code | Demo Time](https://demotime.elio.dev/tips/highlighting/): Learn how to highlight code in Demo Time to make it stand out in your demos.
+- [Move panel to activity bar | Demo Time](https://demotime.elio.dev/tips/move-to-activity-bar/): You can move the Demo Time panel to the activity bar to have its own dedicated space.
+- [Presenter View | Demo Time](https://demotime.elio.dev/tips/presenter-view/): Learn how to use the presenter view in Demo Time.
+- [Providing demo notes | Demo Time](https://demotime.elio.dev/tips/providing-demo-notes/): Learn how to provide notes for your demos in Demo Time.
+- [Using clock and timer functions | Demo Time](https://demotime.elio.dev/tips/time-your-presentation/): To keep an eye on the time, you can use the clock and timer functions from Demo Time.
+- [Trigger from a link | Demo Time](https://demotime.elio.dev/tips/uri-handler/): Learn how to trigger a demo from a link.
+- [Working with Variables | Demo Time](https://demotime.elio.dev/tips/variables/): Learn how to work with variables in Demo Time to reuse them across your demos.
+
+

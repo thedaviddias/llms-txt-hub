@@ -1,0 +1,10 @@
+{
+  "name": "Frigade",
+  "description": "User onboarding and product adoption platform",
+  "website": "https://frigade.com",
+  "url": "https://docs.frigade.com/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/frigade-llms.txt",
+  "lastFetched": "2025-03-24"
+}

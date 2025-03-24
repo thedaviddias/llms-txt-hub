@@ -1,0 +1,10 @@
+{
+  "name": "dotenvx",
+  "description": "Environment variable management tool",
+  "website": "https://dotenvx.com",
+  "url": "https://dotenvx.com/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/dotenvx-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

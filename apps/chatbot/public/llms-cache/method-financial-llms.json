@@ -1,0 +1,10 @@
+{
+  "name": "Method Financial",
+  "description": "Financial data and payment solutions platform",
+  "website": "https://methodfi.com",
+  "url": "https://docs.methodfi.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/method-financial-llms.txt",
+  "lastFetched": "2025-03-24"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Cobo",
+  "description": "Digital asset custody and management platform",
+  "website": "https://cobo.com",
+  "url": "https://www.cobo.com/developers/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "security-identity",
+  "cachePath": "apps/chatbot/public/llms-cache/cobo-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

@@ -1,0 +1,1034 @@
+[
+  {
+    "name": "Activepieces",
+    "description": "Open source no-code business automation tool",
+    "website": "https://activepieces.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "AI Squared",
+    "description": "AI integration platform for enterprise applications",
+    "website": "https://squared.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Answer.AI",
+    "description": "AI-powered answering and automation platform",
+    "website": "https://answer.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Aporia",
+    "description": "ML observability and monitoring platform",
+    "website": "https://aporia.com",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Aptible",
+    "description": "Security and compliance platform for cloud infrastructure",
+    "website": "https://aptible.com",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Argil AI",
+    "description": "AI development and deployment platform",
+    "website": "https://argil.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "ast-grep",
+    "description": "ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.",
+    "website": "https://ast-grep.github.io",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Axiom",
+    "description": "Cloud-native observability and log management platform",
+    "website": "https://axiom.co",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Axle",
+    "description": "Insurance technology platform",
+    "website": "https://axle.insure",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "BaseHub",
+    "description": "Database and data infrastructure platform",
+    "website": "https://basehub.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Better Auth",
+    "description": "The most comprehensive authentication library for TypeScript.",
+    "website": "https://www.better-auth.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Bucket",
+    "description": "Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
+    "website": "https://docs.bucket.co/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Bun",
+    "description": "Bun is a new JavaScript runtime with a native bundler, transpiler, task runner, and npm client built-in.",
+    "website": "https://bun.sh",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Campsite",
+    "description": "Organized team communication platform that replaces chaotic chat with structured discussions",
+    "website": "https://developers.campsite.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Chakra UI",
+    "description": "Chakra UI is a component system for building products with speed",
+    "website": "https://chakra-ui.com/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Clever Cloud",
+    "description": "Cloud platform for application deployment and hosting",
+    "website": "https://clever-cloud.com",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Cloudflare",
+    "description": "Make employees, applications and networks faster and more secure everywhere, while reducing complexity and cost.",
+    "website": "https://www.cloudflare.com/",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Cobo",
+    "description": "Digital asset custody and management platform",
+    "website": "https://cobo.com",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Codeium",
+    "description": "Free AI-powered code autocomplete and context-aware coding assistant",
+    "website": "https://docs.codeium.com",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Conductor",
+    "description": "Real-time API integration for QuickBooks Desktop with multi-language support",
+    "website": "https://docs.conductor.is",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Convex",
+    "description": "The missing half of your React app: Convex is the open-source reactive database for app developers.",
+    "website": "https://convex.dev",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Creative Handbook Production Resource Directory",
+    "description": "Creative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
+    "website": "https://www.creativehandbook.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "CrewAI",
+    "description": "AI-powered team collaboration platform",
+    "website": "https://crewai.com",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Cursor",
+    "description": "AI-powered code editor and development environment",
+    "website": "https://cursor.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "The Data Driven Marketer",
+    "description": "Data-driven marketing insights and tools",
+    "website": "https://datadrivenmarketer.me",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Datafold",
+    "description": "Data reliability and testing platform",
+    "website": "https://datafold.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Demo Time",
+    "description": "Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
+    "website": "https://demotime.elio.dev",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "DevHub",
+    "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
+    "website": "https://www.devhub.com/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Dopp Finance",
+    "description": "Decentralized finance and trading platform",
+    "website": "https://dopp.finance",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "dotenvx",
+    "description": "Environment variable management tool",
+    "website": "https://dotenvx.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Drizzle ORM",
+    "description": "\"Headless TypeScript ORM with a head. Runs on Node, Bun and Deno. Lives on the Edge and yes, it's a JavaScript ORM too\"",
+    "website": "https://orm.drizzle.team",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Dub",
+    "description": "Link management and URL shortening platform",
+    "website": "https://dub.co",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "DuckDB",
+    "description": "In-process SQL OLAP database management system",
+    "website": "https://duckdb.org",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Dynamic",
+    "description": "Web3 authentication and authorization platform",
+    "website": "https://dynamic.xyz",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "ElevenLabs",
+    "description": "AI-powered voice synthesis platform",
+    "website": "https://elevenlabs.io",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Emailgic",
+    "description": "Email automation and management platform",
+    "website": "https://emailgic.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "EmbedChain",
+    "description": "AI embedding and chain management platform",
+    "website": "https://embedchain.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Envoyer",
+    "description": "Zero downtime PHP deployment platform",
+    "website": "https://envoyer.io",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Evan Boehs",
+    "description": "Personal website and development portfolio",
+    "website": "https://boehs.org",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Fabric",
+    "description": "E-commerce platform and infrastructure",
+    "website": "https://fabric.inc",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Finch",
+    "description": "Universal API for employment systems",
+    "website": "https://tryfinch.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Fireworks AI",
+    "description": "AI model deployment and inference platform",
+    "website": "https://fireworks.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Flatfile",
+    "description": "Data onboarding and import platform",
+    "website": "https://flatfile.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "FlowX",
+    "description": "Business process automation platform",
+    "website": "https://flowx.ai",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "FractalPay",
+    "description": "Modern payment processing platform",
+    "website": "https://fractalpay.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Frigade",
+    "description": "User onboarding and product adoption platform",
+    "website": "https://frigade.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Front Matter CMS - a CMS in your VS Code editor",
+    "description": "Front Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
+    "website": "https://frontmatter.codes",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Galileo",
+    "description": "AI-powered data quality and monitoring platform",
+    "website": "https://rungalileo.io",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Glama",
+    "description": "Enterprise-grade security, privacy, with features like agents, MCP, prompt templates, and more.",
+    "website": "https://glama.ai",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Goody",
+    "description": "Corporate gifting and rewards platform",
+    "website": "https://ongoody.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Helicone",
+    "description": "LLM observability and monitoring platform",
+    "website": "https://helicone.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Hugging Face Accelerate",
+    "description": "Library for training and optimizing machine learning models",
+    "website": "https://huggingface.co",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Hugging Face Diffusers",
+    "description": "State-of-the-art diffusion models for image and audio generation",
+    "website": "https://huggingface.co",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Hugging Face Hub Python Library",
+    "description": "Python library for interacting with the Hugging Face Hub",
+    "website": "https://huggingface.co",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Hugging Face Hub",
+    "description": "Platform for sharing and discovering machine learning models",
+    "website": "https://huggingface.co",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Hugging Face Transformers",
+    "description": "State-of-the-art Natural Language Processing library",
+    "website": "https://huggingface.co",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Hyperline",
+    "description": "Data pipeline and integration platform",
+    "website": "https://hyperline.co",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Hypermode",
+    "description": "High-performance application development platform",
+    "website": "https://hypermode.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Infisical",
+    "description": "Secure secrets management platform",
+    "website": "https://infisical.com",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Inkeep",
+    "description": "AI-powered documentation and knowledge base platform",
+    "website": "https://inkeep.com",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Intuned",
+    "description": "Product analytics and user behavior platform",
+    "website": "https://intunedhq.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "IonQ",
+    "description": "Quantum computing platform and infrastructure",
+    "website": "https://ionq.com",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Lago",
+    "description": "Open-source metering and usage-based billing platform",
+    "website": "https://getlago.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Langfuse",
+    "description": "LLM observability and analytics platform",
+    "website": "https://langfuse.com",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "llms.txt",
+    "description": "Documentation standard for LLM-powered applications",
+    "website": "https://llmstxt.org",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Loops",
+    "description": "Customer communication and engagement platform",
+    "website": "https://loops.so",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Lots of CSVs",
+    "description": "CSV data management and processing platform",
+    "website": "https://lotsofcsvs.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "LuxAlgo",
+    "description": "Advanced trading algorithms and analysis platform",
+    "website": "https://luxalgo.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Mangopay",
+    "description": "Payment infrastructure and marketplace solutions",
+    "website": "https://mangopay.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "MeshConnect",
+    "description": "Integration and connectivity platform",
+    "website": "https://meshconnect.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Method Financial",
+    "description": "Financial data and payment solutions platform",
+    "website": "https://methodfi.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Mintlify",
+    "description": "Modern documentation platform and tools",
+    "website": "https://mintlify.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Model Context Protocol (MCP)",
+    "description": "MCP is an open protocol that standardizes how applications provide context to LLMs.",
+    "website": "https://modelcontextprotocol.io",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Mystery-o-matic",
+    "description": "Interactive mystery and game generation platform",
+    "website": "https://mystery-o-matic.com",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Netlify",
+    "description": "Learn how to develop and host fast and reliable websites and apps with our enterprise-ready composable web platform.",
+    "website": "https://docs.netlify.com",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "OpenPhone",
+    "description": "Modern business phone system and communication platform",
+    "website": "https://openphone.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "OpenPipe",
+    "description": "AI model fine-tuning and optimization platform",
+    "website": "https://openpipe.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "OpenRouter",
+    "description": "A unified interface for LLMs. Find the best models & prices for your prompts.",
+    "website": "https://openrouter.ai/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Oxla",
+    "description": "Data processing and analytics platform",
+    "website": "https://oxla.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Perplexity",
+    "description": "AI-powered search and discovery platform",
+    "website": "https://perplexity.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Pinata",
+    "description": "Simple API platform for IPFS storage and decentralized file management",
+    "website": "https://docs.pinata.cloud",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Plain",
+    "description": "Customer support and communication platform",
+    "website": "https://plain.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "POPSMASH",
+    "description": "Social gaming and community platform",
+    "website": "https://www.popsmash.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "PrimeV",
+    "description": "Cloud infrastructure and virtualization platform",
+    "website": "https://primev.xyz",
+    "category": "infrastructure-cloud",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Prisma",
+    "description": "TypeScript ORM and hosted PostgreSQL database platform",
+    "website": "https://prisma.io",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "ProjectDiscovery",
+    "description": "Security and vulnerability scanning platform",
+    "website": "https://projectdiscovery.io",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Quill",
+    "description": "SQL query builder and database management platform",
+    "website": "https://quillsql.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "RainbowKit",
+    "description": "Web3 wallet integration toolkit",
+    "website": "https://rainbowkit.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "raincamp",
+    "description": "AI-powered development and deployment platform",
+    "website": "https://raincamp.ai",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Raycast",
+    "description": "A collection of powerful productivity tools all within an extendable launcher.",
+    "website": "https://www.raycast.com/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Rememberizer",
+    "description": "Memory and knowledge management platform",
+    "website": "https://docs.rememberizer.ai",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Resend",
+    "description": "Modern email delivery platform",
+    "website": "https://resend.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Roc",
+    "description": "Fast and safe programming language",
+    "website": "https://roc-lang.org",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Salesbricks",
+    "description": "Sales automation and management platform",
+    "website": "https://salesbricks.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Sardine",
+    "description": "Fraud prevention and compliance platform",
+    "website": "https://sardine.ai",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "ScreenshotOne",
+    "description": "Simple API for automated website screenshots without browser management complexity",
+    "website": "https://screenshotone.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "SimplePDF",
+    "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
+    "website": "https://simplepdf.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "SkyDeck.ai",
+    "description": "AI-powered business intelligence platform",
+    "website": "https://docs.skydeck.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Smartcar",
+    "description": "Connected car API platform",
+    "website": "https://smartcar.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Solid",
+    "description": "Banking and financial infrastructure platform",
+    "website": "https://solidfi.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Sourcegraph",
+    "description": "Code intelligence and search platform",
+    "website": "https://sourcegraph.com",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Stedi",
+    "description": "B2B data integration and EDI platform",
+    "website": "https://stedi.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Stripe",
+    "description": "Stripe powers online and in-person payment processing and financial solutions for businesses of all sizes. Accept payments, send payouts, and automate financial processes with a suite of APIs and no-code tools.",
+    "website": "https://stripe.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Supabase",
+    "description": "Build production-grade applications with a Postgres database, Authentication, instant APIs, Realtime, Functions, Storage and Vector embeddings. Start for free.",
+    "website": "https://supabase.com/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Svelte",
+    "description": "Modern web application framework",
+    "website": "https://svelte.dev",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Tavus",
+    "description": "AI-powered video personalization platform",
+    "website": "https://www.tavus.io",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "TheirStack",
+    "description": "Technology stack discovery platform",
+    "website": "https://theirstack.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Tinybird",
+    "description": "Real-time analytics and data processing platform",
+    "website": "https://tinybird.co",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Trackingplan",
+    "description": "Analytics monitoring and validation platform",
+    "website": "https://www.trackingplan.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Trail of Bits",
+    "description": "Security research and consulting platform",
+    "website": "https://www.trailofbits.com",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Trigger.dev",
+    "description": "Background job and workflow automation platform",
+    "website": "https://trigger.dev",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Turbo",
+    "description": "Turbo is an incremental bundler and build system optimized for JavaScript and TypeScript, written in Rust.",
+    "website": "https://turbo.build",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Turso",
+    "description": "Edge database platform",
+    "website": "https://turso.tech",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "UnifyGTM",
+    "description": "Go-to-market strategy and execution platform",
+    "website": "https://unifygtm.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Unkey",
+    "description": "API key management and authentication platform",
+    "website": "https://unkey.com",
+    "category": "security-identity",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Unstructured",
+    "description": "Document processing and data extraction platform",
+    "website": "https://unstructured.io",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Upstash",
+    "description": "Serverless database and caching platform",
+    "website": "https://upstash.com",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "UX Patterns for Devs",
+    "description": "A collection of UX patterns for developers to build effective, accessible, and usable UI components.",
+    "website": "https://uxpatterns.dev/en",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Velt",
+    "description": "Real-time collaboration platform",
+    "website": "https://velt.dev",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Vercel's AI SDK",
+    "description": "From the creators of Next.js, the AI SDK is a free open-source library that gives you the tools you need to build AI-powered products.",
+    "website": "https://sdk.vercel.ai",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "viem",
+    "description": "Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js.",
+    "website": "https://viem.sh/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Vital",
+    "description": "Health data integration platform",
+    "website": "https://tryvital.io",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Vue Macros",
+    "description": "Vue Macros\r\nModern Way to Writing Vue App - explore more macros and syntax sugar to Vue.",
+    "website": "https://vue-macros.dev/",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Warp",
+    "description": "Modern terminal and development environment",
+    "website": "https://www.warp.dev",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  },
+  {
+    "name": "Webrecorder",
+    "description": "Web archiving and preservation platform",
+    "website": "https://webrecorder.net",
+    "category": "data-analytics",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "WordLift",
+    "description": "AI-powered SEO platform that optimizes content visibility and search performance",
+    "website": "https://wordlift.io",
+    "category": "ai-ml",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Workflow",
+    "description": "Design and workflow automation platform",
+    "website": "https://workflow.design",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "ZAPHYR PHP Framework",
+    "description": "ZAPHYR is a breath of fresh air in the PHP ecosystem, providing a flexible, modular, and lightweight open source framework for web development.",
+    "website": "https://zaphyr.org",
+    "category": "developer-tools",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": false
+  },
+  {
+    "name": "Zapier",
+    "description": "Workflow automation and integration platform",
+    "website": "https://zapier.com",
+    "category": "integration-automation",
+    "hasLlmsTxt": true,
+    "hasLlmsFullTxt": true
+  }
+]

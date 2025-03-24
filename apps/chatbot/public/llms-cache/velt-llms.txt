@@ -1,0 +1,333 @@
+# Velt
+
+## Docs
+
+- [Add Comment Annotations](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comment-annotations/add-comment-annotations.md)
+- [Delete Comment Annotations](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comment-annotations/delete-comment-annotations.md)
+- [Get Comment Annotations v1](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comment-annotations/get-comment-annotations.md)
+- [Get Comment Annotations Count](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comment-annotations/get-comment-annotations-count.md)
+- [Get Comment Annotations v2](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comment-annotations/get-comment-annotations-v2.md)
+- [Update Comment Annotations](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comment-annotations/update-comment-annotations.md)
+- [Add Comments](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comments/add-comments.md)
+- [Delete Comments](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comments/delete-comments.md)
+- [Update Comments](https://docs.velt.dev/api-reference/rest-apis/comments-feature/comments/update-comments.md)
+- [Add Documents](https://docs.velt.dev/api-reference/rest-apis/documents/add-documents.md)
+- [Delete Documents](https://docs.velt.dev/api-reference/rest-apis/documents/delete-documents.md)
+- [Get Documents v1](https://docs.velt.dev/api-reference/rest-apis/documents/get-documents.md)
+- [Get Documents v2](https://docs.velt.dev/api-reference/rest-apis/documents/get-documents-v2.md)
+- [Move Documents](https://docs.velt.dev/api-reference/rest-apis/documents/move-documents.md)
+- [Update Access for Documents](https://docs.velt.dev/api-reference/rest-apis/documents/update-document-access.md)
+- [Update Disabled State for Documents](https://docs.velt.dev/api-reference/rest-apis/documents/update-document-disable-state.md)
+- [Update Documents](https://docs.velt.dev/api-reference/rest-apis/documents/update-documents.md)
+- [Add Folder](https://docs.velt.dev/api-reference/rest-apis/folders/add-folder.md)
+- [Get Folders](https://docs.velt.dev/api-reference/rest-apis/folders/get-folders.md)
+- [Update Folder](https://docs.velt.dev/api-reference/rest-apis/folders/update-folder.md)
+- [Update Access for Folders](https://docs.velt.dev/api-reference/rest-apis/folders/update-folder-access.md)
+- [Broadcast Event](https://docs.velt.dev/api-reference/rest-apis/livestate/broadcast-event.md)
+- [Add Notifications](https://docs.velt.dev/api-reference/rest-apis/notifications/add-notifications.md)
+- [Delete Notifications](https://docs.velt.dev/api-reference/rest-apis/notifications/delete-notifications.md)
+- [Get Notifications v1](https://docs.velt.dev/api-reference/rest-apis/notifications/get-notifications.md)
+- [Get Notifications v2](https://docs.velt.dev/api-reference/rest-apis/notifications/get-notifications-v2.md)
+- [Update Notifications](https://docs.velt.dev/api-reference/rest-apis/notifications/update-notifications.md)
+- [Add User Groups](https://docs.velt.dev/api-reference/rest-apis/organization-user-groups/add-groups.md)
+- [Add Users to Groups](https://docs.velt.dev/api-reference/rest-apis/organization-user-groups/add-users-to-group.md)
+- [Delete Users from Groups](https://docs.velt.dev/api-reference/rest-apis/organization-user-groups/delete-users-from-group.md)
+- [Add Organizations](https://docs.velt.dev/api-reference/rest-apis/organizations/add-organizations.md)
+- [Delete Organizations](https://docs.velt.dev/api-reference/rest-apis/organizations/delete-organizations.md)
+- [Get Organizations v1](https://docs.velt.dev/api-reference/rest-apis/organizations/get-organizations.md)
+- [Get Organizations v2](https://docs.velt.dev/api-reference/rest-apis/organizations/get-organizations-v2.md)
+- [Update Disabled State for Organizations](https://docs.velt.dev/api-reference/rest-apis/organizations/update-organization-disable-state.md)
+- [Update Organizations](https://docs.velt.dev/api-reference/rest-apis/organizations/update-organizations.md)
+- [Add Users](https://docs.velt.dev/api-reference/rest-apis/users/add-users.md)
+- [Delete All User Data (GDPR)](https://docs.velt.dev/api-reference/rest-apis/users/delete-all-user-data-gdpr.md): Remove All User data from Velt.
+- [Delete Users](https://docs.velt.dev/api-reference/rest-apis/users/delete-users.md): Remove Users from an Organization or a Document.
+- [Get Users v1](https://docs.velt.dev/api-reference/rest-apis/users/get-users.md)
+- [Get Users v2](https://docs.velt.dev/api-reference/rest-apis/users/get-users-v2.md)
+- [Update Users](https://docs.velt.dev/api-reference/rest-apis/users/update-users.md)
+- [API Methods Index](https://docs.velt.dev/api-reference/sdk/api/api-methods.md)
+- [React Hooks Index](https://docs.velt.dev/api-reference/sdk/api/react-hooks.md)
+- [API Event Objects](https://docs.velt.dev/api-reference/sdk/models/api-event-objects.md)
+- [API Event Types Enum](https://docs.velt.dev/api-reference/sdk/models/api-event-types-enum.md)
+- [API Request Objects](https://docs.velt.dev/api-reference/sdk/models/api-request-objects.md)
+- [null](https://docs.velt.dev/api-reference/sdk/models/data-models.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/arrows/customize-behavior.md)
+- [Arrows](https://docs.velt.dev/async-collaboration/arrows/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/arrows/setup.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/comments-sidebar/customize-behavior.md)
+- [Comments Sidebar](https://docs.velt.dev/async-collaboration/comments-sidebar/overview.md): Provide a toggleable sidebar to view and filter comments.
+- [Setup](https://docs.velt.dev/async-collaboration/comments-sidebar/setup.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/comments/customize-behavior.md)
+- [Comments Notifications](https://docs.velt.dev/async-collaboration/comments/notifications.md): There are several options to send notifications to your users.
+- [Comments](https://docs.velt.dev/async-collaboration/comments/overview.md): Your users can add comments in context to ask questions, leave feedback, report bugs etc. We handle all complexity to ensure the comments are robust against content changes. We support many types of comment UX patterns as illustrated below.
+- [ChartJS Comments Setup](https://docs.velt.dev/async-collaboration/comments/setup/chart-comments-setup/chartjs.md)
+- [Custom Charts Setup](https://docs.velt.dev/async-collaboration/comments/setup/chart-comments-setup/custom-charts.md)
+- [Highcharts Comments Setup](https://docs.velt.dev/async-collaboration/comments/setup/chart-comments-setup/highcharts.md)
+- [NivoCharts Comments Setup](https://docs.velt.dev/async-collaboration/comments/setup/chart-comments-setup/nivo-charts.md)
+- [Freestyle Setup](https://docs.velt.dev/async-collaboration/comments/setup/freestyle.md)
+- [Inbox Setup](https://docs.velt.dev/async-collaboration/comments/setup/inbox.md)
+- [Inline Comments Setup](https://docs.velt.dev/async-collaboration/comments/setup/inline-comments.md)
+- [Lottie Player Setup](https://docs.velt.dev/async-collaboration/comments/setup/lottie-player-setup.md)
+- [Page Mode Setup](https://docs.velt.dev/async-collaboration/comments/setup/page.md)
+- [Popover Setup](https://docs.velt.dev/async-collaboration/comments/setup/popover.md)
+- [Stream Setup](https://docs.velt.dev/async-collaboration/comments/setup/stream.md)
+- [Text Setup](https://docs.velt.dev/async-collaboration/comments/setup/text.md)
+- [Tiptap Setup](https://docs.velt.dev/async-collaboration/comments/setup/tiptap.md)
+- [Custom Video Player Setup](https://docs.velt.dev/async-collaboration/comments/setup/video-player-setup/custom-video-player-setup.md): Use this guide to add collaboration into your own custom video player.
+- [Prebuilt Video Player Setup](https://docs.velt.dev/async-collaboration/comments/setup/video-player-setup/video-player-setup.md): Use this guide if you want to set up a prebuilt video player from our SDK with collaborative features built in.
+- [Comment Standalone Composer](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-composer/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-composer/setup.md)
+- [Comment Pin](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-pin/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-pin/setup.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-thread/customize-behavior.md)
+- [Standalone Comment Thread](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-thread/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/comments/standalone-components/comment-thread/setup.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/notifications/customize-behavior.md)
+- [In-app Notifications](https://docs.velt.dev/async-collaboration/notifications/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/notifications/setup.md)
+- [Inline Reactions](https://docs.velt.dev/async-collaboration/reactions/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/reactions/setup.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/recorder/customize-behavior.md)
+- [Recorder](https://docs.velt.dev/async-collaboration/recorder/overview.md): The Recorder allows your users to create audio, screen, and video recordings.
+- [null](https://docs.velt.dev/async-collaboration/recorder/setup.md)
+- [Customize Behavior](https://docs.velt.dev/async-collaboration/view-analytics/customize-behavior.md)
+- [View Analytics](https://docs.velt.dev/async-collaboration/view-analytics/overview.md)
+- [Setup](https://docs.velt.dev/async-collaboration/view-analytics/setup.md)
+- [null](https://docs.velt.dev/get-started/overview.md)
+- [Quickstart](https://docs.velt.dev/get-started/quickstart.md): Quickstart for React. For other frameworks like `vue`, `angular`, `svelte`, `vanilla js` etc. check out the setup guide.
+- [Advanced Setup Options](https://docs.velt.dev/get-started/setup/advanced.md)
+- [2. Authenticate](https://docs.velt.dev/get-started/setup/authenticate.md): Autheticate your logged in users with the SDK.
+- [3. Initialize Document](https://docs.velt.dev/get-started/setup/initialize-document.md)
+- [1. Install](https://docs.velt.dev/get-started/setup/install.md): Steps to integrate Velt into an existing app
+- [AG Grid](https://docs.velt.dev/integrations/ag-grid.md)
+- [null](https://docs.velt.dev/key-concepts/access-control/overview.md)
+- [Setup](https://docs.velt.dev/key-concepts/documents/set-document.md)
+- [Use Multiple Locations at once](https://docs.velt.dev/key-concepts/locations/multiple-locations.md)
+- [Remove Locations](https://docs.velt.dev/key-concepts/locations/remove-locations.md)
+- [Setup](https://docs.velt.dev/key-concepts/locations/set-location.md)
+- [null](https://docs.velt.dev/key-concepts/organizations/setup.md)
+- [null](https://docs.velt.dev/key-concepts/overview.md)
+- [null](https://docs.velt.dev/key-concepts/users/contact-list.md)
+- [null](https://docs.velt.dev/key-concepts/users/organization-user-groups.md)
+- [null](https://docs.velt.dev/key-concepts/users/sign-in-user.md)
+- [null](https://docs.velt.dev/key-concepts/users/sign-out-user.md)
+- [Export Cord Data for Migration](https://docs.velt.dev/migration/cord-migration/export-cord-data-for-migration.md)
+- [Overview](https://docs.velt.dev/migration/cord-migration/migration-process-overview.md)
+- [Overview](https://docs.velt.dev/notifications/email/overview.md)
+- [Customize Behavior](https://docs.velt.dev/realtime-collaboration/cursors/customize-behavior.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/cursors/overview.md): Your users can view each other's cursors when interacting on the same document. This makes your app more alive. We handle the complexity of adapting the cursors to different screen sizes, differences in content etc.
+- [null](https://docs.velt.dev/realtime-collaboration/cursors/setup.md)
+- [Customize Behavior](https://docs.velt.dev/realtime-collaboration/flock-mode/customize-behavior.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/flock-mode/overview.md): This is like Figma's follow along feature. Start a shared session in a click. One person is the leader, and whatever they do - like clicking, scrolling, or navigating - happens automatically on everyone else's screen.
+- [Setup](https://docs.velt.dev/realtime-collaboration/flock-mode/setup.md)
+- [Customize Behavior](https://docs.velt.dev/realtime-collaboration/huddle/customize-behavior.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/huddle/overview.md): Enable slack-style effortless audio, video and screen sharing discussions inside your own product. It even comes with built in chat.
+- [Setup](https://docs.velt.dev/realtime-collaboration/huddle/setup.md)
+- [Customize Behavior](https://docs.velt.dev/realtime-collaboration/live-selection/customize-behavior.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/live-selection/overview.md): Your users can see what part of the document others are interacting with in real-time.
+- [null](https://docs.velt.dev/realtime-collaboration/live-selection/setup.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/live-state-sync/overview.md): Sync and broadcast data in real-time across all connected clients.
+- [Redux Middleware](https://docs.velt.dev/realtime-collaboration/live-state-sync/redux-middleware.md)
+- [Setup](https://docs.velt.dev/realtime-collaboration/live-state-sync/setup.md)
+- [Customize Behavior](https://docs.velt.dev/realtime-collaboration/presence/customize-behavior.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/presence/overview.md): Your users can see other users online on the document. This makes your app feel alive.
+- [Setup](https://docs.velt.dev/realtime-collaboration/presence/setup.md)
+- [Overview](https://docs.velt.dev/realtime-collaboration/single-editor-mode/overview.md): Allow only one user to edit at a time but still allow everyone to see the changes as they happen.
+- [Setup](https://docs.velt.dev/realtime-collaboration/single-editor-mode/setup.md)
+- [null](https://docs.velt.dev/realtime-collaboration/video-player-sync/overview.md)
+- [Setup](https://docs.velt.dev/realtime-collaboration/video-player-sync/setup.md)
+- [Version 3.0.0](https://docs.velt.dev/release-notes/3-0-0.md)
+- [null](https://docs.velt.dev/release-notes/archive/april-16-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/april-24-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-12-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-13-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-14-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-16-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-21-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-22-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-6-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/aug-8-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/dec-28-2023.md)
+- [null](https://docs.velt.dev/release-notes/archive/feb-13-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/feb-20-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/feb-27-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/jan-14-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/july-02-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/july-03-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/july-04-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/july-09-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/june-10-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/june-24-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/june-29-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/june-30-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/june-6-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/march-14-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/march-5-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/may-10-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/may-17-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/may-23-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/may-24-2024.md)
+- [null](https://docs.velt.dev/release-notes/archive/may-29-2024.md)
+- [null](https://docs.velt.dev/release-notes/version-4/changelog.md)
+- [Upgrade Guide](https://docs.velt.dev/release-notes/version-4/upgrade-guide.md)
+- [Generating Auth Tokens](https://docs.velt.dev/security/auth-tokens.md)
+- [null](https://docs.velt.dev/security/content-security-policy.md)
+- [JWT Tokens](https://docs.velt.dev/security/jwt-tokens.md): Generate JWT Tokens for additional security
+- [Proxy Server](https://docs.velt.dev/security/proxy-server.md)
+- [Supported Regions](https://docs.velt.dev/security/supported-regions.md)
+- [Conditional Templates](https://docs.velt.dev/ui-customization/conditional-templates.md)
+- [Action Components](https://docs.velt.dev/ui-customization/custom-action-component.md)
+- [Custom Button](https://docs.velt.dev/ui-customization/features/async/arrows/custom-button.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/arrows/parts.md)
+- [Slots](https://docs.velt.dev/ui-customization/features/async/arrows/slots.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/arrows/variables.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comment-bubble/overview.md): This button shows the comment count and the author's avatar. This is used in Popover comments feature.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comment-bubble/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-bubble/subcomponents/avatar.md): The subcomponent on the Comment Bubble that shows the User avatar
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-bubble/subcomponents/comments-count.md): The subcomponent on the Comment Bubble that shows the number of Comments made on a thread.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/overview.md): The interface that appears when you try to read an existing Comment or make a new Comment.
+- [Variants](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/pre-defined-variants.md)
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/all-comments.md): The subcomponent of the Comment Dialog that is used to show the All Comments button that opens the Comments Sidebar
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/approve.md): The subcomponent of the Comment Dialog that is used approve Comments in Moderator Mode
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/assignee-banner.md): The subcomponent of the Comment Dialog that is used assign a Comment as a task
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/autocomplete-chip-tooltip.md): The subcomponent of the Comment Dialog that represents the tooltip that appears when you hover over an Autocomplete Chip.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/autocomplete-option.md): The subcomponent of the Comment Dialog that represents the dropdown list that appears when you press an Autocomplete hotkey.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/body/overview.md): The subcomponent of the Comment Dialog that is used to show all Comment Replies as well as the Comment Composer.
+- [ThreadCard](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/body/subcomponents/threadcard.md): The subcomponent of the Body of the Comment Dialog that is used to show attachments added to a Comment reply.
+- [ThreadCard Attachments](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/body/subcomponents/threadcard-attachments.md): The subcomponent of the Body of the Comment Dialog that is used to show attachments added to a Comment reply.
+- [ThreadCard Options](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/body/subcomponents/threadcard-options.md): The subcomponent of the Body of the Comment Dialog that is used to show the options dropdown
+- [ThreadCard Seen](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/body/subcomponents/threadcard-seen.md)
+- [ToggleReply](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/body/subcomponents/togglereply.md): The reply button in the comment dialog that expands to show the replies and the composer.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/composer/overview.md): The subcomponent of the Comment Dialog that is used to compose new Comment replies.
+- [Composer Attachments](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/composer/subcomponents/composer-attachments.md): The subcomponent of the Comoposer of the Comment Dialog that is used to show attachments on a Comment that has been composed but hasn't been sent yet.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/composer/subcomponents/private-badge.md): The subcomponent of the Comment Dialog that is shown in the Composer when Private Mode is turned on.
+- [Custom Annotation Dropdown](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/custom-annotation-dropdown.md): The subcomponent of the Comment Dialog that represents the custom annotation dropdown.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/ghost-banner.md): The subcomponent of the Comment Dialog that indicates if a Comment has become a Ghost Comment.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/header.md): The subcomponent of the Comment Dialog that represents the Header.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/navigation-button.md): Navigation button that appears on sidebar. Clicking on it will navigate to the comment.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/options-dropdown.md): The subcomponent of the Comment Dialog that represents the Options Dropdown
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/priority-dropdown.md): The subcomponent of the Comment Dialog that represents the Priority Dropdown
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/private-banner.md): The subcomponent of the Comment Dialog that is shown near the Header when the Comment is a Private Comment.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/reaction-pin.md): The subcomponent of the Comment Dialog that represents the the Reaction Pin that appears after a User selects a Reaction.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/reaction-pin-tooltip.md): The subcomponent of the Comment Dialog that represents the tooltip that appears when a User hovers over a Reaction
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/reaction-tool.md): The subcomponent of the Comment Dialog that represents the button used to add a Reaction
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/reactions-panel.md): The subcomponent of the Comment Dialog that represents the panel of all Reactions that have been added to a Comment
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/sign-in.md): The subcomponent of the Comment Dialog that represents the Sign In button that appears when a User is a Guest User
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/status-dropdown.md): The subcomponent of the Comment Dialog that represents the Status Dropdown
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/suggestion-action.md): The subcomponent of the Comment Dialog that represents the Accept or Reject button is Moderator Mode.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-dialog/subcomponents/upgrade.md): The subcomponent of the Comment Dialog that represents the Upgrade button.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/overview.md): The Pin that appears on the DOM when you place a Comment.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/subcomponents/ghost-comment-indicator.md): The subcomponent on the Comment Pin that indicates whether the Comment is a Ghost Comment
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/subcomponents/index.md): The subcomponent on the Comment Pin that indicates the index number of the Comment
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/subcomponents/private-comment-indicator.md): The subcomponent on the Comment Pin that indicates whether the Comment is a Private Comment
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/subcomponents/triangle.md): The subcomponent on the Comment Pin that appears as a triangle in the top right corner of a Popover Comment.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comment-pin/subcomponents/unread-comment-indicator.md): The subcomponent on the Comment Pin that indicates whether a Comment hasn't been read yet by the User.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comment-player-timeline/styling.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comment-tool/overview.md): The button to add new comments.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comment-tool/styling.md)
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comment-video-player/styling.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/overview.md)
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/empty-placeholder.md): The subcomponent of the Comments Sidebar that represents the placeholder when there are no Comments
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/overview.md): The subcomponent of the Comments Sidebar that represents the filter that is used to filter what Comments appear in the Sidebar
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/category.md): The subcomponent of the Comments Sidebar Filter that represents the Category
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/close-button.md): The subcomponent of the Comments Sidebar Filter that represents the Close button
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/comment-type.md): The subcomponent of the Comments Sidebar Filter that represents the Comment Type filter
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/done-button.md): The subcomponent of the Comments Sidebar Filter that represents the Done Button
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/filter-item.md): Used to customize all the filter option items of the Comments Sidebar Filter at once
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/groupby.md): The subcomponent of the Comments Sidebar Filter that represents the Groupby filter option
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/location.md): The subcomponent of the Comments Sidebar Filter that represents the Location filter
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/people.md): The subcomponent of the Comments Sidebar Filter that represents the People filter
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/priority.md): The subcomponent of the Comments Sidebar Filter that represents the Priority filter
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/status.md): The subcomponent of the Comments Sidebar Filter that represents the Priority filter
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/title.md): The subcomponent of the Comments Sidebar Filter that represents the Title
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/filter/subcomponents/versions.md): The subcomponent of the Comments Sidebar Filter that represents the Version filter
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/focused-thread.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/overview.md): The subcomponent of the Comments Sidebar that represents the Header of the Sidebar
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/subcomponents/location-filter-dropdown/overview.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/subcomponents/minimal-action-dropdown/overview.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/subcomponents/minimal-filter-dropdown/overview.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/subcomponents/status/overview.md)
+- [Content](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/subcomponents/status/subcomponents/content.md)
+- [Trigger](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/header/subcomponents/status/subcomponents/trigger.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/list/overview.md): The subcomponent of the Comments Sidebar that represents the List of Comments in the Sidebar
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/list/subcomponents/dialog-container.md): You can customize the Comment Dialog that appears inside the Sidebar with this subcomponent
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/list/subcomponents/group.md): The subcomponent of the Comments Sidebar List that represents the Group
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/page-mode-composer.md): The subcomponent of the Comments Sidebar that represents the Composer that appears in Page Mode.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/reset-filter-button.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/sidebar-button/overview.md): The button that is used to open the Comments Sidebar panel.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/sidebar-button/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/sidebar-button/subcomponents/comments-count.md): The subcomponent on the Sidebar Button that shows the total
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/sidebar-button/subcomponents/icon.md): The subcomponent on the Sidebar Button that shows the total
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/subcomponents/skeleton.md): The subcomponent of the Comments Sidebar that represents the Skeleton loader that appears when the Sidebar is first loading.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/comments-sidebar/variants.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/confirm-dialog/overview.md): The Confirmation Dialog that appears when you delete a comment annotation.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/confirm-dialog/styling.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/overview.md): Components that appear when using Inline Comments
+- [Variants](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/pre-defined-variants.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/subcomponents/panel/comment-count.md): The subcomponent of the Inline Comments Section that contains the Comment Count
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/subcomponents/panel/composer-container.md): The subcomponent of the Inline Comments Section that contains the Composer Container
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/subcomponents/panel/list.md): The subcomponent of the Inline Comments Section that contains the List
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/subcomponents/panel/overview.md): The subcomponent of the Inline Comments Section that contains the Panel
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/subcomponents/panel/sorting-dropdown.md): The subcomponent of the Inline Comments Section that contains the Sorting Dropdown
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/inline-comments-section/subcomponents/skeleton.md): The subcomponent of the Inline Comments Section that contains the Skeleton loader that appears when the Inline Comments Section is first loading.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/multithread-comment-dialog/overview.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/persistent-comment-mode-banner/overview.md): The persistent comment mode banner that appears when persistent mode is enabled and user is adding a comment.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-composer/overview.md)
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-composer/styling.md)
+- [Variants](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-composer/variants.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-pin/overview.md): The Pin that appears on the DOM when you place a Comment.
+- [Variants](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-pin/variants.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-thread/overview.md)
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-thread/styling.md)
+- [Variants](https://docs.velt.dev/ui-customization/features/async/comments/standalone-components/comment-thread/variants.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-tool/overview.md): The Comment Tool that appears when you highlight some text.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-tool/styling.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-toolbar/overview.md): The Toolbar that appears when you highlight some text
+- [Styling](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-toolbar/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-toolbar/subcomponents/comment-annotation.md): The subcomponent on the Text Comment Toolbar that is used to add a new Text Comment.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-toolbar/subcomponents/copywriter.md): The subcomponent on the Text Comment Toolbar that is used to rewrite text on the page using AI.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-toolbar/subcomponents/divider.md): The subcomponent on the Text Comment Toolbar that is used to divide other subcomponents in the UI using a thin line.
+- [null](https://docs.velt.dev/ui-customization/features/async/comments/text-comment-toolbar/subcomponents/generic.md): The subcomponent on the Text Comment Toolbar that is used to query ChatGPT.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/overview.md): The Notification Panel contains all notifications within the current organization. It appears when you click the notification tool or embed it directly on a page.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/content/common-content-list.md): Common Content List component used within all the tab content sections. This renders the list of notifications. You can customize it for all tabs using this or customize it individually within each tab.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/content/overview.md): This contains the main body of the Notifications Panel with the content of each tab.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/content/subcomponents/all-tab-content.md): All Tab content that contains it's notifications.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/content/subcomponents/documents-tab-content.md): Document tab content that contains it's notifications.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/content/subcomponents/for-you-tab-content.md): For You tab content that contains it's notifications.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/content/subcomponents/people-tab-content.md): People tab content that contains it's notifications.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/header.md): This contains all the tabs that are present in the Notifications Panel Header
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/read-all-button.md): This button marks all notifications as read.
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-panel/subcomponents/title.md): The component that displays the title of the Notification Panel.
+- [Overview](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-tool/overview.md): The button that opens or closes the notification panel.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-tool/styling.md)
+- [null](https://docs.velt.dev/ui-customization/features/async/notifications/notifications-tool/variant.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/async/reactions/overview.md): This component is used to render the reaction tool and all the reactions.
+- [Styling](https://docs.velt.dev/ui-customization/features/async/reactions/styling.md)
+- [Variants](https://docs.velt.dev/ui-customization/features/async/reactions/variants.md)
+- [Create Your Own UI](https://docs.velt.dev/ui-customization/features/realtime/cursors/create-your-own-ui.md)
+- [Parts](https://docs.velt.dev/ui-customization/features/realtime/cursors/parts.md)
+- [Slots](https://docs.velt.dev/ui-customization/features/realtime/cursors/slots.md)
+- [Variables](https://docs.velt.dev/ui-customization/features/realtime/cursors/variables.md)
+- [null](https://docs.velt.dev/ui-customization/features/realtime/huddle/parts.md)
+- [Slots](https://docs.velt.dev/ui-customization/features/realtime/huddle/slots.md)
+- [null](https://docs.velt.dev/ui-customization/features/realtime/huddle/variables.md)
+- [Overview](https://docs.velt.dev/ui-customization/features/realtime/live-selection.md)
+- [Create Your Own UI](https://docs.velt.dev/ui-customization/features/realtime/presence/create-your-own-ui.md)
+- [Parts](https://docs.velt.dev/ui-customization/features/realtime/presence/parts.md)
+- [Variables](https://docs.velt.dev/ui-customization/features/realtime/presence/variables.md)
+- [Layout Customization](https://docs.velt.dev/ui-customization/layout.md)
+- [Overview](https://docs.velt.dev/ui-customization/overview.md)
+- [Setup Wireframes](https://docs.velt.dev/ui-customization/setup.md)
+- [CSS Customization](https://docs.velt.dev/ui-customization/styling.md)
+- [Template Variables](https://docs.velt.dev/ui-customization/template-variables.md)
+- [Comments Webhooks](https://docs.velt.dev/webhooks/comments-webhooks.md)
+- [Huddle Webhooks](https://docs.velt.dev/webhooks/huddle-webhooks.md)
+- [Overview](https://docs.velt.dev/webhooks/overview.md)
+
+
+## Optional
+
+- [Examples](https://velt.dev/examples)

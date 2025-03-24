@@ -1,0 +1,26 @@
+# Campsite
+
+## Docs
+
+- [Create comment](https://developers.campsite.com/api-reference/create-comment.md): Creates a new comment on a post.
+- [Create DM](https://developers.campsite.com/api-reference/create-dm.md): Creates a new chat message in a direct message thread with a user.
+- [Create message](https://developers.campsite.com/api-reference/create-message.md): Creates a new chat message.
+- [Create post](https://developers.campsite.com/api-reference/create-post.md): Creates a new post.
+- [Create thread](https://developers.campsite.com/api-reference/create-thread.md): Creates a new thread.
+- [Get post](https://developers.campsite.com/api-reference/get-post.md): Gets a post.
+- [Bot DMs](https://developers.campsite.com/api-reference/guides/bot-dms.md): Enable direct messaging between users and your integration
+- [Mentioning users](https://developers.campsite.com/api-reference/guides/mentioning-users.md)
+- [Webhooks](https://developers.campsite.com/api-reference/guides/webhooks.md): Use webhooks to get notified when something happens in Campsite
+- [Introduction](https://developers.campsite.com/api-reference/introduction.md): Use Campsite's REST API to create custom integrations and scripts that interact with Campsite.
+- [List channels](https://developers.campsite.com/api-reference/list-channels.md): Lists all channels in your organization.
+- [List comments](https://developers.campsite.com/api-reference/list-comments.md): Lists all comments on a post.
+- [List members](https://developers.campsite.com/api-reference/list-members.md): Lists all members of the organization.
+- [List messages](https://developers.campsite.com/api-reference/list-messages.md): Lists all messages in a thread.
+- [List posts](https://developers.campsite.com/api-reference/list-posts.md): Lists posts.
+- [Resolve post](https://developers.campsite.com/api-reference/resolve-post.md): Resolves a post with an optional message or resolving comment.
+- [Unresolve post](https://developers.campsite.com/api-reference/unresolve-post.md): Unresolves a post.
+
+
+## Optional
+
+- [Examples](https://github.com/campsite/examples)

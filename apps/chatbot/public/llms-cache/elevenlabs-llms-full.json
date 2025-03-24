@@ -1,0 +1,10 @@
+{
+  "name": "ElevenLabs",
+  "description": "AI-powered voice synthesis platform",
+  "website": "https://elevenlabs.io",
+  "url": "https://elevenlabs.io/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/elevenlabs-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

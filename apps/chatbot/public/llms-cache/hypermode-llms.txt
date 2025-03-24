@@ -1,0 +1,60 @@
+# Hypermode
+
+## Docs
+
+- [Design](https://docs.hypermode.com/badger/design.md): Architected for fast key-value storage in Go
+- [Overview](https://docs.hypermode.com/badger/overview.md): Welcome to the Badger docs!
+- [Quickstart](https://docs.hypermode.com/badger/quickstart.md): Everything you need to get started with Badger
+- [Troubleshooting](https://docs.hypermode.com/badger/troubleshooting.md): Common issues and solutions with Badger
+- [Community and Support](https://docs.hypermode.com/community-and-support.md): Get help with Hypermode and connect with other developers
+- [Configure Environment](https://docs.hypermode.com/configure-environment.md): Define environment parameters for your app
+- [Create Project](https://docs.hypermode.com/create-project.md): Initialize your Modus app with Hypermode
+- [Deploy Project](https://docs.hypermode.com/deploy.md): A git-based flow for simple deployment
+- [Hosted Models](https://docs.hypermode.com/hosted-models.md): Iterate quickly with seamless access to the most popular models
+- [Hyp CLI](https://docs.hypermode.com/hyp-cli.md): Comprehensive reference for the Hyp CLI commands and usage
+- [Integrate API](https://docs.hypermode.com/integrate-api.md): Easily add intelligent features to your app
+- [Introduction](https://docs.hypermode.com/introduction.md): Build Intelligent APIs.
+- [Modify Organization](https://docs.hypermode.com/modify-organization.md): Update organization attributes or delete your organization
+- [Modify Project](https://docs.hypermode.com/modify-project.md): Update project attributes or delete your project
+- [API Generation](https://docs.hypermode.com/modus/api-generation.md): Create the signature for your API
+- [App Manifest](https://docs.hypermode.com/modus/app-manifest.md): Define the resources for your app
+- [Authentication](https://docs.hypermode.com/modus/authentication.md): Protect your API
+- [Changelog](https://docs.hypermode.com/modus/changelog.md): The latest changes and improvements in Modus
+- [Data Fetching](https://docs.hypermode.com/modus/data-fetching.md): Pull data into your app
+- [Using DeepSeek](https://docs.hypermode.com/modus/deepseek-model.md): Use the DeepSeek-R1 Model with your Modus app
+- [Error Handling](https://docs.hypermode.com/modus/error-handling.md): Easily debug and handle errors
+- [Model Invoking](https://docs.hypermode.com/modus/model-invoking.md): Invoke your models with the Modus Models API
+- [Modus CLI](https://docs.hypermode.com/modus/modus-cli.md): Comprehensive reference for the Modus CLI commands and usage
+- [Overview](https://docs.hypermode.com/modus/overview.md): Welcome to the Modus docs!
+- [Project Structure](https://docs.hypermode.com/modus/project-structure.md): Understand the structure of a Modus app
+- [Quickstart](https://docs.hypermode.com/modus/quickstart.md): Run your first Modus app in a few minutes
+- [Run Locally](https://docs.hypermode.com/modus/run-locally.md): Test your Modus app and iterate quickly
+- [Collections APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/collections.md): Add storage and vector search capabilities to your functions.
+- [Console APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/console.md): Capture errors and debugging information in your functions
+- [Dgraph APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/dgraph.md): Execute queries and mutations against a Dgraph database
+- [GraphQL APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/graphql.md): Access external GraphQL data sources from your functions
+- [HTTP APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/http.md): Access external HTTP endpoints from your functions
+- [Local Time APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/localtime.md): Access the user's local time and time zone in your functions
+- [AI Model APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/models.md): Invoke AI models from your functions
+- [MySQL APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/mysql.md): Execute queries against a MySQL database
+- [Neo4j APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/neo4j.md): Execute queries and mutations against a Neo4j database
+- [Modus AssemblyScript SDK](https://docs.hypermode.com/modus/sdk/assemblyscript/overview.md): Learn how to use the Modus AssemblyScript SDK
+- [PostgreSQL APIs](https://docs.hypermode.com/modus/sdk/assemblyscript/postgresql.md): Execute queries against a PostgreSQL database
+- [Collections APIs](https://docs.hypermode.com/modus/sdk/go/collections.md): Add storage and vector search capabilities to your functions.
+- [Console APIs](https://docs.hypermode.com/modus/sdk/go/console.md): Capture errors and debugging information in your functions
+- [Dgraph APIs](https://docs.hypermode.com/modus/sdk/go/dgraph.md): Execute queries and mutations against a Dgraph database
+- [GraphQL APIs](https://docs.hypermode.com/modus/sdk/go/graphql.md): Access external GraphQL data sources from your functions
+- [HTTP APIs](https://docs.hypermode.com/modus/sdk/go/http.md): Access external HTTP endpoints from your functions
+- [Local Time APIs](https://docs.hypermode.com/modus/sdk/go/localtime.md): Access the user's local time and time zone in your functions
+- [AI Model APIs](https://docs.hypermode.com/modus/sdk/go/models.md): Invoke AI models from your functions
+- [MySQL APIs](https://docs.hypermode.com/modus/sdk/go/mysql.md): Execute queries against a MySQL database
+- [Neo4j APIs](https://docs.hypermode.com/modus/sdk/go/neo4j.md): Execute queries and mutations against a Neo4j database
+- [Modus Go SDK](https://docs.hypermode.com/modus/sdk/go/overview.md): Learn how to use the Modus Go SDK
+- [PostgreSQL APIs](https://docs.hypermode.com/modus/sdk/go/postgresql.md): Execute queries against a PostgreSQL database
+- [Search](https://docs.hypermode.com/modus/search.md): Add natural language search to your app using AI embeddings
+- [Observe Functions](https://docs.hypermode.com/observe-functions.md): Understand what's happening within your functions
+- [Quickstart](https://docs.hypermode.com/quickstart.md): Start building AI features in under five minutes
+- [Security](https://docs.hypermode.com/security.md): Data handling, privacy, and security best practices
+- [Semantic Search With Dgraph and Modus](https://docs.hypermode.com/semantic-search.md): Add natural language search to your app with Dgraph, Modus, and AI embeddings
+- [User Management](https://docs.hypermode.com/user-management.md): Add and remove users from your organization
+- [Work Locally](https://docs.hypermode.com/work-locally.md): Seamless local-to-cloud experience for rapid experimentation

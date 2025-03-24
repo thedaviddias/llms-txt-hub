@@ -1,0 +1,10 @@
+{
+  "name": "UX Patterns for Devs",
+  "description": "A collection of UX patterns for developers to build effective, accessible, and usable UI components.",
+  "website": "https://uxpatterns.dev/en",
+  "url": "https://uxpatterns.dev/en/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/ux-patterns-for-devs-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

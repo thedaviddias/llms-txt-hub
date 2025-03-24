@@ -1,0 +1,10 @@
+{
+  "name": "Vital",
+  "description": "Health data integration platform",
+  "website": "https://tryvital.io",
+  "url": "https://docs.tryvital.io/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/vital-llms.txt",
+  "lastFetched": "2025-03-24"
+}

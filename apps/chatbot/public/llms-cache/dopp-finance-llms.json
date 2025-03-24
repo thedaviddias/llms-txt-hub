@@ -1,0 +1,10 @@
+{
+  "name": "Dopp Finance",
+  "description": "Decentralized finance and trading platform",
+  "website": "https://dopp.finance",
+  "url": "https://docs.dopp.finance/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/dopp-finance-llms.txt",
+  "lastFetched": "2025-03-24"
+}

@@ -1,0 +1,75 @@
+# Goody
+
+## Docs
+
+- [List all active cards](https://developer.ongoody.com/api-reference/cards/list-all-active-cards.md)
+- [Calculate the price for an order batch](https://developer.ongoody.com/api-reference/order-batches/calculate-the-price-for-an-order-batch.md)
+- [Create an order batch](https://developer.ongoody.com/api-reference/order-batches/create-an-order-batch.md)
+- [List all order batches](https://developer.ongoody.com/api-reference/order-batches/list-all-order-batches.md)
+- [Retrieve an order batch](https://developer.ongoody.com/api-reference/order-batches/retrieve-an-order-batch.md)
+- [Retrieve orders for an order batch](https://developer.ongoody.com/api-reference/order-batches/retrieve-orders-for-an-order-batch.md)
+- [Retrieve recipients for an order batch](https://developer.ongoody.com/api-reference/order-batches/retrieve-recipients-for-an-order-batch.md)
+- [Cancel an order](https://developer.ongoody.com/api-reference/orders/cancel-an-order.md)
+- [List all orders](https://developer.ongoody.com/api-reference/orders/list-all-orders.md)
+- [Retrieve an order](https://developer.ongoody.com/api-reference/orders/retrieve-an-order.md)
+- [Update expiration for an order](https://developer.ongoody.com/api-reference/orders/update-expiration-for-an-order.md)
+- [List all payment methods](https://developer.ongoody.com/api-reference/payment-methods/list-all-payment-methods.md)
+- [List all active products](https://developer.ongoody.com/api-reference/products/list-all-active-products.md)
+- [Retrieve a product](https://developer.ongoody.com/api-reference/products/retrieve-a-product.md)
+- [Retrieve current user](https://developer.ongoody.com/api-reference/retrieve-current-user.md)
+- [Brand](https://developer.ongoody.com/api-reference/schemas/brand.md)
+- [Cart](https://developer.ongoody.com/api-reference/schemas/cart.md)
+- [CartInput](https://developer.ongoody.com/api-reference/schemas/cartinput.md)
+- [CartItem](https://developer.ongoody.com/api-reference/schemas/cartitem.md)
+- [CartItemInput](https://developer.ongoody.com/api-reference/schemas/cartiteminput.md)
+- [Error](https://developer.ongoody.com/api-reference/schemas/error.md)
+- [Image](https://developer.ongoody.com/api-reference/schemas/image.md)
+- [ListMeta](https://developer.ongoody.com/api-reference/schemas/listmeta.md)
+- [MailingAddress](https://developer.ongoody.com/api-reference/schemas/mailingaddress.md)
+- [Me](https://developer.ongoody.com/api-reference/schemas/me.md)
+- [Order](https://developer.ongoody.com/api-reference/schemas/order.md)
+- [OrderBatch](https://developer.ongoody.com/api-reference/schemas/orderbatch.md)
+- [OrderBatchInput](https://developer.ongoody.com/api-reference/schemas/orderbatchinput.md)
+- [OrderBatchRecipient](https://developer.ongoody.com/api-reference/schemas/orderbatchrecipient.md)
+- [OrderBatchSendMethod](https://developer.ongoody.com/api-reference/schemas/orderbatchsendmethod.md)
+- [OrderBatchSendStatus](https://developer.ongoody.com/api-reference/schemas/orderbatchsendstatus.md)
+- [OrderStatus](https://developer.ongoody.com/api-reference/schemas/orderstatus.md)
+- [Product](https://developer.ongoody.com/api-reference/schemas/product.md)
+- [ProductImage](https://developer.ongoody.com/api-reference/schemas/productimage.md)
+- [ProductVariant](https://developer.ongoody.com/api-reference/schemas/productvariant.md)
+- [RecipientInput](https://developer.ongoody.com/api-reference/schemas/recipientinput.md)
+- [Sender](https://developer.ongoody.com/api-reference/schemas/sender.md)
+- [Shipment](https://developer.ongoody.com/api-reference/schemas/shipment.md)
+- [List all workspaces](https://developer.ongoody.com/api-reference/workspaces/list-all-workspaces.md)
+- [Automation API: Access the product catalog](https://developer.ongoody.com/automation-api/access-the-catalog.md)
+- [Automation API: Authentication](https://developer.ongoody.com/automation-api/authentication.md)
+- [Automation API: Create an order](https://developer.ongoody.com/automation-api/create-an-order.md)
+- [Goody Automation API](https://developer.ongoody.com/automation-api/overview.md)
+- [Automation API: Retrieve order status](https://developer.ongoody.com/automation-api/retrieve-order-status.md)
+- [Automation API: Webhooks](https://developer.ongoody.com/automation-api/webhooks.md): Webhooks allow you to be notified when events happen on Goody orders and order batches. You can subscribe to all webhooks, or a subset of them. Webhooks are sent by the Svix platform.
+- [Automation API: Zapier](https://developer.ongoody.com/automation-api/zapier.md): Create automations without code using Zapier workflows
+- [Commerce API: Access the product catalog](https://developer.ongoody.com/commerce-api/access-the-catalog.md)
+- [Commerce API: Authentication](https://developer.ongoody.com/commerce-api/authentication.md): Production and Sandbox accounts are separate, and you have different API keys for each environment for isolation.
+- [Commerce API: Create an order](https://developer.ongoody.com/commerce-api/create-an-order.md)
+- [Goody Commerce API](https://developer.ongoody.com/commerce-api/overview.md): Sell physical products in your app without handling inventory, vendor partnerships, or logistics, and earn a revenue share on orders.
+- [Commerce API: Payment](https://developer.ongoody.com/commerce-api/payment.md)
+- [Commerce API: Retrieve order status](https://developer.ongoody.com/commerce-api/retrieve-order-status.md)
+- [Commerce API: Webhooks](https://developer.ongoody.com/commerce-api/webhooks.md): Webhooks allow you to be notified when events happen on Goody orders and order batches. You can subscribe to all webhooks, or a subset of them. Webhooks are sent by the Svix platform.
+- [Developer mode](https://developer.ongoody.com/introduction/developer-mode.md): Enable Developer Mode on the Goody website to get product IDs and card IDs.
+- [Order lifecycle](https://developer.ongoody.com/introduction/order-lifecycle.md)
+- [Goody API](https://developer.ongoody.com/introduction/overview.md): Goody's API lets you send physical products and gifts programmatically.
+- [Send methods](https://developer.ongoody.com/introduction/send-methods.md)
+- [Ship to address](https://developer.ongoody.com/introduction/send-to-address.md): Ship products directly to an address with the Direct Send send method.
+- [Changelog](https://developer.ongoody.com/resources/changelog.md): Updates to the Goody API
+- [Event: order.canceled](https://developer.ongoody.com/webhooks/events/order.canceled.md): Emitted when an order has been canceled.
+- [Event: order.created](https://developer.ongoody.com/webhooks/events/order.created.md): Emitted when an order has been created and is ready to be opened and accepted (if it's a gift). An individual gift link is available (`individual_gift_link`).
+- [Event: order.delivered](https://developer.ongoody.com/webhooks/events/order.delivered.md): Emitted when an order has been delivered. If the order has multiple shipments, this is emitted when all shipments have been delivered.
+- [Event: order.gift_accepted](https://developer.ongoody.com/webhooks/events/order.gift_accepted.md): Emitted when a gift has been accepted by a recipient, and the final costs of the order have been calculated. You can also view whether they swapped the gift (`is_swapped`) and what they swapped to (`cart`).
+- [Event: order.gift_opened](https://developer.ongoody.com/webhooks/events/order.gift_opened.md): Emitted when a gift is first opened. Note that if you open the gift link yourself, you might trigger this event.
+- [Event: order.refunded](https://developer.ongoody.com/webhooks/events/order.refunded.md): Emitted when an order has been refunded.
+- [Event: order.shipped](https://developer.ongoody.com/webhooks/events/order.shipped.md): Emitted when the order is shipped. If there are multiple shipments, this is emitted when the first shipment for this order is in transit.
+- [Event: order.thank_you_note_added](https://developer.ongoody.com/webhooks/events/order.thank_you_note_added.md): Emitted when the recipient adds a thank you note to a gift. This typically happens shortly after the gift has been accepted, but can happen anytime after acceptance. You can access the thank you note on the `thank_you_note` property of the order.
+- [Event: order_batch.completed](https://developer.ongoody.com/webhooks/events/order_batch.completed.md): Emitted when an order batch is fully processed, which is when all orders are created for each recipient in the order batch.
+- [null](https://developer.ongoody.com/webhooks/events/order_batch.created.md): Emitted when a order batch is created in the organization.
+- [Webhooks](https://developer.ongoody.com/webhooks/overview.md): Webhooks allow you to be notified when events happen on Goody orders and order batches. You can subscribe to all webhooks, or a subset of them. Webhooks are sent by the Svix platform.
+- [Webhook security](https://developer.ongoody.com/webhooks/webhook-security.md): To ensure the integrity of the webhooks you receive, we recommend verifying the signatures of the webhooks you receive. The webhook platform we use, Svix, provides packages for multiple languages that make verifying signatures easy.

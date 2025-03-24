@@ -1,0 +1,93 @@
+# Warp documentation
+
+## Warp documentation
+
+- [Quickstart Guide](https://docs.warp.dev/): Learn how to install Warp and get it running on your machine. All installation options support auto-update, ensuring you receive new features, bug fixes, and performance improvements.
+- [What is Warp?](https://docs.warp.dev/getting-started/what-is-warp): Warp is the intelligent terminal with AI and your dev team's knowledge built-in.
+- [Migrate to Warp](https://docs.warp.dev/getting-started/migrate-to-warp): Learn how to import settings from other terminals when you switch to Warp.
+- [Using Warp with \[zsh|bash|fish|pwsh\]](https://docs.warp.dev/getting-started/using-warp-with-shells): Warp supports popular shells across macOS, Windows, and Linux. On macOS and Linux, this includes bash, zsh, fish, and PowerShell (pwsh). On Windows, this includes PowerShell 5 & 7, WSL2, and Git Bash.
+- [Privacy](https://docs.warp.dev/getting-started/privacy): Warp's approach to privacy and your control over your data
+- [Refer a Friend & Earn Rewards](https://docs.warp.dev/getting-started/refer-a-friend): Think Warp would be the ideal product for someone you know? You can invite your team or friends within the app.
+- [Changelog](https://docs.warp.dev/getting-started/changelog): Warp auto-updates whenever a new release comes out. We try to ship an update every week usually on Thursday!
+- [Themes](https://docs.warp.dev/appearance/themes): Warp includes several themes (out-of-box) and also supports setting custom themes.
+- [Custom Themes](https://docs.warp.dev/appearance/custom-themes): Warp supports Custom Themes which can be created manually or downloaded from our repo.
+- [Prompt](https://docs.warp.dev/appearance/prompt): Warp allows you to configure its default prompt or a custom prompt. A terminal prompt is a text that appears in the command line interface, indicating that the terminal is ready to accept commands.
+- [Input Position](https://docs.warp.dev/appearance/input-position): Warp gives you the ability to configure the position of your input, which includes both the prompt and the command line.
+- [Text, Fonts, & Cursor](https://docs.warp.dev/appearance/text-fonts-cursor): Warp supports customizing the font and how text is displayed. This can help improve readability and usability. Warp also supports disabling the blinking cursor.
+- [Size, Opacity, & Blurring](https://docs.warp.dev/appearance/size-opacity-blurring): Warp supports settings for Window size, opacity(transparency), and blurring effects. This can help with setting up specific terminal layouts and visual preferences.
+- [Pane Dimming & Focus](https://docs.warp.dev/appearance/pane-dimming): Warp supports dimming inactive Panes as well as allowing the focus to follow the mouse. This helps you easily see which pane is active and maintain focus.
+- [Blocks Behavior](https://docs.warp.dev/appearance/blocks-behavior): Warp lets you customize your Blocks in a variety of ways such as enabling Compact mode, or disabling the Block Dividers for a more custom block experience, and more.
+- [Tabs Behavior](https://docs.warp.dev/appearance/tabs-behavior): Warp lets you customize the Tabs behavior in a variety of ways such as setting the Tab indicators, or  hiding the Tab bar for a more personalized navigation experience, and more.
+- [App Icons](https://docs.warp.dev/appearance/app-icons): Warp supports a palette of built-in app icons.
+- [Warp AI](https://docs.warp.dev/features/warp-ai): Warp AI includes powerful capabilities such as Agent Mode, Voice, Generate, and Autonomy fully integrated within the Warp terminal.
+- [Active AI](https://docs.warp.dev/features/warp-ai/active-ai): Active AI proactively recommends fixes and next actions based on your terminal errors, inputs, and outputs.
+- [Agent Mode](https://docs.warp.dev/features/warp-ai/agent-mode): Use natural language to accomplish any task in the terminal
+- [Generate](https://docs.warp.dev/features/warp-ai/generate): Use natural language to look up commands or input, accessible either directly from the command line input or inside any interactive command or program.
+- [Voice](https://docs.warp.dev/features/warp-ai/voice): Voice enables natural language interaction with Warp, letting you speak commands  and queries directly to your terminal.
+- [Knowledge](https://docs.warp.dev/features/warp-ai/knowledge): Provide more context to your Agent Mode interactions.
+- [Command Palette](https://docs.warp.dev/features/command-palette): Command Palette is a global search to quickly locate Workflows, Notebooks,  keyboard shortcuts, or other actions within Warp.
+- [Warp Drive](https://docs.warp.dev/features/warp-drive): Warp Drive is a workspace in your terminal where you can save workflows for personal use or to share with a team.
+- [Notebooks](https://docs.warp.dev/features/warp-drive/notebooks): Save interactive playbooks to simplify onboarding and development.
+- [Workflows](https://docs.warp.dev/features/warp-drive/workflows): Saved parameterized commands to run on-demand.
+- [Environment Variables](https://docs.warp.dev/features/warp-drive/environment-variables): Save or sync environment variables to load into your terminal sessions.
+- [Warp Drive on the Web](https://docs.warp.dev/features/warp-drive/warp-drive-on-the-web): Access your Warp Drive objects and Shared Sessions wherever you are.
+- [Teams](https://docs.warp.dev/features/teams): Create or join a team to collaborate with others in Warp.
+- [Session Sharing](https://docs.warp.dev/features/session-sharing): Collaborate with anybody in a Warp terminal session, in real-time
+- [Blocks](https://docs.warp.dev/features/blocks): A Block groups commands and outputs into one atomic unit.
+- [Block Basics](https://docs.warp.dev/features/blocks/block-basics): The basics of creating, selecting, and navigating between Blocks.
+- [Block Actions](https://docs.warp.dev/features/blocks/block-actions): All the cool features Blocks provide.
+- [Block Sharing](https://docs.warp.dev/features/blocks/block-sharing): Share a block with your team or community.
+- [Block Filtering](https://docs.warp.dev/features/blocks/block-filtering): Quickly filter and focus on a subset of a block.
+- [Background Blocks](https://docs.warp.dev/features/blocks/background-blocks): How Blocks interact with background process output.
+- [Sticky Command Header](https://docs.warp.dev/features/blocks/sticky-command-header): Sticky Command Header shows you the command run for a large Block that is scrolled partially off-screen. This helps you see the command that was previously run or currently running jump to the top.
+- [Modern Text Editing](https://docs.warp.dev/features/editor): Unlike other terminals, Warp’s input editor operates out of the box like a modern IDE and the text editors we’re used to.
+- [Alias Expansion](https://docs.warp.dev/features/editor/alias-expansion): Warp will automatically expand your aliases as you type in the input editor.
+- [Command Inspector](https://docs.warp.dev/features/editor/command-inspector): Command Inspector  (also known as Command X-Ray) surfaces documentation for sub-parts of your command, directly in Warp's Input Editor.
+- [Syntax & Error Highlighting](https://docs.warp.dev/features/editor/syntax-error-highlighting): Syntax Highlighting differentiate between sub-commands, options/flags, arguments, and variables. Error Highlighting automatically underlines any invalid commands with a dashed red underline.
+- [Vim Keybindings](https://docs.warp.dev/features/editor/vim): Use Vim keybindings (also known as Vim mode) to edit commands in Warp's input editor.
+- [Command Entry](https://docs.warp.dev/features/entry): Warp's main features for Command Entry, History, Synchronized Inputs, YAML Workflows and More!
+- [Command Corrections](https://docs.warp.dev/features/entry/command-corrections): Command Corrections provides auto-correct suggestions on previously run commands to catch typos and forgotten flags, and fix general console errors.
+- [Command Search](https://docs.warp.dev/features/entry/command-search): The Command Search panel allows you to search across Command History, Workflows, Notebooks, and Warp AI simultaneously. Warp supports fuzzy search and tries to rank more relevant results.
+- [Command History](https://docs.warp.dev/features/entry/command-history): Command History helps you quickly find previously run commands.
+- [Synchronized Inputs](https://docs.warp.dev/features/entry/synchronized-inputs): Synchronized Inputs allow you to sync your commands from one session to multiple similar panes as you’re typing, so you can easily run the same command in multiple sessions at the same time.
+- [YAML Workflows](https://docs.warp.dev/features/entry/yaml-workflows): Workflows are an easier way to execute and share commands within Warp.
+- [Command Completions](https://docs.warp.dev/features/command-completions): Warp's main features for command completions and autosuggestions.
+- [Completions](https://docs.warp.dev/features/command-completions/completions): Warp Tab Completions will suggest commands, option names, and path parameters for you. This feature works regardless of machine or directory (including SSH sessions).
+- [Autosuggestions](https://docs.warp.dev/features/command-completions/autosuggestions): Warp will automatically suggest commands as you type based on shell history and possible completions.
+- [Session Management](https://docs.warp.dev/features/sessions): Warp feature to manages sessions in multiple ways.
+- [Launch Configurations](https://docs.warp.dev/features/sessions/launch-configurations): Launch Configurations enables you to save your configuration of windows, tabs, and panes, so that you can reopen the same set of sessions per project quickly.
+- [Session Navigation](https://docs.warp.dev/features/sessions/session-navigation): The Session Navigation Palette helps you speed up your workflow by allowing you to quickly navigate using the keyboard or mouse to the terminal sessions you are looking for across Warp.
+- [Session Restoration](https://docs.warp.dev/features/sessions/session-restoration): The Session Restoration feature enables Warp to restore your session history, specifically windows, tabs, and panes, along with the last few Blocks in each pane.
+- [Window Management](https://docs.warp.dev/features/windows): Warp's features for Window Management.
+- [Global Hotkey](https://docs.warp.dev/features/windows/global-hotkey): Warp's Global Hotkey is a configurable shortcut that can show/hide a dedicated Warp window or all Warp windows on your chosen desktop regardless of whether the app is focused.
+- [Tabs](https://docs.warp.dev/features/windows/tabs): The Tabs feature allows you to organize a window into multiple terminal sessions. Tabs can be customized with a title and/or an ANSI color to help identify them.
+- [Split Panes](https://docs.warp.dev/features/windows/split-panes): The Split Panes feature allows you to divide a tab into multiple rectangular panes, each of which is a unique terminal session.
+- [Warpify](https://docs.warp.dev/features/warpify): Warp support for Warpifying, or enabling Warp's features, in local or remote sessions.
+- [Subshells](https://docs.warp.dev/features/warpify/subshells): Warp supports subshells for bash, zsh, and fish.
+- [SSH](https://docs.warp.dev/features/warpify/ssh-legacy): SSH wrapper that enables Warp features in remote sessions.
+- [Accessibility](https://docs.warp.dev/features/accessibility): Our mission is to make Warp the most accessible terminal for all developers. It includes fixing the UI, making it easier to use for experts and new engineers who are starting to use the command line.
+- [Find](https://docs.warp.dev/features/find): Find in Warp works unlike how you may have seen in other terminals. Instead of searching from the lowest point in view as with text editors or from the top as with terminals.
+- [Files, Links, & Scripts](https://docs.warp.dev/features/files-and-links): Quickly open links and files or run scripts with your mouse.
+- [Markdown Viewer](https://docs.warp.dev/features/markdown-viewer): Open Markdown files in your terminal and run commands.
+- [Working Directory](https://docs.warp.dev/features/working-directory)
+- [Smart-Select](https://docs.warp.dev/features/smart-select): With smart selection, you no longer need to drag the mouse when highlighting common patterns (listed below).
+- [Full-screen Apps](https://docs.warp.dev/features/full-screen-apps): Warp runs alt-grid apps like Vim and Emacs in full-screen mode. Warp also supports sending mouse and scroll events directly to the alt-grid or adjusting the padding surrounding the apps.
+- [Keyboard Shortcuts](https://docs.warp.dev/features/keyboard-shortcuts): Warps commonly used keyboard shortcuts.
+- [Notifications & Audible Bell](https://docs.warp.dev/features/notifications): Warp can send you customizable desktop notifications when you are away from the app and quickly re-focus when something meaningful happens in your terminal sessions.
+- [Settings Sync (Beta)](https://docs.warp.dev/features/settings-sync): Settings Sync is a cloud feature in Warp that makes it convenient to use Warp on multiple devices or on a single device using both the Desktop and Web versions of Warp.
+- [Quit Warning](https://docs.warp.dev/features/quit-warning): Warp's quit warning feature is a valuable precaution to prevent unintentional data loss or lost progress on long-running jobs.
+- [Integrations](https://docs.warp.dev/features/integrations-and-plugins): Warp extends and integrates with popular development tools.
+- [URI Scheme](https://docs.warp.dev/features/uri-scheme): Warps URI scheme enables you to programmatically open new windows, tabs, or launch configurations with ease.
+- [Network Log](https://docs.warp.dev/features/network-log): Logs for all network traffic (both requests and responses) originating from the current terminal session.
+- [Secret Redaction](https://docs.warp.dev/features/secret-redaction): Secret Redaction attempts to automatically redact secrets and sensitive information in your terminal output, including passwords, IP addresses, API keys, and PII.
+- [Linux](https://docs.warp.dev/features/linux): Linux specific features.
+- [Performance](https://docs.warp.dev/how-does-warp-compare/performance): This is a short comparison of different terminals and their performance.
+- [Terminal features](https://docs.warp.dev/how-does-warp-compare/terminal-features): Below you'll find a table showcasing different terminal features (such as text attribution) and information about which one of those are supported in Warp.
+- [Sending Feedback & Logs](https://docs.warp.dev/help/sending-us-feedback): Submit your feedback on Warp: bugs, feature requests, novel ideas, etc.
+- [Plans, Subscriptions & Pricing](https://docs.warp.dev/help/plans-subscriptions-and-pricing): Learn about Warp's plans and pricing tiers. Get started for free.
+- [Updating Warp](https://docs.warp.dev/help/updating-warp): Steps and help with updating Warp.
+- [Using Warp Offline](https://docs.warp.dev/help/using-warp-offline): Using Warp offline and what features are supported.
+- [Logging out & Uninstalling](https://docs.warp.dev/help/uninstalling-warp): How to log out from Warp, and how to uninstall Warp.
+- [Known Issues](https://docs.warp.dev/help/known-issues): Warp issues along with workarounds and solutions.
+- [Troubleshooting Login Issues](https://docs.warp.dev/help/troubleshooting-login-issues): Instructions on how to troubleshoot login issues.
+- [Open Source Licenses](https://docs.warp.dev/help/licenses): These are the third-party libraries that Warp depends on.

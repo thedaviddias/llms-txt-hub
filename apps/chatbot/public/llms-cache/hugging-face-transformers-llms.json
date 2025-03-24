@@ -1,0 +1,10 @@
+{
+  "name": "Hugging Face Transformers",
+  "description": "State-of-the-art Natural Language Processing library",
+  "website": "https://huggingface.co",
+  "url": "https://huggingface-projects-docs-llms-txt.hf.space/transformers/llms.txt",
+  "type": "llms.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/hugging-face-transformers-llms.txt",
+  "lastFetched": "2025-03-24"
+}

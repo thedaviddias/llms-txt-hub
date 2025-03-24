@@ -1,0 +1,541 @@
+# Source Control
+
+Connect to source control providers to deploy your projects.
+
+## Overview
+
+Project owners must connect their source control providers before they can deploy projects. You can manage source control providers from the [Integrations tab](https://envoyer.io/user/profile#/integrations) within your account dashboard.
+
+## Supported Providers
+
+Envoyer supports four source control providers:
+
+*   <a href="https://github.com"><Icon icon="github" /> GitHub</a>
+*   <a href="https://bitbucket.com"><Icon icon="bitbucket" /> Bitbucket</a>
+*   <a href="https://gitlab.com"><Icon icon="gitlab" /> GitLab</a>
+*   <a href="https://about.gitlab.com/install/"><Icon icon="gitlab" /> GitLab Self-Hosted</a>
+
+Below we will discuss some issues that may arise when using each provider and how you can address them.
+
+<AccordionGroup>
+  <Accordion title="GitHub">
+    If your organization has third-party restrictions enabled, the organization's owner will need to approve the integration. This can be done using the following link: [https://github.com/settings/connections/applications/94f9ec2a8d84cbc725e2](https://github.com/settings/connections/applications/94f9ec2a8d84cbc725e2)
+  </Accordion>
+
+  <Accordion title="GitLab">
+    GitLab has [strict rate limits](https://docs.gitlab.com/ee/security/rate_limits.html) that can prevent a project from deploying to multiple servers at one time. If you need to deploy to more than one server at a time, you should consider switching to another source control provider.
+  </Accordion>
+
+  <Accordion title="GitLab Self-Hosted">
+    If you receive the "Invalid repository. Are you sure you have access to it?" error message when attempting to connect a repository to your project, you should try using the Repository ID instead of the name.
+  </Accordion>
+</AccordionGroup>
+
+## Provider Management
+
+### Connecting Providers
+
+You can connect to any of the supported source control providers at any time through the [Integrations panel](https://envoyer.io/user/profile#/integrations) within your account dashboard.
+
+### Unlinking Providers
+
+You may unlink providers at any time by clicking the **Unlink** button next to the **Refresh Token** button.
+
+<Warning>
+  If you unlink a source control provider, you will be unable to make new deployments for projects that are connected to that provider. Existing deployments will be unaffected.
+</Warning>
+
+
+# Your Account
+
+Learn how to manage your Envoyer account.
+
+## Updating Your Profile Information
+
+You may update your name, email and password from the [Account dashboard](https://envoyer.io/user/profile#/account) within your user profile at any time.
+
+## Securing Your Account With Two-Factor Authentication
+
+You can add Two-Factor Authentication (2FA) to your account from the [Account page](https://envoyer.io/user/profile#/account). Once you enable 2FA, please remember to scan the 2FA barcode into your phone's authentication application.
+
+<Tip>
+  We recommend using applications such as 1Password or the [Google Authenticator](https://support.google.com/accounts/answer/1066447) application on your smartphone to manage your Envoyer 2FA configuration.
+</Tip>
+
+## Billing
+
+You can sign up to any one of Envoyer's three subscription plans:
+
+*   **Basic:** 10 Projects, 10 Minute Deploy Time
+*   **Plus:** 20 Projects, 10 Minute Deploy Time
+*   **Premium:** Unlimited Projects, 15 Minute Deploy Time
+
+You may join Envoyer for free as a collaborator on other projects. If you need to manage your own projects in the future, you can upgrade your account at any time.
+
+<Note>
+  The build time for each plan determines the maximum that your deployment plan can take before timing out.
+</Note>
+
+### Business Receipts
+
+If you need to add specific contact or tax information to your receipts, like your full business name, VAT identification number, or address of record you can add Extra Billing Information from the Subscription page in your account. We'll make sure it shows up on every receipt.
+
+### Deleting Your Account
+
+You can delete your account at any time from the [Account page](https://envoyer.io/user/profile#/account).
+
+<Warning>
+  Deleting your account will cancel your subscription and delete all of your account's data. **Your data, including billing information, will not be recoverable**; however, your servers will be preserved.
+</Warning>
+
+
+# Introduction
+
+Welcome to Envoyer, a zero downtime deployment service for PHP.
+
+<CardGroup cols={2}>
+  <Card title="Create An Account" icon="user-plus" href="https://envoyer.io/auth/register">
+    Create your Envoyer account today
+  </Card>
+
+  <Card title="Watch More" icon="circle-play" href="https://laracasts.com/series/envoyer">
+    Watch the free Envoyer series on Laracasts
+  </Card>
+</CardGroup>
+
+## What Is Envoyer?
+
+[Envoyer](https://envoyer.io) is a zero downtime deployment service for PHP. Some highlights of Envoyer's features include:
+
+* GitHub, GitLab & Bitbucket Integration
+
+* GitLab Self-Hosted Integration
+
+* Seamless Deployment Rollbacks
+
+* Application Health Checks
+
+* Integrated Chat Notifications
+
+* Tuned for Laravel Apps
+
+* Deploy Any PHP Project
+
+* Unlimited Deployments
+
+* Deploy To Multiple Servers
+
+* Cron Job Monitoring
+
+* Unlimited Team Members
+
+* Customize Your Deployments
+
+* Import Your [Laravel Forge](https://forge.laravel.com) Servers
+
+## Forge Integration
+
+[Laravel Forge](https://forge.laravel.com) now offers a first-party integration with Envoyer. [Learn more](https://blog.laravel.com/forge-zero-downtime-deployments).
+
+<Frame>
+  ![Laravel Forge x Envoyer](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/forge-envoyer-integration-header.png)
+</Frame>
+
+## Envoyer IP Addresses
+
+If you are restricting SSH access to your server using IP whitelisting, you **must** whitelist the following IP addresses:
+
+* `159.65.47.205`
+
+* `157.245.120.132`
+
+* `134.122.14.47`
+
+* `144.126.248.121`
+
+You may also need to whitelist the [Health Check IP addresses](/projects/management#health-check-ip-addresses).
+
+## Envoyer API
+
+Envoyer provides a powerful API that allows you to manage your servers programmatically, providing access to the vast majority of Envoyer features. You can find the Envoyer API documentation [here](https://envoyer.io/api-documentation).
+
+## Limitations
+
+Envoyer is not necessary for applications running [Laravel Octane](https://github.com/laravel/octane), as Octane already includes zero-downtime deployments out of the box.
+
+## Legal and Compliance
+
+Our [Terms of Service](https://envoyer.io/terms) and [Privacy Policy](https://envoyer.io/privacy) provide details on the terms, conditions, and privacy practices for using Envoyer.
+
+
+# Collaborators
+
+Manage who can collaborate on your projects.
+
+## Overview
+
+Collaborators can be added to projects to help manage projects and deployments. Note that collaborators are not permitted to invite additional collaborators or delete a project.
+
+<Note>
+  In addition, you can invite collaborators to your project who do not have a paid Envoyer subscription plan. This means that your company or team only need one active subscription to Envoyer.
+</Note>
+
+## Inviting Collaborators
+
+On a project's **Collaborators** tab, you can click the **Add Collaborator** button. Envoyer will present you with a modal dialog window asking for the email address of the collaborator you wish to add. The email address must belong to a registered Envoyer user.
+
+<Info>
+  Only project owners are able to manage project collaborators.
+</Info>
+
+
+# Deployment Hooks
+
+Learn how to deploy your projects with Deployment Hooks.
+
+## Overview
+
+Deployment hooks allow you to customize your entire deployment plan by writing small Bash scripts to automate parts of your deployment. You may also specify the servers on which each hook is executed and the user that runs the hook.
+
+Envoyer creates several first-party deployment hooks that cannot be modified or re-ordered:
+
+*   Clone New Release
+*   Install Composer Dependencies (if you have configured your project to do so)
+*   Activate New Release
+*   Purge Old Releases
+
+Your custom hooks can be re-ordered before / after each of these fixed actions.
+
+Like any other step during your deployment, if a deployment hook exits with a non-zero status code, the entire deployment will be cancelled. This prevents your application from experiencing downtime due to a broken deployment.
+
+## Push To Deploy URL
+
+If you need to trigger deployments as part of your CI or other automated process instead of [when code is pushed to your repository](/projects/management#source-control), you can choose to use the "Push To Deploy" URL that is generated by Envoyer for your project. To trigger a deployment using this URL, simply make an HTTP `GET` or `POST` request to the URL.
+
+<Info>
+  You may regenerate the "Push To Deploy" URL at any time by clicking the refresh icon next to the URL within the Deployment Hooks tab of your project.
+</Info>
+
+### Deployment URL Options
+
+You may pass either a `sha` or `branch` parameter to the deployment URL to choose which branch or Git commit to deploy. These parameters may be passed as query string variables or POST fields.
+
+## Deployment Lifecycle
+
+When a deployment is triggered for your project, Envoyer will execute your deployment plan. By default, this consists of downloading a tarball of your project, installing the Composer dependencies (if configured), pointing the `current` symbolic link at the latest release, and finally purging any old deployments from your server.
+
+Of course, any deployment hooks you have configured will also be run during the deployment in their configured sequence.
+
+## Hook Variables
+
+Within your deployment hook scripts, you may use the `release` variable to access the most current release directory. For example:
+
+```bash
+cd {{ release }}
+
+php artisan command
+```
+
+Other available variables are:
+
+| Name       | Description                                                                                     |
+| ---------- | ----------------------------------------------------------------------------------------------- |
+| `author`   | The author of the commit that is being deployed                                                 |
+| `branch`   | The branch that Envoyer is configured to deploy                                                 |
+| `message`  | The message of the commit that is being deployed                                                |
+| `project`  | The project's root directory (the directory which contains `current`, `releases` and `storage`) |
+| `release`  | The current release path, within `releases`                                                     |
+| `sha`      | The commit hash that is being deployed                                                          |
+| `time`     | The current deployment formatted as `YmdHis`                                                    |
+| `php`      | The server's configured PHP path                                                                |
+| `composer` | The server's configured Composer path                                                           |
+| `name`     | The project's name                                                                              |
+
+<Info>
+  Variables can be written with or without a space inside of the curly braces. For example, `{{ variable }}` is the same as `{{variable}}`
+</Info>
+
+
+# Heartbeats
+
+Learn how to monitor your application's cron jobs.
+
+## Overview
+
+Heartbeats provide a monitoring mechanism for your Cron jobs or any other scheduled task performed by your application. You may select from a variety of schedule frequencies when creating the heartbeat. So, for example, if your scheduled job runs daily, you should select the 1 Day monitoring option.
+
+After creating a heartbeat, a unique URL will be assigned to the heartbeat. When this URL is called via a HTTP `GET` request, the "Last Check-In" time of your heartbeat will be updated.
+
+If Envoyer does not receive a check-in from your job within the specified monitoring frequency, a notification will be sent to your configured notification channels.
+
+## Heartbeat URLs
+
+### Calling Manually
+
+If you are manually modifying your server's `/etc/crontab` file to define scheduled tasks, you can simply append a curl request to your Cron command. For example:
+
+```text /etc/crontab
+* * * * * user php command && curl http://beats.envoyer.io/heartbeat-id
+```
+
+### Calling With Laravel
+
+If you're using Laravel's task scheduler, you may use the `thenPing` method on your scheduled job.
+
+```php app/Console/Kernel.php
+$schedule->command('foo')->thenPing('http://beats.envoyer.io/heartbeat-id');
+```
+
+
+# Management
+
+How to manage your Envoyer projects.
+
+## Overview
+
+Within Envoyer, your application is represented by a "project". Projects can be deployed to one or more servers at the same time.
+
+## Creating a Project
+
+To create a project, click the **Add Project** button at the top of the Envoyer dashboard. You will be presented with a modal that asks you to provide a few details about the project.
+
+If you don't see the Source Control provider that you need, make sure that you've linked it in your account settings.
+
+Once you've provided the details regarding your project, click **Save Project**.
+
+<Info>
+  To create new projects, you must be subscribed to one of Envoyer's paid subscriptions.
+</Info>
+
+## Project Settings
+
+To make changes to your project settings, click the **Settings** button at the top of the project's dashboard.
+
+From here, you can change the project settings, source control settings, and delete the project. In addition, you can edit the project's name, type, health check URL, and how many deployments to retain for the project
+
+### Health Checks
+
+When your site has finished deploying, Envoyer can ping it to ensure that it is still available. Health checks are performed from three locations:
+
+*   New York
+*   London
+*   Singapore
+
+If you have configured notifications on your project, Envoyer will notify these channels of the result of the health check.
+
+<Check>
+  The configured URL must return a `2xx` status code. All other status codes will be considered a failure.
+</Check>
+
+#### Health Check IP Addresses
+
+If your application firewall requires you to allow access from the health check monitors by IP address, you should allow the following IP addresses so that Envoyer can ping your URL:
+
+*   New York: `198.199.84.22`
+*   London: `167.71.140.19`
+*   Singapore: `167.71.208.72`
+
+### Source Control
+
+You can manage how the project is deployed via the project's source control settings. Specifically, you may configure from which source control provider the project is deployed, the branch that is deployed, and you may also choose whether to install the project's Composer dependencies.
+
+You may also enable the project's **Deploy When Code Is Pushed** setting. Enabling this setting will add a webhook to your source control provider. When code is pushed to the selected branch, Envoyer will automatically trigger a new deployment.
+
+### Transfer Project
+
+Projects may be transferred to other Envoyer accounts from the project's Settings panel. To transfer the project, you must provide the email address of the Envoyer account you wish to transfer the project to. The Envoyer account that is receiving the project will receive an email asking them to confirm the transfer request.
+
+You may only transfer projects to Envoyer accounts with an active subscription.
+
+### Delete Project
+
+If you no longer need the project, you may delete it via the project settings dashboard. After confirming the name of the project, click the **Delete Project** button.
+
+<Warning>
+  Deleting your project is an irreversible action, and we will be unable to recover the project's settings for you.
+</Warning>
+
+
+# Notifications
+
+Receive notifications from Envoyer.
+
+## Overview
+
+Envoyer can optionally notify you after a deployment completes and inform you whether it's deployed successfully or not. Configured notification channels will also be used by Envoyer's Heartbeat and health check services.
+
+## Channels
+
+Envoyer supports a variety of notification channels, and you are welcome to configure multiple channels for your project:
+
+*   Slack
+*   Email
+*   Discord
+*   Microsoft Teams
+
+After you have selected a channel, you will be asked to provide a name for the channel, webhook URL, or email address. Once you've finished providing this information, click **Add Channel** to confirm.
+
+
+# Servers
+
+Learn how Envoyer deploys your projects to servers.
+
+## Overview
+
+After creating a project, you may add as many servers as you like to the project. After adding a server, you will be given an SSH key to add to your server. You should add the SSH key to the `~/.ssh/authorized_keys` file for the users Envoyer should connect to the server as.
+
+After you have added the SSH key to the server, click the "refresh" icon next to the server's "Connection Status" indicator. Envoyer will attempt to connect to your server and run a few health checks on the server, such as attempting to restart PHP FPM (if it is installed on the server).
+
+<Info>
+  If Envoyer was unable to restart PHP FPM, you will receive an alert on your project overview. The information modal for the alert will provide the command needed to allow Envoyer to restart FPM without a password.
+</Info>
+
+## Server Configuration
+
+There are several options you may configure when managing a server:
+
+| **Field**                        | Description                                                                                               |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Name**                         | Give your server a name that you can identify easily.                                                     |
+| **Hostname / IP Address**        | The IPv4 address of your server.                                                                          |
+| **Port**                         | The port Envoyer should use to connect to your server.                                                    |
+| **Connect As**                   | The user that Envoyer should use to connect to your server.                                               |
+| **Receives Code Deployments**    | Determines whether the server should receive code deployments.                                            |
+| **Project Path**                 | The absolute path to the project's root directory on your server.                                         |
+| **Reload FPM After Deployments** | Determines whether the PHP-FPM service will be reloaded after each deployment.                            |
+| **FreeBSD**                      | Indicates whether the server is running the FreeBSD operating system.                                     |
+| **PHP Version**                  | The version of PHP being used (also determines the version of the PHP-FPM service that will be reloaded). |
+| **PHP Path**                     | The absolute path to the PHP binary on your system.                                                       |
+| **Composer Path**                | The absolute path to the Composer binary on your system.                                                  |
+
+### Configuring Multiple PHP Versions
+
+If your server is configured to run multiple versions of PHP, you may find that the **Install Composer Dependencies** step uses the wrong version. To resolve this, you should define a custom Composer path configuration setting, such as `php8.0 /usr/local/bin/composer`. This setting will instruct Composer to run using PHP 8.0 instead of the system default.
+
+### Non-Standard PHP Services
+
+Some VPS providers run custom versions of Ubuntu that manage PHP services in a variety of ways that are not typical. If Envoyer is not able to correctly identify and reload the correct PHP service, you will need to disable the **Reload FPM After Deployments** setting and create a custom [Deployment Hook](/projects/deployment-hooks) that reloads the correct service.
+
+## Importing Laravel Forge Servers
+
+If you have provisioned your server with [Laravel Forge](https://forge.laravel.com), you may import it into your Envoyer project. You'll need to create an API token on your Forge account and then connect it to your Envoyer account from the [Integrations](https://envoyer.io/user/profile#/integrations) dashboard.
+
+When adding a server to your project, click the **Import Forge Server** button. Envoyer will display a modal asking you to select the server from your account and the site from the server.
+
+Once selected, Envoyer will add the required SSH key to the connected site's user (typically `forge`, unless using a Forge configured isolated user). Envoyer will use this SSH key to connect to your server and deploy your site.
+
+## Managing Uploaded Files
+
+When storing user uploaded files in an Envoyer deployed Laravel application, you should store them in the application's `storage` directory. Then, you may use the "Manage Linked Folders" feature of Envoyer to create a symbolic link from your public directory to the `storage` directory. The "Manage Linked Folders" button can be found on the "Deployment Hooks" tab of your project.
+
+If you are not using Laravel, you will essentially follow the same process. However, you will need to manually create a `storage` directory in the deployment path of your application (the same directory level as the `current` symbolic link).
+
+
+# Quick Start
+
+There are just a few simple and intuitive steps to get started.
+
+## Overview
+
+The following documentation provides a step-by-step guide to configure your application and infrastructure for zero downtime deployments with Envoyer.
+
+## Source Control Providers
+
+Once you have subscribed to a plan, you will need to connect Envoyer with your preferred source control provider. Envoyer supports GitHub, Bitbucket, GitLab, and self-hosted GitLab.
+
+From the onboarding screen, select your provider and follow the authentication flow for that provider. This grants Envoyer permission to interact with your repositories on your behalf.
+
+<Frame>
+  ![Selecting a source control provider](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/source-provider.png)
+</Frame>
+
+Once you've connected to your source control provider, this step of the onboarding flow will be complete. Should you wish to connect additional providers, you may do so from the [integrations](https://envoyer.io/user/profile#/integrations) panel of your account.
+
+## Projects
+
+With your source control provider connected, you can now configure your first project.
+
+Click the "Add project" button to open the project creation modal.
+
+<Frame>
+  ![Selecting a source control provider](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/create-project.png)
+</Frame>
+
+Give your project a descriptive name and select the source control provider associated with your application.
+
+Finally, enter the repository information in the format `organization/repository` along with the branch name you want to deploy. Envoyer will automatically deploy the provided branch unless this is overridden at the start of a deployment.
+
+## Servers
+
+With your project created, you now need to tell Envoyer which server or servers to deploy to. There are three ways to do this.
+
+### Import From Forge
+
+Envoyer has a first-party integration with [Laravel Forge](https://forge.laravel.com) - Laravel's preferred server provisioning and management platform - and you may import servers directly from Forge into your project.
+
+Click the "Provide API Token" option from the onboarding screen and provide a [Forge API token](https://forge.laravel.com/user-profile/api). From the project overview, you may now select the "Import" option to open the import modal. From here, select the server and site you wish to import. Envoyer will retrieve the connection details of the server and automatically add an SSH key which allows it to connect.
+
+<Frame>
+  ![Import from Forge](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/import-forge.png)
+</Frame>
+
+### Manual Import
+
+Don't worry if you're not using Forge; you may configure your server manually. Select the "Configure" option from the onboarding screen in the "Manual Configuration" section. After adding the [connection details](/projects/servers#server-configuration) for your server, add the provided SSH key to the `~/.ssh/authorized_keys` file for the users Envoyer should connect to the server as.
+
+<Frame>
+  ![Manual Import](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/import-manual.png)
+</Frame>
+
+### Connect From Forge
+
+It's also possible to attach a server to your Envoyer project [directly from Forge](https://forge.laravel.com/docs/sites/envoyer.html). When creating a new site on Laravel Forge, you may choose "Configure with Envoyer," allowing you to select the Envoyer project you wish the site to be attached to. Doing so will automatically configure the connection between Envoyer and Forge, install an SSH key, and set the path from which the project should be served.
+
+<Frame>
+  ![Connect from Forge](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/forge-connect.png)
+</Frame>
+
+## Deployments
+
+The final part of your journey to zero downtime deployments is configuring what should happen during the deployment itself.
+
+Envoyer provides a lot of flexibility and control over your deployments - you can read more about that in the [hooks](/projects/deployment-hooks) section, but for your first deployment, there are only two things to consider:
+
+1.  Which directory on your server(s) should Envoyer deploy your application?
+2.  Which directory should your application be served from?
+
+You may configure the deployment directory by opening the "Update server" modal from your project's "Servers" tab.
+
+<Frame>
+  ![Updating the project path](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/project-path.png)
+</Frame>
+
+Envoyer creates a `releases` directory in which your latest code is copied when you initiate a deployment. A `current` symlink is also created that links to the latest release.
+
+If your deployment path is `/home/forge/app.com`, you should set your web server's document root directory to `/home/forge/app.com/current/public`.
+
+<Info>
+  When adding a server to Envoyer from Forge, the application path and the web root are set automatically.
+</Info>
+
+Finally, Envoyer can manage your application's environment variables across all servers associated with a project. You should likely configure this before your first deployment.
+
+You may do so by selecting "Manage Environment" from the project overview page. First, you must provide a key to encrypt the variables stored on our servers and choose the servers. Next, you can enter your variables and select which servers you wish to sync them to. Envoyer will then connect to the selected servers and sync the variables to a `.env` file in your chosen project path.
+
+<Warning>
+  When using Envoyer, you should always manage your Environment variables via Envoyer's UI.
+</Warning>
+
+<Frame>
+  ![Manage environment](https://mintlify.s3.us-west-1.amazonaws.com/envoyer/images/environment.png)
+</Frame>
+
+With these steps completed, you may deploy your project by clicking the "Deploy" button from your project overview, which will open the deployment modal, allowing you to choose the branch or tag you wish to deploy.
+
+Envoyer will attempt to connect to each server and clone the code of the chosen branch or tag of the configured repository into a new release directory. Next, Composer dependencies are installed before the symlink is updated, making the new release live.
+
+<Check>
+  Congratulations, you've just successfully completed your first zero downtime deployment.
+</Check>
+
+

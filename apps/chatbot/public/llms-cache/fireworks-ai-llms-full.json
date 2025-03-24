@@ -1,0 +1,10 @@
+{
+  "name": "Fireworks AI",
+  "description": "AI model deployment and inference platform",
+  "website": "https://fireworks.ai",
+  "url": "https://docs.fireworks.ai/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/fireworks-ai-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

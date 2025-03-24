@@ -1,0 +1,10 @@
+{
+  "name": "Flatfile",
+  "description": "Data onboarding and import platform",
+  "website": "https://flatfile.com",
+  "url": "https://flatfile.com/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/flatfile-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

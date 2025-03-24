@@ -1,0 +1,10 @@
+{
+  "name": "AI Squared",
+  "description": "AI integration platform for enterprise applications",
+  "website": "https://squared.ai",
+  "url": "https://docs.squared.ai/llms.txt",
+  "type": "llms.txt",
+  "category": "ai-ml",
+  "cachePath": "apps/chatbot/public/llms-cache/ai-squared-llms.txt",
+  "lastFetched": "2025-03-24"
+}

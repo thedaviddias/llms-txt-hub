@@ -1,0 +1,35 @@
+# Model Context Protocol
+
+## Docs
+
+- [Example Clients](https://modelcontextprotocol.io/clients.md): A list of applications that support MCP integrations
+- [Contributing](https://modelcontextprotocol.io/development/contributing.md): How to participate in Model Context Protocol development
+- [Roadmap](https://modelcontextprotocol.io/development/roadmap.md): Our plans for evolving Model Context Protocol (H1 2025)
+- [What's New](https://modelcontextprotocol.io/development/updates.md): The latest updates and improvements to MCP
+- [Core architecture](https://modelcontextprotocol.io/docs/concepts/architecture.md): Understand how MCP connects clients, servers, and LLMs
+- [Prompts](https://modelcontextprotocol.io/docs/concepts/prompts.md): Create reusable prompt templates and workflows
+- [Resources](https://modelcontextprotocol.io/docs/concepts/resources.md): Expose data and content from your servers to LLMs
+- [Roots](https://modelcontextprotocol.io/docs/concepts/roots.md): Understanding roots in MCP
+- [Sampling](https://modelcontextprotocol.io/docs/concepts/sampling.md): Let your servers request completions from LLMs
+- [Tools](https://modelcontextprotocol.io/docs/concepts/tools.md): Enable LLMs to perform actions through your server
+- [Transports](https://modelcontextprotocol.io/docs/concepts/transports.md): Learn about MCP's communication mechanisms
+- [Debugging](https://modelcontextprotocol.io/docs/tools/debugging.md): A comprehensive guide to debugging Model Context Protocol (MCP) integrations
+- [Inspector](https://modelcontextprotocol.io/docs/tools/inspector.md): In-depth guide to using the MCP Inspector for testing and debugging Model Context Protocol servers
+- [Example Servers](https://modelcontextprotocol.io/examples.md): A list of example servers and implementations
+- [Introduction](https://modelcontextprotocol.io/introduction.md): Get started with the Model Context Protocol (MCP)
+- [For Client Developers](https://modelcontextprotocol.io/quickstart/client.md): Get started building your own client that can integrate with all MCP servers.
+- [For Server Developers](https://modelcontextprotocol.io/quickstart/server.md): Get started building your own server to use in Claude for Desktop and other clients.
+- [For Claude Desktop Users](https://modelcontextprotocol.io/quickstart/user.md): Get started using pre-built servers in Claude for Desktop.
+- [MCP Client](https://modelcontextprotocol.io/sdk/java/mcp-client.md): Learn how to use the Model Context Protocol (MCP) client to interact with MCP servers
+- [Overview](https://modelcontextprotocol.io/sdk/java/mcp-overview.md): Introduction to the Model Context Protocol (MCP) Java SDK
+- [MCP Server](https://modelcontextprotocol.io/sdk/java/mcp-server.md): Learn how to implement and configure a Model Context Protocol (MCP) server
+- [Building MCP with LLMs](https://modelcontextprotocol.io/tutorials/building-mcp-with-llms.md): Speed up your MCP development using LLMs such as Claude!
+
+
+## Optional
+
+- [Python SDK](https://github.com/modelcontextprotocol/python-sdk)
+- [TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
+- [Java SDK](https://github.com/modelcontextprotocol/java-sdk)
+- [Kotlin SDK](https://github.com/modelcontextprotocol/kotlin-sdk)
+- [Specification](https://spec.modelcontextprotocol.io)

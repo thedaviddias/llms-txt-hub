@@ -1,0 +1,10 @@
+{
+  "name": "Velt",
+  "description": "Real-time collaboration platform",
+  "website": "https://velt.dev",
+  "url": "https://docs.velt.dev/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/velt-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

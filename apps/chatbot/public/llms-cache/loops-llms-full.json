@@ -1,0 +1,10 @@
+{
+  "name": "Loops",
+  "description": "Customer communication and engagement platform",
+  "website": "https://loops.so",
+  "url": "https://loops.so/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/loops-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

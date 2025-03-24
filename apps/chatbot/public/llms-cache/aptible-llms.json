@@ -1,0 +1,10 @@
+{
+  "name": "Aptible",
+  "description": "Security and compliance platform for cloud infrastructure",
+  "website": "https://aptible.com",
+  "url": "https://www.aptible.com/docs/llms.txt",
+  "type": "llms.txt",
+  "category": "security-identity",
+  "cachePath": "apps/chatbot/public/llms-cache/aptible-llms.txt",
+  "lastFetched": "2025-03-24"
+}

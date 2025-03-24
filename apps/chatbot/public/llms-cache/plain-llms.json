@@ -1,0 +1,10 @@
+{
+  "name": "Plain",
+  "description": "Customer support and communication platform",
+  "website": "https://plain.com",
+  "url": "https://www.plain.com/docs/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/plain-llms.txt",
+  "lastFetched": "2025-03-24"
+}

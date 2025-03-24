@@ -1,0 +1,10 @@
+{
+  "name": "Sourcegraph",
+  "description": "Code intelligence and search platform",
+  "website": "https://sourcegraph.com",
+  "url": "https://docs.sourcegraph.com/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/sourcegraph-llms.txt",
+  "lastFetched": "2025-03-24"
+}

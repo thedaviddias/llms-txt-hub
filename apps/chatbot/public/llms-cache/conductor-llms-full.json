@@ -1,0 +1,10 @@
+{
+  "name": "Conductor",
+  "description": "Real-time API integration for QuickBooks Desktop with multi-language support",
+  "website": "https://docs.conductor.is",
+  "url": "https://docs.conductor.is/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/conductor-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

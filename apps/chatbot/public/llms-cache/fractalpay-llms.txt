@@ -1,0 +1,32 @@
+# API Documentation
+
+## Docs
+
+- [Low Code JS](https://docs.fractalpay.com/EmbeddedPayments.md): Fractal JS in depth
+- [null](https://docs.fractalpay.com/Webhooks.md)
+- [Charge Customer](https://docs.fractalpay.com/api-reference/customers/charge-customer.md): Charge Customer
+- [Create Customer](https://docs.fractalpay.com/api-reference/customers/create-customer.md): Create Customer
+- [Get Customer](https://docs.fractalpay.com/api-reference/customers/get-customer.md): Get Customer
+- [Get Customers](https://docs.fractalpay.com/api-reference/customers/get-customers.md): Get Customers
+- [Request Card](https://docs.fractalpay.com/api-reference/customers/request-card.md): Request Card
+- [Full Merchant Submit](https://docs.fractalpay.com/api-reference/merchant-onboarding/full-merchant-submit.md): Full Merchant Submit
+- [Get Merchants by Client](https://docs.fractalpay.com/api-reference/merchant-onboarding/get-merchants-by-client.md): Get Merchants by Client
+- [Create Link](https://docs.fractalpay.com/api-reference/payment-collection-methods/create-payment-link.md): Create Link
+- [Payment Request](https://docs.fractalpay.com/api-reference/payment-collection-methods/payment-request.md): Payment Request
+- [Payment Request Customer](https://docs.fractalpay.com/api-reference/payment-collection-methods/payment-request-customer.md): Payment Request Customer
+- [Payment Link](https://docs.fractalpay.com/api-reference/payment-collection-methods/qr-payment-link.md): Payment Link
+- [Capture Pre-Authorization](https://docs.fractalpay.com/api-reference/preauthorizations/capture-pre-authorization.md): Capture Pre-Authorization
+- [Increment Pre-Authorization](https://docs.fractalpay.com/api-reference/preauthorizations/increment-pre-authorization.md): Increment Pre-Authorization
+- [Pre-Authorization with Token](https://docs.fractalpay.com/api-reference/preauthorizations/pre-authorization-with-token.md): Pre-Authorization with Token
+- [Get Transaction](https://docs.fractalpay.com/api-reference/transactions/get-transaction.md): Get Transaction
+- [Get Transactions](https://docs.fractalpay.com/api-reference/transactions/get-transactions.md): Get Transactions
+- [Return Sale](https://docs.fractalpay.com/api-reference/transactions/return-sale.md): Return Sale
+- [Void Sale](https://docs.fractalpay.com/api-reference/transactions/void-sale.md): Void Sale
+- [GooglePay™ Web Integration](https://docs.fractalpay.com/googlepay.md)
+- [Implementation Guide](https://docs.fractalpay.com/implementationguide.md): Integrations simplified
+- [Introduction](https://docs.fractalpay.com/introduction.md): Welcome to the Fractal documentation
+
+
+## Optional
+
+- [Embedded Payments](https://fractalpay.com/)

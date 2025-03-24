@@ -1,0 +1,97 @@
+# Dopp Docs
+
+## Docs
+
+- [GET /v1/public/get_account_balance](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_account_balance.md)
+- [GET /v1/public/get_account_collateral](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_account_collateral.md)
+- [GET /v1/public/get_account_summary](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_account_summary.md)
+- [null](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_all_account_balances.md)
+- [GET /v1/public/get_exercisable_options](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_exercisable_options.md)
+- [GET /v1/public/get_position](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_position.md)
+- [GET /v1/public/get_positions](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_positions.md)
+- [null](https://docs.dopp.finance/api-reference/account-management/get-v1publicget_positions_with_mints.md)
+- [POST /v1/private/create_admin](https://docs.dopp.finance/api-reference/authentication/post-v1privatecreate_admin.md)
+- [null](https://docs.dopp.finance/api-reference/authentication/post-v1privatecreate_token.md)
+- [POST /v1/private/create_user](https://docs.dopp.finance/api-reference/authentication/post-v1privatecreate_user.md)
+- [null](https://docs.dopp.finance/api-reference/invite-code-management/get-v1publicverify_invite_code.md)
+- [null](https://docs.dopp.finance/api-reference/invite-code-management/post-v1privategenerate_invite_code.md)
+- [GET /v1/public/get_all_instruments](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_all_instruments.md)
+- [GET /v1/public/get_all_order_books](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_all_order_books.md)
+- [GET /v1/public/get_book_summary_per_currency/{currency}](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_book_summary_per_currency.md)
+- [GET /v1/public/get_book_summary_per_instrument/{instrument_name}](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_book_summary_per_instrument.md)
+- [GET /v1/public/get_contract_size/{instrument_name}](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_contract_size.md)
+- [GET /v1/public/get_currencies](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_currencies.md)
+- [GET /v1/public/get_expiration_timestamps](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_expiration_timestamps.md)
+- [GET /v1/public/get_instrument/{instrument_name}](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_instrument.md)
+- [GET /v1/public/get_instruments](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_instruments.md)
+- [GET /v1/public/get_last_trades_by_currency](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_last_trades_by_currency.md)
+- [GET /v1/public/get_last_trades_by_currency_and_time](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_last_trades_by_currency_and_time.md)
+- [GET /v1/public/get_last_trades_by_instrument](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_last_trades_by_instrument.md)
+- [GET /v1/public/get_last_trades_by_instrument_and_time](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_last_trades_by_instrument_and_time.md)
+- [GET /v1/public/get_mark_price_history](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_mark_price_history.md)
+- [GET /v1/public/get_order_book/{instrument_name}](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_order_book.md)
+- [GET /v1/public/get_order_book_by_instrument_id/{instrument_id}](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_order_book_by_instrument_id.md)
+- [GET /v1/public/get_simplified_order_book](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_simplified_order_book.md)
+- [GET /v1/public/get_trade_volumes](https://docs.dopp.finance/api-reference/market-data/get-v1publicget_trade_volumes.md)
+- [GET /v1/public/get_open_orders_by_currency](https://docs.dopp.finance/api-reference/trading/get-v1publicget_open_orders_by_currency.md)
+- [GET /v1/public/get_open_orders_by_instrument](https://docs.dopp.finance/api-reference/trading/get-v1publicget_open_orders_by_instrument.md)
+- [GET /v1/public/get_open_orders_by_side](https://docs.dopp.finance/api-reference/trading/get-v1publicget_open_orders_by_side.md)
+- [GET /v1/public/get_open_orders_instrument_by_currency](https://docs.dopp.finance/api-reference/trading/get-v1publicget_open_orders_instrument_by_currency.md)
+- [GET /v1/public/get_user_trades_by_currency](https://docs.dopp.finance/api-reference/trading/get-v1publicget_user_trades_by_currency.md)
+- [GET /v1/public/get_user_trades_by_currency_and_time](https://docs.dopp.finance/api-reference/trading/get-v1publicget_user_trades_by_currency_and_time.md)
+- [GET /v1/public/get_user_trades_by_instrument](https://docs.dopp.finance/api-reference/trading/get-v1publicget_user_trades_by_instrument.md)
+- [GET /v1/public/get_user_trades_by_instrument_and_time](https://docs.dopp.finance/api-reference/trading/get-v1publicget_user_trades_by_instrument_and_time.md)
+- [GET /v1/public/get_user_trades_by_order](https://docs.dopp.finance/api-reference/trading/get-v1publicget_user_trades_by_order.md)
+- [POST /v1/private/buy](https://docs.dopp.finance/api-reference/trading/post-v1privatebuy.md)
+- [POST /v1/private/cancel](https://docs.dopp.finance/api-reference/trading/post-v1privatecancel.md)
+- [POST /v1/private/cancel_all](https://docs.dopp.finance/api-reference/trading/post-v1privatecancel_all.md)
+- [POST /v1/private/cancel_all_by_currency](https://docs.dopp.finance/api-reference/trading/post-v1privatecancel_all_by_currency.md)
+- [POST /v1/private/cancel_all_by_instrument](https://docs.dopp.finance/api-reference/trading/post-v1privatecancel_all_by_instrument.md)
+- [POST /v1/private/deposit_collateral](https://docs.dopp.finance/api-reference/trading/post-v1privatedeposit_collateral.md)
+- [POST /v1/private/sell](https://docs.dopp.finance/api-reference/trading/post-v1privatesell.md)
+- [Get Open Orders by Currency WebSocket API](https://docs.dopp.finance/api-reference/websockets/open_orders/get-v1open_orders_by_currency.md)
+- [Get Open Orders by Instrument WebSocket API](https://docs.dopp.finance/api-reference/websockets/open_orders/get-v1open_orders_by_instrument.md)
+- [Get Open Orders by Side WebSocket API](https://docs.dopp.finance/api-reference/websockets/open_orders/get-v1open_orders_by_side.md)
+- [Get All Order Books WebSocket API](https://docs.dopp.finance/api-reference/websockets/order_books/get-v1all_order_books.md)
+- [Get Order Book By Currency and Instrument WebSocket API](https://docs.dopp.finance/api-reference/websockets/order_books/get-v1order_book_ws_handler.md)
+- [Get Last Trades by Currency WebSocket API](https://docs.dopp.finance/api-reference/websockets/trades/get-v1last_trades_by_currency.md)
+- [Get Last Trades by Instrument WebSocket API](https://docs.dopp.finance/api-reference/websockets/trades/get-v1last_trades_by_instruments.md)
+- [Get Last User Trades by Currency WebSocket API](https://docs.dopp.finance/api-reference/websockets/user_trades/get-v1last_user_trades_by_currency.md)
+- [Get Last User Trades by Instrument WebSocket API](https://docs.dopp.finance/api-reference/websockets/user_trades/get-v1last_user_trades_by_instruments.md)
+- [Architecture](https://docs.dopp.finance/product/architecture.md): Overview of DOPP architecture + Controller, Options Factory, and Orderbook
+- [Margin System](https://docs.dopp.finance/product/architecture/margin-system.md)
+- [Workflow](https://docs.dopp.finance/product/architecture/workflow.md): Opening positions
+- [Cross-Chain Bridges](https://docs.dopp.finance/product/cross-chain-bridges.md)
+- [FAQs](https://docs.dopp.finance/product/faqs.md): Common questions when interacting with DOPP or the Starknet ecosystem
+- [Fees](https://docs.dopp.finance/product/fees.md): Trading, Settlement, and Liquidation fees:
+- [Liquidation & Insurance Fund](https://docs.dopp.finance/product/liquidation-and-insurance-fund.md): Learn about DOPP's liquidation model as well as how the insurance fund works.
+- [Mission](https://docs.dopp.finance/product/mission.md): The base layer for DeFi options
+- [Options Markets Specs](https://docs.dopp.finance/product/options-markets-specs.md): Contract specifications for our list of active options contracts
+- [Options Primer](https://docs.dopp.finance/product/options-primer.md): Learn about European style, physically-settled crypto options for Bitcoin, Ethereum, and other tokens offered on DOPP.
+- [Settlement](https://docs.dopp.finance/product/options-primer/settlement.md): Differences between Physical and Cash settlement of crypto options
+- [Oracle](https://docs.dopp.finance/product/oracle.md): DOPP uses [Pragma ](https://www.pragma.build/)as its price oracle.
+- [Perpetual Futures](https://docs.dopp.finance/product/perpetual-futures.md): Product coming: DATE TBD
+- [Referral Program](https://docs.dopp.finance/product/referral-program.md): Invite frens and get rewards
+- [Roadmap](https://docs.dopp.finance/product/roadmap.md): **2024**
+- [Getting Started](https://docs.dopp.finance/product/welcome-to-dopp/getting-started.md): This guide is designed to help you navigate the process of connecting to DOPP and ultimately trading your first options.
+- [Bridging ETH->STRK](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/bridging-eth-greater-than-strk.md): Source: Argent.xyz "Learn" section
+- [Cancelling expired orders](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/cancelling-expired-orders.md)
+- [Closing an order](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/closing-an-order.md)
+- [Deploying your wallet account](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/deploying-your-wallet-account.md): Deploying your Starknet account is a necessary part of the process to have your wallet fully operational.
+- [Excercising](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/excercising.md)
+- [Metamask (to bridge funds only)](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/metamask-to-bridge-funds-only.md): As a reminder, you _**can’t use your Metamask wallet address on Starknet.**_ The Starknet blockchain is powered by Cairo and is not EVM compatible, and different from other blockchains as it supports account abstraction. 
+- [Placing Orders](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/placing-orders.md): Placing an order for a $60,000 BTC Call using Argent X
+- [Testnet Access](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/testnet-access.md): If you want to test out Starknet Dapps to provide feedback or to better understand how they work before Mainnet; you need to be on the Starknet Testnet and have Testnet ETH. Follow the steps below:
+- [Token Addresses](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/token-addresses.md)
+- [Using Argent X Wallet](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/using-argent-x-wallet.md): This guide is designed to help you navigate the process of trading your first options on DOPP, using Argent X.
+- [Deposit/Withdraw Collateral](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/using-argent-x-wallet/deposit-withdraw-collateral.md): Using Argent X
+- [Using Braavos Wallet](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/using-braavos-wallet.md): This guide is designed to help you navigate the process of trading your first options on DOPP, using Braavos.
+- [Deposit/Withdraw Collateral](https://docs.dopp.finance/product/welcome-to-dopp/getting-started/using-braavos-wallet/deposit-withdraw-collateral.md): Using Braavos
+- [Table of Contents](https://docs.dopp.finance/product/welcome-to-dopp/table-of-contents.md): The following sections contain an in-depth view of DOPP basics, including the following sub-sections:
+
+
+## Optional
+
+- [Home](https://www.dopp.finance/)
+- [Documentation](https://docs.dopp.finance)
+- [Community](https://dopp.finance/discord)

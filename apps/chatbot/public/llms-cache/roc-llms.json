@@ -1,0 +1,10 @@
+{
+  "name": "Roc",
+  "description": "Fast and safe programming language",
+  "website": "https://roc-lang.org",
+  "url": "https://www.roc-lang.org/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/roc-llms.txt",
+  "lastFetched": "2025-03-24"
+}

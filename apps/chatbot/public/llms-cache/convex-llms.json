@@ -1,0 +1,10 @@
+{
+  "name": "Convex",
+  "description": "The missing half of your React app: Convex is the open-source reactive database for app developers.",
+  "website": "https://convex.dev",
+  "url": "https://convex.dev/llms.txt",
+  "type": "llms.txt",
+  "category": "infrastructure-cloud",
+  "cachePath": "apps/chatbot/public/llms-cache/convex-llms.txt",
+  "lastFetched": "2025-03-24"
+}

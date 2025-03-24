@@ -1,0 +1,24 @@
+# Workflow Help
+
+## Docs
+
+- [Add a Creative to a Task](https://docs.workflow.design/articles/adding-creative-work-to-workflow/adding-a-creative-to-a-task.md)
+- [Supported Creative Formats](https://docs.workflow.design/articles/adding-creative-work-to-workflow/creative-formats-that-workflow-supports.md)
+- [Upload Work from Figma](https://docs.workflow.design/articles/adding-creative-work-to-workflow/uploading-work-from-figma.md)
+- [Checking Your Work With AI](https://docs.workflow.design/articles/ai-checks/check-your-work-with-AI.md)
+- [Create an Account](https://docs.workflow.design/articles/get-started/create-an-account.md)
+- [General Concepts](https://docs.workflow.design/articles/get-started/general-concepts.md)
+- [Add Your Team](https://docs.workflow.design/articles/get-started/invite-team.md)
+- [Inbox](https://docs.workflow.design/articles/inbox-and-notifications/inbox.md): The Inbox in Workflow serves as your notification center, where you’ll find important updates about your tasks.
+- [Create and Customise Workspace Statuses](https://docs.workflow.design/articles/managing-projects-and-inviting-guests/create-and-customise-workspace-statuses.md)
+- [Inviting Guests to a Project](https://docs.workflow.design/articles/managing-projects-and-inviting-guests/inviting-guests-to-workflow-projects.md)
+- [Project and Task Templates](https://docs.workflow.design/articles/managing-projects-and-inviting-guests/project-and-task-templates.md)
+- [Project Notifications](https://docs.workflow.design/articles/managing-projects-and-inviting-guests/projects-notifications.md)
+- [Projects Overview](https://docs.workflow.design/articles/managing-projects-and-inviting-guests/projects-overview.md)
+- [Removing Teammates or Guests from a Project](https://docs.workflow.design/articles/managing-projects-and-inviting-guests/removing-teammates-or-guests-from-a-project.md)
+- [Managing Teammates](https://docs.workflow.design/articles/managing-users-and-roles/adding-removing-and-managing-teammates.md)
+- [The Difference Between Teammates, Guests, and Share Links](https://docs.workflow.design/articles/managing-users-and-roles/difference-teammates-guests-links.md)
+- [Video Walkthroughs and Reviews](https://docs.workflow.design/articles/present-work-and-get-feedback/presenting-work-with-a-screen-recording.md): Use the built-in screen recorder for effective feedback and walkthroughs
+- [Shareable Review Links](https://docs.workflow.design/articles/present-work-and-get-feedback/shareable-links.md)
+- [Getting Feedback on SquareSpace Websites](https://docs.workflow.design/articles/present-work-and-get-feedback/squarespace-sites.md)
+- [Home](https://docs.workflow.design/home.md): Get an overview of Workflow's features and how to use them.

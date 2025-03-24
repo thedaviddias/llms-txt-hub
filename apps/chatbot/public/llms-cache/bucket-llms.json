@@ -1,0 +1,10 @@
+{
+  "name": "Bucket",
+  "description": "Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
+  "website": "https://docs.bucket.co/",
+  "url": "https://docs.bucket.co/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/bucket-llms.txt",
+  "lastFetched": "2025-03-24"
+}

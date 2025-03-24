@@ -1,0 +1,10 @@
+{
+  "name": "Envoyer",
+  "description": "Zero downtime PHP deployment platform",
+  "website": "https://envoyer.io",
+  "url": "https://docs.envoyer.io/llms.txt",
+  "type": "llms.txt",
+  "category": "infrastructure-cloud",
+  "cachePath": "apps/chatbot/public/llms-cache/envoyer-llms.txt",
+  "lastFetched": "2025-03-24"
+}

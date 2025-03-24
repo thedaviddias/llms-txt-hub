@@ -1,0 +1,108 @@
+# CrewAI
+
+## Docs
+
+- [Changelog](https://docs.crewai.com/changelog.md): View the latest updates and changes to CrewAI
+- [Agents](https://docs.crewai.com/concepts/agents.md): Detailed guide on creating and managing agents within the CrewAI framework.
+- [CLI](https://docs.crewai.com/concepts/cli.md): Learn how to use the CrewAI CLI to interact with CrewAI.
+- [Collaboration](https://docs.crewai.com/concepts/collaboration.md): Exploring the dynamics of agent collaboration within the CrewAI framework, focusing on the newly integrated features for enhanced functionality.
+- [Crews](https://docs.crewai.com/concepts/crews.md): Understanding and utilizing crews in the crewAI framework with comprehensive attributes and functionalities.
+- [Event Listeners](https://docs.crewai.com/concepts/event-listener.md): Tap into CrewAI events to build custom integrations and monitoring
+- [Flows](https://docs.crewai.com/concepts/flows.md): Learn how to create and manage AI workflows using CrewAI Flows.
+- [Knowledge](https://docs.crewai.com/concepts/knowledge.md): What is knowledge in CrewAI and how to use it.
+- [Using LangChain Tools](https://docs.crewai.com/concepts/langchain-tools.md): Learn how to integrate LangChain tools with CrewAI agents to enhance search-based queries and more.
+- [Using LlamaIndex Tools](https://docs.crewai.com/concepts/llamaindex-tools.md): Learn how to integrate LlamaIndex tools with CrewAI agents to enhance search-based queries and more.
+- [LLMs](https://docs.crewai.com/concepts/llms.md): A comprehensive guide to configuring and using Large Language Models (LLMs) in your CrewAI projects
+- [Memory](https://docs.crewai.com/concepts/memory.md): Leveraging memory systems in the CrewAI framework to enhance agent capabilities.
+- [Planning](https://docs.crewai.com/concepts/planning.md): Learn how to add planning to your CrewAI Crew and improve their performance.
+- [Processes](https://docs.crewai.com/concepts/processes.md): Detailed guide on workflow management through processes in CrewAI, with updated implementation details.
+- [Tasks](https://docs.crewai.com/concepts/tasks.md): Detailed guide on managing and creating tasks within the CrewAI framework.
+- [Testing](https://docs.crewai.com/concepts/testing.md): Learn how to test your CrewAI Crew and evaluate their performance.
+- [Tools](https://docs.crewai.com/concepts/tools.md): Understanding and leveraging tools within the CrewAI framework for agent collaboration and task execution.
+- [Training](https://docs.crewai.com/concepts/training.md): Learn how to train your CrewAI agents by giving them feedback early on and get consistent results.
+- [CrewAI Examples](https://docs.crewai.com/examples/example.md): A collection of examples that show how to use CrewAI framework to automate workflows.
+- [Customizing Prompts](https://docs.crewai.com/guides/advanced/customizing-prompts.md): Dive deeper into low-level prompt customization for CrewAI, enabling super custom and complex use cases for different models and languages.
+- [Fingerprinting](https://docs.crewai.com/guides/advanced/fingerprinting.md): Learn how to use CrewAI's fingerprinting system to uniquely identify and track components throughout their lifecycle.
+- [Crafting Effective Agents](https://docs.crewai.com/guides/agents/crafting-effective-agents.md): Learn best practices for designing powerful, specialized AI agents that collaborate effectively to solve complex problems.
+- [Evaluating Use Cases for CrewAI](https://docs.crewai.com/guides/concepts/evaluating-use-cases.md): Learn how to assess your AI application needs and choose the right approach between Crews and Flows based on complexity and precision requirements.
+- [Build Your First Crew](https://docs.crewai.com/guides/crews/first-crew.md): Step-by-step tutorial to create a collaborative AI team that works together to solve complex problems.
+- [Build Your First Flow](https://docs.crewai.com/guides/flows/first-flow.md): Learn how to create structured, event-driven workflows with precise control over execution.
+- [Mastering Flow State Management](https://docs.crewai.com/guides/flows/mastering-flow-state.md): A comprehensive guide to managing, persisting, and leveraging state in CrewAI Flows for building robust AI applications.
+- [Agent Monitoring with AgentOps](https://docs.crewai.com/how-to/agentops-observability.md): Understanding and logging your agent performance with AgentOps.
+- [Coding Agents](https://docs.crewai.com/how-to/coding-agents.md): Learn how to enable your CrewAI Agents to write and execute code, and explore advanced features for enhanced functionality.
+- [Conditional Tasks](https://docs.crewai.com/how-to/conditional-tasks.md): Learn how to use conditional tasks in a crewAI kickoff
+- [Create Custom Tools](https://docs.crewai.com/how-to/create-custom-tools.md): Comprehensive guide on crafting, using, and managing custom tools within the CrewAI framework, including new functionalities and error handling.
+- [Create Your Own Manager Agent](https://docs.crewai.com/how-to/custom-manager-agent.md): Learn how to set a custom agent as the manager in CrewAI, providing more control over task management and coordination.
+- [Customize Agents](https://docs.crewai.com/how-to/customizing-agents.md): A comprehensive guide to tailoring agents for specific roles, tasks, and advanced customizations within the CrewAI framework.
+- [Force Tool Output as Result](https://docs.crewai.com/how-to/force-tool-output-as-result.md): Learn how to force tool output as the result in an Agent's task in CrewAI.
+- [Hierarchical Process](https://docs.crewai.com/how-to/hierarchical-process.md): A comprehensive guide to understanding and applying the hierarchical process within your CrewAI projects, updated to reflect the latest coding practices and functionalities.
+- [Human Input on Execution](https://docs.crewai.com/how-to/human-input-on-execution.md): Integrating CrewAI with human input during execution in complex decision-making processes and leveraging the full capabilities of the agent's attributes and tools.
+- [Kickoff Crew Asynchronously](https://docs.crewai.com/how-to/kickoff-async.md): Kickoff a Crew Asynchronously
+- [Kickoff Crew for Each](https://docs.crewai.com/how-to/kickoff-for-each.md): Kickoff Crew for Each Item in a List
+- [Agent Monitoring with Langfuse](https://docs.crewai.com/how-to/langfuse-observability.md): Learn how to integrate Langfuse with CrewAI via OpenTelemetry using OpenLit
+- [Agent Monitoring with Langtrace](https://docs.crewai.com/how-to/langtrace-observability.md): How to monitor cost, latency, and performance of CrewAI Agents using Langtrace, an external observability tool.
+- [Connect to any LLM](https://docs.crewai.com/how-to/llm-connections.md): Comprehensive guide on integrating CrewAI with various Large Language Models (LLMs) using LiteLLM, including supported providers and configuration options.
+- [Agent Monitoring with MLflow](https://docs.crewai.com/how-to/mlflow-observability.md): Quickly start monitoring your Agents with MLflow.
+- [Using Multimodal Agents](https://docs.crewai.com/how-to/multimodal-agents.md): Learn how to enable and use multimodal capabilities in your agents for processing images and other non-text content within the CrewAI framework.
+- [Agent Monitoring with OpenLIT](https://docs.crewai.com/how-to/openlit-observability.md): Quickly start monitoring your Agents in just a single line of code with OpenTelemetry.
+- [Agent Monitoring with Portkey](https://docs.crewai.com/how-to/portkey-observability.md): How to use Portkey with CrewAI
+- [Replay Tasks from Latest Crew Kickoff](https://docs.crewai.com/how-to/replay-tasks-from-latest-crew-kickoff.md): Replay tasks from the latest crew.kickoff(...)
+- [Sequential Processes](https://docs.crewai.com/how-to/sequential-process.md): A comprehensive guide to utilizing the sequential processes for task execution in CrewAI projects.
+- [Installation](https://docs.crewai.com/installation.md): Get started with CrewAI - Install, configure, and build your first AI crew
+- [Introduction](https://docs.crewai.com/introduction.md): Build AI agent teams that work together to tackle complex tasks
+- [Quickstart](https://docs.crewai.com/quickstart.md): Build your first AI agent with CrewAI in under 5 minutes.
+- [Telemetry](https://docs.crewai.com/telemetry.md): Understanding the telemetry data collected by CrewAI and how it contributes to the enhancement of the library.
+- [AI Mind Tool](https://docs.crewai.com/tools/aimindtool.md): The `AIMindTool` is designed to query data sources in natural language.
+- [Apify Actors](https://docs.crewai.com/tools/apifyactorstool.md): `ApifyActorsTool` lets you call Apify Actors to provide your CrewAI workflows with web scraping, crawling, data extraction, and web automation capabilities.
+- [Brave Search](https://docs.crewai.com/tools/bravesearchtool.md): The `BraveSearchTool` is designed to search the internet using the Brave Search API.
+- [Browserbase Web Loader](https://docs.crewai.com/tools/browserbaseloadtool.md): Browserbase is a developer platform to reliably run, manage, and monitor headless browsers.
+- [Code Docs RAG Search](https://docs.crewai.com/tools/codedocssearchtool.md): The `CodeDocsSearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool designed for semantic searches within code documentation.
+- [Code Interpreter](https://docs.crewai.com/tools/codeinterpretertool.md): The `CodeInterpreterTool` is a powerful tool designed for executing Python 3 code within a secure, isolated environment.
+- [Composio Tool](https://docs.crewai.com/tools/composiotool.md): Composio provides 250+ production-ready tools for AI agents with flexible authentication management.
+- [CSV RAG Search](https://docs.crewai.com/tools/csvsearchtool.md): The `CSVSearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool designed for semantic searches within a CSV file's content.
+- [DALL-E Tool](https://docs.crewai.com/tools/dalletool.md): The `DallETool` is a powerful tool designed for generating images from textual descriptions.
+- [Directory Read](https://docs.crewai.com/tools/directoryreadtool.md): The `DirectoryReadTool` is a powerful utility designed to provide a comprehensive listing of directory contents.
+- [Directory RAG Search](https://docs.crewai.com/tools/directorysearchtool.md): The `DirectorySearchTool` is a powerful RAG (Retrieval-Augmented Generation) tool designed for semantic searches within a directory's content.
+- [DOCX RAG Search](https://docs.crewai.com/tools/docxsearchtool.md): The `DOCXSearchTool` is a RAG tool designed for semantic searching within DOCX documents.
+- [EXA Search Web Loader](https://docs.crewai.com/tools/exasearchtool.md): The `EXASearchTool` is designed to perform a semantic search for a specified query from a text's content across the internet.
+- [File Read](https://docs.crewai.com/tools/filereadtool.md): The `FileReadTool` is designed to read files from the local file system.
+- [File Write](https://docs.crewai.com/tools/filewritetool.md): The `FileWriterTool` is designed to write content to files.
+- [Firecrawl Crawl Website](https://docs.crewai.com/tools/firecrawlcrawlwebsitetool.md): The `FirecrawlCrawlWebsiteTool` is designed to crawl and convert websites into clean markdown or structured data.
+- [Firecrawl Scrape Website](https://docs.crewai.com/tools/firecrawlscrapewebsitetool.md): The `FirecrawlScrapeWebsiteTool` is designed to scrape websites and convert them into clean markdown or structured data.
+- [Firecrawl Search](https://docs.crewai.com/tools/firecrawlsearchtool.md): The `FirecrawlSearchTool` is designed to search websites and convert them into clean markdown or structured data.
+- [Github Search](https://docs.crewai.com/tools/githubsearchtool.md): The `GithubSearchTool` is designed to search websites and convert them into clean markdown or structured data.
+- [Hyperbrowser Load Tool](https://docs.crewai.com/tools/hyperbrowserloadtool.md): The `HyperbrowserLoadTool` enables web scraping and crawling using Hyperbrowser.
+- [JSON RAG Search](https://docs.crewai.com/tools/jsonsearchtool.md): The `JSONSearchTool` is designed to search JSON files and return the most relevant results.
+- [Linkup Search Tool](https://docs.crewai.com/tools/linkupsearchtool.md): The `LinkupSearchTool` enables querying the Linkup API for contextual information.
+- [LlamaIndex Tool](https://docs.crewai.com/tools/llamaindextool.md): The `LlamaIndexTool` is a wrapper for LlamaIndex tools and query engines.
+- [MDX RAG Search](https://docs.crewai.com/tools/mdxsearchtool.md): The `MDXSearchTool` is designed to search MDX files and return the most relevant results.
+- [MultiOn Tool](https://docs.crewai.com/tools/multiontool.md): The `MultiOnTool` empowers CrewAI agents with the capability to navigate and interact with the web through natural language instructions.
+- [MySQL RAG Search](https://docs.crewai.com/tools/mysqltool.md): The `MySQLSearchTool` is designed to search MySQL databases and return the most relevant results.
+- [NL2SQL Tool](https://docs.crewai.com/tools/nl2sqltool.md): The `NL2SQLTool` is designed to convert natural language to SQL queries.
+- [Patronus Evaluation Tools](https://docs.crewai.com/tools/patronustools.md): The Patronus evaluation tools enable CrewAI agents to evaluate and score model inputs and outputs using the Patronus AI platform.
+- [PDF RAG Search](https://docs.crewai.com/tools/pdfsearchtool.md): The `PDFSearchTool` is designed to search PDF files and return the most relevant results.
+- [PG RAG Search](https://docs.crewai.com/tools/pgsearchtool.md): The `PGSearchTool` is designed to search PostgreSQL databases and return the most relevant results.
+- [Qdrant Vector Search Tool](https://docs.crewai.com/tools/qdrantvectorsearchtool.md): Semantic search capabilities for CrewAI agents using Qdrant vector database
+- [RAG Tool](https://docs.crewai.com/tools/ragtool.md): The `RagTool` is a dynamic knowledge base tool for answering questions using Retrieval-Augmented Generation.
+- [S3 Reader Tool](https://docs.crewai.com/tools/s3readertool.md): The `S3ReaderTool` enables CrewAI agents to read files from Amazon S3 buckets.
+- [S3 Writer Tool](https://docs.crewai.com/tools/s3writertool.md): The `S3WriterTool` enables CrewAI agents to write content to files in Amazon S3 buckets.
+- [Scrape Element From Website Tool](https://docs.crewai.com/tools/scrapeelementfromwebsitetool.md): The `ScrapeElementFromWebsiteTool` enables CrewAI agents to extract specific elements from websites using CSS selectors.
+- [Scrapegraph Scrape Tool](https://docs.crewai.com/tools/scrapegraphscrapetool.md): The `ScrapegraphScrapeTool` leverages Scrapegraph AI's SmartScraper API to intelligently extract content from websites.
+- [Scrape Website](https://docs.crewai.com/tools/scrapewebsitetool.md): The `ScrapeWebsiteTool` is designed to extract and read the content of a specified website.
+- [Scrapfly Scrape Website Tool](https://docs.crewai.com/tools/scrapflyscrapetool.md): The `ScrapflyScrapeWebsiteTool` leverages Scrapfly's web scraping API to extract content from websites in various formats.
+- [Selenium Scraper](https://docs.crewai.com/tools/seleniumscrapingtool.md): The `SeleniumScrapingTool` is designed to extract and read the content of a specified website using Selenium.
+- [Google Serper Search](https://docs.crewai.com/tools/serperdevtool.md): The `SerperDevTool` is designed to search the internet and return the most relevant results.
+- [Snowflake Search Tool](https://docs.crewai.com/tools/snowflakesearchtool.md): The `SnowflakeSearchTool` enables CrewAI agents to execute SQL queries and perform semantic search on Snowflake data warehouses.
+- [Spider Scraper](https://docs.crewai.com/tools/spidertool.md): The `SpiderTool` is designed to extract and read the content of a specified website using Spider.
+- [TXT RAG Search](https://docs.crewai.com/tools/txtsearchtool.md): The `TXTSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation) search within the content of a text file.
+- [Vision Tool](https://docs.crewai.com/tools/visiontool.md): The `VisionTool` is designed to extract text from images.
+- [Weaviate Vector Search](https://docs.crewai.com/tools/weaviatevectorsearchtool.md): The `WeaviateVectorSearchTool` is designed to search a Weaviate vector database for semantically similar documents.
+- [Website RAG Search](https://docs.crewai.com/tools/websitesearchtool.md): The `WebsiteSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation) search within the content of a website.
+- [XML RAG Search](https://docs.crewai.com/tools/xmlsearchtool.md): The `XMLSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation) search within the content of a XML file.
+- [YouTube Channel RAG Search](https://docs.crewai.com/tools/youtubechannelsearchtool.md): The `YoutubeChannelSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation) search within the content of a Youtube channel.
+- [YouTube Video RAG Search](https://docs.crewai.com/tools/youtubevideosearchtool.md): The `YoutubeVideoSearchTool` is designed to perform a RAG (Retrieval-Augmented Generation) search within the content of a Youtube video.
+
+
+## Optional
+
+- [Community](https://community.crewai.com)

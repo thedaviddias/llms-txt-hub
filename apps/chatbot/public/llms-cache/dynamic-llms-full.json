@@ -1,0 +1,10 @@
+{
+  "name": "Dynamic",
+  "description": "Web3 authentication and authorization platform",
+  "website": "https://dynamic.xyz",
+  "url": "https://docs.dynamic.xyz/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "security-identity",
+  "cachePath": "apps/chatbot/public/llms-cache/dynamic-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

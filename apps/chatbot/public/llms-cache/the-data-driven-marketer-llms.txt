@@ -1,0 +1,18 @@
+# /llms.txt
+
+## Data Driven Marketer
+
+Data Driven Marketer is a blog dedicated to providing strategies and insights on data-driven marketing.
+
+### Recent Posts
+
+- [Understanding Customer Segmentation](https://datadrivenmarketer.me/2023/11/30/understanding-customer-segmentation/)
+- [Data-Driven Marketing Strategies](https://datadrivenmarketer.me/2023/11/25/data-driven-marketing-strategies/)
+- [Measuring Marketing ROI](https://datadrivenmarketer.me/2023/11/20/measuring-marketing-roi/)
+- [Personalization in Digital Marketing](https://datadrivenmarketer.me/2023/11/15/personalization-in-digital-marketing/)
+- [Leveraging Social Media Analytics](https://datadrivenmarketer.me/2023/11/10/leveraging-social-media-analytics/)
+- [Importance of A/B Testing](https://datadrivenmarketer.me/2023/11/05/importance-of-a-b-testing/)
+- [Optimizing Email Campaigns](https://datadrivenmarketer.me/2023/11/01/optimizing-email-campaigns/)
+- [SEO Best Practices](https://datadrivenmarketer.me/2023/10/28/seo-best-practices/)
+- [Understanding Customer Journey](https://datadrivenmarketer.me/2023/10/25/understanding-customer-journey/)
+- [Data Privacy in Marketing](https://datadrivenmarketer.me/2023/10/20/data-privacy-in-marketing/)

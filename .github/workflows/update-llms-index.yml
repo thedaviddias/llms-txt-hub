@@ -1,0 +1,47 @@
+name: Update LLMs Index
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight UTC
+  workflow_dispatch:     # Allow manual trigger
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: '10.4.1'
+          run_install: false
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Generate LLMs Index
+        run: pnpm node scripts/llms-chatbot-index-generator.js
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Only commit if there are changes
+          if [[ -n $(git status -s) ]]; then
+            git add apps/chatbot/public/llms-index.json
+            git add apps/chatbot/public/llms-cache/
+            git commit -m "chore: update llms.txt index [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi

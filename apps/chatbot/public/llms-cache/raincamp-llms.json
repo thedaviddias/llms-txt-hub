@@ -1,0 +1,10 @@
+{
+  "name": "raincamp",
+  "description": "AI-powered development and deployment platform",
+  "website": "https://raincamp.ai",
+  "url": "https://raincamp.ai/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/raincamp-llms.txt",
+  "lastFetched": "2025-03-24"
+}

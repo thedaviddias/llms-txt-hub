@@ -1,0 +1,10 @@
+{
+  "name": "Datafold",
+  "description": "Data reliability and testing platform",
+  "website": "https://datafold.com",
+  "url": "https://docs.datafold.com/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/datafold-llms.txt",
+  "lastFetched": "2025-03-24"
+}

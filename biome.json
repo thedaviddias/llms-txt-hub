@@ -17,7 +17,8 @@
       "**/shadcn/**",
       "packages/design-system/lib/**",
       "packages/design-system/hooks/**",
-      "apps/web/public/search/**"
+      "apps/web/public/search/**",
+      "apps/chatbot/public/"
     ]
   },
   "formatter": {

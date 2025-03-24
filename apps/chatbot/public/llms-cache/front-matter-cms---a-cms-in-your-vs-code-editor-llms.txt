@@ -1,0 +1,67 @@
+# Headless CMS right in your code editor | Front Matter
+
+> Headless CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.
+
+## Community
+
+- [Community | Front Matter](https://frontmatter.codes/community): Join our community and get to know more about Front Matter.
+
+## Docs
+
+- [Documentation | Front Matter](https://frontmatter.codes/docs): Get to know more about how you can use Front Matter with our documentation.
+- [AI features | Front Matter](https://frontmatter.codes/docs/ai-features): Get to know more about how you can use Front Matter with our documentation.
+- [Commands | Front Matter](https://frontmatter.codes/docs/commands): Get to know more about how you can use Front Matter with our documentation.
+- [Field actions | Front Matter](https://frontmatter.codes/docs/content-creation/field-actions): Learn how you can add your custom field actions to populate the field with a specific value.
+- [Content folders | Front Matter](https://frontmatter.codes/docs/content-creation/content-folders): Learn how to let Front Matter CMS know where to find and create your content
+- [Content types | Front Matter](https://frontmatter.codes/docs/content-creation/content-types): Learn how to define content types in Front Matter CMS
+- [Field conditions | Front Matter](https://frontmatter.codes/docs/content-creation/field-conditions): Learn how to show or hide fields based on the value of another field
+- [Fields | Front Matter](https://frontmatter.codes/docs/content-creation/fields): Learn which kind of fields you can use in Front Matter CMS
+- [Content creation | Front Matter](https://frontmatter.codes/docs/content-creation): Get to know more about how you can use Front Matter with our documentation.
+- [Multilingual | Front Matter](https://frontmatter.codes/docs/content-creation/multilingual): Learn how to use multilingual content in Front Matter CMS
+- [Additional configuration | Front Matter](https://frontmatter.codes/docs/content-creation/additional-config): Get to know more about how you can use Front Matter with our documentation.
+- [Placeholders | Front Matter](https://frontmatter.codes/docs/content-creation/placeholders): Learn how to use placeholders in Front Matter CMS
+- [Slug | Front Matter](https://frontmatter.codes/docs/content-creation/slug): Learn how you can dynamically generate slugs for your pages in Front Matter CMS
+- [Contributing | Front Matter](https://frontmatter.codes/docs/contributing): Get to know more about how you can use Front Matter with our documentation.
+- [Advanced script actions | Front Matter](https://frontmatter.codes/docs/custom-actions/advanced): Get to know more about how you can use Front Matter with our documentation.
+- [Content scripts | Front Matter](https://frontmatter.codes/docs/custom-actions/content-scripts): Get to know more about how you can use Front Matter with our documentation.
+- [Custom actions/scripts | Front Matter](https://frontmatter.codes/docs/custom-actions): Get to know more about how you can use Front Matter with our documentation.
+- [Media scripts | Front Matter](https://frontmatter.codes/docs/custom-actions/media-scripts): Get to know more about how you can use Front Matter with our documentation.
+- [Sample scripts | Front Matter](https://frontmatter.codes/docs/custom-actions/sample-scripts): Get to know more about how you can use Front Matter with our documentation.
+- [Content view | Front Matter](https://frontmatter.codes/docs/dashboard/content-view): Get to know more about how you can use Front Matter with our documentation.
+- [Data files/folders view | Front Matter](https://frontmatter.codes/docs/dashboard/datafiles-view): Get to know more about how you can use Front Matter with our documentation.
+- [Dashboard | Front Matter](https://frontmatter.codes/docs/dashboard): Get to know more about how you can use Front Matter with our documentation.
+- [Media view | Front Matter](https://frontmatter.codes/docs/dashboard/media-view): Get to know more about how you can use Front Matter with our documentation.
+- [Snippets view | Front Matter](https://frontmatter.codes/docs/dashboard/snippets-view): Get to know more about how you can use Front Matter with our documentation.
+- [Taxonomy view | Front Matter](https://frontmatter.codes/docs/dashboard/taxonomy-view): Get to know more about how you can use Front Matter with our documentation.
+- [Page not found | Front Matter](https://frontmatter.codes/docs/experimental): It seems you ended up on a page that we didn't write yet.
+- [Getting started | Front Matter](https://frontmatter.codes/docs/getting-started): Get to know more about how you can use Front Matter with our documentation.
+- [Git integration | Front Matter](https://frontmatter.codes/docs/git-integration): Get to know more about how you can use Front Matter with our documentation.
+- [Introduction | Front Matter](https://frontmatter.codes/docs/index): Create, edit, and preview your pages within Visual Studio Code/Gitpod/... Front Matter allows you to keep control of your static site without any external tools
+- [Markdown | Front Matter](https://frontmatter.codes/docs/markdown): Get to know more about how you can use Front Matter with our documentation.
+- [Editor panel | Front Matter](https://frontmatter.codes/docs/panel): Learn how to use the Front Matter panel to perform most of the extension actions with just a click on the button.
+- [Settings overview | Front Matter](https://frontmatter.codes/docs/settings/overview): Get to know more about how you can use Front Matter with our documentation.
+- [Settings | Front Matter](https://frontmatter.codes/docs/settings): Get to know more about how you can use Front Matter with our documentation.
+- [Projects | Front Matter](https://frontmatter.codes/docs/settings/projects): Projects are useful when managing multiple sites or when you want to separate your content into different environments.
+- [Site preview | Front Matter](https://frontmatter.codes/docs/site-preview): Get to know more about how you can use Front Matter with our documentation.
+- [Snippets | Front Matter](https://frontmatter.codes/docs/snippets): Get to know more about how you can use Front Matter with our documentation.
+- [Sponsor features | Front Matter](https://frontmatter.codes/docs/sponsor-features): Get to know more about how you can use Front Matter with our documentation.
+- [Astro Configuration | Front Matter](https://frontmatter.codes/docs/ssg-and-frameworks/astro-configuration): Get to know more about how you can use Front Matter with our documentation.
+- [Hugo Configuration | Front Matter](https://frontmatter.codes/docs/ssg-and-frameworks/hugo-configuration): Get to know more about how you can use Front Matter with our documentation.
+- [Static Site Generators | Front Matter](https://frontmatter.codes/docs/ssg-and-frameworks): Get to know more about how you can use Front Matter with our documentation.
+- [Next.js Configuration | Front Matter](https://frontmatter.codes/docs/ssg-and-frameworks/nextjs-configuration): Get to know more about how you can use Front Matter with our documentation.
+- [Troubleshooting | Front Matter](https://frontmatter.codes/docs/troubleshooting): Get to know more about how you can use Front Matter with our documentation.
+- [UI extensibility | Front Matter](https://frontmatter.codes/docs/ui-extensibility): UI extensibility in the Front Matter extension.
+
+## Showcase
+
+- [Showcases | Front Matter](https://frontmatter.codes/showcase): showcase_description
+
+## Swag
+
+- [Show your support with our SWAG | Front Matter](https://frontmatter.codes/swag): We are a small team of developers who love to create software. We are always looking for new ideas and ways to improve our product. If you like Front Matter, we would appreciate your support and your contribution to the project.
+
+## Updates
+
+- [Updates | Front Matter](https://frontmatter.codes/updates): Check out the updates for Front Matter.
+
+

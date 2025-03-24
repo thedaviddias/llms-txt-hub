@@ -1,0 +1,10 @@
+{
+  "name": "Creative Handbook Production Resource Directory",
+  "description": "Creative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
+  "website": "https://www.creativehandbook.com",
+  "url": "https://www.creativehandbook.com/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/creative-handbook-production-resource-directory-llms.txt",
+  "lastFetched": "2025-03-24"
+}

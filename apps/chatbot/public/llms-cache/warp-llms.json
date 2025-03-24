@@ -1,0 +1,10 @@
+{
+  "name": "Warp",
+  "description": "Modern terminal and development environment",
+  "website": "https://www.warp.dev",
+  "url": "https://docs.warp.dev/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/warp-llms.txt",
+  "lastFetched": "2025-03-24"
+}

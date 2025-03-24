@@ -1,0 +1,10 @@
+{
+  "name": "Dub",
+  "description": "Link management and URL shortening platform",
+  "website": "https://dub.co",
+  "url": "https://dub.co/docs/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/dub-llms.txt",
+  "lastFetched": "2025-03-24"
+}

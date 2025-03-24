@@ -1,0 +1,10 @@
+{
+  "name": "Turbo",
+  "description": "Turbo is an incremental bundler and build system optimized for JavaScript and TypeScript, written in Rust.",
+  "website": "https://turbo.build",
+  "url": "https://turbo.build/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/turbo-llms.txt",
+  "lastFetched": "2025-03-24"
+}

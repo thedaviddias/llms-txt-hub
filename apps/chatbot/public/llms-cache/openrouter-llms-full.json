@@ -1,0 +1,10 @@
+{
+  "name": "OpenRouter",
+  "description": "A unified interface for LLMs. Find the best models & prices for your prompts.",
+  "website": "https://openrouter.ai/",
+  "url": "https://openrouter.ai/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/openrouter-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

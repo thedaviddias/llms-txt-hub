@@ -1,0 +1,54 @@
+# Rememberizer
+
+### Overview
+- [Why Rememberizer?](https://docs.rememberizer.ai): An introduction explaining how Rememberizer enhances generative AI apps by providing them access to relevant content from documents, data and discussions.
+
+### Background
+- [What are Vector Embeddings and Vector Databases?](https://docs.rememberizer.ai/background/what-are-vector-embeddings-and-vector-databases): A detailed explanation of how Rememberizer uses vector embeddings in vector databases to enable semantic similarity searches within user knowledge sources.
+
+### Personal
+- [Rememberizer Slack Integration](https://docs.rememberizer.ai/personal/rememberizer-slack-integration): A step-by-step guide for integrating Slack workspaces into Rememberizer as a knowledge source.
+- [Rememberizer Dropbox Integration](https://docs.rememberizer.ai/personal/rememberizer-dropbox-integration): Instructions for connecting and embedding Dropbox files into Rememberizer's knowledge base.
+- [Rememberizer Google Drive Integration](https://docs.rememberizer.ai/personal/rememberizer-google-drive-integration): A comprehensive guide for integrating Google Drive into Rememberizer as a knowledge source.
+- [Rememberizer Gmail Integration](https://docs.rememberizer.ai/personal/rememberizer-gmail-integration): Instructions for connecting Gmail accounts and selecting labels for knowledge base integration.
+- [Rememberizer Memory Integration](https://docs.rememberizer.ai/personal/rememberizer-memory-integration): Guide to using Rememberizer's shared memory feature for storing and accessing data across multiple applications.
+- [Rememberizer App](https://docs.rememberizer.ai/personal/rememberizer-app): Documentation for the MacOS desktop application that converts local files into vector embeddings for Rememberizer.
+- [Mementos Filter Access](https://docs.rememberizer.ai/personal/mementos-filter-access): Explanation of how to use Mementos to control third-party application access to your knowledge.
+- [Manage Third-party Apps](https://docs.rememberizer.ai/personal/manage-third-party-apps): Guide for exploring, authorizing, and managing third-party applications in Rememberizer.
+- [Common Knowledge](https://docs.rememberizer.ai/personal/common-knowledge): Instructions for accessing and contributing to Rememberizer's shared public knowledge base.
+- [Search Your Knowledge](https://docs.rememberizer.ai/personal/search-your-knowledge): Guide to searching and retrieving conceptually similar content from your knowledge base.
+- [Manage Your Embedded Knowledge](https://docs.rememberizer.ai/personal/manage-your-embedded-knowledge): Instructions for managing stored files from various sources in Rememberizer.
+
+### Developer
+- [Registering Rememberizer Apps](https://docs.rememberizer.ai/developer/registering-rememberizer-apps): Guide for creating and registering new Rememberizer applications.
+- [Authorizing Rememberizer Apps](https://docs.rememberizer.ai/developer/authorizing-rememberizer-apps): Documentation for implementing OAuth2 authorization in Rememberizer applications.
+- [Creating a Rememberizer GPT](https://docs.rememberizer.ai/developer/creating-a-rememberizer-gpt): Tutorial for creating a custom GPT that integrates with Rememberizer's API functionality.
+- [Talk-to-Slack Sample Web App](https://docs.rememberizer.ai/developer/talk-to-slack-the-sample-web-app): Example implementation of a web application integrating LLMs with Rememberizer.
+- [Registering and Using API Keys](https://docs.rememberizer.ai/developer/registering-and-using-api-keys): Instructions for obtaining and using API keys to access Rememberizer's functionality.
+- [LangChain Integration](https://docs.rememberizer.ai/developer/langchain-integration): Guide for integrating Rememberizer as a LangChain retriever for vector database search.
+- [Vector Stores](https://docs.rememberizer.ai/developer/vector-stores): Documentation for using Rememberizer's Vector Store functionality for handling vector data.
+
+### API Documentation
+- [API Overview](https://docs.rememberizer.ai/developer/api-documentations): Guide to authenticating and using Rememberizer's APIs using OAuth2 or API keys.
+- [Memorize Content](https://docs.rememberizer.ai/developer/api-documentations/memorize-content-to-rememberizer): API endpoint documentation for storing content in Rememberizer's database for later search access.
+- [Retrieve Documents](https://docs.rememberizer.ai/developer/api-documentations/retrieve-documents): API endpoint for retrieving a list of all documents, Slack channels, and common knowledge within data sources.
+- [Retrieve Document Contents](https://docs.rememberizer.ai/developer/api-documentations/retrieve-document-contents): API endpoint for retrieving specific document contents by ID with chunk-based pagination.
+- [Retrieve Slack Content](https://docs.rememberizer.ai/developer/api-documentations/retrieve-slacks-content): API endpoint for retrieving Slack or Discord chat contents with thread support and time range filtering.
+- [Search Documents](https://docs.rememberizer.ai/developer/api-documentations/search-for-documents-by-semantic-similarity): API endpoint for searching documents by semantic similarity using up to 400-word queries.
+- [List Data Source Integrations](https://docs.rememberizer.ai/developer/api-documentations/list-available-data-source-integrations): API endpoint for retrieving available data sources and their integration status.
+- [Retrieve Account Details](https://docs.rememberizer.ai/developer/api-documentations/retrieve-current-users-account-details): API endpoint for getting current user's account information.
+- [Get Public Knowledge](https://docs.rememberizer.ai/developer/api-documentations/get-all-added-public-knowledge): API endpoint for retrieving all subscribed public knowledge items.
+- [Vector Store APIs](https://docs.rememberizer.ai/developer/api-documentations/vector-store): Documentation for Rememberizer's Vector Store API endpoints and functionality.
+- [Get Vector Store Information](https://docs.rememberizer.ai/developer/api-documentations/vector-store/get-vector-stores-information): API endpoint for retrieving vector store configuration and metadata.
+- [List Vector Store Documents](https://docs.rememberizer.ai/developer/api-documentations/vector-store/get-a-list-of-documents-in-a-vector-store): API endpoint for retrieving all documents stored in a specific vector store.
+- [Get Document Information](https://docs.rememberizer.ai/developer/api-documentations/vector-store/get-the-information-of-a-document): API endpoint for retrieving metadata about a specific document in a vector store.
+- [Add Text Document](https://docs.rememberizer.ai/developer/api-documentations/vector-store/add-new-text-document-to-a-vector-store): API endpoint for adding new text documents to a vector store.
+- [Upload Files](https://docs.rememberizer.ai/developer/api-documentations/vector-store/upload-files-to-a-vector-store): API endpoint for uploading file documents to a vector store.
+- [Update Document Content](https://docs.rememberizer.ai/developer/api-documentations/vector-store/update-files-content-in-a-vector-store): API endpoint for updating existing document content in a vector store.
+- [Remove Document](https://docs.rememberizer.ai/developer/api-documentations/vector-store/remove-a-document-in-vector-store): API endpoint for removing documents from a vector store.
+- [Search Vector Store](https://docs.rememberizer.ai/developer/api-documentations/vector-store/search-for-vector-store-documents-by-semantic-similarity): API endpoint for semantic similarity search within a specific vector store.
+
+### Notices
+- [Terms of Use](https://docs.rememberizer.ai/notices/terms-of-use): Legal agreement outlining the terms and conditions for using Rememberizer's services.
+- [Privacy Policy](https://docs.rememberizer.ai/notices/privacy-policy): Detailed information about how Rememberizer collects, uses, and protects user data.
+- [Releases](https://docs.rememberizer.ai/notices/releases): Chronological listing of Rememberizer's feature updates, improvements, and bug fixes.

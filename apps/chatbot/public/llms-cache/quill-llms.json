@@ -1,0 +1,10 @@
+{
+  "name": "Quill",
+  "description": "SQL query builder and database management platform",
+  "website": "https://quillsql.com",
+  "url": "https://docs.quillsql.com/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/quill-llms.txt",
+  "lastFetched": "2025-03-24"
+}

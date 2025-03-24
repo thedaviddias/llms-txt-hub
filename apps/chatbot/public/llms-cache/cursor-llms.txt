@@ -1,0 +1,69 @@
+# Cursor
+
+## Docs
+
+- [Billing](https://docs.cursor.com/account/billing.md): Guide to Cursor billing: manage subscriptions, seats, cycles, and payments through Stripe portal
+- [Dashboard](https://docs.cursor.com/account/dashboard.md): Learn how to manage billing, usage pricing, and team settings in the dashboard for different plans
+- [Plans & Usage](https://docs.cursor.com/account/plans-and-usage.md): Learn about Cursor's pricing plans, usage limits, request pools, and billing information
+- [Pricing](https://docs.cursor.com/account/pricing.md)
+- [Privacy + Security](https://docs.cursor.com/account/privacy.md): A guide to Cursor's privacy settings, data handling, and code indexing with Privacy Mode option
+- [Analytics](https://docs.cursor.com/account/teams/analytics.md): Track team metrics including usage stats, per-user activity, and active user counts from the dashboard
+- [Members + Roles](https://docs.cursor.com/account/teams/members.md): Learn about team roles, member management, SSO, usage controls, and billing for organizational teams
+- [Get Started](https://docs.cursor.com/account/teams/setup.md): Learn how to create and manage a business team: setup, invite members, and configure SSO options
+- [SSO](https://docs.cursor.com/account/teams/sso.md): Learn how to set up SAML 2.0 Single Sign-On (SSO) for secure team authentication in Cursor
+- [Notepads (Beta)](https://docs.cursor.com/beta/notepads.md): A guide to using Notepads in Cursor for sharing context between Composers and Chat interactions
+- [Agent](https://docs.cursor.com/chat/agent.md): AI assistant that uses tools and reasoning to perform coding tasks with minimal supervision
+- [Apply](https://docs.cursor.com/chat/apply.md): Learn how to apply, accept, or reject code suggestions from chat using Cursor's Apply feature
+- [Overview](https://docs.cursor.com/chat/overview.md): Unified AI interface that combines Ask, Edit, and Agent modes to help write, edit, and understand code directly in your editor
+- [Overview](https://docs.cursor.com/cmdk/overview.md): Learn how to use Cmd/Ctrl K in Cursor to generate, edit code and ask questions with the Prompt Bar
+- [Terminal Cmd K](https://docs.cursor.com/cmdk/terminal-cmdk.md): Use Ctrl/⌘ K in Cursor terminal to generate and run commands through a prompt bar interface
+- [@Code](https://docs.cursor.com/context/@-symbols/@-code.md): Learn to reference code using @Code symbol and keyboard shortcuts for adding code to Chat or Edit
+- [@Codebase](https://docs.cursor.com/context/@-symbols/@-codebase.md): Learn how Chat processes codebase queries using gathering, reranking, reasoning, and generation steps
+- [@Cursor Rules](https://docs.cursor.com/context/@-symbols/@-cursor-rules.md): Work with and reference Cursor rules in your project
+- [@Definitions](https://docs.cursor.com/context/@-symbols/@-definitions.md): Add nearby code definitions to Cmd K context using the @Definitions symbol
+- [@Docs](https://docs.cursor.com/context/@-symbols/@-docs.md): Learn how to use, add, and manage custom documentation as context in Cursor using @Docs
+- [@Files](https://docs.cursor.com/context/@-symbols/@-files.md): Learn how to reference files using @ in Cursor's Chat and Cmd K, with preview and chunking features
+- [@Folders](https://docs.cursor.com/context/@-symbols/@-folders.md): Reference folders as context in Chat & Composer for enhanced AI conversations
+- [@Git](https://docs.cursor.com/context/@-symbols/@-git.md): Learn how to use @Git in Cursor's Chat to analyze diffs, find bugs, and generate commit messages
+- [@Link](https://docs.cursor.com/context/@-symbols/@-link.md): Use web content as context by linking to external websites and resources
+- [@Lint Errors](https://docs.cursor.com/context/@-symbols/@-lint-errors.md): Access and reference linting errors in your codebase
+- [@Notepads](https://docs.cursor.com/context/@-symbols/@-notepads.md): Reference and include notepads as context in Cursor
+- [@Recent Changes](https://docs.cursor.com/context/@-symbols/@-recent-changes.md): Access and reference recent changes in your workspace
+- [@Summarized Composers](https://docs.cursor.com/context/@-symbols/@-summarized-composers.md): Reference summarized versions of your previous Composer sessions as context in new conversations
+- [@Web](https://docs.cursor.com/context/@-symbols/@-web.md): @Web command searches the internet automatically to find relevant context for Cursor queries
+- [Overview](https://docs.cursor.com/context/@-symbols/overview.md): Overview of all @ symbols available in Cursor for context and commands
+- [#Files](https://docs.cursor.com/context/@-symbols/pill-files.md): Use # to select files and @ for context control when chatting with AI agents
+- [/command](https://docs.cursor.com/context/@-symbols/slash-commands.md): Use / to reference open editor tabs and add them as context when composing chats with the AI agent
+- [Codebase Indexing](https://docs.cursor.com/context/codebase-indexing.md): Learn how to index your codebase in Cursor for more accurate AI assistance and search results
+- [Ignore Files](https://docs.cursor.com/context/ignore-files.md): Learn how to use .cursorignore and .cursorindexingignore to control file access and indexing in Cursor
+- [Model Context Protocol](https://docs.cursor.com/context/model-context-protocol.md): Learn how to add and use custom MCP tools within Cursor feature
+- [Rules for AI](https://docs.cursor.com/context/rules-for-ai.md): Learn how to customize AI behavior in Cursor using project-specific and global rules
+- [FAQ](https://docs.cursor.com/faq.md): Frequently asked questions about Cursor's features, language support, models, and usage
+- [Installation](https://docs.cursor.com/get-started/installation.md): Learn how to install, set up, and use Cursor with AI features like Chat, Tab, and Composer
+- [Introduction](https://docs.cursor.com/get-started/introduction.md): Learn how to use Cursor's core features: Tab completion, Chat for code queries, and Agent for assistance
+- [Welcome to Cursor](https://docs.cursor.com/get-started/welcome.md): AI-powered IDE with Chat, Tab, and Agent for intelligent code development
+- [Java](https://docs.cursor.com/guides/languages/java.md): Migrate from JetBrains IDEs to Cursor in minutes
+- [JavaScript & TypeScript](https://docs.cursor.com/guides/languages/javascript.md): Learn how to setup Cursor for JavaScript & TypeScript
+- [Python](https://docs.cursor.com/guides/languages/python.md): A comprehensive guide to setting up the perfect Python development environment in Cursor
+- [iOS & macOS (Swift)](https://docs.cursor.com/guides/languages/swift.md): Learn how to setup Cursor for Swift
+- [Migrate from JetBrains IDEs](https://docs.cursor.com/guides/migration/jetbrains.md): Learn how to customize Cursor to replicate your JetBrains IDE experience
+- [Migrate from VS Code](https://docs.cursor.com/guides/migration/vscode.md): Migrate from VS Code to Cursor in minutes
+- [Keyboard Shortcuts](https://docs.cursor.com/kbd.md): A comprehensive guide to Cursor keyboard shortcuts for Chat, Composer, Tab and Agent
+- [AI Commit Message](https://docs.cursor.com/more/ai-commit-message.md): Learn how to generate Git commit messages automatically in Cursor using the sparkle icon or shortcuts
+- [Custom API Keys](https://docs.cursor.com/settings/api-keys.md): Learn how to use your own API keys in Cursor for OpenAI, Anthropic, Google, and Azure LLM providers
+- [Early Access Program](https://docs.cursor.com/settings/beta.md): Access experimental features and early releases in Cursor
+- [Models](https://docs.cursor.com/settings/models.md): Switch between AI models in Cursor using Chat, Composer, Tab, or Agent with different pricing tiers
+- [Advanced Features](https://docs.cursor.com/tab/advanced-features.md): Learn to navigate code efficiently using Tab in peek views, prediction, and partial accepts
+- [Auto-import](https://docs.cursor.com/tab/auto-import.md): Auto-import feature in Tab helps add module imports automatically in TypeScript and Python projects
+- [Tab vs GitHub Copilot](https://docs.cursor.com/tab/from-gh-copilot.md): Learn how Cursor's code editing capabilities surpass GitHub Copilot with multi-character & instructional edits
+- [Overview](https://docs.cursor.com/tab/overview.md): AI-powered code autocomplete that suggests edits and multi-line changes based on your recent work
+- [Common Issues](https://docs.cursor.com/troubleshooting/common-issues.md): Guide for troubleshooting common Cursor app issues including updates, login, and connectivity problems
+- [Getting a Request ID](https://docs.cursor.com/troubleshooting/request-reporting.md): Learn how to find and share request IDs in Cursor for better technical support and issue reporting
+- [Troubleshooting Guide](https://docs.cursor.com/troubleshooting/troubleshooting-guide.md): Technical guide for gathering logs, errors and system info when reporting Cursor issues
+
+
+## Optional
+
+- [Website](https://cursor.com/)
+- [Forum](https://forum.cursor.com/)
+- [Get Help](mailto:hi@cursor.com)

@@ -1,0 +1,10 @@
+{
+  "name": "Cursor",
+  "description": "AI-powered code editor and development environment",
+  "website": "https://cursor.com",
+  "url": "https://docs.cursor.com/llms.txt",
+  "type": "llms.txt",
+  "category": "developer-tools",
+  "cachePath": "apps/chatbot/public/llms-cache/cursor-llms.txt",
+  "lastFetched": "2025-03-24"
+}

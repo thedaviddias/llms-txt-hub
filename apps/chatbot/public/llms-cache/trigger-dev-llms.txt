@@ -1,0 +1,172 @@
+# Trigger.dev
+
+## Docs
+
+- [API keys](https://trigger.dev/docs/apikeys.md): How to authenticate with Trigger.dev so you can trigger tasks.
+- [Bulk actions](https://trigger.dev/docs/bulk-actions.md): Perform actions like replay and cancel on multiple runs at once.
+- [Changelog](https://trigger.dev/docs/changelog.md)
+- [CLI deploy command](https://trigger.dev/docs/cli-deploy-commands.md): Use the deploy command to deploy your tasks to Trigger.dev.
+- [CLI dev command](https://trigger.dev/docs/cli-dev.md): The `trigger.dev dev` command is used to run your tasks locally.
+- [CLI dev command](https://trigger.dev/docs/cli-dev-commands.md): The `trigger.dev dev` command is used to run your tasks locally.
+- [CLI init command](https://trigger.dev/docs/cli-init-commands.md): Use these options when running the CLI `init` command.
+- [Introduction](https://trigger.dev/docs/cli-introduction.md): The Trigger.dev CLI has a number of options and commands to help you develop locally, self host, and deploy your tasks.
+- [CLI list-profiles command](https://trigger.dev/docs/cli-list-profiles-commands.md): Use these options when using the `list-profiles` CLI command.
+- [CLI login command](https://trigger.dev/docs/cli-login-commands.md): Use these options when logging in to Trigger.dev using the CLI.
+- [CLI logout command](https://trigger.dev/docs/cli-logout-commands.md): Use these options when using the `logout` CLI command.
+- [CLI promote command](https://trigger.dev/docs/cli-promote-commands.md): Use the promote command to promote a previously deployed version to the current version.
+- [CLI update command](https://trigger.dev/docs/cli-update-commands.md): Use these options when using the `update` CLI command.
+- [CLI whoami command](https://trigger.dev/docs/cli-whoami-commands.md): Use these options to display the current logged in user and project details.
+- [Discord Community](https://trigger.dev/docs/community.md)
+- [The trigger.config.ts file](https://trigger.dev/docs/config/config-file.md): This file is used to configure your project and how it's built.
+- [Additional Files](https://trigger.dev/docs/config/extensions/additionalFiles.md): Use the additionalFiles build extension to copy additional files to the build directory
+- [Additional Packages](https://trigger.dev/docs/config/extensions/additionalPackages.md): Use the additionalPackages build extension to include additional packages in the build
+- [apt-get](https://trigger.dev/docs/config/extensions/aptGet.md): Use the aptGet build extension to install system packages into the deployed image
+- [Audio Waveform](https://trigger.dev/docs/config/extensions/audioWaveform.md): Use the audioWaveform build extension to add support for Audio Waveform in your project
+- [Custom build extensions](https://trigger.dev/docs/config/extensions/custom.md): Customize how your project is built and deployed to Trigger.dev with your own custom build extensions
+- [Emit Decorator Metadata](https://trigger.dev/docs/config/extensions/emitDecoratorMetadata.md): Use the emitDecoratorMetadata build extension to enable support for the emitDecoratorMetadata TypeScript compiler option
+- [esbuild Plugin](https://trigger.dev/docs/config/extensions/esbuildPlugin.md): Use the esbuildPlugin build extension to add existing or custom esbuild plugins to your build process
+- [FFmpeg](https://trigger.dev/docs/config/extensions/ffmpeg.md): Use the ffmpeg build extension to include FFmpeg in your project
+- [Build extensions](https://trigger.dev/docs/config/extensions/overview.md): Customize how your project is built and deployed to Trigger.dev with build extensions
+- [Prisma](https://trigger.dev/docs/config/extensions/prismaExtension.md): Use the prismaExtension build extension to use Prisma with Trigger.dev
+- [Puppeteer](https://trigger.dev/docs/config/extensions/puppeteer.md): Use the puppeteer build extension to enable support for Puppeteer in your project
+- [Python](https://trigger.dev/docs/config/extensions/pythonExtension.md): Use the python build extension to add support for executing Python scripts in your project
+- [Sync env vars](https://trigger.dev/docs/config/extensions/syncEnvVars.md): Use the syncEnvVars build extension to automatically sync environment variables to Trigger.dev
+- [Context](https://trigger.dev/docs/context.md): Get the context of a task run.
+- [Environment Variables](https://trigger.dev/docs/deploy-environment-variables.md): Any environment variables used in your tasks need to be added so the deployed code will run successfully.
+- [Atomic deploys](https://trigger.dev/docs/deployment/atomic-deployment.md): Use atomic deploys to coordinate changes to your tasks and your application.
+- [Deployment](https://trigger.dev/docs/deployment/overview.md): Learn how to deploy your tasks to Trigger.dev.
+- [Errors & Retrying](https://trigger.dev/docs/errors-retrying.md): How to deal with errors and write reliable tasks.
+- [Overview & Authentication](https://trigger.dev/docs/frontend/overview.md): Using the Trigger.dev SDK from your frontend application.
+- [Overview](https://trigger.dev/docs/frontend/react-hooks/overview.md): Using the Trigger.dev v3 API from your React application.
+- [Realtime hooks](https://trigger.dev/docs/frontend/react-hooks/realtime.md): Get live updates from the Trigger.dev API in your frontend application.
+- [Trigger hooks](https://trigger.dev/docs/frontend/react-hooks/triggering.md): Triggering tasks from your frontend application.
+- [GitHub Actions](https://trigger.dev/docs/github-actions.md): You can easily deploy your tasks with GitHub actions.
+- [GitHub repo](https://trigger.dev/docs/github-repo.md)
+- [Generate and translate copy](https://trigger.dev/docs/guides/ai-agents/generate-translate-copy.md): Create an AI agent workflow that generates and translates copy
+- [AI agents overview](https://trigger.dev/docs/guides/ai-agents/overview.md): Real world AI agent example tasks using Trigger.dev
+- [Respond to customer inquiry and check for inappropriate content](https://trigger.dev/docs/guides/ai-agents/respond-and-check-content.md): Create an AI agent workflow that responds to customer inquiries while checking if their text is inappropriate
+- [Route a question to a different AI model](https://trigger.dev/docs/guides/ai-agents/route-question.md): Create an AI agent workflow that routes a question to a different AI model depending on its complexity
+- [Translate text and refine it based on feedback](https://trigger.dev/docs/guides/ai-agents/translate-and-refine.md): This guide will show you how to create a task that translates text and refines it based on feedback.
+- [Verify a news article](https://trigger.dev/docs/guides/ai-agents/verify-news-article.md): Create an AI agent workflow that verifies the facts in a news article
+- [dotenvx](https://trigger.dev/docs/guides/community/dotenvx.md): A dotenvx package for Trigger.dev.
+- [Fatima](https://trigger.dev/docs/guides/community/fatima.md): A Fatima package for Trigger.dev.
+- [Rate limiter](https://trigger.dev/docs/guides/community/rate-limiter.md): A rate limiter for Trigger.dev.
+- [SvelteKit setup guide](https://trigger.dev/docs/guides/community/sveltekit.md): A plugin for SvelteKit to integrate with Trigger.dev.
+- [Next.js Batch LLM Evaluator](https://trigger.dev/docs/guides/example-projects/batch-llm-evaluator.md): This example Next.js project evaluates multiple LLM models using the Vercel AI SDK and streams updates to the frontend using Trigger.dev Realtime.
+- [Claude 3.7 thinking chatbot](https://trigger.dev/docs/guides/example-projects/claude-thinking-chatbot.md): This example Next.js project uses Vercel's AI SDK and Anthropic's Claude 3.7 model to create a thinking chatbot.
+- [Next.js Realtime CSV Importer](https://trigger.dev/docs/guides/example-projects/realtime-csv-importer.md): This example Next.js project demonstrates how to use Trigger.dev Realtime to build a CSV Uploader with progress updates streamed to the frontend.
+- [Image generation with Fal.ai and Trigger.dev Realtime](https://trigger.dev/docs/guides/example-projects/realtime-fal-ai.md): This example Next.js project generates an image from a prompt using Fal.ai and shows the progress of the task on the frontend using Trigger.dev Realtime.
+- [Turborepo monorepo with Prisma](https://trigger.dev/docs/guides/example-projects/turborepo-monorepo-prisma.md): Two example projects demonstrating how to use Prisma and Trigger.dev in a Turborepo monorepo setup.
+- [Vercel AI SDK image generator](https://trigger.dev/docs/guides/example-projects/vercel-ai-sdk-image-generator.md): This example Next.js project uses the Vercel AI SDK to generate images from a prompt.
+- [Generate an image using DALL·E 3](https://trigger.dev/docs/guides/examples/dall-e3-generate-image.md): This example will show you how to generate an image using DALL·E 3 and text using GPT-4o with Trigger.dev.
+- [Transcribe audio using Deepgram](https://trigger.dev/docs/guides/examples/deepgram-transcribe-audio.md): This example will show you how to transcribe audio using Deepgram's speech recognition API with Trigger.dev.
+- [Convert an image to a cartoon using Fal.ai](https://trigger.dev/docs/guides/examples/fal-ai-image-to-cartoon.md): This example task generates an image from a URL using Fal.ai and uploads it to Cloudflare R2.
+- [Generate an image from a prompt using Fal.ai and Trigger.dev Realtime](https://trigger.dev/docs/guides/examples/fal-ai-realtime.md): This example task generates an image from a prompt using Fal.ai and shows the progress of the task on the frontend using Trigger.dev Realtime.
+- [Video processing with FFmpeg](https://trigger.dev/docs/guides/examples/ffmpeg-video-processing.md): These examples show you how to process videos in various ways using FFmpeg with Trigger.dev.
+- [Crawl a URL using Firecrawl](https://trigger.dev/docs/guides/examples/firecrawl-url-crawl.md): This example demonstrates how to crawl a URL using Firecrawl with Trigger.dev.
+- [Convert documents to PDF using LibreOffice](https://trigger.dev/docs/guides/examples/libreoffice-pdf-conversion.md): This example demonstrates how to convert documents to PDF using LibreOffice with Trigger.dev.
+- [Call OpenAI with retrying](https://trigger.dev/docs/guides/examples/open-ai-with-retrying.md): This example will show you how to call OpenAI with retrying using Trigger.dev.
+- [Turn a PDF into an image using MuPDF](https://trigger.dev/docs/guides/examples/pdf-to-image.md): This example will show you how to turn a PDF into an image using MuPDF and Trigger.dev.
+- [Puppeteer](https://trigger.dev/docs/guides/examples/puppeteer.md): These examples demonstrate how to use Puppeteer with Trigger.dev.
+- [Generate a PDF using react-pdf and save it to R2](https://trigger.dev/docs/guides/examples/react-pdf.md): This example will show you how to generate a PDF using Trigger.dev.
+- [Send a sequence of emails using Resend](https://trigger.dev/docs/guides/examples/resend-email-sequence.md): This example will show you how to send a sequence of emails over several days using Resend with Trigger.dev.
+- [Scrape the top 3 articles from Hacker News and email yourself a summary every weekday](https://trigger.dev/docs/guides/examples/scrape-hacker-news.md): This example demonstrates how to scrape the top 3 articles from Hacker News using BrowserBase and Puppeteer, summarize them with ChatGPT and send a nicely formatted email summary to yourself every weekday using Resend.
+- [Track errors with Sentry](https://trigger.dev/docs/guides/examples/sentry-error-tracking.md): This example demonstrates how to track errors with Sentry using Trigger.dev.
+- [Process images using Sharp](https://trigger.dev/docs/guides/examples/sharp-image-processing.md): This example demonstrates how to process images using the Sharp library with Trigger.dev.
+- [Trigger a task from Stripe webhook events](https://trigger.dev/docs/guides/examples/stripe-webhook.md): This example demonstrates how to handle Stripe webhook events using Trigger.dev.
+- [Supabase database operations using Trigger.dev](https://trigger.dev/docs/guides/examples/supabase-database-operations.md): These examples demonstrate how to run basic CRUD operations on a table in a Supabase database using Trigger.dev.
+- [Uploading files to Supabase Storage](https://trigger.dev/docs/guides/examples/supabase-storage-upload.md): This example demonstrates how to upload files to Supabase Storage using Trigger.dev.
+- [Using the Vercel AI SDK](https://trigger.dev/docs/guides/examples/vercel-ai-sdk.md): This example demonstrates how to use the Vercel AI SDK with Trigger.dev.
+- [Syncing environment variables from your Vercel projects](https://trigger.dev/docs/guides/examples/vercel-sync-env-vars.md): This example demonstrates how to sync environment variables from your Vercel project to Trigger.dev.
+- [Bun guide](https://trigger.dev/docs/guides/frameworks/bun.md): This guide will show you how to setup Trigger.dev with Bun
+- [Drizzle setup guide](https://trigger.dev/docs/guides/frameworks/drizzle.md): This guide will show you how to set up Drizzle ORM with Trigger.dev
+- [Next.js setup guide](https://trigger.dev/docs/guides/frameworks/nextjs.md): This guide will show you how to setup Trigger.dev in your existing Next.js project, test an example task, and view the run.
+- [Triggering tasks with webhooks in Next.js](https://trigger.dev/docs/guides/frameworks/nextjs-webhooks.md): Learn how to trigger a task from a webhook in a Next.js app.
+- [Node.js setup guide](https://trigger.dev/docs/guides/frameworks/nodejs.md): This guide will show you how to setup Trigger.dev in your existing Node.js project, test an example task, and view the run.
+- [Prisma setup guide](https://trigger.dev/docs/guides/frameworks/prisma.md): This guide will show you how to set up Prisma with Trigger.dev
+- [Remix setup guide](https://trigger.dev/docs/guides/frameworks/remix.md): This guide will show you how to setup Trigger.dev in your existing Remix project, test an example task, and view the run.
+- [Triggering tasks with webhooks in Remix](https://trigger.dev/docs/guides/frameworks/remix-webhooks.md): Learn how to trigger a task from a webhook in a Remix app.
+- [Sequin database triggers](https://trigger.dev/docs/guides/frameworks/sequin.md): This guide will show you how to trigger tasks from database changes using Sequin
+- [Triggering tasks from Supabase edge functions](https://trigger.dev/docs/guides/frameworks/supabase-edge-functions-basic.md): This guide will show you how to trigger a task from a Supabase edge function, and then view the run in our dashboard.
+- [Triggering tasks from Supabase Database Webhooks](https://trigger.dev/docs/guides/frameworks/supabase-edge-functions-database-webhooks.md): This guide shows you how to trigger a transcribing task when a row is added to a table in a Supabase database, using a Database Webhook and Edge Function.
+- [Supabase overview](https://trigger.dev/docs/guides/frameworks/supabase-guides-overview.md): Guides and examples for using Supabase with Trigger.dev.
+- [Using webhooks with Trigger.dev](https://trigger.dev/docs/guides/frameworks/webhooks-guides-overview.md): Guides for using webhooks with Trigger.dev.
+- [Frameworks, guides and examples](https://trigger.dev/docs/guides/introduction.md): A growing list of guides and examples to get the most out of Trigger.dev.
+- [Python headless browser web crawler example](https://trigger.dev/docs/guides/python/python-crawl4ai.md): Learn how to use Python, Crawl4AI and Playwright to create a headless browser web crawler with Trigger.dev.
+- [Python image processing example](https://trigger.dev/docs/guides/python/python-image-processing.md): Learn how to use Trigger.dev with Python to process images from URLs and upload them to S3.
+- [Python PDF form extractor example](https://trigger.dev/docs/guides/python/python-pdf-form-extractor.md): Learn how to use Trigger.dev with Python to extract form data from PDF files.
+- [Email us](https://trigger.dev/docs/help-email.md)
+- [Slack support](https://trigger.dev/docs/help-slack.md)
+- [How it works](https://trigger.dev/docs/how-it-works.md): Understand how Trigger.dev works and how it can help you.
+- [Idempotency](https://trigger.dev/docs/idempotency.md): An API call or operation is “idempotent” if it has the same result when called more than once.
+- [Welcome to the Trigger.dev docs](https://trigger.dev/docs/introduction.md): Find all the resources and guides you need to get started
+- [Limits](https://trigger.dev/docs/limits.md): There are some hard and soft limits that you might hit.
+- [Logging and tracing](https://trigger.dev/docs/logging.md): How to use the built-in logging and tracing system.
+- [Machines](https://trigger.dev/docs/machines.md): Configure the number of vCPUs and GBs of RAM you want the task to use.
+- [Advanced usage](https://trigger.dev/docs/management/advanced-usage.md): Advanced usage of the Trigger.dev management API
+- [Authentication](https://trigger.dev/docs/management/authentication.md): Authenticating with the Trigger.dev management API
+- [Auto-pagination](https://trigger.dev/docs/management/auto-pagination.md): Using auto-pagination with the Trigger.dev management API
+- [Create Env Var](https://trigger.dev/docs/management/envvars/create.md): Create a new environment variable for a specific project and environment.
+- [Delete Env Var](https://trigger.dev/docs/management/envvars/delete.md): Delete a specific environment variable for a specific project and environment.
+- [Import Env Vars](https://trigger.dev/docs/management/envvars/import.md): Upload mulitple environment variables for a specific project and environment.
+- [List Env Vars](https://trigger.dev/docs/management/envvars/list.md): List all environment variables for a specific project and environment.
+- [Retrieve Env Var](https://trigger.dev/docs/management/envvars/retrieve.md): Retrieve a specific environment variable for a specific project and environment.
+- [Update Env Var](https://trigger.dev/docs/management/envvars/update.md): Update a specific environment variable for a specific project and environment.
+- [Errors and retries](https://trigger.dev/docs/management/errors-and-retries.md): Handling errors and retries with the Trigger.dev management API
+- [Overview](https://trigger.dev/docs/management/overview.md): Using the Trigger.dev management API
+- [Cancel run](https://trigger.dev/docs/management/runs/cancel.md): Cancels an in-progress run. If the run is already completed, this will have no effect.
+- [List runs](https://trigger.dev/docs/management/runs/list.md): List runs in a specific environment. You can filter the runs by status, created at, task identifier, version, and more.
+- [Replay run](https://trigger.dev/docs/management/runs/replay.md): Creates a new run with the same payload and options as the original run.
+- [Reschedule run](https://trigger.dev/docs/management/runs/reschedule.md): Updates a delayed run with a new delay. Only valid when the run is in the DELAYED state.
+- [Retrieve run](https://trigger.dev/docs/management/runs/retrieve.md): Retrieve information about a run, including its status, payload, output, and attempts. If you authenticate with a Public API key, we will omit the payload and output fields for security reasons.
+
+- [Update metadata](https://trigger.dev/docs/management/runs/update-metadata.md): Update the metadata of a run.
+- [Activate Schedule](https://trigger.dev/docs/management/schedules/activate.md): Activate a schedule by its ID. This will only work on `IMPERATIVE` schedules that were created in the dashboard or using the imperative SDK functions like `schedules.create()`.
+- [Create Schedule](https://trigger.dev/docs/management/schedules/create.md): Create a new `IMPERATIVE` schedule based on the specified options.
+- [Deactivate Schedule](https://trigger.dev/docs/management/schedules/deactivate.md): Deactivate a schedule by its ID. This will only work on `IMPERATIVE` schedules that were created in the dashboard or using the imperative SDK functions like `schedules.create()`.
+- [Delete Schedule](https://trigger.dev/docs/management/schedules/delete.md): Delete a schedule by its ID. This will only work on `IMPERATIVE` schedules that were created in the dashboard or using the imperative SDK functions like `schedules.create()`.
+- [List Schedules](https://trigger.dev/docs/management/schedules/list.md): List all schedules. You can also paginate the results.
+- [Retrieve Schedule](https://trigger.dev/docs/management/schedules/retrieve.md): Get a schedule by its ID.
+- [Get timezones](https://trigger.dev/docs/management/schedules/timezones.md): Get all supported timezones that schedule tasks support.
+- [Update Schedule](https://trigger.dev/docs/management/schedules/update.md): Update a schedule by its ID. This will only work on `IMPERATIVE` schedules that were created in the dashboard or using the imperative SDK functions like `schedules.create()`.
+- [Batch trigger](https://trigger.dev/docs/management/tasks/batch-trigger.md): Batch trigger tasks with up to 500 payloads.
+- [Trigger](https://trigger.dev/docs/management/tasks/trigger.md): Trigger a task by its identifier.
+- [Contributing](https://trigger.dev/docs/open-source-contributing.md): You can contribute to Trigger.dev in many ways.
+- [Self-hosting](https://trigger.dev/docs/open-source-self-hosting.md): You can self-host Trigger.dev on your own infrastructure.
+- [Concurrency & Queues](https://trigger.dev/docs/queue-concurrency.md): Configure what you want to happen when there is more than one run at a time.
+- [Quick start](https://trigger.dev/docs/quick-start.md): How to get started in 3 minutes using the CLI and SDK.
+- [Realtime overview](https://trigger.dev/docs/realtime/overview.md): Using the Trigger.dev v3 realtime API
+- [Realtime React hooks](https://trigger.dev/docs/realtime/react-hooks.md): Subscribes to all changes to a run in a React component.
+- [Realtime streams](https://trigger.dev/docs/realtime/streams.md): Stream data in realtime from inside your tasks
+- [runs.subscribeToBatch](https://trigger.dev/docs/realtime/subscribe-to-batch.md): Subscribes to all changes for runs in a batch.
+- [runs.subscribeToRun](https://trigger.dev/docs/realtime/subscribe-to-run.md): Subscribes to all changes to a run.
+- [runs.subscribeToRunsWithTag](https://trigger.dev/docs/realtime/subscribe-to-runs-with-tag.md): Subscribes to all changes to runs with a specific tag.
+- [Replaying](https://trigger.dev/docs/replaying.md): A replay is a copy of a run with the same payload but against the latest version in that environment. This is useful if something went wrong and you want to try again with the latest version of your code.
+- [Request a feature](https://trigger.dev/docs/request-feature.md)
+- [Roadmap](https://trigger.dev/docs/roadmap.md)
+- [Run tests](https://trigger.dev/docs/run-tests.md): You can use the dashboard to run a test of your tasks.
+- [Usage](https://trigger.dev/docs/run-usage.md): Get compute duration and cost from inside a run, or for a specific block of code.
+- [Runs](https://trigger.dev/docs/runs.md): Understanding the lifecycle of task run execution in Trigger.dev
+- [Max duration](https://trigger.dev/docs/runs/max-duration.md): Set a maximum duration for a task to run.
+- [Run metadata](https://trigger.dev/docs/runs/metadata.md): Attach a small amount of data to a run and update it as the run progresses.
+- [Tags](https://trigger.dev/docs/tags.md): Tags allow you to easily filter runs in the dashboard and when using the SDK.
+- [Tasks: Overview](https://trigger.dev/docs/tasks/overview.md): Tasks are functions that can run for a long time and provide strong resilience to failure.
+- [Scheduled tasks (cron)](https://trigger.dev/docs/tasks/scheduled.md): A task that is triggered on a recurring schedule using cron syntax.
+- [schemaTask](https://trigger.dev/docs/tasks/schemaTask.md): Define tasks with a runtime payload schema and validate the payload before running the task.
+- [Triggering](https://trigger.dev/docs/triggering.md): Tasks need to be triggered in order to run.
+- [Common problems](https://trigger.dev/docs/troubleshooting.md): Some common problems you might experience and their solutions
+- [Alerts](https://trigger.dev/docs/troubleshooting-alerts.md): Get alerted when runs or deployments fail, or when deployments succeed.
+- [Debugging in VS Code](https://trigger.dev/docs/troubleshooting-debugging-in-vscode.md)
+- [GitHub Issues](https://trigger.dev/docs/troubleshooting-github-issues.md)
+- [Uptime Status](https://trigger.dev/docs/troubleshooting-uptime-status.md)
+- [Upgrade to new build system](https://trigger.dev/docs/upgrading-beta.md): How to update to 3.0.0 from the beta
+- [How to upgrade the Trigger.dev packages](https://trigger.dev/docs/upgrading-packages.md): When we release fixes and new features we recommend you upgrade your Trigger.dev packages.
+- [Vercel integration](https://trigger.dev/docs/vercel-integration.md): When you deploy to Vercel, automatically deploy your associated tasks.
+- [Versioning](https://trigger.dev/docs/versioning.md): We use atomic versioning to ensure that started tasks are not affected by changes to the task code.
+- [Video walkthrough](https://trigger.dev/docs/video-walkthrough.md): Go from zero to a working task in your Next.js app in 10 minutes.
+- [Wait: Overview](https://trigger.dev/docs/wait.md): During your run you can wait for a period of time or for something to happen.
+- [Wait for](https://trigger.dev/docs/wait-for.md): Wait for a period of time, then continue execution.
+- [Wait for event](https://trigger.dev/docs/wait-for-event.md): Wait until an event has been received, then continue execution.
+- [Wait for request](https://trigger.dev/docs/wait-for-request.md): Wait until a `Request` has been received at the provided URL, then continue execution.
+- [Wait until](https://trigger.dev/docs/wait-until.md): Wait until a date, then continue execution.
+- [Writing tasks: Overview](https://trigger.dev/docs/writing-tasks-introduction.md): Tasks are the core of Trigger.dev. They are long-running processes that are triggered by events.

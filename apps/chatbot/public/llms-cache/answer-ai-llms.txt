@@ -1,0 +1,12 @@
+# Answer.AI company website
+
+> Answer.AI is a new kind of AI R&D lab which creates practical end-user products based on foundational research breakthroughs.
+
+Answer.AI is a public benefit corporation.
+
+## Docs
+
+- [Launch post describing Answer.AI's mission and purpose](https://www.answer.ai/posts/2023-12-12-launch.md): Describes Answer.AI, a "new old kind of R&D lab"
+- [Lessons from history’s greatest R&D labs](https://www.answer.ai/posts/2024-01-26-freaktakes-lessons.md): A historical analysis of what the earliest electrical and great applied R&D labs can teach Answer.AI, and potential pitfalls, by R&D lab historian Eric Gilliam
+- [Answer.AI projects](https://www.answer.ai/overview.md): Brief descriptions and dates of released Answer.AI projects
+

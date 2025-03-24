@@ -1,0 +1,278 @@
+# Axiom Docs
+
+## Docs
+
+- [arg_max](https://axiom.co/docs/apl/aggregation-function/arg-max.md): This page explains how to use the arg_max aggregation in APL.
+- [arg_min](https://axiom.co/docs/apl/aggregation-function/arg-min.md): This page explains how to use the arg_min aggregation in APL.
+- [avg](https://axiom.co/docs/apl/aggregation-function/avg.md): This page explains how to use the avg aggregation function in APL.
+- [avgif](https://axiom.co/docs/apl/aggregation-function/avgif.md): This page explains how to use the avgif aggregation function in APL.
+- [count](https://axiom.co/docs/apl/aggregation-function/count.md): This page explains how to use the count aggregation function in APL.
+- [countif](https://axiom.co/docs/apl/aggregation-function/countif.md): This page explains how to use the countif aggregation function in APL.
+- [dcount](https://axiom.co/docs/apl/aggregation-function/dcount.md): This page explains how to use the dcount aggregation function in APL.
+- [dcountif](https://axiom.co/docs/apl/aggregation-function/dcountif.md): This page explains how to use the dcountif aggregation function in APL.
+- [histogram](https://axiom.co/docs/apl/aggregation-function/histogram.md): This page explains how to use the histogram aggregation function in APL.
+- [make_list](https://axiom.co/docs/apl/aggregation-function/make-list.md): This page explains how to use the make_list aggregation function in APL.
+- [make_list_if](https://axiom.co/docs/apl/aggregation-function/make-list-if.md): This page explains how to use the make_list_if aggregation function in APL.
+- [make_set](https://axiom.co/docs/apl/aggregation-function/make-set.md): This page explains how to use the make_set aggregation function in APL.
+- [make_set_if](https://axiom.co/docs/apl/aggregation-function/make-set-if.md): This page explains how to use the make_set_if aggregation function in APL.
+- [max](https://axiom.co/docs/apl/aggregation-function/max.md): This page explains how to use the max aggregation function in APL.
+- [maxif](https://axiom.co/docs/apl/aggregation-function/maxif.md): This page explains how to use the maxif aggregation function in APL.
+- [min](https://axiom.co/docs/apl/aggregation-function/min.md): This page explains how to use the min aggregation function in APL.
+- [minif](https://axiom.co/docs/apl/aggregation-function/minif.md): This page explains how to use the minif aggregation function in APL.
+- [percentile](https://axiom.co/docs/apl/aggregation-function/percentile.md): This page explains how to use the percentile aggregation function in APL.
+- [percentileif](https://axiom.co/docs/apl/aggregation-function/percentileif.md): This page explains how to use the percentileif aggregation function in APL.
+- [rate](https://axiom.co/docs/apl/aggregation-function/rate.md): This page explains how to use the rate aggregation function in APL.
+- [Aggregation functions](https://axiom.co/docs/apl/aggregation-function/statistical-functions.md): This section explains how to use and combine different aggregation functions in APL.
+- [stdev](https://axiom.co/docs/apl/aggregation-function/stdev.md): This page explains how to use the stdev aggregation function in APL.
+- [stdevif](https://axiom.co/docs/apl/aggregation-function/stdevif.md): This page explains how to use the stdevif aggregation function in APL.
+- [sum](https://axiom.co/docs/apl/aggregation-function/sum.md): This page explains how to use the sum aggregation function in APL.
+- [sumif](https://axiom.co/docs/apl/aggregation-function/sumif.md): This page explains how to use the sumif aggregation function in APL.
+- [topk](https://axiom.co/docs/apl/aggregation-function/topk.md): This page explains how to use the topk aggregation function in APL.
+- [variance](https://axiom.co/docs/apl/aggregation-function/variance.md): This page explains how to use the variance aggregation function in APL.
+- [varianceif](https://axiom.co/docs/apl/aggregation-function/varianceif.md): This page explains how to use the varianceif aggregation function in APL.
+- [Map fields](https://axiom.co/docs/apl/data-types/map-fields.md): This page explains what map fields are and how to query them.
+- [Null values](https://axiom.co/docs/apl/data-types/null-values.md): This page explains how APL represents missing values.
+- [Scalar data types](https://axiom.co/docs/apl/data-types/scalar-data-types.md): This page explains the data types in APL.
+- [Entity names](https://axiom.co/docs/apl/entities/entity-names.md): This page explains how to use entity names in your APL query.
+- [Migrate from SQL to APL](https://axiom.co/docs/apl/guides/migrating-from-sql-to-apl.md): This guide will help you through migrating SQL to APL, helping you understand key differences and providing you with query examples.
+- [Migrate from Sumo Logic Query Language to APL](https://axiom.co/docs/apl/guides/migrating-from-sumologic-to-apl.md): This guide dives into why APL could be a superior choice for your data needs, and the differences between Sumo Logic and APL.
+- [Migrate from Splunk SPL to APL](https://axiom.co/docs/apl/guides/splunk-cheat-sheet.md): This step-by-step guide provides a high-level mapping from Splunk SPL to APL.
+- [Axiom Processing Language (APL)](https://axiom.co/docs/apl/introduction.md): This section explains how to use the Axiom Processing Language to get deeper insights from your data.
+- [Set statement](https://axiom.co/docs/apl/query-statement/set-statement.md): The set statement is used to set a query option in your APL query.
+- [Special field attributes](https://axiom.co/docs/apl/reference/special-field-attributes.md): This page explains how to implement special fields within APL queries to enhance the functionality and interactivity of datasets. Use these fields in APL queries to add unique behaviors to the Axiom user interface.
+- [Array functions](https://axiom.co/docs/apl/scalar-functions/array-functions.md): This section explains how to use array functions in APL.
+- [array_concat](https://axiom.co/docs/apl/scalar-functions/array-functions/array-concat.md): This page explains how to use the array_concat function in APL.
+- [array_iff](https://axiom.co/docs/apl/scalar-functions/array-functions/array-iff.md): This page explains how to use the array_iff function in APL.
+- [array_index_of](https://axiom.co/docs/apl/scalar-functions/array-functions/array-index-of.md): This page explains how to use the array_index_of function in APL.
+- [array_length](https://axiom.co/docs/apl/scalar-functions/array-functions/array-length.md): This page explains how to use the array_length function in APL.
+- [array_reverse](https://axiom.co/docs/apl/scalar-functions/array-functions/array-reverse.md): This page explains how to use the array_reverse function in APL.
+- [array_rotate_left](https://axiom.co/docs/apl/scalar-functions/array-functions/array-rotate-left.md): This page explains how to use the array_rotate_left function in APL.
+- [array_rotate_right](https://axiom.co/docs/apl/scalar-functions/array-functions/array-rotate-right.md): This page explains how to use the array_rotate_right function in APL.
+- [array_select_dict](https://axiom.co/docs/apl/scalar-functions/array-functions/array-select-dict.md): This page explains how to use the array_select_dict function in APL.
+- [array_shift_left](https://axiom.co/docs/apl/scalar-functions/array-functions/array-shift-left.md): This page explains how to use the array_shift_left function in APL.
+- [array_shift_right](https://axiom.co/docs/apl/scalar-functions/array-functions/array-shift-right.md): This page explains how to use the array_shift_right function in APL.
+- [array_slice](https://axiom.co/docs/apl/scalar-functions/array-functions/array-slice.md): This page explains how to use the array_slice function in APL.
+- [array_split](https://axiom.co/docs/apl/scalar-functions/array-functions/array-split.md): This page explains how to use the array_split function in APL.
+- [array_sum](https://axiom.co/docs/apl/scalar-functions/array-functions/array-sum.md): This page explains how to use the array_sum function in APL.
+- [isarray](https://axiom.co/docs/apl/scalar-functions/array-functions/isarray.md): This page explains how to use the isarray function in APL.
+- [pack_array](https://axiom.co/docs/apl/scalar-functions/array-functions/pack-array.md): This page explains how to use the pack_array function in APL.
+- [strcat_array](https://axiom.co/docs/apl/scalar-functions/array-functions/strcat-array.md): This page explains how to use the strcat_array function in APL.
+- [Conditional functions](https://axiom.co/docs/apl/scalar-functions/conditional-function.md): Learn how to use and combine different conditional functions in APL
+- [Conversion functions](https://axiom.co/docs/apl/scalar-functions/conversion-functions.md): Learn how to use and combine different conversion functions in APL
+- [Datetime functions](https://axiom.co/docs/apl/scalar-functions/datetime-functions.md): Learn how to use and combine different timespan functions in APL
+- [Hash functions](https://axiom.co/docs/apl/scalar-functions/hash-functions.md): Learn how to use and combine various hash functions in APL
+- [IP functions](https://axiom.co/docs/apl/scalar-functions/ip-functions.md): This section explains how to use IP functions in APL.
+- [format_ipv4](https://axiom.co/docs/apl/scalar-functions/ip-functions/format-ipv4.md): This page explains how to use the format_ipv4 function in APL.
+- [geo_info_from_ip_address](https://axiom.co/docs/apl/scalar-functions/ip-functions/geo-info-from-ip-address.md): This page explains how to use the geo_info_from_ip_address function in APL.
+- [has_any_ipv4](https://axiom.co/docs/apl/scalar-functions/ip-functions/has-any-ipv4.md): This page explains how to use the has_any_ipv4 function in APL.
+- [has_any_ipv4_prefix](https://axiom.co/docs/apl/scalar-functions/ip-functions/has-any-ipv4-prefix.md): This page explains how to use the has_any_ipv4_prefix function in APL.
+- [has_ipv4](https://axiom.co/docs/apl/scalar-functions/ip-functions/has-ipv4.md): This page explains how to use the has_ipv4 function in APL.
+- [has_ipv4_prefix](https://axiom.co/docs/apl/scalar-functions/ip-functions/has-ipv4-prefix.md): This page explains how to use the has_ipv4_prefix function in APL.
+- [ipv4_compare](https://axiom.co/docs/apl/scalar-functions/ip-functions/ipv4-compare.md): This page explains how to use the ipv4_compare function in APL.
+- [ipv4_is_in_any_range](https://axiom.co/docs/apl/scalar-functions/ip-functions/ipv4-is-in-any-range.md): This page explains how to use the ipv4_is_in_any_range function in APL.
+- [ipv4_is_in_range](https://axiom.co/docs/apl/scalar-functions/ip-functions/ipv4-is-in-range.md): This page explains how to use the ipv4_is_in_range function in APL.
+- [ipv4_is_match](https://axiom.co/docs/apl/scalar-functions/ip-functions/ipv4-is-match.md): This page explains how to use the ipv4_is_match function in APL.
+- [ipv4_is_private](https://axiom.co/docs/apl/scalar-functions/ip-functions/ipv4-is-private.md): This page explains how to use the ipv4_is_private function in APL.
+- [ipv4_netmask_suffix](https://axiom.co/docs/apl/scalar-functions/ip-functions/ipv4-netmask-suffix.md): This page explains how to use the ipv4_netmask_suffix function in APL.
+- [parse_ipv4](https://axiom.co/docs/apl/scalar-functions/ip-functions/parse-ipv4.md): This page explains how to use the parse_ipv4 function in APL.
+- [parse_ipv4_mask](https://axiom.co/docs/apl/scalar-functions/ip-functions/parse-ipv4-mask.md): This page explains how to use the parse_ipv4_mask function in APL.
+- [Mathematical functions](https://axiom.co/docs/apl/scalar-functions/mathematical-functions.md): Learn how to use and combine different mathematical functions in APL
+- [Pair functions](https://axiom.co/docs/apl/scalar-functions/pair-functions.md): Learn how to use and combine different pair functions in APL
+- [Rounding functions](https://axiom.co/docs/apl/scalar-functions/rounding-functions.md): Learn how to use and combine different rounding functions in APL
+- [SQL functions](https://axiom.co/docs/apl/scalar-functions/sql-functions.md): Learn how to use SQL functions in APL
+- [String functions](https://axiom.co/docs/apl/scalar-functions/string-functions.md): Learn how to use and combine different string functions in APL
+- [Logical operators](https://axiom.co/docs/apl/scalar-operators/logical-operators.md): Learn how to use and combine different logical operators in APL.
+- [Numerical operators](https://axiom.co/docs/apl/scalar-operators/numerical-operators.md): Learn how to use and combine numerical operators in APL.
+- [String operators](https://axiom.co/docs/apl/scalar-operators/string-operators.md): Learn how to use and combine different query operators for searching string data types.
+- [count](https://axiom.co/docs/apl/tabular-operators/count-operator.md): This page explains how to use the count operator function in APL.
+- [distinct](https://axiom.co/docs/apl/tabular-operators/distinct-operator.md): This page explains how to use the distinct operator function in APL.
+- [extend](https://axiom.co/docs/apl/tabular-operators/extend-operator.md): This page explains how to use the extend operator in APL.
+- [extend-valid](https://axiom.co/docs/apl/tabular-operators/extend-valid-operator.md): This page explains how to use the extend-valid operator in APL.
+- [externaldata](https://axiom.co/docs/apl/tabular-operators/externaldata-operator.md): This page explains how to use the externaldata operator in APL.
+- [join](https://axiom.co/docs/apl/tabular-operators/join-operator.md): This page explains how to use the join operator in APL.
+- [limit](https://axiom.co/docs/apl/tabular-operators/limit-operator.md): This page explains how to use the limit operator in APL.
+- [lookup](https://axiom.co/docs/apl/tabular-operators/lookup-operator.md): This page explains how to use the lookup operator in APL.
+- [order](https://axiom.co/docs/apl/tabular-operators/order-operator.md): This page explains how to use the order operator in APL.
+- [Tabular operators](https://axiom.co/docs/apl/tabular-operators/overview.md): This section explains how to use and combine tabular operators in APL.
+- [parse](https://axiom.co/docs/apl/tabular-operators/parse-operator.md): This page explains how to use the parse operator function in APL.
+- [project-away](https://axiom.co/docs/apl/tabular-operators/project-away-operator.md): This page explains how to use the project-away operator function in APL.
+- [project-keep](https://axiom.co/docs/apl/tabular-operators/project-keep-operator.md): This page explains how to use the project-keep operator function in APL.
+- [project](https://axiom.co/docs/apl/tabular-operators/project-operator.md): This page explains how to use the project operator in APL.
+- [project-reorder](https://axiom.co/docs/apl/tabular-operators/project-reorder-operator.md): This page explains how to use the project-reorder operator in APL.
+- [redact](https://axiom.co/docs/apl/tabular-operators/redact-operator.md): This page explains how to use the redact operator in APL.
+- [sample](https://axiom.co/docs/apl/tabular-operators/sample-operator.md): This page explains how to use the sample operator function in APL.
+- [search](https://axiom.co/docs/apl/tabular-operators/search-operator.md): This page explains how to use the search operator in APL.
+- [sort](https://axiom.co/docs/apl/tabular-operators/sort-operator.md): This page explains how to use the sort operator function in APL.
+- [summarize](https://axiom.co/docs/apl/tabular-operators/summarize-operator.md): This page explains how to use the summarize operator function in APL.
+- [take](https://axiom.co/docs/apl/tabular-operators/take-operator.md): This page explains how to use the take operator in APL.
+- [top](https://axiom.co/docs/apl/tabular-operators/top-operator.md): This page explains how to use the top operator function in APL.
+- [union](https://axiom.co/docs/apl/tabular-operators/union-operator.md): This page explains how to use the union operator in APL.
+- [where](https://axiom.co/docs/apl/tabular-operators/where-operator.md): This page explains how to use the where operator in APL.
+- [Sample queries](https://axiom.co/docs/apl/tutorial.md): Explore how to use APL in Axiom’s Query tab to run queries using Tabular Operators, Scalar Functions, and Aggregation Functions.
+- [Connect Axiom with Cloudflare Logpush](https://axiom.co/docs/apps/cloudflare-logpush.md): Axiom gives you an all-at-once view of key Cloudflare Logpush metrics and logs, out of the box, with our dynamic Cloudflare Logpush dashboard.
+- [Connect Axiom with Cloudflare Workers](https://axiom.co/docs/apps/cloudflare-workers.md): This page explains how to enrich your Axiom experience with Cloudflare Workers.
+- [Connect Axiom with Grafana](https://axiom.co/docs/apps/grafana.md): Learn how to extend the functionality of Grafana by installing the Axiom data source plugin.
+- [Apps](https://axiom.co/docs/apps/introduction.md): Enrich your Axiom organization with dedicated apps.
+- [Enrich Axiom experience with AWS Lambda](https://axiom.co/docs/apps/lambda.md): This page explains how to enrich your Axiom experience with AWS Lambda.
+- [Connect Axiom with Netlify](https://axiom.co/docs/apps/netlify.md): Integrating Axiom with Netlify to get a comprehensive observability experience for your Netlify projects. This app will give you a better understanding of how your Jamstack apps are performing.
+- [Connect Axiom with Tailscale](https://axiom.co/docs/apps/tailscale.md): This page explains how to integrate Axiom with Tailscale.
+- [Connect Axiom with Terraform](https://axiom.co/docs/apps/terraform.md): Provision and manage Axiom resources such as datasets and monitors with Terraform.
+- [Connect Axiom with Vercel](https://axiom.co/docs/apps/vercel.md): Easily monitor data from requests, functions, and web vitals in one place to get the deepest observability experience for your Vercel projects.
+- [Configure dashboard elements](https://axiom.co/docs/dashboard-elements/configure.md): This section explains how to configure dashboard elements.
+- [Create dashboard elements](https://axiom.co/docs/dashboard-elements/create.md): This section explains how to create dashboard elements.
+- [Heatmap](https://axiom.co/docs/dashboard-elements/heatmap.md): This section explains how to create heatmap dashboard elements and add them to your dashboard.
+- [Log stream](https://axiom.co/docs/dashboard-elements/log-stream.md): This section explains how to create log stream dashboard elements and add them to your dashboard.
+- [Monitor list](https://axiom.co/docs/dashboard-elements/monitor-list.md): This section explains how to create monitor list dashboard elements and add them to your dashboard.
+- [Note](https://axiom.co/docs/dashboard-elements/note.md): This section explains how to create note dashboard elements and add them to your dashboard.
+- [Dashboard elements](https://axiom.co/docs/dashboard-elements/overview.md): This section explains how to create different dashboard elements and add them to your dashboard.
+- [Pie chart](https://axiom.co/docs/dashboard-elements/pie-chart.md): This section explains how to create pie chart dashboard elements and add them to your dashboard.
+- [Scatter plot](https://axiom.co/docs/dashboard-elements/scatter-plot.md): This section explains how to create scatter plot dashboard elements and add them to your dashboard.
+- [Statistic](https://axiom.co/docs/dashboard-elements/statistic.md): This section explains how to create statistic dashboard elements and add them to your dashboard.
+- [Table](https://axiom.co/docs/dashboard-elements/table.md): This section explains how to create table dashboard elements and add them to your dashboard.
+- [Time series](https://axiom.co/docs/dashboard-elements/time-series.md): This section explains how to create time series dashboard elements and add them to your dashboard.
+- [Configure dashboards](https://axiom.co/docs/dashboards/configure.md): This page explains how to configure your dashboards.
+- [Create dashboards](https://axiom.co/docs/dashboards/create.md): This section explains how to create and delete dashboards.
+- [Dashboards](https://axiom.co/docs/dashboards/overview.md): This section introduces the Dashboards tab and explains how to create your first dashboard.
+- [Send data from Honeycomb to Axiom](https://axiom.co/docs/endpoints/honeycomb.md): Integrate Axiom in your existing Honeycomb stack with minimal effort and without breaking any of your existing Honeycomb workflows.
+- [Send data from Loki to Axiom](https://axiom.co/docs/endpoints/loki.md): Integrate Axiom in your existing Loki stack with minimal effort and without breaking any of your existing Loki workflows.
+- [Send data from Splunk to Axiom](https://axiom.co/docs/endpoints/splunk.md): Integrate Axiom in your existing Splunk app with minimal effort and without breaking any of your existing Splunk stack.
+- [Frequently asked questions](https://axiom.co/docs/get-help/faq.md): Learn more about Axiom.
+- [Axiom tour](https://axiom.co/docs/getting-started-guide/axiom-tour.md): Interactive demonstration of Axiom and its features
+- [Event data](https://axiom.co/docs/getting-started-guide/event-data.md): This page explains the fundamentals of timestamped event data in Axiom.
+- [Feature states in Axiom](https://axiom.co/docs/getting-started-guide/feature-states.md): This section explains the feature states in Axiom.
+- [Get started](https://axiom.co/docs/getting-started-guide/getting-started.md): This guide introduces you to the concepts behind working with Axiom and give a short introduction to each of the high-level features.
+- [Glossary of key Axiom terms](https://axiom.co/docs/getting-started-guide/glossary.md): The glossary explains the key concepts in Axiom.
+- [Axiom for observability](https://axiom.co/docs/getting-started-guide/observability.md): This page explains how Axiom helps you leverage timestamped event data for observability purposes.
+- [Axiom Go adapter for Apex](https://axiom.co/docs/guides/apex.md): This page explains how to send logs generated by the apex/log library to Axiom.
+- [Send data from Go app to Axiom](https://axiom.co/docs/guides/go.md): This page explains how to send data from a Go app to Axiom.
+- [Send data from JavaScript app to Axiom](https://axiom.co/docs/guides/javascript.md): This page explains how to send data from a JavaScript app to Axiom.
+- [Axiom Go adapter for Logrus](https://axiom.co/docs/guides/logrus.md): This page explains how to send logs generated by the sirupsen/logrus library to Axiom.
+- [OpenTelemetry using Cloudflare Workers](https://axiom.co/docs/guides/opentelemetry-cloudflare-workers.md): This guide explains how to configure a Cloudflare Workers app to send telemetry data to Axiom.
+- [Send OpenTelemetry data from a Django app to Axiom](https://axiom.co/docs/guides/opentelemetry-django.md): This guide explains how to send OpenTelemetry data from a Django app to Axiom using the Python OpenTelemetry SDK.
+- [OpenTelemetry using .NET](https://axiom.co/docs/guides/opentelemetry-dotnet.md): This guide explains how to configure a .NET app using the .NET OpenTelemetry SDK to send telemetry data to Axiom.
+- [OpenTelemetry using Golang](https://axiom.co/docs/guides/opentelemetry-go.md): This guide explains how to configure a Go app using the Go OpenTelemetry SDK to send telemetry data to Axiom.
+- [Send data from Java app using OpenTelemetry](https://axiom.co/docs/guides/opentelemetry-java.md): This page explains how to configure a Java app using the Java OpenTelemetry SDK to send telemetry data to Axiom.
+- [OpenTelemetry using Next.js](https://axiom.co/docs/guides/opentelemetry-nextjs.md): This guide demonstrates how to configure OpenTelemetry in a Next.js app to send telemetry data to Axiom.
+- [OpenTelemetry using Node.js](https://axiom.co/docs/guides/opentelemetry-nodejs.md): This guide demonstrates how to configure OpenTelemetry in a Node.js app to send telemetry data to Axiom.
+- [Send OpenTelemetry data from a Python app to Axiom](https://axiom.co/docs/guides/opentelemetry-python.md): This guide explains how to send OpenTelemetry data from a Python app to Axiom using the Python OpenTelemetry SDK.
+- [Send OpenTelemetry data from a Ruby on Rails app to Axiom](https://axiom.co/docs/guides/opentelemetry-ruby.md): This guide explains how to send OpenTelemetry data from a Ruby on Rails App to Axiom using the Ruby OpenTelemetry SDK.
+- [Axiom transport for Pino logger](https://axiom.co/docs/guides/pino.md): This page explains how to send data from a Node.js app to Axiom through Pino.
+- [Send data from Python app to Axiom](https://axiom.co/docs/guides/python.md): This page explains how to send data from a Python app to Axiom.
+- [Send data from Rust app to Axiom](https://axiom.co/docs/guides/rust.md): This page explains how to send data from a Rust app to Axiom.
+- [Send logs from Apache Log4j to Axiom](https://axiom.co/docs/guides/send-logs-from-apache-log4j.md): This guide explains how to configure Apache Log4j to send logs to Axiom 
+- [Send logs from a .NET app](https://axiom.co/docs/guides/send-logs-from-dotnet.md): This guide explains how to set up and configure logging in a .NET application, and how to send logs to Axiom.
+- [Send logs from Laravel to Axiom](https://axiom.co/docs/guides/send-logs-from-laravel.md): This guide demonstrates how to configure logging in a Laravel app to send logs to Axiom
+- [Send logs from a Ruby on Rails application using Faraday](https://axiom.co/docs/guides/send-logs-from-ruby-on-rails.md): This guide provides step-by-step instructions on how to send logs from a Ruby on Rails application to Axiom using the Faraday library.
+- [Axiom transport for Winston logger](https://axiom.co/docs/guides/winston.md): This page explains how to send data from a Node.js app to Axiom through Winston.
+- [Axiom adapter for Zap](https://axiom.co/docs/guides/zap.md): This page explains how to send logs generated by the uber-go/zap library to Axiom.
+- [Introduction](https://axiom.co/docs/introduction.md): In this documentation, you will be able to gain a deeper understanding of what Axiom is, how to get it installed, and how best to use it for your organization’s use case.
+- [Anomaly monitors](https://axiom.co/docs/monitor-data/anomaly-monitors.md): This section introduces the Monitors tab and explains how to create monitors.
+- [Configure monitors](https://axiom.co/docs/monitor-data/configure-monitors.md): This page explains how to configure monitors.
+- [Configure notifiers](https://axiom.co/docs/monitor-data/configure-notifiers.md): This page explains how to configure notifiers.
+- [Custom webhook notifier](https://axiom.co/docs/monitor-data/custom-webhook-notifier.md): This page explains how to create and configure a custom webhook notifier.
+- [Discord notifier](https://axiom.co/docs/monitor-data/discord-notifier.md): This page explains how to create and configure a Discord notifier.
+- [Email notifier](https://axiom.co/docs/monitor-data/email-notifier.md): This page explains how to create and configure an email notifier.
+- [Match monitors](https://axiom.co/docs/monitor-data/match-monitors.md): This section introduces the Monitors tab and explains how to create monitors.
+- [Microsoft Teams notifier](https://axiom.co/docs/monitor-data/microsoft-teams-notifier.md): This page explains how to create and configure a Microsoft Teams notifier.
+- [Monitor examples](https://axiom.co/docs/monitor-data/monitor-examples.md): This page presents example monitor configurations for some common alerting use cases.
+- [Monitors](https://axiom.co/docs/monitor-data/monitors.md): This section introduces monitors and explains how you can use them to generate automated alerts from your event data.
+- [Notifiers](https://axiom.co/docs/monitor-data/notifiers-overview.md): This section introduces notifiers and explains how you can use them to generate automated alerts from your event data.
+- [Opsgenie notifier](https://axiom.co/docs/monitor-data/opsgenie-notifier.md): This page explains how to create and configure an Opsgenie notifier.
+- [PagerDuty notifier](https://axiom.co/docs/monitor-data/pagerduty.md): This page explains how to create and configure a PagerDuty notifier.
+- [Slack notifier](https://axiom.co/docs/monitor-data/slack-notifier.md): This page explains how to create and configure a Slack notifier.
+- [Threshold monitors](https://axiom.co/docs/monitor-data/threshold-monitors.md): This section introduces the Monitors tab and explains how to create monitors.
+- [View monitor status](https://axiom.co/docs/monitor-data/view-monitor-status.md): This page explains how to view the status of monitors.
+- [Amazon S3 destination](https://axiom.co/docs/process-data/destinations/amazon-s3.md): This page explains how to set up an Amazon S3 destination.
+- [Axiom destination](https://axiom.co/docs/process-data/destinations/axiom.md): This page explains how to set up an Axiom destination.
+- [Azure Blob destination](https://axiom.co/docs/process-data/destinations/azure-blob.md): This page explains how to set up an Azure Blob destination.
+- [Elastic Bulk destination](https://axiom.co/docs/process-data/destinations/elastic-bulk.md): This page explains how to set up an Elastic Bulk destination.
+- [Google Cloud Storage destination](https://axiom.co/docs/process-data/destinations/gcs.md): This page explains how to set up a Google Cloud Storage destination.
+- [HTTP destination](https://axiom.co/docs/process-data/destinations/http.md): This page explains how to set up an HTTP destination.
+- [Manage destinations](https://axiom.co/docs/process-data/destinations/manage-destinations.md): This page explains how to manage Flow destinations.
+- [OpenTelemetry Traces destination](https://axiom.co/docs/process-data/destinations/opentelemetry.md): This page explains how to set up an OpenTelemetry Traces destination.
+- [S3-compatible storage destination](https://axiom.co/docs/process-data/destinations/s3-compatible.md): This page explains how to set up an S3-compatible storage destination.
+- [Splunk destination](https://axiom.co/docs/process-data/destinations/splunk.md): This page explains how to set up a Splunk destination.
+- [Configure Flow](https://axiom.co/docs/process-data/flows.md): This page explains how to set up a flow to filter, shape, and route data from an Axiom dataset to a destination.
+- [Introduction to Flow](https://axiom.co/docs/process-data/introduction.md): This section explains how to use Axiom’s Flow feature to filter, shape, and route event data.
+- [Data security in Flow](https://axiom.co/docs/process-data/security.md): This page explains the measures Axiom takes to protect sensitive data in Flow.
+- [Annotate dashboard elements](https://axiom.co/docs/query-data/annotate-charts.md): This page explains how to use annotations to add context to your dashboard elements.
+- [Analyze data](https://axiom.co/docs/query-data/datasets.md): This page explains how to use the Datasets tab in Axiom.
+- [Query data with Axiom](https://axiom.co/docs/query-data/explore.md): Learn how to filter, manipulate, extend, and summarize your data.
+- [Create dashboards with filters](https://axiom.co/docs/query-data/filters.md): This page explains how to create dashboards with filters that let you choose the data you want to display.
+- [Stream data with Axiom](https://axiom.co/docs/query-data/stream.md): The Stream tab enables you to process and analyze high volumes of high-velocity data from a variety of sources in real time.
+- [Explore traces](https://axiom.co/docs/query-data/traces.md): Learn how to observe how requests propagate through your distributed systems, understand the interactions between microservices, and trace the life of the request through your app’s architecture.
+- [Virtual fields](https://axiom.co/docs/query-data/virtual-fields.md): Virtual fields allow you to derive new values from your data in real time, eliminating the need for up-front data structuring, enhancing flexibility and efficiency.
+- [Visualize data](https://axiom.co/docs/query-data/visualizations.md): Learn how to run powerful aggregations across your data to produce insights that are easy to understand and monitor.
+- [Track activity in Axiom](https://axiom.co/docs/reference/audit-log.md): This page explains how to track activity in your Axiom organization with the audit log.
+- [Axiom CLI](https://axiom.co/docs/reference/cli.md): Learn how to use the Axiom CLI to ingest data, manage authentication state, and configure multiple deployments.
+- [Manage datasets](https://axiom.co/docs/reference/datasets.md): Learn how to manage datasets in Axiom.
+- [Limits and requirements](https://axiom.co/docs/reference/field-restrictions.md): This reference article explains the pricing-based and system-wide limits and requirements imposed by Axiom.
+- [Organize your Axiom instance](https://axiom.co/docs/reference/introduction.md): This section explains how to organize your Axiom instance.
+- [Optimize performance](https://axiom.co/docs/reference/performance.md): Axiom is blazing fast. This page explains how you can further improve performance in Axiom.
+- [Query costs](https://axiom.co/docs/reference/query-hours.md): This page explains how to calculate and manage query compute resources in GB-hours to optimize usage within Axiom.
+- [Regions](https://axiom.co/docs/reference/regions.md): This page explains how to work with Axiom based on your organization’s region.
+- [Data security](https://axiom.co/docs/reference/security.md): This article summarizes what Axiom does to ensure the highest standards of information security and data protection.
+- [Get started with settings](https://axiom.co/docs/reference/settings.md): Learn how to configure your account settings.
+- [Authenticate API requests with tokens](https://axiom.co/docs/reference/tokens.md): Learn how you can authenticate your requests to the Axiom API with tokens.
+- [API limits](https://axiom.co/docs/restapi/api-limits.md): Learn how to limit the number of calls a user can make over a certain period of time.
+- [Create annotation](https://axiom.co/docs/restapi/endpoints/createAnnotation.md): Create annotation
+- [Create dataset](https://axiom.co/docs/restapi/endpoints/createDataset.md): Create a dataset
+- [Create API token](https://axiom.co/docs/restapi/endpoints/createToken.md): Create API token
+- [Delete annotation](https://axiom.co/docs/restapi/endpoints/deleteAnnotation.md): Delete annotation
+- [Delete dataset](https://axiom.co/docs/restapi/endpoints/deleteDataset.md): Delete dataset
+- [Delete API token](https://axiom.co/docs/restapi/endpoints/deleteToken.md): Delete API token
+- [Retrieve annotation](https://axiom.co/docs/restapi/endpoints/getAnnotation.md): Get annotation by ID
+- [List all annotations](https://axiom.co/docs/restapi/endpoints/getAnnotations.md): Get annotations
+- [Retrieve current user](https://axiom.co/docs/restapi/endpoints/getCurrentUser.md): Get current user
+- [Retrieve dataset](https://axiom.co/docs/restapi/endpoints/getDataset.md): Retrieve dataset by ID
+- [List all datasets](https://axiom.co/docs/restapi/endpoints/getDatasets.md): Get list of datasets available to the current user.
+- [Retrieve API token](https://axiom.co/docs/restapi/endpoints/getToken.md): Get API token by ID
+- [List all API tokens](https://axiom.co/docs/restapi/endpoints/getTokens.md): Get API tokens
+- [Ingest data](https://axiom.co/docs/restapi/endpoints/ingestIntoDataset.md): Ingest
+- [Run query](https://axiom.co/docs/restapi/endpoints/queryApl.md): Query
+- [Run query (legacy)](https://axiom.co/docs/restapi/endpoints/queryDataset.md): Query (Legacy)
+- [Regenerate API token](https://axiom.co/docs/restapi/endpoints/regenerateToken.md): Regenerate API token
+- [Trim dataset](https://axiom.co/docs/restapi/endpoints/trimDataset.md): Trim dataset
+- [Update annotation](https://axiom.co/docs/restapi/endpoints/updateAnnotation.md): Update annotation
+- [Update dataset](https://axiom.co/docs/restapi/endpoints/updateDataset.md): Update dataset
+- [Send data via Axiom API](https://axiom.co/docs/restapi/ingest.md): Learn how to send and load data into Axiom using the API.
+- [Get started with Axiom API](https://axiom.co/docs/restapi/introduction.md): This section explains how to send data to Axiom, query data, and manage resources using the Axiom API.
+- [Pagination in Axiom API](https://axiom.co/docs/restapi/pagination.md): Learn how to use pagination with the Axiom API.
+- [Query data via Axiom API](https://axiom.co/docs/restapi/query.md): Learn how to use Axiom querying API to create and get query objects.
+- [Send data from Amazon Data Firehose to Axiom](https://axiom.co/docs/send-data/aws-firehose.md): This page explains how to send data from Amazon Data Firehose to Axiom.
+- [Send data from AWS FireLens to Axiom](https://axiom.co/docs/send-data/aws-firelens.md): Leverage AWS FireLens to forward logs from Amazon ECS tasks to Axiom for efficient, real-time analysis and insights.
+- [Send data from AWS IoT to Axiom](https://axiom.co/docs/send-data/aws-iot-rules.md): This page explains how to route device log data from AWS IoT Core to Axiom using AWS IoT and Lambda functions
+- [Send data from AWS Lambda to Axiom](https://axiom.co/docs/send-data/aws-lambda.md): This page explains how to send Lambda function logs and platform events to Axiom.
+- [Send data from AWS to Axiom using AWS Distro for OpenTelemetry](https://axiom.co/docs/send-data/aws-lambda-dot.md): This page explains how to auto-instrument AWS Lambda functions and send telemetry data to Axiom using AWS Distro for OpenTelemetry.
+- [Send data from AWS to Axiom](https://axiom.co/docs/send-data/aws-overview.md): This page explains how to send data from different AWS services to Axiom.
+- [Send data from AWS S3 to Axiom](https://axiom.co/docs/send-data/aws-s3.md): Efficiently send log data from AWS S3 to Axiom via Lambda function
+- [Send data from CloudFront to Axiom](https://axiom.co/docs/send-data/cloudfront.md): Send data from CloudFront to Axiom using AWS S3 bucket and Lambda to monitor your static and dynamic content.
+- [Send data from Amazon CloudWatch to Axiom](https://axiom.co/docs/send-data/cloudwatch.md): This page explains how to send data from Amazon CloudWatch to Axiom.
+- [Send data from Convex to Axiom](https://axiom.co/docs/send-data/convex.md): This guide explains how to send data from Convex to Axiom.
+- [Send data from Cribl to Axiom](https://axiom.co/docs/send-data/cribl.md): Learn how to configure Cribl LogStream to forward logs to Axiom using both HTTP and Syslog destinations.
+- [Send data from Datadog to Axiom](https://axiom.co/docs/send-data/datadog.md): Send data from Datadog to Axiom.
+- [Send data from Elastic Beats to Axiom](https://axiom.co/docs/send-data/elastic-beats.md): Collect metrics and logs from elastic beats, and monitor them with Axiom.
+- [Send data from Elastic Bulk API to Axiom](https://axiom.co/docs/send-data/elasticsearch-bulk-api.md): This step-by-step guide will help you get started with migrating from Elasticsearch to Axiom using the Elastic Bulk API
+- [Send data from Fluent Bit to Axiom](https://axiom.co/docs/send-data/fluent-bit.md): This step-by-step guide will help you collect any data like metrics and logs from different sources, enrich them with filters, and send them to Axiom.
+- [Send data from Fluentd to Axiom](https://axiom.co/docs/send-data/fluentd.md): This step-by-step guide will help you collect, aggregate, analyze, and route log files from multiple Fluentd sources into Axiom
+- [Send data from Heroku Log Drains to Axiom](https://axiom.co/docs/send-data/heroku-log-drains.md): This step-by-step guide will help you forward logs from your apps, and deployments to Axiom by sending them via HTTPS.
+- [Send data](https://axiom.co/docs/send-data/ingest.md): Use Axiom’s API to ingest, transport, and retrieve data from different sources such as relational databases, web logs, app logs, and kubernetes.
+- [Send data from Kubernetes Cluster to Axiom](https://axiom.co/docs/send-data/kubernetes.md): This step-by-step guide helps you ingest logs from your Kubernetes cluster into Axiom using the DaemonSet configuration.
+- [Send data from Logstash to Axiom](https://axiom.co/docs/send-data/logstash.md): This step-by-step guide helps you collect, and parse logs from your logstash processing pipeline into Axiom
+- [Send data from Loki Multiplexer to Axiom](https://axiom.co/docs/send-data/loki-multiplexer.md): This step-by-step guide provides a gateway for you to connect a direct link interface to Axiom via Loki endpoint.
+- [Send data from Next.js app to Axiom](https://axiom.co/docs/send-data/nextjs.md): This page explains how to send data from your Next.js app to Axiom.
+- [Send OpenTelemetry data to Axiom](https://axiom.co/docs/send-data/opentelemetry.md): Learn how OpenTelemetry-compatible events flow into Axiom and explore Axiom comprehensive observability through browsing, querying, dashboards, and alerting of OpenTelemetry data.
+- [Send data from client-side React apps to Axiom](https://axiom.co/docs/send-data/react.md): This page explains how to send data from your client-side React apps to Axiom using the @axiomhq/react library.
+- [Send logs from Render to Axiom](https://axiom.co/docs/send-data/render.md): This page explains how to send logs from Render to Axiom.
+- [Send data from syslog to Axiom over a secure connection](https://axiom.co/docs/send-data/secure-syslog.md): This page explains how to send data securely from a syslog logging system to Axiom.
+- [Send data from Serverless to Axiom](https://axiom.co/docs/send-data/serverless.md): This page explains how to send data from Serverless to Axiom.
+- [Send data from syslog to Axiom](https://axiom.co/docs/send-data/syslog-proxy.md): This page explains how to send data from a syslog logging system to Axiom.
+- [Send data from Tremor to Axiom](https://axiom.co/docs/send-data/tremor.md): This step-by-step guide will help you configure Tremor connectors and events components to interact with your databases, APIs, and ingest data from these sources into Axiom.
+- [Send data from Vector to Axiom](https://axiom.co/docs/send-data/vector.md): This step-by-step guide will help you configure Vector to read and collect metrics from your sources using the Axiom sink.
+
+
+## Optional
+
+- [Axiom Playground](https://axiom.co/play)
+- [Changelog](https://axiom.co/changelog)
+- [Book a demo](https://axiom.co/demo)

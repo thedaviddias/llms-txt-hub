@@ -1,0 +1,45 @@
+# Codeium Docs
+
+## Docs
+
+- [Overview](https://docs.codeium.com/autocomplete/overview.md)
+- [Tips](https://docs.codeium.com/autocomplete/tips.md)
+- [Prompt Engineering](https://docs.codeium.com/best-practices/prompt-engineering.md)
+- [Common Use Cases](https://docs.codeium.com/best-practices/use-cases.md)
+- [Models](https://docs.codeium.com/chat/models.md)
+- [Overview](https://docs.codeium.com/chat/overview.md): Converse with a codebase-aware AI
+- [Overview](https://docs.codeium.com/command/codeium-overview.md): AI-powered in-line edits
+- [Refactors, Docstrings, and More](https://docs.codeium.com/command/related-features.md): Features powered by Command
+- [Command](https://docs.codeium.com/command/windsurf-overview.md): Cmd/Ctrl + I for in-line code generations and edits
+- [Code Lenses](https://docs.codeium.com/command/windsurf-related-features.md): Shortcuts for common operations
+- [Local Indexing](https://docs.codeium.com/context-awareness/local-indexing.md)
+- [Overview](https://docs.codeium.com/context-awareness/overview.md): On codebase context and related features
+- [Remote Indexing](https://docs.codeium.com/context-awareness/remote-indexing.md)
+- [Profile & Analytics (Teams)](https://docs.codeium.com/extensions/analytics.md)
+- [Compatibility](https://docs.codeium.com/extensions/compatibility.md)
+- [Getting Started](https://docs.codeium.com/extensions/getting-started.md): Welcome to Codeium
+- [Setting up SSO & SCIM](https://docs.codeium.com/getstarted/sso-scim.md)
+- [Reporting Security Concerns](https://docs.codeium.com/security/reporting.md)
+- [Tab](https://docs.codeium.com/tab/overview.md): A powerful next-intent prediction experience routed to a single keystroke.
+- [General Issues](https://docs.codeium.com/troubleshooting/codeium-common-issues.md)
+- [Gathering Logs](https://docs.codeium.com/troubleshooting/codeium-gathering-logs.md)
+- [Common Windsurf Issues](https://docs.codeium.com/troubleshooting/windsurf-common-issues.md)
+- [Gathering Logs](https://docs.codeium.com/troubleshooting/windsurf-gathering-logs.md)
+- [Advanced](https://docs.codeium.com/windsurf/advanced.md)
+- [Overview](https://docs.codeium.com/windsurf/cascade.md)
+- [Getting Started](https://docs.codeium.com/windsurf/getting-started.md)
+- [Image Upload](https://docs.codeium.com/windsurf/image-upload.md)
+- [MCP](https://docs.codeium.com/windsurf/mcp.md)
+- [Memories & Rules](https://docs.codeium.com/windsurf/memories.md)
+- [Models](https://docs.codeium.com/windsurf/models.md): Cascade has several different models for you to choose from.
+- [Previews (Beta)](https://docs.codeium.com/windsurf/previews.md)
+- [Terminal](https://docs.codeium.com/windsurf/terminal.md)
+- [Paid Plan and Credit Usage](https://docs.codeium.com/windsurf/usage.md)
+- [Web Search](https://docs.codeium.com/windsurf/web-search.md)
+
+
+## Optional
+
+- [Discord Community](https://discord.com/invite/3XFf78nAx5)
+- [Codeium Blog](https://codeium.com/blog)
+- [Support](https://codeium.com/support)

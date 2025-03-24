@@ -1,0 +1,107 @@
+# Solid
+
+## Docs
+
+- [Controls](https://docs.solidfi.com/accounts/controls.md): A guide to Account Controls
+- [Introduction](https://docs.solidfi.com/accounts/introduction.md): An introduction to Accounts
+- [Master Accounts](https://docs.solidfi.com/accounts/master-accounts.md): A guide to Master Accounts
+- [Reconciliation](https://docs.solidfi.com/accounts/reconciliation.md): A guide to Reconciliation
+- [Sub Accounts](https://docs.solidfi.com/accounts/sub-accounts.md): A guide to Sub Accounts
+- [ATM](https://docs.solidfi.com/card-issuance/atm.md): A guide to Automated Teller Machines (ATM).
+- [Controls](https://docs.solidfi.com/card-issuance/controls.md): A guide to Cards Issuance Controls.
+- [Introduction](https://docs.solidfi.com/card-issuance/introduction.md): An introduction to Card Issuance.
+- [Physical Card](https://docs.solidfi.com/card-issuance/physical-card.md): A guide to Physical Cards
+- [Virtual Card](https://docs.solidfi.com/card-issuance/virtual-card.md): A guide to Virtual Cards.
+- [Wallet](https://docs.solidfi.com/card-issuance/wallet.md): A guide to Wallets.
+- [Account Holders](https://docs.solidfi.com/general/account-holders.md): A guide to Account Holders
+- [Card Holders](https://docs.solidfi.com/general/card-holders.md): A guide to Card Holders
+- [Counterparties](https://docs.solidfi.com/general/counterparties.md): A guide to Counterparties
+- [Flow of Funds](https://docs.solidfi.com/general/flow-of-funds.md): A guide to Flow of Funds
+- [Introduction](https://docs.solidfi.com/general/introduction.md): Learn about the Solid Platform
+- [Transactions](https://docs.solidfi.com/general/transactions.md): A guide to Transactions
+- [ACH](https://docs.solidfi.com/payments/ach.md): A guide to ACH
+- [Check](https://docs.solidfi.com/payments/check.md): A guide to Checks
+- [Controls](https://docs.solidfi.com/payments/controls.md): A guide to Payment Controls
+- [Intra Account](https://docs.solidfi.com/payments/intra-account.md): A guide to Intra Account (On-Us)
+- [Introduction](https://docs.solidfi.com/payments/introduction.md): An introduction to Payments
+- [Wire](https://docs.solidfi.com/payments/wire.md): A guide to Wires
+- [Create an Attachment](https://docs.solidfi.com/v2/api-reference/attachments/create-an-attachment.md): Create an Attachment
+- [Delete an Attachment](https://docs.solidfi.com/v2/api-reference/attachments/delete-an-attachment.md): Delete an Attachment
+- [List all Attachments](https://docs.solidfi.com/v2/api-reference/attachments/list-all-attachments.md): List all Attachments
+- [Retrieve an Attachment](https://docs.solidfi.com/v2/api-reference/attachments/retrieve-an-attachment.md): Retrieve an Attachment
+- [Create a Card Holder](https://docs.solidfi.com/v2/api-reference/card-holders/create-a-card-holder.md): Create a Card Holder
+- [List all Card Holders](https://docs.solidfi.com/v2/api-reference/card-holders/list-all-card-holders.md): List all Card Holders
+- [Retrieve a Card Holder](https://docs.solidfi.com/v2/api-reference/card-holders/retrieve-a-card-holder.md): Retrieve a Card Holder
+- [Update a Card Holder](https://docs.solidfi.com/v2/api-reference/card-holders/update-a-card-holder.md): Update a Card Holder
+- [Activate a Card](https://docs.solidfi.com/v2/api-reference/cards/activate-a-card.md): Activate a Card
+- [Create a Card](https://docs.solidfi.com/v2/api-reference/cards/create-a-card.md): Create a Card
+- [List all Cards](https://docs.solidfi.com/v2/api-reference/cards/list-all-cards.md): List all Cards
+- [Provision a Card](https://docs.solidfi.com/v2/api-reference/cards/provision-a-card.md): Provision a Card on Apple Pay, Google Pay and Samsung Pay
+- [Reissue a Card](https://docs.solidfi.com/v2/api-reference/cards/reissue-a-card.md): Reissue a Card
+- [Retrieve a Card](https://docs.solidfi.com/v2/api-reference/cards/retrieve-a-card.md): Retrieve a Card
+- [Set a PIN](https://docs.solidfi.com/v2/api-reference/cards/set-a-pin.md): Setting a PIN is a two-step process 
+ 1. Get a one-time PIN token 
+ 2. Use the PIN token in Solid's SDK to set a PIN. Solid will provide access to the SDK during the implementation.
+- [Show a Card](https://docs.solidfi.com/v2/api-reference/cards/show-a-card.md): Displaying unredacted card number and CVV is a two-step process 
+ 1. Get a one-time show token 
+ 2. Use the show token in Solid's SDK to show the unredacted card number and CVV. Solid will provide access to the SDK during the implementation.
+- [Update a Card](https://docs.solidfi.com/v2/api-reference/cards/update-a-card.md): Update a Card
+- [Create a Counterparty](https://docs.solidfi.com/v2/api-reference/counterparties/create-a-counterparty.md): Create a Counterparty
+- [List all Counterparties](https://docs.solidfi.com/v2/api-reference/counterparties/list-all-counterparties.md): List all Counterparties
+- [Retrieve a Counterparty](https://docs.solidfi.com/v2/api-reference/counterparties/retrieve-a-counterparty.md): Retrieve a Counterparty
+- [Retrieve Bank Info](https://docs.solidfi.com/v2/api-reference/counterparties/retrieve-bank-info.md): Retrieve Bank Info
+- [Update a Counterparty](https://docs.solidfi.com/v2/api-reference/counterparties/update-a-counterparty.md): Update a Counterparty
+- [Attachments](https://docs.solidfi.com/v2/api-reference/getting-started/attachments.md): Solid Platform supports attachments
+- [Authentication](https://docs.solidfi.com/v2/api-reference/getting-started/authentication.md): API key based authentication
+- [Environments](https://docs.solidfi.com/v2/api-reference/getting-started/environments.md): Sandbox and Prod environments
+- [Idempotency](https://docs.solidfi.com/v2/api-reference/getting-started/idempotency.md): Solid Platform supports idempotency
+- [Introduction](https://docs.solidfi.com/v2/api-reference/getting-started/introduction.md): An introduction to the Solid APIs
+- [Metadata](https://docs.solidfi.com/v2/api-reference/getting-started/metadata.md): Solid Platform supports metadata
+- [Pagination](https://docs.solidfi.com/v2/api-reference/getting-started/pagination.md): Solid Platform support cursor pagination
+- [Rate Limiting](https://docs.solidfi.com/v2/api-reference/getting-started/rate-limiting.md): Solid Platform enforces rate limiting
+- [Simulation](https://docs.solidfi.com/v2/api-reference/getting-started/simulation.md): Solid Platform simulates transactions
+- [List all Master Accounts](https://docs.solidfi.com/v2/api-reference/master-accounts/list-all-master-accounts.md): List all Master Accounts
+- [Retrieve a Master Account](https://docs.solidfi.com/v2/api-reference/master-accounts/retrieve-a-master-account.md): Retrieve a Master Account
+- [Simulate an Auth Transaction](https://docs.solidfi.com/v2/api-reference/simulation/simulate-an-auth-transaction.md): Simulate an Auth Transaction
+- [Simulate an Incoming ACH Pull](https://docs.solidfi.com/v2/api-reference/simulation/simulate-an-incoming-ach-pull.md): Simulate an Incoming ACH Pull
+- [Simulate an Incoming ACH Push](https://docs.solidfi.com/v2/api-reference/simulation/simulate-an-incoming-ach-push.md): Simulate an Incoming ACH Push
+- [Simulate an Incoming Domestic Wire Push](https://docs.solidfi.com/v2/api-reference/simulation/simulate-an-incoming-domestic-wire-push.md): Simulate an Incoming Domestic Wire Push
+- [Simulate an Incoming International Wire Push](https://docs.solidfi.com/v2/api-reference/simulation/simulate-an-incoming-international-wire-push.md): Simulate an Incoming International Wire Push
+- [Create a Sub Account Holder](https://docs.solidfi.com/v2/api-reference/sub-account-holders/create-a-sub-account-holder.md): Create a Sub Account Holder
+- [List all Sub Account Holders](https://docs.solidfi.com/v2/api-reference/sub-account-holders/list-all-sub-account-holders.md): List all Sub Account Holders
+- [Retrieve a Sub Account Holder](https://docs.solidfi.com/v2/api-reference/sub-account-holders/retrieve-a-sub-account-holder.md): Retrieve a Sub Account Holder
+- [Submit an IDV](https://docs.solidfi.com/v2/api-reference/sub-account-holders/submit-a-idv.md): Submit an IDV
+- [Submit a KYB](https://docs.solidfi.com/v2/api-reference/sub-account-holders/submit-a-kyb.md): Submit a KYB
+- [Submit a KYC](https://docs.solidfi.com/v2/api-reference/sub-account-holders/submit-a-kyc.md): Submit a KYC
+- [Update a Sub Account Holder](https://docs.solidfi.com/v2/api-reference/sub-account-holders/update-a-sub-account-holder.md): Update a Sub Account Holder
+- [Create a Sub Account](https://docs.solidfi.com/v2/api-reference/sub-accounts/create-a-sub-account.md): Create a Sub Account
+- [List all Sub Accounts](https://docs.solidfi.com/v2/api-reference/sub-accounts/list-all-sub-accounts.md): List all Sub Accounts
+- [Retrieve a Sub Account](https://docs.solidfi.com/v2/api-reference/sub-accounts/retrieve-a-sub-account.md): Retrieve a Sub Account
+- [Update a Sub Account](https://docs.solidfi.com/v2/api-reference/sub-accounts/update-a-sub-account.md): Update a Sub Account
+- [List all Transactions](https://docs.solidfi.com/v2/api-reference/transactions/list-all-transactions.md): List all Transactions
+- [Originate a Check Deposit](https://docs.solidfi.com/v2/api-reference/transactions/originate-a-check-deposit.md): Originate a Check Deposit
+- [Originate a Check Send](https://docs.solidfi.com/v2/api-reference/transactions/originate-a-check-send.md): Originate a Check Send
+- [Originate a Debit Card Pull](https://docs.solidfi.com/v2/api-reference/transactions/originate-a-debit-card-pull.md): Originate a Debit Card Pull
+- [Originate a Debit Card Push](https://docs.solidfi.com/v2/api-reference/transactions/originate-a-debit-card-push.md): Originate a Debit Card Push
+- [Originate a Domestic Wire](https://docs.solidfi.com/v2/api-reference/transactions/originate-a-domestic-wire.md): Originate a Domestic Wire
+- [Originate a FedNow Push](https://docs.solidfi.com/v2/api-reference/transactions/originate-a-fednow-push.md): Originate a FedNow Push
+- [Originate an ACH Pull](https://docs.solidfi.com/v2/api-reference/transactions/originate-an-ach-pull.md): Originate an ACH Pull
+- [Originate an ACH Push](https://docs.solidfi.com/v2/api-reference/transactions/originate-an-ach-push.md): Originate an ACH Push
+- [Originate an International Wire](https://docs.solidfi.com/v2/api-reference/transactions/originate-an-international-wire.md): Originate an International Wire
+- [Originate an Intra Account Pull](https://docs.solidfi.com/v2/api-reference/transactions/originate-an-intra-account-pull.md): Originate an Intra Account Pull
+- [Originate an Intra Account Push](https://docs.solidfi.com/v2/api-reference/transactions/originate-an-intra-account-push.md): Originate an Intra Account Push
+- [Originate an RTP Push](https://docs.solidfi.com/v2/api-reference/transactions/originate-an-rtp-push.md): Originate an RTP Push
+- [Retrieve a Transaction](https://docs.solidfi.com/v2/api-reference/transactions/retrieve-a-transaction.md): Retrieve a Transaction
+- [Sub Ledger a Transaction](https://docs.solidfi.com/v2/api-reference/transactions/sub-ledger-a-transaction.md): Sub Ledger a Transaction
+- [Update a Transaction](https://docs.solidfi.com/v2/api-reference/transactions/update-a-transaction.md): Update a Transaction
+- [Create a Webhook](https://docs.solidfi.com/v2/api-reference/webhooks/create-a-webhook.md): Create a Webhook
+- [Delete a Webhook](https://docs.solidfi.com/v2/api-reference/webhooks/delete-a-webhook.md): Delete a Webhook
+- [List all Webhooks](https://docs.solidfi.com/v2/api-reference/webhooks/list-all-webhook.md): List all Webhooks
+- [List all Webhook Events](https://docs.solidfi.com/v2/api-reference/webhooks/list-all-webhook-events.md): List all Webhook Events
+- [Retrieve a Webhook](https://docs.solidfi.com/v2/api-reference/webhooks/retrieve-a-webhook.md): Retrieve a Webhook
+
+
+## Optional
+
+- [Platform Status](https://status.solidfi.com/?&_ga=2.106479873.308955735.1702327933-383528257.1702327933)
+- [Changelog](https://docs.solidfi.com/changelog)

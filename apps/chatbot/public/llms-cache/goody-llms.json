@@ -1,0 +1,10 @@
+{
+  "name": "Goody",
+  "description": "Corporate gifting and rewards platform",
+  "website": "https://ongoody.com",
+  "url": "https://developer.ongoody.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/goody-llms.txt",
+  "lastFetched": "2025-03-24"
+}

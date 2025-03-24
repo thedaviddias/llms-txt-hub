@@ -1,0 +1,161 @@
+# Plain Docs
+
+## Docs
+
+- [Attachments](https://www.plain.com/docs/api-reference/attachments.md): How to upload attachments programmatically for messages and events in Plain.
+- [Customer cards](https://www.plain.com/docs/api-reference/customer-cards.md): Live context straight from your own systems when helping customers.
+- [Create a customer card](https://www.plain.com/docs/api-reference/customer-cards/create-a-customer-card.md): Define the details of the customer card.
+- [Examples](https://www.plain.com/docs/api-reference/customer-cards/examples.md)
+- [Playground](https://www.plain.com/docs/api-reference/customer-cards/playground.md)
+- [Protocol](https://www.plain.com/docs/api-reference/customer-cards/protocol.md): Learn how we request customer cards from your API and how to respond to these requests.
+- [API Explorer](https://www.plain.com/docs/api-reference/graphql/api-explorer.md)
+- [Authentication](https://www.plain.com/docs/api-reference/graphql/authentication.md)
+- [Companies](https://www.plain.com/docs/api-reference/graphql/companies.md)
+- [Get companies](https://www.plain.com/docs/api-reference/graphql/companies/get-companies.md)
+- [Update customer company](https://www.plain.com/docs/api-reference/graphql/companies/update-customer-company.md)
+- [Customers](https://www.plain.com/docs/api-reference/graphql/customers.md)
+- [Customer groups](https://www.plain.com/docs/api-reference/graphql/customers/customer-groups.md)
+- [Delete customers](https://www.plain.com/docs/api-reference/graphql/customers/delete.md)
+- [Fetch customers](https://www.plain.com/docs/api-reference/graphql/customers/get.md)
+- [Upserting customers](https://www.plain.com/docs/api-reference/graphql/customers/upsert.md): Learn how to create and update customers programmatically.
+- [Error codes](https://www.plain.com/docs/api-reference/graphql/error-codes.md): If you receive an error code as part of an API call, this is where you can look up what it means
+- [Error handling](https://www.plain.com/docs/api-reference/graphql/error-handling.md): GraphQL queries and mutations require different error handling.
+- [Events](https://www.plain.com/docs/api-reference/graphql/events.md): Log important events to have the full picture of what happened in Plain.
+- [Create a customer event](https://www.plain.com/docs/api-reference/graphql/events/create-customer-event.md)
+- [Create a thread event](https://www.plain.com/docs/api-reference/graphql/events/create-thread-event.md)
+- [Introduction](https://www.plain.com/docs/api-reference/graphql/introduction.md): An overview of Plain's GraphQL API.
+- [Labels](https://www.plain.com/docs/api-reference/graphql/labels.md)
+- [Add labels](https://www.plain.com/docs/api-reference/graphql/labels/add.md)
+- [Remove labels](https://www.plain.com/docs/api-reference/graphql/labels/remove.md)
+- [Messaging](https://www.plain.com/docs/api-reference/graphql/messaging.md)
+- [Reply to emails](https://www.plain.com/docs/api-reference/graphql/messaging/reply-email.md)
+- [Reply to threads](https://www.plain.com/docs/api-reference/graphql/messaging/reply-to-thread.md)
+- [Send new emails](https://www.plain.com/docs/api-reference/graphql/messaging/send-email.md)
+- [Pagination](https://www.plain.com/docs/api-reference/graphql/pagination.md)
+- [Schema](https://www.plain.com/docs/api-reference/graphql/schema.md)
+- [Tenants](https://www.plain.com/docs/api-reference/graphql/tenants.md)
+- [Add customers to tenants](https://www.plain.com/docs/api-reference/graphql/tenants/add-customers.md)
+- [Get tenants](https://www.plain.com/docs/api-reference/graphql/tenants/get.md)
+- [Remove customers to tenants](https://www.plain.com/docs/api-reference/graphql/tenants/remove-customers.md)
+- [Set customer tenants](https://www.plain.com/docs/api-reference/graphql/tenants/set-customer-tenants.md)
+- [Upserting tenants](https://www.plain.com/docs/api-reference/graphql/tenants/upsert.md)
+- [Threads](https://www.plain.com/docs/api-reference/graphql/threads.md)
+- [Assignment](https://www.plain.com/docs/api-reference/graphql/threads/assignment.md)
+- [null](https://www.plain.com/docs/api-reference/graphql/threads/autoresponders.md)
+- [Create threads](https://www.plain.com/docs/api-reference/graphql/threads/create.md)
+- [Changing status](https://www.plain.com/docs/api-reference/graphql/threads/status-changes.md)
+- [Thread fields](https://www.plain.com/docs/api-reference/graphql/threads/thread-fields.md)
+- [Tiers & SLAs](https://www.plain.com/docs/api-reference/graphql/tiers.md)
+- [Add companies and tenants to tiers](https://www.plain.com/docs/api-reference/graphql/tiers/add-members.md)
+- [Get tiers](https://www.plain.com/docs/api-reference/graphql/tiers/get.md)
+- [Remove companies and tenants to tiers](https://www.plain.com/docs/api-reference/graphql/tiers/remove-members.md)
+- [Update company tier](https://www.plain.com/docs/api-reference/graphql/tiers/update-company-tier.md)
+- [Update tenant tier](https://www.plain.com/docs/api-reference/graphql/tiers/update-tenant-tier.md)
+- [Typescript SDK](https://www.plain.com/docs/api-reference/graphql/typescript-sdk.md)
+- [mTLS](https://www.plain.com/docs/api-reference/mtls.md)
+- [Request signing](https://www.plain.com/docs/api-reference/request-signing.md)
+- [UI Components](https://www.plain.com/docs/api-reference/ui-components.md)
+- [Badge](https://www.plain.com/docs/api-reference/ui-components/badge.md): Useful for statuses or when you need to attract attention to something.
+- [Container](https://www.plain.com/docs/api-reference/ui-components/container.md): Useful when you need to create a bit of structure.
+- [CopyButton](https://www.plain.com/docs/api-reference/ui-components/copy-button.md): Useful if you have any IDs or other details you want to copy for use in messages or outside of Plain.
+- [Divider](https://www.plain.com/docs/api-reference/ui-components/divider.md): Useful when you need a bit of structure.
+- [LinkButton](https://www.plain.com/docs/api-reference/ui-components/link-button.md): Useful when you want to link somewhere external (e.g. your own admin tool or payment provider)
+- [PlainText](https://www.plain.com/docs/api-reference/ui-components/plain-text.md): Useful when you want to show any text that should not have any formatting (is not Markdown). If you want markdown please use [Text](/api-reference/ui-components/text).
+- [Row](https://www.plain.com/docs/api-reference/ui-components/row.md): Useful when you need to show two things next to each-other.
+- [Spacer](https://www.plain.com/docs/api-reference/ui-components/spacer.md)
+- [Text](https://www.plain.com/docs/api-reference/ui-components/text.md)
+- [Webhooks](https://www.plain.com/docs/api-reference/webhooks.md)
+- [Customer created](https://www.plain.com/docs/api-reference/webhooks/customer-created.md)
+- [Customer deleted](https://www.plain.com/docs/api-reference/webhooks/customer-deleted.md)
+- [Customer Group Membership Changed Event](https://www.plain.com/docs/api-reference/webhooks/customer-group-membership-changed.md)
+- [Customer updated](https://www.plain.com/docs/api-reference/webhooks/customer-updated.md)
+- [Thread assignment transitioned](https://www.plain.com/docs/api-reference/webhooks/thread-assignment-transitioned.md)
+- [Chat received](https://www.plain.com/docs/api-reference/webhooks/thread-chat-received.md)
+- [Chat sent](https://www.plain.com/docs/api-reference/webhooks/thread-chat-sent.md)
+- [Thread created](https://www.plain.com/docs/api-reference/webhooks/thread-created.md)
+- [Email received](https://www.plain.com/docs/api-reference/webhooks/thread-email-received.md)
+- [Email sent](https://www.plain.com/docs/api-reference/webhooks/thread-email-sent.md)
+- [Thread Field created](https://www.plain.com/docs/api-reference/webhooks/thread-field-created.md)
+- [Thread Field deleted](https://www.plain.com/docs/api-reference/webhooks/thread-field-deleted.md)
+- [Thread Field updated](https://www.plain.com/docs/api-reference/webhooks/thread-field-updated.md)
+- [Thread labels changed](https://www.plain.com/docs/api-reference/webhooks/thread-labels-changed.md)
+- [Note created](https://www.plain.com/docs/api-reference/webhooks/thread-note-created.md)
+- [Thread priority changed](https://www.plain.com/docs/api-reference/webhooks/thread-priority-changed.md)
+- [Thread SLA status transitioned](https://www.plain.com/docs/api-reference/webhooks/thread-service-level-agreement-status-transitioned.md)
+- [Slack message received](https://www.plain.com/docs/api-reference/webhooks/thread-slack-message-received.md)
+- [Slack message sent](https://www.plain.com/docs/api-reference/webhooks/thread-slack-message-sent.md)
+- [Thread status transitioned](https://www.plain.com/docs/api-reference/webhooks/thread-status-transitioned.md)
+- [Webhooks and Typescript](https://www.plain.com/docs/api-reference/webhooks/typescript.md)
+- [Webhook Versions](https://www.plain.com/docs/api-reference/webhooks/versions.md)
+- [Assignment](https://www.plain.com/docs/assignment.md)
+- [Auto-responses](https://www.plain.com/docs/auto-responses.md)
+- [Broadcasts](https://www.plain.com/docs/broadcasts.md)
+- [Chat](https://www.plain.com/docs/chat.md)
+- [Authentication](https://www.plain.com/docs/chat/authentication.md)
+- [Customization](https://www.plain.com/docs/chat/customization.md)
+- [Companies](https://www.plain.com/docs/company-support.md)
+- [Contact forms](https://www.plain.com/docs/contact-forms.md): The best way to offer support at scale.
+- [Customer cards](https://www.plain.com/docs/customer-cards.md): Live context straight from your own systems when helping customers.
+- [Customer groups](https://www.plain.com/docs/customer-groups.md): Organize and segment your customers.
+- [Data model](https://www.plain.com/docs/data-model.md): A quick overview of how Plain is structured.
+- [Digests](https://www.plain.com/docs/digests.md)
+- [Overview](https://www.plain.com/docs/discord/overview.md): This guide will help you set up and make the most of our Discord integration, enabling seamless communication between your Discord server and Plain workspace.
+- [Email](https://www.plain.com/docs/email.md)
+- [Alternate addresses](https://www.plain.com/docs/email/alternate-emails.md)
+- [Email avatars](https://www.plain.com/docs/email/email-avatars.md)
+- [Receiving emails](https://www.plain.com/docs/email/receiving.md)
+- [Sending emails](https://www.plain.com/docs/email/sending.md)
+- [Events](https://www.plain.com/docs/events.md): Get the full picture of what happened and why straight in Plain.
+- [Favorite Pages](https://www.plain.com/docs/favorite-pages.md)
+- [Headless Support Portal](https://www.plain.com/docs/headless-support-portal.md): Give your customers visibility over their support requests.
+- [Discourse Integration](https://www.plain.com/docs/integrations/discourse.md)
+- [Help Scout Sync](https://www.plain.com/docs/integrations/helpscout.md)
+- [HubSpot Sync](https://www.plain.com/docs/integrations/hubspot.md)
+- [Inkeep](https://www.plain.com/docs/integrations/inkeep.md)
+- [Jira integration](https://www.plain.com/docs/integrations/jira.md)
+- [Linear integration](https://www.plain.com/docs/integrations/linear.md)
+- [Salesforce importer](https://www.plain.com/docs/integrations/salesforce.md)
+- [Shortcut integration](https://www.plain.com/docs/integrations/shortcut.md)
+- [Zendesk importer](https://www.plain.com/docs/integrations/zendesk.md)
+- [Can I forward emails to Plain?](https://www.plain.com/docs/knowledge-base/kb-forwarding-emails.md)
+- [Can I connect my personal email address to Plain?](https://www.plain.com/docs/knowledge-base/kb-personal-email.md)
+- [How long does it take to set up Plain? Do I need to have someone technical do it for me?](https://www.plain.com/docs/knowledge-base/kb-setup-time.md)
+- [Are you SOC2 certified?](https://www.plain.com/docs/knowledge-base/kb-soc2.md)
+- [Knowledge Base](https://www.plain.com/docs/knowledge-base/overview.md)
+- [Labels](https://www.plain.com/docs/labels.md)
+- [Microsoft Teams](https://www.plain.com/docs/microsoft-teams.md)
+- [Installation](https://www.plain.com/docs/microsoft-teams/installation.md)
+- [Notifications](https://www.plain.com/docs/notifications.md)
+- [Overview](https://www.plain.com/docs/plain-ai.md)
+- [Knowledge Sources](https://www.plain.com/docs/plain-ai/knowledge-sources.md)
+- [Suggested Responses](https://www.plain.com/docs/plain-ai/suggested-responses.md)
+- [Workflow](https://www.plain.com/docs/plain-ai/workflow.md)
+- [Priorities](https://www.plain.com/docs/priorities.md)
+- [Quickstart](https://www.plain.com/docs/quickstart.md): Everything you need to know to start supporting your customers with Plain.
+- [Overview](https://www.plain.com/docs/reporting.md)
+- [null](https://www.plain.com/docs/reporting/metrics.md)
+- [null](https://www.plain.com/docs/reporting/team-reporting.md)
+- [null](https://www.plain.com/docs/reporting/using-reporting.md)
+- [Roles & Permissions](https://www.plain.com/docs/roles-in-plain.md)
+- [Saved Views](https://www.plain.com/docs/saved-views.md)
+- [Security](https://www.plain.com/docs/security.md)
+- [Shortcuts](https://www.plain.com/docs/shortcuts.md)
+- [Slack](https://www.plain.com/docs/slack.md)
+- [Data Retention](https://www.plain.com/docs/slack/data-retention.md)
+- [How to rename your Slack bot](https://www.plain.com/docs/slack/how-to-rename-bot.md)
+- [Ingestion Modes](https://www.plain.com/docs/slack/ingestion-modes.md)
+- [Snippets](https://www.plain.com/docs/snippets.md)
+- [null](https://www.plain.com/docs/statuses.md)
+- [Syntax highlighting](https://www.plain.com/docs/syntax-highlighting.md)
+- [Tenants](https://www.plain.com/docs/tenant-support.md)
+- [Slack Discussions](https://www.plain.com/docs/thread-discussions.md)
+- [Thread Fields](https://www.plain.com/docs/thread-fields.md): Extend and customise Plain's data model.
+- [Tiers & SLAs](https://www.plain.com/docs/tiers.md)
+- [Workflow Rules](https://www.plain.com/docs/workflow-rules.md)
+
+
+## Optional
+
+- [Changelog](https://plain.com/changelog/?utm_source=docs)
+- [Blog](https://plain.com/blog/?utm_source=docs)
+- [Book a demo](https://www.plain.com/signup/demo?utm_source=docs)

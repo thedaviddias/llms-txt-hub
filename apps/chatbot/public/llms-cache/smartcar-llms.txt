@@ -1,0 +1,163 @@
+# smartcar
+
+## Docs
+
+- [Make Specific Endpoints](https://smartcar.com/docs/api-reference/about-brand-specific.md)
+- [All Vehicles](https://smartcar.com/docs/api-reference/all-vehicles.md): Returns a paged list of all vehicles connected to the application for the current authorized `user`.
+- [API Errors](https://smartcar.com/docs/api-reference/api-errors.md)
+- [SDKs](https://smartcar.com/docs/api-reference/api-sdks.md)
+- [Permissions](https://smartcar.com/docs/api-reference/application-permissions.md): Returns a list of the permissions that have been granted to your application in relation to this vehicle.
+- [Audi: Charge Status](https://smartcar.com/docs/api-reference/audi/get-charge.md): Returns all charging related data for an Audi vehicle.
+- [Auth Code Exchange](https://smartcar.com/docs/api-reference/authorization/auth-code-exchange.md): To interact with the Smartcar API, you will need to exchange your authorization code from the [Connect redirect](/docs/connect/handle-the-response) for an access token. See [Token Management](https://smartcar.com/docs/connect/token-management/overview) for an overview.
+- [Token Refresh](https://smartcar.com/docs/api-reference/authorization/token-refresh.md): Your access token will expire 2 hours after it is issued. When this happens, your application can retrieve a new one by using the `refresh_token` returned in the [auth code exchange](/docs/api-reference/authorization/auth-code-exchange) or prior token refresh. See [Token Refresh](https://smartcar.com/docs/connect/token-management/refreshing-access-token) for additional guidance.
+- [Batch](https://smartcar.com/docs/api-reference/batch.md): Returns a list of responses from multiple Smartcar `GET` endpoints, all combined into a single request.
+- [Charge Records](https://smartcar.com/docs/api-reference/bmw/get-charge-records.md): Returns data associated with completed charging sessions for a vehicle. Limited to the last 30 days or when the owner first granted your application access, which ever is shorter.
+- [By Region and Make](https://smartcar.com/docs/api-reference/compatibility/by-region-and-make.md)
+- [By VIN](https://smartcar.com/docs/api-reference/compatibility/by-vin.md)
+- [Lock & Unlock](https://smartcar.com/docs/api-reference/control-lock-unlock.md): Lock or unlock the vehicle.
+- [Start & Stop Charge](https://smartcar.com/docs/api-reference/evs/control-charge.md): Start or stop the vehicle charging.
+- [Battery Level](https://smartcar.com/docs/api-reference/evs/get-battery-level.md): Returns the state of charge and the remaining range of an electric vehicle's high voltage battery.
+- [Charge Limit](https://smartcar.com/docs/api-reference/evs/get-charge-limit.md): Returns the charge limit configuration for the vehicle.
+- [Charge Status](https://smartcar.com/docs/api-reference/evs/get-charge-status.md): Returns the charge status for the vehicle.
+- [Charge Limit](https://smartcar.com/docs/api-reference/evs/set-charge-limit.md): Set the  charge limit of an electric vehicle.
+- [Charge Schedule by Location](https://smartcar.com/docs/api-reference/ford/get-charge-schedule-by-location.md): Returns all saved charging locations for a vehicle and their associated charging limits, schedules and configurations.
+- [Charge Schedule by Location](https://smartcar.com/docs/api-reference/ford/set-charge-schedule-by-location.md): Set all schedules for the specified charging location.
+- [Diagnostic Trouble Codes](https://smartcar.com/docs/api-reference/get-dtcs.md): Provides a list of active Diagnostic Trouble Codes (DTCs) reported by the vehicle. Currently supporting GM brands including Chevrolet and GMC.
+- [Oil Life](https://smartcar.com/docs/api-reference/get-engine-oil-life.md): Returns the remaining life span of a vehicle’s engine oil.
+- [Fuel Tank](https://smartcar.com/docs/api-reference/get-fuel-tank.md): Returns the status of the fuel remaining in the vehicle’s fuel tank.
+- [Location](https://smartcar.com/docs/api-reference/get-location.md): Returns the vehicle's last known location.
+- [Lock Status](https://smartcar.com/docs/api-reference/get-lock-status.md): Returns the lock status for a vehicle and the open status of its doors, windows, storage units, sunroof and charging port where available.
+- [Battery Capacity](https://smartcar.com/docs/api-reference/get-nominal-capacity.md): Returns a list of nominal rated battery capacities for a vehicle.
+- [Odometer](https://smartcar.com/docs/api-reference/get-odometer.md): Returns the vehicle’s last known odometer reading.
+- [Service History](https://smartcar.com/docs/api-reference/get-service-records.md): Retrieve service records tracked by the vehicle's dealer or manually added by the vehicle owner. Currently supporting Ford, Lincoln, Toyota, Lexus, Mazda and Volkswagen (US)
+- [System Status](https://smartcar.com/docs/api-reference/get-system-status.md): Provides a list of vehicle systems and their current health status. Currently supporting FCA and GM brands including RAM, Jeep, Chrysler, Dodge, Fiat, Alpha Romeo, Buick, Cadillac, Chevrolet and GMC. See [Diagnostic Systems](/docs/help/diagnostic-systems) for a complete list of Smartcar System IDs.
+- [Tire Pressure](https://smartcar.com/docs/api-reference/get-tire-pressure.md): Returns the air pressure of each of the vehicle’s tires.
+- [Vehicle Attributes](https://smartcar.com/docs/api-reference/get-vehicle-info.md): Returns a single vehicle object, containing identifying information.
+- [VIN](https://smartcar.com/docs/api-reference/get-vin.md): Returns the vehicle’s manufacturer identifier.
+- [Charge Completion Time](https://smartcar.com/docs/api-reference/gm/get-charge-completion-time.md): When the vehicle is charging, returns the date and time the vehicle expects to "complete" this charging session.  When the vehicle is not charging, this endpoint results in a vehicle state error.
+- [Voltage](https://smartcar.com/docs/api-reference/gm/get-charge-voltmeter.md): When the vehicle is plugged in, returns the charging voltage measured by the vehicle. When the vehicle is not plugged in, this endpoint results in a vehicle state error.
+- [Headers](https://smartcar.com/docs/api-reference/headers.md)
+- [Smartcar API Reference](https://smartcar.com/docs/api-reference/intro.md)
+- [Makes](https://smartcar.com/docs/api-reference/makes.md): Valid values for the `make` parameter
+- [Vehicle Connections](https://smartcar.com/docs/api-reference/management/delete-vehicle-connections.md): Deletes all vehicle connections associated with a Smartcar user ID or a specific vehicle.
+- [Vehicle Connections](https://smartcar.com/docs/api-reference/management/get-vehicle-connections.md): Returns a paged list of all vehicles that are connected to the application associated with the management API token used, sorted in descending order by connection date.
+- [Charge Schedule](https://smartcar.com/docs/api-reference/nissan/get-charge-schedule.md): Returns the charging schedule of a vehicle. The response contains the start time and departure time of the vehicle's charging schedule.
+- [Charge Schedule](https://smartcar.com/docs/api-reference/nissan/set-charge-schedule.md): Sets the charging schedule for a vehicle.
+- [Permissions](https://smartcar.com/docs/api-reference/permissions.md): In order to use an endpoint or webhook, you'll need to request the associated permissions from your user in [Connect](/docs/connect/what-is-connect).
+- [Send Destination](https://smartcar.com/docs/api-reference/send-destination-to-vehicle.md): Send destination coordinates to the vehicle's navigation system.
+- [Clear PIN to Drive](https://smartcar.com/docs/api-reference/tesla/clear-pin-to-drive.md): Disables this feature on the vehicle and resets the PIN.
+- [Charge Port](https://smartcar.com/docs/api-reference/tesla/control-charge-port.md): Open or close the vehicle's charge port door.
+- [Frunk](https://smartcar.com/docs/api-reference/tesla/control-frunk.md): Open or close the frunk (front trunk) of the Tesla vehicle.
+- [Trunk](https://smartcar.com/docs/api-reference/tesla/control-trunk.md): Open or close the trunk of the Tesla vehicle.
+- [Alerts](https://smartcar.com/docs/api-reference/tesla/get-alerts.md): Returns recent alerts from the vehicle.
+- [Tesla: Battery Status](https://smartcar.com/docs/api-reference/tesla/get-battery.md): Returns all battery related data for a Tesla vehicle.
+- [Cabin Climate](https://smartcar.com/docs/api-reference/tesla/get-cabin.md): Returns the current state and target temperature setting of a vehicle's cabin climate system.
+- [Tesla: Charge Status](https://smartcar.com/docs/api-reference/tesla/get-charge.md): Returns all charging related data for a Tesla vehicle.
+- [Charge Completion Time](https://smartcar.com/docs/api-reference/tesla/get-charge-completion-time.md): When the vehicle is charging, returns the date and time when the vehicle is expected to reach its charge limit. When the vehicle is not charging, this endpoint results in a vehicle state error.
+- [Charge Billing Records](https://smartcar.com/docs/api-reference/tesla/get-charge-records-billing.md): Returns information about charging sessions for Tesla vehicles at public Tesla chargers including cost and charging site.
+- [Charge Schedule](https://smartcar.com/docs/api-reference/tesla/get-charge-schedule.md): Returns the charging schedule of a vehicle. The response contains the start time and departure time of the vehicle's charging schedule.
+- [Voltage](https://smartcar.com/docs/api-reference/tesla/get-charge-voltmeter.md): When the vehicle is plugged in, returns the charging voltage measured by the vehicle. When the vehicle is not plugged in, this endpoint results in a vehicle state error.
+- [Wattage](https://smartcar.com/docs/api-reference/tesla/get-charge-wattmeter.md): When the vehicle is charging, returns the instant charging wattage as measured by the vehicle. When the vehicle is not charging, this endpoint results in a vehicle state error.
+- [Compass](https://smartcar.com/docs/api-reference/tesla/get-compass-heading.md): Returns the current compass heading and direction of the vehicle.
+- [Defroster](https://smartcar.com/docs/api-reference/tesla/get-defroster.md): Returns the current state of a vehicle's front and rear defroster.
+- [Extended Vehicle Info](https://smartcar.com/docs/api-reference/tesla/get-ext-vehicle-info.md): Returns detailed configuration information for a vehicle.
+- [Exterior Temperature](https://smartcar.com/docs/api-reference/tesla/get-exterior-temperature.md): Returns the vehicle’s last known exterior thermometer reading. See our [climate setting](/docs/api-reference/tesla/get-cabin) endpoints for managing a cabin temperature.
+- [Interior Temperature](https://smartcar.com/docs/api-reference/tesla/get-interior-temperature.md): Returns the vehicle’s last known interior thermometer reading. See our [climate setting](/docs/api-reference/tesla/get-cabin) endpoints for managing a cabin temperature.
+- [Migration Status](https://smartcar.com/docs/api-reference/tesla/get-migration-status.md): Indicates if the vehicle needs to migrate to Tesla's new API. See [Tesla - What's New](https://smartcar.com/docs/help/oem-integrations/tesla/whats-new) for more details.
+- [Speed](https://smartcar.com/docs/api-reference/tesla/get-speedometer.md): Returns the current speed of the vehicle.
+- [Steering Heater](https://smartcar.com/docs/api-reference/tesla/get-steering-heater.md): Returns the current state of a vehicle's steering wheel heater system.
+- [User Access](https://smartcar.com/docs/api-reference/tesla/get-user-access.md): Returns the account type and permissions for the connected Tesla account.
+- [User Info](https://smartcar.com/docs/api-reference/tesla/get-user-info.md): Returns the email associated with the connected Tesla account.
+- [Vehicle Status](https://smartcar.com/docs/api-reference/tesla/get-vehicle-status.md): Returns the status for the vehicle.
+- [Virtual Key Status](https://smartcar.com/docs/api-reference/tesla/get-virtual-key-status.md): Indicates if a vehicle has the appropriate virtual key installed. See [Tesla - What's New](https://smartcar.com/docs/help/oem-integrations/tesla/whats-new#if-your-application-issues-commands) for more details on Tesla's virtual key requirements.
+- [Cabin Climate](https://smartcar.com/docs/api-reference/tesla/set-cabin.md): Set the temperature and control the cabin climate system for a vehicle.
+- [Amperage](https://smartcar.com/docs/api-reference/tesla/set-charge-ammeter.md): Set the amperage drawn by the vehicle from the EVSE for the current charging session. If the vehicle is not plugged in, this endpoint results in a vehicle state error.
+- [Charge Schedule](https://smartcar.com/docs/api-reference/tesla/set-charge-schedule.md): Sets the charging schedule for a vehicle.
+- [Defroster](https://smartcar.com/docs/api-reference/tesla/set-defroster.md): Start or stop the front and rear defroster for a vehicle.
+- [Set PIN to Drive](https://smartcar.com/docs/api-reference/tesla/set-pin-to-drive.md): Enables this feature on the vehicle and sets the PIN needed in order to drive it.
+- [Steering Heater](https://smartcar.com/docs/api-reference/tesla/set-steering-heater.md): Start or stop heating a vehicle's steering wheel.
+- [User](https://smartcar.com/docs/api-reference/user.md): Returns the ID of the vehicle owner who granted access to your application.
+- [Callback URI Verification](https://smartcar.com/docs/api-reference/webhooks/callback-verification.md): Verify your newly-created webhook.
+- [Payload Verification](https://smartcar.com/docs/api-reference/webhooks/payload-verification.md)
+- [Subscribe](https://smartcar.com/docs/api-reference/webhooks/subscribe-webhook.md): Subscribe a vehicle to a webhook.
+- [Unsubscribe](https://smartcar.com/docs/api-reference/webhooks/unsubscribe-webhook.md): Unsubscribe a vehicle from a webhook.
+- [2022 Releases](https://smartcar.com/docs/changelog/2022.md)
+- [2023 Releases](https://smartcar.com/docs/changelog/2023.md)
+- [2024 Releases](https://smartcar.com/docs/changelog/2024.md)
+- [Latest Releases](https://smartcar.com/docs/changelog/latest.md): Learn about Smartcar's latest product updates and improvements
+- [Country Selection](https://smartcar.com/docs/connect/advanced-config/country-flag.md): By default Connect will launch based on the devices location impacting the brands that are available to the user e.g. Renault is only available in Europe.
+- [Connect Flows](https://smartcar.com/docs/connect/advanced-config/flows.md): Connect can be launched with three different workflows. Depending on your use case and what information you have about the vehicle ahead of a launching Connect, you may be able to leverage one of these flows for a more streamlined Connect experience.
+- [Modes](https://smartcar.com/docs/connect/advanced-config/modes.md)
+- [Auth Code Exchange](https://smartcar.com/docs/connect/auth-code-exchange.md)
+- [SDKs for Connect](https://smartcar.com/docs/connect/connect-sdks.md): Our SDKs make integrating Smartcar fast and easy in different languages and frameworks.
+- [Dashboard Configuration](https://smartcar.com/docs/connect/dashboard-config.md)
+- [Handle the Response](https://smartcar.com/docs/connect/handle-the-response.md): Upon successfully accepting the permissions, Smartcar will redirect the user back to your application using the specified `REDIRECT_URI`, along with an authorization code as a query parameter. In the case of on error, we'll provide an error and description as parameters instead.
+- [Handle the Response](https://smartcar.com/docs/connect/re-auth/handle-response.md): If the re-auth is successful, the redirect to your application will contain a vehicle ID. In the case of an error, we'll provide an error and description as parameters instead.
+- [Redirect to Connect](https://smartcar.com/docs/connect/re-auth/redirect-to-connect.md)
+- [Build the Connect URL](https://smartcar.com/docs/connect/redirect-to-connect.md)
+- [Overview](https://smartcar.com/docs/connect/token-management/overview.md): After fetching your first token pair, you'll need to manage them in order to maintain access to the vehicle.
+- [Refreshing Refresh Tokens](https://smartcar.com/docs/connect/token-management/refresh-refresh-token.md): Refresh tokens expire after **60 days ordinarily** or **after 1 minute when used to fetch a new token pair**.
+- [Refreshing Access Tokens](https://smartcar.com/docs/connect/token-management/refreshing-access-token.md): Your access token will expire **2 hours** after it is issued. When this happens, your application  can retrieve a new one by using the corresponding `REFRESH_TOKEN`.
+- [What is Connect?](https://smartcar.com/docs/connect/what-is-connect.md)
+- [Authentication Errors](https://smartcar.com/docs/errors/api-errors/authentication-errors.md): Thrown when there is an issue with your authorization header.
+- [Billing Errors](https://smartcar.com/docs/errors/api-errors/billing-errors.md): Thrown when limits have been reached based on your plan, or if the feature is not avaible.
+- [Compatibility Errors](https://smartcar.com/docs/errors/api-errors/compatibility-errors.md): Thrown when Smartcar does not support a make, or feature for a vehicle.
+- [Connected Services Account Errors](https://smartcar.com/docs/errors/api-errors/connected-services-account-errors.md): Thrown when there are issues with the user's connected service account.
+- [Permission Errors](https://smartcar.com/docs/errors/api-errors/permission-errors.md): Thrown when Smartcar does not support a make or feature for a vehicle.
+- [Rate Limit Errors](https://smartcar.com/docs/errors/api-errors/rate-limit-errors.md): Thrown when there is an issue with the frequency of your requests.
+- [Resource Not Found](https://smartcar.com/docs/errors/api-errors/resource-not-found-errors.md): Thrown when the incorrect API version is used or when the endpoint URL is incorrect.
+- [Server Errors](https://smartcar.com/docs/errors/api-errors/server-errors.md): Thrown when Smartcar runs into an unexpected issue and was unable to process the request.
+- [Upstream Errors](https://smartcar.com/docs/errors/api-errors/upstream-errors.md): Thrown when the OEM servers or vehicle failed to process the request.
+- [Validation Errors](https://smartcar.com/docs/errors/api-errors/validation-errors.md): Thrown if there is an issue with the format of the request or body.
+- [Vehicle State Errors](https://smartcar.com/docs/errors/api-errors/vehicle-state-errors.md): Thrown when a request fails due to the state of a vehicle or logically cannot be completed e.g. you can't start a vehicle charging if it's not plugged in.
+- [Access Denied](https://smartcar.com/docs/errors/connect-errors/access-denied.md): This error occurs when a user denies your application access to the requested scope of permissions.
+- [Configuration](https://smartcar.com/docs/errors/connect-errors/configuration-error.md): This error occurs when the user has encountered an Error page in Connect and has chosen to return to your application.
+- [Invalid Subscription](https://smartcar.com/docs/errors/connect-errors/invalid-subscription.md): This error occurs when a user’s vehicle is compatible but their connected services subscription is inactive because either it has expired or it has never been activated.
+- [No Vehicles](https://smartcar.com/docs/errors/connect-errors/no-vehicles.md): This error occurs when a vehicle owner has a connected services account, but there are no vehicles associated with the account.
+- [OEM Login Cancelled](https://smartcar.com/docs/errors/connect-errors/oem-login-cancelled.md): This error occurs when a user went to authorize directly with the OEM but exited the flow for some reason.
+- [User returned to application](https://smartcar.com/docs/errors/connect-errors/returned-to-application.md): This error occurs when a user leaves the Connect flow after hitting **Back to application** before granting your application access to their vehicle.
+- [Server](https://smartcar.com/docs/errors/connect-errors/server-error.md): If there is a server error, the user will return to your application.
+- [Vehicle Incompatible](https://smartcar.com/docs/errors/connect-errors/vehicle-incompatible.md): This error occurs when a user tries to authorize an incompatible vehicle in Smartcar Connect.
+- [Overview](https://smartcar.com/docs/errors/overview.md): A comprehensive breakout of all Smartcar errors.
+- [Testing Errors](https://smartcar.com/docs/errors/testing-errors.md): By launching Connect in [simulated mode](/docs/connect/advanced-config/modes), you're able to test your application against certain errors.
+- [Dashboard Configurations](https://smartcar.com/docs/getting-started/dashboard/configuration.md)
+- [Connect Insights](https://smartcar.com/docs/getting-started/dashboard/connect-insights.md): Connect Insights allows you to visualize your Connect conversion rate and identify where individual users are running into issues during onboarding.
+- [Dashboard Multi-Factor Authentication (MFA)](https://smartcar.com/docs/getting-started/dashboard/dashboard-mfa.md)
+- [Dashboard Overview](https://smartcar.com/docs/getting-started/dashboard/overview.md): All you need to know about the Smartcar Dashboard
+- [Connect Playground](https://smartcar.com/docs/getting-started/dashboard/playground.md)
+- [Vehicle Simulator](https://smartcar.com/docs/getting-started/dashboard/simulator.md)
+- [Charging station utilization](https://smartcar.com/docs/getting-started/guides/charging-station-utilization.md): This guide explains how to use the Smartcar API to enhance charging station discoverability by leveraging vehicle data such as state of charge,  battery level, range, and location. These capabilities allow developers to help EV drivers find nearby charging stations based on real-time vehicle data.
+- [Preventive maintenance scheduling](https://smartcar.com/docs/getting-started/guides/preventive-maintenance-scheduling.md): This guide explains how to use the Smartcar API to proactively automate preventive maintenance scheduling. By leveraging data such as odometer readings, engine oil life, Diagnostic Trouble Codes (DTCs), and system status, you can reduce vehicle downtime, improve reliability, and enhance customer satisfaction.
+- [Drive revenue with real-time diagnostics](https://smartcar.com/docs/getting-started/guides/real-time-vehicle-diagnostics.md): This guide explains how to use the Smartcar API to provide real-time vehicle diagnostics by leveraging data such as Diagnostic Trouble Codes (DTCs), overall system health, and odometer readings. These capabilities allow developers and service providers to proactively identify issues, schedule service visits, and reduce vehicle downtime.
+- [Enabling simplified payments](https://smartcar.com/docs/getting-started/guides/simplified-payments.md): This guide outlines how charge point operators can utilize the Smartcar API to implement plug-and-charge capabilities, enabling automatic billing and session management through vehicle identification and charging data.
+- [Plan Your Integration](https://smartcar.com/docs/getting-started/integration-overview.md)
+- [Introduction to Smartcar's API](https://smartcar.com/docs/getting-started/introduction.md): Learn about how to build applications that connect to millions of vehicles around the world.
+- [Test Your Integration](https://smartcar.com/docs/getting-started/test-your-integration.md)
+- [Android Tutorial](https://smartcar.com/docs/getting-started/tutorials/android.md): In this tutorial, we will use the Android SDK to integrate Connect into your application.
+- [Backend SDK Tutorials](https://smartcar.com/docs/getting-started/tutorials/backend.md): In this tutorial, we will go over how  to integrate Connect into your application and make requests to a vehicle using our backend SDKs.
+- [iOS Tutorial](https://smartcar.com/docs/getting-started/tutorials/ios.md): In this tutorial, we will use the iOS SDK to integrate Connect into your application.
+- [React Tutorial](https://smartcar.com/docs/getting-started/tutorials/react.md): In this tutorial, we will use the JavaScript SDK to integrate Connect into your application.
+- [Diagnostic Webhooks](https://smartcar.com/docs/getting-started/tutorials/webhooks-diagnostic.md): Diagnostic webhooks send events whenever a state change occurs within the vehicle's Health Status or a Diagnostic Trouble Code (DTC) is reported
+- [Dynamic Webhooks (Early Access)](https://smartcar.com/docs/getting-started/tutorials/webhooks-dynamic.md): Dynamic webhooks make it incredibly easy to receive data from a vehicle at the optimal frequency supported by the OEM. Specifically, once a certain condition is met, you will be able to receive data more frequently from the vehicle to stay up-to-date with the state of the vehicle when it matters most to you.
+- [Scheduled Webhooks](https://smartcar.com/docs/getting-started/tutorials/webhooks-scheduled.md): Scheduled webhooks make it incredibly easy to receive vehicle data on a cadence of your choosing. You can set up a webhook for any Smartcar endpoint that allows you to read data from a vehicle.
+- [Testing with Postman](https://smartcar.com/docs/getting-started/using-vs-with-postman.md): In this guide we'll go over how to use Vehicle Simulator to test out Smartcar using Postman.
+- [Smartcar Usage Limits](https://smartcar.com/docs/help/api-limits.md): Learn about limits you may encounter when using Smartcar.
+- [Brand Quirks](https://smartcar.com/docs/help/brand-quirks.md): Brand specific quirks to keep in mind while building out your application.
+- [Brand Subscription Information](https://smartcar.com/docs/help/brand-subscriptions.md): Below you can find the connected service name for each brand as well as any specific subscription packages needed to connect to the vehicle via Smartcar.
+- [Compatible Vehicles](https://smartcar.com/docs/help/compatibility.md)
+- [Connect your car](https://smartcar.com/docs/help/connect-your-car.md)
+- [Diagnostic Systems](https://smartcar.com/docs/help/diagnostic-systems.md): To support our System Status endpoint, reference the below list of unified systems.
+- [Early Access](https://smartcar.com/docs/help/early-access.md): Understand Smartcar's approach to Early Access features.
+- [Frequently Asked Questions (FAQs)](https://smartcar.com/docs/help/faqs.md)
+- [Submit a Feature Request](https://smartcar.com/docs/help/feature-request.md)
+- [mySmartcar](https://smartcar.com/docs/help/my-smartcar.md): With [mySmartcar](https://my.smartcar.com/login), you can see which apps are connected to your vehicle and manage their permissions anytime.
+- [Upgraded Tesla API Integration](https://smartcar.com/docs/help/oem-integrations/tesla/developers.md): This page has information regarding Smartcar's upgraded Tesla integration.
+- [Tesla FAQs](https://smartcar.com/docs/help/oem-integrations/tesla/faqs.md): FAQs on our new Tesla integration. For an overview of the changes see [this page](https://smartcar.com/docs/help/oem-integrations/tesla/whats-new).
+- [Important Updates](https://smartcar.com/docs/help/oem-integrations/tesla/whats-new.md): Upcoming changes to data access and permissions in 2025
+- [OEM Latency](https://smartcar.com/docs/help/oem-latency.md): Request latency we've observed by make
+- [Reliability and Data Age](https://smartcar.com/docs/help/reliability-and-freshness.md): When making requests to vehicles, there is variation in how often data is updated and how many requests it can process in a given period. The tables below indicate the performance for each of Smartcar supported brands in each region.
+- [Join the Research Fleet](https://smartcar.com/docs/help/research-fleet.md)
+- [Teams](https://smartcar.com/docs/help/teams.md): With Teams you're able to easily manage your team's access to Dashboard
+- [Vehicle Simulator](https://smartcar.com/docs/help/vehicle-simulator.md): Learn about what to expect from Vehicle Simulator and how it compares to Live mode.
+- [What is a Connected Car?](https://smartcar.com/docs/help/what-is-a-connected-car.md): Learn about how to build applications that connect to millions of vehicles around the world.
+- [What is Smartcar?](https://smartcar.com/docs/help/what-is-smartcar.md): Learn about how to build applications that connect to millions of vehicles around the world.

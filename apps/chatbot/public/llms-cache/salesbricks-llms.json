@@ -1,0 +1,10 @@
+{
+  "name": "Salesbricks",
+  "description": "Sales automation and management platform",
+  "website": "https://salesbricks.com",
+  "url": "https://docs.salesbricks.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/salesbricks-llms.txt",
+  "lastFetched": "2025-03-24"
+}

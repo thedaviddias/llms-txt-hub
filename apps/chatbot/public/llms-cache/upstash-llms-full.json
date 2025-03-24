@@ -1,0 +1,10 @@
+{
+  "name": "Upstash",
+  "description": "Serverless database and caching platform",
+  "website": "https://upstash.com",
+  "url": "https://upstash.com/docs/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/upstash-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

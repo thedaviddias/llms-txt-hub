@@ -1,0 +1,10 @@
+{
+  "name": "Oxla",
+  "description": "Data processing and analytics platform",
+  "website": "https://oxla.com",
+  "url": "https://docs.oxla.com/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/oxla-llms.txt",
+  "lastFetched": "2025-03-24"
+}

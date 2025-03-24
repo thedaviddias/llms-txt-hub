@@ -1,0 +1,125 @@
+# ZAPHYR PHP Framework
+## Supercharge your   PHP development with ZAPHYR
+
+ZAPHYR is a breath of fresh air in the **PHP** ecosystem, providing a flexible,
+modular, and lightweight **open source framework** for web development.
+
+[Read the docs](https://zaphyr.org/docs/framework/latest/welcome "Read the ZAPHYR documentation")
+[View on GitHub](https://www.github.com/zaphyr-org "This link takes you to the ZAPHYR GitHub profile")
+
+## Easy to learn.
+
+Read the documentation to learn more about the framework's features and how to get started.
+
+[Read the docs](https://zaphyr.org/docs/framework/latest/welcome "Read the ZAPHYR documentation")
+
+## Customizable to your needs.
+
+Extend the framework's core functionalities with plugins tailored to your project's needs.
+
+[Read more about plugins](https://zaphyr.org/docs/framework/latest/welcome#plugins "Read more about ZAPHYR plugins")
+
+## Separation of concerns.
+
+Dive into repositories that forge the framework's core, providing a robust foundation for
+developers.
+
+[Read more about repositories](https://zaphyr.org/docs/framework/latest/welcome#repositories "Read more about the ZAPHYR core repositories")
+
+No grain, no bread.
+
+## Dive into repositories that forge the framework's core.
+
+Repositories embody the essence of ZAPHYR, defining the bedrock of low-level code that powers
+the framework. These repositories serve as the building blocks, providing a robust foundation
+for developers to construct exceptional applications.
+
+### Config
+
+Configuration loader supports PHP, INI, JSON, XML, YAML and NEON file extensions.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/config)
+
+### Container
+
+Powerful auto wiring dependency injection container including PSR-11.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/container)
+
+### Cookie
+
+Small repository for handling cookies.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/cookie)
+
+### Encrypt
+
+Encrypting and decrypting text via OpenSSL using AES-128 and AES-256 encryption.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/encrypt)
+
+### Event Dispatcher
+
+An efficient PSR-14 event dispatcher.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/event-dispatcher)
+
+### HTTP Client
+
+HTTP cURL client based on PSR-18.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/http-client)
+
+### HTTP Emitter
+
+Emits PSR-7 responses to the PHP Server API.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/http-emitter)
+
+### HTTP Message
+
+Lightweight and strict implementation of PSR-7 HTTP Message including PSR-17 HTTP Factories.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/http-message)
+
+### Logger
+
+A robust PSR-3 logging service.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/logger)
+
+### Mail
+
+A mail API over the popular Symfony Mailer.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/mail)
+
+### Router
+
+Robust router including PSR-7, PSR-11 and PSR-15
+
+[Read more](https://zaphyr.org/docs/repositories/latest/router)
+
+### Session
+
+A session handler repository for maintaining user state across multiple requests.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/session)
+
+### Translate
+
+A simple translator to serve your applications in multiple languages.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/translate)
+
+### Utils
+
+A collection of useful helper classes, which make a developer's workday a little easier.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/utils)
+
+### Validate
+
+Easy to use, highly customizable validator.
+
+[Read more](https://zaphyr.org/docs/repositories/latest/validate)

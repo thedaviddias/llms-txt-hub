@@ -1,0 +1,10 @@
+{
+  "name": "IonQ",
+  "description": "Quantum computing platform and infrastructure",
+  "website": "https://ionq.com",
+  "url": "https://docs.ionq.com/llms-full.txt",
+  "type": "llms-full.txt",
+  "category": "infrastructure-cloud",
+  "cachePath": "apps/chatbot/public/llms-cache/ionq-llms-full.txt",
+  "lastFetched": "2025-03-24"
+}

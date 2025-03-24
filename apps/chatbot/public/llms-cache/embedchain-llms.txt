@@ -1,0 +1,113 @@
+# Embedchain
+
+## Docs
+
+- [Custom configurations](https://docs.embedchain.ai/api-reference/advanced/configuration.md)
+- [📊 add](https://docs.embedchain.ai/api-reference/app/add.md)
+- [💬 chat](https://docs.embedchain.ai/api-reference/app/chat.md)
+- [🗑 delete](https://docs.embedchain.ai/api-reference/app/delete.md)
+- [🚀 deploy](https://docs.embedchain.ai/api-reference/app/deploy.md)
+- [📝 evaluate](https://docs.embedchain.ai/api-reference/app/evaluate.md)
+- [📄 get](https://docs.embedchain.ai/api-reference/app/get.md)
+- [App](https://docs.embedchain.ai/api-reference/app/overview.md)
+- [❓ query](https://docs.embedchain.ai/api-reference/app/query.md)
+- [🔄 reset](https://docs.embedchain.ai/api-reference/app/reset.md)
+- [🔍 search](https://docs.embedchain.ai/api-reference/app/search.md)
+- [AI Assistant](https://docs.embedchain.ai/api-reference/store/ai-assistants.md)
+- [OpenAI Assistant](https://docs.embedchain.ai/api-reference/store/openai-assistant.md)
+- [🤝 Connect with Us](https://docs.embedchain.ai/community/connect-with-us.md)
+- [🎤 Audio](https://docs.embedchain.ai/components/data-sources/audio.md)
+- [🐝 Beehiiv](https://docs.embedchain.ai/components/data-sources/beehiiv.md)
+- [📊 CSV](https://docs.embedchain.ai/components/data-sources/csv.md)
+- [⚙️ Custom](https://docs.embedchain.ai/components/data-sources/custom.md)
+- [Data type handling](https://docs.embedchain.ai/components/data-sources/data-type-handling.md)
+- [📁 Directory/Folder](https://docs.embedchain.ai/components/data-sources/directory.md)
+- [💬 Discord](https://docs.embedchain.ai/components/data-sources/discord.md)
+- [🗨️ Discourse](https://docs.embedchain.ai/components/data-sources/discourse.md)
+- [📚 Code Docs website](https://docs.embedchain.ai/components/data-sources/docs-site.md)
+- [📄 Docx file](https://docs.embedchain.ai/components/data-sources/docx.md)
+- [💾 Dropbox](https://docs.embedchain.ai/components/data-sources/dropbox.md)
+- [📝 Github](https://docs.embedchain.ai/components/data-sources/github.md)
+- [📬 Gmail](https://docs.embedchain.ai/components/data-sources/gmail.md)
+- [🖼️ Image](https://docs.embedchain.ai/components/data-sources/image.md)
+- [📃 JSON](https://docs.embedchain.ai/components/data-sources/json.md)
+- [📝 Mdx file](https://docs.embedchain.ai/components/data-sources/mdx.md)
+- [🐬 MySQL](https://docs.embedchain.ai/components/data-sources/mysql.md)
+- [📓 Notion](https://docs.embedchain.ai/components/data-sources/notion.md)
+- [🙌 OpenAPI](https://docs.embedchain.ai/components/data-sources/openapi.md)
+- [Overview](https://docs.embedchain.ai/components/data-sources/overview.md)
+- [📰 PDF](https://docs.embedchain.ai/components/data-sources/pdf-file.md)
+- [🐘 Postgres](https://docs.embedchain.ai/components/data-sources/postgres.md)
+- [❓💬 Question and answer pair](https://docs.embedchain.ai/components/data-sources/qna.md)
+- [🗺️ Sitemap](https://docs.embedchain.ai/components/data-sources/sitemap.md)
+- [🤖 Slack](https://docs.embedchain.ai/components/data-sources/slack.md)
+- [📝 Substack](https://docs.embedchain.ai/components/data-sources/substack.md)
+- [📝 Text](https://docs.embedchain.ai/components/data-sources/text.md)
+- [🌐 HTML Web page](https://docs.embedchain.ai/components/data-sources/web-page.md)
+- [🧾 XML file](https://docs.embedchain.ai/components/data-sources/xml.md)
+- [📽️ Youtube Channel](https://docs.embedchain.ai/components/data-sources/youtube-channel.md)
+- [📺 Youtube Video](https://docs.embedchain.ai/components/data-sources/youtube-video.md)
+- [🧩 Embedding models](https://docs.embedchain.ai/components/embedding-models.md)
+- [🔬 Evaluation](https://docs.embedchain.ai/components/evaluation.md)
+- [🧩 Introduction](https://docs.embedchain.ai/components/introduction.md)
+- [🤖 Large language models (LLMs)](https://docs.embedchain.ai/components/llms.md)
+- [ChromaDB](https://docs.embedchain.ai/components/vector-databases/chromadb.md)
+- [Elasticsearch](https://docs.embedchain.ai/components/vector-databases/elasticsearch.md)
+- [OpenSearch](https://docs.embedchain.ai/components/vector-databases/opensearch.md)
+- [Pinecone](https://docs.embedchain.ai/components/vector-databases/pinecone.md)
+- [Qdrant](https://docs.embedchain.ai/components/vector-databases/qdrant.md)
+- [Weaviate](https://docs.embedchain.ai/components/vector-databases/weaviate.md)
+- [Zilliz](https://docs.embedchain.ai/components/vector-databases/zilliz.md)
+- [👨‍💻 Development](https://docs.embedchain.ai/contribution/dev.md): Contribute to Embedchain framework development
+- [📝 Documentation](https://docs.embedchain.ai/contribution/docs.md): Contribute to Embedchain docs
+- [📋 Guidelines](https://docs.embedchain.ai/contribution/guidelines.md)
+- [🐍 Python](https://docs.embedchain.ai/contribution/python.md)
+- [Fly.io](https://docs.embedchain.ai/deployment/fly_io.md): Deploy your RAG application to fly.io platform
+- [Gradio.app](https://docs.embedchain.ai/deployment/gradio_app.md): Deploy your RAG application to gradio.app platform
+- [Huggingface.co](https://docs.embedchain.ai/deployment/huggingface_spaces.md): Deploy your RAG application to huggingface.co platform
+- [Modal.com](https://docs.embedchain.ai/deployment/modal_com.md): Deploy your RAG application to modal.com platform
+- [Railway.app](https://docs.embedchain.ai/deployment/railway.md): Deploy your RAG application to railway.app
+- [Render.com](https://docs.embedchain.ai/deployment/render_com.md): Deploy your RAG application to render.com platform
+- [Streamlit.io](https://docs.embedchain.ai/deployment/streamlit_io.md): Deploy your RAG application to streamlit.io platform
+- [null](https://docs.embedchain.ai/examples/chat-with-PDF.md)
+- [🤖 Discord Bot](https://docs.embedchain.ai/examples/discord_bot.md)
+- [Full Stack](https://docs.embedchain.ai/examples/full_stack.md)
+- [null](https://docs.embedchain.ai/examples/nextjs-assistant.md)
+- [Notebooks & Replits](https://docs.embedchain.ai/examples/notebooks-and-replits.md)
+- [OpenAI Assistant](https://docs.embedchain.ai/examples/openai-assistant.md)
+- [Open-Source AI Assistant](https://docs.embedchain.ai/examples/opensource-assistant.md)
+- [🔮 Poe Bot](https://docs.embedchain.ai/examples/poe_bot.md)
+- [Add data](https://docs.embedchain.ai/examples/rest-api/add-data.md): Add a data source to an app.
+- [Check status](https://docs.embedchain.ai/examples/rest-api/check-status.md): Endpoint to check the status of the API
+- [Create app](https://docs.embedchain.ai/examples/rest-api/create.md): Create a new app using App ID
+- [Delete app](https://docs.embedchain.ai/examples/rest-api/delete.md): Delete an existing app
+- [Deploy app](https://docs.embedchain.ai/examples/rest-api/deploy.md): Deploy an existing app.
+- [Get all apps](https://docs.embedchain.ai/examples/rest-api/get-all-apps.md): Get all applications
+- [Get data](https://docs.embedchain.ai/examples/rest-api/get-data.md): Get all data sources for an app
+- [🌍 Getting Started](https://docs.embedchain.ai/examples/rest-api/getting-started.md)
+- [Query app](https://docs.embedchain.ai/examples/rest-api/query.md): Query an app
+- [🎪 Community showcase](https://docs.embedchain.ai/examples/showcase.md)
+- [null](https://docs.embedchain.ai/examples/slack-AI.md)
+- [💼 Slack Bot](https://docs.embedchain.ai/examples/slack_bot.md)
+- [📱 Telegram Bot](https://docs.embedchain.ai/examples/telegram_bot.md)
+- [💬 WhatsApp Bot](https://docs.embedchain.ai/examples/whatsapp_bot.md)
+- [Overview](https://docs.embedchain.ai/get-started/deployment.md): Deploy your RAG application to production
+- [❓ FAQs](https://docs.embedchain.ai/get-started/faq.md): Collections of all the frequently asked questions
+- [💻 Full stack](https://docs.embedchain.ai/get-started/full-stack.md)
+- [📚 Introduction](https://docs.embedchain.ai/get-started/introduction.md)
+- [⚡ Quickstart](https://docs.embedchain.ai/get-started/quickstart.md): 💡 Create an AI app on your own data in a minute
+- [⛓️ Chainlit](https://docs.embedchain.ai/integration/chainlit.md): Integrate with Chainlit to create LLM chat apps
+- [🧊 Helicone](https://docs.embedchain.ai/integration/helicone.md): Implement Helicone, the open-source LLM observability platform, with Embedchain. Monitor, debug, and optimize your AI applications effortlessly.
+- [🛠️ LangSmith](https://docs.embedchain.ai/integration/langsmith.md): Integrate with Langsmith to debug and monitor your LLM app
+- [🔭 OpenLIT](https://docs.embedchain.ai/integration/openlit.md): OpenTelemetry-native Observability and Evals for LLMs & GPUs
+- [🚀 Streamlit](https://docs.embedchain.ai/integration/streamlit-mistral.md): Integrate with Streamlit to plug and play with any LLM
+- [ 📜 Release Notes](https://docs.embedchain.ai/product/release-notes.md)
+- [🤖 Chatbots](https://docs.embedchain.ai/use-cases/chatbots.md)
+- [🧱 Introduction](https://docs.embedchain.ai/use-cases/introduction.md)
+- [❓ Question Answering](https://docs.embedchain.ai/use-cases/question-answering.md)
+- [🔍 Semantic Search](https://docs.embedchain.ai/use-cases/semantic-search.md)
+
+
+## Optional
+
+- [Talk to founders](https://cal.com/taranjeetio/ec)

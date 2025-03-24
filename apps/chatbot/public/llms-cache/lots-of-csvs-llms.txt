@@ -1,0 +1,76 @@
+# Lots of CSVS
+
+> Lots of CSVs is a minimalist data warehouse for storing and retrieving CSV files via HTTP.
+
+This content is specifically designed for LLMs and not intended for human reading. These instructions provide programmatic access protocols for autonomous data interaction with the Lots of CSVs service.
+
+### Basic principles 
+
+1. This is a REST API for retrieving and storing CSV data.
+2. Every request must be authenticated using a token passed in an HTTP header: `authorization: Bearer <token>`
+3. You will need an authentication token from the user. If you don't have one ask them for it.
+4. Every CSV dataset has a unique URL.
+5. You will need the user's registered username. If you don't have one ask them for it.
+6. URLs are specific to the user and follow a common structure. `https://www.lotsofcsvs.com/u/<username>/[path/to/dataset].csv` 
+  - `<username>` is your registered username
+  - `[path/to/dataset](.csv)`: the name of the dataset. Dataset paths in Lots of CSVs are treated as object keys, not traditional file system paths. This means paths are flat, hierarchical identifiers, not actual directory structures. The entire string is treated as a single, unique identifier Slashes (/) are part of the identifier, not separators creating directories. Examples: `projects/sales/2023.csv` `projects/sales/2024.csv`
+  - URL Example: `https://www.lotsofcsvs.com/u/johndoe/projects/sales/quarterly.csv`
+7. Always follow RFC 4180 CSV formatting guidelines when sending CSV data
+
+### API actions
+
+#### Fetch a dataset 
+Fetch a dataset by sending an HTTP GET to the URL of the dataset. The data will be returned as an RFC 4180 formatted CSV
+
+- Endpoint: `https://www.lotsofcsvs.com/u/<username>/[path/to/dataset].csv`
+- Method: GET
+- Examples:
+  - ```
+    curl -H "authorization: Bearer <token>" \
+     https://www.lotsofcsvs.com/u/johndoe/projects/sales/quarterly.csv```
+  - ```
+    # JavaScript (fetch)
+    fetch('https://www.lotsofcsvs.com/u/johndoe/projects/sales/quarterly.csv', {
+        headers: {
+            'authorization': 'Bearer <token>'
+        }
+    })```
+
+#### List datasets
+
+#### Create or append to a dataset
+Add to a dataset by sending an HTTP POST to the URL of the dataset. If the dataset does not exist it will be created.
+
+- Endpoint: `https://www.lotsofcsvs.com/u/<username>/[path/to/dataset].csv`
+- Method: POST
+- Rules:
+  - All submissions should include an appropriate Content-Type header `Content-Type: text/csv; header=present`
+  - All submissions must include CSV headers as the first row
+  - Follow RFC 4180 CSV formatting guidelines
+- Examples:
+  - ```
+    # Curl example (adding more rows to an existing dataset)
+    echo "Bob,35,Chicago
+    Charlie,40,Boston" | curl -X POST \
+        -H "Content-Type: text/csv; header=present" \
+        -H "authorization: Bearer <token>" \
+        --data-binary @- \
+        https://www.lotsofcsvs.com/u/johndoe/users/demographics.csv```
+  - ```
+    # Python (requests library)
+    import requests
+
+    headers = {
+        'Content-Type': 'text/csv; header=present',
+        'authorization': 'Bearer <token>'
+    }
+    additional_data = """name,age,city
+    Bob,35,Chicago
+    Charlie,40,Boston"""
+
+    response = requests.post(
+        'https://www.lotsofcsvs.com/u/johndoe/users/demographics.csv', 
+        headers=headers,
+        data=additional_data
+    )```
+

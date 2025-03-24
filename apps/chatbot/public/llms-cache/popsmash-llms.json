@@ -1,0 +1,10 @@
+{
+  "name": "POPSMASH",
+  "description": "Social gaming and community platform",
+  "website": "https://www.popsmash.com",
+  "url": "https://www.popsmash.com/llms.txt",
+  "type": "llms.txt",
+  "category": "integration-automation",
+  "cachePath": "apps/chatbot/public/llms-cache/popsmash-llms.txt",
+  "lastFetched": "2025-03-24"
+}

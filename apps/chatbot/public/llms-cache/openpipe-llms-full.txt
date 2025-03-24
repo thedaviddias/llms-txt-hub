@@ -1,0 +1,2920 @@
+# Delete Dataset
+Source: https://docs.openpipe.ai/api-reference/delete-dataset
+
+delete /datasets/{datasetId}
+Delete a dataset.
+
+
+
+# Delete Model
+Source: https://docs.openpipe.ai/api-reference/delete-model
+
+delete /models/{modelSlug}
+Delete an existing model.
+
+
+
+# Get Model
+Source: https://docs.openpipe.ai/api-reference/get-getModel
+
+get /models/{modelSlug}
+Get a model by ID.
+
+
+
+# List Datasets
+Source: https://docs.openpipe.ai/api-reference/get-listDatasets
+
+get /datasets
+List datasets for a project.
+
+
+
+# List Models
+Source: https://docs.openpipe.ai/api-reference/get-listModels
+
+get /models
+List all models for a project.
+
+
+
+# Chat Completions
+Source: https://docs.openpipe.ai/api-reference/post-chatcompletions
+
+post /chat/completions
+OpenAI-compatible route for generating inference and optionally logging the request.
+
+
+
+# Create Dataset
+Source: https://docs.openpipe.ai/api-reference/post-createDataset
+
+post /datasets
+Create a new dataset.
+
+
+
+# Add Entries to Dataset
+Source: https://docs.openpipe.ai/api-reference/post-createDatasetEntries
+
+post /datasets/{datasetId}/entries
+Add new dataset entries.
+
+
+
+# Create Model
+Source: https://docs.openpipe.ai/api-reference/post-createModel
+
+post /models
+Train a new model.
+
+
+
+# Judge Criteria
+Source: https://docs.openpipe.ai/api-reference/post-criteriajudge
+
+post /criteria/judge
+Get a judgement of a completion against the specified criterion
+
+
+
+# Report
+Source: https://docs.openpipe.ai/api-reference/post-report
+
+post /report
+Record request logs from OpenAI models
+
+
+
+# Report Anthropic
+Source: https://docs.openpipe.ai/api-reference/post-report-anthropic
+
+post /report-anthropic
+Record request logs from Anthropic models
+
+
+
+# Update Metadata
+Source: https://docs.openpipe.ai/api-reference/post-updatemetadata
+
+post /logs/update-metadata
+Update tags metadata for logged calls matching the provided filters.
+
+
+
+# Base Models
+Source: https://docs.openpipe.ai/base-models
+
+Train and compare across a range of the most powerful base models.
+
+We regularly evaluate new models to see how they compare against our existing suite. If you'd like us to check out a
+base model you're particularly excited about, send an email to [hello@openpipe.ai](mailto:hello@openpipe.ai).
+
+## Current Base Models
+
+### Open Source
+
+* [meta-llama/Meta-Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
+* [meta-llama/Meta-Llama-3.1-70B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-70B-Instruct)
+* [meta-llama/Llama-3.1-8B](https://huggingface.co/meta-llama/Llama-3.1-8B)
+* [meta-llama/Llama-3.1-70B](https://huggingface.co/meta-llama/Llama-3.1-70B)
+* [Qwen/Qwen2.5-72B-Instruct](https://huggingface.co/Qwen/Qwen2.5-72B-Instruct)
+* [Qwen/Qwen2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct)
+* [Qwen/Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct)
+* [Qwen/Qwen2.5-Coder-32B-Instruct](https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct)
+* [mistralai/Mistral-Nemo-Base-2407](https://huggingface.co/mistralai/Mistral-Nemo-Base-2407)
+* [mistralai/Mistral-Small-24B-Base-2501](https://huggingface.co/mistralai/Mistral-Small-24B-Base-2501)
+* [meta-llama/Llama-3.2-1B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct)
+* [meta-llama/Llama-3.2-3B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct)
+* [meta-llama/Llama-3.3-70B-Instruct](https://huggingface.co/meta-llama/Llama-3.3-70B-Instruct)
+
+### OpenAI
+
+* [gpt-4o-mini-2024-07-18](https://platform.openai.com/docs/models/gpt-4o-mini)
+* [gpt-4o-2024-08-06](https://platform.openai.com/docs/models/gpt-4o)
+* [gpt-3.5-turbo-0125](https://platform.openai.com/docs/models/gpt-3-5-turbo)
+
+### Google Gemini
+
+* [gemini-1.0-pro-001](https://deepmind.google/technologies/gemini/pro/)
+* [gemini-1.5-flash-001](https://deepmind.google/technologies/gemini/flash/)
+
+## Enterprise models
+
+These models are currently available for enterprise customers only. If you're interested in exploring these models, we'd be happy to discuss further. Please reach out to us at [hello@openpipe.ai](mailto:hello@openpipe.ai) to learn more.
+
+### AWS Bedrock
+
+* [cohere.command-text-v14](https://docs.aws.amazon.com/bedrock/latest/userguide/cm-hp-cohere-command.html)
+* [cohere.command-light-text-v14](https://docs.aws.amazon.com/bedrock/latest/userguide/cm-hp-cohere-command.html)
+* [anthropic.claude-3-haiku-20240307-v1:0](https://docs.aws.amazon.com/bedrock/latest/userguide/cm-hp-anth-claude-3.html)
+
+
+# Caching
+Source: https://docs.openpipe.ai/features/caching
+
+ Improve performance and reduce costs by caching previously generated responses.
+
+When caching is enabled, our service stores the responses generated for each unique request. If an identical request is made in the future, instead of processing the request again, the cached response is instantly returned. This eliminates the need for redundant computations, resulting in faster response times and reduced API usage costs.
+
+Caching is currently in a free beta preview.
+
+## Enabling Caching
+
+Caching is disabled by default. To enable caching for your requests, you can set the `cache` property of the openpipe object to one of the following values:
+
+* `readWrite`: Cache is read from and written to.
+* `readOnly`: Cache is read from, but not written to.
+* `writeOnly`: Cache is written to, but not read from.
+
+If you are making requests through our proxy, add the `op-cache` header to your requests. For any of these settings, if a cache entry is not found, the request will be processed as normal.
+
+<Tabs>
+  <Tab title="cURL Request">
+    ```bash
+    curl --request POST \
+      --url https://api.openpipe.ai/api/v1/chat/completions \
+      --header "Authorization: Bearer YOUR_OPENPIPE_API_KEY" \
+      --header 'Content-Type: application/json' \
+      --header 'op-cache: readWrite' \
+      --data '{
+      "model": "openpipe:your-fine-tuned-model-id",
+      "messages": [
+        {
+          "role": "system",
+          "content": "count to 5"
+        }
+      ]
+    }'
+    ```
+  </Tab>
+
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="openpipe:your-fine-tuned-model-id",
+        messages=[{"role": "system", "content": "count to 5"}],
+        openpipe={
+            "cache": "readWrite"
+        },
+    )
+
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    const openai = new OpenAI();
+
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: "count to 5" }],
+      model: "openpipe:your-fine-tuned-model-id",
+      openpipe: {
+        cache: "readWrite",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+
+# Anthropic Proxy
+Source: https://docs.openpipe.ai/features/chat-completions/anthropic
+
+
+
+If you'd like to make chat completion requests to Anthropic models without modifying your prompt schema, you can proxy OpenAI-compatible requests through OpenPipe, and we'll handle
+the translation for you.
+
+To proxy requests to Anthropic models, first add your Anthropic API Key to your project settings. Then, adjust the **model** parameter of your requests to be the name of the model you
+wish to query, prepended with the string `anthropic:`. For example, to make a request to `claude-3-5-sonnet-20241022`, use the following code:
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="anthropic:claude-3-5-sonnet-20241022",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+
+    const completion = await client.chat.completions.create({
+      model: "anthropic:claude-3-5-sonnet-20241022",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+For your reference, here is a list of the most commonly used Anthropic models formatted for the OpenPipe proxy:
+
+* `anthropic:claude-3-7-sonnet-20250219`
+* `anthropic:claude-3-5-sonnet-20241022`
+* `anthropic:claude-3-opus-20240229`
+* `anthropic:claude-3-sonnet-20240229`
+* `anthropic:claude-3-haiku-20240307`
+
+Additionally, you can always stay on the latest version of the model by using an abbreviated model name:
+
+* `anthropic:claude-3-7-sonnet`
+* `anthropic:claude-3-5-sonnet`
+* `anthropic:claude-3-opus`
+* `anthropic:claude-3-sonnet`
+* `anthropic:claude-3-haiku`
+
+If you'd like to make requests directly to Anthropic models, you can do that externally using the Anthropic SDK, and report your logs using the
+asynchronous [reporting API](/features/request-logs/reporting-anthropic).
+
+
+# Proxying to External Models
+Source: https://docs.openpipe.ai/features/chat-completions/external-models
+
+
+
+<Info>
+  Adding custom external models is not required to proxy requests to Anthropic, Gemini, or OpenAI
+  models. See our docs on proxying to [Anthropic](/features/chat-completions/anthropic),
+  [Gemini](/features/chat-completions/gemini), or
+  [OpenAI](/features/request-logs/logging-requests#proxy) for more information.
+</Info>
+
+To proxy requests to models from unsupported providers, you'll need to complete the following steps:
+
+1. Add an external model provider
+2. Update your chat completion requests
+
+To add an external model provider to your project, follow the instructions in [External Models](/features/external-models). Once it's been added, continue to the next step.
+
+### Updating your chat completion requests
+
+Set the model parameter in your requests to match this format: `openpipe:<external-model-provider-slug>/<external-model-slug>`.
+
+For example, if you're calling <b>gpt-4o-2024-08-06</b> on Azure, the model parameter should be `openpipe:custom-azure-provider/gpt-4o-2024-08-06`.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="openpipe:custom-azure-provider/gpt-4o-2024-08-06",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+
+    const completion = await client.chat.completions.create({
+      model: "openpipe:custom-azure-provider/gpt-4o-2024-08-06",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+External models can also be used for filtering and relabeling your data. We currently support custom external
+models for providers with openai and azure-compatible endpoints. If you'd like support for an external provider with a different API format, send a request to [hello@openpipe.ai](mailto:hello@openpipe.ai).
+
+
+# Gemini Proxy
+Source: https://docs.openpipe.ai/features/chat-completions/gemini
+
+
+
+OpenPipe can translate your existing OpenAI chat completion requests to work with Gemini models automatically, allowing you to use Gemini without changing your prompt format.
+
+After adding your Google AI Studio API Key in your project settings, specify the Gemini **model** you want to use by adding the `gemini:` prefix to the model name in your requests:
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="gemini:gemini-1.5-flash",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+
+    const completion = await client.chat.completions.create({
+      model: "gemini:gemini-1.5-flash",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+For your reference, here is a list of the most commonly used Gemini models formatted for the OpenPipe proxy:
+
+* `gemini:gemini-1.5-flash-002`
+* `gemini:gemini-1.5-flash-8b-001`
+* `gemini:gemini-1.5-pro-002`
+* `gemini:gemini-exp-1206`
+* `gemini:gemini-2.0-flash-exp`
+
+Additionally, you can always stay on the latest version of the model by using an abbreviated model name:
+
+* `gemini:gemini-1.5-flash`
+* `gemini:gemini-1.5-flash-8b`
+* `gemini:gemini-1.5-pro`
+* `gemini:gemini-2.0-flash`
+
+
+# Mixture of Agents Chat Completions
+Source: https://docs.openpipe.ai/features/chat-completions/moa
+
+
+
+In some cases, completions produced by GPT-4 or other SOTA models aren't good enough to be used in production. To improve quality beyond the
+limit of SOTA models, we've developed a Mixture of Agents (MoA) technique that enhances quality but also increases cost and latency.
+
+To use MoA models, set the **model** parameter to be one of the following:
+
+* `openpipe:moa-gpt-4o-v1`
+* `openpipe:moa-gpt-4-turbo-v1`
+* `openpipe:moa-gpt-4-v1`
+
+To get the highest quality completions, use the MoA model that corresponds to the best-performing SOTA model.
+For instance, if your original model was `gpt-4-turbo-2024-04-09`, try switching to `openpipe:moa-gpt-4-turbo-v1`.
+
+Make sure to set your `OpenAI API Key` in the `Project Settings` page to enable MoA completions!
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        # model="gpt-4-turbo-2024-04-09", - original model
+        model="openpipe:moa-gpt-4-turbo-v1",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+
+    const completion = await client.chat.completions.create({
+      // model: "gpt-4-turbo-2024-04-09", - original model
+      model: "openpipe:moa-gpt-4-turbo-v1",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+To learn more, visit the [Mixture of Agents](/features/mixture-of-agents) page.
+
+
+# Chat Completions
+Source: https://docs.openpipe.ai/features/chat-completions/overview
+
+
+
+Once your fine-tuned model is deployed, you're ready to start generating chat completions.
+
+First, make sure you've set up the SDK properly. See the [OpenPipe SDK](/getting-started/openpipe-sdk) section for more details. Once the SDK is installed and you've added the right
+`OPENPIPE_API_KEY` to your environment variables, you're almost done.
+
+The last step is to update the model that you're querying to match the ID of your new fine-tuned model.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        # model="gpt-4o", - original model
+        model="openpipe:your-fine-tuned-model-id",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+
+    const completion = await client.chat.completions.create({
+      // model: "gpt-4o", - original model
+      model: "openpipe:your-fine-tuned-model-id",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+Queries to your fine-tuned models will now be shown in the [Request Logs](/features/request-logs) panel.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/running-inference-logs.png)</Frame>
+
+Feel free to run some sample inference on the [PII Redaction model](https://app.openpipe.ai/p/BRZFEx50Pf/fine-tunes/6076ad69-cce5-4892-ae54-e0549bbe107f/general) in our public project.
+
+
+# Criterion Alignment Sets
+Source: https://docs.openpipe.ai/features/criteria/alignment-set
+
+Use alignment sets to test and improve your criteria.
+
+Alignment sets are a collection of LLM input/output pairs that are judged by both the criterion LLM judge and a human.
+The performance of the criterion LLM judge is then measured by how well it matches the judgements of the human judge. We recommend importing and judging at least 30 rows to ensure the alignment stats are meaningful.
+
+## Importing an Alignment Set
+
+You can import an alignment set from either an OpenPipe dataset or a JSONL file. Alignment sets can be added to an existing criterion or imported when a new criterion is created.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/alignment-set/import-alignment-set.png)</Frame>
+
+### Importing from a Dataset
+
+When importing from a dataset, you select a number of rows to be randomly sampled from the dataset of your choice to imported into the criterion alignment set. The inputs of each of these rows will be copied directly from the rows in the dataset without any changes. By default, the outputs will also be copied from the original dataset. However, if you set **Output Source** to be an LLM model, the outputs will be generated by the LLM model based on the dataset inputs.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/alignment-set/import-from-dataset.png)</Frame>
+
+### Importing from a JSONL File
+
+You can also import an alignment set from a JSONL file. Uploads are limited to 10MB in size,
+which should be plenty for an alignment set.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/alignment-set/import-from-upload.png)</Frame>
+
+The schema of the JSONL file is exactly the same as an OpenAI-compatible [JSONL fine-tuning file](/features/datasets/uploading-data#openai-fields), but also supports an optional `judgement` field for each row. `judgement` can be either `PASS` or `FAIL`, depending on whether the row should pass or fail the criterion.
+
+#### Example
+
+```jsonl
+...
+{"judgement": "PASS", "messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Tasmania?"},{"role":"assistant","content":null,"tool_calls":[{"id":"","type":"function","function":{"name":"identify_capital","arguments":"{\"capital\":\"Hobart\"}"}}]}],"tools":[{"type":"function","function":{"name":"identify_capital","parameters":{"type":"object","properties":{"capital":{"type":"string"}}}}}]}
+{"judgement": "FAIL", "messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Sweden?"},{"role":"assistant","content":null,"tool_calls":[{"id":"","type":"function","function":{"name":"identify_capital","arguments":"{\"capital\":\"Beijing\"}"}}]}],"tools":[{"type":"function","function":{"name":"identify_capital","parameters":{"type":"object","properties":{"capital":{"type":"string"}}}}}]}
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Sweden?"},{"role":"assistant","content":null,"tool_calls":[{"id":"","type":"function","function":{"name":"identify_capital","arguments":"{\"capital\":\"Stockholm\"}"}}]}],"tools":[{"type":"function","function":{"name":"identify_capital","parameters":{"type":"object","properties":{"capital":{"type":"string"}}}}}]}
+...
+```
+
+## Alignment Stats
+
+Alignment stats are a simple way to understand how well your criterion is performing.
+As you refine your criterion prompt, you're alignment stats will improve as well.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/alignment-set/alignment-stats.png)</Frame>
+
+* **Precision** indicates the fraction of rows that the LLM judge labeled as failing that a human judge also labeled as failing. It's an indicator of how reliable the LLM judge's FAIL label is.
+* **Recall** indicates the fraction of rows that a human judge labeled as failing that the LLM judge also labeled as failing. It's an indicator of how reliable the LLM judge's PASS label is.
+* **F1 Score** is the harmonic mean of precision and recall. As either score improves, the F1 score will also improve.
+
+To ensure your alignment stats are meaningful, we recommend labeling at least 30 rows,
+but in some cases you may need to label more in order to get a reliable statistic.
+
+
+# API Endpoints
+Source: https://docs.openpipe.ai/features/criteria/api
+
+Use the Criteria API for runtime evaluation and offline testing.
+
+After you've defined and aligned your judge criteria, you can access them via API endpoints for both runtime evaluation (**Best of N** sampling) and offline testing.
+
+### Runtime Evaluation
+
+<Info>
+  See the Chat Completion [docs](/features/chat-completions/overview) and [API
+  Reference](/api-reference/post-chatcompletions) for more information on making chat completions
+  with OpenPipe.
+</Info>
+
+When making a request to the `/chat/completions` endpoint, you can specify a list of criteria to run immediately after a completion is generated. We recommend generating multiple responses from the same prompt, each of which will be scored by the specified criteria. The responses will be sorted by their combined score across all criteria, from highest to lowest. This technique is known as **[Best of N](https://huggingface.co/docs/trl/en/best_of_n)** sampling.
+
+To invoke criteria, add an `op-criteria` header to your request with a list of criterion IDs, like so:
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="openai:gpt-4o-mini",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={
+            "prompt_id": "counting",
+            "any_key": "any_value",
+        },
+        n=5,
+        extra_headers={"op-criteria": '["criterion-1@v1", "criterion-2"]'},
+    )
+
+    best_response = completion.choices[0]
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+
+    const completion = await client.chat.completions.create({
+      model: "openai:gpt-4o-mini",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+      n: 5,
+      headers: {
+        "op-criteria": '["criterion-1@v1", "criterion-2"]',
+      },
+    });
+
+    const bestResponse = completion.choices[0];
+    ```
+  </Tab>
+
+  <Tab title="cURL">
+    ```bash
+    curl --request POST \
+    --url https://app.openpipe.ai/api/v1/chat/completions \
+    --header "Authorization: Bearer $OPENPIPE_API_KEY" \
+    --header 'Content-Type: application/json' \
+    --header 'op-criteria: ["criterion-1@v1", "criterion-2"]' \
+    --data '{
+    "model": "openai:gpt-4o-mini",
+    "messages": [
+        {
+            "role": "user",
+            "content": "Count to 10"
+        },
+    ],
+    "store": true,
+    "n": 5,
+    "metadata": {
+        "prompt_id": "counting",
+        "any_key": "any_value",
+    }
+    }'
+    ```
+  </Tab>
+</Tabs>
+
+Specified criteria can either be versioned, like `criterion-1@v1`, or default to the latest criterion version, like `criterion-2`.
+
+In addition to the usual fields, each chat completion choice will now include a `criteria_results` object, which contains the judgements of the specified criteria. The array of completion choices will take the following form:
+
+```json
+[
+  {
+    "finish_reason": "stop",
+    "index": 0,
+    "message": {
+      "content": "1, 2, 3.",
+      "refusal": null,
+      "role": "assistant"
+    },
+    "logprobs": null,
+    "criteria_results": {
+      "criterion-1": {
+        "status": "success",
+        "score": 1,
+        "explanation": "..."
+      },
+      "criterion-2": {
+        "status": "success",
+        "score": 0.6,
+        "explanation": "..."
+      }
+    }
+  },
+  {
+    ...
+  }
+]
+```
+
+### Offline Testing
+
+<Info>See the [API Reference](/api-reference/post-criteriajudge) for more details.</Info>
+
+To check the quality of a previously generated output against a specific criterion, use the `/criteria/judge` endpoint. You can request judgements using either the TypeScript or Python SDKs, or through a cURL request.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe.client import OpenPipe
+
+    op_client = OpenPipe()
+
+    result = op_client.get_criterion_judgement(
+        criterion_id="criterion-1@v1", # if no version is specified, the latest version is used
+        input={"messages": messages},
+        output=output,
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenPipe from "openpipe/client";
+
+    const opClient = OpenPipe();
+
+    const result = await opClient.getCriterionJudgement({
+      criterion_id: "criterion-1@v1", // if no version is specified, the latest version is used
+      input: {
+        messages,
+      },
+      output: { role: "assistant", content: "1, 2, 3" },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+
+# Criteria
+Source: https://docs.openpipe.ai/features/criteria/overview
+
+Align LLM judgements with human ratings to evaluate and improve your models.
+
+<Info>
+  For questions about criteria or to unlock beta features for your organization, reach out to
+  [support@openpipe.ai](mailto:support@openpipe.ai).
+</Info>
+
+Criteria are a simple way to reliably detect and correct mistakes in LLM output. Criteria can currently be used for the following purposes:
+
+* Defining LLM evaluations
+* Improving dataset quality
+* Runtime evaluation when generating [best of N](/features/criteria/api#runtime-evaluation) samples
+* [Offline testing](/features/criteria/api#offline-testing) of previously generated outputs
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/overview.png)</Frame>
+
+## What is a Criterion?
+
+A criterion is a combination of an LLM model and prompt that can be used to identify a specific issue with a model's output. Criterion judgements are generated
+by passing the input and output of a single row along with the criterion prompt to an LLM model, which then returns a binary `PASS`/`FAIL` judgement.
+
+To learn how to create your first criterion, read the [Quick Start](/features/criteria/quick-start).
+
+
+# Criteria Quick Start
+Source: https://docs.openpipe.ai/features/criteria/quick-start
+
+Create and align your first criterion.
+
+Criteria are a reliable way to detect and correct mistakes in LLM output. Criteria can be used when defining LLM evaluations, improving data quality, and for [runtime evaluation](/features/criteria/api#runtime-evaluation) when generating **best of N** samples.
+This tutorial will walk you through creating and aligning your first criterion.
+
+<Note>
+  <b>Before you begin:</b> Before creating your first criterion, you should identify an issue with
+  your model's output that you want to detect and correct. You should also have either an OpenPipe
+  [dataset](/features/datasets/overview) or a [JSONL
+  file](/features/criteria/alignment-set#importing-from-a-jsonl-file) containing several rows of
+  data that exhibit the issue, and several that don't.
+</Note>
+
+### Creating a Criterion
+
+<Steps>
+  <Step title="Open the creation modal">
+    Navigate to the **Criteria** tab and click the **New Criterion** button.
+    The creation modal will open with a default prompt and judge model.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/create-criterion.png)</Frame>
+
+    By default, each of the following fields will be templated into the criterion's prompt when assigning a judgement to an output:
+
+    * `messages` *(optional):* The messages used to generate the output
+    * `tools` *(optional):* The tools used to generate the output
+    * `tool_choice` *(optional):* The tool choice used to generate the output
+    * `output` *(required):* The chat completion object to be judged
+
+    Many criteria do not require all of the input fields, and some may judge based soley on the `output`. You can exclude fields by removing them from the **Templated Variables** section.
+  </Step>
+
+  <Step title="Draft an initial prompt">
+    Write an initial LLM prompt with basic instructions for identifying rows containing
+    the issue you want to detect and correct. Don't worry about engineering a perfect
+    prompt, you'll have a chance to improve it during the alignment process.
+
+    As an example, if you want to detect rows in which the model's output is in a different language than the input,
+    you might write a prompt like this:
+
+    ```
+    Mark the criteria as passed if the input and output are the same language.
+    Mark it as failed if they are in different languages.
+    ```
+
+    <Tip>
+      Make sure to use the terms `input`, `output`, `passed`, and `failed` in your prompt to match our
+      internal templating.
+    </Tip>
+
+    Finally, import a few rows (we recommend at least 30) into an alignment set for the criterion.
+  </Step>
+
+  <Step title="Confirm creation">
+    Click **Create** to create the criterion and run the initial prompt against the imported alignment set.
+    You'll be redirected to the criterion's alignment page.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/overview.png)</Frame>
+  </Step>
+</Steps>
+
+### Aligning a Criterion
+
+Ensuring your criterion's judgements are reliable involves two simple processes:
+
+* Manually labeling outputs
+* Refining the criterion
+
+<Steps>
+  <Step title="Manually labeling outputs">
+    In order to know whether you agree with your criterion's judgements, you'll need to label some data yourself.
+    Use the Alignment UI to manually label each output with `PASS` or `FAIL` based on the criterion. Feel free to `SKIP` outputs you aren't sure about and come back to them later.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/manually-label.png)</Frame>
+
+    Try to label at least 30 rows to provide a reliable estimate of the LLM's precision and recall.
+  </Step>
+
+  <Step title="Refining the criterion">
+    As you record your own judgements, alter the criterion's prompt and judge model to align its judgements with your own.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/edit-criterion.png)</Frame>
+
+    Investing time in a good prompt and selecting the best judge model pays dividends.
+    High-quality LLM judgements help you quickly identify rows that fail the criterion, speeding up the process of manually labeling rows.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/llm-judgement.png)</Frame>
+
+    As you improve your criterion prompt, you'll notice your [alignment stats](/features/criteria/alignment-set#alignment-stats) improving.
+    Once you've labeled at least 30 rows and are satisfied with the precision and recall of your LLM judge, the criterion is ready to be deployed!
+  </Step>
+</Steps>
+
+### Deploying a Criterion
+
+The simplest way to deploy a criterion is to create a criterion eval. Unlike head to head evals, criterion evals are not pairwise comparisons.
+Instead, they evaluate the quality of one or more models' output according to a specific criterion.
+
+First, navigate to the Evals tab and click **New Evaluation** -> **Add criterion eval**.
+
+Pick the models to evaluate and the test dataset on which to evaluate them. Next, select the criterion you would like to judge your models against.
+The judge model and prompt you defined when creating the criterion will be used to judge individual outputs from your models.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/create-criterion-eval.png)</Frame>
+
+Finally, click **Create** to run the evaluation. Just like that, you're be able to view evaluation results based on aligned LLM judgements!
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/criteria/criterion-eval-results.png)</Frame>
+
+
+# Exporting Data
+Source: https://docs.openpipe.ai/features/datasets/exporting-data
+
+ Export your past requests as a JSONL file in their raw form.
+
+## Dataset export
+
+After you've collected, filtered, and transformed your dataset entries for fine-tuning, you can export them as a JSONL file.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/datasets/exporting-dataset-entries.png)</Frame>
+
+### Fields
+
+* **`messages`:** The complete chat history.
+* **`tools`:** The tools provided to the model.
+* **`tool_choice`:** The tool required for the model to use.
+* **`split`:** The train/test split to which the entry belongs.
+
+### Example
+
+```jsonl
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Tasmania?"},{"role":"assistant","content":null,"tool_calls":[{"id":"","type":"function","function":{"name":"identify_capital","arguments":"{\"capital\":\"Hobart\"}"}}]}],"tools":[{"type":"function","function":{"name":"identify_capital","parameters":{"type":"object","properties":{"capital":{"type":"string"}}}}}]}
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Sweden?"},{"role":"assistant","content":null,"tool_calls":[{"id":"","type":"function","function":{"name":"identify_capital","arguments":"{\"capital\":\"Stockholm\"}"}}]}],"tools":[{"type":"function","function":{"name":"identify_capital","parameters":{"type":"object","properties":{"capital":{"type":"string"}}}}}]}
+```
+
+
+# Importing Request Logs
+Source: https://docs.openpipe.ai/features/datasets/importing-logs
+
+ Search and filter your past LLM requests to inspect your responses and build a training dataset.
+
+Logged requests will be visible on your project's [Request Logs](https://app.openpipe.ai/p/BRZFEx50Pf/request-logs?filterData=%7B%22shown%22%3Atrue%2C%22filters%22%3A%5B%7B%22id%22%3A%221706912835890%22%2C%22field%22%3A%22request%22%2C%22comparator%22%3A%22CONTAINS%22%2C%22value%22%3A%22You+are+an+expert%22%7D%2C%7B%22id%22%3A%221706912850914%22%2C%22field%22%3A%22response%22%2C%22comparator%22%3A%22NOT_CONTAINS%22%2C%22value%22%3A%22As+an+AI+language+model%22%7D%2C%7B%22id%22%3A%221706912861496%22%2C%22field%22%3A%22model%22%2C%22comparator%22%3A%22%3D%22%2C%22value%22%3A%22gpt-4-0613%22%7D%2C%7B%22id%22%3A%221706912870230%22%2C%22field%22%3A%22tags.prompt_id%22%2C%22comparator%22%3A%22CONTAINS%22%2C%22value%22%3A%22redaction%22%7D%5D%7D) page.
+You can filter your logs by completionId, model, custom tags, and more to narrow down your results.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/log-filters.png)</Frame>
+
+Once you've found a set of data that you'd like to train on, import those logs into the dataset of your choice.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/importing-logs.png)</Frame>
+
+After your data has been saved to your dataset, [kicking off a training job](/features/fine-tuning) is straightforward.
+
+
+# Datasets
+Source: https://docs.openpipe.ai/features/datasets/overview
+
+Collect, evaluate, and refine your training data.
+
+Datasets are the raw material for training models. They can be scraped from your request logs or uploaded from your local machine.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/datasets/overview.png)</Frame>
+
+To learn how to create a dataset, check out the [Quick Start](/features/datasets/quick-start) guide.
+
+
+# Datasets Quick Start
+Source: https://docs.openpipe.ai/features/datasets/quick-start
+
+Create your first dataset and import training data.
+
+Datasets are the raw material for training models. They're where you'll go to collect, evaluate, and refine your training data.
+
+<Steps>
+  <Step title="Create Dataset">
+    To create a dataset, navigate to the **Datasets** tab and click **New Dataset**.
+
+    Your dataset will be given a default name including the time at which it was created. We suggest editing the name to something more descriptive.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/datasets/editing-dataset-name.png)</Frame>
+  </Step>
+
+  <Step title="Import Data">
+    Now that you have a shiny new dataset, you need to somehow import data into it. This can be done in one of two ways:
+
+    1. [Importing request logs](/features/datasets/importing-logs)
+    2. [Uploading a file from your machine](/features/datasets/uploading-data)
+
+    Click the links to learn more about each method.
+  </Step>
+</Steps>
+
+
+# Relabeling Data
+Source: https://docs.openpipe.ai/features/datasets/relabeling-data
+
+Use powerful models to generate new outputs for your data before training.
+
+After importing rows from request logs or uploading a JSONL file, you can optionally relabel
+each row by sending its messages, tools, and other input parameters to a more powerful model,
+which will generate an output to replace your row's existing output. If time or cost constraints prevent
+you from using the most powerful model available in production, relabeling offers an opportunity to
+optimize the quality of your training data before kicking off a job.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/relabeled-output.png)</Frame>
+
+We provide a number of built-in relabeling options.
+
+Anthropic:
+
+* `claude-3-opus-20240229`
+* `claude-sonnet-3-7-20250219`
+* `claude-sonnet-3-5-20241022`
+
+OpenAI:
+
+* `gpt-4-5-preview-02-27`
+* `o1-2024-12-17`
+* `o3-mini-2025-01-31`
+* `gpt-4o-2024-08-06`
+* `gpt-4o-2024-11-20`
+* `gpt-4-turbo-2024-04-09`
+* `gpt-4-0125-preview`
+* `gpt-4-1106-preview`
+* `gpt-4-0613`
+
+Gemini:
+
+* `gemini-2-0-flash`
+* `gemini-2-0-pro-exp-02-05`
+
+Meta:
+
+* `meta-llama-3-1-405b-instruct`
+
+DeepSeek:
+
+* `deepseek-v3`
+* `deepseek-r1`
+
+Mixture of Agents:
+
+* `moa-gpt-4o-v1` (Mixture of Agents)
+* `moa-gpt-4-turbo-v1` (Mixture of Agents)
+* `moa-gpt-4-v1` (Mixture of Agents)
+
+To learn more about Mixture of Agents, a powerful technique for optimizing quality at the cost of speed and price,
+on the [Mixture of Agents](/features/mixture-of-agents) page.
+
+
+# Uploading Data
+Source: https://docs.openpipe.ai/features/datasets/uploading-data
+
+ Upload external data to kickstart your fine-tuning process. Use the OpenAI chat fine-tuning format.
+
+Upload a JSONL file populated with a list of training examples.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/uploading-data.png)</Frame>
+
+Each line of the file should be compatible with the OpenAI [chat format](https://platform.openai.com/docs/api-reference/chat/object), with additional optional fields.
+
+### OpenAI Fields
+
+* **`messages`: Required** - Formatted as a list of OpenAI [chat completion messages](https://platform.openai.com/docs/guides/gpt/chat-completions-api). The list should end with an assistant message.
+* **`tools`: Optional** - An array of tools (functions) available for the model to call. For more information read OpenAI's [function calling docs](https://platform.openai.com/docs/guides/function-calling).
+* **`tool_choice`: Optional** - You can set this to indicate that the model should be required to call the given tool. For more information read OpenAI's [function calling docs](https://platform.openai.com/docs/guides/function-calling).
+
+#### Deprecated
+
+* **`functions`: Deprecated | Optional** - An array of functions available for the model to call.
+* **`function_call`: Deprecated | Optional** - You can set this to indicate that the model should be required to call the given function.
+
+You can include other parameters from the OpenAI chat completion input format (eg. temperature), but they will be ignored since they aren't relevant for training.
+
+### Additional Fields
+
+* **`split`: Optional** - One of "TRAIN" or "TEST". If you don't set this field we'll automatically divide your inputs into train and test splits with a target ratio of 90:10.
+* **`rejected_message`: Optional** - Add a rejected output for entries on which you want to perform direct preference optimization (DPO). You can find more information about that here: [Direct Preference Optimization](/features/dpo/overview)
+* **`metadata`: Optional** - A string=>string dictionary of any additional information you want to associate with an entry. This can be useful for tracking information like prompt IDs.
+
+### Example
+
+```jsonl
+...
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Tasmania?"},{"role":"assistant","content":"Hobart"}], "rejected_message":{"role": "assistant", "content": "Paris"}, "split": "TRAIN", "metadata": {"prompt_id": "capital_cities", "any_key": "any_value"}}
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Sweden?"},{"role":"assistant","content":"Stockholm"}], "rejected_message":{"role": "assistant", "content": "London"}, "split": "TEST", "metadata": {"prompt_id": "capital_cities", "any_key": "any_value"}}
+...
+```
+
+
+# Deployment Types
+Source: https://docs.openpipe.ai/features/deployments
+
+ Learn about serverless, hourly, and dedicated deployments.
+
+OpenPipe offers three deployment types: serverless, hourly, and dedicated.
+
+* **Serverless**: shared endpoints with auto-scaling and per-token billing
+* **Hourly**: shared endpoint for a less popular model that is billed by the [compute unit](/pricing/pricing#2-hourly-compute-units)
+* **Dedicated**: single-tenant deployment that is billed through a monthly contract
+
+Dedicated deployments can offer much lower latency than serverless and hourly deployments, but are sometimes more expensive.
+
+### Serverless
+
+Our most popular base models are available through serverless deployments. Serverless deployments are shared across all users of a given base model, and are automatically scaled up and down in response to user demand. All usage is billed [by the token](/pricing/pricing#1-per-token-pricing).
+
+We recommend training models hosted on serverless endpoints when possible to take advantage of fast response times and flexible billing. Along with closed source models like `gpt-4o` and `gemini-1.5-flash`, the following open source base models can be fine-tuned and hosted on serverless endpoints:
+
+* `meta-llama/Meta-Llama-3.1-8B-Instruct`
+* `meta-llama/Meta-Llama-3.1-70B-Instruct`
+* `qwen/Qwen-2.5-14B-Instruct`
+
+### Hourly
+
+As with serverless deployments, base models hosted on hourly deployments are also shared across users. They are billed by the compute unit, which corresponds to the amount of time that a model ran on a GPU while processing a request.
+
+While many models are available through hourly deployments, they are prone to cold start times, which can be a problem for latency-sensitive tasks. If no request has been made to a given base model (e.g. Qwen 2.5 7B Instruct) for over 5 minutes, the next request to any model trained on that base will have to wait for the entire model to be downloaded to a GPU.
+
+If you need to run a model that is not available through a serverless deployment for a latency-sensitive task, we recommend using a dedicated deployment.
+
+### Dedicated
+
+Dedicated deployments are single-tenant and are billed based on a monthly contract. Unlike serverless and hourly deployments, they can be served as merged models. Through speculative decoding, prefix caching, and other techniques, dedicated deployments can provide much faster response times for latency-sensitive tasks.
+
+Any fine-tuned model can be deployed on a dedicated endpoint. The cost of the deployment is determined by the size of the model and the number of concurrent requests it needs to support.
+
+### Latency Benchmarks
+
+While every task is different, we've found that models hosted on dedicated deployments generally provide much faster response times than those hosted on serverless and hourly endpoints. Both time to first token and total completion time are often reduced by 50% or more.
+
+The following chart shows the average time to first token and total completion time for three models hosted on OpenPipe, and three popular closed source models. The dedicated deployments are equipped with n-gram speculative decoding, allowing the model to "guess" several tokens at a time, then validate the guess with the fully trained model. In practice this reduces latency by avoiding bottlenecks in the GPU without any degradation in accuracy.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/deployments/800-input-500-output.png)</Frame>
+
+As shown in the chart above, the models hosted on dedicated deployments are able to provide much faster response times than the serverless deployment or closed models, with a dedicated Qwen 2.5 14B Instruct deployment outperforming Llama 3.1 8B Instruct despite being almost twice as large.
+
+If you have questions about any of these deployment types or would like to trial one of your models on a dedicated deployment, please reach out to [hello@openpipe.ai](mailto:hello@openpipe.ai). Happy training!
+
+
+# Direct Preference Optimization (DPO)
+Source: https://docs.openpipe.ai/features/dpo/overview
+
+
+
+<Note>
+  DPO is much harder to get right than supervised fine-tuning, and the results may not always be
+  better. To get the most out of DPO, we recommend familiarizing yourself with your specific use
+  case, your dataset, and the technique itself.
+</Note>
+
+Direct Preference Optimization (DPO), introduced in [Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/abs/2106.13358), is an algorithm used to fine-tune LLMs based on preference feedback.
+
+It focuses on aligning model outputs with specific human preferences or desired behaviors. Unlike traditional supervised fine-tuning, which relies solely on input-output pairs, DPO leverages preference data—information about which of two outputs is preferred in a given context.
+
+DPO works by directly optimizing a model to produce preferred outputs over non-preferred ones, without the need for complex reward modeling or reinforcement learning techniques. It uses paired data samples, where each pair consists of a preferred and a non-preferred response to a given prompt. This method allows the model to learn nuanced distinctions that are difficult to capture with explicit labels alone. By directly optimizing for preferences, DPO enables the creation of models that produce more aligned, contextually appropriate, and user-satisfying responses.
+
+## Gathering Preference Data
+
+DPO is useful when you have a source of preference data that you can exploit. There are many possible sources of preference data, depending on your use case:
+
+1. **Expert Feedback**: you may have a team of experts who can evaluate your model's outputs and edit them to make them better. You can use the original and edited outputs as rejected and preferred outputs respectively. DPO can be effective with just a few preference pairs.
+2. **Criteria Feedback**: if you use [OpenPipe criteria](/features/criteria/overview) or another evaluation framework that assigns a score or pass/fail to an output based on how well it meets certain criteria, you can run several generations and use the highest and lowest scoring outputs as preferred and non-preferred outputs respectively.
+3. **User Choice**: if you have a chatbot-style interface where users can select their preferred response from a list of generated outputs, you can use the selected and rejected outputs as preference data.
+4. **User Regenerations**: if a user is able to regenerate an action multiple times and then eventually accepts one of the outputs, you can use the first output they rejected as a non-preferred output and the accepted output as a preferred output.
+5. **User Edits**: if your model creates a draft output and the user is able to edit it and then save, you can use the original draft as a non-preferred output and the edited draft as a preferred output.
+
+## Dataset Format
+
+If uploading a dataset for DPO, ensure you include a `rejected_message` field for each entry. This field should contain an output that model should avoid generating.
+
+```jsonl
+...
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Tasmania?"},{"role":"assistant","content":"Hobart"}], "rejected_message":{"role": "assistant", "content": "Paris"}, "split": "TRAIN", "metadata": {"prompt_id": "capital_cities", "any_key": "any_value"}}
+{"messages":[{"role":"system","content":"You are a helpful assistant"},{"role":"user","content":"What is the capital of Sweden?"},{"role":"assistant","content":"Stockholm"}], "rejected_message":{"role": "assistant", "content": "London"}, "split": "TEST", "metadata": {"prompt_id": "capital_cities", "any_key": "any_value"}}
+...
+```
+
+To learn more about the dataset format, read the [Uploading Data](/features/datasets/uploading-data) guide.
+
+## Example Use Cases
+
+Initial tests with DPO on OpenPipe have shown promising results. DPO, when used with [user-defined criteria](https://docs.openpipe.ai/features/criteria/overview), allows you to fine-tune models that more consistently respect even very nuanced preferences.
+
+<Frame>![SFT vs DPO](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/dpo/sft-vs-dpo-for-criteria-chart.png)</Frame>
+
+The following are all real results on customer tasks:
+
+* **Word Limit**: for a summarization task with an explicit word limit given in the prompt, DPO was able to cut the number of responses exceeding the limit from 31% to 7%, a **77%** decrease.
+* **Highlight Format**: for a content formatting task, DPO was able to drop the percentage of times the wrong word or phrase was highlighted from 17.3% to 1.7%, a **90%** decrease.
+* **Hallucination**: for an information extraction task, DPO was able to drop the fraction of outputs with hallucinated information from 12.7% to 3.0%, a **76%** decrease.
+* **Result Relevance**: for a classification task determining whether a result was relevant to a query, DPO was able to drop the mis-classification rate from 4.7% to 1.3%, a **72%** decrease.
+
+We're excited to see how you'll leverage DPO to create even more powerful and tailored models for your specific needs!
+
+
+# DPO Quick Start
+Source: https://docs.openpipe.ai/features/dpo/quick-start
+
+Train your first DPO fine-tuned model with OpenPipe.
+
+DPO fine-tuning uses preference data to train models on positive and negative examples. In OpenPipe, DPO
+can be used as a drop-in replacement for SFT fine-tuning or as a complement to it.
+
+<Note>
+  <b>Before you begin:</b> Before building training your first model with DPO, make sure you've
+  [created a dataset](/features/datasets/quick-start) and have collected at least 500 rows of
+  training data on OpenPipe or another platform.
+</Note>
+
+<Steps>
+  <Step title="Prepare your Dataset">
+    To train a model with DPO, you need pairs of outputs containing preferred and rejected responses. You can prepare this data in one of two ways:
+
+    1. **Upload a JSONL file**
+
+       Add training rows to your dataset by [uploading a JSONL file](/features/datasets/uploading-data). Make sure to add a `rejected_message` field on each row that you'd like to use for preference tuning [(see docs)](/features/datasets/uploading-data#additional-fields).
+
+    2. **Track Rejected Outputs**
+
+       In the **Data Pipeline** view of your dataset, you can convert original outputs that have been overwritten by either an LLM (through an <b>LLM Relabel</b> node) or human (through a <b>Human Relabel</b> node) into rejected outputs. The original output will be treated as the negative example, and the replacement output will be treated as the positive example.
+
+       <b>LLM Relabel Node</b>
+       <Frame>![LLM Relabel Node](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/dpo/llm-relabel-track-rejected-op.png)</Frame>
+
+       <br />
+
+       <b>Human Relabel Node</b>
+       <Frame>![Human Relabel Node](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/dpo/human-relabel-track-rejected-op.png)</Frame>
+  </Step>
+
+  <Step title="Configure Training Settings">
+    Once your dataset is ready, training a DPO model is similar to training an SFT model.
+
+    1. Select the dataset you prepared for preference tuning.
+    2. Adjust the base model.
+       * Currently, DPO is only supported on Llama 3.1 8B.
+    3. Under <b>Advanced Options</b>, click the <b>Enable Preference Tuning</b> checkbox.
+
+    <Frame>![Enable Preference Tuning](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/dpo/enable-pt.png)</Frame>
+  </Step>
+
+  <Step title="Adjust Hyperparameters (optional)">
+    You should now see the number of rows that will be used for supervised fine tuning
+    (<b>SFT Row Count</b>)
+    and preference tuning (<b>Preference Row Count</b>). Rows in your dataset that only include a
+    preferred output will be used for supervised fine tuning, while rows with both preferred and
+    rejected outputs will be used for preference tuning.
+
+    Adjust the training job's hyperparameters if needed. We recommend using the default values if you're unsure.
+
+    <Frame>![DPO Hyperparameters](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/dpo/dpo-hyperparams.png)</Frame>
+  </Step>
+
+  <Step title="Start Training">
+    Finally, kick off a training job by clicking the **Start Training** button.
+  </Step>
+</Steps>
+
+
+# Code Evaluations
+Source: https://docs.openpipe.ai/features/evaluations/code
+
+ Write custom code to evaluate your LLM outputs. 
+
+<Note>
+  Code evaluations are not a good match for all tasks. They work well for deterministic tasks like
+  classification or information extraction, but not for tasks that produce freeform outputs like
+  chatbots or summarization. To evaluate tasks with freeform outputs, please consider [criterion
+  evaluations](/features/evaluations/criterion).
+</Note>
+
+The code evaluation framework provides greater flexibility than built-in head-to-head and criterion evaluations, allowing you to grade your LLM outputs on whatever metrics you define.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/new-code-eval-modal.png)</Frame>
+
+<br />
+
+Each code eval consists of a templated `grader` function that you can customize. Here's the basic structure:
+
+```typescript
+function grader({
+  messages,
+  tools,
+  toolChoice,
+  generatedOutput,
+  datasetOutput,
+}: GraderArgs): number {
+  let score = 0.0;
+
+  // begin implementation
+
+  score = 1.0;
+
+  // end implementation
+
+  return score;
+}
+
+...
+```
+
+As you can see, the `grader` function takes in a number of arguments and returns a score between 0 and 1, where 1 means the generated output is perfect. The available arguments are:
+
+* `messages`: The messages sent to the LLM.
+* `tools`: The tools available to the LLM.
+* `toolChoice`: The tool choice specified for the LLM.
+* `generatedOutput`: The output generated by the LLM which is being evaluated.
+* `datasetOutput`: The original dataset output associated with the row being evaluated.
+
+The grader you define can use any of the above arguments, but most often you'll want to use `generatedOutput` and `datasetOutput` to compare the output of the LLM to the dataset output.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/editable-lines.png)</Frame>
+
+<br />
+
+To get a better idea of what kinds of checks can be performed through a code evaluation, you can check out the **Exact Match** or **Argument Comparison** templates below.
+
+<Accordion title="Exact Match">
+  The **Exact Match** template checks if the generated output matches the dataset output exactly, meaning that the content and tool calls must match exactly.
+
+  ```typescript
+  function grader({
+    messages,
+    tools,
+    toolChoice,
+    generatedOutput,
+    datasetOutput,
+  }: GraderArgs): number {
+    let score = 0.0;
+
+    // begin implementation
+
+    if (!exactToolCallsMatch(generatedOutput.tool_calls, datasetOutput.tool_calls)) {
+      return 0.0;
+    }
+
+    if (generatedOutput.content !== datasetOutput.content) {
+      return 0.0;
+    }
+
+    // generated output matches dataset output
+    score = 1.0;
+
+    // end implementation
+
+    return score;
+  }
+
+  interface GraderArgs {
+    messages: ChatCompletionMessageParam;
+    tools: ChatCompletionTool[] | null;
+    toolChoice: "none" | "auto" | ChatCompletionNamedToolChoice | null;
+    generatedOutput: ChatCompletionMessage;
+    datasetOutput: ChatCompletionMessage;
+  }
+
+  interface ChatCompletionMessageToolCallFunction {
+    name: string;
+    arguments: string;
+  }
+
+  interface ChatCompletionMessageToolCall {
+    function: ChatCompletionMessageToolCallFunction;
+  }
+
+  interface ChatCompletionMessage {
+    content: string | null;
+    refusal: string | null;
+    tool_calls: ChatCompletionMessageToolCall[] | null;
+  }
+
+  type ChatCompletionMessageParam = ChatCompletionMessage;
+
+  interface ChatCompletionTool {
+    function: FunctionDefinition;
+    type: "function";
+  }
+
+  interface FunctionDefinition {
+    name: string;
+    description?: string;
+    parameters?: Record<string, unknown>;
+  }
+
+  export interface ChatCompletionNamedToolChoice {
+    function: Function;
+    type: "function";
+  }
+
+  interface Function {
+    name: string;
+  }
+
+  function exactToolCallsMatch(
+    toolCalls1: ChatCompletionMessageToolCall[] | null,
+    toolCalls2: ChatCompletionMessageToolCall[] | null,
+  ): boolean {
+    // If either list is null, they can only match if both are null
+    if (!toolCalls1 && !toolCalls2) {
+      return true;
+    }
+    if (!toolCalls1 || !toolCalls2) {
+      return false;
+    }
+
+    // Check if lengths match
+    if (toolCalls1.length !== toolCalls2.length) {
+      return false;
+    }
+
+    // Compare each tool call
+    for (let i = 0; i < toolCalls1.length; i++) {
+      const call1 = toolCalls1[i];
+      const call2 = toolCalls2[i];
+
+      // Compare all fields that must match exactly
+      if (
+        call1?.function.name !== call2?.function.name ||
+        call1?.function.arguments !== call2?.function.arguments
+      ) {
+        return false;
+      }
+    }
+
+    // If we made it through all comparisons, the calls match exactly
+    return true;
+  }
+  ```
+</Accordion>
+
+<Accordion title="Argument Comparison">
+  The **Argument Comparison** template provides an example of how you can check whether a specific argument in the tool call generated by the LLM matches the dataset output.
+
+  ```typescript
+  function grader({
+    messages,
+    tools,
+    toolChoice,
+    generatedOutput,
+    datasetOutput,
+  }: GraderArgs): number {
+    let score = 0.0;
+
+    // begin implementation
+
+    const generatedToolCallArgsStr = generatedOutput.tool_calls?.[0]?.function.arguments;
+    const datasetToolCallArgsStr = datasetOutput.tool_calls?.[0]?.function.arguments;
+
+    if (!generatedToolCallArgsStr || !datasetToolCallArgsStr) {
+      return 0.0;
+    }
+
+    type JudgementArgs = {
+      explanation: string;
+      score: number;
+    };
+
+    const generatedToolCallArgs = JSON.parse(generatedToolCallArgsStr) as JudgementArgs;
+    const datasetToolCallArgs = JSON.parse(datasetToolCallArgsStr) as JudgementArgs;
+
+    if (generatedToolCallArgs.score !== datasetToolCallArgs.score) {
+      return 0.0;
+    }
+
+    score = 1.0;
+
+    // end implementation
+
+    return score;
+  }
+
+  interface GraderArgs {
+    messages: ChatCompletionMessageParam;
+    tools: ChatCompletionTool[] | null;
+    toolChoice: "none" | "auto" | ChatCompletionNamedToolChoice | null;
+    generatedOutput: ChatCompletionMessage;
+    datasetOutput: ChatCompletionMessage;
+  }
+
+  interface ChatCompletionMessageToolCallFunction {
+    name: string;
+    arguments: string;
+  }
+
+  interface ChatCompletionMessageToolCall {
+    function: ChatCompletionMessageToolCallFunction;
+  }
+
+  interface ChatCompletionMessage {
+    content: string | null;
+    refusal: string | null;
+    tool_calls: ChatCompletionMessageToolCall[] | null;
+  }
+
+  type ChatCompletionMessageParam = ChatCompletionMessage;
+
+  interface ChatCompletionTool {
+    function: FunctionDefinition;
+    type: "function";
+  }
+
+  interface FunctionDefinition {
+    name: string;
+    description?: string;
+    parameters?: Record<string, unknown>;
+  }
+
+  export interface ChatCompletionNamedToolChoice {
+    function: Function;
+    type: "function";
+  }
+
+  interface Function {
+    name: string;
+  }
+
+  function exactToolCallsMatch(
+    toolCalls1: ChatCompletionMessageToolCall[] | null,
+    toolCalls2: ChatCompletionMessageToolCall[] | null,
+  ): boolean {
+    // If either list is null, they can only match if both are null
+    if (!toolCalls1 && !toolCalls2) {
+      return true;
+    }
+    if (!toolCalls1 || !toolCalls2) {
+      return false;
+    }
+
+    // Check if lengths match
+    if (toolCalls1.length !== toolCalls2.length) {
+      return false;
+    }
+
+    // Compare each tool call
+    for (let i = 0; i < toolCalls1.length; i++) {
+      const call1 = toolCalls1[i];
+      const call2 = toolCalls2[i];
+
+      // Compare all fields that must match exactly
+      if (
+        call1?.function.name !== call2?.function.name ||
+        call1?.function.arguments !== call2?.function.arguments
+      ) {
+        return false;
+      }
+    }
+
+    // If we made it through all comparisons, the calls match exactly
+    return true;
+  }
+  ```
+</Accordion>
+
+In most cases, you'll want to start from one of the templates and customize the grader function to run the checks you care about. You can also use the **Custom** template to start from scratch.
+
+<Info>
+  Currently, the code evaluation framework only supports TypeScript code executed in a sandbox
+  environment without access to the internet, external npm packages, or a file system. If you're
+  interested in writing evals in other languages or need more advanced features, please let us know
+  at [support@openpipe.ai](mailto:support@openpipe.ai).
+</Info>
+
+
+# Criterion Evaluations
+Source: https://docs.openpipe.ai/features/evaluations/criterion
+
+ Evaluate your LLM outputs using criteria. 
+
+<Note>
+  Criterion evaluations are useful for evaluating your LLM outputs against a set of criteria. If you
+  haven't defined any criteria yet, check out the criteria [Quick
+  Start](/features/criteria/quick-start) guide.
+</Note>
+
+Criterion evaluations are a reliable way to judge the quality of your LLM outputs according to the criteria you've defined. For each model being evaluated, the output of that model is compared against the criteria you've defined for every entry in the evaluation dataset.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/criterion-eval-settings.png)</Frame>
+
+<Info>
+  A criterion evaluation is only as reliable as the criterion you've defined. To improve your
+  criterion, check out the [alignment docs](/features/criteria/alignment-set).
+</Info>
+
+Each output in the evaluation dataset is compared against the criterion you've defined. The output is then scored as either `PASS` or `FAIL` based on the criterion.
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/criterion-eval-results-table.png)</Frame>
+
+<br />
+
+To see why one model might be outperforming another, you can navigate back to the [evaluation table](https://app.openpipe.ai/p/BRZFEx50Pf/datasets/3e7e82c1-b066-476c-9f17-17fd85a2169b/evaluate) and click on a result pill to see the evaluation judge's reasoning.
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/criterion-eval-explanation.png)</Frame>
+
+<br />
+
+While criterion evaluations are powerful and flexible, they're much more expensive to run than pure code. If your models' outputs can be easily evaluated by code alone, consider using [code evaluations](/features/evaluations/code) instead.
+
+
+# Head-to-Head Evaluations
+Source: https://docs.openpipe.ai/features/evaluations/head-to-head
+
+ Evaluate your LLM outputs against one another using head-to-head evaluations. 
+
+<Note>
+  Head-to-head evaluations are useful for evaluating your LLM outputs against one another to
+  determine which models are generally better at a given task. However, they do not provide precise
+  metrics on how often a given model makes a certain error, only how often it outperforms another
+  model. For more precise metrics, please consider [criteria](/features/evaluations/criterion) or
+  [code](/features/evaluations/code) evaluations.
+</Note>
+
+Head to head evaluations are a fast way to get a sense of how well your models perform against one another. For each model being evaluated, the output of that model is compared against the output of every other model for every entry in the evaluation dataset.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/h2h-settings.png)</Frame>
+
+<Info>
+  The number of comparisons performed in a head to head eval scales linearly with the number of
+  entries and quadratically with the number of models. If you're evaluating 2 models on 100 entries,
+  there will be 100 \* 1 = 100 comparisons. If you're evaluating 3 models on 100 entries, there will
+  be 100 \* 2 + 100 \* 1 = 300 comparisons.
+</Info>
+
+As outputs are compared against one another, each model is assigned a "win rate" score. For example, if you're evaluating 2 models on 100 entries and model A outperforms model B 55 times, model A will have a win rate of 55% and model B will have a win rate of 45%. In cases where both models produce the same output or the judge is unable to determine a winner, the score will be a tie (equivalent to 50% win rate).
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/h2h-results-table.png)</Frame>
+
+<br />
+
+In addition to the results table, you can also view results in a matrix format. This is useful for visualizing how specific models perform against one another.
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/h2h-matrix.png)</Frame>
+
+<br />
+
+To see why one model might be outperforming another, you can navigate back to the [evaluation table](https://app.openpipe.ai/p/BRZFEx50Pf/datasets/3e7e82c1-b066-476c-9f17-17fd85a2169b/evaluate) and click on a result pill to see the evaluation judge's reasoning.
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/h2h-judge-explanation.png)</Frame>
+
+<br />
+
+While head-to-head evaluations are convenient, they can quickly become expensive to run, and provide limited insight into how well a model performs. For more precise metrics, consider [criterion](/features/evaluations/criterion) or [code](/features/evaluations/code) evaluations.
+
+
+# Evaluations
+Source: https://docs.openpipe.ai/features/evaluations/overview
+
+ Evaluate the quality of your LLMs against one another or independently.
+
+After training a model, you'll want to know how well it performs. Datasets include a built-in evaluation framework that makes it easy to compare newly trained models against previous models and generic base models as well.
+
+By default, 10% of the dataset entries you provide will be withheld from training. These entries form your test set. For each entry in the test set, your new model will produce an output that will be shown in the [evaluation table](https://app.openpipe.ai/p/BRZFEx50Pf/datasets/3e7e82c1-b066-476c-9f17-17fd85a2169b/evaluate).
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/evals-table.png)</Frame>
+
+<br />
+
+Viewing outputs side by side is useful, but it doesn't tell you which model is doing better in general. For that, we need to define evaluations. Evaluations
+allow you to compare model outputs across a variety of inputs to determine which model is doing a better
+job. While each type of evaluation has its own unique UI, they all show final results in a sorted table.
+
+<br />
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/eval-results-table.png)</Frame>
+
+<br />
+
+Datasets support three types of evaluations:
+
+* [Code evaluations](/features/evaluations/code)
+* [Criterion evaluations](/features/evaluations/criterion)
+* [Head-to-head evaluations](/features/evaluations/head-to-head)
+
+As a rough guide, use code evaluations for deterministic tasks like classification or information extraction. Use criterion evaluations for tasks with freeform outputs like chatbots or summarization. Use head-to-head evaluations for comparing two or more models against each other if you're looking for a quick and dirty way to compare model outputs.
+
+
+# Evaluations Quick Start
+Source: https://docs.openpipe.ai/features/evaluations/quick-start
+
+Create your first head to head evaluation.
+
+In this quick start guide, we'll walk you through creating your first head-to-head evaluation. Head to head evaluations allow you to compare two or more models
+using an LLM judge that compares outputs against one another based on custom instructions.
+
+<Note>
+  <b>Before you begin:</b> Before writing your first eval, make sure you've [created a
+  dataset](/features/datasets/quick-start) with one or more test entries. Also, make sure to add
+  your OpenAI or Anthropic API key in your project settings page to allow the judge LLM to run.
+</Note>
+
+### Writing an Evaluation
+
+<Steps>
+  <Step title="Choose a dataset to evaluate models on">
+    To create an eval, navigate to the dataset with the test entries you'd like to evaluate your models based on.
+    Find the **Evaluate** tab and click the **+** button to the right of the **Evals** dropdown list.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/eval-button.png)</Frame>
+
+    A configuration modal will appear.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/create-h2h-eval.png)</Frame>
+  </Step>
+
+  <Step title="Edit judge model instructions">
+    Customize the judge LLM instructions. The outputs of each model will be compared against one another
+    pairwise and a score of WIN, LOSS, or TIE will be assigned to each model's based on the judge's instructions.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/edit-judge-instructions.png)</Frame>
+  </Step>
+
+  <Step title="Select judge model">
+    Choose a judge model from the dropdown list. If you'd like to use a judge model that isn't supported by default,
+    add it as an [external model](/features/chat-completions/external-models) in your project settings page.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/select-judge-model.png)</Frame>
+  </Step>
+
+  <Step title="Choose models to evaluate">
+    Choose the models you'd like to evaluate against one another.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/choose-evaluated-models.png)</Frame>
+  </Step>
+
+  <Step title="Run the evaluation">
+    Click **Create** to start running the eval.
+
+    Once the eval is complete, you can see model performance in the evaluation's **Results** tab.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/evaluations/quick-start-results.png)</Frame>
+  </Step>
+</Steps>
+
+To learn more about customizing the judge LLM instructions and viewing evaluation judgements in greater detail,
+see the [Head-to-Head Evaluations](/features/evaluations/head-to-head) page.
+
+
+# External Models
+Source: https://docs.openpipe.ai/features/external-models
+
+
+
+<Info>
+  Before defining a custom external model provider, check your project settings to see if the
+  provider you're looking for is already supported.
+</Info>
+
+To use a custom external model from a cloud provider that OpenPipe doesn't support, you can add an external model provider to your project. External models can be used for the following purposes:
+
+* [Proxying chat completions](/features/chat-completions/external-models)
+* [Filtering and relabeling your data](/features/evaluations/head-to-head)
+* [Evaluating outputs through criteria](/features/criteria/quick-start)
+
+The instructions below demonstrate how to add a DeepSeek (OpenAI Compatible) and Azure provider to your project.
+
+### Creating an external model provider
+
+Find the **External Model Providers** section of your project settings, and click the **Add Provider** button.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/external-models/add-provider-button.png)</Frame>
+
+Give your custom provider a slug, API key, and add a custom base url if necessary. The provider slug should be unique,
+and will be used when we proxy requests to models associated with this provider.
+
+<Tabs>
+  <Tab title="DeepSeek (OpenAI Compatible)">
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/external-models/add-provider-modal-deepseek.png)</Frame>
+  </Tab>
+
+  <Tab title="Azure Endpoint">
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/external-models/add-provider-modal-azure.png)</Frame>
+  </Tab>
+</Tabs>
+
+### Adding a model to the external provider
+
+To add a model to the provider you're creating, click the <b>Add Model</b> button.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/external-models/add-model-button.png)</Frame>
+
+Provide a slug that matches the model you'd like to call on your external provider. To call <b>gpt-4o-2024-08-06</b> on Azure for instance, the slug should be `gpt-4o-2024-08-06`.
+
+<Tabs>
+  <Tab title="DeepSeek (OpenAI Compatible)">
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/external-models/add-model-row-deepseek.png)</Frame>
+  </Tab>
+
+  <Tab title="Azure Endpoint">
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/external-models/add-model-row-azure.png)</Frame>
+  </Tab>
+</Tabs>
+
+Setting input cost and output cost is optional, but can be helpful for showing relative costs in the [evals](/features/evaluations) page.
+
+We currently support custom external
+models for providers with openai and azure-compatible endpoints. If you'd like support for an external provider with a different API format, send a request to [hello@openpipe.ai](mailto:hello@openpipe.ai).
+
+
+# Fallback options
+Source: https://docs.openpipe.ai/features/fallback
+
+ Safeguard your application against potential failures, timeouts, or instabilities that may occur when using experimental or newly released models.
+
+Fallback is a feature that ensures a seamless experience and guarantees 100% uptime when working with new or unstable models.
+
+When fallback is enabled, any failed API calls will be automatically retried using OpenAI or any OpenAI-compatible client.
+
+## Fallback to OpenAI
+
+To enable fallback to OpenAI, you can simply pass the `fallback` option to the `openpipe` object with the `model` property set to the OpenAI model you want to fall back to.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="openpipe:my-ft-model",
+        messages=[{"role": "system", "content": "count to 10"}],
+        openpipe={
+            "fallback": {
+                "model": "gpt-4-turbo"
+            }
+        },
+    )
+
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    const openai = new OpenAI();
+
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: "Count to 10" }],
+      model: "openpipe:my-ft-model",
+      openpipe: {
+        fallback: { model: "gpt-4-turbo" },
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Timeout Fallback
+
+If a request takes too long to execute, you can set a timeout for the fallback.
+In the example below, the request will fall back to OpenAI after 10 seconds.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    client = OpenAI(timeout=10) # initial OpenPipe call timeout in seconds
+
+    completion = client.chat.completions.create(
+        model="openpipe:my-ft-model",
+        messages=[{"role": "system", "content": "count to 10"}],
+        openpipe={
+            "fallback": {
+                "model": "gpt-4-turbo",
+                # optional fallback timeout. Defaults to the timeout specified in the client, or OpenAI default timeout if not set.
+                "timeout": 20 # seconds
+            }
+        },
+    )
+
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    const openai = new OpenAI();
+
+    const completion = await openai.chat.completions.create(
+      {
+        messages: [{ role: "user", content: "Count to 10" }],
+        model: "openpipe:my-ft-model",
+        openpipe: {
+          fallback: {
+            model: "gpt-4-turbo",
+            // optional fallback timeout. Defaults to the timeout specified in client options, or OpenAI default timeout if not set.
+            timeout: 20 * 1000, // milliseconds
+          },
+        },
+      },
+      {
+        timeout: 10 * 1000, // initial OpenPipe call timeout in milliseconds
+      },
+    );
+    ```
+  </Tab>
+</Tabs>
+
+## Fallback to Custom OpenAI Compatible Client
+
+If you want to use another OpenAI-compatible fallback client, you can pass a `fallback_client` to the `openpipe` object.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    from openpipe import OpenAI
+
+    client = OpenAI(
+        openpipe={
+            "fallback_client": OpenAICompatibleClient(api_key="client api key")
+        }
+    );
+
+    completion = client.chat.completions.create(
+        model="openpipe:my-ft-model",
+        messages=[{"role": "system", "content": "count to 10"}],
+        openpipe={
+            "fallback": { "model": "gpt-4-turbo" }
+        },
+    )
+
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+
+    const openai = new OpenAI({
+      openpipe: {
+        fallbackClient: new OpenAICompatibleClient({ apiKey: "client api key" }),
+      },
+    });
+
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: "Count to 10" }],
+      model: "openpipe:my-ft-model",
+      openpipe: {
+        fallback: { model: "gpt-4-turbo" },
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+
+# Fine Tuning via API (Beta)
+Source: https://docs.openpipe.ai/features/fine-tuning/api
+
+ Fine tune your models programmatically through our API.
+
+We've made fine-tuning via API available through unstable routes that are subject to change. For most users,
+we highly recommend fine-tuning through the Webapp to achieve optimal performance with a smooth experience.
+However, some users may prefer to fine-tune via API for custom use cases.
+
+The following base models are supported for general access:
+
+* `OpenPipe/Hermes-2-Theta-Llama-3-8B-32k`
+* `meta-llama/Meta-Llama-3-8B-Instruct`
+* `meta-llama/Meta-Llama-3-70B-Instruct`
+* `OpenPipe/mistral-ft-optimized-1227`
+* `mistralai/Mixtral-8x7B-Instruct-v0.1`
+
+Learn more about fine-tuning via API on the [route page](/api-reference/post-unstablefinetunecreate).
+Please contact us at [hello@openpipe.ai](mailto:hello@openpipe.ai) if you would like help getting set up.
+
+
+# Fine-Tuning Quick Start
+Source: https://docs.openpipe.ai/features/fine-tuning/quick-start
+
+Train your first fine-tuned model with OpenPipe.
+
+Fine-tuning open and closed models with custom hyperparameters only takes a few clicks.
+
+<Note>
+  <b>Before you begin:</b> Before training your first model, make sure you've [created a
+  dataset](/features/datasets/quick-start) and imported at least 10 training entries.
+</Note>
+
+### Training a Model
+
+<Steps title="Training a Model">
+  <Step title="Navigate to Dataset">
+    To train a model, navigate to the dataset you'd like to train your model on. Click the **Fine Tune** button in the top right corner of the **General** tab.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/fine-tuning/fine-tune-modal.png)</Frame>
+  </Step>
+
+  <Step title="Name your Model">
+    Choose a descriptive name for your new model. This name will be used as the `model` parameter when querying it in code.
+    You can always rename your model later.
+  </Step>
+
+  <Step title="Select Base Model">
+    Select the base model you'd like to fine-tune on. We recommend starting with Llama 3.1 8B if you aren't sure which to choose.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/fine-tuning/select-base-model.png)</Frame>
+  </Step>
+
+  <Step title="Adjust Hyperparameters (optional)">
+    Under **Advanced Options**, you can optionally adjust the hyperparameters to fine-tune your model.
+    You can leave these at their default values if you aren't sure which to choose.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/fine-tuning/adjust-hyperparameters.png)</Frame>
+  </Step>
+
+  <Step title="Start Training">
+    Click **Start Training** to begin the training process.
+    The training job may take a few minutes or a few hours to complete, depending on the amount of training data, the base model, and the hyperparameters you choose.
+
+    <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/fine-tuning/trained-model.png)</Frame>
+  </Step>
+</Steps>
+
+To learn more about fine-tuning through the webapp, check out the [Fine-Tuning via Webapp](/features/fine-tuning/overview) page.
+To learn about fine-tuning via API, see our [Fine Tuning via API](/api-reference/fine-tuning) page.
+
+
+# Fine Tuning via Webapp
+Source: https://docs.openpipe.ai/features/fine-tuning/webapp
+
+ Fine tune your models on filtered logs or uploaded datasets. Filter by prompt id and exclude requests with an undesirable output.
+
+OpenPipe allows you to train, evaluate, and deploy your models all in the same place. We recommend training your models
+through the webapp, which provides more flexibility and a smoother experience than the API. To fine-tune a new model, follow these steps:
+
+1. Create a new dataset or navigate to an existing one.
+2. Click "Fine Tune" in the top right.
+3. Select a base model.
+4. (Optional) Set custom hyperparameters and configure [pruning rules](/features/pruning-rules).
+5. Click "Start Training" to kick off the job.
+
+Once started, your model's training job will take at least a few minutes and potentially several hours, depending on the size of the
+model and the amount of data. You can check your model's status by navigating to the Fine Tunes page and selecting your model.
+
+For an example of how an OpenPipe model looks once it's trained, see our public [PII Redaction](https://app.openpipe.ai/p/BRZFEx50Pf/fine-tunes/6076ad69-cce5-4892-ae54-e0549bbe107f/general) model. Feel free to hit it with some sample queries!
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/fine-tuning.png)</Frame>
+
+
+# Mixture of Agents
+Source: https://docs.openpipe.ai/features/mixture-of-agents
+
+Use Mixture of Agents to increase quality beyond SOTA models.
+
+We’re currently beta-testing a novel completion generating technique we’re calling “Mixture of Agents,” which we’ll document more formally soon.
+
+The basic idea is that instead of simply asking GPT-4 to generate a completion for your prompt directly, we use a series of GPT-4 prompts to iteratively improve the completion. The steps our “mixture of agents” model takes are as follows:
+
+* **Prompt 1** generates 3 candidate completions in parallel by calling the chosen base model with `n=3` and a high temperature to promote output diversity.
+* **Prompt 2** again calls the base model. It passes in the original input again, along with the 3 candidate completions generated by prompt 1. It then asks the LLM to review the candidate completions and critique them.
+* **Prompt 3** again passes the original input, the 3 candidate completions, and their critiques. Using this information, the base model generates a final completion that incorporates the best of all 3 candidates.
+
+We’ve iterated on this process significantly and found that completions generated in this way tend to be significantly higher quality than those generated by GPT-4 in a single step, and lead to much stronger downstream fine-tuned models as well.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/moa/llm-judge-moa-wr.png)</Frame>
+
+## Using MoA in Production
+
+To use MoA models at inference time, make requests to the /chat/completions endpoint with a MoA model. See [instructions](/features/chat-completions/moa).
+
+## Using the MoA Relabeling Flow
+
+The following instructions explain how to copy an existing dataset and relabel it with the mixture-of-agents flow, which will let you train models on the higher-quality outputs.
+
+1. **Export the original dataset**
+
+   Navigate to your existing OpenPipe dataset and click the “Export” button in the upper right. Keep the “Include split” checkbox checked. You’ll download a .jsonl file with the contents of your dataset (this may take a few minutes).
+
+   <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/moa/export-arrow.png)</Frame>
+
+2. **Re-import the dataset**
+
+   Create a new dataset in your project. Import the file you exported from step (1). Once the import finishes, your new dataset should contain a copy of the same data as the old one.
+
+3. **Open the Data Pipeline view**
+
+   Navigate to the **Data Pipeline** tab in the new dataset, then expand the Data Pipeline view by hovering over and clicking the data pipeline preview.
+
+   <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/moa/data-lineage-preview.png)</Frame>
+
+4. Select the “LLM Relabel” node for the file you just uploaded. Then in the sidebar, choose one of `moa-gpt-4-v1`, `moa-gpt-4-turbo-v1`, or `moa-gpt-4o-v1`, depending on which model you’d like to use as your MoA base. **Note:** we use your API key for relabelling, so you’ll need to have entered a valid OpenAI API key in your project settings for this to work.
+
+   <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/moa/data-lineage-relabeling.png)</Frame>
+
+5. **Wait for relabeling to finish**
+
+   Depending on your dataset size relabelling may take quite a while. Behind the scenes we run 4 relabelling jobs in parallel at a time. You’ll know relabeling has finished when the “Processing entries” status disappears at the top right of the dataset view.
+
+   <Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/moa/processing-entries.png)</Frame>
+
+6. **Train a model on the new dataset**
+
+   Train the base model of your choice on the new dataset.
+
+7. **(Optional) Evaluate your new model against your old one**
+
+   If you have an existing head-to-head evaluation on the platform, you can easily add your new model to it to see how it compares. Simply open your existing eval and add your newly-trained model as another model to compare!
+
+## Costs
+
+We aren’t charging for the MoA relabeling flow while it is in beta. However, you will pay for the actual calls to the OpenAI API. The exact cost varies depending on your input vs output mix but as a rule of thumb our MoA approach uses 3x-4x as many tokens as running the same completion in a non-MoA context.
+
+
+# Pruning Rules
+Source: https://docs.openpipe.ai/features/pruning-rules
+
+Decrease input token counts by pruning out chunks of static text.
+
+Some prompts have large chunks of unchanging text, like system messages which don't change from one request to the next. By removing this static text and fine-tuning a model on the compacted data, we can reduce the size of incoming requests and save you money on inference.
+
+Add pruning rules to your dataset in the Settings tab, as shown below and in our [demo dataset](https://app.openpipe.ai/p/BRZFEx50Pf/datasets/0aa75f72-3fe5-4294-a94e-94c9236befa6/settings).
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/pruning-rules/dataset-pruning-rule.png)</Frame>
+
+To see the effect your pruning rules had on an individual training entry's input messages, open the Dataset Entry drawer:
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/pruning-rules/drawer-rule.png)</Frame>
+
+By default, fine-tuned models inherit pruning rules applied to the dataset on which they were trained (see [demo model](https://app.openpipe.ai/p/BRZFEx50Pf/fine-tunes/5a2af605-03d3-412c-a7d3-611bdf6e1dcf/general)). These rules will automatically prune matching text from any incoming requests sent to that model. New pruning rules will not be associated with previously trained models, so you don't need to worry about backwards compatibility when adding new rules to your dataset. Before training a new model, you can choose to disable any inherited pruning rules.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/pruning-rules/model-rules.png)</Frame>
+
+## Warning: can affect quality!
+
+We’ve found that while pruning rules always decrease latency and costs, they can also negatively affect response quality, especially with smaller datasets. We recommend enabling pruning rules on datasets with 10K+ training examples, as smaller datasets may not provide enough guidance for the model to fully learn the task.
+
+
+# Exporting Logs
+Source: https://docs.openpipe.ai/features/request-logs/exporting-logs
+
+ Export your past requests as a JSONL file in their raw form.
+
+## Request logs export
+
+Once your request logs are recorded, you can export them at any time. The exported jsonl contains all the data that we've collected from your logged calls, including tags and errors.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/request-logs/exporting-logs.png)</Frame>
+
+### Fields
+
+* **`Input`:** The complete chat creation request.
+* **`Output`:** Whatever output was generated, including errors.
+* **`Tags`:** Any metadata tags that you included when making the request.
+
+### Example
+
+```jsonl
+{"input":{"model":"openpipe:test-tool-calls-ft","tools":[{"type":"function","function":{"name":"get_current_weather","parameters":{"type":"object","required":["location"],"properties":{"unit":{"enum":["celsius","fahrenheit"],"type":"string"},"location":{"type":"string","description":"The city and state, e.g. San Francisco, CA"}}},"description":"Get the current weather in a given location"}}],"messages":[{"role":"system","content":"tell me the weather in SF and Orlando"}]},"output":{"id":"c7670af0d71648b0bd829fa1901ac6c5","model":"openpipe:test-tool-calls-ft","usage":{"total_tokens":106,"prompt_tokens":47,"completion_tokens":59},"object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":null,"tool_calls":[{"id":"","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\": \"San Francisco, CA\", \"unit\": \"celsius\"}"}},{"id":"","type":"function","function":{"name":"get_current_weather","arguments":"{\"location\": \"Orlando, FL\", \"unit\": \"celsius\"}"}}]},"finish_reason":"stop"}],"created":1702666185703},"tags":{"prompt_id":"test_sync_tool_calls_ft","$sdk":"python","$sdk.version":"4.1.0"}}
+{"input":{"model":"openpipe:test-content-ft","messages":[{"role":"system","content":"count to 3"}]},"output":{"id":"47116eaa9dad4238bf12e32135f9c147","model":"openpipe:test-content-ft","usage":{"total_tokens":38,"prompt_tokens":29,"completion_tokens":9},"object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"1, 2, 3"},"finish_reason":"stop"}],"created":1702666036923},"tags":{"prompt_id":"test_sync_content_ft","$sdk":"python","$sdk.version":"4.1.0"}}
+```
+
+If you'd like to see how it works, try exporting some logs from our [public demo](https://app.openpipe.ai/p/BRZFEx50Pf/request-logs).
+
+
+# Logging Requests
+Source: https://docs.openpipe.ai/features/request-logs/logging-requests
+
+ Record production data to train and improve your models' performance.
+
+Request logs are a great way to get to know your data. More importantly, you can import recorded logs directly into your training datasets. That means it's really easy to train on data you've collected in production.
+
+We recommend collecting request logs for both base and fine-tuned models. We provide several options for recording your requests.
+
+### SDK
+
+The simplest way to start ingesting request logs into OpenPipe is by installing our Python or TypeScript SDK. Requests to both OpenAI and OpenPipe models will automatically be recorded.
+Logging doesn't add any latency to your requests, because our SDK calls the OpenAI server directly and returns your completion before kicking off the request to record it in your project.
+
+We provide a drop-in replacement for the OpenAI SDK, so the only code you need to update is your import statement:
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    # from openai import OpenAI
+    from openpipe import OpenAI
+
+    # Nothing else changes
+
+    client = OpenAI()
+
+    completion = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "system", "content": "count to 10"}],
+        # searchable metadata tags are highly recommended
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    // import OpenAI from "openai"
+    import OpenAI from "openpipe/openai";
+
+    // Nothing else changes
+
+    const client = new OpenAI();
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: "Count to 10" }],
+      // searchable metadata tags are highly recommended
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+See [Installing the SDK](/getting-started/openpipe-sdk) for a quick guide on how to get started.
+
+### Proxy
+
+If you're developing in a language other than Python or TypeScript, the best way to ingest data into OpenPipe is through our proxy. We provide a `/chat/completions` endpoint that is fully compatible
+with OpenAI, so you can continue using the latest features like tool calls and streaming without a hitch.
+
+Integrating the Proxy and logging requests requires a couple steps.
+
+1. Add an OpenAI key to your project in the [project settings](https://app.openpipe.ai/settings) page.
+2. Set the authorization token of your request to be your OpenPipe API key.
+3. Set the destination url of your request to be `https://api.openpipe.ai/api/v1/chat/completions`.
+4. When making any request that you’d like to record, include the `"store": true` parameter in the request body. We also recommend that you add custom metadata tags to your request to
+   distinguish data collected from different prompts.
+
+Here's an example of steps 2-4 put together in both a raw cURL request and with the Python SDK:
+
+<Tabs>
+  <Tab title="cURL Request">
+    ```bash
+    curl --request POST \
+      --url https://api.openpipe.ai/api/v1/chat/completions \
+      --header "Authorization: Bearer YOUR_OPENPIPE_API_KEY" \
+      --header 'Content-Type: application/json' \
+      --data '{
+      "model": "gpt-4-0613",
+      "messages": [
+        {
+          "role": "system",
+          "content": "count to 5"
+        }
+      ],
+      "max_tokens": 100,
+      "temperature": 0,
+      "store": true,
+      "metadata": {
+        "prompt_id": "first_prompt"
+      }
+    }'
+    ```
+  </Tab>
+
+  <Tab title="Python SDK">
+    ```python
+    from openai import OpenAI
+
+    # Find your API key in https://app.openpipe.ai/settings
+    client = OpenAI(
+        base_url="https://api.openpipe.ai/api/v1", api_key="YOUR_OPENPIPE_API_KEY"
+    )
+
+    completion = client.chat.completions.create(
+        model="gpt-4-0613",
+        messages=[{"role": "system", "content": "count to 5"}],
+        stream=True,
+        store=True,
+        metadata={"prompt_id": "first_prompt"},
+    )
+
+
+    ```
+  </Tab>
+
+  <Tab title="TypeScript SDK">
+    ```typescript
+    import OpenAI from "openai";
+
+    // Find your API key in https://app.openpipe.ai/settings
+    const client = new OpenAI({
+      baseURL: "https://api.openpipe.ai/api/v1",
+      apiKey: "YOUR_OPENPIPE_API_KEY",
+    });
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-4-0613",
+      messages: [{ role: "system", content: "count to 5" }],
+      store: true,
+      metadata: { prompt_id: "first_prompt" },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+### Reporting
+
+If you need more flexibility in how you log requests, you can use the `report` endpoint. This gives you full control over when and how to create request logs.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    import time
+    from openai import OpenAI
+    from openpipe.client import OpenPipe
+
+    client = OpenAI()
+    op_client = OpenPipe()
+
+    payload = {
+        "model": "gpt-4o",
+        "messages": [{"role": "user", "content": "Count to 10"}],
+    }
+
+    completion = client.chat.completions.create(**payload)
+
+    op_client.report(
+        requested_at=int(time.time() * 1000),
+        received_at=int(time.time() * 1000),
+        req_payload=payload,
+        resp_payload=completion,
+        status_code=200,
+        metadata={"prompt_id": "My prompt id"},
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openai";
+    import { ChatCompletionCreateParams } from "openai/resources";
+    import OpenPipe from "openpipe/client";
+
+    const client = new OpenAI();
+    const opClient = new OpenPipe();
+
+    const payload: ChatCompletionCreateParams = {
+      model: "gpt-4o",
+      messages: [{ role: "user", content: "Count to 10" }],
+    };
+
+    const completion = await client.chat.completions.create(payload);
+
+    await opClient.report({
+      requestedAt: Date.now(),
+      receivedAt: Date.now(),
+      reqPayload: payload,
+      respPayload: completion,
+      statusCode: 200,
+      metadata: { prompt_id: "My prompt id" },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+If you’re developing in a language other than Python or TypeScript, you can also make a raw HTTP request to the [report](/api-reference/post-report) endpoint.
+
+Once you've set up logging, you will see the data on the Request Logs page. From there, you'll be able to search through your requests and train your models. See [Training on Logs](/features/datasets/importing-logs) to learn more.
+
+
+# Logging Anthropic Requests
+Source: https://docs.openpipe.ai/features/request-logs/reporting-anthropic
+
+
+
+Anthropic's language models have a different API structure than those of OpenAI.
+To record requests made to Anthropic's models, follow the examples below:
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    import time
+    from anthropic import Anthropic
+    from openpipe.client import OpenPipe
+
+    anthropic = Anthropic()
+    op_client = OpenPipe()
+
+    payload = {
+        "model": "claude-3-opus-20240229",
+        "messages": [{"role": "user", "content": "Hello, Claude"}],
+        "max_tokens": 100,
+    }
+
+    message = anthropic.messages.create(**payload)
+
+    op_client.report_anthropic(
+        requested_at=int(time.time() * 1000),
+        received_at=int(time.time() * 1000),
+        req_payload=payload,
+        resp_payload=message,
+        status_code=200,
+        metadata={
+            "prompt_id": "My prompt id",
+        },
+    )
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import Anthropic from "@anthropic-ai/sdk";
+    import { Message, MessageCreateParams } from "@anthropic-ai/sdk/resources";
+    import OpenPipe from "openpipe/client";
+
+    const anthropic = new Anthropic();
+    const opClient = new OpenPipe();
+
+    const payload: MessageCreateParams = {
+      model: "claude-3-opus-20240229",
+      messages: [{ role: "user", content: "Hello, Claude" }],
+      max_tokens: 1024,
+    };
+
+    const message: Message = await anthropic.messages.create(payload);
+
+    await opClient.reportAnthropic({
+      requestedAt: Date.now(),
+      receivedAt: Date.now(),
+      reqPayload: payload,
+      respPayload: message,
+      statusCode: 200,
+      metadata: {
+        prompt_id: "My prompt id",
+      },
+    });
+    ```
+  </Tab>
+</Tabs>
+
+If you're using a different programming language, you can make a raw http request to the [report-anthropic](/api-reference/post-report-anthropic) enpoint.
+
+
+# Updating Metadata Tags
+Source: https://docs.openpipe.ai/features/updating-metadata
+
+
+
+You may want to update the metadata tags on a request log after it's already been reported. For instance, if you notice that a certain completion from your fine-tuned model was flawed,
+you can mark it to be imported into one of your datasets and relabeled with GPT-4 for future training.
+
+<Tabs>
+  <Tab title="Python">
+    ```python
+    import os
+    from openpipe import OpenPipe, OpenAI
+    from openpipe.client import UpdateLogTagsRequestFiltersItem
+
+    # Find the config values in "Installing the SDK"
+    client = OpenAI()
+    op_client = OpenPipe(
+        # defaults to os.environ["OPENPIPE_API_KEY"]
+        api_key="YOUR_API_KEY"
+    )
+
+    completion = client.chat.completions.create(
+        model="openpipe:your-fine-tuned-model-id",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "tag_to_remove": "some value"},
+    )
+
+    resp = op_client.update_log_metadata(
+        filters=[
+            UpdateLogTagsRequestFiltersItem(
+                field="completionId",
+                equals=completion.id,
+            ),
+            # completionId is the only filter necessary in this case, but let's add a couple more examples
+            UpdateLogTagsRequestFiltersItem(
+                field="model",
+                equals="openpipe:your-fine-tuned-model-id",
+            ),
+            UpdateLogTagsRequestFiltersItem(
+                field="metadata.prompt_id",
+                equals="counting",
+            ),
+        ],
+        metadata={
+            "relabel": "true",
+            "tag_to_remove": None # this will remove the tag_to_remove tag from the request log we just created
+        },
+    )
+
+    assert resp.matched_logs == 1
+    ```
+  </Tab>
+
+  <Tab title="NodeJS">
+    ```typescript
+    import OpenAI from "openpipe/openai";
+    import OpenPipe from "openpipe/client";
+
+    // Find the config values in "Installing the SDK"
+    const client = OpenAI();
+    const opClient = OpenPipe({
+      // defaults to process.env.OPENPIPE_API_KEY
+      apiKey: "YOUR_API_KEY",
+    });
+
+    const completion = await client.chat.completions.create({
+      model: "openpipe:your-fine-tuned-model-id",
+      messages: [{ role: "user", content: "Count to 10" }],
+      metadata: {
+        prompt_id: "counting",
+        tag_to_remove: "some value",
+      },
+    });
+
+    const resp = await opClient.updateLogTags({
+      filters: [
+        { field: "completionId", equals: completion.id },
+        // completionId is the only filter necessary in this case, but let's add a couple more examples
+        { field: "model", equals: "openpipe:your-fine-tuned-model-id" },
+        { field: "metadata.prompt_id", equals: "counting" },
+      ],
+      metadata: {
+        relabel: "true",
+        tag_to_remove: null, // this will remove the tag_to_remove tag from the request log we just created
+      },
+    });
+
+    expect(resp.matchedLogs).toEqual(1);
+    ```
+  </Tab>
+</Tabs>
+
+To update your metadata, you'll need to provide two fields: `filters` and `metadata`.
+
+### Filters
+
+Use filters to determine which request logs should be updated. Each filter contains two fields, `field` and `equals`.
+
+* **`field`: Required** - Indicates the field on a request log that should be checked. Valid options include `model`, `completionId`, and `tags.your_tag_name`.
+* **`equals`: Required** - The value that the field should equal.
+
+Keep in mind that filters are cumulative, so only request logs that match all of the filters you provide will be updated.
+
+### Metadata
+
+Provide one or more metadata tags in a json object. The key should be the name of the tag you'd like to add, update, or delete. The value should be the new value of the tag.
+If you'd like to delete a tag, provide a value of `None` or `null`.
+
+Updated metadata tags will be searchable in the [Request Logs](/features/request-logs) panel.
+
+
+# Installing the SDK
+Source: https://docs.openpipe.ai/getting-started/openpipe-sdk
+
+
+
+Use the OpenPipe SDK as a drop-in replacement for the generic OpenAI package. Calls sent through the OpenPipe SDK will be recorded by default for later training. You'll use this same SDK to call your own fine-tuned models once they're deployed.
+
+<Tabs>
+  <Tab title="Python">
+    Find the SDK at [https://pypi.org/project/openpipe/](https://pypi.org/project/openpipe/)
+
+    ## Installation
+
+    ```bash
+    pip install openpipe
+    ```
+
+    ## Simple Integration
+
+    Add `OPENPIPE_API_KEY` to your environment variables.
+
+    ```bash
+    export OPENPIPE_API_KEY=opk-<your-api-key>
+    # Or you can set it in your code, see "Complete Example" below
+    ```
+
+    Replace this line
+
+    ```python
+    from openai import OpenAI
+    ```
+
+    with this one
+
+    ```python
+    from openpipe import OpenAI
+    ```
+
+    ## Adding Searchable Metadata Tags
+
+    OpenPipe follows OpenAI’s concept of metadata tagging for requests. You can use metadata tags in the [Request Logs](/features/request-logs) view to narrow down the data your model will train on.
+    We recommend assigning a unique metadata tag to each of your prompts.
+    These tags will help you find all the input/output pairs associated with a certain prompt and fine-tune a model to replace it.
+
+    Here's how you can use the tagging feature:
+
+    ## Complete Example
+
+    ```python
+    from openpipe import OpenAI
+    import os
+
+    client = OpenAI(
+        # defaults to os.environ.get("OPENAI_API_KEY")
+        api_key="My API Key",
+        openpipe={
+            # defaults to os.environ.get("OPENPIPE_API_KEY")
+            "api_key": "My OpenPipe API Key",
+            # optional, defaults to process.env["OPENPIPE_BASE_URL"] or https://api.openpipe.ai/api/v1 if not set
+            "base_url": "My URL",
+        }
+    )
+
+    completion = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[{"role": "system", "content": "count to 10"}],
+        metadata={"prompt_id": "counting", "any_key": "any_value"},
+    )
+
+    ```
+  </Tab>
+
+  <Tab title="NodeJS (ESM)">
+    Find the SDK at [https://www.npmjs.com/package/openpipe](https://www.npmjs.com/package/openpipe)
+
+    ## Installation
+
+    ```bash
+    npm install --save openpipe
+    # or
+    yarn add openpipe
+    ```
+
+    ## Simple Integration
+
+    Add `OPENPIPE_API_KEY` to your environment variables.
+
+    ```bash
+    export OPENPIPE_API_KEY=opk-<your-api-key>
+    # Or you can set it in your code, see "Complete Example" below
+    ```
+
+    Replace this line
+
+    ```typescript
+    import OpenAI from "openai";
+    ```
+
+    with this one
+
+    ```typescript
+    import OpenAI from "openpipe/openai";
+    ```
+
+    ## Adding Searchable Metadata Tags
+
+    OpenPipe follows OpenAI’s concept of metadata tagging for requests. You can use metadata tags in the [Request Logs](/features/request-logs) view to narrow down the data your model will train on.
+    We recommend assigning a unique metadata tag to each of your prompts.
+    These tags will help you find all the input/output pairs associated with a certain prompt and fine-tune a model to replace it.
+
+    Here's how you can use the tagging feature:
+
+    ## Complete Example
+
+    ```typescript
+    import OpenAI from "openpipe/openai";
+    // Fully compatible with original OpenAI initialization
+    const openai = new OpenAI({
+      apiKey: "my api key", // defaults to process.env["OPENAI_API_KEY"]
+      // openpipe key is optional
+      openpipe: {
+        apiKey: "my api key", // defaults to process.env["OPENPIPE_API_KEY"]
+        baseUrl: "my url", // defaults to process.env["OPENPIPE_BASE_URL"] or https://api.openpipe.ai/api/v1 if not set
+      },
+    });
+
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: "Count to 10" }],
+      model: "gpt-4o",
+      // optional
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+      store: true, // Enable/disable data collection. Defaults to true.
+    });
+    ```
+  </Tab>
+
+  <Tab title="NodeJS (CJS)">
+    Find the SDK at [https://www.npmjs.com/package/openpipe](https://www.npmjs.com/package/openpipe)
+
+    ## Installation
+
+    ```bash
+    npm install --save openpipe
+    # or
+    yarn add openpipe
+    ```
+
+    ## Simple Integration
+
+    Add `OPENPIPE_API_KEY` to your environment variables.
+
+    ```bash
+    export OPENPIPE_API_KEY=opk-<your-api-key>
+    # Or you can set it in your code, see "Complete Example" below
+    ```
+
+    Replace this line
+
+    ```typescript
+    const OpenAI = require("openai");
+    ```
+
+    with this one
+
+    ```typescript
+    const OpenAI = require("openpipe/openai").default;
+    ```
+
+    ## Adding Searchable Metadata Tags
+
+    OpenPipe follows OpenAI’s concept of metadata tagging for requests. You can use metadata tags in the [Request Logs](/features/request-logs) view to narrow down the data your model will train on.
+    We recommend assigning a unique metadata tag to each of your prompts.
+    These tags will help you find all the input/output pairs associated with a certain prompt and fine-tune a model to replace it.
+
+    Here's how you can use the tagging feature:
+
+    ## Complete Example
+
+    ```typescript
+    import OpenAI from "openpipe/openai";
+    // Fully compatible with original OpenAI initialization
+    const openai = new OpenAI({
+      apiKey: "my api key", // defaults to process.env["OPENAI_API_KEY"]
+      // openpipe key is optional
+      openpipe: {
+        apiKey: "my api key", // defaults to process.env["OPENPIPE_API_KEY"]
+        baseUrl: "my url", // defaults to process.env["OPENPIPE_BASE_URL"] or https://api.openpipe.ai/api/v1 if not set
+      },
+    });
+
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "user", content: "Count to 10" }],
+      model: "gpt-4o",
+      // optional
+      metadata: {
+        prompt_id: "counting",
+        any_key: "any_value",
+      },
+      store: true, // Enable/disable data collection. Defaults to true.
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Should I Wait to Enable Logging?
+
+We recommend keeping request logging turned on from the beginning. If you change your prompt you can just set a new `prompt_id` metadata tag so you can select just the latest version when you're ready to create a dataset.
+
+
+# Quick Start
+Source: https://docs.openpipe.ai/getting-started/quick-start
+
+Get started with OpenPipe in a few quick steps.
+
+## Step 1: Create Your OpenPipe Account
+
+If you don't already have one, create an account with OpenPipe at [https://app.openpipe.ai/](https://app.openpipe.ai/). You can sign up with GitHub, so you don't need to remember an extra password.
+
+## Step 2: Find Your Project API Key
+
+In order to capture your calls and fine-tune a model on them, we need an API key to authenticate you and determine which project to store your logs under.
+
+<Note>
+  When you created your account, a project was automatically configured for you as well. Find its
+  API key at [https://app.openpipe.ai/settings](https://app.openpipe.ai/settings).
+</Note>
+
+## Step 3: Record Training Data (Optional)
+
+If you don't have any training data, you can record it by integrating the OpenPipe SDK or using the OpenPipe Proxy. If you already have a dataset, you can skip this step!
+
+<CardGroup cols={2}>
+  <Card title="Installing the SDK" icon="code" iconType="duotone" href="/getting-started/openpipe-sdk" />
+
+  <Card title="Using the OpenPipe Proxy" icon="layer-group" href="/features/request-logs/logging-requests#proxy" />
+</CardGroup>
+
+## Step 4: Prepare a Dataset
+
+Datasets are the core of OpenPipe. They store your training data, and allow you to fine-tune and evaluate models on it. To learn more about datasets, check out the [Datasets](/features/datasets/overview) page.
+
+Datasets can be populated in two ways:
+
+1. [Uploading external data](/features/datasets/uploading-data)
+2. [Importing request logs](/features/datasets/importing-logs)
+
+If you already have a dataset, we recommend uploading it as a starting point. Otherwise, make sure you set up request logging in step 3!
+
+## Step 5: Fine Tune a Model
+
+Once your dataset has been created and populated, you can fine-tune models on it. Follow the [fine-tuning quickstart](/features/fine-tuning/quick-start) guide to kick off your first fine-tuning run.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/features/fine-tuning/fine-tune-modal.png)</Frame>
+
+We recommend training several models of varying sizes and configurations to determine the best one for your use case. If you have questions on this step, please reach out to us at [support@openpipe.ai](mailto:support@openpipe.ai)!
+
+## Step 6: Evaluate Your Model
+
+Once your model (or models) have been fine-tuned, you can evaluate them. To learn more about evaluating models, check out the [Evaluations](/features/evaluations/overview) page.
+
+## Step 7: Deploy Your Model
+
+By default, your model will be automatically hosted on OpenPipe's cloud infrastructure. Additionally, you can export and deploy any of our open-weight models on your own cloud.
+
+Good luck! If you have any questions, don't hesitate to reach out!
+
+
+# OpenPipe Documentation
+Source: https://docs.openpipe.ai/introduction
+
+ Software engineers and data scientists use OpenPipe's intuitive fine-tuning and monitoring services to decrease the cost and latency of their LLM operations.  You can use OpenPipe to collect and analyze LLM logs, create fine-tuned models, and compare output from multiple models given the same input.
+
+<Frame>![](https://mintlify.s3.us-west-1.amazonaws.com/openpipe/images/intro/dataset-general.png)</Frame>
+
+<CardGroup cols={2}>
+  <Card title="Get Started" icon="code" href="/getting-started/quick-start">
+    Quickly integrate the OpenPipe SDK into your application and start collecting data.
+  </Card>
+
+  <Card title="Features" icon="lightbulb" href="/overview#what-we-provide">
+    View the platform features OpenPipe provides and learn how to use them.
+  </Card>
+
+  <Card title="Sample Project" icon="vial" href="https://app.openpipe.ai/p/BRZFEx50Pf/request-logs">
+    Glance over the public demo we've set up to get an idea for how OpenPipe works.
+  </Card>
+</CardGroup>
+
+
+# Overview
+Source: https://docs.openpipe.ai/overview
+
+OpenPipe is a streamlined platform designed to help product-focused teams train specialized LLM models as replacements for slow and expensive prompts.
+
+## What We Provide
+
+Here are a few of the features we offer:
+
+* [**Unified SDK**](/getting-started/openpipe-sdk): Collect and utilize interaction data to fine-tune a custom model and continually refine and enhance model performance. Switching requests from your previous LLM provider to your new model is as simple as changing the model name. All our models implement the OpenAI inference format, so you won't have to change how you parse its response.
+
+* [**Data Capture**](/features/request-logs): OpenPipe captures every request and response and stores it for your future use.
+
+  * [**Request Logs**](/features/request-logs): We help you automatically log your past requests and tag them for easy filtering.
+  * [**Upload Data**](/features/datasets/uploading-data): OpenPipe also allows you to import fine-tuning data from OpenAI-compatible JSONL files.
+  * [**Export Data**](/features/datasets/exporting-data): Once your request logs are recorded, you can export them at any time.
+
+* [**Fine-Tuning**](/features/fine-tuning/overview): With all your LLM requests and responses in one place, it's easy to select the data you want to fine-tune on and kick off a job.
+
+  * [**Pruning Rules**](/features/pruning-rules): By removing large chunks of unchanging text and fine-tuning a model on the compacted data, we can reduce the size of incoming requests and save you money on inference.
+
+* [**Model Hosting**](/features/chat-completions): After we've trained your model, OpenPipe will automatically begin hosting it.
+
+  * [**Caching**](/features/caching): Improve performance and reduce costs by caching previously generated responses.
+
+* [**Evaluations**](/features/evaluations/overview): Compare your models against one another and OpenAI base models. Set up custom instructions and get quick insights into your models' performance.
+
+Welcome to the OpenPipe community!
+
+
+# Pricing Overview
+Source: https://docs.openpipe.ai/pricing/pricing
+
+
+
+## Training
+
+We charge for training based on the size of the model and the number of tokens in the dataset.
+
+| Model Category     | Cost per 1M tokens |
+| ------------------ | ------------------ |
+| **8B and smaller** | \$0.48             |
+| **14B models**     | \$1.50             |
+| **32B models**     | \$1.90             |
+| **70B+ models**    | \$2.90             |
+
+## Hosted Inference
+
+Choose between two billing models for running models on our infrastructure:
+
+### 1. Per-Token Pricing
+
+Available for our most popular, high-volume models. You only pay for the tokens you process, with no minimum commitment and automatic infrastructure scaling.
+
+| Model                      | Input (per 1M tokens) | Output (per 1M tokens) |
+| -------------------------- | --------------------- | ---------------------- |
+| **Llama 3.1 8B Instruct**  | \$0.30                | \$0.45                 |
+| **Qwen 2.5 14B Instruct**  | \$1.00                | \$1.50                 |
+| **Llama 3.1 70B Instruct** | \$1.80                | \$2.00                 |
+
+### 2. Hourly Compute Units
+
+Designed for experimental and lower-volume models. A Compute Unit (CU) can handle up to 24 simultaneous requests per second. Billing is precise down to the second, with automatic scaling when traffic exceeds capacity. Compute units remain active for 60 seconds after traffic spikes.
+
+| Model                  | Rate per CU Hour |
+| ---------------------- | ---------------- |
+| **Llama 3.1 8B**       | \$1.50           |
+| **Mistral Nemo 12B**   | \$1.50           |
+| **Qwen 2.5 32B Coder** | \$6.00           |
+| **Qwen 2.5 72B**       | \$12.00          |
+| **Llama 3.1 70B**      | \$12.00          |
+
+## Third-Party Models (OpenAI, Gemini, etc.)
+
+Third-party models fine-tuned through OpenPipe like OpenAI's GPT series or Google's Gemini, we provide direct API integration without any additional markup. You will be billed directly by the respective provider (OpenAI, Google, etc.) at their standard rates. We simply pass through the API calls and responses.
+
+## Enterprise Plans
+
+For organizations requiring custom solutions, we offer enterprise plans that include:
+
+* Volume discounts
+* On-premises deployment options
+* Dedicated support
+* Custom SLAs
+* Advanced security features
+
+Contact our team at [hello@openpipe.ai](mailto:hello@openpipe.ai) to discuss enterprise pricing and requirements.
+
+

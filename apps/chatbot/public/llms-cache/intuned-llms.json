@@ -1,0 +1,10 @@
+{
+  "name": "Intuned",
+  "description": "Product analytics and user behavior platform",
+  "website": "https://intunedhq.com",
+  "url": "https://docs.intunedhq.com/llms.txt",
+  "type": "llms.txt",
+  "category": "data-analytics",
+  "cachePath": "apps/chatbot/public/llms-cache/intuned-llms.txt",
+  "lastFetched": "2025-03-24"
+}

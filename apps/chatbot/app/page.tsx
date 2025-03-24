@@ -9,8 +9,8 @@ export default function Home() {
       {/* Navigation */}
       <header className="sticky top-0 z-50 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
         <div className="container mx-auto flex items-center justify-between px-4 h-16">
-          <Link 
-            href="https://llmstxthub.com" 
+          <Link
+            href="https://llmstxthub.com"
             className="text-neutral-900 dark:text-white font-medium flex items-center gap-2"
           >
             <Bot className="w-5 h-5" />
@@ -19,7 +19,7 @@ export default function Home() {
           <ModeToggle />
         </div>
       </header>
-      
+
       {/* Main content */}
       <main className="flex-1 flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-2xl mx-auto">
@@ -34,20 +34,29 @@ export default function Home() {
               llms.txt Chat Explorer
             </h1>
             <p className="text-neutral-600 dark:text-neutral-400 max-w-md mx-auto">
-              Ask questions about llms.txt files across the ecosystem. 
-              Explore LLM capabilities, context windows, models, and more.
+              Ask questions about llms.txt files across the ecosystem. Explore LLM capabilities,
+              context windows, models, and more.
             </p>
           </div>
-          
+
           {/* Message box */}
           <MessageBox />
         </div>
       </main>
-      
+
       {/* Footer */}
       <footer className="border-t border-neutral-200 dark:border-neutral-800 py-4 bg-white dark:bg-neutral-900">
         <div className="container mx-auto px-4 text-center text-sm text-neutral-500 dark:text-neutral-400">
-          <p>Powered by <a href="https://llmstxthub.com" className="underline hover:text-neutral-900 dark:hover:text-neutral-200">llms.txt Hub</a> | Data collected from open source implementations</p>
+          <p>
+            Powered by{' '}
+            <a
+              href="https://llmstxthub.com"
+              className="underline hover:text-neutral-900 dark:hover:text-neutral-200"
+            >
+              llms.txt Hub
+            </a>{' '}
+            | Data collected from open source implementations
+          </p>
         </div>
       </footer>
     </div>

@@ -1,0 +1,121 @@
+# LLM documentation for Netlify
+
+Netlify is a web platform for building highly performant, secure, and reliable websites and web apps.
+Use the following docs to identify the available capabilities and where to learn more about them.
+
+## Development & Functions
+- [Netlify CLI: Manage Functions](https://docs.netlify.com/cli/manage-functions/): Create, test, and serve Netlify functions locally using the Netlify CLI.  Invoke functions, debug, and deploy with ease.
+- [Netlify Edge Functions Overview](https://docs.netlify.com/edge-functions/overview/): Fast, personalized web experiences using TypeScript/JavaScript at the edge with Netlify; modify requests, localize content, serve ads, authenticate users, and more.
+- [Netlify Edge Functions API](https://docs.netlify.com/edge-functions/api/): Netlify Edge Functions API reference guide: request handling, response types, context object, supported Web APIs, and more.
+- [Netlify Edge Functions: Get Started](https://docs.netlify.com/edge-functions/get-started/): Learn to create, test, deploy, invoke, and monitor Netlify Edge Functions.
+- [Netlify Dev: Local Development](https://docs.netlify.com/cli/local-development/): Develop and share Netlify sites locally; use Netlify Dev for local development environments, including custom configurations and HTTPS.
+- [VS Code Netlify CLI Debugging](https://docs.netlify.com/cli/debug-with-vscode/): Configure VS Code to debug Netlify CLI functions and development server.
+- [Netlify CLI: Get Started](https://docs.netlify.com/cli/get-started/): Use Netlify's command-line interface for local development, builds, and deployment.
+- [Netlify API Quickstart](https://docs.netlify.com/api/get-started/): Netlify API basics, deployment, common endpoints, and authentication using OAuth2.
+- [Netlify Async Workloads](https://docs.netlify.com/async-workloads/writing-workloads/): Develop Async Workload functions with Netlify;  includes installation, function writing, event handling, retries, error handling, and type safety.
+- [Async Workloads: Get Started](https://docs.netlify.com/async-workloads/get-started/): Start using Netlify's Async Workloads extension: enable it, create basic functions, and send events.
+- [Edge Functions Configuration](https://docs.netlify.com/edge-functions/optional-configuration/): Configure Netlify Edge Functions with optional settings for directory, caching, and error handling to optimize performance and user experience.
+- [Edge Functions Limits](https://docs.netlify.com/edge-functions/limits/): Netlify Edge Functions: size, memory, execution time limits; invocation limits by plan; feature limitations and caveats.
+- [Edge Functions Integrations](https://docs.netlify.com/edge-functions/create-integration/): Integrate your framework with Netlify Edge Functions by generating function files and declarations; learn about build process integrations and the Netlify SDK.
+- [Netlify Edge Function Declarations](https://docs.netlify.com/edge-functions/declarations/): Configure Netlify edge functions using inline code or `netlify.toml` for specific URL patterns, including optional exclusions and processing order.
+- [Sending Events Async Workloads](https://docs.netlify.com/async-workloads/sending-events/): Send events to trigger Netlify Async Workload functions using AsyncWorkloadsClient or router API; includes scheduling and priority options.
+- [Multi-Step Workloads](https://docs.netlify.com/async-workloads/multi-step-workloads/): Build multi-step Netlify Async Workloads using step functions for durable, retryable workflows with parallel and nested steps.
+- [Netlify Async Workloads Configuration](https://docs.netlify.com/async-workloads/optional-configuration/): Customize Async Workloads settings, API keys, limits, and scheduler intervals for optimal performance.
+- [Netlify Async Workloads Lifecycle](https://docs.netlify.com/async-workloads/lifecycle/): Understanding Async Workloads lifecycle, guarantees, retries, failures, management APIs, and local/branch behavior.
+- [Async Workloads Limits](https://docs.netlify.com/async-workloads/limitations/): Netlify Async Workloads limitations: payload size restrictions, function configuration, and invocation methods.
+- [Netlify Async Workloads Overview](https://docs.netlify.com/async-workloads/overview/): Build scalable, event-driven apps with Netlify's Async Workloads; manage workflows, retries, and more.
+
+## Framework Integration
+- [Next.js Advanced API Routes](https://docs.netlify.com/frameworks/next-js/runtime-v4/advanced-api-routes/): Advanced API routes for Next.js on Netlify Runtime v4, including background and scheduled API routes.
+- [Next.js Adapter v5](https://docs.netlify.com/frameworks/next-js/overview/): Netlify's Next.js adapter v5 configures Netlify sites for optimal performance, including caching, on-demand revalidation, and image optimization.  It's open-source and automatically updates.
+- [Angular on Netlify](https://docs.netlify.com/frameworks/angular/): Deploy and optimize Angular apps on Netlify; leverage Netlify Image CDN, serverless functions, and more.
+- [Deploy Express on Netlify](https://docs.netlify.com/frameworks/express/): Deploy Express apps on Netlify using Netlify Functions; integrate with frontend or standalone.
+- [Astro on Netlify](https://docs.netlify.com/frameworks/astro/): Deploy high-performance Astro sites on Netlify; leverage features like partial hydration, Netlify Image CDN, and server-side rendering.
+- [Hydrogen on Netlify](https://docs.netlify.com/frameworks/hydrogen/): Deploy Shopify Hydrogen storefronts on Netlify using Netlify Edge Functions for enhanced performance;  includes setup guide and troubleshooting.
+- [Gatsby on Netlify](https://docs.netlify.com/frameworks/gatsby/?gatsby-version=adapters): Gatsby and Netlify integration: features, adapters, build processes, and performance optimization.  Covers Gatsby versions, Netlify plugins, and configuration.
+- [Hugo framework on Netlify](https://docs.netlify.com/frameworks/hugo/): Fast static site generator; build speed, themes, Netlify integration, and version control.
+- [Eleventy Static Site Generator on Netlify](https://docs.netlify.com/frameworks/eleventy/): Flexible, JavaScript-based SSG; Netlify integration, Edge Functions, build configurations.
+- [Next.js ISR on Netlify](https://docs.netlify.com/frameworks/next-js/runtime-v4/incremental-static-regeneration/): Configure Incremental Static Regeneration (ISR) on Netlify for Next.js version 10-13.4 using On-demand Builders and the Time To Live (TTL) feature; learn about configuration and alternatives.
+- [Next.js Middleware on Netlify](https://docs.netlify.com/frameworks/next-js/runtime-v4/middleware/): Configure and deploy Next.js Middleware on Netlify, leveraging Edge Functions for enhanced performance and advanced features like HTML rewrites and data transforms using the @netlify/next library.
+- [Next.js Redirects & Rewrites](https://docs.netlify.com/frameworks/next-js/runtime-v4/redirects-and-rewrites/): Configure redirects and rewrites for Next.js sites using Netlify's platform and the Next.js Runtime v4, understanding precedence and best practices.
+- [Netlify Framework Docs](https://docs.netlify.com/frameworks/): Netlify framework deployment configurations, build commands, and publish directory settings for various popular frameworks and architectures.
+- [Netlify Frameworks API](https://docs.netlify.com/frameworks-api/): Deploy web frameworks to Netlify;  full API reference for framework adapters.
+
+## Build & Configuration
+- [Netlify Build Configuration](https://docs.netlify.com/configure-builds/overview/): Configure Netlify's build settings, including build commands, publish directories, and more.
+- [Netlify File-Based Configuration](https://docs.netlify.com/configure-builds/file-based-configuration/): Configure Netlify builds, deploys, and settings using the netlify.toml file; learn best practices.
+- [Netlify Build Environment Variables](https://docs.netlify.com/configure-builds/environment-variables/): Configure Netlify environment variables for builds;  access and use them in your build process.
+- [Netlify Environment Variables](https://docs.netlify.com/environment-variables/overview/): Configure Netlify sites' build and functionality using environment variables; learn about options, overrides, and limitations.
+- [Netlify Build Software](https://docs.netlify.com/configure-builds/available-software-at-build-time/): Netlify build's available software, including languages (Node.js, Python, Ruby, etc.) and tools (npm, yarn, hugo etc.), versions, and configuration.
+- [Netlify Build Plugins](https://docs.netlify.com/build-plugins/): Extend Netlify build functionality with plugins; install, create, share, and manage plugins for enhanced build processes.
+- [Create Netlify Build Plugins](https://docs.netlify.com/build-plugins/create-plugins/): Learn how to build Netlify plugins using JavaScript or TypeScript, including ES modules, event handling, and plugin configuration.
+- [Share Netlify Build Plugins](https://docs.netlify.com/build-plugins/share-plugins/): Publish your Netlify plugins to npm for others to use via file-based install.
+- [Netlify Dependency Management](https://docs.netlify.com/configure-builds/manage-dependencies/): Manage dependencies for Netlify builds, specifying Node.js, Go, PHP, Python, Ruby, Rust, and Swift versions and dependencies.
+- [Netlify Build Control](https://docs.netlify.com/configure-builds/stop-or-activate-builds/): Stop or activate Netlify site builds; control production deploys, previews, and branch deploys; manage build status via UI or API.
+- [Netlify Build Ignoring](https://docs.netlify.com/configure-builds/ignore-builds/): Customize Netlify build process; prevent unnecessary builds using `ignore` command with Node.js or Bash. Skip builds based on branch, file changes, or custom logic.
+- [Netlify Build Troubleshooting](https://docs.netlify.com/configure-builds/troubleshooting-tips/): Troubleshoot failing Netlify builds; get AI-powered solutions for build errors and deploy failures; learn best practices and debugging steps.
+- [Netlify Monorepo Builds](https://docs.netlify.com/configure-builds/monorepos/): Configure Netlify builds for monorepo projects; automated and manual configuration options; base, package, build, and publish directory settings; commit status control.
+- [Netlify Build Hooks](https://docs.netlify.com/configure-builds/build-hooks/): Trigger Netlify builds and deploys using build hook URLs; customize with parameters and payloads.
+- [Netlify On-demand Builders](https://docs.netlify.com/configure-builds/on-demand-builders/): Generate web content via serverless functions, automatically cached on Netlify's Edge CDN for faster load times and improved performance.
+- [Netlify SPA Build Configurations](https://docs.netlify.com/configure-builds/javascript-spas/): Netlify build configuration for JavaScript single-page applications (SPAs), covering build commands, publish directory, avoiding 404s, and handling code splitting.
+- [Netlify Environment Variables](https://docs.netlify.com/frameworks/environment-variables/): Use Netlify environment variables during builds or after for browser, functions, or post-processing; learn about custom and Netlify variables.
+- [Netlify Environment Variables](https://docs.netlify.com/environment-variables/get-started/): Manage Netlify environment variables via UI, CLI, or API; use .env files; secure sensitive data.
+- [Netlify Secrets Controller](https://docs.netlify.com/environment-variables/secrets-controller/): Securely manage sensitive environment variables with Netlify's enhanced security policy and secrets scanning.
+
+## Data & Storage
+- [Netlify Blobs Overview](https://docs.netlify.com/blobs/overview/): Netlify Blobs: Store and retrieve blobs and unstructured data; use as a key/value store or database; offers CRUD operations via functions, edge functions, build plugins, and CLI.
+- [Netlify Connect Overview](https://docs.netlify.com/connect/overview/): Unify content sources, access data through GraphQL API, improve web architecture, and boost performance with Netlify Connect.
+- [Netlify Connect Data Access](https://docs.netlify.com/connect/access-data/): Access and query Netlify Connect data using GraphQL APIs, sandboxes, and clients; includes schema review, query optimization, and caching details.
+- [Netlify Connect Setup](https://docs.netlify.com/connect/get-started/?connect-data-source-type=commercetools): Configure Netlify Connect data layers to sync data from various sources, including commercetools, Contentful, and more, using a guided setup flow.
+- [Manage Data Sources](https://docs.netlify.com/connect/manage-data-layers/manage-data-sources/): Manage Netlify Connect data sources: add, edit, delete, and configure connections to various systems like CMSs. Enterprise plan required.
+- [Netlify Connect Data Sync](https://docs.netlify.com/connect/sync-events/): Learn about automatic and manual data syncs in Netlify Connect, including event types and troubleshooting.
+- [Netlify Connect API Authentication](https://docs.netlify.com/connect/api-authentication/): Secure your data layer with API tokens and scopes; generate, manage, and revoke tokens for controlled access.
+- [Netlify Connect Webhooks](https://docs.netlify.com/connect/manage-data-layers/manage-webhooks/): Configure Netlify Connect data layer webhooks to trigger data syncs from external systems; learn to add, delete, and manage webhooks for efficient data updates.
+- [Netlify Connect Cross-References](https://docs.netlify.com/connect/manage-data-layers/manage-cross-references/): Manage cross-references between data sources in Netlify Connect to streamline data access and improve performance.
+- [Netlify Connect Data Revisions](https://docs.netlify.com/connect/data-revisions/): Manage Netlify Connect data revisions: pin, unpin, review, and access data from specific points in time via the UI or API.
+- [Netlify Connect Activity Monitoring](https://docs.netlify.com/connect/monitor-activity/): Monitor and troubleshoot Netlify Connect data layer sync events and team member activities through detailed logs and Slack notifications.
+- [Netlify Connect Troubleshooting](https://docs.netlify.com/connect/troubleshooting-tips/): Tips for resolving Netlify Connect issues; find IDs, webhooks, and troubleshoot data sources.
+- [Manage Connected Sites](https://docs.netlify.com/connect/manage-data-layers/manage-connected-sites/): Manage Netlify Connect data layer connected sites; add or remove sites to trigger automatic builds and deploys based on data changes.
+- [Netlify Data Layer Management](https://docs.netlify.com/connect/manage-data-layers/overview/): Manage Netlify data layers: access settings, update information, configurations, API authentication, manage revisions, and delete layers.
+
+## Forms & User Input
+- [Netlify Form Setup](https://docs.netlify.com/forms/setup/): Enable Netlify Forms, configure HTML or JavaScript forms, handle submissions, and set up notifications.
+- [Netlify Forms Notifications](https://docs.netlify.com/forms/notifications/): Configure email notifications for form submissions using Netlify Forms.
+- [Netlify Form Submissions](https://docs.netlify.com/forms/submissions/): Manage and view Netlify form submissions, export data, handle sensitive data, and use API endpoints.
+- [Netlify Form Spam Filters](https://docs.netlify.com/forms/spam-filters/): Prevent spam submissions with Akismet, honeypot fields, and reCAPTCHA; manage spam and verified submissions.
+- [Netlify Forms Troubleshooting](https://docs.netlify.com/forms/troubleshooting-tips/): Troubleshoot Netlify form setup issues: custom success pages, spam prevention, missing submissions, and Next.js v5 compatibility.
+
+## Domain & HTTPS Management
+- [Netlify Custom Domains](https://docs.netlify.com/domains/domains-fundamentals/domains-glossary/#custom-domain): Configure custom domains for Netlify sites, including production, previews, and branches.
+- [Netlify HTTPS Setup Guide](https://docs.netlify.com/domains/secure-domains-with-https/https-ssl/): Configure Netlify for HTTPS, using automatic certificates or your own custom certificates.
+- [External DNS Configuration](https://docs.netlify.com/domains/configure-domains/configure-external-dns/): Configure external DNS to point your domain to Netlify; instructions for apex and subdomains.
+- [Netlify DNS Records](https://docs.netlify.com/domains-https/netlify-dns/dns-records/): Manage DNS records for your Netlify domains, including adding, editing, deleting, and supported types like A, AAAA, CNAME, MX, and TXT records.
+- [Netlify DNS: Manage Domains](https://docs.netlify.com/domains/why-netlify-dns/): Manage DNS records, add domains, deploy subdomains, and configure IPv6 using Netlify DNS.
+- [Netlify DNS and HTTPS Troubleshooting](https://docs.netlify.com/domains/troubleshooting-tips/): Troubleshoot DNS and HTTPS issues with Netlify custom domains and branch subdomains; tips for resolving common certificate and DNS configuration problems.
+- [Netlify Multiple Domains](https://docs.netlify.com/domains/manage-domains/manage-multiple-domains/): Manage multiple custom domains and subdomains on Netlify, including aliases, redirects, and configurations for production, previews, and branches.
+- [Netlify Domain Registration](https://docs.netlify.com/domains-https/netlify-dns/domain-registration/): Register, manage, and renew domains directly through Netlify; includes DNS configuration and automatic HTTPS.
+- [Delegate Domain to Netlify DNS](https://docs.netlify.com/domains/get-started-with-domains/): Manage DNS records with Netlify; instructions for delegating your domain and subdomains.
+- [Delegate Subdomain to Netlify DNS](https://docs.netlify.com/domains/configure-domains/delegate-a-standalone-subdomain/): Delegate a subdomain to Netlify DNS for seamless website management and improved performance.
+- [Deprecated: Netlify Dedicated Secondary DNS](https://docs.netlify.com/domains-https/netlify-dns/dedicated-secondary-dns/): Netlify's dedicated secondary DNS is deprecated due to improved DNS reliability and redundancy.
+- [Netlify Automatic Deploy Subdomains](https://docs.netlify.com/domains/manage-domains/automatic-deploy-subdomains/): Configure branded deploy URLs for previews or branch deploys using a custom domain managed by Netlify DNS, enabling seamless integration with third-party services and enhanced security.
+
+## Team & Account Management
+- [Netlify Team Site Management](https://docs.netlify.com/accounts-and-billing/team-management/team-owned-sites/): Transfer sites, manage team labels, and organize Netlify sites efficiently.
+- [Netlify Team Member Management](https://docs.netlify.com/accounts-and-billing/team-management/manage-team-members/): Add, invite, manage, and remove team members;  control permissions and site access.
+- [Netlify Team Roles and Permissions](https://docs.netlify.com/accounts-and-billing/team-management/roles-and-permissions/): Manage team member access, permissions, and roles within the Netlify platform.
+- [Netlify Team Audit Log](https://docs.netlify.com/accounts-and-billing/team-management/team-audit-log/): Track team and site changes with Netlify's detailed audit log; filter by events and sort by date.
+- [Netlify User Settings](https://docs.netlify.com/accounts-and-billing/user-settings/): Manage your Netlify user profile, avatar, password, connect Git providers, choose UI themes, and configure two-factor authentication.
+- [Netlify Organization Management](https://docs.netlify.com/accounts-and-billing/organization-management/): Manage Netlify teams, billing, users, and settings via organization overview dashboard.
+- [Netlify Team Management](https://docs.netlify.com/accounts-and-billing/team-management/): Manage Netlify teams, members, settings, billing, and usage.
+
+## Billing & Usage
+- [Netlify Billing FAQ](https://docs.netlify.com/accounts-and-billing/billing-faq/): Answers frequently asked questions about Netlify billing, team membership, metered features, usage limits, and charges.
+- [Netlify Forms Usage & Billing](https://docs.netlify.com/forms/usage-and-billing/): Netlify Forms usage and billing:  Track submissions, file uploads, and change service levels.  See pricing and FAQs.
+- [Netlify Edge Functions Usage and Billing](https://docs.netlify.com/edge-functions/usage-and-billing/): Monitor Edge Functions invocations, usage, and billing; understand pricing and limits.
+- [Netlify Connect Usage & Billing](https://docs.netlify.com/connect/usage-and-billing/): Monitor Netlify Connect usage, bandwidth, data layers, and sources; view billing and pricing details; find troubleshooting tips.
+- [Netlify Billing](https://docs.netlify.com/accounts-and-billing/billing/): Manage Netlify team and organization billing, usage, payments, and settings.
+
+## General Documentation
+- [Netlify Docs: Build, Deploy, Scale](https://docs.netlify.com/): Netlify documentation: tutorials, guides, platform primitives, framework support, and more.
+- [Netlify Help Center](https://docs.netlify.com/ask-netlify/): Get quick help with Netlify; login required for assistance; contact support for login issues, transfers, or fraud.
+- [Netlify AI Publishing](https://docs.netlify.com/ai-assisted-publishing/): AI-powered content conversion for Netlify sites; currently in private beta.
