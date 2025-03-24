@@ -7,13 +7,13 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@next/bundle-analyzer": "^15.1.7",
+    "@next/bundle-analyzer": "^15.2.3",
     "@t3-oss/env-core": "^0.12.0",
     "@t3-oss/env-nextjs": "^0.12.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "next": "15.1.7"
+    "next": "15.2.3"
   }
 }
