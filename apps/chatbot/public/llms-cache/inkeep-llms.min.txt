@@ -1,0 +1,146 @@
+# Inkeep
+## Docs
+- [AI for Customers](https://docs.inkeep.ai/overview/ai-for-customers)
+- [AI for Support Teams](https://docs.inkeep.ai/overview/ai-for-support-teams)
+- [Why Inkeep?](https://docs.inkeep.ai/overview/why-inkeep)
+- [Privacy](https://docs.inkeep.ai/overview/privacy):How Inkeep protects your data.
+- [Add AI Chat to your Docusaurus docs](https://docs.inkeep.ai/integrations/docusaurus/chat-button)
+- [Add AI Search to your Docusaurus docs](https://docs.inkeep.ai/integrations/docusaurus/search-bar)
+- [Add AI Search & Chat to your Docusaurus docs](https://docs.inkeep.ai/integrations/docusaurus/chat-button-and-search-bar)
+- [Add AI Chat to your GitBook docs](https://docs.inkeep.ai/integrations/gitbook/chat-button)
+- [Add AI Chat to your ReadMe docs](https://docs.inkeep.ai/integrations/readme/chat-button)
+- [Add AI Search to your ReadMe docs](https://docs.inkeep.ai/integrations/readme/search-bar)
+- [Add AI Search & Chat Button to your ReadMe docs](https://docs.inkeep.ai/integrations/readme/chat-button-and-search-bar)
+- [Add Inkeep's UI components to your Fumadocs](https://docs.inkeep.ai/integrations/fumadocs/chat-button)
+- [Add AI Search to your Fumadocs](https://docs.inkeep.ai/integrations/fumadocs/search-bar)
+- [Add AI Chat to your Nextra docs](https://docs.inkeep.ai/integrations/nextra/chat-button)
+- [Add AI Search to your Nextra docs](https://docs.inkeep.ai/integrations/nextra/search-bar)
+- [Add an Embedded AI Chat to your Nextra docs](https://docs.inkeep.ai/integrations/nextra/embedded-chat)
+- [Add a Custom Modal Trigger to your Nextra docs](https://docs.inkeep.ai/integrations/nextra/custom-modal-trigger)
+- [Add AI Search & Chat Button to your Nextra docs](https://docs.inkeep.ai/integrations/nextra/chat-button-and-search-bar)
+- [Add Inkeep's UI components to your Mintlify docs](https://docs.inkeep.ai/integrations/mintlify)
+- [Add AI Chat to your VitePress docs](https://docs.inkeep.ai/integrations/vitepress/chat-button)
+- [Add AI Search to your VitePress docs](https://docs.inkeep.ai/integrations/vitepress/search-bar)
+- [Add AI Chat to your VuePress docs](https://docs.inkeep.ai/integrations/vuepress/chat-button)
+- [Add AI Search to your VuePress docs](https://docs.inkeep.ai/integrations/vuepress/search-bar)
+- [Add an Embedded Chat to your VuePress docs](https://docs.inkeep.ai/integrations/vuepress/embedded-chat):Add AI chat to your VuePress docs.
+- [Add AI Chat to your Document360 docs](https://docs.inkeep.ai/integrations/document360/chat-button)
+- [Add AI Search to your Document360 docs](https://docs.inkeep.ai/integrations/document360/search-bar)
+- [Add AI Search & Chat Button to your Document360 docs](https://docs.inkeep.ai/integrations/document360/chat-button-and-search-bar)
+- [Add AI Chat to your Sphinx docs](https://docs.inkeep.ai/integrations/sphinx/chat-button)
+- [Add AI Search to your Sphinx docs](https://docs.inkeep.ai/integrations/sphinx/search-bar)
+- [Add AI Chat to your Hugo docs](https://docs.inkeep.ai/integrations/hugo/ananke)
+- [Add AI Chat to your Docsy docs](https://docs.inkeep.ai/integrations/hugo/docsy/chat-button)
+- [Add AI Search to your Docsy docs](https://docs.inkeep.ai/integrations/hugo/docsy/search-bar)
+- [Add AI Chat to your Redocly API docs](https://docs.inkeep.ai/integrations/redocly/api-docs/chat-button)
+- [Add AI Search to Redocly API docs](https://docs.inkeep.ai/integrations/redocly/api-docs/search-bar)
+- [Add AI Chat to your Redocly developer portal](https://docs.inkeep.ai/integrations/redocly/developer-portal/chat-button)
+- [Add AI Search to your Redocly developer portal](https://docs.inkeep.ai/integrations/redocly/developer-portal/search-bar)
+- [Add AI Search to your MkDocs docs](https://docs.inkeep.ai/integrations/mkdocs/search-bar)
+- [Add AI Chat to your MkDocs docs](https://docs.inkeep.ai/integrations/mkdocs/chat-button)
+- [Add AI Search & Chat Button to your MkDocs docs](https://docs.inkeep.ai/integrations/mkdocs/chat-button-and-search-bar)
+- [Add AI Chat to your Webflow site](https://docs.inkeep.ai/integrations/webflow/chat-button)
+- [Add AI Search to your Webflow site](https://docs.inkeep.ai/integrations/webflow/search-bar)
+- [Add an Embedded AI Chat to your Webflow site](https://docs.inkeep.ai/integrations/webflow/embedded-chat)
+- [Add a Custom Modal Trigger to your Webflow site](https://docs.inkeep.ai/integrations/webflow/custom-modal-trigger)
+- [Add AI Chat to your Framer website](https://docs.inkeep.ai/integrations/framer/chat-button)
+- [Add AI Search to your Framer website](https://docs.inkeep.ai/integrations/framer/search-bar)
+- [Add AI Chat to your Framer website](https://docs.inkeep.ai/integrations/framer/embedded-chat)
+- [Add AI Chat to your WordPress site](https://docs.inkeep.ai/integrations/wordpress/chat-button)
+- [Add AI Search to your WordPress site](https://docs.inkeep.ai/integrations/wordpress/search-bar)
+- [Add AI Chat to your Gatsby app](https://docs.inkeep.ai/integrations/gatsby/chat-button)
+- [Add AI Search to your Gatsby app](https://docs.inkeep.ai/integrations/gatsby/search-bar)
+- [Add an Embedded AI Chat to your Gatsby app](https://docs.inkeep.ai/integrations/gatsby/embedded-chat)
+- [Add AI Chat using Google Tag Manager](https://docs.inkeep.ai/integrations/google-tag-manager/chat-button)
+- [Add AI Chat to your Zendesk help center](https://docs.inkeep.ai/integrations/zendesk/help-center/chat-button)
+- [Add AI Search to your Zendesk help center](https://docs.inkeep.ai/integrations/zendesk/help-center/search-bar)
+- [Add AI Search & Chat to your Zendesk help center](https://docs.inkeep.ai/integrations/zendesk/help-center/chat-button-and-search-bar)
+- [Embedded Chat](https://docs.inkeep.ai/integrations/zendesk/help-center/embedded-chat):Add AI chat to your Zendesk Help Center.
+- [Add an AI chatbot to your Discord server](https://docs.inkeep.ai/integrations/discord)
+- [Add an AI chatbot to your Slack community](https://docs.inkeep.ai/integrations/slack/community)
+- [Add AI Chat to your Discourse community](https://docs.inkeep.ai/integrations/discourse)
+- [Add AI Chat to your Bettermode community](https://docs.inkeep.ai/integrations/bettermode)
+- [Add AI Chat to your Next.js app](https://docs.inkeep.ai/integrations/nextjs/chat-button)
+- [Add AI Search to your Next.js app](https://docs.inkeep.ai/integrations/nextjs/search-bar)
+- [Add an Embedded Chat to your Next.js app](https://docs.inkeep.ai/integrations/nextjs/embedded-chat):Add AI chat to your Next.js application.
+- [Add a Custom Modal Trigger to your Next.js app](https://docs.inkeep.ai/integrations/nextjs/custom-modal-trigger):Trigger the Inkeep modal with a custom button in your Next.js app.
+- [Add AI Chat to your Remix app](https://docs.inkeep.ai/integrations/remix/chat-button)
+- [Add AI Search to your Remix app](https://docs.inkeep.ai/integrations/remix/search-bar)
+- [Add AI Chat to your Astro app](https://docs.inkeep.ai/integrations/astro/chat-button)
+- [Add AI search to your Astro app](https://docs.inkeep.ai/integrations/astro/search-bar)
+- [Add a Copilot to your Zendesk Workspace](https://docs.inkeep.ai/support-tools/agent-copilot/zendesk):Install Keep, Inkeep's Copilot for Support Agents, to your Zendesk workspace.
+- [Copilot for Support Agents (Any Platform)](https://docs.inkeep.ai/support-tools/agent-copilot/chrome-extension):Keep, Inkeep's copilot for support agents, can be used with any support platform as a Chrome Extension.
+- [Add an AI Copilot to your Intercom workspace](https://docs.inkeep.ai/support-tools/agent-copilot/intercom):Install Keep, Inkeep's Copilot for Support Agents, to your Intercom workspace
+- [Add an AI Copilot to your Plain workspace](https://docs.inkeep.ai/support-tools/agent-copilot/plain):Install Keep, Inkeep's Copilot for Support Agents, to your Plain workspace
+- [Add an AI Copilot to your Atlas workspace](https://docs.inkeep.ai/support-tools/agent-copilot/atlas):Install Keep, Inkeep's Copilot for Support Agents, to your Atlas workspace
+- [Add an AI Copilot to your Help Scout inbox](https://docs.inkeep.ai/support-tools/agent-copilot/helpscout):Install Keep, Inkeep's Copilot for Support Agents, to your Help Scout inbox
+- [Turn closed support tickets into FAQs](https://docs.inkeep.ai/support-tools/agent-copilot/draft-faq)
+- [Provide dynamic information to the copilot using a prehook](https://docs.inkeep.ai/support-tools/agent-copilot/prehook)
+- [Auto-reply to support tickets with Inkeep AI](https://docs.inkeep.ai/support-tools/auto-reply/tickets)
+- [Auto-reply to live chat with Inkeep AI](https://docs.inkeep.ai/support-tools/auto-reply/live-chat)
+- [Route, classify and label your support tickets](https://docs.inkeep.ai/support-tools/ticket-routing/api)
+- [Add an AI Slack bot to your internal channels](https://docs.inkeep.ai/integrations/slack/internal-team)
+- [Content & Feature Gaps](https://docs.inkeep.ai/analytics/content-gaps):Identify documentation gaps and feature requests through AI-powered insights
+- [Viewing Conversation Details and Stats](https://docs.inkeep.ai/analytics/usage-reports)
+- [Projects Overview](https://docs.inkeep.ai/projects/overview)
+- [Custom Prompts & Guidance](https://docs.inkeep.ai/projects/custom-guidance)
+- [Tune Answers with FAQs](https://docs.inkeep.ai/projects/tune-answers)
+- [Onboarding sources](https://docs.inkeep.ai/sources/onboard-new-sources)
+- [Updating content](https://docs.inkeep.ai/sources/updating-content):How content is kept up to date for any source
+- [UI Kit Components](https://docs.inkeep.ai/ui-components/overview)
+- [Embedded Chat (JS)](https://docs.inkeep.ai/ui-components/js-snippet/embedded-chat):Add a chat UI directly on a dedicated page
+- [Embedded Search (JS)](https://docs.inkeep.ai/ui-components/js-snippet/embedded-search):Add a search UI directly on a dedicated page
+- [Embedded Search and Chat (JS)](https://docs.inkeep.ai/ui-components/js-snippet/embedded-search-and-chat):Add a toggleable search and chat UI directly on a dedicated page
+- [Custom Trigger for a modal (JS)](https://docs.inkeep.ai/ui-components/js-snippet/custom-modal-trigger)
+- [Chat Button (JS)](https://docs.inkeep.ai/ui-components/js-snippet/chat-button):Add the Inkeep chat button using a JS snippet.
+- [Search Bar (JS)](https://docs.inkeep.ai/ui-components/js-snippet/search-bar):Add the Inkeep search bar using a JS snippet.
+- [Intelligent Form (JS)](https://docs.inkeep.ai/ui-components/js-snippet/intelligent-form):Add an intelligent form UI directly on a dedicated page
+- [Migrating from @inkeep/uikit-js to @inkeep/cxkit-js](https://docs.inkeep.ai/ui-components/migration-guide/javascript)
+- [Embedded Chat (React)](https://docs.inkeep.ai/ui-components/react/embedded-chat):Add a chat UI directly on a dedicated React powered page.
+- [Embedded Search (React)](https://docs.inkeep.ai/ui-components/react/embedded-search):Add a search UI directly on a dedicated React powered page.
+- [Embedded Search and Chat (React)](https://docs.inkeep.ai/ui-components/react/embedded-search-and-chat):Add a toggleable search and chat UI directly on a dedicated page
+- [Custom Trigger for a modal (React)](https://docs.inkeep.ai/ui-components/react/custom-modal-trigger)
+- [Chat Button (React)](https://docs.inkeep.ai/ui-components/react/chat-button):Add a chat button React component that triggers the Inkeep modal.
+- [Search Bar (React)](https://docs.inkeep.ai/ui-components/react/search-bar):Add the Inkeep search bar as a React component.
+- [Intelligent Form (React)](https://docs.inkeep.ai/ui-components/react/intelligent-form):Add an intelligent form UI directly on a dedicated React powered page.
+- [Migrating from @inkeep/uikit to @inkeep/cxkit-react](https://docs.inkeep.ai/ui-components/migration-guide/inkeep-cxkit-react/0.5)
+- [Base](https://docs.inkeep.ai/ui-components/common-settings/base):Review the basic configuration settings for our widgets.
+- [Search](https://docs.inkeep.ai/ui-components/common-settings/search):Customize search-related settings for the Inkeep widgets.
+- [AI Chat](https://docs.inkeep.ai/ui-components/common-settings/ai-chat):Customize the chat experience for the Inkeep widgets.
+- [Form](https://docs.inkeep.ai/ui-components/common-settings/form):Customize form-related settings for the Intelligent Form widget.
+- [Style the components](https://docs.inkeep.ai/customization-guides/style-components):Customize the widgets to match your brand.
+- [Add your own analytics](https://docs.inkeep.ai/customization-guides/use-your-own-analytics):Use our callback function to log events from the search and chat widgets to your own analytics tool.
+- [Custom Instructions](https://docs.inkeep.ai/customization-guides/custom-instructions)
+- [Add user authentication](https://docs.inkeep.ai/customization-guides/authenticate-users):Gate search or chat API calls with authentication.
+- [Sharable chats](https://docs.inkeep.ai/customization-guides/sharable-chats)
+- [Actions](https://docs.inkeep.ai/customization-guides/actions):Use actions to add custom behavior to the Inkeep widgets.
+- [Content Security Policy (CSP)](https://docs.inkeep.ai/customization-guides/content-security-policy)
+- [API keys for Public Assistants](https://docs.inkeep.ai/ui-components/public-api-keys)
+- [Migrating to @inkeep/cxkit](https://docs.inkeep.ai/ui-components/migration-guide)
+- [UI Components Release Notes](https://docs.inkeep.ai/release-notes/ui-components)
+- [Inkeep AI API Overview](https://docs.inkeep.ai/ai-api/chat-completions-api)
+- [Question Answer API Overview](https://docs.inkeep.ai/ai-api/question-answer-mode/overview)
+- [Using the Question Answer API with the Vercel AI SDK](https://docs.inkeep.ai/ai-api/question-answer-mode/vercel-ai-sdk)
+- [Use the Question Answer API with the OpenAI SDK](https://docs.inkeep.ai/ai-api/question-answer-mode/openai-sdk)
+- [Implement Custom Tool Calls with the Question Answer API](https://docs.inkeep.ai/ai-api/question-answer-mode/custom-tool-calls)
+- [Use the Context Mode API with the Vercel AI SDK](https://docs.inkeep.ai/ai-api/context-mode/vercel-ai-sdk)
+- [Call the Inkeep RAG API using an HTTP Request](https://docs.inkeep.ai/ai-api/rag-mode/http-request)
+- [Using the Inkeep RAG API with the OpenAI SDK](https://docs.inkeep.ai/ai-api/rag-mode/openai-sdk)
+- [Using the Inkeep RAG API with the Vercel AI SDK](https://docs.inkeep.ai/ai-api/rag-mode/vercel-ai-sdk)
+- [Add analytics to any OpenAI compatible chat](https://docs.inkeep.ai/analytics-api/add-analytics-to-any-chat)
+- [Log Conversation](https://docs.inkeep.ai/analytics-api/conversation/log-conversation):Logs a new conversation or updates an existing one with new messages. Always include all messages.
+**API Key Types:** `WEB`, `API`
+- [Get Conversation](https://docs.inkeep.ai/analytics-api/conversation/get-conversation)
+- [Delete Conversation](https://docs.inkeep.ai/analytics-api/conversation/delete-conversation)
+- [Get All Conversations](https://docs.inkeep.ai/analytics-api/conversation/get-all-conversation)
+- [Get All Feedback](https://docs.inkeep.ai/analytics-api/feedback/get-all-feedback)
+- [Submit Feedback](https://docs.inkeep.ai/analytics-api/feedback/submit-feedback)
+- [Log Event](https://docs.inkeep.ai/analytics-api/event/log-event)
+- [](https://docs.inkeep.ai/analytics-api/query/export-semantic-search)
+- [Query Conversations](https://docs.inkeep.ai/analytics-api/query/query-conversations)
+- [Query Events](https://docs.inkeep.ai/analytics-api/query/query-events)
+- [Query Semantic Threads](https://docs.inkeep.ai/analytics-api/query/query-semantic-threads)
+- [Pricing](https://docs.inkeep.ai/faqs/pricing)
+- [Features](https://docs.inkeep.ai/faqs/features)
+- [Troubleshooting](https://docs.inkeep.ai/faqs/troubleshooting)
+- [Comparisons](https://docs.inkeep.ai/faqs/comparisons):How does Inkeep compare to other AI search and chat services?

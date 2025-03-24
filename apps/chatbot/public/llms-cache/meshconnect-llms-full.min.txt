@@ -1,0 +1,2092 @@
+# Get account balance
+Source: https://docs.meshconnect.com/api-reference/balance/get-account-balance
+post /api/v1/balance/get
+Get real-time account fiat balances.
+# Get aggregated portfolio fiat balances
+Source: https://docs.meshconnect.com/api-reference/balance/get-aggregated-portfolio-fiat-balances
+get /api/v1/balance/portfolio
+Get cached aggregated fiat balances from all connected integrations.
+# Get health status
+Source: https://docs.meshconnect.com/api-reference/managed-account-authentication/get-health-status
+get /api/v1/status
+Get the list of supported institutions and their health statuses.
+# Get Link token with parameters
+Source: https://docs.meshconnect.com/api-reference/managed-account-authentication/get-link-token-with-parameters
+post /api/v1/linktoken
+Get a short lived, one-time use token for initializing a Link session using the client-side SDKs
+# Refresh auth token
+Source: https://docs.meshconnect.com/api-reference/managed-account-authentication/refresh-auth-token
+post /api/v1/token/refresh
+Refresh auth token of the connected institution.
+Some institutions do not require tokens to be refreshed.
+The following institutions require custom flows:
+WeBull: AuthToken should be provided along with the RefreshToken
+Vanguard: security settings may activate MFA, requiring user action.
+If MFA is triggered, a second refresh request should be sent.
+Second request should contain MFA code and access token obtained from initial response
+# Remove connection
+Source: https://docs.meshconnect.com/api-reference/managed-account-authentication/remove-connection
+delete /api/v1/account
+Remove connection to the financial institution and erase all related data completely.
+# Retrieve the list of all available integrations.
+Source: https://docs.meshconnect.com/api-reference/managed-account-authentication/retrieve-the-list-of-all-available-integrations
+get /api/v1/integrations
+Returns a list of integrations with details including the integration ID, name, type,
+DeFi wallet provider ID, and categories.
+# Configure transfer
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/configure-transfer
+post /api/v1/transfers/managed/configure
+**Get the list of networks and tokens eligible for a transfer, based on the provided request data.**
+---
+Transfers can be configured either from one connected account to another connected account, or
+from a connected account to any arbitrary address or addresses.
+* **From one connected account to another connected account:**
+The API client provides `FromAuthToken` that is representing the source account and `ToAuthToken` that is representing the target account. Front API maps networks and tokens supported by both accounts and returns all tokens and networks eligible for a transfer as the result.
+* **From a connected account to any arbitrary address:**
+The API client provides `FromAuthToken` that is representing the source account and the list of target addresses using the `ToAddresses` field. Front API verifies the addresses and returns the list of tokens, eligible to be transferred as the result of the operation.
+Returns the list of holdings on the account that can be used to perform the transfer. Each holdings item
+contains the list of supported networks that can be used to transfer the corresponding asset.
+Each network contains details such as gas fees and the amount eligible to be transferred.
+# Execute transfer
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/execute-transfer
+post /api/v1/transfers/managed/execute
+**Commit the previously previewed transfer.**
+---
+Previews the transfer, using the `PreviewId` value.
+Handles multi-factor authentication codes if the account is configured to use them for additional security.
+Returns the status of the transfer and the details of the transfer if it was initiated successfully.
+# Get deposit address
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/get-deposit-address
+post /api/v1/transfers/managed/address/get
+Get or generate a cryptocurrency deposit address that can be used to transfer assets to the financial institution
+# Get integrations
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/get-integrations
+get /api/v1/transfers/managed/integrations
+**Get supported integrations list.**
+---
+Get the list of all integrations supported by Mesh to perform transfers, including which tokens and networks are supported.
+# Get networks
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/get-networks
+get /api/v1/transfers/managed/networks
+**Get supported networks list.**
+---
+Get the list of all networks supported by Mesh to perform transfers, including which tokens and integrations are supported.
+# Get supported tokens list
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/get-supported-tokens-list
+get /api/v1/transfers/managed/tokens
+Get the list of all tokens supported by Mesh to perform transfers, including which networks and integrations are supported.
+# Get transfers initiated by Mesh
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/get-transfers-initiated-by-mesh
+get /api/v1/transfers/managed/mesh
+Get cryptocurrency transfers initiated by Mesh on exchanges or self-custody wallets.
+# Preview transfer
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/preview-transfer
+post /api/v1/transfers/managed/preview
+**Validate and preview the transfer.**
+---
+Validates the transfer, calculates the relevant amount in crypto if requested amount was in fiat and updates
+the current network fee values.
+This endpoint uses the `NetworkId` field to specify which network will be used to perform the transfer. The target `NetworkId`
+should be selected after configuring the transfer using `/configure` endpoint.
+Returns the `PreviewId` value that can be used to commit the transfer.
+# Quote transfer
+Source: https://docs.meshconnect.com/api-reference/managed-transfers/quote-transfer
+post /api/v1/transfers/managed/quote
+Get a quote for transferring a fiat amount from a brokerage account in a given cryptocurrency over a specified network.
+Returns min and max fees and amounts to account for different funding sources (existing crypto balance, cash balance or
+ACH/debit deposit). Currently only supported for Coinbase.
+# Get aggregated portfolio
+Source: https://docs.meshconnect.com/api-reference/portfolio/get-aggregated-portfolio
+get /api/v1/holdings/portfolio
+Get the aggregated portfolio of the user containing market values.
+# Get holdings.
+Source: https://docs.meshconnect.com/api-reference/portfolio/get-holdings
+post /api/v1/holdings/get
+Obtain assets from the connected investment account. Performs realtime API call to the underlying integration.
+# Get holdings values.
+Source: https://docs.meshconnect.com/api-reference/portfolio/get-holdings-values
+post /api/v1/holdings/value
+Obtain assets from the connected investment account and return total value and performance.
+Performs realtime API call to the underlying integration.
+# Authenticate user's account
+Source: https://docs.meshconnect.com/api-reference/self-managed-account-authentication/authenticate-users-account
+post /api/v1/authenticate
+Authenticate user's brokerage/exchange account programmatically (not using the Web Catalog UI)
+# Get authentication schemes
+Source: https://docs.meshconnect.com/api-reference/self-managed-account-authentication/get-authentication-schemes
+get /api/v1/authenticationSchemes
+Get authentication schemes of available integrations to perform authentication programmatically (not using
+the Web Catalog UI).
+# Get OAuth authentication link
+Source: https://docs.meshconnect.com/api-reference/self-managed-account-authentication/get-oauth-authentication-link
+get /api/v1/authenticate/{brokerType}
+Get OAuth link for the integrations with `OAuth` AuthenticationSchemeType
+# Cancel order execution
+Source: https://docs.meshconnect.com/api-reference/transactions/cancel-order-execution
+post /api/v1/transactions/cancel
+Cancels a pending order (an order with `InProgress` status).
+`SymbolPair` is required to be provided for `Binance`, `BinanceInternational`, `Okx` and `BitFlyer` institutions.
+This value
+# Execute order
+Source: https://docs.meshconnect.com/api-reference/transactions/execute-order
+post /api/v1/transactions/{side}
+Validates the order information and then calls institution's API to execute an order.
+It's recommended to call this endpoint after calling the `preview` endpoint to make sure that the
+order execution request is correct.
+# Get supported order features for institution
+Source: https://docs.meshconnect.com/api-reference/transactions/get-supported-order-features-for-institution
+post /api/v1/transactions/featureList
+Get supported features for trading for a particular financial institution. Different institutions support different
+features (e.g. different `OrderType` or different sets of `TimeInForce` values), so this endpoint is used to
+describe such features for provided financial institution.
+# Get symbol information
+Source: https://docs.meshconnect.com/api-reference/transactions/get-symbol-information
+post /api/v1/transactions/symbolinfo
+Returns information on trading allowance for a provided symbol.
+For example - some institutions allow fractional trading for some symbols, but do not allow it
+for others. So before placing an order the API client can check if the required symbol can be traded fractionally
+with the provided institution.
+# Get transaction details
+Source: https://docs.meshconnect.com/api-reference/transactions/get-transaction-details
+post /api/v1/transactions/details
+Get details of an executed order. Typically used to poll the status of the previously executed order.
+# Get transactions
+Source: https://docs.meshconnect.com/api-reference/transactions/get-transactions
+post /api/v1/transactions/list
+Get transactions on the account - the paginated history of the executed orders along with the pending orders.
+# Preview order execution
+Source: https://docs.meshconnect.com/api-reference/transactions/preview-order-execution
+post /api/v1/transactions/preview/{side}
+Validates the order information (such as necessary balance availability), and returns additional information,
+such as expected order fee.
+Does not execute the order.
+# Get deposit address
+Source: https://docs.meshconnect.com/api-reference/transfers/get-deposit-address
+post /api/v1/transfers/address/get
+Get or generate a cryptocurrency deposit address that can be used to transfer assets to the financial institution
+# Get details of asset
+Source: https://docs.meshconnect.com/api-reference/transfers/get-details-of-asset
+post /api/v1/transfers/symbol/details
+Get details of the asset for deposit or withdrawal. For example, several exchanges support same tokens over multiple
+blockchains, and thus require the name of chain to be supplied for transfers. This endpoint allows getting such details.
+# Get transfer details
+Source: https://docs.meshconnect.com/api-reference/transfers/get-transfer-details
+post /api/v1/transfers/details
+Get details of a specific transfer (withdrawals or deposits) executed from an exchange.
+Only supports Exchange integrations.
+# Get transfer history
+Source: https://docs.meshconnect.com/api-reference/transfers/get-transfer-history
+post /api/v1/transfers/list
+Get entire history of cryptocurrency transfers (withdrawals or deposits) executed from an exchange.
+Only supports Exchange integrations.
+# Initiate a transfer
+Source: https://docs.meshconnect.com/api-reference/transfers/initiate-a-transfer
+post /api/v1/transfers
+Initiate a new cryptocurrency transfer on a blockchain, cryptocurrency broker or cryptocurrency exchange.
+Obsolete endpoint, please use POST /transfers/managed/execute endpoint instead.
+# Verify account identity.
+Source: https://docs.meshconnect.com/api-reference/verify/verify
+post /api/v1/exchange/verify
+Returns basic profile data of the user's exchange account.
+Available data varies by exchange and linked account.
+# Get wallet verifications for user and address.
+Source: https://docs.meshconnect.com/api-reference/verify/wallet
+get /api/v1/wallets/verify
+# Android SDK
+Source: https://docs.meshconnect.com/guides/android-sdk
+## Installation ([Android SDK](https://github.com/FrontFin/mesh-android-sdk))
+Add `link` dependency to your `build.gradle`:
+```kotlin
+dependencies {
+implementation 'com.meshconnect:link:2.0.0'
+}
+```
+## Get Link token
+Link token should be obtained from the POST `/api/v1/linktoken` endpoint. Api reference for this request is available [here](https://docs.meshconnect.com/api-reference/managed-account-authentication/get-link-token-with-parameters). The request must be preformed from the server side because it requires the client secret. You will get the response in the following format:
+```json
+{
+"content": {
+"linkToken": "{linkToken}"
+},
+"status": "ok",
+"message": ""
+}
+```
+## Launch Link
+Use `linkToken` to connect a brokerage account or initiate a crypto transfer.
+```kotlin
+import com.meshconnect.link.entity.AccessTokenPayload
+import com.meshconnect.link.entity.LinkPayload
+import com.meshconnect.link.entity.TransferFinishedErrorPayload
+import com.meshconnect.link.entity.TransferFinishedSuccessPayload
+import com.meshconnect.link.ui.LinkContract
+import com.meshconnect.link.ui.LinkExit
+import com.meshconnect.link.ui.LinkSuccess
+class LinkExampleActivity : AppCompatActivity() {
+override fun onCreate(savedInstanceState: Bundle?) {
+super.onCreate(savedInstanceState)
+// launch Link
+linkButton.setOnClickListener {
+linkLauncher.launch(
+"linkToken"
+)
+}
+}
+private val linkLauncher = registerForActivityResult(LinkContract()) { result ->
+when (result) {
+is LinkSuccess -> {
+handlePayloads(result.payloads)
+}
+is LinkExit -> {
+// user canceled the flow by clicking on the back or close button
+// probably because of an error. Use 'result.errorMessage' to get details.
+}
+}
+}
+private fun handlePayloads(payloads: List<LinkPayload>) {
+payloads.forEach { payload ->
+when (payload) {
+is AccessTokenPayload -> {
+// broker connected. Use 'payload' to get details.
+}
+is TransferFinishedSuccessPayload -> {
+// transfer succeed. Use 'payload' to get details.
+}
+is TransferFinishedErrorPayload -> {
+// transfer failed. Use 'payload' to get details.
+}
+}
+}
+}
+}
+```
+# API Key Permissions
+Source: https://docs.meshconnect.com/guides/api-key-permissions
+# Overview
+Scoped access enables you to set permissions for your production Mesh API keys. Rather than granting unrestricted access, you can define whether each key has **Read-only** or **Read & Write** permissions. By managing access to specific API endpoints, you can reduce security risks by ensuring users only have access to necessary resources and nothing more. This is inline with the principles of zero trust and least privilege.
+# Scope of current implementation
+* Permissions are set at the client API key level.
+* Permissions can only be set for production API keys, not sandbox keys.
+* Permissions cannot be set at the broker-level (ie. clients cannot configure different permissions for Binance vs. Coinbase for the same API key).
+* All keys allow for Read access.
+* Clients can assign a key **Read-only** permissions or **Read & Write** permissions.
+* Permissions can only be assigned at the time of key creation, not afterwards. API keys cannot be edited after they’ve been created. Only deleted.
+* **Read** permission enables you to receive successful responses to all read calls to the Mesh API when using this key (eg. Get holdings, Get transfer history, etc.). A production API key always has read access. Even for write functionality, Mesh must read account data like balances as part of transfer configuration.
+* **Write** permission enables you to receive successful responses to all write calls (eg. Execute order, Execute transfer, etc.) to the Mesh API when using this key. If **Write** permission is not enabled, a call to write data to a linked user account will return a `403` error from the Mesh API.
+* When connecting their account, users will see a permissions screen that reflects the permissions granted to the API key, as shown below (Read & Write on the left, Read-only on the right).
+![permissions](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/permissions.png)
+* When connecting to Coinbase via OAuth, the Mesh API key permissions have been mapped to the OAuth permissions. Therefore, the permissions shown to the user in Coinbase's Oauth window will also reflect there properly.
+* However, Mesh API key permissions are not currently mapped to other broker integrations beyond Coinbase. For example, if a Read-only Mesh API key is used to link a user’s Binance account to a client app, that Binance authentication still provides both Read & Write capabilities.
+* Rest assured, even though the Binance connection to the client-app does support both Read & Write permissions, any calls to the Mesh API will respect the Mesh API key permissions (in this example, a trade or transfer call to the linked Binance account would return a `403` response from the Mesh API).
+* This mapping is also not yet in place for other OAuth integrations beyond Coinbase. To discuss this further, please email [support@meshconnect.com](mailto:support@meshconnect.com).
+# How to view & configure API key access scopes
+* You can create Mesh API keys by going to Accounts —> [API keys](https://dashboard.meshconnect.com/company/keys).
+* When creating a new production API key, you will have the option to enable permissions as shown below.
+![key scopes](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/bd4d377-API_Keys_-_Creating_key.png)
+* We strongly recommend naming keys in a meaningful and logical way. For example, you can use the format: `<company name>-<scope>-<company feature/product>` (eg. Mesh-ReadOnly-MeshAggregate)
+* After a key exists, you can view whether it has Read or Read & Write permissions as shown below.
+![viewing keys](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/ee213b4-viewing_keys.png)
+# Managed Transfers with APIs
+Source: https://docs.meshconnect.com/guides/digital-asset-managed-transfers-with-apis-guide
+This page will help you get started with Mesh APIs to authenticate an account and configure, preview, and execute a transfer.
+## **Overview**
+One of the unique features with Mesh is enabling clients to build embedded experiences that enables retail users to transfer digital assets from either centralized exchanges or self-custody wallets to the client application without needing to copy and paste a target address on a separate platform. This document will guide you through integrating with our Link SDK and server-side APIs to build a **native transfer** experience from centralized exchanges for your users.
+Mesh APIs handle credential validation, multi-factor authentication, and error handling when connecting to each account. After an end user authenticates with their account credentials, clients will be passed authentication tokens to provide access to the account which allows client applications to initiate transfers on behalf of the user on the originating platform. Clients have the option of using Mesh's pre-built transfer UI or building the experience natively using server-side calls.
+You can test the authentication and transfers functionality for yourself in our [interactive demos](https://dashboard.meshconnect.com/demos).
+Using Mesh APIs, you can easily connect and transfer digital assets from:
+* Centralized exchanges
+* To transfer from self-custody wallets
+Our v2 Transfers APIs facilitate a structured transfer flow that allows the end user to configure, preview, a transfer before committing to execute their transfer. Mesh's Transfer Risk Engine runs checks on the transfer to help protect against misconfigured transfers that fail and can not be retrieved.
+* [Configure](/api-reference/managed-transfers/configure-transfer) - setup transfer with the appropriate target addresses so that Mesh can provide relevant information (eg. eligibility, min/max transfer amount, estimated gas fees, platform fees) to help configure the transfer
+* [Preview](/api-reference/managed-transfers/preview-transfer) - provides a detailed preview of the transfer, including target address, origin address, transfer amount, and associated transfer fees.
+* [Execute](/api-reference/managed-transfers/configure-transfer) - processes the transfer by instructing the originating platform to execute the transfer with the given parameters.
+You can use Mesh [Transfer APIs](/api-reference/managed-transfers/get-networks) directly for transfers from centralized exchanges to build the experience natively on your platform. Alternatively, using the Link + Transfer SDKs, you can use Mesh's pre-built transfer UI to easily enable transfers on your platform.
+## Introduction
+The fastest to get started with Meshs's Transfers product is by testing the functionality via our[interactive demos](https://dashboard.meshconnect.com/demos). Then, you’ll need to generate [API keys](https://dashboard.meshconnect.com/company/keys), which are accessible after [signing up](https://dashboard.meshconnect.com/signup) for Mesh.
+You can generate two different API keys (one for Sandbox and another for Production), you should store the API keys immediately after generating them as they will no longer be viewable after leaving the page.
+You should add any 'Allowed callback URLs' for your local, staging and production environments, this will enable the Link SDK to correctly load. Note: you should add full URLs (eg. [http://localhost:3000/settings/user](http://localhost:3000/settings/user))
+![](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/f3c8c64-api_key.png)
+## How the Link Authentication and Transfer APIs work
+You will client-side components to authenticate with Mesh, then server-side components to transfer with Mesh.
+### Link Authentication
+1. Call /api/v1/linkToken to create a link URL\
+to create a temporary and unique URL that your\
+user can connect their account.
+2. Pass the iFrameURL to the appropriate Link SDK
+* [Web Link SDK](/guides/web-sdk)
+* [iOS Link SDK](/guides/ios-sdk)
+* [Android Link SDK](/guides/android-sdk)
+* [React Native SDK](/guides/react-native-sdk)
+3. Your user will be able to filter and search for the account\
+they want to connect. Mesh will manage the authentication\
+flow and handle MFAs for all supported integrations.
+4. After a user successfully enters their credentials, in the return method you will receive an auth\_token.
+5. Client stores the auth\_token (and refresh\_token) for use in **subsequent transfer calls.**
+![](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/44ffbce-Quickstart_Guide_Workspace_1.png)
+### Transfer APIs
+## Overview
+1. Call [/api/v1/transfers/managed/networks](/api-reference/managed-transfers/get-networks) to get a list of networks supported by Mesh along with the network IDs that will be required to configure a transfer. These network IDs are static, so that it is recommended to store these in your database.
+**Request**
+```BASH
+curl -X GET `[https://sandbox-integration-api.meshconnect.com/api/v1/transfers/managed/networks]`
+-H 'Content-Type: application/json' \
+-H 'X-Client-Id: CLIENT_ID' \
+-H 'X-Client-Secret: CLIENT_SECRET' \
+```
+**Response**
+```JSON JSON
+{
+"content": {
+"networks": [
+{
+"id": "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
+"name": "Polygon",
+"chainId": "137",
+"supportedTokens": [
+"MATIC",
+"USDC"
+],
+"supportedBrokerTypes": [
+"binanceInternational",
+"kraken",
+"robinhood"
+]
+},
+{
+"id": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"name": "Ethereum",
+"chainId": "1",
+"supportedTokens": [
+"ETH",
+"USDC"
+],
+"supportedBrokerTypes": [
+"binanceInternational",
+"kraken",
+"robinhood"
+]
+},
+{
+"id": "0291810a-5947-424d-9a59-e88bb33e999d",
+"name": "Solana",
+"chainId": "101",
+"supportedTokens": [
+"SOL",
+"USDC"
+],
+"supportedBrokerTypes": [
+"binanceInternational",
+"kraken"
+]
+}
+]
+},
+"status": "ok",
+"message": ""
+}
+```
+**Request**
+```BASH
+curl -X POST "https://sandbox-integration-api.meshconnect.com/api/v1/transfers/managed/configure" \
+-H 'Content-Type: application/json' \
+-H 'X-Client-Id: CLIENT_ID' \
+-H 'X-Client-Secret: CLIENT_SECRET' \
+-d '{
+"FromAuthToken": "{{auth_token}}",
+"FromType": "kraken",
+"ToAddresses": [{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDC",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},{
+"NetworkId": "0291810a-5947-424d-9a59-e88bb33e999d",
+"Symbol": "USDC",
+"Address": "HN7cABqLq46Es1jh92dQQisAq662SmxELLLsHHe4YWrH"
+},{
+"NetworkId": "0291810a-5947-424d-9a59-e88bb33e999d",
+"Symbol": "SOL",
+"Address": "HN7cABqLq46Es1jh92dQQisAq662SmxELLLsHHe4YWrH"
+}]
+}'
+```
+**Response**
+```JSON
+{
+"content": {
+"status": "succeeded",
+"holdings": [
+{
+"symbol": "ETH",
+"availableBalance": 0.003591685289408172, // Balance in ETH
+"availableBalanceInFiat": 6.86, // Balance in USD
+"eligibleForTransfer": true, // Indicates that ETH can be generally sent
+"networks": [
+{
+"name": "Ethereum",
+"id": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"minimumAmount": 0.000000000000000001,
+"maximumAmount": 0.002836873765928172,
+"totalEstimatedTransferFeeInFiat": 1.44,
+"minimumAmountInFiat": 0.00,
+"estimatedNetworkGasFee": {
+"fee": 0.00075481152348, // Average estimated fee
+"feeCurrency": "ETH",
+"feeInFiat": 1.4408748134014416 // Fee converted to fiat
+},
+"institutionTransferFee": {
+"fee": 0,
+"feeInFiat": 0
+},
+"eligibleForTransfer": true
+}
+]
+},
+{
+"symbol": "USDC",
+"availableBalance": 15,
+"availableBalanceInFiat": 15.00,
+"eligibleForTransfer": true,
+"networks": [
+{
+"name": "Ethereum",
+"id": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"minimumAmount": 0.000000000000000001,
+"maximumAmount": 15,
+"totalEstimatedTransferFeeInFiat": 2.89,
+"minimumAmountInFiat": 0.00,
+"maximumAmountInFiat": 15.00,
+"estimatedNetworkGasFee": {
+"fee": 0.0015155537089302,
+"feeCurrency": "ETH",
+"feeInFiat": 2.893070786051037384
+},
+"institutionTransferFee": {
+"fee": 0,
+"feeInFiat": 0
+},
+"eligibleForTransfer": true
+}
+]
+}
+]
+},
+"status": "ok",
+"message": ""
+}
+```
+1. A user should be able to configure their transfer and select token, network (optional) and input amount to transfer
+2. Call [/api/v1/transfers/managed/preview](/api-reference/managed-transfers/preview-transfer) with the auth\_token and the selected token, network and amount inputted by the user and the target address provided in the configure response.
+**Request**
+```BASH
+curl -X GET "https://sandbox-integration-api.meshconnect.com/api/v1/transfers/managed/configure" \
+-H 'Content-Type: application/json' \
+-H 'X-Client-Id: CLIENT_ID' \
+-H 'X-Client-Secret: CLIENT_SECRET' \
+-d '{
+"FromAuthToken": "{auth_token}",
+"FromType": "kraken",
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDC",
+"ToAddress": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6",
+"Amount": 10
+}'
+```
+**Response**
+```JSON JSON
+{
+"Status": "Succeeded",
+"ErrorMessage": null,
+"PreviewResult": {
+"PreviewId": "29B185B1-2305-40FB-A0E2-929D61451568",
+"ExpiresIn": 180,
+"FromAddress": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6",
+"ToAddress": "0x326a8825472bb0f4719998e708a1eeeb4473ed1b",
+"ContractAddress": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+"NetworkId": "E3C7FDD8-B1FC-4E51-85AE-BB276E075611",
+"Symbol": "USDT",
+"Amount": 10,
+"AmountInFiat": 10,
+"NetworkName": "Optimism",
+"EstimatedTime": 600,
+"InstitutionTransferFee": {
+"Fee": 0,
+"FeeCurrency": null,
+"FeeInFiat": 0
+},
+"EstimatedNetworkGasFee": {
+"Fee": 1.1,
+"FeeCurrency": "USDT",
+"FeeInFiat": 1.1
+},
+"TotalTrasferFeeInFiat": 1.1
+}
+}
+```
+1. Call [/api/v1/transfers/managed/execute](/api-reference/managed-transfers/execute-transfer) with the previewId provided in the preview call and any required authentication (eg. MFA code)
+1. Note: PreviewId expire after a specific amount of time and can not be executed after the expiration time
+**Request**
+```BASH
+curl -X POST "https://sandbox-integration-api.meshconnect.com/api/v1/transfers/managed/execute" \
+-H 'Content-Type: application/json' \
+-H 'X-Client-Id: CLIENT_ID' \
+-H 'X-Client-Secret: CLIENT_SECRET' \
+-d '{
+"fromAuthToken": "{auth_token}",
+"fromType": "kraken",
+"previewId": "29B185B1-2305-40FB-A0E2-929D61451568",
+"mfaCode": "112457"
+}'
+```
+**Response**
+```JSON JSON
+{
+"Status": "Succeeded",
+"ErrorMessage": null,
+"TransferResult": {
+"TransferId": "29B185B1-2305-40FB-A0E2-929D61451568",
+"Status": "Pending",
+"StatusDetail": "Pending",
+"FromAddress": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6",
+"ToAddress": "0x326a8825472bb0f4719998e708a1eeeb4473ed1b",
+"Hash": "0xa9bce90d2ab4f17258729d604f88f3709eb105c58db03ca0e97ae4ea500ef98f",
+"NetworkId": "E3C7FDD8-B1FC-4E51-85AE-BB276E075611",
+"Symbol": "USDT",
+"Amount": 10,
+"AmountInFiat": 10,
+"NetworkName": "Optimism",
+"CompletedConfirmations": 7,
+"InstitutionTransferFee": {
+"Fee": 0,
+"FeeCurrency": null,
+"FeeInFiat": 0
+},
+"NetworkGasFee": {
+"Fee": 1.1,
+"FeeCurrency": "USDT",
+"FeeInFiat": 1.1
+},
+"TotalTrasferFeeFiat": 1.1
+}
+}
+```
+![](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/2c61f51-Quickstart_Guide_Workspace_2.png)
+# Link Transfers Guide
+Source: https://docs.meshconnect.com/guides/digital-asset-managed-transfers-with-sdk-integration-guide
+## Overview
+One of the unique features with Mesh is enabling clients to build embedded experiences that enables retail users to transfer digital assets from either centralized exchanges or self-custody wallets to the client application without needing to copy and paste a target address on a separate platform. This document will guide you through integrating with our Link + Transfer SDKs and **drop-in UI** to transfer from **either centralized exchanges or self-custody wallets** for your users.
+Mesh APIs handle credential validation, multi-factor authentication, and error handling when connecting to each account. After an end user authenticates with their account credentials, clients will be passed authentication tokens to provide access to the account which allows client applications to initiate transfers on behalf of the user on the originating platform. Clients have the option of using Mesh's pre-built transfer UI or building the experience natively using server-side calls.
+You can test the authentication and transfers functionality for yourself in our [interactive demos](https://dashboard.meshconnect.com/demos).
+Using Mesh APIs, you can easily connect and transfer digital from the following types of accounts:
+* Centralized exchanges
+* Self-custody wallets
+* Transfers for self-custody wallets **must** use the Mesh SDKs
+Using the Link + Transfer SDKs, you can leverage Mesh's pre-built transfer UI to easily enable transfers on your platform. Alternatively, you can use Mesh [Transfer APIs](/api-reference/managed-transfers/configure-transfer) directly for transfers from centralized exchanges to build the experience natively on your platform.
+## Introduction
+The fastest to get started with Mesh's Transfers product is by testing the functionality via our [interactive demos](https://dashboard.meshconnect.com/demos). Then, you’ll need to generate [API keys](https://dashboard.meshconnect.com/company/keys), which are accessible after [signing up](https://dashboard.meshconnect.com/signup) for Mesh.
+You can generate two different API keys (one for Sandbox and another for Production), you should store the API keys immediately after generating them as they will no longer be viewable after leaving the page.
+You should add any 'Allowed callback URLs' for your local, staging and production environments, this will enable the Link SDK to correctly load. Note: you should add full URLs (e.g., [http://localhost:3000/settings/user](http://localhost:3000/settings/user)).
+![Callback url](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/f3c8c64-api_key.png)
+# How the Link + Transfer SDKs works
+You will use both server and client-side components to facilitate a transfer with Mesh APIs.
+1. Call [Get Networks](/api-reference/managed-transfers/get-networks) to get the network IDs and token symbols that you want to make available to receive assets.
+2. Call [/api/v1/linkToken](/api-reference/managed-account-authentication/get-link-token-with-parameters) with a POST that includes the network IDs, token symbol and the target addresses that you want to make available to receive assets to create a link + Transfer URL. Make sure to include the parameter enableTransfers=true.
+3. Pass the iFrameURL to the appropriate SDK
+1. [Web Link SDK](/guides/web-sdk)
+2. [iOS Link SDK](/guides/ios-sdk)
+3. [Android Link SDK](/guides/android-sdk)
+4. [React Native SDK](/guides/react-native-sdk)
+4. Your user will be able to filter and search for the account they want to connect. Mesh will manage the authentication flow and handle MFAs for all integrations that support transfers v2.
+5. After your user successfully enters their credentials, in the return method you will receive an auth\_token.
+6. Your user initiates a transfer by selecting the eligible assets
+7. Your user configures a transfer by inputting amount to transfer
+8. Your user is given preview of transfer details (including origin account, destination address, symbol, network, amount, estimated gas fee)
+9. Your user submits the transfer
+1. If user is transferring from self-custody wallet, then the user is redirected to wallet platform to execute transfer
+2. If user is transferring from centralized exchange, then Mesh sends instructions to exchange to execute the transfer
+10. Your user will be returned to a transfer confirmation screen after the transfer has been successfully confirmed by the origin account
+![QuickstartDiagram](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/quickstartGuideWorkspace.png)
+A pre-requisite step is to call [/api/v1/transfers/managed/networks](/api-reference/managed-transfers/get-networks)\` to get the list of networks supported by Mesh in order to supply the list of addresses to Mesh.
+```JSX
+{
+"content": {
+"networks": [
+{
+"id": "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
+"name": "Polygon",
+"chainId": "137",
+"supportedTokens": [
+"MATIC",
+"USDC"
+],
+"supportedBrokerTypes": [
+"binanceInternational",
+"kraken",
+"robinhood"
+]
+},
+{
+"id": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"name": "Ethereum",
+"chainId": "1",
+"supportedTokens": [
+"ETH",
+"USDC"
+],
+"supportedBrokerTypes": [
+"binanceInternational",
+"kraken",
+"robinhood"
+]
+},
+{
+"id": "0291810a-5947-424d-9a59-e88bb33e999d",
+"name": "Solana",
+"chainId": "101",
+"supportedTokens": [
+"SOL",
+"USDC"
+],
+"supportedBrokerTypes": [
+"binanceInternational",
+"kraken"
+]
+}
+]
+},
+"status": "ok",
+"message": ""
+}
+```
+The initial step is to generate a link URL by posting a request to
+### Request
+```BASH
+curl --request POST \
+--url https://integration-api.meshconnect.com/api/v1/linktoken \
+--header 'accept: application/json' \
+--header 'content-type: application/json' \
+--header 'X-Client-Id: CLIENT_ID' \
+-H 'X-Client-Secret: CLIENT_SECRET' \
+--data '
+{
+"transferOptions": {
+"toAddresses": [
+{
+"networkId": "0291810a-5947-424d-9a59-e88bb33e999d",
+"symbol": "SOL",
+"address": "DVifyLEUVxCAUTdi8rPHX9fmi1tCwv7hciut4BErskZ8"
+}
+]
+},
+"restrictMultipleAccounts": true,
+"userId": "123456"
+}
+'
+```
+### Response
+```json
+{
+"content": {
+"linkToken": "aHR0cHM6Ly93ZWIuZ2V0ZnJvbnQuY29tL2IyYi1pZnJhbWUvZTE4ODBjNmQtNWFmOC00NjM0LTMxODItMDhkYmE1OGE5OWE1L2Jyb2tlci1jb25uZWN0P2F1dGhfY29kZT12NkJMT2tkMF84cUhLbXZNa2FWdGVMTGo2WnRBcGpjQVpCNE50S091MllnQV9ZcW5OSkVROE9Lck1Hd3E1akFjNU1Tb0drNDVpdEZzN1MtZ19lWFdwQSZyZXN0cmljdE11bHRpcGxlQWNjb3VudHM9dHJ1ZSZ0cmFuc2Zlcl90b2tlbj0wUDlENHNLV2Q5VFRXdGh3bHlTSzVRJTNkJTNkLmFHWldJcjdsN2tjZXp3cVVzWUQ0JTJiRG5kSE1NcmNGNXVZYnkyWDdCVDMwS2VEdm5hZkcxaXJKY0NUbE5BNUp6WWRLWVlDRXQxOWpxSkJsdTd5WlVFTkxBOHBFNTNLdkNGRVpIVWtob2p4TlhSdEpKVDN3MGdKWHdwR3VaQ2RHakUlMmZWZDBzMUZpdnlPJTJicEM0ZEVIdFFlUSUzZCUzZCZsaW5rX3N0eWxlPWV5SndZeUk2SWlNd016ZEdSa1lpTENKd2RDSTZJaU5HUmtaR1JrWWlMQ0p6WXlJNklpTkdOME16TmpZaUxDSnpkQ0k2SWlNd01EQXdNREFpTENKaWNpSTZOUzR3TUN3aWFYSWlPakF1TURBc0ltbHZJam93TGpNM01EQXdNREF3TENKMElqb2liR0ZpWld3aUxDSm9ZeUk2Wm1Gc2MyVjk="
+},
+"status": "ok",
+"message": "",
+"errorType": ""
+}
+```
+Once you have the `linkToken`, you can use it to initialize the Mesh Link SDK. Mesh Link SDKs are a drop-in client-side module available for web, iOS, and Android that handles the authentication process and facilitate transfers. This is what your users use to connect to their accounts, configure and execute their transfers.
+```jsx
+import React, { useEffect, useState } from 'react'
+import {
+FrontConnection,
+FrontPayload,
+createFrontConnection
+} from '@front-finance/link'
+import { clientId } from '../utility/config'
+export const FrontComponent: React.FC<{
+iframeLink?: string | null
+onSuccess: (authData: FrontPayload) => void
+onExit?: (error?: string) => void
+}> = ({ iframeLink, onSuccess, onExit }) => {
+const [frontConnection, setFrontConnection] =
+useState<FrontConnection | null>(null)
+useEffect(() => {
+setFrontConnection(
+createFrontConnection({
+clientId: clientId,
+onBrokerConnected: authData => {
+console.info('[MESH SUCCESS]', authData)
+onSuccess(authData)
+},
+onExit: (error?: string) => {
+if (error) {
+console.error(`[FRONT ERROR] ${error}`)
+}
+onExit?.()
+},
+onTransferFinished: data => {
+console.info('[FRONT TRANSFER SUCCESS]', data)
+onTransferFinished?.(data)
+}
+})
+)
+}, [])
+useEffect(() => {
+if (iframeLink) {
+frontConnection?.openPopup(iframeLink)
+}
+return () => {
+if (iframeLink) {
+frontConnection?.closePopup()
+}
+}
+}, [frontConnection, iframeLink])
+return <></>
+}
+```
+On successful authentication, you will be provided the auth\_token (and in most cases refresh\_token) that can be used for future calls.
+Your users will be able to configure, preview and execute transfers with the Drop-In Transfer UI. We will provide events that you can subscribe to that provide details on progress and any errors that might be encountered.
+On successful completion of the transfer, you will be provided a transaction data of the type `TransferFinishedPayload`, that's content can be the following:
+```json
+{
+"type": "transferFinished",
+"payload": {
+"status": "success",
+"amount": 0.005,
+"fromAddress": "0x9bf6207f8a3f4278e0c989527015defe10e5d7c6",
+"toAddress":  "0x9bf6207f8a3f4278e0c989527015defe10e5d7c6",
+"networkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"symbol": "ETH",
+"txId": "0x458f3d8bd6c9ea3c9f1fe831d7444e4a6f4525e40c87179796350cc426aa020c",
+}
+}
+{
+"type": "transferFinished",
+"payload": {
+"status": "error",
+"errorMessage": "The specified amount is greater than the maximum amount allowed."
+}
+}
+```
+# How to initiate a transfer after a user has previously authenticated
+1. Generate a new Link token with payload providing `transferOptions` along with `toAddresses` as shown below and described in [API reference](/api-reference/managed-account-authentication/get-link-token-with-parameters)
+```BASH
+curl --request POST \
+--url https://integration-api.meshconnect.com/api/v1/linktoken \
+--header 'accept: application/json' \
+--header 'content-type: application/json' \
+--header 'X-Client-Id: CLIENT_ID' \
+-H 'X-Client-Secret: CLIENT_SECRET' \
+--data '
+{
+"transferOptions": {
+"toAddresses": [
+{
+"networkId": "0291810a-5947-424d-9a59-e88bb33e999d",
+"symbol": "SOL",
+"address": "DVifyLEUVxCAUTdi8rPHX9fmi1tCwv7hciut4BErskZ8"
+}
+]
+},
+"restrictMultipleAccounts": true,
+"userId": "123456"
+}
+'
+```
+2. Initiate the web SDK using `createFrontConnection` function and provide the `accessTokens` parameters that was obtained previously (**Note**: Only provide `accessTokens` as shown below).  The type of the access tokens object is exported as `IntegrationAccessToken` type from the `@meshconnect/link` package
+```typescript
+createFrontConnection({
+clientId: clientId,
+onBrokerConnected: authData => {
+console.info('[FRONT SUCCESS]', authData)
+onSuccess(authData)
+},
+onExit: (error?: string) => {
+if (error) {
+console.error(`[FRONT ERROR] ${error}`)
+}
+onExit?.()
+},
+accessTokens: [
+{
+accountId: '739376630',
+accountName: 'Margin account',
+accessToken: '..............',
+brokerType: 'robinhood',
+brokerName: 'Robinhood'
+}
+]
+})
+```
+3. Open the transfers UI using the `frontConnection.openPopup`  function as you would on account connection flow described in the [quickstart guide](https://docs.meshconnect.com/docs/web-sdks#getting-tokens). This should take you straight to the Transfers UI using previously authenticated integration.
+Notes:
+* In step 2, you can provide multiple integration access tokens. However, only the first account will be used as an origin account for transfers.
+* If you provide an access token that is not supported by managed transfers, the user will see an error message stating that there are no eligible assets to transfer from the origin account. A list of supported integrations can be found [here](/api-reference/managed-transfers/get-integrations).
+* If you provide an access token that belongs to a DeFi wallet, the user is prompted to connect that account again and then redirected to the crypto transfers flow.
+# Flow Diagrams
+## CEX Flow Diagram
+![CEX Flow Diagram](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/cexFlow.png)
+# null
+Source: https://docs.meshconnect.com/guides/error-dictionary
+## Possible Ineligibility Reasons
+Here are the reasons why holdings cannot be transferred in some cases.
+## Configure Transfer Errors
+| Error Code                      | Description                                                                                                                                                                | Level Found |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| NoEligibleNetworks              | None of the networks supported by Source and Target accounts can be used for the transfer. Individual reasons specifying why a particular network cannot be used may vary. | Holdings    |
+| SymbolDoesNotMatch              | The symbol that was requested for the transfer is different from the holding’s symbol                                                                                      | Holdings    |
+| NotSupportedForTransferByTarget | None of the networks for that token are eligible to transfer TO the source. This is often due to the **client** not supporting the token for transfer.                     | Holdings    |
+| NotSupportedForTransferBySource | None of the networks for that token are eligible to transfer FROM the source. This is often due to **Mesh or the integration** not supporting the token for transfer.      | Holdings    |
+| AmountNotSufficient             | The (amount to be transferred + the gas fee) is more than the available balance                                                                                            | Network     |
+| NoTargetNetworkFound            | Target addresses/institution do not contain the corresponding network, so this network cannot be used for the transfer                                                     | Network     |
+| GasFeeAssetBalanceNotEnough     | The amount of the asset is sufficient, but there’s not enough balance of the gas fee’s asset (e.g. not enough ETH to send USDC)                                            | Network     |
+## Preview Transfer Errors
+Statuses:
+* Succeeded
+* Failed
+### Error messages (when status = failed)
+| Error Code                                         | Error Message                                                                                                                                                                                                               |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| NetworkIdMissing                                   | (TransferToAddress.NetworkId) field was not provided.                                                                                                                                                                       |
+| AddressMissing                                     | (TransferToAddress.Address) field was not provided.                                                                                                                                                                         |
+| SymbolMissing                                      | (TransferToAddress.Symbol) field was not provided.                                                                                                                                                                          |
+| UnsupportedSymbolByNetwork                         | Network does not currently support the requested symbol.                                                                                                                                                                    |
+| InvalidAddressPattern                              | Target address does not match network '{0}' address pattern.                                                                                                                                                                |
+| NetworkNotFound                                    | Network not found.                                                                                                                                                                                                          |
+| NetworkDisabled                                    | Network '{0}' is currently disabled and cannot be used.                                                                                                                                                                     |
+| InsufficientFunds                                  | Insufficient '{0}' funds.                                                                                                                                                                                                   |
+| InsufficientFeeFunds                               | Insufficient '{0}' funds for transfer fees.                                                                                                                                                                                 |
+| EmptyWalletSymbolBalance                           | Source wallet '{0}' balance is empty.                                                                                                                                                                                       |
+| KycRequired                                        | The provided '{0}' account requires KYC to be completed to perform transfers.                                                                                                                                               |
+| DepositAmountTooLow                                | The requested amount is lower than the minimum amount that can be accepted by the target institution.                                                                                                                       |
+| WrongPreviewRequestFromAuthTokenMissing            | (PreviewTransferRequest.FromAuthToken) is a mandatory field and should be provided.                                                                                                                                         |
+| WrongPreviewRequestNoSymbol                        | (PreviewTransferRequest.Symbol) is a mandatory field and should be provided.                                                                                                                                                |
+| WrongPreviewRequestInvalidToAuthToken              | (PreviewTransferRequest.ToAuthToken) is invalid.                                                                                                                                                                            |
+| WrongPreviewRequestToData                          | Either (PreviewTransferRequest.ToAuthToken) with (PreviewTransferRequest.ToType) or (PreviewTransferRequest.ToAddress) should be provided.                                                                                  |
+| WrongPreviewRequestAmount                          | Both (PreviewTransferRequest.AmountInFiat) and (PreviewTransferRequest.Amount) can not be provided.                                                                                                                         |
+| WrongPreviewRequestNoAmount                        | Either (PreviewTransferRequest.AmountInFiat) or (PreviewTransferRequest.Amount) should be provided.                                                                                                                         |
+| WrongPreviewRequestUnsupportedSymbolBySourceWallet | Symbol to transfer not supported by the source wallet over the requested network.                                                                                                                                           |
+| WrongPreviewRequestUnsupportedSymbolByTargetWallet | Symbol to transfer not supported by the target wallet over the requested network.                                                                                                                                           |
+| WrongPreviewRequestNetwork                         | Requested network is not supported by the source wallet.                                                                                                                                                                    |
+| PriceNotFound                                      | Could not fetch '{0}' price.                                                                                                                                                                                                |
+| AmountMoreThanWithdrawMaximum                      | Could not preview the transfer. The requested amount (previewRequest.Amount) (requestDto.Request.Symbol) is greater than the maximum allowed amount (minimumMaximumAmount.WithdrawMaximumAmount requestDto.Request.Symbol). |
+| AmountLessThanWithdrawMinimum                      | Could not preview the transfer. The requested amount (previewRequest.Amount) (requestDto.Request.Symbol) is below the minimum allowable threshold (minimumMaximumAmount.WithdrawMinimumAmount requestDto.Request.Symbol).   |
+## Execute Transfer Errors
+Statuses:
+* Succeeded
+* Failed
+* MfaRequired
+* EmailConfirmationRequired
+* DeviceConfirmationRequired
+* MfaFailed
+* AddressWhitelistRequired
+### Error messages (when status = failed)
+| Error Code           | Error Message                         |
+| -------------------- | ------------------------------------- |
+| PreviewExpired       | The preview is expired.               |
+| TransferIsRequested  | The transfer is already requested.    |
+| PreviewNotFound      | Could not find the preview.           |
+| AddressNotRegistered | The target address is not registered. |
+# Getting Started
+Source: https://docs.meshconnect.com/guides/getting-started
+![overview](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/overview.png)
+We’re building fintech’s modern connection layer and are excited to help you on your journey toward a single, unified API.
+###
+<Tabs>
+<Tab title="Resources">
+<CardGroup cols={2}>
+<Card title="Quickstart Guides" href="/guides/quickstart-guide-with-link-sdks" icon="book">
+Check out our guides to learn how to build on Mesh
+</Card>
+<Card title="Workshop" href="https://workshop.meshconnect.com" icon="person-chalkboard">
+Leverage our interactive workshop to get a 201 understanding on how Mesh works
+</Card>
+<Card title="API reference" icon="webhook" href="/api-reference">
+Explore our API endpoints
+</Card>
+<Card title="Interactive Demos" icon="gallery-thumbnails" href="https://dashboard.meshconnect.com/demos">
+We've built some beatiful experiences on top of our API/SDK- check em out
+</Card>
+</CardGroup>
+</Tab>
+<Tab title="Products">
+<CardGroup cols={2}>
+<Card title="Deposit" href="https://www.meshconnect.com/products/mesh-deposit" icon="money-simple-from-bracket">
+The simplest and most secure way to deposit crypto
+</Card>
+<Card title="Pay" href="https://www.meshconnect.com/products/mesh-pay" icon="cash-register">
+Let your customers pay from their existing accounts on Coinbase, Binance, Metamask and 300+ others, with a single integration
+</Card>
+<Card title="Ramp" icon="arrow-trend-up" href="https://www.meshconnect.com/products/mesh-ramp">
+On-ramp directly from stored payment methods in your customers’ exchange accounts with no additional KYC
+</Card>
+<Card title="Payout" icon="share" href="https://www.meshconnect.com/products/mesh-payout">
+Automated, secure collection of payout wallet addresses
+</Card>
+</CardGroup>
+</Tab>
+</Tabs>
+### Requirements
+The Mesh API program is built for scaling and self-service.  In order to get started, we require:
+* [Mesh Dashboard account](https://dashboard.meshconnect.com/login)
+* A registered business account (for production keys)
+### Grabbing Your API Keys
+* [Generate API Keys](https://dashboard.meshconnect.com/company/keys)
+* Choose to create Sandbox or Production API Keys. ***Be sure to store key in a secure place (i.e., .env file ) and you only get one chance to copy from dashboard***
+## Start Building on Mesh
+You're ready to begin building on our MeshConnect platform!  Be sure to check out our guides and [interactive workshop](https://workshop.meshconnect.com)
+# Handling Auth Tokens
+Source: https://docs.meshconnect.com/guides/handling-auth-tokens
+This guide explains the integration tokens system within Mesh API, encompassing the processes of token generation, renewal, and storage. It can be used to better understand the system so that developers can follow best practices when integrating with Mesh APIs.
+# What is a “token”
+`AccessToken` or `AuthToken` is a generated secret (sequence of symbols) that is returned by Mesh API upon successful account authentication and used in subsequent requests to access the user’s data.
+Each token represents a connection between a particular user (typically, an end user of a client) and the user’s brokerage/exchange/wallet account.
+The token grants access to the user's data and enables the execution of read and (based on the integration) write operations. Therefore, it is essential to store the token with **utmost security measures** in place.
+## Types of tokens
+There are 2 types of tokens provided by the Mesh API:
+### `AccessToken`
+A token that allows performing read and write operations with the connected account.
+Can be obtained in the following ways:
+* in a [Link JS](/api-reference/managed-account-authentication/get-link-token-with-parameters) callback upon **successful** authentication [managed authentication](/api-reference/managed-account-authentication/get-link-token-with-parameters) - recommended
+* by calling [/api/v1/linkToken](/api-reference/managed-account-authentication/get-link-token-with-parameters)
+* by refreshing the token using the refreshToken in the following request - [/api/v1/token/refresh](/api-reference/managed-account-authentication/refresh-auth-token)
+### `RefreshToken`
+A token that is returned by some integrations and needs to be used to refresh the access token before it expires.
+Provided typically by OAuth and username password integrations, it is critical that it is handled correctly in order to ensure continued connections to accounts.
+Can be obtained in the following ways:
+\-- in a [Link JS](/api-reference/managed-account-authentication/get-link-token-with-parameters) callback upon **successful** authentication [managed authentication](/api-reference/managed-account-authentication/get-link-token-with-parameters) - recommended
+* by calling [/api/v1/authenticate](/api-reference/managed-account-authentication/get-link-token-with-parameters)
+* by refreshing the token using the refreshToken in the following request - [/api/v1/token/refresh](/api-reference/managed-account-authentication/refresh-auth-token)
+* by refreshing the refresh token using the refreshToken in the following request - [/api/v1/token/refresh](/api-reference/managed-account-authentication/refresh-auth-token) and providing `CreateNewRefreshToken` parameter
+# General design
+An important difference between Mesh and similar platforms is that Mesh **does not store** authentication tokens generated by integrations. Instead, Mesh API gets tokens from integrations, encrypts them and then returns back to API clients.
+The main benefit of this approach is **security.** Even having access to Mesh's system does not make it possible to manipulate customer accounts. Even Mesh employees are not able to use connections to integrations to perform operations with accounts.
+Considering that Mesh supports critical `write` actions (trading and transfers) this approach makes the platform way safer compared to similar platforms that store tokens on their side.
+However, there are also several disadvantages:
+* Clients have to manage tokens on their side - store and refresh them when necessary
+* Tokens are of different lengths
+* Different integrations return tokens in different formats - each with its own Time-To-Live (TTL), some of them require to be refreshed while other ones do not, and so on
+* There are [some exceptions that have to be handled manually](/api-reference/managed-account-authentication/refresh-auth-token) - for example, `Delay` authentication approach (Interactive Brokers) or the requirement to refresh the `RefreshToken` in some integrations
+![Sequence diagram](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/integrationFlow.png)
+# Data model
+Successful `Authenticate`  or `RefreshToken` call result (only relevant fields are shown):
+| Field                        | Type                 | Description                                                                                                | Note                                                                                                                                                                                      |
+| ---------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| AccessToken                  | string (can be null) | The access token that is used to access user’s data                                                        | Provided when the connection contains only one account                                                                                                                                    |
+| RefreshToken                 | string (can be null) | The refresh token that is used to refresh the access token                                                 | Optional and depends on the specific integration. Some integrations do not provide refresh tokens                                                                                         |
+| ExpiresInSeconds             | number (can be null) | Specifies the duration, measured in seconds, after which the Access token expires and becomes unavailable  | Optional, depends on the integration. If not provided, it indicates that the token associated with that integration does not have an expiration time and can be used indefinitely         |
+| RefreshTokenExpiresInSeconds | number (can be null) | Specifies the duration, measured in seconds, after which the Refresh token expires and becomes unavailable | Optional, depends on the integration. If not provided, it indicates that the Refresh token associated with that integration does not have an expiration time and can be used indefinitely |
+| AccountTokens                | Array (can be null)  | Contains the list of account tokens if the integration provides multiple accounts                          | Optional, used only if the integration provides multiple accounts or “subaccounts”. If provided, AccessToken and RefreshToken are not provided                                            |
+| Account                      | BrokerAccount        | General information about the connected account (AccountId, AccountName and so on)                         |                                                                                                                                                                                           |
+`BrokerAccount` model:
+| Field        | Type                 | Description                                                | Note                                   |
+| ------------ | -------------------- | ---------------------------------------------------------- | -------------------------------------- |
+| AccessToken  | string (can be null) | The access token that is used to access user’s data        |                                        |
+| RefreshToken | string (can be null) | The refresh token that is used to refresh the access token |                                        |
+| Account      | BrokerAccount        | General information about the connected account            | eg. (AccountId, AccountName and so on) |
+# Structure of token responses by integration types
+## API key integrations
+Typically, API key integrations do not have an “access token” concept. Authentication is based on constant `ApiKey` and `ApiSecret` values that are obtained by users and provided to Mesh API during authentication. Mesh API does not store these values, instead, the API concatenates and encrypts them. The result is returned in the `AccessToken` field. Since the accessToken contains encrypted ApiKey and ApiSecret values and not actual integration’s tokens, there is no need to refresh them. That’s why the RefreshToken is typically not returned for such integrations.
+### Kraken API Example
+```json
+{
+"content": {
+"status": "succeeded",
+"accessToken": "YHeBTUxgdIcLUZNCEOg3hA==......",
+"accountTokens": []
+},
+"status": "ok",
+"message": ""
+}
+```
+Please note:
+* `RefreshToken` is not provided (there’s no need to refresh this token)
+* `ExpiresInSeconds` is not provided (the token never expires)
+* `RefreshTokenExpiresInSeconds` is not provided (there’s no refresh token)
+## Email-password integrations
+Token data of username-password integrations may vary, based on specific implementations of underlying APIs of brokerage integrations. In most of the cases they follow a JWT token authentication approach and require to refresh the `accessToken`.
+### Robinhood Example:
+```json
+{
+"content": {
+"status": "succeeded",
+"accessToken": "Wi13vA35s10si1i330Cy7w==.................",
+"refreshToken": "He536LzN3Pa11aP9GgusYg==.zwafsZqwIS8n0Pe4kqYu4lqdee4kO4uz3FzBBuopWztF0zkHyDN04ogGwGC5dY8UwnsxX2j7nQTyGdeFsgi32kfSqyMWYl........",
+"expiresInSeconds": 734000,
+"brokerAccountTokens": []
+},
+"status": "ok",
+"message": ""
+}
+```
+Please note:
+* `ExpiresInSeconds` is provided, the value 734000 indicates that the access token will be expired after 734000 seconds (approximately 8 days)
+* `RefreshToken` is provided, and should be used to refresh the access token before access token expires
+* `RefreshTokenExpiresInSeconds` is not provided, it means that the refresh token never expires, and can be used even after the access token is expired
+## OAuth integrations
+OAuth implementations may also vary. For example, Alpaca does not provide the RefreshToken. They provide the AccessToken only which means that the AccessToken never expires.
+But generally, typical token response contains both Access and Refresh tokens and requires only the AccessToken to be refreshed.
+### Coinbase Example:
+```json
+{
+"content": {
+"status": "succeeded",
+"accessToken": "6czWll8LTs5RLC2nm/K9HQ==.NcR3ErlhbwvnfEfLD8R/5uOeEOeOEqQ8pRkRE3esfSdj1htdeIduOKm8vCNhrL284YKfnYWcJ/nNcfomGo/DFf0vVJTxTp+6YjIraEKfP10yLu0tP+OPp+3juDybdm8Y1oksiJoFUgyVgViq4+3jMrnY.....",
+"refreshToken": "zE6Q+/Xltg0RbvtEi0VvJA==.UBMzYzt0eCVAF7F4p2tm12MU8uzW5efEhYpt7GLlflBdEXvZOL6gN2/btzLQiX+0zcleLSbU/DR3j1nlGCNur5rWLr7fiui/8W6rSe...",
+"expiresInSeconds": 7200,
+"brokerAccountTokens": []
+},
+"status": "ok",
+"message": ""
+}
+```
+* `ExpiresInSeconds` is provided, the value 7200indicates that the access token will be expired after 2 hours, so in this case it has to be refreshed oftenly
+* `RefreshToken` is provided, and should be used to refresh the access token before access token expires
+* `RefreshTokenExpiresInSeconds` is not provided, it means that the refresh token never expires, and can be used even after the access token is expired
+## Self Custody Wallets
+Because of the nature of DeFi wallets, Mesh API never receives any sensitive information related to a wallet connection, like the private key or the seed/mnemonic phrase of the wallet. So technically, there’s no need to use secret tokens. But in order to follow the approach that is used with other integrations, Mesh generates the accessToken for DeFi wallet connections and uses the token to identify the connected chain type and connected address. Since there’s nothing to refresh, Mesh API returns the `accessToken` only:
+```json
+{
+"content": {
+"status": "succeeded",
+"accessToken": "2ndqYOsU0vClpt3qmGccFQ==.Nlhbu3AuPdQnGTdWWYq527r0gitUSJPX2dSV0h2MChxg1sF8RAT/fOe1cjo4O3kb3N1s/kWrWi6xNKudNuj4bQjvAV7AJWFaPWE4wPQ6vzgiMUvczJGMVfTWicJStQVrzUsHb1/McM82Dp+9xpP/jB9oLBKR11EgMkkN....",
+},
+"status": "ok",
+"message": ""
+}
+```
+## Subaccounts and multiple accounts
+Integrations have different structure of accounts. For example:
+* Robinhood and Coinbase allow to have one account only
+* Kraken allows multiple accounts, but each should be registered using a different email, so every account is completely separate
+* Binance account contains several subaccounts by default - “Spot” account and “Margin” account
+* Some exchanges have a concept of “Funding” account (that is used to deposit and withdraw fiat and crypto) and “Trading” account (that is used for trading only).
+Because of a completely different nature of account handling by integrations, Mesh API does not have a concept of subaccounts. Instead, for integrations that support multiple accounts, Mesh API returns them on the same level, as completely equal accounts.
+### Binance Example:
+```json
+{
+"content": {
+"status": "succeeded",
+"accountTokens": [
+{
+"account": {
+"accountId": "953c03fb6f562805600de4f386495b2fe4199049:Spot",
+"accountName": "Binance International Spot Account",
+},
+"accessToken": "H4LYskKAOpF8FImBCxAa4g==.aKqJKG5/LL0r9dyStTeZLM2P8V647J1gf3FdwcGKtB3Pjl2/zciT/HfhmmYbrIVUvg0QSEI78Dc4AJeyVGKXkT8Eeu4sppMfxmd0Tv9VnxMIzS/W9ma1JabJOVNGyPEJBqs0j03mgrXz31LzCBvaMOW......=="
+},
+{
+"account": {
+"accountId": "953c03fb6f562805600de4f386495b2fe4199049:Margin",
+"accountName": "Binance International Margin Account",
+},
+"accessToken": "1BFmQaFUkvzdulWM6PxtWQ==.LgKuTfz89WQY0kISemLeVXx3Mhxy7pgEA9HFbqMaEr32hGk+ds9ylDmpvXActgar2PfrxFLDOobdBtMmUh3c0WmsmeBU2p1+u90Q01F4Cl4vYMPQcFvRyhOJA/wR1X8kZFsxZeQjwmnPv+V6sKRQ8pZ4TspPAr1f....=="
+}
+]
+},
+"status": "ok",
+"message": ""
+}
+```
+Note that:
+* top level `AccessToken` and `RefreshToken` fields are empty, and both pairs of `AccessToken` and `RefreshToken` are provided in `accountTokens` field.
+# Refresh Token Implementation
+## Best Practices
+Suggested logic on how to implement the flow to refresh tokens to cover all possible scenarios properly:
+* Check if `expiresInSeconds` value is present
+* If `expiresInSeconds` is present, it means that the `accessToken` should be refreshed before it is expired
+* Create a logic that registers the timestamp when the `accessToken` is obtained, records the `expiresInSeconds` and uses the `refreshToken` to refresh the token before `timestamp` + `expiresInSeconds` comes
+* If `refreshTokenExpiresInSeconds` is also provided, create the same logic for the `refreshToken` - it should be refreshed using `/api/v1/token/refresh` call with `CreateNewRefreshToken: true` parameter before `timestamp` +`refreshTokenExpiresInSeconds` time comes
+* Check the [documentation for the exceptions](/api-reference/managed-account-authentication/refresh-auth-token) and implement them for the required integrations.
+## Bad Practices
+It’s a bad practice to rely on 401 responses and update Access and Refresh tokens ***after*** they have expired. Integrations may track this behavior and **block clients** that do not refresh tokens properly.
+The proper approach is to handle `expiresInSeconds` and `refreshTokenExpiresInSeconds` values properly and refresh token/tokens before tokens expire.
+## Exceptions
+There are some exception related to token flows related to limitations of specific integrations.
+They are mostly related to the refreshToken and [described in the documentation](/api-reference/managed-account-authentication/refresh-auth-token).
+**Interactive Broker: Delayed Authentication**
+Interactive Brokers API has a limitation. The problem is that when user is authenticated against the API for the first time before 16:55 EST, the IBKR API does not return information about user’s accounts (number of available accounts, their IDs etc.). This information becomes available only the next day (after the “nightly” refresh of the API).
+This happens with accounts that were **never** connected to the API before.
+# iOS SDK
+Source: https://docs.meshconnect.com/guides/ios-sdk
+## Installation
+Add package [LinkSDK](https://github.com/FrontFin/mesh-ios-sdk) in your project's Package Dependencies or download [LinkSDK.xcframework](https://github.com/FrontFin/mesh-ios-sdk/tree/main/LinkSDK.xcframework).
+## Get Link token
+Link token should be obtained from the POST `/api/v1/linktoken endpoint`. API reference for this request is available [here](/api-reference/managed-account-authentication/get-link-token-with-parameters). The request must be performed from the server side because it requires the client's secret. You will get the response in the following format:
+Set up `GetFrontLinkSDK` with the `linkToken`
+```json
+{
+"content": {
+"linkToken": "{linkToken}"
+},
+"status": "ok",
+"message": ""
+}
+```
+## Launch Link
+Create a `LinkConfiguration` instance with the `linkToken` and the callbacks:
+```swift
+let configuration = LinkConfiguration(
+linkToken: linkToken,
+settings: LinkSettings?,
+onIntegrationConnected: onIntegrationConnected,
+onTransferFinished: onTransferFinished,
+onEvent: onEvent,
+onExit: onExit)
+```
+The callback `onIntegrationConnected` is called with `LinkPayload` once an integration has been connected.
+```swift
+let onIntegrationConnected: (LinkPayload)->() = { linkPayload in
+switch linkPayload {
+case .accessToken(let accessTokenPayload):
+print(accessTokenPayload)
+case .delayedAuth(let delayedAuthPayload):
+print(delayedAuthPayload)
+}
+}
+```
+The callback `onTransferFinished` callback is called once a crypto transfer has been executed or failed. The parameter is either `success(TransferFinishedSuccessPayload)` or `error(TransferFinishedErrorPayload)`.
+The callback `onEvent` is called to provide more details on the user's progress while interacting with the Link. This is a list of possible event types, some of them may have additional parameters:
+* `loaded`
+* `integrationConnectionError`
+* `integrationSelected`
+* `credentialsEntered`
+* `transferStarted`
+* `transferPreviewed`
+* `transferPreviewError`
+* `transferExecutionError`
+The callback `onExit` is called once a user exits the Link flow. It might be used to dismiss the Link view controller in case the app manages its life cycle (see `LinkHandler.create()`)
+Callback closures are optional, but either `onIntegrationConnected` or `onTransferFinished` must be provided.
+Create a `LinkHandler` instance by calling `createHandler()` function, or handle an error. The following errors can be returned:
+* Invalid `linkToken`
+* Either `onIntegrationConnected` or `onTransferFinished` callback must be provided
+```swift
+let result = configuration.createHandler()
+switch result {
+case .failure(let error):
+print(error)
+case .success(let handler):
+handler.present(in: self)
+}
+```
+In case of success, you can call `LinkHandler.present` (in `viewController`) function to let `LinkSDK` modally present the Link view controller and dismiss it on exit, or get the reference to a view controller by calling `LinkHandler.create()` if you prefer your app to manage its life cycle.
+### Adding URL Schemes to Info.plist
+To enable our SDK to interact with specific apps, please add the following URL schemes to your info plist file
+* Open your info.plist located in the 'ios' directory of your React Native project
+* Add the following XML snippet within the `<dict></dict>` tag.
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+<string>trust</string>
+<string>robinhood</string>
+<string>metamask</string>
+<string>rainbow</string>
+<string>uniswap</string>
+<string>exodus</string>
+<string>robinhood-wallet</string>
+<string>blockchain-wallet</string>
+<string>1inch</string>
+<string>cryptowallet<string>
+<string>okx</string>
+<string>bitkeep</string>
+</array>
+```
+# Launch Checklist
+Source: https://docs.meshconnect.com/guides/launch
+![middleware](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/checklist.png)
+### <Icon icon="hourglass" iconType="solid" /> Getting Started:
+* [Generate API](https://dashboard.meshconnect.com/company/keys) keys for sandbox and production environments.
+* Production access requires going through our KYB process. But don’t worry, our Sandbox environment allows you to develop end to end while you await KYB approval.
+* [Define](https://dashboard.meshconnect.com/company/keys) Specific Domains for Mesh Access Across All Production and Pre-Production Environments (i.e., [https://localhost:3000](https://localhost:3000)). Wildcards are supported (i.e., https\://\*.westus2.5.azurestaticapps.net/).
+* \[Optional] Familiarize yourself with [Interactive Demo](https://dashboard.getfront.com/docs/interactive-demo) to see how Mesh Link Modal handles different use cases and integrations.
+### <Icon icon="monitor-waveform" iconType="solid" /> Dashboard Configuration:
+* [Upload](https://dashboard.meshconnect.com/company/link/branding) your icon and Company Name to be displayed in Mesh modal
+* [Create](https://dashboard.meshconnect.com/company/link/restrictions) either a “Deny List” or an “Allow List” to manage the countries from which your users will be able to use Mesh Link to connect accounts or initiate transfers (based on IP address).
+* [Configure](https://dashboard.meshconnect.com/company/link/configurations) the Mesh modal to your Branding guidelines.
+* [Exclude](https://dashboard.meshconnect.com/company/link/configurations) wallets/exchanges/brokerages that aren’t popular to your user demographic. Typically our customers use custom buttons for their top few exchanges and wallets and a ‘catch all button’ that opens the Mesh catalogue
+* [Customize](https://dashboard.meshconnect.com/company/link/customizations) the branding elements of the Link modal. You can adjust the modal overlay opacity, corner radii, button radii, and also add button backup colors to match your app for lesser-used integrations.
+### <Icon icon="code" iconType="solid" /> Development
+* \[Optional] Before starting development, we recommend completing the [Mesh Workshop](https://workshop.meshconnect.com/). This workshop provides a comprehensive introduction to:
+* Connecting to our integrations, networks, and tokens
+* Authenticating users through the Mesh Modal
+* Fetching data from connected wallets or exchanges
+* Exploring various workflows transferring data
+* Since Mesh is a client-side SDK, ensure that your front-end application running the Mesh SDK does not make direct API calls or store Mesh API credentials. The best practice is to have your front end communicate with a middleware service layer that securely handles access to Mesh API credentials.
+![middleware](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/middleware.png)
+* \[Optional] Pass fundingOptions object in linkToken to ensure users can buy more crypto or convert existing crypto in a
+transfer flow. This extends Transfer options when a user is paying for a good or
+service but doesn’t have enough of the request token. Refer to Account
+* Pass a unique transactionId with every transfer initiated in Link Modal
+* Pass a transferType key value pay for every linkToken transfer request. Values are: deposit | onramp | payment
+* \[Optional] Allow users to send assets over L2’s to save on gas
+* \[Recommended] Listen for Mesh transfer webhooks to receive real-time updates
+on the transfer lifecycle, including statuses such as pending, succeeded, or failed.
+* Completed transfers will include a transaction hash in the response object of the GET Mesh transfers endpoint.
+* Mesh monitors transactions on the blockchain for up to 2 hours to obtain a transaction hash. If the hash is not received within this timeframe, an alert is triggered for our on-call team to investigate.
+* \[Recommended]
+Listen to Client side SDK events: Each SDK provides client-side events to help you
+understand the workflow behavior of every Link session. This allows you to push real-time
+user experience data to your observability and business intelligence tools (e.g.,
+Mixpanel). - \[Optional] Leverage our guides for [handling access tokens](https://docs.meshconnect.com/guides/handling-auth-tokens)
+* \[Optional] Error Handling: familiarize yourself with [Mesh Error types](https://docs.meshconnect.com/guides/error-dictionary)
+and add retry logic and error handling as necessary
+### **Testing**
+* Conduct end-to-end testing in the sandbox environment. Please note, Mesh does not support testnets for self-custody wallets. All API and Modal behavior is simulated
+* Test webhook data connectivity to your endpoint
+* \[Recommnded] Share application build with Mesh to provide any final guidance and feedback
+### **Pre-Launch:**
+* Notify Mesh team of planned launch
+* Upgrade to the latest SDK build and perform functional and UAT testing
+### Post-launch
+* Notify your Mesh Account Executive and Implementation Specialist
+* [Subscribe](https://status.meshconnect.com/) to Mesh status page
+* [Bookmark](https://front-finance.atlassian.net/servicedesk/customer/portal/3) Mesh support portal for 24/7 support
+### Links
+* [Mesh API Docs](https://docs.meshconnect.com/guides/getting-started)
+* [Interactive Demo](https://dashboard.getfront.com/docs/interactive-demo)
+* [Mesh Workshop](https://workshop.meshconnect.com)
+# Link Utilization and Use cases
+Source: https://docs.meshconnect.com/guides/link-initialization
+## Overview
+Mesh Link SDK allow client applications to connect users to their accounts across brokerages, centralized exchanges, and self-custody wallets. Mesh Link UI handles credential validation, multi-factor authentication, and error handling when connecting to each account.
+After an end user authenticates with their account credentials, clients will be passed authentication tokens to provide access to the account which allows client applications to read account information such as holdings, transactions, and balances, and initiate trades and transfers on behalf of the end user.
+## Getting Your API Keys
+You can generate two different API keys (one for Sandbox and another for Production) on the [Mesh Dashboard](https://dashboard.meshconnect.com/company/keys), you should **store the API keys immediately** after generating them as they will no longer be viewable after leaving the page.
+> ❗️ These API keys should never be stored on your client-side application, always store them securely on your applications backend, following security best practices.
+## LinkToken Endpoint
+This [endpoint](/api-reference/managed-account-authentication/get-link-token-with-parameters) provides a short-lived, one-time-use token for initializing a Link session, when passed to one of the client side SDKs. Depending on the payload of the API call, the Link UI will load into different workflows, such as user authentication, or asset transfer.
+The LinkToken endpoint should always be called from your backend, since it requires an API secret.
+## Link UI Use Cases
+In the next section we will go trough the different ways Link UI can be initialized:
+## Account Authentication
+### Basic Account Authentication
+The most basic way to initialize Link is to simply pass the `UserId` body param. The `UserId` is a unique ID representing the end user. This identifier is a map to reference which customers you are logging in through Mesh Link.
+```json
+{
+"UserId": "EndUserId",
+}
+```
+POST /api/v1/linktoken body
+### Direct to Exchange or Brokerage Integration
+Many of our customers and UI/UX designers want to launch link directly to a specific integration (eg. Binance or Coinbase) and skip our Full Catalogue. This is easily achieved by including the `IntegrationId` param.
+The `IntegrationId` of the integration you wish to connect can be obtained by calling the **[Retrieve the list of all available integrations.](/api-reference/managed-transfers/get-integrations)** endpoint and referencing the `id` field.
+```json
+{
+"UserId": "EndUserId",
+"IntegrationId": "9226e5c2-ebc3-4fdd-94f6-ed52cdce1420"
+}
+```
+POST /api/v1/linktoken body
+### Direct to Self Custody Wallet
+Many of our customers and UI/UX designers want to load up Link directly to a specific wallet (eg. Metamask) and skip our Full Catalogue. This is easily achieved by including the `IntegrationId` param.
+The `IntegrationId` of the integration you wish to connect can be obtained by calling the **[Retrieve the list of all available integrations.](/api-reference/managed-transfers/get-integrations)** endpoint and referencing the `id` field.
+```json
+{
+"UserId": "EndUserId",
+"IntegrationId": "34aeb688-decb-485f-9d80-b66466783394"
+}
+```
+POST /api/v1/linktoken body
+### Restricting User to Connect only One Account
+By default, Link UI lets users authenticate with more than one provider in one session. This is great for portfolio management use cases or when a user wants to transfer from one provider to another within your application. To limit the authentication to one provider, set the RestrictMultipleAccounts param to true.
+```json
+{
+"UserId": "EndUserId",
+"RestrictMultipleAccounts": true
+}
+```
+POST /api/v1/linktoken body
+## Deposits
+### Sending Assets to a Single Crypto Address
+You can include as many `toAddresses` object items, but the most streamlined way for users to transfer assets is to include a single token/network/address combo. Please remember that for each item in the 'toAddresses' array, you must provide the Mesh UID for the network to which you are sending the supported token. The comprehensive list of tokens, networks and integrations that can Mesh supports can be found here: [Tokens](/api-reference/managed-transfers/get-supported-tokens-list) | [Networks](/api-reference/managed-transfers/get-networks) | [Integrations](/api-reference/managed-transfers/get-integrations)
+> 👍 If only one destination address is provided, the Link UI skips the ‘Select asset’ and ‘Select network’ screens to streamline the user experience.
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": [
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+}
+]
+}
+}
+```
+POST /api/v1/linktoken body - single network and token
+### Configuring for Multiple Crypto Tokens or Networks
+You can include as many `toAddresses` object items as needed to enable your users to perform transfers. Each item, represents the symbol they can transfer and the network it could be sent over. Please remember that for each item in the 'toAddresses' array, you must provide the Mesh UID for the network to which you are sending the supported token. The comprehensive list of tokens, networks and integrations that can Mesh supports can be found here: [Tokens](/api-reference/managed-transfers/get-supported-tokens-list) | [Networks](/api-reference/managed-transfers/get-networks) | [Integrations](/api-reference/managed-transfers/get-integrations)
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": [
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDC",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDT",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
+"Symbol": "MATIC",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+}
+]
+}
+}
+```
+POST /api/v1/linktoken body - multiple networks/tokens
+### Sending Assets to a Previously Connected User Account
+In the case if the end user has an already connected integration, and you want to move some funds between the users accounts, you can pass the `auth_token` when initializing the SDK.
+#### `accessTokens` Code Example
+`transferDestinationTokens`
+The `transferDestinationTokens` are used for crypto transfers flow. It is an alternative way of providing target addresses for crypto transfers by using previously obtained integration `auth_tokens`.
+The type of the `transferDestinationTokens` parameter is an array of `IntegrationAccessToken`.
+See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/main/packages/link/src/utils/types.ts).
+```json
+const transferDestinationTokens =
+[
+{
+accountId: 'accountId',
+accountName: 'accountName',
+accessToken: 'accessToken',
+brokerType: 'brokerType',
+brokerName: 'brokerName',
+},
+]
+const meshLink =
+createLink({
+clientId: 'clientId',
+onIntegrationConnected: (payload) => {},
+onExit: (error) => {},
+onTransferFinished: (transferData) => {},
+onEvent: (ev) => {},
+accessTokens: [],
+transferDestinationTokens: transferDestinationTokens // Provide a previously obtained integration auth_tokens to use as destination address
+})
+```
+In this case you need to provide an **empty** `toAddresses` array to the LinkToken endpoint, to indicate that you wish to use the transfers workflow.
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": []
+}
+}
+```
+POST /api/v1/linktoken body
+## Payments
+### Transferring for a Specific Amount
+If you’d like to initialize Mesh Link with the transfer amount pre-populated with a supplied destination address, include the assets you want to let the user pay with, plus the destination addresses of those tokens. In the example below, the user can pay with Solana or USDC over Ethereum networks (notice how the network IDs are different).
+You can achieve this by providing the `AmountInFiat` parameter when calling the LinkToken endpoint
+By providing a unique `TransactionID`, you'll be to map a payments to a specific identifier, similar to an order number.
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": [
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Amount": 0.0032,
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDC",
+"Amount": 10,
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDT",
+"Amount": 10,
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
+"Symbol": "MATIC",
+"Amount": 22.8,
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+}
+],
+"TransactionId": "TransactionId"
+}
+}
+```
+POST /api/v1/linktoken body - multiple networks/tokens
+> 👍 If `AmountInFiat` is included and only a single network/token/address combo is included, Link will skip directly to the preview page, making even more streamlined for a user to complete their transfer.
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": [
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+}
+],
+"AmountInFiat": 10,
+"TransactionId": "TransactionId"
+}
+}
+```
+POST /api/v1/linktoken body - single network and token
+#### Adding a Fee for a Payment
+If you’d like to charge a client fee for processing a transfer, you can append the `ClientFee` field to the above JSON object examples. This fee should only be used for **Payments** (when the transfer destination is an address owned by your company), and not for Deposits (when the transfer destination is an address owned by the end-user).
+A percentage fee (input as a ratio, eg. 0.02500 = 2.500%) added onto your users' gross transfer to your company.
+This will override any default fee entered in your Mesh dashboard for an individual transaction.
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": [
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDC",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "USDT",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+},
+{
+"NetworkId": "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
+"Symbol": "MATIC",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+}
+],
+"AmountInFiat": 10,
+"ClientFee": 0.025
+}
+}
+```
+POST /api/v1/linktoken body - multiple networks/tokens
+```json
+{
+"UserId": "EndUserId",
+"TransferOptions": {
+"ToAddresses": [
+{
+"NetworkId": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+"Symbol": "ETH",
+"Address": "0x9Bf6207f8A3f4278E0C989527015deFe10e5D7c6"
+}
+],
+"AmountInFiat": 10,
+"TransactionId": "TransactionId"
+"ClientFee": 0.025
+}
+}
+```
+POST /api/v1/linktoken body - single network and token
+# Link UI Events
+Source: https://docs.meshconnect.com/guides/link-ui-events
+## Overview
+Mesh Link UI offers an event tracking system, allowing you to gain insights into user interactions within the Link UI. These events can be used for analytics and understanding user behavior. The event data can be obtained directly from the SDKs and includes various user actions, such as initiating a connection, completing authentication, completing an asset transfer, or encountering errors.
+The way in which these events are captured and transmitted varies slightly across different platforms (Web, iOS, Android, and React Native). For detailed instructions, see the page for your specific platform.
+## List of Events
+| Event Type                            | Description of Occurrence                                                                                                                                                                  | Payload Details                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pageLoaded`                          | Triggered when the Link UI page is fully loaded.                                                                                                                                           | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `integrationSelected`                 | Triggered when a user selects an integration from the list.                                                                                                                                | - `integrationType`: Type of the integration\<>- `integrationName`: Name of the selected integration                                                                                                                                                                                                                                                          |
+| `credentialsEntered`                  | Occurs when a user enters credentials in the Link UI.                                                                                                                                      | No additional payload. Indicates that credentials were entered.                                                                                                                                                                                                                                                                                               |
+| `integrationMfaRequired`              | Triggered when MFA required to connect integration.                                                                                                                                        | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `integrationMfaEntered`               | Triggered when user enters MFA code to connect integration.                                                                                                                                | No additional payload. Indicates that MFA code were entered.                                                                                                                                                                                                                                                                                                  |
+| `integrationOAuthStarted`             | Triggered when OAuth connection flow started.                                                                                                                                              | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `integrationAccountSelectionRequired` | Triggered when account selection page showed.                                                                                                                                              | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `integrationConnected`                | Occurs when a user successfully connects to an integration.                                                                                                                                | - `LinkPayload`: Details about the connected integration.                                                                                                                                                                                                                                                                                                     |
+| `integrationConnectionError`          | Fired when there's an error in connecting to an integration.                                                                                                                               | - `errorMessage`: Descriptive error message.                                                                                                                                                                                                                                                                                                                  |
+| `transferStarted`                     | Fired at the initiation of a financial transfer.                                                                                                                                           | No additional payload. Indicates the start of a transfer.                                                                                                                                                                                                                                                                                                     |
+| `transferAssetSelected`               | Fired when user selects asset to transfer.                                                                                                                                                 | - `symbol`: Currency symbol.                                                                                                                                                                                                                                                                                                                                  |
+| `transferNetworkSelected`             | Fired when user selects network to transfer.                                                                                                                                               | - `id`: Selected network identifier `name`: Selected network name                                                                                                                                                                                                                                                                                             |
+| `transferAmountEntered`               | Fired when user enters amount to transfer.                                                                                                                                                 | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `transferPreviewed`                   | Triggered when a user previews the details of a pending transfer.                                                                                                                          | - `amount`: Transfer amount\<>- `symbol`: Currency symbol\<>- `toAddress`: Destination address\<>- `networkId`: Network identifier\<>- `previewId`: Unique ID for the preview\<>- `networkName` (optional): Name of the network\<>- `amountInFiat` (optional): Amount in fiat currency\<>- `estimatedNetworkGasFee` (optional): Object containing fee details |
+| `transferPreviewError`                | Occurs when there is an error in previewing a transfer.                                                                                                                                    | - `errorMessage`: Descriptive error message.                                                                                                                                                                                                                                                                                                                  |
+| `transferMfaRequired`                 | Triggered when MFA required to perform the transfer.                                                                                                                                       | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `transferMfaEntered`                  | Triggered when user enters MFA code to perform the transfer.                                                                                                                               | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `transferKycRequired`                 | Triggered when KYC flow needed to perform the transfer.                                                                                                                                    | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `transferCompleted`                   | Happens when a financial transfer is successfully completed.                                                                                                                               | - `TransferFinishedPayload`: Details about the completed transfer.                                                                                                                                                                                                                                                                                            |
+| `transferExecutionError`              | Fired when there is an error in executing a transfer.                                                                                                                                      | - `errorMessage`: Descriptive error message.                                                                                                                                                                                                                                                                                                                  |
+| `connectionUnavailable`               | Triggered when a timeout occurred on clicking a deep link (CTA `Continue`) on a DeFi wallet connect page on mobile, most likely because the DeFi wallet app is not intalled on the device. | - `ConnectionUnavailable`: integration name and type, the reason.                                                                                                                                                                                                                                                                                             |
+| `connectionDeclined`                  | Triggered when an error occurred on connecting a DeFi wallet on mobile or in a browser due to either a user rejected connection or a network switch.                                       | - `ConnectionDeclined`: integration name and type, reason, network ID, destination address, error message.                                                                                                                                                                                                                                                    |
+| `transferDeclined`                    | Triggered when an error occurred on a Transfer Preview page on mobile or in a browser due to a user rejected the transfer or a transfer failed.                                            | - `TransferDeclined`: integration name and type, network, destination address, token, amount, status: \['declined', 'failed']                                                                                                                                                                                                                                 |
+| `walletMessageSigned`                 | Triggered when a user signs to verify wallet ownership.                                                                                                                                    | - `address: "0x.....1234"` <br /> - `isVerified: true` <br /> - `message: "Message that was signed"` <br /> - `signedMessageHash: "0x87...cb1b"` <br /> - `timeStamp: 1731950936`                                                                                                                                                                             |
+| `verifyDonePage`                      | Triggered when user closes verify success page.                                                                                                                                            | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+| `verifyWalletRejected`                | Triggered when user rejects wallet verification request                                                                                                                                    | No additional payload.                                                                                                                                                                                                                                                                                                                                        |
+# SDK Overview
+Source: https://docs.meshconnect.com/guides/quickstart-guide-with-link-sdks
+This page will help you get started using Mesh SDKs to authenticate and make server side calls.
+## What is Link SDK?
+Mesh Link is a collection of client side SDKs, that allows your users to connect to their financial institutions and perform transactions using a user interface provided by Mesh.
+Link will handle credential validation, multi-factor authentication, and error handling for each institution that Mesh supports. Link can also provide a user interface for asset transfers, deposits or payment methods. You can read more about Link use cases in [this document](/guides/link-initialization).
+Mesh provides client side SDKs for all modern platforms:
+1. [Web Link SDK](/guides/web-sdk)
+2. [iOS Link SDK](/guides/ios-sdk)
+3. [Android Link SDK](/guides/android-sdk)
+4. [React Native SDK](/guides/react-native-sdk)
+## Authentication + Call Flow Overview
+The starting point for any integration with Mesh is with an account connection, which using the fastest way to get started is by using Link SDKs or cloning the [Quickstart React app](https://github.com/FrontFin/mesh-web-sdk/tree/main/examples/react-example).
+After generating Sandbox and Production [API keys](https://dashboard.meshconnect.com/company/keys), you’ll start by leveraging Link SDKs to facilitate end user authentication.
+1. Call [/api/v1/linktoken](/api-reference/managed-account-authentication/get-link-token-with-parameters) to create a `linktoken`. This endpoint provides a short-lived, one-time-use token for initializing a Link session
+2. Pass the `linktoken` to the appropriate Link SDK. The exact implementation details for passing the `linktoken` will vary by platform. For detailed instructions, see the page for your specific platform
+3. Your user will be able to filter and search for the account they want to connect. Mesh will manage the authentication flow and handle MFAs for all supported integrations.
+4. After successful authentication on the Link UI, `auth_token` will be passed to the SDK.
+1. 🚨 You should **securely store** the `auth_token` (and `refresh_token`) for use in subsequent server requests
+The diagram below shows the model of how Link is used to obtain the `auth_token` and `refresh_token` which can be used for subsequent server requests.
+![](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/81d158e-Token_Diagram_Excalidraw.png)
+Here is a more detailed call flow diagram for user authentication using Link SDK:
+![](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/3b646b4-linkToken_flow.png)
+### Link Initialization and Use Cases
+Depending on the `linktoken` API call payload, Link's functionality can be tailored to suit various user flows. From Authentication, Transfers to Deposits, the primary use cases can be [found here](/docs/link-initialization-and-use-cases).
+* [Account Authentication](/docs/link-initialization-and-use-cases#account-authentication)
+* [Deposit Use Cases](/docs/link-initialization-and-use-cases#deposits)
+* [Payment Use Cases](/docs/link-initialization-and-use-cases#payments)
+### Troubleshooting
+For details on dealing with common problems, see the [Troubleshooting section](/docs/link-troubleshooting).
+### Security Measures for Handling Authentication Tokens
+**Secure Storage of Authentication Tokens**
+* **Backend Storage:** It is **highly recommended** that `auth_token` and `refresh_token` obtained through Mesh Link should be securely stored on your backend server. Storing tokens on the server side enhances security by reducing the exposure of sensitive data to client-side vulnerabilities.
+* **Mobile SDK Secure Storage:** For mobile applications, Mesh provides secure storage solutions within the iOS and Android SDKs. The iOS SDK leverages the Secure Enclave, a hardware-based key manager, and for Android devices, Mesh SDK utilizes secure storage mechanisms provided by the Android Keystore system. Utilizing these secure storage options ensures that tokens are stored in a manner compliant with the best practices of each platform.
+**Handling User Credentials**
+* **No Storage of User Credentials:** Mesh's backend infrastructure is designed to never store user credentials. This approach aligns with best practices in data security, ensuring that sensitive user information remains confidential and reducing the risk of data breaches.
+Learn more about about [Security at Mesh](https://www.meshconnect.com/security)
+### Event Tracking in UI
+Mesh Link UI offers an event tracking system, allowing you to gain insights into user interactions within the Link UI. These events can be used for analytics and understanding user behavior. The event data can be obtained directly from the SDKs and includes various user actions, such as initiating a connection, completing authentication, completing an asset transfer, or encountering errors.
+The way in which these events are captured and transmitted varies slightly across different platforms (Web, iOS, Android, and React Native). For detailed instructions, see the page for your specific platform.
+The following document [list of UI Events](/docs/link-ui-events#list-of-events) details all of the events supported by Mesh SDKs.
+# React Native SDK
+Source: https://docs.meshconnect.com/guides/react-native-sdk
+## Installation
+With `npm`:
+`npm install --save @meshconnect/react-native-link-sdk`
+With `yarn`:
+`yarn add @meshconnect/react-native-link-sdk`
+💡 This package requires `react-native-webview` to be installed in your project. Although it is listed as direct dependency, some times it is not installed automatically (This is a known [npm issue](https://stackoverflow.com/questions/18401606/npm-doesnt-install-module-dependencies)). You should install it manually via following command in this case:
+```
+npm install --save react-native-webview
+# or with yarn
+yarn add react-native-webview
+```
+## Get Link token
+Link token should be obtained from the POST `/api/v1/linktoken` endpoint. API reference for this request is available here. The request must be performed from the server side because it requires the client's secret. You will get the response in the following format:
+```json
+{
+"content": {
+"linkToken": "{linkToken}"
+},
+"status": "ok",
+"message": ""
+}
+```
+## Launch Link
+```javascript
+import React from 'react';
+import {
+LinkConnect,
+LinkPayload,
+TransferFinishedPayload,
+TransferFinishedSuccessPayload,
+TransferFinishedErrorPayload
+} from '@meshconnect/react-native-link-sdk';
+export const App = () => {
+return (
+<LinkConnect
+linkToken={"YOUR_LINKTOKEN"}
+onIntegrationConnected={(payload: LinkPayload) => {
+// use broker account data
+}}
+onTransferFinished={(payload: TransferFinishedPayload) => {
+if (payload.status === 'success') {
+const successPayload = payload as TransferFinishedSuccessPayload
+// use transfer finished data
+} else {
+const errorPayload = payload as TransferFinishedErrorPayload
+// handle transfer error
+}
+}}
+onExit={(err?: string) => {
+// use error message
+}}
+onEvent={(event: string, payload: LinkPayload) => {
+// use event
+}}
+/>
+)
+}
+export default App;
+```
+ℹ️ See full source code example at [examples/](https://github.com/FrontFin/mesh-react-native-sdk/tree/main/examples).
+### `LinkConnect` component arguments
+| Key                    | Type                                       | Required/Optional |
+| ---------------------- | ------------------------------------------ | ----------------- |
+| linkToken              | string                                     | required          |
+| onIntegrationConnected | (payload: LinkPayload) => void             | optional          |
+| onTransferFinished     | (payload: TransferFinishedPayload) => void | optional          |
+| onExit                 | (err: string) => void)                     | optional          |
+### Typescript support
+Typescript definitions for `@meshconnect/react-native-link-sdk` are built into the npm package.
+### Adding URL Schemes to Info.plist
+To enable our SDK to interact with specific apps, please add the following URL schemes to your info plist file
+* Open your info.plist located in the 'ios' directory of your React Native project
+* Add the following XML snippet within the `<dict></dict>` tag.
+```xml
+<key>LSApplicationQueriesSchemes</key>
+<array>
+<string>trust</string>
+<string>robinhood</string>
+<string>metamask</string>
+<string>rainbow</string>
+<string>uniswap</string>
+<string>exodus</string>
+<string>robinhood-wallet</string>
+<string>blockchain-wallet</string>
+<string>1inch</string>
+<string>cryptowallet<string>
+<string>okx</string>
+<string>bitkeep</string>
+</array>
+```
+# Sandbox Environment
+Source: https://docs.meshconnect.com/guides/sandbox
+Learn about the Sandbox environment, its features, limitations, and how to use it for API testing.
+## What is the Sandbox?
+The **Sandbox** is a dedicated testing environment that allows clients to integrate and interact with our APIs in a safe and controlled manner. It is designed to mirror the **Production** environment as closely as possible, providing a realistic experience without real-world consequences.
+This environment enables developers and testers to explore our platform, validate their integrations, and troubleshoot issues **without relying on live third-party services**. Instead, the Sandbox uses **mocked data** to simulate real-world responses.
+### Key Features of the Sandbox
+* **Isolated Execution** – Runs in a separate application to prevent interference with Production.
+* **Mocked Data** – Simulated responses replace real third-party integrations.
+* **Dedicated Endpoint** – Access the Sandbox API at:  **`https://sandbox-integration-api.meshconnect.com`**
+* **Safe Testing Environment** – Ideal for testing API integrations and workflows before moving to Production.
+***
+## Limitations of the Sandbox
+#### **Mocked Third-Party Integrations**
+* All third-party integrations (e.g., payment providers, asset pricing, etc.) return **simulated** responses rather than real-time data.
+* Asset prices are **hardcoded** and do not reflect real market values.
+#### **Self-Custody Wallets Not Available**
+* Sandbox does not support **self-custody wallets** yet.
+#### **No Real Transactions**
+* Since the environment does not interact with actual third-party services, any financial transactions, API calls, or data exchanges are **simulated**.
+#### **Performance Differences**
+* Performance may vary slightly compared to Prod, due to testing loads and mocked data responses.
+***
+## Who Should Use the Sandbox?
+✅ **Developers & Engineers** – Validating API integrations and troubleshooting issues.\
+✅ **Quality Assurance Teams** – Testing workflows before Production deployment.\
+✅ **Product Teams** – Understanding platform behavior and testing use cases.
+***
+## Getting Started
+The easiest and quickest way to get started is through our [Interactive Demos](https://dashboard.meshconnect.com/demos/). Try various Mesh products without any set up or touching “real” assets as shown below,
+![sandbox-demo-page](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/sandbox-demo-page.png)
+Alternatively, you can start interacting with various Sandbox endpoints following the [API reference](https://docs.meshconnect.com/api-reference/)
+1. **Create Sandbox API keys:**
+* Create a new key in your [Dashboard](https://dashboard.meshconnect.com/company/keys)
+2. **Use the Dedicated API Endpoint:**
+* `https://sandbox-integration-api.meshconnect.com`
+3. **Authenticate Using API Credentials:**
+* Use the newly created Sandbox API keys, separate from your Production credentials.
+4. **Test Your Integration:**
+* Execute API calls, validate responses, and ensure your application behaves as expected.
+5. **Move to Production:**
+* Once testing is complete, update your integration to point to the Production API.
+***
+## Frequently Asked Questions
+<Accordion title="🔹 Can I perform real transactions in the Sandbox?">
+No, the Sandbox does not process real transactions. All payments, asset movements, and third-party API calls return mocked responses for testing purposes.
+</Accordion>
+<Accordion title="🔹 Does the Sandbox have the same API as Production?">
+Yes, the Sandbox API follows the same structure and endpoints as the Production API, but the responses are simulated.
+</Accordion>
+<Accordion title="🔹 Are Testnets supported?">
+No, testnets are not yet supported, but will be available by the end of Q1 2025.
+</Accordion>
+<Accordion title="🔹 Are all exchange integrations supported in the Sandbox the same as in Production?">
+No, the Sandbox API supports the following exchange integrations:
+| Exchanges   |
+| ----------- |
+| Binance     |
+| Binance API |
+| Coinbase    |
+| Bybit       |
+| OKX API     |
+| Gemini      |
+| KuCoin API  |
+| Kraken API  |
+</Accordion>
+<Accordion title="🔹 How can I allow users to bypass authentication when they return to use Mesh again?">
+* To enable a seamless return experience without prompting users to authenticate again, you can pass a valid `accessToken` into the `createLink()` function when connecting an account via the Mesh Web SDK.
+* If you provide a valid `accessToken`, users will not need to reauthenticate.
+* If you pass **no `integrationId` and no `accessToken`**, the catalog will open, but users will be required to authenticate again when selecting an already linked integration.
+* **Important:** You must securely store and manage the `accessToken` on your side. For best practices on handling authentication tokens, refer to our guide: [Handling Auth Tokens](https://docs.meshconnect.com/guides/handling-auth-tokens#handling-auth-tokens).
+</Accordion>
+# Status Page
+Source: https://docs.meshconnect.com/guides/status
+<iframe src="https://status.meshconnect.com" width="100%" height="750" style={{ border: "none" }} allowFullScreen loading="lazy" />
+# Sub-Client Branding
+Source: https://docs.meshconnect.com/guides/sub-client-branding
+[Sub-Client Branding](https://meshconnect.notion.site/Sub-Client-Functionality-142f862e950a80c695bdd108c37de78b)
+# Supported Transfer Integrations
+Source: https://docs.meshconnect.com/guides/supported-transfer-integrations
+## Centralized Exchanges
+* Binance International
+* Binance US
+* ByBit
+* Coinbase
+* Coinbase Prime
+* Huobi
+* Kraken
+* KuCoin
+* OKX
+* Paxos
+* Robinhood
+* BTC Turk (new)
+## Exchanges Coming Soon
+* Paribu
+* Bitso
+* ByBit
+## Self-Custody Wallets
+* Metamask
+* Coinbase Wallet
+* Trust Wallet
+* Blockchain.com
+* ZenGo
+* Robinhood Wallet
+* Argent Wallet
+* [Full Integration List](https://www.meshconnect.com/integrations)
+## Supported Chains
+* Arbitrum
+* Avalanche
+* AvalancheC
+* AvalancheX
+* Base
+* Binance Smart Chain
+* Bitcoin
+* Cardano
+* Doge
+* Dogecoin
+* Ethereum
+* Litecoin
+* Optimism
+* Polygon
+* Ripple
+* Solana
+* Stellar
+* Stellar
+* Sui
+* Tron
+## COMING SOON
+* Aptos
+* Bitcoin Lightning
+* Ton
+# null
+Source: https://docs.meshconnect.com/guides/troubleshooting-link
+## Link UI is not displaying in your webpage
+**Symptoms:**
+* When initializing the Link UI, you see a grey box instead of the Link UI
+* An error in the browser's console that says `Refused to frame 'https://web.meshconnect.com/' because an ancestor violates the following Content Security Policy directive...`
+![CORS Error](https://files.readme.io/c063393-cors_error.png)
+**Causes:**
+* When using the Link Web SDK in your page, Mesh SDK loads the Link UI using an iFrame component. Due to security reasons, we allow loading the Link UI only on a predefined set of URLs.
+* If you are using a Content Security Policy (CSP) directives on your website, they might block loading an external iFrame into your page.
+**Troubleshooting:**
+* [ ] &#x20;Add your website's URL to the list of **Allowed Link URLs** in our [dashboard](https://dashboard.meshconnect.com/company/keys).
+* [ ] &#x20;Add the following CSP directives to your site:\
+`frame-src: *.getfront.com, *.meshconnect.com`
+# Unable to connect an OAuth integration
+**Symptoms:**
+* When authenticating on a third party integration's side (e.g., Coinbase or Gemini), the user gets stuck on a page displaying a loading spinner
+**Causes:**
+* Ad-blocking software is not officially supported with Link UI, and some ad-blockers have been known to cause issues with Link.
+* Some browsers have built-in ad-blocking service (Brave Browser) which prevents Link UI from using the browser's storage.
+**Troubleshooting:**
+* [ ] &#x20;Disable all ad-blockers in your browser
+# Verifying Self-Hosted Wallets
+Source: https://docs.meshconnect.com/guides/verifying-self-hosted-wallets
+[Verifying Self-Hosted Wallets](https://meshconnect.notion.site/Using-Mesh-Verify-for-wallet-verification-142f862e950a80b78595f7e90409ad36)
+# Web SDK
+Source: https://docs.meshconnect.com/guides/web-sdk
+## Installation
+To get started with Web Link SDK, clone the [GitHub repository](https://github.com/FrontFin/mesh-web-sdk), and review the example application.
+Next, you will need to install the **[@meshconnect/web-link-sdk](https://www.npmjs.com/package/@meshconnect/web-link-sdk)** package.
+```
+npm install --save @meshconnect/web-link-sdk
+```
+With `yarn`:
+```
+yarn add @meshconnect/web-link-sdk
+```
+Then import the necessary components and types:
+```jsx JSX
+import {
+Link,
+LinkPayload,
+TransferFinishedPayload,
+createLink,
+} from "@meshconnect/web-link-sdk";
+```
+## Creating Link Connection
+The `createLink` function accepts one argument, a configuration Object typed `LinkOptions` and returns an Object with two functions, `openLink` and `closeLink`.
+Calling `openLink` will display the Link UI in an iframe, and the overlay around it.\
+Calling the `closeLink` will close the already displayed Link UI. Please note, that the Link UI will close itself once the user finishes their workflow in Link UI.
+#### `createLink` arguments
+| Key                                  | Type                            | Description                                                                                                                                                                                                                        |
+| ------------------------------------ | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| clientId                             | string                          | A Client ID, unique to your company, which can be obtained at [https://dashboard.meshconnect.com/company/keys](https://dashboard.meshconnect.com/company/keys)                                                                     |
+| onIntegrationConnected               | callback                        | A callback function that is called when an integration is successfully connected.The function should expect an argument typed LinkPayload.                                                                                         |
+| onExit (optional)                    | callback                        | A callback function, that is called, when the Link UI is closed.The function should expect two arguments:1. Nullable error string as an argument.2. Nullable summary object.                                                       |
+| onTransferFinished (optional)        | callback                        | A callback function that is called when an asset transfer is finished.The function should expect an argument typed TransferFinishedPayload.                                                                                        |
+| onEvent (optional)                   | callback                        | A callback function that is called when various events occur within the Link UI.The function should expect an argument typed LinkEventType.See [Link UI Events](/guides/link-ui-events) for more details on event types.           |
+| accessTokens (optional)              | Array of IntegrationAccessToken | These access tokens are used to initialize crypto transfers flow at 'Select asset step’ using previously obtained integration auth\_tokens .See [Link Initialization and Use Cases](/guides/link-initialization) for more details. |
+| transferDestinationTokens (optional) | Array of IntegrationAccessToken | These access tokens are used to initialize crypto transfers flow at 'Select asset step’ using previously obtained integration auth\_tokens .See [Link Initialization and Use Cases](/guides/link-initialization) for more details. |
+#### createLink code example
+```JSX JSX
+const meshLink =
+createLink({
+clientId: 'clientId',
+onIntegrationConnected: (payload) => {},
+onExit: (error) => {},
+onTransferFinished: (transferData) => {},
+onEvent: (ev) => {},
+accessTokens: [],
+transferDestinationTokens: []
+})
+```
+### onIntegrationConnected
+The `onIntegrationConnected` callback is called when an integration is successfully connected. It takes one argument called `payload` with the type of `LinkPayload`
+#### `LinkPayload` properties
+| Key                    | Type                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ---------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| accessToken (nullable) | Object of type AccessTokenPayload | The an accessToken payload is returned, when a user successfully connects an integration.It contains all the necessary data to interact with the users connected account via the Mesh API.Make sure, that you handle this data securely and you follow our recommended [best practices](/guides/handling-auth-tokens). See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/963dfe9820ec634c8d68f45e7df9b8c30d8402b7/packages/link/src/utils/types.ts#L48C24-L48C24). |
+| delayedAuth (nullable) | Object of type DelayedAuthPayload | The a delayedAuth payload is returned, when a user successfully connects an Interactive Brokers account for the first time.It contains a refresh\_token that can be exchanged into an auth\_token in 24 hours, using the Mesh API. See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/963dfe9820ec634c8d68f45e7df9b8c30d8402b7/packages/link/src/utils/types.ts#L57).                                                                                               |
+### onExit
+The `onExit` callback is called, when the Link UI is closed. This can be due to an error, or the user can close the Link UI by choosing so.\
+It takes two arguments:
+1. `error` with the type of `string`, which is the reason, why the Link UI was closed in an user friendly message.
+2. `summary` object that contains session summary in following format
+```jsx JSX
+{
+/**
+*   Current page of application. Possible values:
+* `startPage`
+* `integrationsCatalogPage`
+* `integrationLoginPage`
+* `integrationMfaPage`
+* `integrationAccountSelectPage`
+* `integrationConnectedPage`
+* `errorPage`
+* `transferKycPage`
+* `transferHoldingSelectionPage`
+* `transferNetworkSelectionPage`
+* `transferAmountSelectionPage`
+* `transferPreviewPage`
+* `transferMfaPage`
+* `transferFundingPage`
+* `transferExecutedPage`
+* `termsAndConditionPage`
+*
+* This list may change in future.
+*/
+page: string
+/** Selected integration */
+selectedIntegration?: {
+id?: string
+name?: string
+}
+/** Transfer information */
+transfer?: {
+previewId?: string
+symbol?: string
+amount?: number
+amountInFiat?: number
+transactionId?: string
+networkId?: string
+}
+errorMessage?: string
+}
+```
+### onTransferFinished
+The `onTransferFinished` callback is called, when an asset transfer is finished successfully or unsuccessfully.\
+It takes one argument called `payload` with the type of `TransferFinishedSuccessPayload` or `TransferFinishedErrorPayload`.
+#### `TransferFinishedSuccessPayload` properties
+See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/main/packages/link/src/utils/types.ts).
+| Key         | Type   | Description                                                                                                                                                |
+| ----------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| status      | string | The status of the transfer in case of TransferFinishedSuccessPayload it will be always success                                                             |
+| txId        | string | The identifier of the executed transaction, received from the integration                                                                                  |
+| fromAddress | string | Address where the crypto funds were sent from                                                                                                              |
+| toAddress   | string | Address where the crypto funds were sent to                                                                                                                |
+| symbol      | string | The symbol of the crypto asset                                                                                                                             |
+| amount      | string | The amount in the given cryptocurrency that was sent                                                                                                       |
+| networkId   | string | Id of the network over which the transaction was executed.See more about network IDs in our [API reference](/api-reference/managed-transfers/get-networks) |
+#### `TransferFinishedErrorPayload` properties
+See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/main/packages/link/src/utils/types.ts).
+| Key          | Type   | Description                                                                                |
+| ------------ | ------ | ------------------------------------------------------------------------------------------ |
+| status       | string | The status of the transfer in case of TransferFinishedErrorPayload it will be always error |
+| errorMessage | string | A user friendly message on why the transaction failed.                                     |
+### onEvent
+The `onEvent` callback is called, when various events occur within the Link UI.\
+It takes one argument, called `event` with the type of `LinkEventType`.
+See [Link UI Events](/guides/link-ui-events) for more details on events and their type definitions.
+### accessTokens
+The `accessTokens` parameter is used to initialize crypto transfers flow at the 'Select asset step’ using previously obtained integration `auth_token`. It can be used if you have a valid `auth_token` and want to bypass authentication to jump right into a transfer.
+The type of the `accessTokens` parameter is an array of `IntegrationAccessToken`, however, please note, only the first item in the array will be taken into account.
+See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/main/packages/link/src/utils/types.ts).
+#### `accessTokens` code example
+```JSX JSX
+const accessTokens =
+[
+{
+accountId: 'accountId',
+accountName: 'accountName',
+accessToken: 'accessToken',
+brokerType: 'brokerType',
+brokerName: 'brokerName',
+},
+]
+const meshLink =
+createLink({
+clientId: 'clientId',
+onIntegrationConnected: (payload) => {},
+onExit: (error) => {},
+onTransferFinished: (transferData) => {},
+onEvent: (ev) => {},
+accessTokens: accessTokens, // Provide a previously obtained integration auth_token
+transferDestinationTokens: []
+})
+```
+### transferDestinationTokens
+The `transferDestinationTokens` are used for crypto transfers flow. It is an alternative way of providing target addresses for crypto transfers by using previously obtained integration `auth_tokens`.
+See [Link initialization and use cases](/guides/link-initialization) for more details.
+The type of the `transferDestinationTokens` parameter is an array of `IntegrationAccessToken`.
+See the type definition on our [GitHub](https://github.com/FrontFin/mesh-web-sdk/blob/main/packages/link/src/utils/types.ts).
+#### `transferDestinationTokens` code example
+```jsx JSX
+const transferDestinationTokens = [
+{
+accountId: "accountId",
+accountName: "accountName",
+accessToken: "accessToken",
+brokerType: "brokerType",
+brokerName: "brokerName",
+},
+];
+const meshLink = createLink({
+clientId: "clientId",
+onIntegrationConnected: (payload) => {},
+onExit: (error) => {},
+onTransferFinished: (transferData) => {},
+onEvent: (ev) => {},
+accessTokens: [],
+transferDestinationTokens: transferDestinationTokens, // Provide a previously obtained integration auth_tokens to use as destination address
+});
+```
+### openLink()
+Calling `openLink` will display the Link UI in an iframe, and the overlay around it.
+It takes `linkToken` as an argument, which can be obtained from the POST `/api/v1/linktoken` endpoint. Request must be preformed from the server side because it requires the client secret and ID.
+See more about obtaining the `linkToken` and [initialization use cases](/guides/link-initialization)
+#### `openLink` code example
+```jsx JSX
+const meshLink = createLink({
+clientId: "clientId",
+onIntegrationConnected: (payload) => {},
+onExit: (error) => {},
+onTransferFinished: (transferData) => {},
+onEvent: (ev) => {},
+accessTokens: [],
+transferDestinationTokens: [],
+});
+meshLink.openLink("linktoken"); // Open the Link UI popup
+```
+### closeLink()
+Calling the `closeLink` will close the already displayed Link UI. Please note, that the Link UI will close itself once the user finishes their workflow in Link UI.
+### Typescript support
+TypeScript definitions for `@meshconnect/web-link-sdk` are built into the NPM package.
+# Transfer Webhooks
+Source: https://docs.meshconnect.com/guides/webhooks
+If your business relies on transfer status updates to make business decisions (releasing inventory, dispersing funds, etc.), then polling Mesh’s managed transfers endpoint is an inefficient and ineffective solution. Mesh offers webhooks to solve this problem. A webhook is a callback function that allows lightweight, event-driven communication between 2 systems. The events that trigger communications from Mesh’s webhooks are updates to transfer statuses. Instead of polling a Mesh endpoint, you can provide Mesh (via the Dashboard) with a unique callback URL which will automatically receive transfer status updates as Mesh learns about them.
+## Secure Data Transmission
+* Mesh uses HMAC (Hash-based Message Authentication Code)
+* When clients register their Webhook URI, they receive a Secret from Mesh which will be used in signing the request.
+* Mesh signs each webhook request using a secret key. The receiver can verify the signature using the same secret key to ensure the data has not been tampered with.
+* Mesh will include a signature header (e.g., **`X-Mesh-Signature-256`**) that the receiver can use to validate the integrity and authenticity of the payload.
+This is the function we use for creating HMAC signature that is used in the request header:
+```csharp
+public string GenerateHmacSignature(string payload, string webhookSecret)
+{
+using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(webhookSecret));
+byte[] hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(payload));
+return Convert.ToBase64String(hash);
+}
+```
+# Whitelist IP
+All the webhook calls from Mesh side will come from this static IP:
+```bash
+20.22.113.37
+```
+## Webhook Event Models
+### TransferUpdateWebhookQueueItem
+The `TransferUpdateWebhookQueueItem` model contains the core information related to a transfer update. Below are the fields available in this model:
+* **`EventId`** (`Guid`): A unique identifier for the event. This event identifies each message sent to clients.
+* **`TransferId`** (`Guid`): The unique identifier of the transfer related to this event.
+* **`Timestamp`** (`long`): The timestamp indicating when the event occurred.
+* **`TransferStatus`** (`TransferPreviewExecutionStatus`): The status of the transfer at the time of the event. This is an enumeration representing various possible states of the transfer.
+* **`TransactionId`** (`string`): The unique identifier for the transaction associated with the transfer.
+* **`TxHash`** (`string`): The unique identifier for the blockchain transaction associated with the transfer.
+* **`UserId`** (`string`): The unique identifier of the user associated with the transfer.
+### TransferUpdateWebhookEvent
+The `TransferUpdateWebhookEvent` model extends `TransferUpdateWebhookQueueItem` and includes additional fields specific to the event. Below are the fields available in this model:
+* **`Id`** (`Guid`): A unique identifier for the webhook event. This is considered as SentID, there maybe multiple retries for any event pushed into the queue. For each try for sending a specific event there is a different Id.
+* **`SentTimestamp`** (`long`): The timestamp indicating when the webhook event was sent.
+### Data Payload
+JSON, the standard format for `TransferUpdateWebhookEvent` payloads.
+```json
+{
+"EventId": "56713e70-be74-4a37-0036-08da97f5941a",
+"Id": "358c6ab7-4518-416b-9266-c680fda3a8dd",
+"SentTimestamp": 1720532648,
+"Timestamp": 1715175519038,
+"TransactionId": "transaction_id_provided_by_client",
+"TransferId": "dd4063e5-f317-441c-3f07-08dc7353b6f8",
+"TransferStatus": "Pending",
+"TxHash": "0x7d4ec1ce50952a377452c95fdf5a787ff551f08c0343093f866c84f57c473495"
+"UserId": "user_id_provided_by_client"
+}
+```
+### Transfer Status Values
+* **`pending`**: The transfer has been initiated via Mesh, but has not yet reached a final state. Mesh does not yet have a Transfer Hash for this transfer.
+* **`succeeded`**: A final state that indicates the transfer was successfully delivered to the destination address. Mesh has a Transfer Hash for this transfer.
+* **`failed`**: A final state that indicates the transfer has failed. No transfer hash available.
+### Create and register your callback URI
+* Create an endpoint that can receive a POST request with application/json content.
+* Go to [Account —> API Keys](https://dashboard.meshconnect.com/company/keys) in your Mesh Dashboard.
+* Scroll down to “Production Transfer Webhook URI” and “Sandbox Transfer Webhook URI”
+![Register Webhook](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/registerWebhookURI.png)
+* When registering an endpoint, you’ll be prompted to store your secret key, as you won’t be able to view it again.
+![Register Webhook](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/registerModal.png)
+* You can only save one production URI and one Sandbox URI, but you can deactivate one and save a new one at any time.
+![Register Webhook](https://mintlify.s3.us-west-1.amazonaws.com/mesh-40/images/registeredWebhookURI.png)
+### How to respond to a Mesh webhook event
+* Please respond with a **`200`** response in \< 200ms to confirm receipt of the event.
+* If Mesh does not receive a **`200`** response in \< 200ms, the webhook will retry (you will receive the event again with all duplicate information except for a different **`Id`**).

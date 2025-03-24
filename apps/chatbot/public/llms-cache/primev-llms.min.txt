@@ -1,0 +1,100 @@
+# Documentation
+## Docs
+- [Add Auto Deposit](https://docs.primev.xyz/v1.0.0/api-reference/bidder/autodeposit.md): AutoDeposit is called by the bidder node to add a recurring deposit in the bidder registry. The bidder
+can specify the amount of ETH to be deposited in each window. The bidder can also specify the start window
+number for the deposit. If the start window number is not specified, the current block number is used to
+calculate the window number. If the block number is specified, the window number is calculated based on
+the block number. One it is enabled, the node will automatically deposit the specified amount in each window
+as well as withdraw the deposit from the previous window.
+- [Get Auto Deposit Status](https://docs.primev.xyz/v1.0.0/api-reference/bidder/autodepositstatus.md): AutoDepositStatus is called by the bidder node to get the status of the auto deposit.
+- [Cancel Auto Deposit](https://docs.primev.xyz/v1.0.0/api-reference/bidder/cancelautodeposit.md): CancelAutoDeposit is called by the bidder node to cancel the auto deposit. The bidder can specify if it
+wants to withdraw the deposit from the current deposited windows. If the withdraw flag is set to true, the API will
+wait till we can withdraw the deposit from the latest deposited window.
+- [Add Deposit](https://docs.primev.xyz/v1.0.0/api-reference/bidder/deposit.md): Deposit is called by the bidder node to add deposit in the bidder registry. The bidder can deposit
+funds in a particular window by specifying the window number. If the window number is not specified,
+the current block number is used to calculate the window number. If the block number is specified,
+the window number is calculated based on the block number. If AutoDeposit is enabled, the deposit
+API returns error.
+- [Retrieve Deposit](https://docs.primev.xyz/v1.0.0/api-reference/bidder/getdeposit.md): GetDeposit is called by the bidder to get its deposit in the bidder registry.
+- [Send Bid](https://docs.primev.xyz/v1.0.0/api-reference/bidder/sendbid.md): Send a bid to the bidder mev-commit node. The bid is a message from the bidder to the provider
+with the transaction hashes and the amount of ETH that the bidder is willing to pay to the provider
+for including the transaction in the block. The bid also includes the block number that the bidder
+wants to include the transaction in, the start and end timestamps for the bid decay. The bidder can
+optionally include the raw transaction payloads (hex encoded RLP) instead of transaction hashes.
+- [Withdraw Deposit](https://docs.primev.xyz/v1.0.0/api-reference/bidder/withdraw.md): Withdraw is called by the bidder to withdraw deposit from the bidder registry.
+- [Withdraw Deposit From Windows](https://docs.primev.xyz/v1.0.0/api-reference/bidder/withdrawfromwindows.md): WithdrawFromWindows is called by the bidder node to withdraw funds from multiple windows.
+- [Cancel Transaction](https://docs.primev.xyz/v1.0.0/api-reference/debug/canceltx.md): CancelTransaction is called by the provider to cancel a transaction sent from this wallet.
+- [Pending Transactions](https://docs.primev.xyz/v1.0.0/api-reference/debug/pendingtxs.md): GetPendingTransactions is called by the provider to get the pending transactions for the wallet.
+- [Topology](https://docs.primev.xyz/v1.0.0/api-reference/debug/topology.md): GetTopology is called by the user to get the topology of the node. The topology
+includes connectivity information about the node.
+- [Introduction](https://docs.primev.xyz/v1.0.0/api-reference/introduction.md)
+- [Retrieve Minimum Stake](https://docs.primev.xyz/v1.0.0/api-reference/provider/getminstake.md): GetMinStake is called by the provider to get the minimum stake required to be in the provider registry.
+- [Retrieve Stake](https://docs.primev.xyz/v1.0.0/api-reference/provider/getstake.md): GetStake is called by the provider to get its stake in the provider registry.
+- [Receive Bids](https://docs.primev.xyz/v1.0.0/api-reference/provider/receivebids.md): ReceiveBids is called by the provider to receive bids from the mev-commit node.
+The mev-commit node will stream bids to the provider as the response. The bid can optionally
+have the raw transaction payload in it. The order of the transaction hashes will be the same
+as the raw transaction payloads if included.
+- [Register Stake](https://docs.primev.xyz/v1.0.0/api-reference/provider/registerstake.md): Stake is called by the provider to register or add to its stake in the provider registry.
+- [Send Processed Bids](https://docs.primev.xyz/v1.0.0/api-reference/provider/sendprocessedbids.md): SendProcessedBids is called by the provider to send processed bids to the mev-commit node.
+The provider will stream processed bids to the mev-commit node.
+- [Unstake Funds](https://docs.primev.xyz/v1.0.0/api-reference/provider/unstake.md): Unstake is called by the provider to request a unstake from the provider registry.
+- [Withdraw Stake](https://docs.primev.xyz/v1.0.0/api-reference/provider/withdraw_stake.md): WithdrawStake is called by the provider to withdraw its stake from the provider registry.
+- [Get Validators](https://docs.primev.xyz/v1.0.0/api-reference/validator/getvalidators.md): GetValidators is called by the bidder to get the validators for a given epoch.
+- [null](https://docs.primev.xyz/v1.0.0/concepts/actors.md)
+- [Bid Decay Mechanism](https://docs.primev.xyz/v1.0.0/concepts/bids/bid-decay-mechanism.md): Learn about how bids decay in value in real time
+- [Bid Structure](https://docs.primev.xyz/v1.0.0/concepts/bids/bid-structure.md)
+- [Understanding Bidder Deposit Rules](https://docs.primev.xyz/v1.0.0/concepts/bids/bidder-deposit.md)
+- [null](https://docs.primev.xyz/v1.0.0/concepts/bids/reverting-txns.md)
+- [Builder Attribution](https://docs.primev.xyz/v1.0.0/concepts/builder-attribution.md): Understanding how builders are identified and attributed in mev-commit
+- [null](https://docs.primev.xyz/v1.0.0/concepts/commitments.md)
+- [Bridging Details](https://docs.primev.xyz/v1.0.0/concepts/mev-commit-chain/bridging-details.md)
+- [Chain Details](https://docs.primev.xyz/v1.0.0/concepts/mev-commit-chain/chain-details.md)
+- [Differences Between Ethereum and mev-commit Chain](https://docs.primev.xyz/v1.0.0/concepts/mev-commit-chain/differences-between-ethereum-and-mev-commit-chain.md)
+- [Understanding mev-commit](https://docs.primev.xyz/v1.0.0/concepts/network-overview.md)
+- [null](https://docs.primev.xyz/v1.0.0/concepts/oracle.md)
+- [Security & Privacy](https://docs.primev.xyz/v1.0.0/concepts/privacy.md)
+- [mev-commit Points Program](https://docs.primev.xyz/v1.0.0/concepts/rewards-and-slashing/points.md)
+- [Rewards and Slashing](https://docs.primev.xyz/v1.0.0/concepts/rewards-and-slashing/rewards-and-slashing.md)
+- [Solvers](https://docs.primev.xyz/v1.0.0/concepts/solvers.md)
+- [null](https://docs.primev.xyz/v1.0.0/concepts/validator-considerations.md)
+- [What is mev-commit?](https://docs.primev.xyz/v1.0.0/concepts/what-is-mev-commit.md)
+- [Bidder API](https://docs.primev.xyz/v1.0.0/developers/bidder-api.md)
+- [Managing Your Bidder Deposit](https://docs.primev.xyz/v1.0.0/developers/bidder-deposit.md)
+- [null](https://docs.primev.xyz/v1.0.0/developers/contracts.md)
+- [null](https://docs.primev.xyz/v1.0.0/developers/debugging.md)
+- [null](https://docs.primev.xyz/v1.0.0/developers/docker-bidder.md)
+- [Mev-commit Mainnet](https://docs.primev.xyz/v1.0.0/developers/mainnet.md)
+- [Manual Node Setup](https://docs.primev.xyz/v1.0.0/developers/manual-start-mev-commit.md)
+- [Provider API](https://docs.primev.xyz/v1.0.0/developers/provider-api.md)
+- [Run mev-commit Chain Node](https://docs.primev.xyz/v1.0.0/developers/run-mev-commit-chain-node.md)
+- [System Requirements](https://docs.primev.xyz/v1.0.0/developers/system-requirements.md)
+- [Mev-commit Testnet](https://docs.primev.xyz/v1.0.0/developers/testnet.md)
+- [Tools for Bid Submission](https://docs.primev.xyz/v1.0.0/developers/tools-for-bid-submission.md)
+- [Bidder Best Practices](https://docs.primev.xyz/v1.0.0/get-started/bidders/best-practices.md)
+- [Bidder CLI application](https://docs.primev.xyz/v1.0.0/get-started/bidders/bidder-cli.md)
+- [Bidder Node Commands](https://docs.primev.xyz/v1.0.0/get-started/bidders/bidder-node-commands.md)
+- [Using the Bridge UI](https://docs.primev.xyz/v1.0.0/get-started/bridge/bridge.md): How to bridge ETH between L1 and mev-commit using the web interface
+- [Bridge CLI](https://docs.primev.xyz/v1.0.0/get-started/bridge/bridge-cli.md)
+- [Querying for Proposers](https://docs.primev.xyz/v1.0.0/get-started/providers/Querying-for-proposers.md): Use the pointers below to determine whether an upcoming proposer has opted in to mev-commit or not.
+- [Consuming Bids from mev-commit](https://docs.primev.xyz/v1.0.0/get-started/providers/consuming-bids.md)
+- [Registering as a Provider](https://docs.primev.xyz/v1.0.0/get-started/providers/registering-a-provider.md)
+- [Sending Commitments](https://docs.primev.xyz/v1.0.0/get-started/providers/sending-commitments.md)
+- [Withdraw Stake](https://docs.primev.xyz/v1.0.0/get-started/providers/withdraw.md): Withdraws the stake from the provider registry.
+- [Quickstart for mev-commit bidder node](https://docs.primev.xyz/v1.0.0/get-started/quickstart.md): This guide covers everything you need to set up your mev-commit bidder node. For providers, please refer to the [manual start mev-commit](/v1.0.0/developers/manual-start-mev-commit) section
+- [Relay Integration Guide](https://docs.primev.xyz/v1.0.0/get-started/relays.md)
+- [Eigenlayer Opt-in](https://docs.primev.xyz/v1.0.0/get-started/validators/eigenlayer.md): Opt into mev-commit by natively restaking to our AVS.
+- [Symbiotic Opt-in](https://docs.primev.xyz/v1.0.0/get-started/validators/symbiotic.md): Opt into mev-commit by ERC20 restaking with the MevCommitMiddleware contract through Symbiotic.
+- [Validator Guide](https://docs.primev.xyz/v1.0.0/get-started/validators/validator-guide.md): Opt into mev-commit with ease. This guide covers everything you need to passively opt-in to mev-commit as an L1 validator.
+- [Vanilla Opt-in](https://docs.primev.xyz/v1.0.0/get-started/validators/vanilla.md): Opt into mev-commit by simply staking ETH.
+- [Welcome to Primev](https://docs.primev.xyz/v1.0.0/get-started/welcome-to-primev.md): Primev's mev-commit makes Ethereum FAST by enabling preconfirmations and new types of mev using an encrypted mempool, enhancing yield for opted-in validators.
+- [Eigenlayer Operator Registration](https://docs.primev.xyz/v1.0.0/knowledge-base/eigenlayer-operator-registration.md): Instructions for registering as an Eigenlayer operator for the mev-commit AVS, enabling validator opt-in via restaking.
+- [How do I fix the error: "failed to read msg: stream reset"?](https://docs.primev.xyz/v1.0.0/knowledge-base/how-do-i-fix-the-error-failed-to-read-msg-stream-reset.md): Learn how to resolve the `failed to read msg: stream reset` error for provider nodes within the mev-commit network.
+- [How Do You Provide A Commitment for Execution?](https://docs.primev.xyz/v1.0.0/knowledge-base/how-do-preconfs-work.md): Learn what providers do during an execution preconfirmation.
+- [How to Price A Bid](https://docs.primev.xyz/v1.0.0/knowledge-base/how-to-price-a-bid.md): Learn how to find the sweet spot for competitive bids.
+- [Introduction](https://docs.primev.xyz/v1.0.0/knowledge-base/introduction.md): A collection of answers to frequently asked questions.
+- [What Happens During An Execution Preconfirmation?](https://docs.primev.xyz/v1.0.0/knowledge-base/what-happens-during-an-execution-preconf.md): Learn about what happens behind the scenes during an execution preconfirmation.
+- [What is the Deposit Amount?](https://docs.primev.xyz/v1.0.0/knowledge-base/what-is-deposit-amount.md): Learn about deposit amounts required for bidding and their significance.
+- [What is Execution Preconfirmations?](https://docs.primev.xyz/v1.0.0/knowledge-base/what-is-execution-preconfirmations.md)
+- [What is Foundry?](https://docs.primev.xyz/v1.0.0/knowledge-base/what-is-foundry.md): Discover what Foundry is and its role in smart contract development and interactions within the mev-commit ecosystem.
+- [Why do I receive the same commitment when resending a bid?](https://docs.primev.xyz/v1.0.0/knowledge-base/why-do-i-receive-the-same-commitment-when-resending-a-bid.md): Understand why resending a bid in the mev-commit ecosystem results in receiving the same commitment.
+- [Why is cast necessary for mev-commit chain interactions?](https://docs.primev.xyz/v1.0.0/knowledge-base/why-is-cast-necessary-for-mev-commit-chain-interactions.md)

@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "developer-tools",
   "cachePath": "apps/chatbot/public/llms-cache/screenshotone-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/screenshotone-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

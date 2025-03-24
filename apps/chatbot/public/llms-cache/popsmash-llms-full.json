@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "integration-automation",
   "cachePath": "apps/chatbot/public/llms-cache/popsmash-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/popsmash-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

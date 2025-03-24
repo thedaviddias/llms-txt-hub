@@ -1,0 +1,168 @@
+# Fireworks AI Docs
+## Docs
+- [Custom SSO](https://docs.fireworks.ai/accounts/sso.md): Set up custom Single Sign-On (SSO) authentication for Fireworks AI
+- [Managing users](https://docs.fireworks.ai/accounts/users.md): Add and delete additional users in your Fireworks account
+- [Batch Delete Batch Jobs](https://docs.fireworks.ai/api-reference-dlde/batch-delete-batch-jobs.md)
+- [Batch Delete Environments](https://docs.fireworks.ai/api-reference-dlde/batch-delete-environments.md)
+- [Batch Delete Node Pools](https://docs.fireworks.ai/api-reference-dlde/batch-delete-node-pools.md)
+- [Cancel Batch Job](https://docs.fireworks.ai/api-reference-dlde/cancel-batch-job.md): Cancels an existing batch job if it is queued, pending, or running.
+- [Connect Environment](https://docs.fireworks.ai/api-reference-dlde/connect-environment.md): Connects the environment to a node pool.
+Returns an error if there is an existing pending connection.
+- [Create Aws Iam Role Binding](https://docs.fireworks.ai/api-reference-dlde/create-aws-iam-role-binding.md)
+- [Create Batch Job](https://docs.fireworks.ai/api-reference-dlde/create-batch-job.md)
+- [Create Cluster](https://docs.fireworks.ai/api-reference-dlde/create-cluster.md)
+- [Create Environment](https://docs.fireworks.ai/api-reference-dlde/create-environment.md)
+- [Create Node Pool](https://docs.fireworks.ai/api-reference-dlde/create-node-pool.md)
+- [Create Node Pool Binding](https://docs.fireworks.ai/api-reference-dlde/create-node-pool-binding.md)
+- [Create Snapshot](https://docs.fireworks.ai/api-reference-dlde/create-snapshot.md)
+- [Delete Aws Iam Role Binding](https://docs.fireworks.ai/api-reference-dlde/delete-aws-iam-role-binding.md)
+- [Delete Batch Job](https://docs.fireworks.ai/api-reference-dlde/delete-batch-job.md)
+- [Delete Cluster](https://docs.fireworks.ai/api-reference-dlde/delete-cluster.md)
+- [Delete Environment](https://docs.fireworks.ai/api-reference-dlde/delete-environment.md)
+- [Delete Node Pool](https://docs.fireworks.ai/api-reference-dlde/delete-node-pool.md)
+- [Delete Node Pool Binding](https://docs.fireworks.ai/api-reference-dlde/delete-node-pool-binding.md)
+- [Delete Snapshot](https://docs.fireworks.ai/api-reference-dlde/delete-snapshot.md)
+- [Disconnect Environment](https://docs.fireworks.ai/api-reference-dlde/disconnect-environment.md): Disconnects the environment from the node pool. Returns an error
+if the environment is not connected to a node pool.
+- [Get Batch Job](https://docs.fireworks.ai/api-reference-dlde/get-batch-job.md)
+- [Get Batch Job Logs](https://docs.fireworks.ai/api-reference-dlde/get-batch-job-logs.md)
+- [Get Cluster](https://docs.fireworks.ai/api-reference-dlde/get-cluster.md)
+- [Get Cluster Connection Info](https://docs.fireworks.ai/api-reference-dlde/get-cluster-connection-info.md): Retrieve connection settings for the cluster to be put in kubeconfig
+- [Get Environment](https://docs.fireworks.ai/api-reference-dlde/get-environment.md)
+- [Get Node Pool](https://docs.fireworks.ai/api-reference-dlde/get-node-pool.md)
+- [Get Node Pool Stats](https://docs.fireworks.ai/api-reference-dlde/get-node-pool-stats.md)
+- [Get Snapshot](https://docs.fireworks.ai/api-reference-dlde/get-snapshot.md)
+- [List Aws Iam Role Bindings](https://docs.fireworks.ai/api-reference-dlde/list-aws-iam-role-bindings.md)
+- [List Batch Jobs](https://docs.fireworks.ai/api-reference-dlde/list-batch-jobs.md)
+- [List Clusters](https://docs.fireworks.ai/api-reference-dlde/list-clusters.md)
+- [List Environments](https://docs.fireworks.ai/api-reference-dlde/list-environments.md)
+- [List Node Pool Bindings](https://docs.fireworks.ai/api-reference-dlde/list-node-pool-bindings.md)
+- [List Node Pools](https://docs.fireworks.ai/api-reference-dlde/list-node-pools.md)
+- [List Snapshots](https://docs.fireworks.ai/api-reference-dlde/list-snapshots.md)
+- [Update Batch Job](https://docs.fireworks.ai/api-reference-dlde/update-batch-job.md)
+- [Update Cluster](https://docs.fireworks.ai/api-reference-dlde/update-cluster.md)
+- [Update Environment](https://docs.fireworks.ai/api-reference-dlde/update-environment.md)
+- [Update Node Pool](https://docs.fireworks.ai/api-reference-dlde/update-node-pool.md)
+- [Streaming Transcription](https://docs.fireworks.ai/api-reference/audio-streaming-transcriptions.md)
+- [Transcribe audio](https://docs.fireworks.ai/api-reference/audio-transcriptions.md)
+- [Translate audio](https://docs.fireworks.ai/api-reference/audio-translations.md)
+- [Create API Key](https://docs.fireworks.ai/api-reference/create-api-key.md)
+- [Create Dataset](https://docs.fireworks.ai/api-reference/create-dataset.md)
+- [CRUD APIs for deployed models.](https://docs.fireworks.ai/api-reference/create-deployed-model.md)
+- [Create Deployment](https://docs.fireworks.ai/api-reference/create-deployment.md)
+- [Create Model](https://docs.fireworks.ai/api-reference/create-model.md)
+- [Create Supervised Fine-tuning Job](https://docs.fireworks.ai/api-reference/create-supervised-fine-tuning-job.md)
+- [Create User](https://docs.fireworks.ai/api-reference/create-user.md)
+- [Create embeddings](https://docs.fireworks.ai/api-reference/creates-an-embedding-vector-representing-the-input-text.md)
+- [Delete API Key](https://docs.fireworks.ai/api-reference/delete-api-key.md)
+- [Delete Dataset](https://docs.fireworks.ai/api-reference/delete-dataset.md)
+- [null](https://docs.fireworks.ai/api-reference/delete-deployed-model.md)
+- [Delete Deployment](https://docs.fireworks.ai/api-reference/delete-deployment.md)
+- [Delete Model](https://docs.fireworks.ai/api-reference/delete-model.md)
+- [Delete Supervised Fine-tuning Job](https://docs.fireworks.ai/api-reference/delete-supervised-fine-tuning-job.md)
+- [Generate an image](https://docs.fireworks.ai/api-reference/generate-a-new-image-from-a-text-prompt.md)
+- [Get Account](https://docs.fireworks.ai/api-reference/get-account.md)
+- [Get Dataset](https://docs.fireworks.ai/api-reference/get-dataset.md)
+- [Get Dataset Upload Endpoint](https://docs.fireworks.ai/api-reference/get-dataset-upload-endpoint.md)
+- [Get Deployment](https://docs.fireworks.ai/api-reference/get-deployment.md)
+- [Get Model](https://docs.fireworks.ai/api-reference/get-model.md)
+- [Get Model Download Endpoint](https://docs.fireworks.ai/api-reference/get-model-download-endpoint.md)
+- [Get Model Upload Endpoint](https://docs.fireworks.ai/api-reference/get-model-upload-endpoint.md)
+- [Get Supervised Fine-tuning Job](https://docs.fireworks.ai/api-reference/get-supervised-fine-tuning-job.md)
+- [Get User](https://docs.fireworks.ai/api-reference/get-user.md)
+- [Introduction](https://docs.fireworks.ai/api-reference/introduction.md)
+- [List API Keys](https://docs.fireworks.ai/api-reference/list-api-keys.md)
+- [List Datasets](https://docs.fireworks.ai/api-reference/list-datasets.md)
+- [List Deployments](https://docs.fireworks.ai/api-reference/list-deployments.md)
+- [List Models](https://docs.fireworks.ai/api-reference/list-models.md)
+- [List Supervised Fine-tuning Jobs](https://docs.fireworks.ai/api-reference/list-supervised-fine-tuning-jobs.md)
+- [List Users](https://docs.fireworks.ai/api-reference/list-users.md)
+- [Create Chat Completion](https://docs.fireworks.ai/api-reference/post-chatcompletions.md): Creates a model response for the given chat conversation.
+- [Create Completion](https://docs.fireworks.ai/api-reference/post-completions.md): Creates a completion for the provided prompt and parameters.
+- [Update Dataset](https://docs.fireworks.ai/api-reference/update-dataset.md)
+- [Update Deployment](https://docs.fireworks.ai/api-reference/update-deployment.md)
+- [Update Model](https://docs.fireworks.ai/api-reference/update-model.md)
+- [Update User](https://docs.fireworks.ai/api-reference/update-user.md)
+- [Upload Dataset Files](https://docs.fireworks.ai/api-reference/upload-dataset-files.md): Provides a streamlined way to upload a dataset file in a single API request. This path can handle file sizes up to 150Mb. For larger file sizes use [Get Dataset Upload Endpoint](get-dataset-upload-endpoint).
+- [Validate Dataset Upload](https://docs.fireworks.ai/api-reference/validate-dataset-upload.md)
+- [Validate Model Upload](https://docs.fireworks.ai/api-reference/validate-model-upload.md)
+- [Start here](https://docs.fireworks.ai/cookbook/cookbook_landing.md)
+- [Build with Fireworks](https://docs.fireworks.ai/cookbook/learn_with_fireworks/ecosystem_examples.md): Step-by-step guides for hands-on exploration, ideal for interactive learning of AI techniques.
+- [Community showcase](https://docs.fireworks.ai/cookbook/projects_showcase/community_examples.md): Creative user-contributed projects that showcase innovative applications of Fireworks in diverse contexts.
+- [DeepSeek Resources](https://docs.fireworks.ai/deepseek/general-deepseek.md): Access information, blog posts, FAQs, and detailed documentation for DeepSeek v3 and R1.
+- [Direct routing](https://docs.fireworks.ai/deployments/direct-routing.md): Direct routing enables enterprise users reduce latency to their deployments.
+- [Regions](https://docs.fireworks.ai/deployments/regions.md): Fireworks runs a global fleet of hardware on which you can deploy your models.
+- [Reserved capacity](https://docs.fireworks.ai/deployments/reservations.md)
+- [About Fireworks developer partners](https://docs.fireworks.ai/ecosystem/integrations_process.md): Learn about the Fireworks Developer Partners Program, including goals, application process, and benefits for tools and platforms in the LLMOps/Gen-Ops ecosystem.
+- [Account setup & management](https://docs.fireworks.ai/faq/account/access/setup-management.md): Solutions for common account access issues and management procedures for Fireworks.ai accounts
+- [Billing management](https://docs.fireworks.ai/faq/billing-pricing-usage/billing/billing-management.md): Information about Fireworks.ai invoicing and API billing.
+- [Credit system](https://docs.fireworks.ai/faq/billing-pricing-usage/billing/credit-system.md): Understanding how Fireworks.ai billing, credits, and account suspension work.
+- [Cost structure](https://docs.fireworks.ai/faq/billing-pricing-usage/pricing/cost-structure.md): Understanding Fireworks.ai pricing and fees for various services.
+- [Discounts](https://docs.fireworks.ai/faq/billing-pricing-usage/pricing/discounts.md): Information about bulk usage discounts and special pricing options.
+- [Billing & scaling](https://docs.fireworks.ai/faq/deployment/ondemand/billing-scaling.md): Understanding billing and scaling mechanisms for on-demand deployments.
+- [Deployment issues](https://docs.fireworks.ai/faq/deployment/ondemand/deployment-issues.md): Troubleshooting and resolving common issues with on-demand deployments.
+- [Hardware options](https://docs.fireworks.ai/faq/deployment/ondemand/hardware-options.md): Understanding hardware choices for Fireworks.ai on-demand deployments.
+- [On-demand deployment scaling](https://docs.fireworks.ai/faq/deployment/ondemand/ondemand-deployment-scaling.md): Understanding Fireworks.ai system scaling and request handling capabilities.
+- [Performance optimization](https://docs.fireworks.ai/faq/deployment/performance/optimization.md): Guidelines for optimizing performance and benchmarking Fireworks.ai deployments.
+- [Costs & management](https://docs.fireworks.ai/faq/deployment/serverless/costs-management.md): Understanding costs and model availability for serverless deployments.
+- [Performance issues](https://docs.fireworks.ai/faq/deployment/serverless/performance-issues.md): Troubleshooting timeout errors and performance issues with serverless LLM models.
+- [Service levels](https://docs.fireworks.ai/faq/deployment/serverless/service-levels.md): Understanding SLAs and service guarantees for Fireworks.ai serverless deployments.
+- [Certifications](https://docs.fireworks.ai/faq/enterprise/compliance/certifications.md): Information about Fireworks.ai compliance certifications and HIPAA requirements.
+- [Enterprise quotas](https://docs.fireworks.ai/faq/enterprise/service/quotas.md): Understanding quota allocations for Enterprise customers.
+- [Platform support](https://docs.fireworks.ai/faq/general/support/platform-support.md): Information about Fireworks.ai deployment regions, general support channels, and platform requests.
+- [Support structure & access](https://docs.fireworks.ai/faq/general/support/structure-access.md): Information about Fireworks.ai support options, access methods, and communication channels.
+- [Enterprise support tiers & SLAs](https://docs.fireworks.ai/faq/general/support/tiers-slas.md): Detailed information about Fireworks.ai support priority levels and response time commitments.
+- [Platform models](https://docs.fireworks.ai/faq/models/availability/platform-models.md): Information about custom and available models on Fireworks.ai.
+- [Fine-tuning service](https://docs.fireworks.ai/faq/models/fine-tuning/service-overview.md): Overview of Fireworks.ai fine-tuning capabilities and supported models.
+- [Fine-tuning troubleshooting](https://docs.fireworks.ai/faq/models/fine-tuning/troubleshooting.md): Solutions for common fine-tuning deployment and access issues.
+- [FLUX capabilities](https://docs.fireworks.ai/faq/models/image-generation/flux.md): Understanding FLUX image generation features and limitations.
+- [Limitations & controls](https://docs.fireworks.ai/faq/models/inference/limitations-controls.md): Understanding model limitations, safety features, and token limits.
+- [Inference performance](https://docs.fireworks.ai/faq/models/inference/performance.md): Understanding model performance, quantization, and batching capabilities.
+- [Data security](https://docs.fireworks.ai/faq/security/infrastructure/data-security.md): Information about Fireworks.ai data encryption and security measures.
+- [Security documentation](https://docs.fireworks.ai/faq/security/infrastructure/documentation.md): Access to Fireworks.ai security policies and documentation.
+- [Model security](https://docs.fireworks.ai/faq/security/infrastructure/model-security.md): Understanding model security and guardrail implementations.
+- [Private access](https://docs.fireworks.ai/faq/security/network/private-access.md): Understanding private connection options for Fireworks.ai services.
+- [Fine-tuning models](https://docs.fireworks.ai/fine-tuning/fine-tuning-models.md)
+- [Using Document Inlining](https://docs.fireworks.ai/firesearch/inline-multimodal.md)
+- [Concepts](https://docs.fireworks.ai/getting-started/concepts.md): This document outlines basic Fireworks AI concepts.
+- [Fireworks AI Developer Platform](https://docs.fireworks.ai/getting-started/introduction.md): Start building with open source AI models
+- [Onboarding](https://docs.fireworks.ai/getting-started/onboarding.md): A quick guide to navigating and building with the Fireworks platform.
+- [Quickstart](https://docs.fireworks.ai/getting-started/quickstart.md): Get started in minutes with an OpenAI compatible endpoint
+- [Using function-calling](https://docs.fireworks.ai/guides/function-calling.md)
+- [Merging LoRA adapters with base models](https://docs.fireworks.ai/guides/lora-model-merge.md): A guide for downloading base models, merging them with LoRA adapters, and deploying the result using Fireworks.
+- [On-demand deployments](https://docs.fireworks.ai/guides/ondemand-deployments.md): Deploying on your own GPUs
+- [Using Predicted Outputs](https://docs.fireworks.ai/guides/predicted-outputs.md): Use Predicted Outputs to boost output generation speeds for editing / rewriting use cases
+- [Prompt caching](https://docs.fireworks.ai/guides/prompt-caching.md)
+- [Querying embedding models](https://docs.fireworks.ai/guides/querying-embeddings-models.md)
+- [Querying text models](https://docs.fireworks.ai/guides/querying-text-models.md)
+- [Querying vision-language models](https://docs.fireworks.ai/guides/querying-vision-language-models.md)
+- [Rate limits, spend limits and quotas](https://docs.fireworks.ai/guides/quotas_usage/rate-limits.md): Rate limits, spend limits and quotas for serverless inference and on-demand deployments
+- [Data privacy & security](https://docs.fireworks.ai/guides/security_compliance/data_handling.md): How we secure and handle your data
+- [Understanding LoRA performance](https://docs.fireworks.ai/guides/understanding_lora_performance.md): Understand the performance impact of LoRA fine-tuning, optimization strategies, and deployment considerations.
+- [Deploying models](https://docs.fireworks.ai/models/deploying.md)
+- [Overview](https://docs.fireworks.ai/models/overview.md)
+- [null](https://docs.fireworks.ai/models/quantization.md)
+- [Uploading a custom model](https://docs.fireworks.ai/models/uploading-custom-models.md)
+- [Using grammar mode](https://docs.fireworks.ai/structured-responses/structured-output-grammar-based.md)
+- [Using JSON mode](https://docs.fireworks.ai/structured-responses/structured-response-formatting.md)
+- [Authentication](https://docs.fireworks.ai/tools-sdks/firectl/commands/authentication.md): Authentication for access to your account
+- [Create a Dataset](https://docs.fireworks.ai/tools-sdks/firectl/commands/create-dataset.md): Create a Dataset on Fireworks AI platform
+- [Create a deployment](https://docs.fireworks.ai/tools-sdks/firectl/commands/create-deployment.md): Create a Deployment on Fireworks AI platform
+- [Create a fine-tuning job](https://docs.fireworks.ai/tools-sdks/firectl/commands/create-finetune-job.md): Create a fine-tuning job with a base model
+- [Create Model](https://docs.fireworks.ai/tools-sdks/firectl/commands/create-model.md): Create a model on Fireworks AI platform
+- [Delete Resources](https://docs.fireworks.ai/tools-sdks/firectl/commands/delete-model.md): Deletes resource(s) in a Fireworks AI account
+- [Deploy Model](https://docs.fireworks.ai/tools-sdks/firectl/commands/deploy-model.md): Deploy a model on Fireworks AI platform
+- [Download a model](https://docs.fireworks.ai/tools-sdks/firectl/commands/download-model.md): Download a model from third-party locations
+- [Get Resources](https://docs.fireworks.ai/tools-sdks/firectl/commands/get-model.md): Retrieves model information from Fireworks AI platform
+- [Import Model](https://docs.fireworks.ai/tools-sdks/firectl/commands/import-model.md): Imports specified model from Fireworks AI Platform
+- [List Resources](https://docs.fireworks.ai/tools-sdks/firectl/commands/list-models.md): List various resources in an Fireworks AI account
+- [Undeploy Model](https://docs.fireworks.ai/tools-sdks/firectl/commands/undeploy-model.md): Undeploy a model on Fireworks AI platform
+- [Update Resources](https://docs.fireworks.ai/tools-sdks/firectl/commands/update.md): Updates Resources on Fireworks AI platform
+- [Getting Started](https://docs.fireworks.ai/tools-sdks/firectl/firectl.md): Learn to create, deploy, and manage resources using Firectl
+- [OpenAI compatibility](https://docs.fireworks.ai/tools-sdks/openai-compatibility.md)
+- [API Reference](https://docs.fireworks.ai/tools-sdks/python-client/api-reference.md)
+- [Getting Started](https://docs.fireworks.ai/tools-sdks/python-client/installation.md)
+- [Inference errors](https://docs.fireworks.ai/troubleshooting/status_error_codes/inference_error_code.md): This page lists common error codes encountered during inference requests using the Fireworks API, their meanings, and potential resolutions.
+## Optional
+- [Community](https://discord.gg/fireworks-ai)
+- [Blog](https://fireworks.ai/blog)

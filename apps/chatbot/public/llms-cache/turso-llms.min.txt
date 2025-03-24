@@ -1,0 +1,180 @@
+# Turso
+## Docs
+- [List Audit Logs](https://docs.turso.tech/api-reference/audit-logs/list.md): Return the audit logs for the given organization, ordered by the `created_at` field in descending order.
+- [Authentication](https://docs.turso.tech/api-reference/authentication.md)
+- [Retrieve Database Configuration](https://docs.turso.tech/api-reference/databases/configuration.md): Retrieve an individual database configuration belonging to the organization or user.
+- [Create Database](https://docs.turso.tech/api-reference/databases/create.md): Creates a new database in a group for the organization or user.
+- [Generate Database Auth Token](https://docs.turso.tech/api-reference/databases/create-token.md): Generates an authorization token for the specified database.
+- [Delete Database](https://docs.turso.tech/api-reference/databases/delete.md): Delete a database belonging to the organization or user.
+- [Invalidate All Database Auth Tokens](https://docs.turso.tech/api-reference/databases/invalidate-tokens.md): Invalidates all authorization tokens for the specified database.
+- [List Databases](https://docs.turso.tech/api-reference/databases/list.md): Returns a list of databases belonging to the organization or user.
+- [List Database Instances](https://docs.turso.tech/api-reference/databases/list-instances.md): Returns a list of instances of a database. Instances are the individual primary or replica databases in each region defined by the group.
+- [Retrieve Database](https://docs.turso.tech/api-reference/databases/retrieve.md): Returns a database belonging to the organization or user.
+- [Retrieve Database Instance](https://docs.turso.tech/api-reference/databases/retrieve-instance.md): Return the individual database instance by name.
+- [Retrieve Database Stats](https://docs.turso.tech/api-reference/databases/stats.md): Fetch the top queries of a database, including the count of rows read and written.
+- [Update Database Configuration](https://docs.turso.tech/api-reference/databases/update-configuration.md): Update a database configuration belonging to the organization or user.
+- [Upload SQLite Dump](https://docs.turso.tech/api-reference/databases/upload-dump.md): Upload a SQL dump to be used when [creating a new database](/api-reference/databases/create) from seed.
+- [Retrieve Database Usage](https://docs.turso.tech/api-reference/databases/usage.md): Fetch activity usage for a database in a given time period.
+- [Create Group](https://docs.turso.tech/api-reference/groups/create.md): Creates a new group for the organization or user.
+- [Create Group Auth Token](https://docs.turso.tech/api-reference/groups/create-token.md): Generates an authorization token for the specified group.
+- [Delete Group](https://docs.turso.tech/api-reference/groups/delete.md): Delete a group belonging to the organization or user.
+- [Invalidate All Group Auth Tokens](https://docs.turso.tech/api-reference/groups/invalidate-tokens.md): Invalidates all authorization tokens for the specified group.
+- [List Groups](https://docs.turso.tech/api-reference/groups/list.md): Returns a list of groups belonging to the organization or user.
+- [Retrieve Group](https://docs.turso.tech/api-reference/groups/retrieve.md): Returns a group belonging to the organization or user.
+- [Transfer Group](https://docs.turso.tech/api-reference/groups/transfer.md): Transfer a group to another organization that you own or a member of.
+- [Unarchive Group](https://docs.turso.tech/api-reference/groups/unarchive.md): Unarchive a group that has been archived due to inactivity.
+- [Update Databases in a Group](https://docs.turso.tech/api-reference/groups/update-database-versions.md): Updates all databases in the group to the latest libSQL version.
+- [Turso Platform API](https://docs.turso.tech/api-reference/introduction.md)
+- [Closest Region](https://docs.turso.tech/api-reference/locations/closest-region.md): Returns the closest region to the user's location.
+- [List Locations](https://docs.turso.tech/api-reference/locations/list.md): Returns a list of locations where you can create or replicate databases.
+- [Create Invite](https://docs.turso.tech/api-reference/organizations/invites/create.md): Invite a user (who isn't already a Turso user) to an organization.
+- [Delete Invite](https://docs.turso.tech/api-reference/organizations/invites/delete.md): Delete an invite for the organization by email.
+- [List Invites](https://docs.turso.tech/api-reference/organizations/invites/list.md): Returns a list of invites for the organization.
+- [List Invoices](https://docs.turso.tech/api-reference/organizations/invoices.md): Returns a list of invoices for the organization.
+- [List Organizations](https://docs.turso.tech/api-reference/organizations/list.md): Returns a list of organizations the authenticated user owns or is a member of.
+- [Add Member](https://docs.turso.tech/api-reference/organizations/members/add.md): Add an existing Turso user to an organization.
+- [List Members](https://docs.turso.tech/api-reference/organizations/members/list.md): Returns a list of members part of the organization.
+- [Remove Member](https://docs.turso.tech/api-reference/organizations/members/remove.md): Remove a user from the organization by username.
+- [Retrieve Member](https://docs.turso.tech/api-reference/organizations/members/retrieve.md): Retrieve details of a specific member in the organization.
+- [Update Member Role](https://docs.turso.tech/api-reference/organizations/members/update.md): Update the role of an organization member. Only organization admins or owners can perform this action.
+- [List Plans](https://docs.turso.tech/api-reference/organizations/plans.md): Returns a list of available plans and their quotas.
+- [Retrieve Organization](https://docs.turso.tech/api-reference/organizations/retrieve.md): Retrieve details of a specific organization.
+- [Current Subscription](https://docs.turso.tech/api-reference/organizations/subscription.md): Returns the current subscription details for the organization.
+- [Update Organization](https://docs.turso.tech/api-reference/organizations/update.md): Update an organization you own or are a member of.
+- [Organization Usage](https://docs.turso.tech/api-reference/organizations/usage.md): Fetch current billing cycle usage for an organization.
+- [Quickstart](https://docs.turso.tech/api-reference/quickstart.md): Get started with Turso API in a few easy steps.
+- [Errors](https://docs.turso.tech/api-reference/response-codes.md)
+- [Create API Token](https://docs.turso.tech/api-reference/tokens/create.md): Returns a new API token belonging to a user.
+- [List API Tokens](https://docs.turso.tech/api-reference/tokens/list.md): Returns a list of API tokens belonging to a user.
+- [Revoke API Token](https://docs.turso.tech/api-reference/tokens/revoke.md): Revokes the provided API token belonging to a user.
+- [Validate API Token](https://docs.turso.tech/api-reference/tokens/validate.md): Validates an API token belonging to a user.
+- [auth api-tokens list](https://docs.turso.tech/cli/auth/api-tokens/list.md)
+- [auth api-tokens mint](https://docs.turso.tech/cli/auth/api-tokens/mint.md)
+- [auth api-tokens revoke](https://docs.turso.tech/cli/auth/api-tokens/revoke.md)
+- [auth login](https://docs.turso.tech/cli/auth/login.md)
+- [auth logout](https://docs.turso.tech/cli/auth/logout.md)
+- [auth signup](https://docs.turso.tech/cli/auth/signup.md)
+- [auth token](https://docs.turso.tech/cli/auth/token.md)
+- [auth whoami](https://docs.turso.tech/cli/auth/whoami.md)
+- [Authentication](https://docs.turso.tech/cli/authentication.md)
+- [contact bookmeeting](https://docs.turso.tech/cli/contact/bookmeeting.md)
+- [contact feedback](https://docs.turso.tech/cli/contact/feedback.md)
+- [db create](https://docs.turso.tech/cli/db/create.md)
+- [db destroy](https://docs.turso.tech/cli/db/destroy.md)
+- [db inspect](https://docs.turso.tech/cli/db/inspect.md)
+- [db list](https://docs.turso.tech/cli/db/list.md)
+- [db locations](https://docs.turso.tech/cli/db/locations.md)
+- [db shell](https://docs.turso.tech/cli/db/shell.md)
+- [db show](https://docs.turso.tech/cli/db/show.md)
+- [db tokens create](https://docs.turso.tech/cli/db/tokens/create.md)
+- [db tokens invalidate](https://docs.turso.tech/cli/db/tokens/invalidate.md)
+- [dev](https://docs.turso.tech/cli/dev.md)
+- [group create](https://docs.turso.tech/cli/group/create.md)
+- [group destroy](https://docs.turso.tech/cli/group/destroy.md)
+- [group list](https://docs.turso.tech/cli/group/list.md)
+- [group tokens create](https://docs.turso.tech/cli/group/tokens/create.md)
+- [group tokens invalidate](https://docs.turso.tech/cli/group/tokens/invalidate.md)
+- [group transfer](https://docs.turso.tech/cli/group/transfer.md)
+- [group unarchive](https://docs.turso.tech/cli/group/unarchive.md)
+- [group update](https://docs.turso.tech/cli/group/update.md)
+- [Headless Mode](https://docs.turso.tech/cli/headless-mode.md)
+- [Help](https://docs.turso.tech/cli/help.md)
+- [Installation](https://docs.turso.tech/cli/installation.md): Learn how to install the Turso CLI on Mac, Linux and Windows.
+- [Introduction](https://docs.turso.tech/cli/introduction.md)
+- [org billing](https://docs.turso.tech/cli/org/billing.md)
+- [org create](https://docs.turso.tech/cli/org/create.md)
+- [destroy](https://docs.turso.tech/cli/org/destroy.md)
+- [org list](https://docs.turso.tech/cli/org/list.md)
+- [org members add](https://docs.turso.tech/cli/org/members/add.md)
+- [org members invite](https://docs.turso.tech/cli/org/members/invite.md)
+- [org members list](https://docs.turso.tech/cli/org/members/list.md)
+- [org members rm](https://docs.turso.tech/cli/org/members/rm.md)
+- [org switch](https://docs.turso.tech/cli/org/switch.md)
+- [plan overages disable](https://docs.turso.tech/cli/plan/overages/disable.md)
+- [plan overages enable](https://docs.turso.tech/cli/plan/overages/enable.md)
+- [plan select](https://docs.turso.tech/cli/plan/select.md)
+- [plan show](https://docs.turso.tech/cli/plan/show.md)
+- [plan upgrade](https://docs.turso.tech/cli/plan/upgrade.md)
+- [Upgrading](https://docs.turso.tech/cli/upgrading.md): Update the Turso CLI to the latest version to benefit from all the latest features, and fixes.
+- [Cloud Providers](https://docs.turso.tech/cloud-providers.md): Turso is available on AWS and Fly.
+- [Durability Guarantees](https://docs.turso.tech/cloud/durability.md)
+- [Data & Connections](https://docs.turso.tech/data-and-connections.md): Learn how data consistency and connections work with Turso databases.
+- [AI & Embeddings](https://docs.turso.tech/features/ai-and-embeddings.md): Vector Similarity Search is built into Turso and libSQL Server as a native feature.
+- [Attach Database (Deprecated)](https://docs.turso.tech/features/attach-database.md): Attach and read data across multiple databases.
+- [Branching](https://docs.turso.tech/features/branching.md)
+- [Data Edge (Deprecated)](https://docs.turso.tech/features/data-edge.md): Allow your users to reach local replicas of your database, wherever they are.
+- [Embedded Replicas](https://docs.turso.tech/features/embedded-replicas/introduction.md)
+- [Turso + Linode by Akamai](https://docs.turso.tech/features/embedded-replicas/with-akamai.md): Deploy a JavaScript/Rust app using [Turso embedded replicas](/features/embedded-replicas) to [Akamai](https://www.linode.com/).
+- [Embedded Replicas on Fly](https://docs.turso.tech/features/embedded-replicas/with-fly.md): Deploy a JavaScript app using [Turso embedded replicas](/features/embedded-replicas) to [Fly.io](https://www.fly.io/).
+- [Turso + Koyeb](https://docs.turso.tech/features/embedded-replicas/with-koyeb.md): Deploy a JavaScript/Rust app using [Turso embedded replicas](/features/embedded-replicas) to [Koyeb](https://www.koyeb.com/).
+- [Turso + Railway](https://docs.turso.tech/features/embedded-replicas/with-railway.md): Deploy a JavaScript/Rust app using [Turso embedded replicas](/features/embedded-replicas) to [Railway](https://railway.app/).
+- [Turso + Render](https://docs.turso.tech/features/embedded-replicas/with-render.md): Deploy a JavaScript app using [Turso embedded replicas](/features/embedded-replicas) to [Render](https://render.com/).
+- [Multi-DB Schemas (Deprecated)](https://docs.turso.tech/features/multi-db-schemas.md): Create and share a single schema across multiple databases.
+- [Platform API](https://docs.turso.tech/features/platform-api.md): Manage databases, and teams with the Turso Platform API.
+- [Point-in-Time Recovery](https://docs.turso.tech/features/point-in-time-recovery.md)
+- [Scale to Zero](https://docs.turso.tech/features/scale-to-zero.md)
+- [Usage & Billing](https://docs.turso.tech/help/usage-and-billing.md)
+- [Welcome to Turso Cloud](https://docs.turso.tech/introduction.md): SQLite for Production. Powered by libSQL.
+- [libSQL](https://docs.turso.tech/libsql.md): libSQL is SQLite for modern applications.
+- [Local Development](https://docs.turso.tech/local-development.md): Build locally using SQLite, libSQL Server or Turso.
+- [Quickstart](https://docs.turso.tech/quickstart.md): Welcome to Turso! Get started with Turso in minutes.
+- [Ruby on Rails + Turso](https://docs.turso.tech/sdk/activerecord/guides/rails.md): Set up Turso in your Ruby on Rails project in minutes.
+- [Turso Quickstart (ActiveRecord)](https://docs.turso.tech/sdk/activerecord/quickstart.md): Get started with Turso and ActiveRecord in a few simple steps.
+- [Authentication](https://docs.turso.tech/sdk/authentication.md)
+- [Turso Examples (C)](https://docs.turso.tech/sdk/c/examples.md)
+- [Turso Quickstart (C)](https://docs.turso.tech/sdk/c/quickstart.md): Get started with Turso and C using the libSQL client in a few simple steps.
+- [C Reference](https://docs.turso.tech/sdk/c/reference.md): libSQL C Reference
+- [Examples](https://docs.turso.tech/sdk/flutter/examples.md)
+- [Drift + Turso / LibSQL](https://docs.turso.tech/sdk/flutter/integrations/drift.md): Configure `drift` to work with `libsql_dart`
+- [Turso Quickstart (Flutter / Dart)](https://docs.turso.tech/sdk/flutter/quickstart.md): Get started with Flutter and Dart using the libSQL client in a few simple steps
+- [Reference](https://docs.turso.tech/sdk/flutter/reference.md): libSQL Flutter / Dart Reference
+- [Examples](https://docs.turso.tech/sdk/go/examples.md)
+- [Turso Quickstart (Go)](https://docs.turso.tech/sdk/go/quickstart.md): Get started with Turso and Go using the libSQL client in a few simple steps.
+- [Reference](https://docs.turso.tech/sdk/go/reference.md)
+- [Turso Quickstart (HTTP)](https://docs.turso.tech/sdk/http/quickstart.md): Get started with Turso using the libSQL remote protocol in a few simple steps.
+- [libSQL Remote Protocol Reference](https://docs.turso.tech/sdk/http/reference.md)
+- [Introduction](https://docs.turso.tech/sdk/introduction.md)
+- [Turso Quickstart (Android)](https://docs.turso.tech/sdk/kotlin/quickstart.md): Get started with Turso and Android using the libSQL client in a few simple steps.
+- [Android Reference](https://docs.turso.tech/sdk/kotlin/reference.md): libSQL Android Reference
+- [Examples](https://docs.turso.tech/sdk/php/examples.md)
+- [Turso Quickstart (Laravel)](https://docs.turso.tech/sdk/php/guides/laravel.md)
+- [Turso + Doctrine DBAL](https://docs.turso.tech/sdk/php/orm/doctrine-dbal.md): Set up Turso in your PHP + Doctrine DBAL project in minutes
+- [Turso Quickstart (PHP)](https://docs.turso.tech/sdk/php/quickstart.md): Get started with Turso and PHP using the libSQL client in a few simple steps.
+- [Reference](https://docs.turso.tech/sdk/php/reference.md): libSQL PHP Reference
+- [Examples](https://docs.turso.tech/sdk/python/examples.md)
+- [Flask + Turso](https://docs.turso.tech/sdk/python/guides/flask.md): Set up Turso in your Flask project in minutes
+- [SQLAlchemy + Turso](https://docs.turso.tech/sdk/python/orm/sqlalchemy.md): Configure SQLAlchemy to work with your Turso database
+- [Turso Quickstart (Python)](https://docs.turso.tech/sdk/python/quickstart.md): Get started with Turso and Python using the libSQL client in a few simple steps.
+- [Reference](https://docs.turso.tech/sdk/python/reference.md)
+- [Turso Examples (Ruby)](https://docs.turso.tech/sdk/ruby/examples.md)
+- [Turso Quickstart (Ruby)](https://docs.turso.tech/sdk/ruby/quickstart.md): Get started with Turso and Ruby using the libSQL client in a few simple steps.
+- [Examples](https://docs.turso.tech/sdk/rust/examples.md)
+- [Turso + Actix](https://docs.turso.tech/sdk/rust/guides/actix.md): Set up Turso in your Actix project in minutes
+- [Turso + Axum](https://docs.turso.tech/sdk/rust/guides/axum.md): Set up Turso in your Axum project in minutes
+- [Turso + Rocket](https://docs.turso.tech/sdk/rust/guides/rocket.md): Set up Turso in your Rocket project in minutes
+- [Tauri + Turso](https://docs.turso.tech/sdk/rust/guides/tauri.md): Set up Turso in your Tauri project in minutes
+- [Turso Quickstart (Rust)](https://docs.turso.tech/sdk/rust/quickstart.md): Get started with Turso and Rust using the libSQL crate in a few simple steps
+- [Reference](https://docs.turso.tech/sdk/rust/reference.md): libSQL Rust Reference
+- [Turso Quickstart (Swift)](https://docs.turso.tech/sdk/swift/quickstart.md): Get started with Turso and Swift using the libSQL client in a few simple steps.
+- [Swift Reference](https://docs.turso.tech/sdk/swift/reference.md): libSQL Swift Reference
+- [Examples](https://docs.turso.tech/sdk/ts/examples.md)
+- [Astro + Turso](https://docs.turso.tech/sdk/ts/guides/astro.md): Set up Turso in your Astro project in minutes.
+- [Elysia + Turso](https://docs.turso.tech/sdk/ts/guides/elysia.md): Set up Turso in your Elysia project in minutes.
+- [Hono + Turso](https://docs.turso.tech/sdk/ts/guides/hono.md): Set up Turso in your Hono project in minutes.
+- [Next.js + Turso](https://docs.turso.tech/sdk/ts/guides/nextjs.md): Set up Turso in your Next.js project in minutes.
+- [Nuxt + Turso](https://docs.turso.tech/sdk/ts/guides/nuxt.md): Set up Turso in your Nuxt project in minutes
+- [Quasar + Turso](https://docs.turso.tech/sdk/ts/guides/quasar.md): Set up Turso in your Quasar project in minutes
+- [Qwik + Turso](https://docs.turso.tech/sdk/ts/guides/qwik.md): Set up Turso in your Qwik project in minutes
+- [Remix + Turso](https://docs.turso.tech/sdk/ts/guides/remix.md): Set up Turso in your Remix project in minutes
+- [SvelteKit + Turso](https://docs.turso.tech/sdk/ts/guides/sveltekit.md): Set up Turso in your SvelteKit project in minutes
+- [Sentry](https://docs.turso.tech/sdk/ts/integrations/sentry.md): Trace slow queries and capture SQL errors with Sentry.
+- [Drizzle + Turso](https://docs.turso.tech/sdk/ts/orm/drizzle.md): Configure Drizzle to work with Turso
+- [Prisma + Turso](https://docs.turso.tech/sdk/ts/orm/prisma.md): Configure Prisma to work with your Turso database
+- [Turso Quickstart (TypeScript / JS)](https://docs.turso.tech/sdk/ts/quickstart.md): Get started with Turso and TypeScript using the libSQL client in a few simple steps
+- [Reference](https://docs.turso.tech/sdk/ts/reference.md): libSQL JavaScript and TypeScript Reference
+- [Support](https://docs.turso.tech/support.md): We're always here to help.
+## Optional
+- [Turso Homepage](https://turso.tech)
+- [Blog & Tutorials](https://turso.tech/blog)
+- [Discord](https://discord.gg/turso)
+- [GitHub](https://github.com/tursodatabase)

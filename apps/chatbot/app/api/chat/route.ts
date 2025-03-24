@@ -14,15 +14,24 @@ type LlmsTxtData = {
   description?: string
   website?: string
   cacheFile?: string
+  minified?: boolean
   lastFetched: string
 }
 
 // Load a specific provider's llms.txt file
-async function loadProviderFile(provider: string): Promise<LlmsTxtData | null> {
+async function loadProviderFile(provider: string, useMinified = true): Promise<LlmsTxtData | null> {
   try {
-    // Try both formats of filenames
+    // Try both formats of filenames with minified option
     const providerSlug = provider.toLowerCase().replace(/[^a-z0-9]/g, '-')
     const possiblePaths = [
+      // Try minified version first if requested
+      ...(useMinified
+        ? [
+            path.resolve(process.cwd(), `public/llms-cache/${providerSlug}-llms.min.txt`),
+            path.resolve(process.cwd(), `public/llms-cache/${provider.toLowerCase()}-llms.min.txt`)
+          ]
+        : []),
+      // Then try regular version
       path.resolve(process.cwd(), `public/llms-cache/${providerSlug}-llms.txt`),
       path.resolve(process.cwd(), `public/llms-cache/${provider.toLowerCase()}-llms.txt`)
     ]
@@ -30,11 +39,14 @@ async function loadProviderFile(provider: string): Promise<LlmsTxtData | null> {
     for (const filePath of possiblePaths) {
       try {
         const fileContent = await fs.readFile(filePath, 'utf8')
+        const isMinified = filePath.includes('.min.txt')
+
         return {
           name: provider,
           url: `https://${provider.toLowerCase()}.com/llms.txt`, // approximated URL
           content: fileContent,
           type: 'llms.txt',
+          minified: isMinified,
           lastFetched: new Date().toISOString().split('T')[0]
         }
       } catch (e) {

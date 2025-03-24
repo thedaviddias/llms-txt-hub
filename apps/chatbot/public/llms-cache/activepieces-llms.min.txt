@@ -1,0 +1,187 @@
+# Activepieces
+## Docs
+- [Breaking Changes](https://www.activepieces.com/docs/about/breaking-changes.md): This list shows all versions that include breaking changes and how to upgrade.
+- [Changelog](https://www.activepieces.com/docs/about/changelog.md): A log of all notable changes to Activepieces
+- [Editions](https://www.activepieces.com/docs/about/editions.md)
+- [i18n Translations](https://www.activepieces.com/docs/about/i18n.md)
+- [License](https://www.activepieces.com/docs/about/license.md)
+- [Telemetry](https://www.activepieces.com/docs/about/telemetry.md)
+- [Appearance](https://www.activepieces.com/docs/admin-console/appearance.md)
+- [Custom Domains](https://www.activepieces.com/docs/admin-console/custom-domain.md)
+- [Customize Emails](https://www.activepieces.com/docs/admin-console/customize-emails.md)
+- [Manage AI Providers](https://www.activepieces.com/docs/admin-console/manage-ai-providers.md)
+- [Replace OAuth2 Apps](https://www.activepieces.com/docs/admin-console/manage-oauth2.md)
+- [Manage Pieces](https://www.activepieces.com/docs/admin-console/manage-pieces.md)
+- [Managed Projects](https://www.activepieces.com/docs/admin-console/manage-projects.md)
+- [Manage Templates](https://www.activepieces.com/docs/admin-console/manage-templates.md)
+- [Overview](https://www.activepieces.com/docs/admin-console/overview.md)
+- [Create Action](https://www.activepieces.com/docs/developers/building-pieces/create-action.md)
+- [Create Trigger](https://www.activepieces.com/docs/developers/building-pieces/create-trigger.md)
+- [Overview](https://www.activepieces.com/docs/developers/building-pieces/overview.md): This section helps developers build and contribute pieces.
+- [Add Piece Authentication](https://www.activepieces.com/docs/developers/building-pieces/piece-authentication.md)
+- [Create Piece Definition](https://www.activepieces.com/docs/developers/building-pieces/piece-definition.md)
+- [Fork Repository](https://www.activepieces.com/docs/developers/building-pieces/setup-fork.md)
+- [Start Building](https://www.activepieces.com/docs/developers/building-pieces/start-building.md)
+- [GitHub Codespaces](https://www.activepieces.com/docs/developers/development-setup/codespaces.md)
+- [Dev Containers](https://www.activepieces.com/docs/developers/development-setup/dev-container.md)
+- [Getting Started](https://www.activepieces.com/docs/developers/development-setup/getting-started.md)
+- [Local Dev Environment](https://www.activepieces.com/docs/developers/development-setup/local.md)
+- [Build Custom Pieces](https://www.activepieces.com/docs/developers/misc/build-piece.md)
+- [Create New AI Provider](https://www.activepieces.com/docs/developers/misc/create-new-ai-provider.md)
+- [Custom Pieces CI/CD](https://www.activepieces.com/docs/developers/misc/pieces-ci-cd.md)
+- [Setup Private Fork](https://www.activepieces.com/docs/developers/misc/private-fork.md)
+- [Publish Custom Pieces](https://www.activepieces.com/docs/developers/misc/publish-piece.md)
+- [Piece Auth](https://www.activepieces.com/docs/developers/piece-reference/authentication.md): Learn about piece authentication
+- [Enable Custom API Calls](https://www.activepieces.com/docs/developers/piece-reference/custom-api-calls.md): Learn how to enable custom API calls for your pieces
+- [Piece Examples](https://www.activepieces.com/docs/developers/piece-reference/examples.md): Explore a collection of example triggers and actions
+- [External Libraries](https://www.activepieces.com/docs/developers/piece-reference/external-libraries.md): Learn how to install and use external libraries.
+- [Files](https://www.activepieces.com/docs/developers/piece-reference/files.md): Learn how to use files object to create file references.
+- [Flow Control](https://www.activepieces.com/docs/developers/piece-reference/flow-control.md): Learn How to Control Flow from Inside the Piece
+- [Persistent Storage](https://www.activepieces.com/docs/developers/piece-reference/persistent-storage.md): Learn how to store and retrieve data from a key-value store
+- [Piece Versioning](https://www.activepieces.com/docs/developers/piece-reference/piece-versioning.md): Learn how to version your pieces
+- [Props](https://www.activepieces.com/docs/developers/piece-reference/properties.md): Learn about different types of properties used in triggers / actions
+- [Props Validation](https://www.activepieces.com/docs/developers/piece-reference/properties-validation.md): Learn about different types of properties validation
+- [Overview](https://www.activepieces.com/docs/developers/piece-reference/triggers/overview.md)
+- [Polling Trigger](https://www.activepieces.com/docs/developers/piece-reference/triggers/polling-trigger.md): Periodically call endpoints to check for changes
+- [Webhook Trigger](https://www.activepieces.com/docs/developers/piece-reference/triggers/webhook-trigger.md): Listen to user events through a single URL
+- [Community (Public NPM)](https://www.activepieces.com/docs/developers/sharing-pieces/community.md): Learn how to publish your piece to the community.
+- [Contribute](https://www.activepieces.com/docs/developers/sharing-pieces/contribute.md): Learn how to contribute a piece to the main repository.
+- [Overview](https://www.activepieces.com/docs/developers/sharing-pieces/overview.md): Learn the different ways to publish your own piece on activepieces.
+- [Private](https://www.activepieces.com/docs/developers/sharing-pieces/private.md): Learn how to share your pieces privately.
+- [Chat Completion](https://www.activepieces.com/docs/developers/unified-ai/chat.md): Learn how to use chat completion AI in actions
+- [Function Calling](https://www.activepieces.com/docs/developers/unified-ai/function-calling.md): Learn how to use function calling AI in actions
+- [Image AI](https://www.activepieces.com/docs/developers/unified-ai/image.md): Learn how to use image AI in actions
+- [Overview](https://www.activepieces.com/docs/developers/unified-ai/overview.md): The AI Toolkit to build AI pieces tailored for specific use cases that work with many AI providers
+- [Customize Pieces](https://www.activepieces.com/docs/embedding/customize-pieces.md)
+- [Embed Builder](https://www.activepieces.com/docs/embedding/embed-builder.md)
+- [Create Connections](https://www.activepieces.com/docs/embedding/embed-connections.md)
+- [Navigation](https://www.activepieces.com/docs/embedding/navigation.md)
+- [Overview](https://www.activepieces.com/docs/embedding/overview.md): Understanding how embedding works
+- [Provision Users](https://www.activepieces.com/docs/embedding/provision-users.md): Automatically authenticate your SaaS users to your Activepieces instance
+- [SDK Changelog](https://www.activepieces.com/docs/embedding/sdk-changelog.md): A log of all notable changes to Activepieces SDK
+- [Delete Connection](https://www.activepieces.com/docs/endpoints/connections/delete.md): Delete an app connection
+- [List Connections](https://www.activepieces.com/docs/endpoints/connections/list.md)
+- [Connection Schema](https://www.activepieces.com/docs/endpoints/connections/schema.md)
+- [Upsert Connection](https://www.activepieces.com/docs/endpoints/connections/upsert.md): Upsert an app connection based on the app name
+- [Get Flow Run](https://www.activepieces.com/docs/endpoints/flow-runs/get.md): Get Flow Run
+- [List Flows Runs](https://www.activepieces.com/docs/endpoints/flow-runs/list.md): List Flow Runs
+- [Flow Run Schema](https://www.activepieces.com/docs/endpoints/flow-runs/schema.md)
+- [Create Flow Template](https://www.activepieces.com/docs/endpoints/flow-templates/create.md): Create a flow template
+- [Delete Flow Template](https://www.activepieces.com/docs/endpoints/flow-templates/delete.md): Delete a flow template
+- [Get Flow Template](https://www.activepieces.com/docs/endpoints/flow-templates/get.md): Get a flow template
+- [List Flow Templates](https://www.activepieces.com/docs/endpoints/flow-templates/list.md): List flow templates
+- [Flow Template Schema](https://www.activepieces.com/docs/endpoints/flow-templates/schema.md)
+- [Create Flow](https://www.activepieces.com/docs/endpoints/flows/create.md): Create a flow
+- [Delete Flow](https://www.activepieces.com/docs/endpoints/flows/delete.md): Delete a flow
+- [Get Flow](https://www.activepieces.com/docs/endpoints/flows/get.md): Get a flow by id
+- [List Flows](https://www.activepieces.com/docs/endpoints/flows/list.md): List flows
+- [Flow Schema](https://www.activepieces.com/docs/endpoints/flows/schema.md)
+- [Apply Flow Operation](https://www.activepieces.com/docs/endpoints/flows/update.md): Apply an operation to a flow
+- [Create Folder](https://www.activepieces.com/docs/endpoints/folders/create.md): Create a new folder
+- [Delete Folder](https://www.activepieces.com/docs/endpoints/folders/delete.md): Delete a folder
+- [Get Folder](https://www.activepieces.com/docs/endpoints/folders/get.md): Get a folder by id
+- [List Folders](https://www.activepieces.com/docs/endpoints/folders/list.md): List folders
+- [Folder Schema](https://www.activepieces.com/docs/endpoints/folders/schema.md)
+- [Update Folder](https://www.activepieces.com/docs/endpoints/folders/update.md): Update an existing folder
+- [Configure](https://www.activepieces.com/docs/endpoints/git-repos/configure.md): Upsert a git repository information for a project.
+- [Git Repos Schema](https://www.activepieces.com/docs/endpoints/git-repos/schema.md)
+- [Delete Global Connection](https://www.activepieces.com/docs/endpoints/global-connections/delete.md)
+- [List Global Connections](https://www.activepieces.com/docs/endpoints/global-connections/list.md)
+- [Global Connection Schema](https://www.activepieces.com/docs/endpoints/global-connections/schema.md)
+- [Update Global Connection](https://www.activepieces.com/docs/endpoints/global-connections/update.md)
+- [Upsert Global Connection](https://www.activepieces.com/docs/endpoints/global-connections/upsert.md)
+- [Overview](https://www.activepieces.com/docs/endpoints/overview.md)
+- [Install Piece](https://www.activepieces.com/docs/endpoints/pieces/install.md): Add a piece to a platform
+- [Piece Schema](https://www.activepieces.com/docs/endpoints/pieces/schema.md)
+- [Delete Project Member](https://www.activepieces.com/docs/endpoints/project-members/delete.md)
+- [List Project Member](https://www.activepieces.com/docs/endpoints/project-members/list.md)
+- [Project Member Schema](https://www.activepieces.com/docs/endpoints/project-members/schema.md)
+- [Create Project Release](https://www.activepieces.com/docs/endpoints/project-releases/create.md)
+- [Project Release Schema](https://www.activepieces.com/docs/endpoints/project-releases/schema.md)
+- [Create Project](https://www.activepieces.com/docs/endpoints/projects/create.md)
+- [List Projects](https://www.activepieces.com/docs/endpoints/projects/list.md)
+- [Project Schema](https://www.activepieces.com/docs/endpoints/projects/schema.md)
+- [Update Project](https://www.activepieces.com/docs/endpoints/projects/update.md)
+- [Get Sample Data](https://www.activepieces.com/docs/endpoints/sample-data/get.md)
+- [Save Sample Data](https://www.activepieces.com/docs/endpoints/sample-data/save.md)
+- [Delete User Invitation](https://www.activepieces.com/docs/endpoints/user-invitations/delete.md)
+- [List User Invitations](https://www.activepieces.com/docs/endpoints/user-invitations/list.md)
+- [User Invitation Schema](https://www.activepieces.com/docs/endpoints/user-invitations/schema.md)
+- [Send User Invitation (Upsert)](https://www.activepieces.com/docs/endpoints/user-invitations/upsert.md): Send a user invitation to a user. If the user already has an invitation, the invitation will be updated.
+- [Building Flows](https://www.activepieces.com/docs/flows/building-flows.md): Flow consists of two parts, trigger and actions
+- [Debugging Runs](https://www.activepieces.com/docs/flows/debugging-runs.md): Ensuring your business automations are running properly
+- [Technical limits](https://www.activepieces.com/docs/flows/known-limits.md): technical limits for Activepieces execution
+- [Passing Data](https://www.activepieces.com/docs/flows/passing-data.md): Using data from previous steps in the current one
+- [Publishing Flows](https://www.activepieces.com/docs/flows/publishing-flows.md): Make your flow work by publishing your updates
+- [Version History](https://www.activepieces.com/docs/flows/versioning.md): Learn how flow versioning works in Activepieces
+- [🥳 Welcome to Activepieces](https://www.activepieces.com/docs/getting-started/introduction.md): Your friendliest open source all-in-one automation tool, designed to be extensible.
+- [Product Principles](https://www.activepieces.com/docs/getting-started/principles.md)
+- [How to handle Requests](https://www.activepieces.com/docs/handbook/customer-support/handle-requests.md)
+- [Overview](https://www.activepieces.com/docs/handbook/customer-support/overview.md)
+- [How to use Pylon](https://www.activepieces.com/docs/handbook/customer-support/pylon.md): Guide for using Pylon to manage customer support tickets
+- [Tone & Communication](https://www.activepieces.com/docs/handbook/customer-support/tone.md)
+- [Trial Key Management](https://www.activepieces.com/docs/handbook/customer-support/trial.md): Description of your new file.
+- [Handling Downtime](https://www.activepieces.com/docs/handbook/engineering/onboarding/downtime-incident.md)
+- [Engineering Workflow](https://www.activepieces.com/docs/handbook/engineering/onboarding/how-we-work.md)
+- [On-Call](https://www.activepieces.com/docs/handbook/engineering/onboarding/on-call.md)
+- [Overview](https://www.activepieces.com/docs/handbook/engineering/overview.md)
+- [Queues Dashboard](https://www.activepieces.com/docs/handbook/engineering/playbooks/bullboard.md)
+- [Database Migrations](https://www.activepieces.com/docs/handbook/engineering/playbooks/database-migration.md): Guide for creating database migrations in Activepieces
+- [Cloud Infrastructure](https://www.activepieces.com/docs/handbook/engineering/playbooks/infrastructure.md)
+- [Feature Announcement](https://www.activepieces.com/docs/handbook/engineering/playbooks/product-announcement.md)
+- [How to create Release](https://www.activepieces.com/docs/handbook/engineering/playbooks/releases.md)
+- [Setup Incident.io](https://www.activepieces.com/docs/handbook/engineering/playbooks/setup-incident-io.md)
+- [Our Compensation](https://www.activepieces.com/docs/handbook/hiring/compensation.md)
+- [Our Hiring Process](https://www.activepieces.com/docs/handbook/hiring/hiring.md)
+- [Our Roles & Levels](https://www.activepieces.com/docs/handbook/hiring/levels.md)
+- [Our Team Structure](https://www.activepieces.com/docs/handbook/hiring/team.md)
+- [Activepieces Handbook](https://www.activepieces.com/docs/handbook/overview.md)
+- [AI Agent](https://www.activepieces.com/docs/handbook/teams/ai.md)
+- [Marketing & Content](https://www.activepieces.com/docs/handbook/teams/content.md)
+- [Developer Experience & Infrastructure](https://www.activepieces.com/docs/handbook/teams/developer-experience.md)
+- [Embedding](https://www.activepieces.com/docs/handbook/teams/embed-sdk.md)
+- [Flow Editor & Dashboard](https://www.activepieces.com/docs/handbook/teams/flow-builder.md)
+- [Human in the Loop](https://www.activepieces.com/docs/handbook/teams/human-in-loop.md)
+- [Dashboard & Platform Admin](https://www.activepieces.com/docs/handbook/teams/management-features.md)
+- [Overview](https://www.activepieces.com/docs/handbook/teams/overview.md)
+- [Pieces](https://www.activepieces.com/docs/handbook/teams/pieces.md)
+- [Sales](https://www.activepieces.com/docs/handbook/teams/sales.md)
+- [Tables](https://www.activepieces.com/docs/handbook/teams/tables.md)
+- [Engine](https://www.activepieces.com/docs/install/architecture/engine.md)
+- [Overview](https://www.activepieces.com/docs/install/architecture/overview.md)
+- [Stack & Tools](https://www.activepieces.com/docs/install/architecture/stack.md)
+- [Workers & Sandboxing](https://www.activepieces.com/docs/install/architecture/workers.md)
+- [Environment Variables](https://www.activepieces.com/docs/install/configuration/environment-variables.md)
+- [Hardware Requirements](https://www.activepieces.com/docs/install/configuration/hardware.md): Specifications for hosting Activepieces
+- [Deployment Checklist](https://www.activepieces.com/docs/install/configuration/overview.md): Checklist to follow after deploying Activepieces
+- [Seperate Workers from App](https://www.activepieces.com/docs/install/configuration/seperate-workers.md)
+- [Setup App Webhooks](https://www.activepieces.com/docs/install/configuration/setup-app-webhooks.md)
+- [Setup HTTPS](https://www.activepieces.com/docs/install/configuration/setup-ssl.md)
+- [Troubleshooting](https://www.activepieces.com/docs/install/configuration/troubleshooting.md)
+- [AWS (Pulumi)](https://www.activepieces.com/docs/install/options/aws.md): Get Activepieces up & running on AWS with Pulumi for IaC
+- [Docker](https://www.activepieces.com/docs/install/options/docker.md): Single docker image deployment with SQLite3 and Memory Queue
+- [Docker Compose](https://www.activepieces.com/docs/install/options/docker-compose.md)
+- [Easypanel](https://www.activepieces.com/docs/install/options/easypanel.md): Run Activepieces with Easypanel 1-Click Install
+- [Elestio](https://www.activepieces.com/docs/install/options/elestio.md): Run Activepieces with Elestio 1-Click Install
+- [GCP](https://www.activepieces.com/docs/install/options/gcp.md)
+- [Overview](https://www.activepieces.com/docs/install/overview.md): Introduction to the different ways to install Activepieces
+- [Connection Deleted](https://www.activepieces.com/docs/operations/audit-logs/connection-deleted.md)
+- [Connection Upserted](https://www.activepieces.com/docs/operations/audit-logs/connection-upserted.md)
+- [Flow Created](https://www.activepieces.com/docs/operations/audit-logs/flow-created.md)
+- [Flow Deleted](https://www.activepieces.com/docs/operations/audit-logs/flow-deleted.md)
+- [Flow Run Finished](https://www.activepieces.com/docs/operations/audit-logs/flow-run-finished.md)
+- [Flow Run Started](https://www.activepieces.com/docs/operations/audit-logs/flow-run-started.md)
+- [Flow Updated](https://www.activepieces.com/docs/operations/audit-logs/flow-updated.md)
+- [Folder Created](https://www.activepieces.com/docs/operations/audit-logs/folder-created.md)
+- [Folder Deleted](https://www.activepieces.com/docs/operations/audit-logs/folder-deleted.md)
+- [Folder Updated](https://www.activepieces.com/docs/operations/audit-logs/folder-updated.md)
+- [Overview](https://www.activepieces.com/docs/operations/audit-logs/overview.md)
+- [Signing Key Created](https://www.activepieces.com/docs/operations/audit-logs/signing-key-created.md)
+- [User Email Verified](https://www.activepieces.com/docs/operations/audit-logs/user-email-verified.md)
+- [User Password Reset](https://www.activepieces.com/docs/operations/audit-logs/user-password-reset.md)
+- [User Signed In](https://www.activepieces.com/docs/operations/audit-logs/user-signed-in.md)
+- [User Signed Up](https://www.activepieces.com/docs/operations/audit-logs/user-signed-up.md)
+- [Environments & Releases](https://www.activepieces.com/docs/operations/git-sync.md)
+- [Project Permissions](https://www.activepieces.com/docs/security/permissions.md): Documentation on project permissions in Activepieces
+- [Security & Data Practices](https://www.activepieces.com/docs/security/practices.md): We prioritize security and follow these practices to keep information safe.
+- [Single Sign-On](https://www.activepieces.com/docs/security/sso.md)

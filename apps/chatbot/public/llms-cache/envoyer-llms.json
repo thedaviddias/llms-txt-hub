@@ -6,5 +6,6 @@
   "type": "llms.txt",
   "category": "infrastructure-cloud",
   "cachePath": "apps/chatbot/public/llms-cache/envoyer-llms.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/envoyer-llms.min.txt",
   "lastFetched": "2025-03-24"
 }

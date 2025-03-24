@@ -1,0 +1,112 @@
+# Mesh
+## Docs
+- [Get account balance](https://docs.meshconnect.com/api-reference/balance/get-account-balance.md): Get real-time account fiat balances.
+- [Get aggregated portfolio fiat balances](https://docs.meshconnect.com/api-reference/balance/get-aggregated-portfolio-fiat-balances.md): Get cached aggregated fiat balances from all connected integrations.
+- [Get health status](https://docs.meshconnect.com/api-reference/managed-account-authentication/get-health-status.md): Get the list of supported institutions and their health statuses.
+- [Get Link token with parameters](https://docs.meshconnect.com/api-reference/managed-account-authentication/get-link-token-with-parameters.md): Get a short lived, one-time use token for initializing a Link session using the client-side SDKs
+- [Refresh auth token](https://docs.meshconnect.com/api-reference/managed-account-authentication/refresh-auth-token.md): Refresh auth token of the connected institution.
+Some institutions do not require tokens to be refreshed.
+The following institutions require custom flows:
+WeBull: AuthToken should be provided along with the RefreshToken
+Vanguard: security settings may activate MFA, requiring user action.
+If MFA is triggered, a second refresh request should be sent.
+Second request should contain MFA code and access token obtained from initial response
+- [Remove connection](https://docs.meshconnect.com/api-reference/managed-account-authentication/remove-connection.md): Remove connection to the financial institution and erase all related data completely.
+- [Retrieve the list of all available integrations.](https://docs.meshconnect.com/api-reference/managed-account-authentication/retrieve-the-list-of-all-available-integrations.md): Returns a list of integrations with details including the integration ID, name, type,
+DeFi wallet provider ID, and categories.
+- [Configure transfer](https://docs.meshconnect.com/api-reference/managed-transfers/configure-transfer.md): **Get the list of networks and tokens eligible for a transfer, based on the provided request data.**
+---
+Transfers can be configured either from one connected account to another connected account, or
+from a connected account to any arbitrary address or addresses.
+* **From one connected account to another connected account:**
+The API client provides `FromAuthToken` that is representing the source account and `ToAuthToken` that is representing the target account. Front API maps networks and tokens supported by both accounts and returns all tokens and networks eligible for a transfer as the result.
+* **From a connected account to any arbitrary address:**
+The API client provides `FromAuthToken` that is representing the source account and the list of target addresses using the `ToAddresses` field. Front API verifies the addresses and returns the list of tokens, eligible to be transferred as the result of the operation.
+Returns the list of holdings on the account that can be used to perform the transfer. Each holdings item
+contains the list of supported networks that can be used to transfer the corresponding asset.
+Each network contains details such as gas fees and the amount eligible to be transferred.
+- [Execute transfer](https://docs.meshconnect.com/api-reference/managed-transfers/execute-transfer.md): **Commit the previously previewed transfer.**
+---
+Previews the transfer, using the `PreviewId` value.
+Handles multi-factor authentication codes if the account is configured to use them for additional security.
+Returns the status of the transfer and the details of the transfer if it was initiated successfully.
+- [Get deposit address](https://docs.meshconnect.com/api-reference/managed-transfers/get-deposit-address.md): Get or generate a cryptocurrency deposit address that can be used to transfer assets to the financial institution
+- [Get integrations](https://docs.meshconnect.com/api-reference/managed-transfers/get-integrations.md): **Get supported integrations list.**
+---
+Get the list of all integrations supported by Mesh to perform transfers, including which tokens and networks are supported.
+- [Get networks](https://docs.meshconnect.com/api-reference/managed-transfers/get-networks.md): **Get supported networks list.**
+---
+Get the list of all networks supported by Mesh to perform transfers, including which tokens and integrations are supported.
+- [Get supported tokens list](https://docs.meshconnect.com/api-reference/managed-transfers/get-supported-tokens-list.md): Get the list of all tokens supported by Mesh to perform transfers, including which networks and integrations are supported.
+- [Get transfers initiated by Mesh](https://docs.meshconnect.com/api-reference/managed-transfers/get-transfers-initiated-by-mesh.md): Get cryptocurrency transfers initiated by Mesh on exchanges or self-custody wallets.
+- [Preview transfer](https://docs.meshconnect.com/api-reference/managed-transfers/preview-transfer.md): **Validate and preview the transfer.**
+---
+Validates the transfer, calculates the relevant amount in crypto if requested amount was in fiat and updates
+the current network fee values.
+This endpoint uses the `NetworkId` field to specify which network will be used to perform the transfer. The target `NetworkId`
+should be selected after configuring the transfer using `/configure` endpoint.
+Returns the `PreviewId` value that can be used to commit the transfer.
+- [Quote transfer](https://docs.meshconnect.com/api-reference/managed-transfers/quote-transfer.md): Get a quote for transferring a fiat amount from a brokerage account in a given cryptocurrency over a specified network.
+Returns min and max fees and amounts to account for different funding sources (existing crypto balance, cash balance or
+ACH/debit deposit). Currently only supported for Coinbase.
+- [Get aggregated portfolio](https://docs.meshconnect.com/api-reference/portfolio/get-aggregated-portfolio.md): Get the aggregated portfolio of the user containing market values.
+- [Get holdings.](https://docs.meshconnect.com/api-reference/portfolio/get-holdings.md): Obtain assets from the connected investment account. Performs realtime API call to the underlying integration.
+- [Get holdings values.](https://docs.meshconnect.com/api-reference/portfolio/get-holdings-values.md): Obtain assets from the connected investment account and return total value and performance.
+Performs realtime API call to the underlying integration.
+- [Authenticate user's account](https://docs.meshconnect.com/api-reference/self-managed-account-authentication/authenticate-users-account.md): Authenticate user's brokerage/exchange account programmatically (not using the Web Catalog UI)
+- [Get authentication schemes](https://docs.meshconnect.com/api-reference/self-managed-account-authentication/get-authentication-schemes.md): Get authentication schemes of available integrations to perform authentication programmatically (not using
+the Web Catalog UI).
+- [Get OAuth authentication link](https://docs.meshconnect.com/api-reference/self-managed-account-authentication/get-oauth-authentication-link.md): Get OAuth link for the integrations with `OAuth` AuthenticationSchemeType
+- [Cancel order execution](https://docs.meshconnect.com/api-reference/transactions/cancel-order-execution.md): Cancels a pending order (an order with `InProgress` status).
+`SymbolPair` is required to be provided for `Binance`, `BinanceInternational`, `Okx` and `BitFlyer` institutions.
+This value
+- [Execute order](https://docs.meshconnect.com/api-reference/transactions/execute-order.md): Validates the order information and then calls institution's API to execute an order.
+It's recommended to call this endpoint after calling the `preview` endpoint to make sure that the
+order execution request is correct.
+- [Get supported order features for institution](https://docs.meshconnect.com/api-reference/transactions/get-supported-order-features-for-institution.md): Get supported features for trading for a particular financial institution. Different institutions support different
+features (e.g. different `OrderType` or different sets of `TimeInForce` values), so this endpoint is used to
+describe such features for provided financial institution.
+- [Get symbol information](https://docs.meshconnect.com/api-reference/transactions/get-symbol-information.md): Returns information on trading allowance for a provided symbol.
+For example - some institutions allow fractional trading for some symbols, but do not allow it
+for others. So before placing an order the API client can check if the required symbol can be traded fractionally
+with the provided institution.
+- [Get transaction details](https://docs.meshconnect.com/api-reference/transactions/get-transaction-details.md): Get details of an executed order. Typically used to poll the status of the previously executed order.
+- [Get transactions](https://docs.meshconnect.com/api-reference/transactions/get-transactions.md): Get transactions on the account - the paginated history of the executed orders along with the pending orders.
+- [Preview order execution](https://docs.meshconnect.com/api-reference/transactions/preview-order-execution.md): Validates the order information (such as necessary balance availability), and returns additional information,
+such as expected order fee.
+Does not execute the order.
+- [Get deposit address](https://docs.meshconnect.com/api-reference/transfers/get-deposit-address.md): Get or generate a cryptocurrency deposit address that can be used to transfer assets to the financial institution
+- [Get details of asset](https://docs.meshconnect.com/api-reference/transfers/get-details-of-asset.md): Get details of the asset for deposit or withdrawal. For example, several exchanges support same tokens over multiple
+blockchains, and thus require the name of chain to be supplied for transfers. This endpoint allows getting such details.
+- [Get transfer details](https://docs.meshconnect.com/api-reference/transfers/get-transfer-details.md): Get details of a specific transfer (withdrawals or deposits) executed from an exchange.
+Only supports Exchange integrations.
+- [Get transfer history](https://docs.meshconnect.com/api-reference/transfers/get-transfer-history.md): Get entire history of cryptocurrency transfers (withdrawals or deposits) executed from an exchange.
+Only supports Exchange integrations.
+- [Initiate a transfer](https://docs.meshconnect.com/api-reference/transfers/initiate-a-transfer.md): Initiate a new cryptocurrency transfer on a blockchain, cryptocurrency broker or cryptocurrency exchange.
+Obsolete endpoint, please use POST /transfers/managed/execute endpoint instead.
+- [Verify account identity.](https://docs.meshconnect.com/api-reference/verify/verify.md): Returns basic profile data of the user's exchange account.
+Available data varies by exchange and linked account.
+- [Get wallet verifications for user and address.](https://docs.meshconnect.com/api-reference/verify/wallet.md)
+- [Android SDK](https://docs.meshconnect.com/guides/android-sdk.md)
+- [API Key Permissions](https://docs.meshconnect.com/guides/api-key-permissions.md)
+- [Managed Transfers with APIs](https://docs.meshconnect.com/guides/digital-asset-managed-transfers-with-apis-guide.md): This page will help you get started with Mesh APIs to authenticate an account and configure, preview, and execute a transfer.
+- [Link Transfers Guide](https://docs.meshconnect.com/guides/digital-asset-managed-transfers-with-sdk-integration-guide.md)
+- [null](https://docs.meshconnect.com/guides/error-dictionary.md)
+- [Getting Started](https://docs.meshconnect.com/guides/getting-started.md)
+- [Handling Auth Tokens](https://docs.meshconnect.com/guides/handling-auth-tokens.md)
+- [iOS SDK](https://docs.meshconnect.com/guides/ios-sdk.md)
+- [Launch Checklist](https://docs.meshconnect.com/guides/launch.md)
+- [Link Utilization and Use cases](https://docs.meshconnect.com/guides/link-initialization.md)
+- [Link UI Events](https://docs.meshconnect.com/guides/link-ui-events.md)
+- [SDK Overview](https://docs.meshconnect.com/guides/quickstart-guide-with-link-sdks.md): This page will help you get started using Mesh SDKs to authenticate and make server side calls.
+- [React Native SDK](https://docs.meshconnect.com/guides/react-native-sdk.md)
+- [Sandbox Environment](https://docs.meshconnect.com/guides/sandbox.md): Learn about the Sandbox environment, its features, limitations, and how to use it for API testing.
+- [Status Page](https://docs.meshconnect.com/guides/status.md)
+- [Sub-Client Branding](https://docs.meshconnect.com/guides/sub-client-branding.md)
+- [Supported Transfer Integrations](https://docs.meshconnect.com/guides/supported-transfer-integrations.md)
+- [null](https://docs.meshconnect.com/guides/troubleshooting-link.md)
+- [Verifying Self-Hosted Wallets](https://docs.meshconnect.com/guides/verifying-self-hosted-wallets.md)
+- [Web SDK](https://docs.meshconnect.com/guides/web-sdk.md)
+- [Transfer Webhooks](https://docs.meshconnect.com/guides/webhooks.md)
+## Optional
+- [Workshop](https://workshop.meshconnect.com)

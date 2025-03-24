@@ -1,0 +1,56 @@
+# OpenPipe
+## Docs
+- [Delete Dataset](https://docs.openpipe.ai/api-reference/delete-dataset.md): Delete a dataset.
+- [Delete Model](https://docs.openpipe.ai/api-reference/delete-model.md): Delete an existing model.
+- [Get Model](https://docs.openpipe.ai/api-reference/get-getModel.md): Get a model by ID.
+- [List Datasets](https://docs.openpipe.ai/api-reference/get-listDatasets.md): List datasets for a project.
+- [List Models](https://docs.openpipe.ai/api-reference/get-listModels.md): List all models for a project.
+- [Chat Completions](https://docs.openpipe.ai/api-reference/post-chatcompletions.md): OpenAI-compatible route for generating inference and optionally logging the request.
+- [Create Dataset](https://docs.openpipe.ai/api-reference/post-createDataset.md): Create a new dataset.
+- [Add Entries to Dataset](https://docs.openpipe.ai/api-reference/post-createDatasetEntries.md): Add new dataset entries.
+- [Create Model](https://docs.openpipe.ai/api-reference/post-createModel.md): Train a new model.
+- [Judge Criteria](https://docs.openpipe.ai/api-reference/post-criteriajudge.md): Get a judgement of a completion against the specified criterion
+- [Report](https://docs.openpipe.ai/api-reference/post-report.md): Record request logs from OpenAI models
+- [Report Anthropic](https://docs.openpipe.ai/api-reference/post-report-anthropic.md): Record request logs from Anthropic models
+- [Update Metadata](https://docs.openpipe.ai/api-reference/post-updatemetadata.md): Update tags metadata for logged calls matching the provided filters.
+- [Base Models](https://docs.openpipe.ai/base-models.md): Train and compare across a range of the most powerful base models.
+- [Caching](https://docs.openpipe.ai/features/caching.md):  Improve performance and reduce costs by caching previously generated responses.
+- [Anthropic Proxy](https://docs.openpipe.ai/features/chat-completions/anthropic.md)
+- [Proxying to External Models](https://docs.openpipe.ai/features/chat-completions/external-models.md)
+- [Gemini Proxy](https://docs.openpipe.ai/features/chat-completions/gemini.md)
+- [Mixture of Agents Chat Completions](https://docs.openpipe.ai/features/chat-completions/moa.md)
+- [Chat Completions](https://docs.openpipe.ai/features/chat-completions/overview.md)
+- [Criterion Alignment Sets](https://docs.openpipe.ai/features/criteria/alignment-set.md): Use alignment sets to test and improve your criteria.
+- [API Endpoints](https://docs.openpipe.ai/features/criteria/api.md): Use the Criteria API for runtime evaluation and offline testing.
+- [Criteria](https://docs.openpipe.ai/features/criteria/overview.md): Align LLM judgements with human ratings to evaluate and improve your models.
+- [Criteria Quick Start](https://docs.openpipe.ai/features/criteria/quick-start.md): Create and align your first criterion.
+- [Exporting Data](https://docs.openpipe.ai/features/datasets/exporting-data.md):  Export your past requests as a JSONL file in their raw form.
+- [Importing Request Logs](https://docs.openpipe.ai/features/datasets/importing-logs.md):  Search and filter your past LLM requests to inspect your responses and build a training dataset.
+- [Datasets](https://docs.openpipe.ai/features/datasets/overview.md): Collect, evaluate, and refine your training data.
+- [Datasets Quick Start](https://docs.openpipe.ai/features/datasets/quick-start.md): Create your first dataset and import training data.
+- [Relabeling Data](https://docs.openpipe.ai/features/datasets/relabeling-data.md): Use powerful models to generate new outputs for your data before training.
+- [Uploading Data](https://docs.openpipe.ai/features/datasets/uploading-data.md):  Upload external data to kickstart your fine-tuning process. Use the OpenAI chat fine-tuning format.
+- [Deployment Types](https://docs.openpipe.ai/features/deployments.md):  Learn about serverless, hourly, and dedicated deployments.
+- [Direct Preference Optimization (DPO)](https://docs.openpipe.ai/features/dpo/overview.md)
+- [DPO Quick Start](https://docs.openpipe.ai/features/dpo/quick-start.md): Train your first DPO fine-tuned model with OpenPipe.
+- [Code Evaluations](https://docs.openpipe.ai/features/evaluations/code.md):  Write custom code to evaluate your LLM outputs.
+- [Criterion Evaluations](https://docs.openpipe.ai/features/evaluations/criterion.md):  Evaluate your LLM outputs using criteria.
+- [Head-to-Head Evaluations](https://docs.openpipe.ai/features/evaluations/head-to-head.md):  Evaluate your LLM outputs against one another using head-to-head evaluations.
+- [Evaluations](https://docs.openpipe.ai/features/evaluations/overview.md):  Evaluate the quality of your LLMs against one another or independently.
+- [Evaluations Quick Start](https://docs.openpipe.ai/features/evaluations/quick-start.md): Create your first head to head evaluation.
+- [External Models](https://docs.openpipe.ai/features/external-models.md)
+- [Fallback options](https://docs.openpipe.ai/features/fallback.md):  Safeguard your application against potential failures, timeouts, or instabilities that may occur when using experimental or newly released models.
+- [Fine Tuning via API (Beta)](https://docs.openpipe.ai/features/fine-tuning/api.md):  Fine tune your models programmatically through our API.
+- [Fine-Tuning Quick Start](https://docs.openpipe.ai/features/fine-tuning/quick-start.md): Train your first fine-tuned model with OpenPipe.
+- [Fine Tuning via Webapp](https://docs.openpipe.ai/features/fine-tuning/webapp.md):  Fine tune your models on filtered logs or uploaded datasets. Filter by prompt id and exclude requests with an undesirable output.
+- [Mixture of Agents](https://docs.openpipe.ai/features/mixture-of-agents.md): Use Mixture of Agents to increase quality beyond SOTA models.
+- [Pruning Rules](https://docs.openpipe.ai/features/pruning-rules.md): Decrease input token counts by pruning out chunks of static text.
+- [Exporting Logs](https://docs.openpipe.ai/features/request-logs/exporting-logs.md):  Export your past requests as a JSONL file in their raw form.
+- [Logging Requests](https://docs.openpipe.ai/features/request-logs/logging-requests.md):  Record production data to train and improve your models' performance.
+- [Logging Anthropic Requests](https://docs.openpipe.ai/features/request-logs/reporting-anthropic.md)
+- [Updating Metadata Tags](https://docs.openpipe.ai/features/updating-metadata.md)
+- [Installing the SDK](https://docs.openpipe.ai/getting-started/openpipe-sdk.md)
+- [Quick Start](https://docs.openpipe.ai/getting-started/quick-start.md): Get started with OpenPipe in a few quick steps.
+- [OpenPipe Documentation](https://docs.openpipe.ai/introduction.md):  Software engineers and data scientists use OpenPipe's intuitive fine-tuning and monitoring services to decrease the cost and latency of their LLM operations.  You can use OpenPipe to collect and analyze LLM logs, create fine-tuned models, and compare output from multiple models given the same input.
+- [Overview](https://docs.openpipe.ai/overview.md): OpenPipe is a streamlined platform designed to help product-focused teams train specialized LLM models as replacements for slow and expensive prompts.
+- [Pricing Overview](https://docs.openpipe.ai/pricing/pricing.md)

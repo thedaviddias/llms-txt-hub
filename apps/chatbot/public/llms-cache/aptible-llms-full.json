@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "security-identity",
   "cachePath": "apps/chatbot/public/llms-cache/aptible-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/aptible-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

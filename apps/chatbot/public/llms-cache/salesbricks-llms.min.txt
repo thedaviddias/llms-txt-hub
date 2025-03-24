@@ -1,0 +1,64 @@
+# Salesbricks
+## Docs
+- [Authentication](https://docs.salesbricks.com/api-reference/getting-started/authentication.md)
+- [Idempotent Requests](https://docs.salesbricks.com/api-reference/getting-started/idempotent-requests.md)
+- [Overview](https://docs.salesbricks.com/api-reference/getting-started/overview.md)
+- [Manage My Subscription](https://docs.salesbricks.com/api-reference/manage-my-subscription.md)
+- [Delete a usage entry](https://docs.salesbricks.com/api-reference/usage/delete.md): Use this API to delete an existing usage entry.
+- [Overview](https://docs.salesbricks.com/api-reference/usage/overview.md)
+- [Update a usage entry](https://docs.salesbricks.com/api-reference/usage/patch.md): Use this API to update an existing usage entry.
+- [Submit a usage entry](https://docs.salesbricks.com/api-reference/usage/post.md): Use this API to set either a prorated gauge or increment a final value counter for a customer.
+- [invoice.past.due](https://docs.salesbricks.com/api-reference/webhooks/invoice/past-due.md)
+- [Invoice Webhook Payload](https://docs.salesbricks.com/api-reference/webhooks/invoice/payload.md)
+- [invoice.payment.failed](https://docs.salesbricks.com/api-reference/webhooks/invoice/payment/failed.md)
+- [invoice.payment.succeeded](https://docs.salesbricks.com/api-reference/webhooks/invoice/payment/succeeded.md)
+- [invoice.start](https://docs.salesbricks.com/api-reference/webhooks/invoice/start.md)
+- [order.closed.delete](https://docs.salesbricks.com/api-reference/webhooks/order/closed-delete.md)
+- [order.closed.lost](https://docs.salesbricks.com/api-reference/webhooks/order/closed-lost.md)
+- [order.complete](https://docs.salesbricks.com/api-reference/webhooks/order/complete.md)
+- [order.end](https://docs.salesbricks.com/api-reference/webhooks/order/end.md)
+- [order.new-ramping-period](https://docs.salesbricks.com/api-reference/webhooks/order/new-ramping-period.md)
+- [Order Webhook Payload](https://docs.salesbricks.com/api-reference/webhooks/order/payload.md)
+- [order.stage.change](https://docs.salesbricks.com/api-reference/webhooks/order/stage-change.md)
+- [order.terminated](https://docs.salesbricks.com/api-reference/webhooks/order/terminated.md)
+- [Overview](https://docs.salesbricks.com/api-reference/webhooks/overview.md)
+- [Payment Webhook Payload](https://docs.salesbricks.com/api-reference/webhooks/payment/payload.md)
+- [Schemas](https://docs.salesbricks.com/api-reference/webhooks/schemas.md): In-depth look at webhook payload schemas
+- [Countersigning](https://docs.salesbricks.com/documentation/countersigning.md)
+- [Custom Billing (Beta)](https://docs.salesbricks.com/documentation/custom-billing.md)
+- [Custom email domain](https://docs.salesbricks.com/documentation/custom-email-domain.md): Send customer email notifications from your own domain
+- [Customer email notifications](https://docs.salesbricks.com/documentation/customer-email-notifications.md): What emails will Salesbricks send to your customers
+- [Deal Shaping](https://docs.salesbricks.com/documentation/deal-shaping.md): Best practices to help you and your customer benefit from a partnership and close the deal
+- [Dunning](https://docs.salesbricks.com/documentation/dunning.md): Handling failed payments in Salesbricks
+- [Magic Links](https://docs.salesbricks.com/documentation/magic-links.md): Allow your customers to buy from your pricing page via a checkout experience powered by Salesbricks
+- [Managing Your Customer](https://docs.salesbricks.com/documentation/managing-your-customer.md): A primer on Upgrades, Renewals, Recasts, and Terminations
+- [Order Stages](https://docs.salesbricks.com/documentation/order-stages.md)
+- [Order Types](https://docs.salesbricks.com/documentation/order-types.md): Understanding upgrades, renewals, recasts, and terminations
+- [Payment Communications](https://docs.salesbricks.com/documentation/payment-communications.md): How to tell your customers that they owe you money
+- [Ramping Structures](https://docs.salesbricks.com/documentation/ramping-structures.md)
+- [Reports & Charts (Beta)](https://docs.salesbricks.com/documentation/reports-and-charts.md): A primer for Salesbricks' reporting and charting features
+- [Taxed States](https://docs.salesbricks.com/documentation/taxed-states.md)
+- [Your email notifications](https://docs.salesbricks.com/documentation/your-email-notifications.md): What emails will Salesbricks send to your team
+- [Attio (Beta)](https://docs.salesbricks.com/integrations/attio.md)
+- [HubSpot](https://docs.salesbricks.com/integrations/hubspot.md)
+- [OIN Configuration Setup](https://docs.salesbricks.com/integrations/okta/oin-configuration.md): How to set up Okta Single Sign-On integration
+- [Private Integration Setup](https://docs.salesbricks.com/integrations/okta/private-integration.md): How to set up a private Okta integration with Salesbricks
+- [Quickbooks](https://docs.salesbricks.com/integrations/quickbooks.md): Quickly and easily connect Salesbricks to Quickbooks to automate your invoice, billing, and accounting workflows.
+- [Managed Package](https://docs.salesbricks.com/integrations/salesforce/managed-package.md)
+- [Overview](https://docs.salesbricks.com/integrations/salesforce/overview.md)
+- [Slack](https://docs.salesbricks.com/integrations/slack.md)
+- [Overview](https://docs.salesbricks.com/integrations/stripe/overview.md)
+- [Setup](https://docs.salesbricks.com/integrations/stripe/setup.md): Quick to configure; simple yet powerful integration.
+- [Adding Team Members](https://docs.salesbricks.com/quickstart-guide/adding-team-members.md)
+- [Building an Order](https://docs.salesbricks.com/quickstart-guide/building-an-order.md)
+- [Checkout & Invoice Payment Options](https://docs.salesbricks.com/quickstart-guide/checkout-invoice-payment-options.md)
+- [Company Details & Branding](https://docs.salesbricks.com/quickstart-guide/company-details-and-branding.md): Tailor your Salesbricks site to your organization
+- [Getting Started](https://docs.salesbricks.com/quickstart-guide/getting-started.md)
+- [Introduction](https://docs.salesbricks.com/quickstart-guide/introduction.md): Close more deals faster with the simplest way to buy and sell software.
+- [Navigating Salesbricks](https://docs.salesbricks.com/quickstart-guide/navigating-salesbricks.md)
+- [Creating a Brick](https://docs.salesbricks.com/quickstart-guide/products-plans-bricks/creating-a-brick.md)
+- [Creating a Plan](https://docs.salesbricks.com/quickstart-guide/products-plans-bricks/creating-a-plan.md)
+- [Creating a Product](https://docs.salesbricks.com/quickstart-guide/products-plans-bricks/creating-a-product.md)
+- [Overview](https://docs.salesbricks.com/quickstart-guide/products-plans-bricks/overview.md)
+## Optional
+- [Knowledge Base](https://support.salesbricks.com)

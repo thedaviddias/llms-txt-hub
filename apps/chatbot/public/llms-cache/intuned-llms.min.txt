@@ -1,0 +1,183 @@
+# Intuned
+## Docs
+- [extractMarkdownFromFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractMarkdownFromFile.md)
+- [extractMarkdownFromLocator](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractMarkdownFromLocator.md)
+- [extractMarkdownFromPage](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractMarkdownFromPage.md)
+- [extractStructuredDataFromContent](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractStructuredDataFromContent.md)
+- [extractStructuredDataFromFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractStructuredDataFromFile.md)
+- [extractStructuredDataFromLocator](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractStructuredDataFromLocator.md)
+- [extractStructuredDataFromPage](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractStructuredDataFromPage.md)
+- [extractTablesFromFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/functions/extractTablesFromFile.md)
+- [ExtractedTable](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/ExtractedTable.md)
+- [FileBase64Source](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/FileBase64Source.md)
+- [FileBufferSource](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/FileBufferSource.md)
+- [FileUrlSource](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/FileUrlSource.md)
+- [HtmlStrategy](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/HtmlStrategy.md)
+- [ImageFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/ImageFile.md)
+- [ImageStrategy](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/ImageStrategy.md)
+- [PdfFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/ai-extractors/interfaces/PdfFile.md)
+- [ExcelFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/classes/ExcelFile.md)
+- [PdfFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/classes/PdfFile.md)
+- [downloadFile](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/functions/downloadFile.md)
+- [uploadFileToS3](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/functions/uploadFileToS3.md)
+- [Download](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/Download.md)
+- [ExcelFileSheet](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/ExcelFileSheet.md)
+- [File](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/File.md)
+- [PdfFileContentItem](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/PdfFileContentItem.md)
+- [S3Configs](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/S3Configs.md)
+- [SearchPdfConfigs](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/SearchPdfConfigs.md)
+- [SearchPdfResult](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/interfaces/SearchPdfResult.md)
+- [PersistFileStrategy](https://docs.intunedhq.com/automation-sdks/intuned-sdk/files/type-aliases/PersistFileStrategy.md)
+- [extractArrayFromLocator](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/functions/extractArrayFromLocator.md)
+- [extractArrayFromPage](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/functions/extractArrayFromPage.md)
+- [extractObjectFromLocator](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/functions/extractObjectFromLocator.md)
+- [extractObjectFromPage](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/functions/extractObjectFromPage.md)
+- [SimpleArrayItemSchema](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/interfaces/SimpleArrayItemSchema.md)
+- [SimpleArrayStringSchema](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/interfaces/SimpleArrayStringSchema.md)
+- [SimpleObjectSchema](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/interfaces/SimpleObjectSchema.md)
+- [SimpleObjectStringSchema](https://docs.intunedhq.com/automation-sdks/intuned-sdk/optimized-extractors/interfaces/SimpleObjectStringSchema.md)
+- [Overview](https://docs.intunedhq.com/automation-sdks/intuned-sdk/overview.md)
+- [extendPlaywrightPage](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/functions/extendPlaywrightPage.md)
+- [extractArrayFromPageUsingSelectors](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/functions/extractArrayFromPageUsingSelectors.md)
+- [extractObjectFromPageUsingSelectors](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/functions/extractObjectFromPageUsingSelectors.md)
+- [fillForm](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/functions/fillForm.md)
+- [goto](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/functions/goto.md)
+- [DynamicFormInputItem](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/interfaces/DynamicFormInputItem.md)
+- [ElementSelector](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/interfaces/ElementSelector.md)
+- [ExtendedPlaywrightPage](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/interfaces/ExtendedPlaywrightPage.md)
+- [ListStaticExtractor](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/interfaces/ListStaticExtractor.md)
+- [StaticFormInputItem](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/interfaces/StaticFormInputItem.md)
+- [ValueSelector](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/interfaces/ValueSelector.md)
+- [ExtractListObjectsUsingStaticSelectorsReturnType](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/type-aliases/ExtractListObjectsUsingStaticSelectorsReturnType.md)
+- [ExtractObjectFromPageUsingSelectorsReturnType](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/type-aliases/ExtractObjectFromPageUsingSelectorsReturnType.md)
+- [InputFieldType](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/type-aliases/InputFieldType.md)
+- [ObjectExtractor](https://docs.intunedhq.com/automation-sdks/intuned-sdk/playwright/type-aliases/ObjectExtractor.md)
+- [RunError](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/classes/RunError.md)
+- [extendPayload](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/functions/extendPayload.md)
+- [requestMultipleChoice](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/functions/requestMultipleChoice.md)
+- [requestOTP](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/functions/requestOTP.md)
+- [runInfo](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/functions/runInfo.md)
+- [Payload](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/interfaces/Payload.md)
+- [RunErrorOptions](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/interfaces/RunErrorOptions.md)
+- [RunInfo](https://docs.intunedhq.com/automation-sdks/intuned-sdk/runtime/interfaces/RunInfo.md)
+- [Overview](https://docs.intunedhq.com/automation-sdks/overview.md)
+- [Playwright Overview](https://docs.intunedhq.com/automation-sdks/playwright/overview.md): Learn about using playwright for browser automation
+- [Auth Sessions Overview](https://docs.intunedhq.com/client-apis/api-reference/auth-sessions-overview.md): Learn how to create and manage auth sessions for your projects.
+- [Standalone File API Overview](https://docs.intunedhq.com/client-apis/api-reference/files-overview.md): Learn how to use the Standalone File API to process files without a project.
+- [Extract Markdown - Async Result](https://docs.intunedhq.com/client-apis/api-reference/filesextractmarkdown/extract-markdown--async-result.md): Gets the result of the markdown extraction operation using the operation ID.
+- [Extract Markdown - Async Start](https://docs.intunedhq.com/client-apis/api-reference/filesextractmarkdown/extract-markdown--async-start.md): Starts an asynchronous operation to extract markdown from a file. Supported file types are image, pdf (more coming soon!).
+This methods accepts the file.
+The API responds with an ID to track the operation status and retrieve the result.
+- [Extract Markdown - Sync](https://docs.intunedhq.com/client-apis/api-reference/filesextractmarkdown/extract-markdown--sync.md): Extracts markdown from a file. Supported file types are image, pdf (more coming soon!).
+It accepts the file.
+- [Extract Structured Data - Async Result](https://docs.intunedhq.com/client-apis/api-reference/filesextractstructureddata/extract-structured-data--async-result.md): Gets the result of the structured data extraction operation using the operation ID.
+- [Extract Structured Data - Async Start](https://docs.intunedhq.com/client-apis/api-reference/filesextractstructureddata/extract-structured-data--async-start.md): Starts an asynchronous operation to extract structured data from a file. Supported file types are image, pdf (more coming soon!).
+It accepts the file and requested schema for the data to be extracted.
+It responds with an ID to track the operation status and retrieve the result.
+- [Extract Structured Data - Sync](https://docs.intunedhq.com/client-apis/api-reference/filesextractstructureddata/extract-structured-data--sync.md): Extracts structured data from a file. Supported file types are image, pdf (more coming soon!).
+It accepts the file and requested schema for the data to be extracted.
+- [Extract Tables - Async Result](https://docs.intunedhq.com/client-apis/api-reference/filesextracttables/extract-tables--async-result.md): Gets the result of the tables extraction operation using the operation ID.
+- [Extract Tables - Async Start](https://docs.intunedhq.com/client-apis/api-reference/filesextracttables/extract-tables--async-start.md): Starts an asynchronous operation to extract tables from a file. Supported file types are image, pdf (more coming soon!).
+This methods accepts the file.
+The API responds with an ID to track the operation status and retrieve the result.
+- [Extract Tables - Sync](https://docs.intunedhq.com/client-apis/api-reference/filesextracttables/extract-tables--sync.md): Extracts tables from a file. Supported file types are image, pdf (more coming soon!).
+It accepts the file.
+- [Project Consumption APIs Overview](https://docs.intunedhq.com/client-apis/api-reference/project-consumption-overview.md)
+- [Delete Auth Session](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessions/delete-auth-session.md): Deletes an authentication session by ID.
+- [Get Auth Session](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessions/get-auth-session.md): Gets authentication session of project by ID
+- [Get Auth Sessions](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessions/get-auth-sessions.md): Gets all authentication sessions of project
+- [Create Auth Session - Result](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionscreate/create-auth-session--result.md): Gets authentication session creation operation result.
+- [Create Auth Session -  Resume](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionscreate/create-auth-session--resume.md): Resume authentication session creation operation. This is needed if the operation requests more info.
+- [Create Auth Session - Start](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionscreate/create-auth-session--start.md): Starts creation process of an authentication session for a project with the authentication session creation setting enabled.
+- [Start recorder session for an auth session](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionsrecorder/start-recorder-session-for-an-auth-session.md): create a recording session for a specific auth session
+- [Update Auth Session - Result](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionsupdate/update-auth-session--result.md): Gets authentication session creation operation result.
+- [Update Auth Session -  Resume](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionsupdate/update-auth-session--resume.md): Resume authentication session creation operation. This is needed if the operation requests more info.
+- [Update Auth Session - Start](https://docs.intunedhq.com/client-apis/api-reference/projectauthsessionsupdate/update-auth-session--start.md): Starts updating process of an authentication session.
+- [Create Job](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/create-job.md): Creates a new job for a project.
+- [Delete Job](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/delete-job.md): Deletes a job by ID.
+- [Get Job](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/get-job.md): Gets a job in a project by ID.
+- [Get Jobs](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/get-jobs.md): Gets all jobs in a project.
+- [Jobs API Overview](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/jobs-overview.md)
+- [Pause Job](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/pause-job.md): Pauses a job. Will pause any job runs and the job schedule if applicable.
+- [Resume Job](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/resume-job.md): Resumes a paused job. Will resume any paused job runs and the job schedule if applicable.
+- [Trigger Job](https://docs.intunedhq.com/client-apis/api-reference/projectjobs/trigger-job.md): Manually triggers a job run for a job. If the job is paused, the trigger fails.
+- [Get Job Runs](https://docs.intunedhq.com/client-apis/api-reference/projectjobsruns/get-job-runs.md): Get all job runs of a job.
+- [Terminate Job Run](https://docs.intunedhq.com/client-apis/api-reference/projectjobsruns/terminate-job-run.md): Terminate a job run by ID.
+- [Create Queue](https://docs.intunedhq.com/client-apis/api-reference/projectqueues/create-queue.md): Creates a new queue.
+- [Delete Queue](https://docs.intunedhq.com/client-apis/api-reference/projectqueues/delete-queue.md): Deletes a queue by ID.
+- [Get Queue](https://docs.intunedhq.com/client-apis/api-reference/projectqueues/get-queue.md): Gets a queue in a project by ID.
+- [Get Queues](https://docs.intunedhq.com/client-apis/api-reference/projectqueues/get-queues.md): Gets all queues in a project.
+- [Append Queue Item](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesitems/append-queue-item.md): Appends an item to the queue.
+- [Delete Queue item](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesitems/delete-queue-item.md): Delete queued item. If the item is currently processing, the delete will fail.
+- [Get Queue Item result](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesitems/get-queue-item-result.md): Get queue item result.
+- [Append Queue Repeat Item](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesrepeatitems/append-queue-repeat-item.md): Creates and appends a repeatable item to the queue. Repeatable items will automatically re-append to the queue according to the repeat settings.
+- [Delete Queue Repeat Item](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesrepeatitems/delete-queue-repeat-item.md): Deletes a repeatable item by ID. The item will no longer be re-appended to the queue.
+- [Get Queue Repeat Item](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesrepeatitems/get-queue-repeat-item.md): Gets a repeatable item from a queue by ID. The last execution result of the item is also returned.
+- [Get Queue Repeat Items](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesrepeatitems/get-queue-repeat-items.md): Gets all repeatable items of a queue.
+- [Update Queue Repeat Item](https://docs.intunedhq.com/client-apis/api-reference/projectqueuesrepeatitems/update-queue-repeat-item.md): Updates the configurations of a repeatable item by ID.
+- [Run API - Async Result](https://docs.intunedhq.com/client-apis/api-reference/projectrun/run-api--async-result.md): Retrieves the result of a started project API run operation.
+- [Run API - Async Start](https://docs.intunedhq.com/client-apis/api-reference/projectrun/run-api--async-start.md): Starts a project API run operation
+- [Run API - Sync](https://docs.intunedhq.com/client-apis/api-reference/projectrun/run-api--sync.md): Runs a project API synchronously.
+- [Queues API Overview](https://docs.intunedhq.com/client-apis/api-reference/queues-overview.md)
+- [Run API](https://docs.intunedhq.com/client-apis/api-reference/run-overview.md)
+- [Sink Body](https://docs.intunedhq.com/client-apis/api-reference/sinks/body.md)
+- [null](https://docs.intunedhq.com/client-apis/api-reference/sinks/overview.md): Learn how sinks function within Intuned
+- [AWS S3 Sink](https://docs.intunedhq.com/client-apis/api-reference/sinks/s3.md)
+- [Webhook Sink](https://docs.intunedhq.com/client-apis/api-reference/sinks/webhook.md)
+- [Overview](https://docs.intunedhq.com/client-apis/overview.md): Learn how to consume the Intuned Client APIs.
+- [Actions in Intuned](https://docs.intunedhq.com/docs/actions/overview.md)
+- [Consume APIs with auth sessions](https://docs.intunedhq.com/docs/auth-sessions/consume-auth-sessions.md)
+- [Develop projects with auth sessions](https://docs.intunedhq.com/docs/auth-sessions/develop-auth-sessions.md)
+- [Auth Sessions](https://docs.intunedhq.com/docs/auth-sessions/overview.md)
+- [File data extraction](https://docs.intunedhq.com/docs/data-extraction/file-data-extraction.md)
+- [Markdown and tables](https://docs.intunedhq.com/docs/data-extraction/markdown-and-tables.md)
+- [Data extraction in Intuned](https://docs.intunedhq.com/docs/data-extraction/overview.md)
+- [Standalone file APIs](https://docs.intunedhq.com/docs/data-extraction/standalone-file-apis.md)
+- [Web data extraction](https://docs.intunedhq.com/docs/data-extraction/web-data-extraction.md)
+- [Concepts and terminology](https://docs.intunedhq.com/docs/getting-started/concepts.md)
+- [Welcome to Intuned](https://docs.intunedhq.com/docs/getting-started/introduction.md): The browser automation platform for developers and product teams.
+- [Quick start](https://docs.intunedhq.com/docs/getting-started/quick-start.md)
+- [How to use Credentials-based auth sessions](https://docs.intunedhq.com/docs/guides/auth/how-to-authenticate-with-credentials.md)
+- [How to automate LinkedIn (Recorder-based auth sessions)](https://docs.intunedhq.com/docs/guides/auth/how-to-automate-linkedin.md)
+- [Guides](https://docs.intunedhq.com/docs/guides/overview.md)
+- [How to create a workspace?](https://docs.intunedhq.com/docs/guides/platform/how-to-create-a-workspace.md)
+- [How to create API keys?](https://docs.intunedhq.com/docs/guides/platform/how-to-create-api-keys.md)
+- [How to create environment variables?](https://docs.intunedhq.com/docs/guides/platform/how-to-create-environment-variables.md)
+- [How to delete workspace?](https://docs.intunedhq.com/docs/guides/platform/how-to-delete-a-workspace.md)
+- [How to delete API keys?](https://docs.intunedhq.com/docs/guides/platform/how-to-delete-api-keys.md)
+- [How to delete environment variables?](https://docs.intunedhq.com/docs/guides/platform/how-to-delete-environment-variables.md)
+- [How to deploy a project?](https://docs.intunedhq.com/docs/guides/platform/how-to-deploy-a-project.md)
+- [How to edit environment variables?](https://docs.intunedhq.com/docs/guides/platform/how-to-edit-environment-variables.md)
+- [How to get a workspace ID?](https://docs.intunedhq.com/docs/guides/platform/how-to-get-a-workspace-id.md)
+- [How to get a project name?](https://docs.intunedhq.com/docs/guides/platform/how-to-get-project-name.md)
+- [How to invite users?](https://docs.intunedhq.com/docs/guides/platform/how-to-invite-users.md)
+- [How to manage auth sessions?](https://docs.intunedhq.com/docs/guides/platform/how-to-manage-auth-sessions.md)
+- [How to manage user roles?](https://docs.intunedhq.com/docs/guides/platform/how-to-manage-user-roles.md)
+- [How to monitor runs?](https://docs.intunedhq.com/docs/guides/platform/how-to-monitor-runs.md)
+- [How to remove users?](https://docs.intunedhq.com/docs/guides/platform/how-to-remove-users.md)
+- [How to rename a workspace?](https://docs.intunedhq.com/docs/guides/platform/how-to-rename-a-workspace.md)
+- [How to rename a project?](https://docs.intunedhq.com/docs/guides/platform/how-to-rename-project.md)
+- [How to use environment variables?](https://docs.intunedhq.com/docs/guides/platform/how-to-use-environment-variables.md)
+- [How to view all projects?](https://docs.intunedhq.com/docs/guides/platform/how-to-view-all-projects.md)
+- [How to scrape a big list - nested scheduling](https://docs.intunedhq.com/docs/guides/scrapers/how-to-scrape-big-list.md)
+- [How to scrape files - persist and extract data](https://docs.intunedhq.com/docs/guides/scrapers/how-to-scrape-files.md)
+- [How to scrape data and save to S3](https://docs.intunedhq.com/docs/guides/scrapers/how-to-scrape-to-s3.md)
+- [How to scrape data and send to a webhook](https://docs.intunedhq.com/docs/guides/scrapers/how-to-scrape-to-webhook.md)
+- [Overview](https://docs.intunedhq.com/docs/platform/consume/consume-overview.md): Learn how to consume your browser automations/projects
+- [Jobs](https://docs.intunedhq.com/docs/platform/consume/jobs.md)
+- [Nested scheduling](https://docs.intunedhq.com/docs/platform/consume/nested-scheduling.md)
+- [Queues](https://docs.intunedhq.com/docs/platform/consume/queues.md)
+- [Deploy](https://docs.intunedhq.com/docs/platform/deploy.md): Learn about the how to deploy integrations in Intuned
+- [API Functions](https://docs.intunedhq.com/docs/platform/develop/api-functions.md)
+- [Environment variables](https://docs.intunedhq.com/docs/platform/develop/environment-variables.md)
+- [Intuned's IDE](https://docs.intunedhq.com/docs/platform/develop/ide.md)
+- [Develop](https://docs.intunedhq.com/docs/platform/develop/overview.md): How to build browser automations in Intuned
+- [Manage](https://docs.intunedhq.com/docs/platform/manage.md)
+- [Monitor](https://docs.intunedhq.com/docs/platform/monitor.md)
+- [Projects](https://docs.intunedhq.com/docs/platform/projects.md)
+- [Contact Us](https://docs.intunedhq.com/docs/support/contact-us.md)
+- [Frequently Asked Questions](https://docs.intunedhq.com/docs/support/faqs.md): Here are some frequently asked questions about Intuned and our answer.
+- [Plans and Pricing](https://docs.intunedhq.com/docs/support/pricing.md)
+- [Privacy policy](https://docs.intunedhq.com/docs/support/privacy-policy.md)
+- [Releases](https://docs.intunedhq.com/docs/support/releases.md)
+- [Terms of service](https://docs.intunedhq.com/docs/support/terms-of-use.md)

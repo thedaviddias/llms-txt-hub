@@ -42,17 +42,39 @@ async function fetchWithRetry(url, maxRetries = 3, timeout = 5000) {
   throw lastError
 }
 
+// Helper to minify text content
+function minifyTextContent(content) {
+  // Remove blank lines and excessive whitespace
+  return content
+    .split('\n')
+    .filter(line => line.trim().length > 0) // Remove empty lines
+    .map(line => line.trim()) // Trim whitespace at start/end of each line
+    .join('\n')
+}
+
 // Helper to save to cache
 function saveToCache(name, type, content) {
   const safeFileName = name.replace(/[^a-z0-9]/gi, '-').toLowerCase()
+
+  // Save original version
   const cachePath = path.join(CACHE_PATH, `${safeFileName}-${type}.txt`)
   fs.writeFileSync(cachePath, content)
-  return cachePath
+
+  // Save minified version with .min suffix
+  const minifiedContent = minifyTextContent(content)
+  const minifiedPath = path.join(CACHE_PATH, `${safeFileName}-${type}.min.txt`)
+  fs.writeFileSync(minifiedPath, minifiedContent)
+
+  return {
+    original: cachePath,
+    minified: minifiedPath
+  }
 }
 
 // Helper to create metadata file for a provider
-function createMetadataFile(name, provider, type, url, cachePath) {
-  const metadataPath = cachePath.replace('.txt', '.json')
+function createMetadataFile(name, provider, type, url, cachePaths) {
+  const metadataPath = cachePaths.original.replace('.txt', '.json')
+  const minifiedMetadataPath = cachePaths.minified.replace('.min.txt', '.min.json')
 
   const metadata = {
     name: provider.name,
@@ -61,12 +83,19 @@ function createMetadataFile(name, provider, type, url, cachePath) {
     url,
     type,
     category: provider.category,
-    cachePath: path.relative(path.dirname(__dirname), cachePath),
+    cachePath: path.relative(path.dirname(__dirname), cachePaths.original),
+    minifiedPath: path.relative(path.dirname(__dirname), cachePaths.minified),
     lastFetched: new Date().toISOString().split('T')[0]
   }
 
+  // Save both regular and minified JSON files
   fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2))
-  return metadataPath
+  fs.writeFileSync(minifiedMetadataPath, JSON.stringify(metadata))
+
+  return {
+    original: metadataPath,
+    minified: minifiedMetadataPath
+  }
 }
 
 async function generateLlmsIndex() {
@@ -112,18 +141,20 @@ async function generateLlmsIndex() {
           const llmsContent = await fetchWithRetry(llmsUrl)
 
           if (llmsContent) {
-            // Save to cache
-            const cachePath = saveToCache(name, 'llms', llmsContent)
+            // Save to cache (both original and minified)
+            const cachePaths = saveToCache(name, 'llms', llmsContent)
 
-            // Create metadata file
-            const metadataPath = createMetadataFile(name, data, 'llms.txt', llmsUrl, cachePath)
+            // Create metadata file (both original and minified)
+            const metadataPaths = createMetadataFile(name, data, 'llms.txt', llmsUrl, cachePaths)
 
             // Add file info to provider
             providerInfo.files.push({
               type: 'llms.txt',
               url: llmsUrl,
-              cachePath,
-              metadataPath
+              cachePath: cachePaths.original,
+              minifiedPath: cachePaths.minified,
+              metadataPath: metadataPaths.original,
+              minifiedMetadataPath: metadataPaths.minified
             })
 
             successCount++
@@ -147,24 +178,26 @@ async function generateLlmsIndex() {
           const llmsFullContent = await fetchWithRetry(llmsFullUrl)
 
           if (llmsFullContent) {
-            // Save to cache
-            const cachePath = saveToCache(name, 'llms-full', llmsFullContent)
+            // Save to cache (both original and minified)
+            const cachePaths = saveToCache(name, 'llms-full', llmsFullContent)
 
-            // Create metadata file
-            const metadataPath = createMetadataFile(
+            // Create metadata file (both original and minified)
+            const metadataPaths = createMetadataFile(
               name,
               data,
               'llms-full.txt',
               llmsFullUrl,
-              cachePath
+              cachePaths
             )
 
             // Add file info to provider
             providerInfo.files.push({
               type: 'llms-full.txt',
               url: llmsFullUrl,
-              cachePath,
-              metadataPath
+              cachePath: cachePaths.original,
+              minifiedPath: cachePaths.minified,
+              metadataPath: metadataPaths.original,
+              minifiedMetadataPath: metadataPaths.minified
             })
 
             successCount++
@@ -197,10 +230,13 @@ async function generateLlmsIndex() {
     successCount,
     errorCount,
     categories: Array.from(categories),
-    errors
+    errors,
+    hasMinifiedVersions: true
   }
 
+  // Write both regular and minified versions of metadata
   fs.writeFileSync(METADATA_PATH, JSON.stringify(metadata, null, 2))
+  fs.writeFileSync(METADATA_PATH.replace('.json', '.min.json'), JSON.stringify(metadata))
 
   // Write providers list (without content)
   const providersList = providersInfo.map(provider => ({
@@ -209,10 +245,18 @@ async function generateLlmsIndex() {
     website: provider.website,
     category: provider.category,
     hasLlmsTxt: provider.files.some(f => f.type === 'llms.txt'),
-    hasLlmsFullTxt: provider.files.some(f => f.type === 'llms-full.txt')
+    hasLlmsFullTxt: provider.files.some(f => f.type === 'llms-full.txt'),
+    // Add paths to minified files
+    minifiedFiles: provider.files.map(f => ({
+      type: f.type,
+      minifiedPath: path.relative(path.dirname(__dirname), f.minifiedPath),
+      minifiedMetadataPath: path.relative(path.dirname(__dirname), f.minifiedMetadataPath)
+    }))
   }))
 
+  // Write both regular and minified versions of the providers list
   fs.writeFileSync(PROVIDERS_LIST_PATH, JSON.stringify(providersList, null, 2))
+  fs.writeFileSync(PROVIDERS_LIST_PATH.replace('.json', '.min.json'), JSON.stringify(providersList))
 
   console.log(`Generated llms metadata with information for ${providersInfo.length} providers`)
   console.log(`Success: ${successCount}, Errors: ${errorCount}`)

@@ -1,0 +1,604 @@
+# Infisical
+## Docs
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/available.md): List the AWS Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/create.md): Create an AWS Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/delete.md): Delete the specified AWS Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/get-by-id.md): Get the specified AWS Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/get-by-name.md): Get the specified AWS Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/list.md): List the AWS Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/aws/update.md): Update the specified AWS Connection.
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/available.md): List the Azure App Configuration Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/create.md): Create an Azure App Configuration Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/delete.md): Delete the specified Azure App Configuration Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/get-by-id.md): Get the specified Azure App Configuration Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/get-by-name.md): Get the specified Azure App Configuration Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/list.md): List the Azure App Configuration Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-app-configuration/update.md): Update the specified Azure App Configuration Connection.
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/available.md): List the Azure Key Vault Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/create.md): Create an Azure Key Vault Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/delete.md): Delete the specified Azure Key Vault Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/get-by-id.md): Get the specified Azure Key Vault Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/get-by-name.md): Get the specified Azure Key Vault Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/list.md): List the Azure Key Vault Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/azure-key-vault/update.md): Update the specified Azure Key Vault Connection.
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/available.md): List the Databricks Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/create.md): Create a Databricks Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/delete.md): Delete the specified Databricks Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/get-by-id.md): Get the specified Databricks Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/get-by-name.md): Get the specified Databricks Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/list.md): List the Databricks Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/databricks/update.md): Update the specified Databricks Connection.
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/available.md): List the GCP Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/create.md): Create a GCP Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/delete.md): Delete the specified GCP Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/get-by-id.md): Get the specified GCP Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/get-by-name.md): Get the specified GCP Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/list.md): List the GCP Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/gcp/update.md): Update the specified GCP Connection.
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/github/available.md): List the GitHub Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/github/create.md): Create a GitHub Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/github/delete.md): Delete the specified GitHub Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/github/get-by-id.md): Get the specified GitHub Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/github/get-by-name.md): Get the specified GitHub Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/github/list.md): List the GitHub Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/github/update.md): Update the specified GitHub Connection.
+- [Available](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/available.md): List the Humanitec Connections the current user has permission to establish connections with.
+- [Create](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/create.md): Create a Humanitec Connection for the current organization.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/delete.md): Delete the specified Humanitec Connection.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/get-by-id.md): Get the specified Humanitec Connection by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/get-by-name.md): Get the specified Humanitec Connection by name.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/list.md): List the Humanitec Connections for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/app-connections/humanitec/update.md): Update the specified Humanitec Connection.
+- [List](https://infisical.com/docs/api-reference/endpoints/app-connections/list.md): List all the App Connections for the current organization.
+- [Options](https://infisical.com/docs/api-reference/endpoints/app-connections/options.md): List the available App Connection Options.
+- [Export](https://infisical.com/docs/api-reference/endpoints/audit-logs/export-audit-log.md): Get all audit logs for an organization
+- [Attach](https://infisical.com/docs/api-reference/endpoints/aws-auth/attach.md): Attach AWS Auth configuration onto identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/aws-auth/login.md): Login with AWS Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/aws-auth/retrieve.md): Retrieve AWS Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/aws-auth/revoke.md): Delete AWS Auth configuration on identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/aws-auth/update.md): Update AWS Auth configuration on identity
+- [Attach](https://infisical.com/docs/api-reference/endpoints/azure-auth/attach.md): Attach Azure Auth configuration onto identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/azure-auth/login.md): Login with Azure Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/azure-auth/retrieve.md): Retrieve Azure Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/azure-auth/revoke.md): Delete Azure Auth configuration on identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/azure-auth/update.md): Update Azure Auth configuration on identity
+- [Retrieve certificate / chain](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/cert.md): Get current CA cert and cert chain of a CA
+- [Create](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/create.md): Create CA
+- [List CRLs](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/crl.md): Get list of CRLs of the CA
+- [Get CSR](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/csr.md): Get CA CSR
+- [Delete](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/delete.md): Delete CA
+- [Import certificate](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/import-cert.md): Import certificate and chain to CA
+- [Issue certificate](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/issue-cert.md): Issue certificate from CA
+- [List](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/list.md)
+- [List CA certificates](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/list-ca-certs.md): Get list of past and current CA certificates for a CA
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/read.md): Get CA
+- [Renew](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/renew.md): Perform CA certificate renewal
+- [Sign certificate](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/sign-cert.md): Sign certificate from CA
+- [Sign intermediate certificate](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/sign-intermediate.md): Create intermediate CA certificate from parent CA
+- [Update](https://infisical.com/docs/api-reference/endpoints/certificate-authorities/update.md): Update CA
+- [Create](https://infisical.com/docs/api-reference/endpoints/certificate-templates/create.md)
+- [Delete](https://infisical.com/docs/api-reference/endpoints/certificate-templates/delete.md)
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/certificate-templates/get-by-id.md)
+- [Update](https://infisical.com/docs/api-reference/endpoints/certificate-templates/update.md)
+- [Get Certificate Body / Chain](https://infisical.com/docs/api-reference/endpoints/certificates/cert-body.md): Get certificate body of certificate
+- [Delete](https://infisical.com/docs/api-reference/endpoints/certificates/delete.md): Delete certificate
+- [Issue Certificate](https://infisical.com/docs/api-reference/endpoints/certificates/issue-certificate.md): Issue certificate
+- [List](https://infisical.com/docs/api-reference/endpoints/certificates/list.md)
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/certificates/read.md): Get certificate
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/certificates/revoke.md): Revoke
+- [Sign Certificate](https://infisical.com/docs/api-reference/endpoints/certificates/sign-certificate.md): Sign certificate
+- [Create](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/create.md)
+- [Create Lease](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/create-lease.md)
+- [Delete](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/delete.md)
+- [Delete Lease](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/delete-lease.md)
+- [Get](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/get.md)
+- [Get Lease](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/get-lease.md)
+- [List](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/list.md)
+- [List Leases](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/list-leases.md)
+- [Renew Lease](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/renew-lease.md)
+- [Update](https://infisical.com/docs/api-reference/endpoints/dynamic-secrets/update.md)
+- [Create](https://infisical.com/docs/api-reference/endpoints/environments/create.md): Create environment
+- [Delete](https://infisical.com/docs/api-reference/endpoints/environments/delete.md): Delete environment
+- [Update](https://infisical.com/docs/api-reference/endpoints/environments/update.md): Update environment
+- [Create](https://infisical.com/docs/api-reference/endpoints/folders/create.md): Create folders
+- [Delete](https://infisical.com/docs/api-reference/endpoints/folders/delete.md): Delete a folder
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/folders/get-by-id.md): Get folder by id
+- [List](https://infisical.com/docs/api-reference/endpoints/folders/list.md): Get folders
+- [Update](https://infisical.com/docs/api-reference/endpoints/folders/update.md): Update folder
+- [Attach](https://infisical.com/docs/api-reference/endpoints/gcp-auth/attach.md): Attach GCP Auth configuration onto identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/gcp-auth/login.md): Login with GCP Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/gcp-auth/retrieve.md): Retrieve GCP Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/gcp-auth/revoke.md): Delete GCP Auth configuration on identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/gcp-auth/update.md): Update GCP Auth configuration on identity
+- [Add Group User](https://infisical.com/docs/api-reference/endpoints/groups/add-group-user.md)
+- [Create](https://infisical.com/docs/api-reference/endpoints/groups/create.md)
+- [Delete](https://infisical.com/docs/api-reference/endpoints/groups/delete.md)
+- [Get Groups in Organization](https://infisical.com/docs/api-reference/endpoints/groups/get.md)
+- [Get By ID](https://infisical.com/docs/api-reference/endpoints/groups/get-by-id.md)
+- [List Group Users](https://infisical.com/docs/api-reference/endpoints/groups/list-group-users.md)
+- [Remove Group User](https://infisical.com/docs/api-reference/endpoints/groups/remove-group-user.md)
+- [Update](https://infisical.com/docs/api-reference/endpoints/groups/update.md)
+- [Create](https://infisical.com/docs/api-reference/endpoints/identities/create.md): Create identity
+- [Delete](https://infisical.com/docs/api-reference/endpoints/identities/delete.md): Delete identity
+- [Get By ID](https://infisical.com/docs/api-reference/endpoints/identities/get-by-id.md): Get an identity by id
+- [List](https://infisical.com/docs/api-reference/endpoints/identities/list.md): List identities
+- [Update](https://infisical.com/docs/api-reference/endpoints/identities/update.md): Update identity
+- [Create Permanent](https://infisical.com/docs/api-reference/endpoints/identity-specific-privilege/create-permanent.md): Create a permanent or a non expiry specific privilege for identity.
+- [Create Temporary](https://infisical.com/docs/api-reference/endpoints/identity-specific-privilege/create-temporary.md): Create a temporary or a expiring specific privilege for identity.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/identity-specific-privilege/delete.md): Delete a specific privilege of an identity.
+- [Find By Privilege Slug](https://infisical.com/docs/api-reference/endpoints/identity-specific-privilege/find-by-slug.md): Retrieve details of a specific privilege by privilege slug.
+- [List](https://infisical.com/docs/api-reference/endpoints/identity-specific-privilege/list.md): List of a specific privilege of an identity in a project.
+- [Update](https://infisical.com/docs/api-reference/endpoints/identity-specific-privilege/update.md): Update a specific privilege of an identity.
+- [Create](https://infisical.com/docs/api-reference/endpoints/integrations/create.md): Create an integration to sync secrets.
+- [Create Auth](https://infisical.com/docs/api-reference/endpoints/integrations/create-auth.md): Create the integration authentication object required for syncing secrets.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/integrations/delete.md): Remove an integration using the integration object ID
+- [Delete Auth](https://infisical.com/docs/api-reference/endpoints/integrations/delete-auth.md): Remove all integration's auth object from the project.
+- [Delete Auth By ID](https://infisical.com/docs/api-reference/endpoints/integrations/delete-auth-by-id.md): Remove an integration auth object by object id.
+- [Get Auth By ID](https://infisical.com/docs/api-reference/endpoints/integrations/find-auth.md): Get details of an integration authorization by auth object id.
+- [List Auth](https://infisical.com/docs/api-reference/endpoints/integrations/list-auth.md): List integration auth objects for a workspace.
+- [List Project Integrations](https://infisical.com/docs/api-reference/endpoints/integrations/list-project-integrations.md): List integrations for a project.
+- [Update](https://infisical.com/docs/api-reference/endpoints/integrations/update.md): Update an integration by integration id
+- [Attach](https://infisical.com/docs/api-reference/endpoints/jwt-auth/attach.md): Attach JWT Auth configuration onto identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/jwt-auth/login.md): Login with JWT Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/jwt-auth/retrieve.md): Retrieve JWT Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/jwt-auth/revoke.md): Delete JWT Auth configuration on identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/jwt-auth/update.md): Update JWT Auth configuration on identity
+- [Create Key](https://infisical.com/docs/api-reference/endpoints/kms/keys/create.md): Create KMS key
+- [Decrypt Data](https://infisical.com/docs/api-reference/endpoints/kms/keys/decrypt.md): Decrypt data with KMS key
+- [Delete Key](https://infisical.com/docs/api-reference/endpoints/kms/keys/delete.md): Delete KMS key
+- [Encrypt Data](https://infisical.com/docs/api-reference/endpoints/kms/keys/encrypt.md): Encrypt data with KMS key
+- [Get Key by ID](https://infisical.com/docs/api-reference/endpoints/kms/keys/get-by-id.md): Get KMS key by ID
+- [Get Key by Name](https://infisical.com/docs/api-reference/endpoints/kms/keys/get-by-name.md): Get KMS key by Name
+- [List Keys](https://infisical.com/docs/api-reference/endpoints/kms/keys/list.md): List KMS keys
+- [Update Key](https://infisical.com/docs/api-reference/endpoints/kms/keys/update.md): Update KMS key
+- [Attach](https://infisical.com/docs/api-reference/endpoints/kubernetes-auth/attach.md): Attach Kubernetes Auth configuration onto identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/kubernetes-auth/login.md): Login with Kubernetes Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/kubernetes-auth/retrieve.md): Retrieve Kubernetes Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/kubernetes-auth/revoke.md): Delete Kubernetes Auth configuration on identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/kubernetes-auth/update.md): Update Kubernetes Auth configuration on identity
+- [Attach](https://infisical.com/docs/api-reference/endpoints/oidc-auth/attach.md): Attach OIDC Auth configuration onto identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/oidc-auth/login.md): Login with OIDC Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/oidc-auth/retrieve.md): Retrieve OIDC Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/oidc-auth/revoke.md): Delete OIDC Auth configuration on identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/oidc-auth/update.md): Update OIDC Auth configuration on identity
+- [Delete User Membership](https://infisical.com/docs/api-reference/endpoints/organizations/delete-membership.md): Delete organization user memberships
+- [List Identity Memberships](https://infisical.com/docs/api-reference/endpoints/organizations/list-identity-memberships.md): Return organization identity memberships
+- [Get User Memberships](https://infisical.com/docs/api-reference/endpoints/organizations/memberships.md): Return organization user memberships
+- [Update User Membership](https://infisical.com/docs/api-reference/endpoints/organizations/update-membership.md): Update organization user memberships
+- [Get Projects](https://infisical.com/docs/api-reference/endpoints/organizations/workspaces.md): Return projects in organization that user is apart of
+- [Create](https://infisical.com/docs/api-reference/endpoints/pki-alerts/create.md): Create PKI alert
+- [Delete](https://infisical.com/docs/api-reference/endpoints/pki-alerts/delete.md): Delete PKI alert
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/pki-alerts/read.md): Get PKI alert
+- [Update](https://infisical.com/docs/api-reference/endpoints/pki-alerts/update.md): Update PKI alert
+- [Add Collection Item](https://infisical.com/docs/api-reference/endpoints/pki-collections/add-item.md): Add item to PKI collection
+- [Create](https://infisical.com/docs/api-reference/endpoints/pki-collections/create.md): Create PKI collection
+- [Delete](https://infisical.com/docs/api-reference/endpoints/pki-collections/delete.md): Delete PKI collection
+- [Delete Collection Item](https://infisical.com/docs/api-reference/endpoints/pki-collections/delete-item.md): Remove item from PKI collection
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/pki-collections/list-items.md): Get items in PKI collection
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/pki-collections/read.md): Get PKI collection
+- [Update](https://infisical.com/docs/api-reference/endpoints/pki-collections/update.md): Update PKI collection
+- [Create Project Membership](https://infisical.com/docs/api-reference/endpoints/project-groups/create.md)
+- [Delete Project Membership](https://infisical.com/docs/api-reference/endpoints/project-groups/delete.md): Remove group from project
+- [Get Project Membership](https://infisical.com/docs/api-reference/endpoints/project-groups/get-by-id.md): Return project group
+- [List Project Memberships](https://infisical.com/docs/api-reference/endpoints/project-groups/list.md): Return list of groups in project
+- [Update Project Membership](https://infisical.com/docs/api-reference/endpoints/project-groups/update.md): Update group in project
+- [Create Identity Membership](https://infisical.com/docs/api-reference/endpoints/project-identities/add-identity-membership.md): Create project identity membership
+- [Delete Identity Membership](https://infisical.com/docs/api-reference/endpoints/project-identities/delete-identity-membership.md): Delete project identity memberships
+- [Get Identity by ID](https://infisical.com/docs/api-reference/endpoints/project-identities/get-by-id.md): Return project identity membership
+- [List Identity Memberships](https://infisical.com/docs/api-reference/endpoints/project-identities/list-identity-memberships.md): Return project identity memberships
+- [Update Identity Membership](https://infisical.com/docs/api-reference/endpoints/project-identities/update-identity-membership.md): Update project identity memberships
+- [Create](https://infisical.com/docs/api-reference/endpoints/project-roles/create.md): Create a project role
+- [Delete](https://infisical.com/docs/api-reference/endpoints/project-roles/delete.md): Delete a project role
+- [Get By Slug](https://infisical.com/docs/api-reference/endpoints/project-roles/get-by-slug.md)
+- [List](https://infisical.com/docs/api-reference/endpoints/project-roles/list.md): List project role
+- [Update](https://infisical.com/docs/api-reference/endpoints/project-roles/update.md): Update a project role
+- [Create](https://infisical.com/docs/api-reference/endpoints/project-templates/create.md): Create a project template.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/project-templates/delete.md): Delete a project template.
+- [Get By ID](https://infisical.com/docs/api-reference/endpoints/project-templates/get-by-id.md): Get a project template by ID.
+- [List](https://infisical.com/docs/api-reference/endpoints/project-templates/list.md): List project templates for the current organization.
+- [Update](https://infisical.com/docs/api-reference/endpoints/project-templates/update.md): Update a project template.
+- [Get By Username](https://infisical.com/docs/api-reference/endpoints/project-users/get-by-username.md): Return project user memberships
+- [Invite Member](https://infisical.com/docs/api-reference/endpoints/project-users/invite-member-to-workspace.md): Invite members to project
+- [Get User Memberships](https://infisical.com/docs/api-reference/endpoints/project-users/memberships.md): Return project user memberships
+- [Remove Member](https://infisical.com/docs/api-reference/endpoints/project-users/remove-member-from-workspace.md): Remove members from project
+- [Update User Membership](https://infisical.com/docs/api-reference/endpoints/project-users/update-membership.md): Update project user membership
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-imports/create.md): Create secret imports
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-imports/delete.md): Delete secret imports
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-imports/list.md): Get secret imports
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-imports/update.md): Update secret imports
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/create.md): Create an AWS Parameter Store Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/delete.md): Delete the specified AWS Parameter Store Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/get-by-id.md): Get the specified AWS Parameter Store Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/get-by-name.md): Get the specified AWS Parameter Store Sync by name and project ID.
+- [Import Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/import-secrets.md): Import secrets from the specified AWS Parameter Store Sync destination.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/list.md): List the AWS Parameter Store Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/remove-secrets.md): Remove previously synced secrets from the specified AWS Parameter Store Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/sync-secrets.md): Trigger a sync for the specified AWS Parameter Store Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-parameter-store/update.md): Update the specified AWS Parameter Store Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/create.md): Create an AWS Secrets Manager Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/delete.md): Delete the specified AWS Secrets Manager Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/get-by-id.md): Get the specified AWS Secrets Manager Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/get-by-name.md): Get the specified AWS Secrets Manager Sync by name and project ID.
+- [Import Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/import-secrets.md): Import secrets from the specified AWS Secrets Manager Sync destination.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/list.md): List the AWS Secrets Manager Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/remove-secrets.md): Remove previously synced secrets from the specified AWS Secrets Manager Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/sync-secrets.md): Trigger a sync for the specified AWS Secrets Manager Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/aws-secrets-manager/update.md): Update the specified AWS Secrets Manager Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/create.md): Create an Azure App Configuration Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/delete.md): Delete the specified Azure App Configuration Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/get-by-id.md): Get the specified Azure App Configuration Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/get-by-name.md): Get the specified Azure App Configuration Sync by name and project ID.
+- [Import Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/import-secrets.md): Import secrets from the specified Azure App Configuration Sync destination.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/list.md): List the Azure App Configuration Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/remove-secrets.md): Remove previously synced secrets from the specified Azure App Configuration Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/sync-secrets.md): Trigger a sync for the specified Azure App Configuration Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-app-configuration/update.md): Update the specified Azure App Configuration Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/create.md): Create an Azure Key Vault Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/delete.md): Delete the specified Azure Key Vault Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/get-by-id.md): Get the specified Azure Key Vault Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/get-by-name.md): Get the specified Azure Key Vault Sync by name and project ID.
+- [Import Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/import-secrets.md): Import secrets from the specified Azure Key Vault Sync destination.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/list.md): List the Azure Key Vault Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/remove-secrets.md): Remove previously synced secrets from the specified Azure Key Vault Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/sync-secrets.md): Trigger a sync for the specified Azure Key Vault Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/azure-key-vault/update.md): Update the specified Azure Key Vault Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/create.md): Create a Databricks Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/delete.md): Delete the specified Databricks Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/get-by-id.md): Get the specified Databricks Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/get-by-name.md): Get the specified Databricks Sync by name and project ID.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/list.md): List the Databricks Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/remove-secrets.md): Remove previously synced secrets from the specified Databricks Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/sync-secrets.md): Trigger a sync for the specified Databricks Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/databricks/update.md): Update the specified Databricks Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/create.md): Create a GCP Secret Manager Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/delete.md): Delete the specified GCP Secret Manager Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/get-by-id.md): Get the specified GCP Secret Manager Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/get-by-name.md): Get the specified GCP Secret Manager Sync by name and project ID.
+- [Import Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/import-secrets.md): Import secrets from the specified GCP Secret Manager Sync destination.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/list.md): List the GCP Secret Manager Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/remove-secrets.md): Remove previously synced secrets from the specified GCP Secret Manager Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/sync-secrets.md): Trigger a sync for the specified GCP Secret Manager Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/gcp-secret-manager/update.md): Update the specified GCP Secret Manager Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/create.md): Create a GitHub Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/delete.md): Delete the specified GitHub Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/get-by-id.md): Get the specified GitHub Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/get-by-name.md): Get the specified GitHub Sync by name and project ID.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/list.md): List the GitHub Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/remove-secrets.md): Remove previously synced secrets from the specified GitHub Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/sync-secrets.md): Trigger a sync for the specified GitHub Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/github/update.md): Update the specified GitHub Sync.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/create.md): Create a Humanitec Sync for the specified project environment.
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/delete.md): Delete the specified Humanitec Sync.
+- [Get by ID](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/get-by-id.md): Get the specified Humanitec Sync by ID.
+- [Get by Name](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/get-by-name.md): Get the specified Humanitec Sync by name and project ID.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/list.md): List the Humanitec Syncs for the specified project.
+- [Remove Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/remove-secrets.md): Remove previously synced secrets from the specified Humanitec Sync destination.
+- [Sync Secrets](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/sync-secrets.md): Trigger a sync for the specified Humanitec Sync.
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-syncs/humanitec/update.md): Update the specified Humanitec Sync.
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-syncs/list.md): List all the Secret Syncs for the specified project.
+- [Options](https://infisical.com/docs/api-reference/endpoints/secret-syncs/options.md): List the available Secret Sync Options.
+- [Create](https://infisical.com/docs/api-reference/endpoints/secret-tags/create.md)
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secret-tags/delete.md)
+- [Get By ID](https://infisical.com/docs/api-reference/endpoints/secret-tags/get-by-id.md)
+- [Get By Slug](https://infisical.com/docs/api-reference/endpoints/secret-tags/get-by-slug.md)
+- [List](https://infisical.com/docs/api-reference/endpoints/secret-tags/list.md)
+- [Update](https://infisical.com/docs/api-reference/endpoints/secret-tags/update.md)
+- [Attach tags](https://infisical.com/docs/api-reference/endpoints/secrets/attach-tags.md): Attach tags to a secret
+- [Create](https://infisical.com/docs/api-reference/endpoints/secrets/create.md): Create secret
+- [Bulk Create](https://infisical.com/docs/api-reference/endpoints/secrets/create-many.md): Create many secrets
+- [Delete](https://infisical.com/docs/api-reference/endpoints/secrets/delete.md): Delete secret
+- [Bulk Delete](https://infisical.com/docs/api-reference/endpoints/secrets/delete-many.md): Delete many secrets
+- [Detach tags](https://infisical.com/docs/api-reference/endpoints/secrets/detach-tags.md): Detach tags from a secret
+- [List](https://infisical.com/docs/api-reference/endpoints/secrets/list.md): List secrets
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/secrets/read.md): Get a secret by name
+- [Update](https://infisical.com/docs/api-reference/endpoints/secrets/update.md): Update secret
+- [Bulk Update](https://infisical.com/docs/api-reference/endpoints/secrets/update-many.md): Update many secrets
+- [Get](https://infisical.com/docs/api-reference/endpoints/service-tokens/get.md): Return Infisical Token data
+- [Create](https://infisical.com/docs/api-reference/endpoints/ssh/ca/create.md): Create SSH CA
+- [Delete](https://infisical.com/docs/api-reference/endpoints/ssh/ca/delete.md): Delete SSH CA
+- [List](https://infisical.com/docs/api-reference/endpoints/ssh/ca/list.md)
+- [List templates](https://infisical.com/docs/api-reference/endpoints/ssh/ca/list-certificate-templates.md): Get list of certificate templates for the SSH CA
+- [Retrieve public key](https://infisical.com/docs/api-reference/endpoints/ssh/ca/public-key.md): Get public key of SSH CA
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/ssh/ca/read.md): Get SSH CA
+- [Update](https://infisical.com/docs/api-reference/endpoints/ssh/ca/update.md): Update SSH CA
+- [Create](https://infisical.com/docs/api-reference/endpoints/ssh/certificate-templates/create.md)
+- [Delete](https://infisical.com/docs/api-reference/endpoints/ssh/certificate-templates/delete.md)
+- [List](https://infisical.com/docs/api-reference/endpoints/ssh/certificate-templates/list.md)
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/ssh/certificate-templates/read.md)
+- [Update](https://infisical.com/docs/api-reference/endpoints/ssh/certificate-templates/update.md)
+- [Issue SSH Credentials](https://infisical.com/docs/api-reference/endpoints/ssh/certificates/issue-credentials.md): Issue SSH credentials (certificate + key)
+- [Sign SSH Public Key](https://infisical.com/docs/api-reference/endpoints/ssh/certificates/sign-key.md): Sign SSH public key
+- [Attach](https://infisical.com/docs/api-reference/endpoints/token-auth/attach.md): Attach Token Auth configuration onto identity
+- [Create Token](https://infisical.com/docs/api-reference/endpoints/token-auth/create-token.md): Create token for identity with Token Auth
+- [Get Tokens](https://infisical.com/docs/api-reference/endpoints/token-auth/get-tokens.md): Get tokens for identity with Token Auth
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/token-auth/retrieve.md): Retrieve Token Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/token-auth/revoke.md): Delete Token Auth configuration on identity
+- [Revoke Token](https://infisical.com/docs/api-reference/endpoints/token-auth/revoke-token.md): Revoke token for identity with Token Auth
+- [Update](https://infisical.com/docs/api-reference/endpoints/token-auth/update.md): Update Token Auth configuration on identity
+- [Update Token](https://infisical.com/docs/api-reference/endpoints/token-auth/update-token.md): Update token for identity with Token Auth
+- [Attach](https://infisical.com/docs/api-reference/endpoints/universal-auth/attach.md): Attach Universal Auth configuration onto identity
+- [Create Client Secret](https://infisical.com/docs/api-reference/endpoints/universal-auth/create-client-secret.md): Create Universal Auth Client Secret for identity
+- [Get Client Secret By ID](https://infisical.com/docs/api-reference/endpoints/universal-auth/get-client-secret-by-id.md): Get Universal Auth Client Secret for identity
+- [List Client Secrets](https://infisical.com/docs/api-reference/endpoints/universal-auth/list-client-secrets.md): List Universal Auth Client Secrets for identity
+- [Login](https://infisical.com/docs/api-reference/endpoints/universal-auth/login.md): Login with Universal Auth
+- [Renew Access Token](https://infisical.com/docs/api-reference/endpoints/universal-auth/renew-access-token.md): Renew access token
+- [Retrieve](https://infisical.com/docs/api-reference/endpoints/universal-auth/retrieve.md): Retrieve Universal Auth configuration on identity
+- [Revoke](https://infisical.com/docs/api-reference/endpoints/universal-auth/revoke.md): Delete Universal Auth configuration on identity
+- [Revoke Access Token](https://infisical.com/docs/api-reference/endpoints/universal-auth/revoke-access-token.md): Revoke access token
+- [Revoke Client Secret](https://infisical.com/docs/api-reference/endpoints/universal-auth/revoke-client-secret.md): Revoke Universal Auth Client Secrets for identity
+- [Update](https://infisical.com/docs/api-reference/endpoints/universal-auth/update.md): Update Universal Auth configuration on identity
+- [Create Project](https://infisical.com/docs/api-reference/endpoints/workspaces/create-workspace.md): Create a new project
+- [Delete Project](https://infisical.com/docs/api-reference/endpoints/workspaces/delete-workspace.md): Delete project
+- [Get Project](https://infisical.com/docs/api-reference/endpoints/workspaces/get-workspace.md): Get project
+- [Roll Back to Snapshot](https://infisical.com/docs/api-reference/endpoints/workspaces/rollback-snapshot.md): Roll back project secrets to those captured in a secret snapshot version.
+- [Get Snapshots](https://infisical.com/docs/api-reference/endpoints/workspaces/secret-snapshots.md): Return project secret snapshots ids
+- [Update Project](https://infisical.com/docs/api-reference/endpoints/workspaces/update-workspace.md): Update project
+- [Authentication](https://infisical.com/docs/api-reference/overview/authentication.md): Learn how to authenticate with the Infisical Public API.
+- [Configure native integrations via API](https://infisical.com/docs/api-reference/overview/examples/integration.md): How to use Infisical API to sync secrets to external secret managers
+- [API Reference](https://infisical.com/docs/api-reference/overview/introduction.md)
+- [Changelog](https://infisical.com/docs/changelog/overview.md)
+- [infisical bootstrap](https://infisical.com/docs/cli/commands/bootstrap.md): Automate the initial setup of a new Infisical instance for headless deployment and infrastructure-as-code workflows
+- [infisical dynamic-secrets](https://infisical.com/docs/cli/commands/dynamic-secrets.md): Perform dynamic secret operations directly with the CLI
+- [infisical export](https://infisical.com/docs/cli/commands/export.md): Export Infisical secrets from CLI into different file formats
+- [infisical gateway](https://infisical.com/docs/cli/commands/gateway.md): Run the Infisical gateway or manage its systemd service
+- [infisical init](https://infisical.com/docs/cli/commands/init.md): Switch between Infisical projects within CLI
+- [infisical login](https://infisical.com/docs/cli/commands/login.md): Login into Infisical from the CLI
+- [infisical reset](https://infisical.com/docs/cli/commands/reset.md): Reset Infisical
+- [infisical run](https://infisical.com/docs/cli/commands/run.md): The command that injects your secrets into local environment
+- [scan](https://infisical.com/docs/cli/commands/scan.md): Scan git history, directories, and files for secrets
+- [scan git-changes](https://infisical.com/docs/cli/commands/scan-git-changes.md): Scan for secrets in your uncommitted code
+- [scan install](https://infisical.com/docs/cli/commands/scan-install.md): Add various scanning tools seamlessly into your development lifecycle
+- [infisical secrets](https://infisical.com/docs/cli/commands/secrets.md): Perform CRUD operations with Infisical secrets
+- [infisical service-token](https://infisical.com/docs/cli/commands/service-token.md): Manage Infisical service tokens
+- [infisical ssh](https://infisical.com/docs/cli/commands/ssh.md): Generate SSH credentials with the CLI
+- [infisical token](https://infisical.com/docs/cli/commands/token.md): Manage your Infisical identity access tokens
+- [infisical user](https://infisical.com/docs/cli/commands/user.md): Manage logged in users
+- [infisical vault](https://infisical.com/docs/cli/commands/vault.md): Change the vault type in Infisical
+- [FAQ](https://infisical.com/docs/cli/faq.md): Frequently Asked Questions about Infisical CLI
+- [Install](https://infisical.com/docs/cli/overview.md): Infisical's CLI is one of the best ways to manage environments and secrets. Install it here
+- [Project config file](https://infisical.com/docs/cli/project-config.md): Project config file & customization options
+- [Secret scanning](https://infisical.com/docs/cli/scanning-overview.md): Scan and prevent secret leaks in your code base
+- [Quickstart](https://infisical.com/docs/cli/usage.md): Manage secrets with Infisical CLI
+- [Code of Conduct](https://infisical.com/docs/contributing/getting-started/code-of-conduct.md): What you should know before contributing to Infisical?
+- [FAQ](https://infisical.com/docs/contributing/getting-started/faq.md): Frequently Asked Questions about contributing to Infisical
+- [Overview](https://infisical.com/docs/contributing/getting-started/overview.md): Contributing to the Infisical ecosystem.
+- [Pull requests](https://infisical.com/docs/contributing/getting-started/pull-requests.md): This guide walks through the code submission process for Infisical.
+- [Backend folder structure](https://infisical.com/docs/contributing/platform/backend/folder-structure.md)
+- [Backend development guide](https://infisical.com/docs/contributing/platform/backend/how-to-create-a-feature.md)
+- [Local development](https://infisical.com/docs/contributing/platform/developing.md): This guide will help you set up and run the Infisical platform in local development.
+- [Local development](https://infisical.com/docs/contributing/sdk/developing.md): This guide will help you contribute to the Infisical SDK.
+- [What is Infisical?](https://infisical.com/docs/documentation/getting-started/introduction.md): An Introduction to the Infisical secret management platform.
+- [Introduction](https://infisical.com/docs/documentation/guides/introduction.md)
+- [Secret Management in Development Environments](https://infisical.com/docs/documentation/guides/local-development.md): Learn how to manage secrets in local development environments.
+- [Microsoft Power Apps](https://infisical.com/docs/documentation/guides/microsoft-power-apps.md): Learn how to manage secrets in Microsoft Power Apps with Infisical.
+- [Next.js + Vercel](https://infisical.com/docs/documentation/guides/nextjs-vercel.md)
+- [Node](https://infisical.com/docs/documentation/guides/node.md)
+- [Infisical Organizational Structure Blueprint](https://infisical.com/docs/documentation/guides/organization-structure.md): Learn how to structure your projects, secrets, and other resources within Infisical.
+- [Python](https://infisical.com/docs/documentation/guides/python.md)
+- [Machine identities](https://infisical.com/docs/documentation/platform/access-controls/abac/managing-machine-identity-attributes.md): Learn how to set metadata and leverage authentication attributes for machine identities.
+- [Users identities](https://infisical.com/docs/documentation/platform/access-controls/abac/managing-user-metadata.md): How to set and use metadata attributes on user identities for ABAC.
+- [Overview](https://infisical.com/docs/documentation/platform/access-controls/abac/overview.md): Learn the basics of ABAC for both users and machine identities.
+- [Access Requests](https://infisical.com/docs/documentation/platform/access-controls/access-requests.md): Learn how to request access to sensitive resources in Infisical.
+- [Additional Privileges](https://infisical.com/docs/documentation/platform/access-controls/additional-privileges.md): Learn how to add specific privileges on top of predefined roles.
+- [Access Controls](https://infisical.com/docs/documentation/platform/access-controls/overview.md): Learn about Infisical's access control toolset.
+- [Role-based Access Controls](https://infisical.com/docs/documentation/platform/access-controls/role-based-access-controls.md): Learn how to use RBAC to manage user permissions.
+- [Temporary Access](https://infisical.com/docs/documentation/platform/access-controls/temporary-access.md): Learn how to set up timed access to sensitive resources for user and machine identities.
+- [Organization Admin Console](https://infisical.com/docs/documentation/platform/admin-panel/org-admin-console.md): View and manage resources across your organization
+- [null](https://infisical.com/docs/documentation/platform/admin-panel/overview.md): Learn about Infisical's Admin Consoles
+- [Server Admin Console](https://infisical.com/docs/documentation/platform/admin-panel/server-admin.md): Configure and manage server related features
+- [Audit Log Streams](https://infisical.com/docs/documentation/platform/audit-log-streams/audit-log-streams.md): Learn how to stream Infisical Audit Logs to external logging providers.
+- [Stream to Non-HTTP providers](https://infisical.com/docs/documentation/platform/audit-log-streams/audit-log-streams-with-fluentbit.md): How to stream Infisical Audit Logs to Non-HTTP log providers
+- [Overview](https://infisical.com/docs/documentation/platform/audit-logs.md): Track evert event action performed within Infisical projects.
+- [Email and Password](https://infisical.com/docs/documentation/platform/auth-methods/email-password.md): Learn how to authenticate into Infisical with email and password.
+- [AWS ElastiCache](https://infisical.com/docs/documentation/platform/dynamic-secrets/aws-elasticache.md): Learn how to dynamically generate AWS ElastiCache user credentials.
+- [AWS IAM](https://infisical.com/docs/documentation/platform/dynamic-secrets/aws-iam.md): Learn how to dynamically generate AWS IAM Users.
+- [Azure Entra Id](https://infisical.com/docs/documentation/platform/dynamic-secrets/azure-entra-id.md): Learn how to dynamically generate Azure Entra Id user credentials.
+- [Cassandra](https://infisical.com/docs/documentation/platform/dynamic-secrets/cassandra.md): Learn how to dynamically generate Cassandra database user credentials
+- [Elasticsearch](https://infisical.com/docs/documentation/platform/dynamic-secrets/elastic-search.md): Learn how to dynamically generate Elasticsearch user credentials.
+- [LDAP](https://infisical.com/docs/documentation/platform/dynamic-secrets/ldap.md): Learn how to dynamically generate user credentials via LDAP.
+- [Mongo Atlas](https://infisical.com/docs/documentation/platform/dynamic-secrets/mongo-atlas.md): Learn how to dynamically generate Mongo Atlas Database user credentials.
+- [Mongo DB](https://infisical.com/docs/documentation/platform/dynamic-secrets/mongo-db.md): Learn how to dynamically generate Mongo DB Database user credentials.
+- [MS SQL](https://infisical.com/docs/documentation/platform/dynamic-secrets/mssql.md): Learn how to dynamically generate MS SQL database user credentials.
+- [MySQL](https://infisical.com/docs/documentation/platform/dynamic-secrets/mysql.md): Learn how to dynamically generate MySQL Database user credentials.
+- [Oracle](https://infisical.com/docs/documentation/platform/dynamic-secrets/oracle.md): Learn how to dynamically generate Oracle Database user credentials.
+- [Dynamic Secrets](https://infisical.com/docs/documentation/platform/dynamic-secrets/overview.md): Learn how to generate secrets dynamically on-demand.
+- [PostgreSQL](https://infisical.com/docs/documentation/platform/dynamic-secrets/postgresql.md): Learn how to dynamically generate PostgreSQL database users.
+- [RabbitMQ](https://infisical.com/docs/documentation/platform/dynamic-secrets/rabbit-mq.md): Learn how to dynamically generate RabbitMQ user credentials.
+- [Redis](https://infisical.com/docs/documentation/platform/dynamic-secrets/redis.md): Learn how to dynamically generate Redis Database user credentials.
+- [SAP ASE](https://infisical.com/docs/documentation/platform/dynamic-secrets/sap-ase.md): Learn how to dynamically generate SAP ASE database account credentials.
+- [SAP HANA](https://infisical.com/docs/documentation/platform/dynamic-secrets/sap-hana.md): Learn how to dynamically generate SAP HANA database account credentials.
+- [Snowflake](https://infisical.com/docs/documentation/platform/dynamic-secrets/snowflake.md): Learn how to dynamically generate Snowflake user credentials.
+- [TOTP](https://infisical.com/docs/documentation/platform/dynamic-secrets/totp.md): Learn how to dynamically generate time-based one-time passwords.
+- [Folders](https://infisical.com/docs/documentation/platform/folder.md): Learn how to organize secrets with folders.
+- [Gateway Security Architecture](https://infisical.com/docs/documentation/platform/gateways/gateway-security.md): Understand the security model and tenant isolation of Infisical's Gateway
+- [Gateway](https://infisical.com/docs/documentation/platform/gateways/overview.md): How to access private network resources from Infisical
+- [User Groups](https://infisical.com/docs/documentation/platform/groups.md): Manage user groups in Infisical.
+- [AWS Auth](https://infisical.com/docs/documentation/platform/identities/aws-auth.md): Learn how to authenticate with Infisical for EC2 instances, Lambda functions, and other IAM principals.
+- [Azure Auth](https://infisical.com/docs/documentation/platform/identities/azure-auth.md): Learn how to authenticate with Infisical for services on Azure
+- [GCP Auth](https://infisical.com/docs/documentation/platform/identities/gcp-auth.md): Learn how to authenticate with Infisical for services on Google Cloud Platform
+- [JWT Auth](https://infisical.com/docs/documentation/platform/identities/jwt-auth.md): Learn how to authenticate with Infisical using JWT-based authentication.
+- [Kubernetes Auth](https://infisical.com/docs/documentation/platform/identities/kubernetes-auth.md): Learn how to authenticate with Infisical in Kubernetes
+- [Machine Identities](https://infisical.com/docs/documentation/platform/identities/machine-identities.md): Learn how to use Machine Identities to programmatically interact with Infisical.
+- [CircleCI](https://infisical.com/docs/documentation/platform/identities/oidc-auth/circleci.md): Learn how to authenticate CircleCI jobs with Infisical using OpenID Connect (OIDC).
+- [General](https://infisical.com/docs/documentation/platform/identities/oidc-auth/general.md): Learn how to authenticate with Infisical from any platform or environment using OpenID Connect (OIDC).
+- [Github](https://infisical.com/docs/documentation/platform/identities/oidc-auth/github.md): Learn how to authenticate Github workflows with Infisical using OpenID Connect (OIDC).
+- [GitLab](https://infisical.com/docs/documentation/platform/identities/oidc-auth/gitlab.md): Learn how to authenticate GitLab pipelines with Infisical using OpenID Connect (OIDC).
+- [Terraform Cloud](https://infisical.com/docs/documentation/platform/identities/oidc-auth/terraform-cloud.md): How to authenticate with Infisical from Terraform Cloud using OIDC.
+- [User and Machine Identities](https://infisical.com/docs/documentation/platform/identities/overview.md): Learn more about identities to interact with resources in Infisical.
+- [Token Auth](https://infisical.com/docs/documentation/platform/identities/token-auth.md): Learn how to authenticate to Infisical from any platform or environment using an access token.
+- [Universal Auth](https://infisical.com/docs/documentation/platform/identities/universal-auth.md): Learn how to authenticate to Infisical from any platform or environment.
+- [User Identities](https://infisical.com/docs/documentation/platform/identities/user-identities.md): Read more about the concept of user identities in Infisical.
+- [AWS CloudHSM](https://infisical.com/docs/documentation/platform/kms-configuration/aws-hsm.md): Learn how to manage encryption using AWS CloudHSM
+- [AWS Key Management Service](https://infisical.com/docs/documentation/platform/kms-configuration/aws-kms.md): Learn how to manage encryption using AWS KMS
+- [GCP Key Management Service](https://infisical.com/docs/documentation/platform/kms-configuration/gcp-kms.md): Learn how to manage encryption using GCP KMS
+- [Key Management Service (KMS) Configuration](https://infisical.com/docs/documentation/platform/kms-configuration/overview.md): Learn how to configure your project's encryption
+- [HSM Integration](https://infisical.com/docs/documentation/platform/kms/hsm-integration.md): Learn more about integrating an HSM with Infisical KMS.
+- [KMIP Integration](https://infisical.com/docs/documentation/platform/kms/kmip.md): Learn more about integrating with Infisical KMS using KMIP (Key Management Interoperability Protocol).
+- [Kubernetes Encryption with KMS](https://infisical.com/docs/documentation/platform/kms/kubernetes-encryption.md)
+- [Key Management Service (KMS)](https://infisical.com/docs/documentation/platform/kms/overview.md): Learn how to manage and use cryptographic keys with Infisical.
+- [General LDAP](https://infisical.com/docs/documentation/platform/ldap/general.md): Learn how to log in to Infisical with LDAP.
+- [JumpCloud LDAP](https://infisical.com/docs/documentation/platform/ldap/jumpcloud.md): Learn how to configure JumpCloud LDAP for authenticating into Infisical.
+- [LDAP Overview](https://infisical.com/docs/documentation/platform/ldap/overview.md): Learn how to authenticate into Infisical with LDAP.
+- [Multi-factor Authentication](https://infisical.com/docs/documentation/platform/mfa.md): Learn how to secure your Infisical account with MFA.
+- [Organizations](https://infisical.com/docs/documentation/platform/organization.md): Learn more and understand the concept of Infisical organizations.
+- [Point-in-Time Recovery](https://infisical.com/docs/documentation/platform/pit-recovery.md): Learn how to rollback secrets and configurations to any snapshot with Infisical.
+- [Alerting](https://infisical.com/docs/documentation/platform/pki/alerting.md): Learn how to set up alerting for expiring certificates with Infisical
+- [Certificates](https://infisical.com/docs/documentation/platform/pki/certificates.md): Learn how to issue X.509 certificates with Infisical.
+- [Enrollment over Secure Transport (EST)](https://infisical.com/docs/documentation/platform/pki/est.md): Learn how to manage certificate enrollment of clients using EST
+- [Internal PKI](https://infisical.com/docs/documentation/platform/pki/overview.md): Learn how to create a Private CA hierarchy and issue X.509 certificates.
+- [Kubernetes Issuer](https://infisical.com/docs/documentation/platform/pki/pki-issuer.md): Learn how to automatically provision and manage TLS certificates for in Kubernetes using Infisical PKI
+- [Private CA](https://infisical.com/docs/documentation/platform/pki/private-ca.md): Learn how to create a Private CA hierarchy with Infisical.
+- [Approval Workflows](https://infisical.com/docs/documentation/platform/pr-workflows.md): Learn how to enable a set of policies to manage changes to sensitive secrets and environments.
+- [Projects](https://infisical.com/docs/documentation/platform/project.md): Learn more and understand the concept of Infisical projects.
+- [Project Templates](https://infisical.com/docs/documentation/platform/project-templates.md): Learn how to manage and apply project templates
+- [Azure SCIM](https://infisical.com/docs/documentation/platform/scim/azure.md): Learn how to configure SCIM provisioning with Azure for Infisical.
+- [SCIM Group Mappings](https://infisical.com/docs/documentation/platform/scim/group-mappings.md): Learn how to enhance your SCIM implementation using group mappings
+- [JumpCloud SCIM](https://infisical.com/docs/documentation/platform/scim/jumpcloud.md): Learn how to configure SCIM provisioning with JumpCloud for Infisical.
+- [Okta SCIM](https://infisical.com/docs/documentation/platform/scim/okta.md): Learn how to configure SCIM provisioning with Okta for Infisical.
+- [SCIM Overview](https://infisical.com/docs/documentation/platform/scim/overview.md): Learn how to provision users for Infisical via SCIM.
+- [Secret Referencing and Importing](https://infisical.com/docs/documentation/platform/secret-reference.md): Learn the fundamentals of secret referencing and importing in Infisical.
+- [AWS IAM User](https://infisical.com/docs/documentation/platform/secret-rotation/aws-iam.md): Learn how to automatically rotate Access Key Id and Secret Key of AWS IAM Users.
+- [Microsoft SQL Server](https://infisical.com/docs/documentation/platform/secret-rotation/mssql.md): Learn how to automatically rotate Microsoft SQL Server user passwords.
+- [MySQL/MariaDB](https://infisical.com/docs/documentation/platform/secret-rotation/mysql.md): Learn how to automatically rotate MySQL/MariaDB user passwords.
+- [Secret Rotation](https://infisical.com/docs/documentation/platform/secret-rotation/overview.md): Learn how to set up automated secret rotation in Infisical.
+- [PostgreSQL/CockroachDB](https://infisical.com/docs/documentation/platform/secret-rotation/postgres.md): Learn how to automatically rotate PostgreSQL/CockroachDB user passwords.
+- [Twilio SendGrid](https://infisical.com/docs/documentation/platform/secret-rotation/sendgrid.md): Find out how to rotate Twilio SendGrid API keys.
+- [Secret Scanning](https://infisical.com/docs/documentation/platform/secret-scanning.md): Scan and prevent secret leaks in your code repositories
+- [Secret Sharing](https://infisical.com/docs/documentation/platform/secret-sharing.md): Learn how to share time & view-count bound secrets securely with anyone on the internet.
+- [Secret Versioning](https://infisical.com/docs/documentation/platform/secret-versioning.md): Learn how secret versioning works in Infisical.
+- [Infisical SSH](https://infisical.com/docs/documentation/platform/ssh.md): Learn how to generate SSH credentials to provide secure and centralized SSH access control for your infrastructure.
+- [Auth0 OIDC](https://infisical.com/docs/documentation/platform/sso/auth0-oidc.md): Learn how to configure Auth0 OIDC for Infisical SSO.
+- [Auth0 SAML](https://infisical.com/docs/documentation/platform/sso/auth0-saml.md): Learn how to configure Auth0 SAML for Infisical SSO.
+- [Entra ID / Azure AD SAML](https://infisical.com/docs/documentation/platform/sso/azure.md): Learn how to configure Microsoft Entra ID for Infisical SSO.
+- [General OIDC](https://infisical.com/docs/documentation/platform/sso/general-oidc.md): Learn how to configure OIDC for Infisical SSO with any OIDC-compliant identity provider
+- [GitHub SSO](https://infisical.com/docs/documentation/platform/sso/github.md): Learn how to configure GitHub SSO for Infisical.
+- [GitLab SSO](https://infisical.com/docs/documentation/platform/sso/gitlab.md): Learn how to configure GitLab SSO for Infisical.
+- [Google SSO](https://infisical.com/docs/documentation/platform/sso/google.md): Learn how to configure Google SSO for Infisical.
+- [Google SAML](https://infisical.com/docs/documentation/platform/sso/google-saml.md): Learn how to configure Google SAML for Infisical SSO.
+- [JumpCloud SAML](https://infisical.com/docs/documentation/platform/sso/jumpcloud.md): Learn how to configure JumpCloud SAML for Infisical SSO.
+- [Keycloak OIDC Group Membership Mapping](https://infisical.com/docs/documentation/platform/sso/keycloak-oidc/group-membership-mapping.md): Learn how to sync Keycloak group members to matching groups in Infisical.
+- [Keycloak OIDC Overview](https://infisical.com/docs/documentation/platform/sso/keycloak-oidc/overview.md): Learn how to configure Keycloak OIDC for Infisical SSO.
+- [Keycloak SAML](https://infisical.com/docs/documentation/platform/sso/keycloak-saml.md): Learn how to configure Keycloak SAML for Infisical SSO.
+- [Okta SAML](https://infisical.com/docs/documentation/platform/sso/okta.md): Learn how to configure Okta SAML 2.0 for Infisical SSO.
+- [SSO Overview](https://infisical.com/docs/documentation/platform/sso/overview.md): Learn how to log in to Infisical via SSO protocols.
+- [Service Token](https://infisical.com/docs/documentation/platform/token.md): Infisical service tokens allow users to programmatically interact with Infisical.
+- [Webhooks](https://infisical.com/docs/documentation/platform/webhooks.md): Learn the fundamentals of Infisical webhooks.
+- [Slack integration](https://infisical.com/docs/documentation/platform/workflow-integrations/slack-integration.md): Learn how to setup Slack integration
+- [Networking](https://infisical.com/docs/documentation/setup/networking.md): Network configuration details for Infisical Cloud
+- [AWS Connection](https://infisical.com/docs/integrations/app-connections/aws.md): Learn how to configure an AWS Connection for Infisical.
+- [Azure App Configuration Connection](https://infisical.com/docs/integrations/app-connections/azure-app-configuration.md): Learn how to configure a Azure App Configuration Connection for Infisical.
+- [Azure Key Vault Connection](https://infisical.com/docs/integrations/app-connections/azure-key-vault.md): Learn how to configure a Azure Key Vault Connection for Infisical.
+- [Databricks Connection](https://infisical.com/docs/integrations/app-connections/databricks.md): Learn how to configure a Databricks Connection for Infisical.
+- [GCP Connection](https://infisical.com/docs/integrations/app-connections/gcp.md): Learn how to configure a GCP Connection for Infisical.
+- [GitHub Connection](https://infisical.com/docs/integrations/app-connections/github.md): Learn how to configure a GitHub Connection for Infisical.
+- [Humanitec Connection](https://infisical.com/docs/integrations/app-connections/humanitec.md): Learn how to configure a Humanitec Connection for Infisical.
+- [null](https://infisical.com/docs/integrations/app-connections/overview.md): Learn how to manage and configure third-party app connections with Infisical.
+- [Gradle](https://infisical.com/docs/integrations/build-tools/gradle.md): How to use Infisical to inject environment variables with Gradle
+- [Bitbucket](https://infisical.com/docs/integrations/cicd/bitbucket.md): How to sync secrets from Infisical to Bitbucket
+- [CircleCI](https://infisical.com/docs/integrations/cicd/circleci.md): How to sync secrets from Infisical to CircleCI
+- [Codefresh](https://infisical.com/docs/integrations/cicd/codefresh.md): How to sync secrets from Infisical to Codefresh
+- [GitHub Actions](https://infisical.com/docs/integrations/cicd/githubactions.md): How to sync secrets from Infisical to GitHub Actions
+- [GitLab](https://infisical.com/docs/integrations/cicd/gitlab.md): How to sync secrets from Infisical to GitLab
+- [Jenkins Plugin](https://infisical.com/docs/integrations/cicd/jenkins.md): How to effectively and securely manage secrets in Jenkins using Infisical
+- [Octopus Deploy](https://infisical.com/docs/integrations/cicd/octopus-deploy.md): Learn how to sync secrets from Infisical to Octopus Deploy
+- [Rundeck](https://infisical.com/docs/integrations/cicd/rundeck.md): How to sync secrets from Infisical to Rundeck
+- [Travis CI](https://infisical.com/docs/integrations/cicd/travisci.md): How to sync secrets from Infisical to Travis CI
+- [AWS Amplify](https://infisical.com/docs/integrations/cloud/aws-amplify.md): Learn how to sync secrets from Infisical to AWS Amplify.
+- [AWS Parameter Store](https://infisical.com/docs/integrations/cloud/aws-parameter-store.md): Learn how to sync secrets from Infisical to AWS Parameter Store.
+- [AWS Secrets Manager](https://infisical.com/docs/integrations/cloud/aws-secret-manager.md): Learn how to sync secrets from Infisical to AWS Secrets Manager.
+- [Azure App Configuration](https://infisical.com/docs/integrations/cloud/azure-app-configuration.md): How to sync secrets from Infisical to Azure App Configuration
+- [Azure DevOps](https://infisical.com/docs/integrations/cloud/azure-devops.md): How to sync secrets from Infisical to Azure DevOps
+- [Azure Key Vault](https://infisical.com/docs/integrations/cloud/azure-key-vault.md): How to sync secrets from Infisical to Azure Key Vault
+- [Checkly](https://infisical.com/docs/integrations/cloud/checkly.md): How to sync secrets from Infisical to Checkly
+- [Cloud 66](https://infisical.com/docs/integrations/cloud/cloud-66.md): How to sync secrets from Infisical to Cloud 66
+- [Cloudflare Pages](https://infisical.com/docs/integrations/cloud/cloudflare-pages.md): How to sync secrets from Infisical to Cloudflare Pages
+- [Cloudflare Workers](https://infisical.com/docs/integrations/cloud/cloudflare-workers.md): How to sync secrets from Infisical to Cloudflare Workers
+- [Databricks](https://infisical.com/docs/integrations/cloud/databricks.md): Learn how to sync secrets from Infisical to Databricks.
+- [Digital Ocean App Platform](https://infisical.com/docs/integrations/cloud/digital-ocean-app-platform.md): How to sync secrets from Infisical to Digital Ocean App Platform
+- [Fly.io](https://infisical.com/docs/integrations/cloud/flyio.md): How to sync secrets from Infisical to Fly.io
+- [GCP Secret Manager](https://infisical.com/docs/integrations/cloud/gcp-secret-manager.md): How to sync secrets from Infisical to GCP Secret Manager
+- [HashiCorp Vault](https://infisical.com/docs/integrations/cloud/hashicorp-vault.md): How to sync secrets from Infisical to HashiCorp Vault
+- [Hasura Cloud](https://infisical.com/docs/integrations/cloud/hasura-cloud.md): How to sync secrets from Infisical to Hasura Cloud
+- [Heroku](https://infisical.com/docs/integrations/cloud/heroku.md): How to sync secrets from Infisical to Heroku
+- [Laravel Forge](https://infisical.com/docs/integrations/cloud/laravel-forge.md): How to sync secrets from Infisical to Laravel Forge
+- [Netlify](https://infisical.com/docs/integrations/cloud/netlify.md): How to sync secrets from Infisical to Netlify
+- [Northflank](https://infisical.com/docs/integrations/cloud/northflank.md): How to sync secrets from Infisical to Northflank
+- [Qovery](https://infisical.com/docs/integrations/cloud/qovery.md): How to sync secrets from Infisical to Qovery
+- [Railway](https://infisical.com/docs/integrations/cloud/railway.md): How to sync secrets from Infisical to Railway
+- [Render](https://infisical.com/docs/integrations/cloud/render.md): How to sync secrets from Infisical to Render
+- [Supabase](https://infisical.com/docs/integrations/cloud/supabase.md): How to sync secrets from Infisical to Supabase
+- [TeamCity](https://infisical.com/docs/integrations/cloud/teamcity.md): How to sync secrets from Infisical to TeamCity
+- [Terraform Cloud](https://infisical.com/docs/integrations/cloud/terraform-cloud.md): How to sync secrets from Infisical to Terraform Cloud
+- [Vercel](https://infisical.com/docs/integrations/cloud/vercel.md): How to sync secrets from Infisical to Vercel
+- [Windmill](https://infisical.com/docs/integrations/cloud/windmill.md): How to sync secrets from Infisical to Windmill
+- [AB Initio](https://infisical.com/docs/integrations/frameworks/ab-initio.md): How to use Infisical secrets in AB Initio.
+- [Django](https://infisical.com/docs/integrations/frameworks/django.md): How to use Infisical to inject environment variables and secrets into a Django app.
+- [.NET](https://infisical.com/docs/integrations/frameworks/dotnet.md): How to use Infisical to inject environment variables and secrets into a .NET app.
+- [Express, Fastify, Koa](https://infisical.com/docs/integrations/frameworks/express.md): How to use Infisical to inject environment variables and secrets into an Express app.
+- [Fiber](https://infisical.com/docs/integrations/frameworks/fiber.md): How to use Infisical to inject environment variables and secrets into a Fiber app.
+- [Flask](https://infisical.com/docs/integrations/frameworks/flask.md): How to use Infisical to inject environment variables and secrets into a Flask app.
+- [Gatsby](https://infisical.com/docs/integrations/frameworks/gatsby.md): How to use Infisical to inject environment variables and secrets into a Gatsby app.
+- [Laravel](https://infisical.com/docs/integrations/frameworks/laravel.md): How to use Infisical to inject environment variables and secrets into a Laravel app.
+- [NestJS](https://infisical.com/docs/integrations/frameworks/nestjs.md): How to use Infisical to inject environment variables and secrets into a NestJS app.
+- [Next.js](https://infisical.com/docs/integrations/frameworks/nextjs.md): How to use Infisical to inject environment variables and secrets into a Next.js app.
+- [Nuxt](https://infisical.com/docs/integrations/frameworks/nuxt.md): How to use Infisical to inject environment variables and secrets into a Nuxt app.
+- [Ruby on Rails](https://infisical.com/docs/integrations/frameworks/rails.md): How to use Infisical to inject environment variables and secrets into a Ruby on Rails app.
+- [React](https://infisical.com/docs/integrations/frameworks/react.md): How to use Infisical to inject environment variables and secrets into a React app.
+- [Remix](https://infisical.com/docs/integrations/frameworks/remix.md): How to use Infisical to inject environment variables and secrets into a Remix app.
+- [Spring Boot with Maven](https://infisical.com/docs/integrations/frameworks/spring-boot-maven.md): How to use Infisical to inject environment variables into Java Spring Boot
+- [SvelteKit](https://infisical.com/docs/integrations/frameworks/sveltekit.md): How to use Infisical to inject environment variables and secrets into a SvelteKit app.
+- [Terraform](https://infisical.com/docs/integrations/frameworks/terraform.md): Learn how to fetch secrets from Infisical with Terraform using both traditional data sources and ephemeral resources
+- [Vite](https://infisical.com/docs/integrations/frameworks/vite.md): How to use Infisical to inject environment variables and secrets into a Vite app.
+- [Vue](https://infisical.com/docs/integrations/frameworks/vue.md): How to use Infisical to inject environment variables and secrets into a Vue.js app.
+- [Ansible](https://infisical.com/docs/integrations/platforms/ansible.md): Learn how to use Infisical for secret management in Ansible.
+- [Apache Airflow](https://infisical.com/docs/integrations/platforms/apache-airflow.md): Learn how to use Infisical as your custom secrets backend in Apache Airflow.
+- [Docker Entrypoint](https://infisical.com/docs/integrations/platforms/docker.md): Learn how to use Infisical to inject environment variables into a Docker container.
+- [Docker Compose](https://infisical.com/docs/integrations/platforms/docker-compose.md): Find out how to use Infisical to inject environment variables into services defined in your Docker Compose file.
+- [Docker](https://infisical.com/docs/integrations/platforms/docker-intro.md): Learn how to feed secrets from Infisical into your Docker application.
+- [Docker Run](https://infisical.com/docs/integrations/platforms/docker-pass-envs.md): Learn how to pass secrets to your docker container at run time.
+- [Docker Swarm](https://infisical.com/docs/integrations/platforms/docker-swarm-with-agent.md): Learn how to manage secrets in Docker Swarm services.
+- [Amazon ECS](https://infisical.com/docs/integrations/platforms/ecs-with-agent.md): Learn how to deliver secrets to Amazon Elastic Container Service.
+- [Infisical Agent](https://infisical.com/docs/integrations/platforms/infisical-agent.md): This page describes how to manage secrets using Infisical Agent.
+- [Kubernetes CSI](https://infisical.com/docs/integrations/platforms/kubernetes-csi.md): How to use Infisical to inject secrets directly into Kubernetes pods.
+- [Using the InfisicalDynamicSecret CRD](https://infisical.com/docs/integrations/platforms/kubernetes/infisical-dynamic-secret-crd.md): Learn how to generate dynamic secret leases in Infisical and sync them to your Kubernetes cluster.
+- [Using the InfisicalPushSecret CRD](https://infisical.com/docs/integrations/platforms/kubernetes/infisical-push-secret-crd.md): Learn how to use the InfisicalPushSecret CRD to push and manage secrets in Infisical.
+- [Using the InfisicalSecret CRD](https://infisical.com/docs/integrations/platforms/kubernetes/infisical-secret-crd.md): Learn how to use the InfisicalSecret CRD to fetch secrets from Infisical and store them as native Kubernetes secret resource
+- [Kubernetes Operator](https://infisical.com/docs/integrations/platforms/kubernetes/overview.md): How to use Infisical to inject, push, and manage secrets within Kubernetes clusters
+- [PM2](https://infisical.com/docs/integrations/platforms/pm2.md): How to use Infisical to inject environment variables and secrets with PM2 into a Node.js app
+- [AWS Parameter Store Sync](https://infisical.com/docs/integrations/secret-syncs/aws-parameter-store.md): Learn how to configure an AWS Parameter Store Sync for Infisical.
+- [AWS Secrets Manager Sync](https://infisical.com/docs/integrations/secret-syncs/aws-secrets-manager.md): Learn how to configure an AWS Secrets Manager Sync for Infisical.
+- [Azure App Configuration Sync](https://infisical.com/docs/integrations/secret-syncs/azure-app-configuration.md): Learn how to configure an Azure App Configuration Sync for Infisical.
+- [Azure Key Vault Sync](https://infisical.com/docs/integrations/secret-syncs/azure-key-vault.md): Learn how to configure a Azure Key Vault Sync for Infisical.
+- [Databricks Sync](https://infisical.com/docs/integrations/secret-syncs/databricks.md): Learn how to configure a Databricks Sync for Infisical.
+- [GCP Secret Manager Sync](https://infisical.com/docs/integrations/secret-syncs/gcp-secret-manager.md): Learn how to configure a GCP Secret Manager Sync for Infisical.
+- [GitHub Sync](https://infisical.com/docs/integrations/secret-syncs/github.md): Learn how to configure a GitHub Sync for Infisical.
+- [Humanitec Sync](https://infisical.com/docs/integrations/secret-syncs/humanitec.md): Learn how to configure a Humanitec Sync for Infisical.
+- [null](https://infisical.com/docs/integrations/secret-syncs/overview.md): Learn how to sync secrets to third-party services with Infisical.
+- [Components](https://infisical.com/docs/internals/components.md): Understand Infisical's core architectural components and how they work together.
+- [Overview](https://infisical.com/docs/internals/overview.md): Read how Infisical works under the hood.
+- [Permissions](https://infisical.com/docs/internals/permissions.md): Infisical's permissions system provides granular access control.
+- [Security](https://infisical.com/docs/internals/security.md): Infisical's security model includes many considerations and initiatives.
+- [Service tokens](https://infisical.com/docs/internals/service-tokens.md): Understanding service tokens and their best practices.
+- [Infisical .NET SDK](https://infisical.com/docs/sdks/languages/csharp.md)
+- [Infisical Go SDK](https://infisical.com/docs/sdks/languages/go.md)
+- [Infisical Java SDK](https://infisical.com/docs/sdks/languages/java.md)
+- [Infisical Node.js SDK](https://infisical.com/docs/sdks/languages/node.md)
+- [Infisical Python SDK](https://infisical.com/docs/sdks/languages/python.md)
+- [Infisical Ruby SDK](https://infisical.com/docs/sdks/languages/ruby.md)
+- [SDKs](https://infisical.com/docs/sdks/overview.md)
+- [Configurations](https://infisical.com/docs/self-hosting/configuration/envars.md): Read how to configure environment variables for self-hosted Infisical.
+- [Hardware requirements](https://infisical.com/docs/self-hosting/configuration/requirements.md): Find out the minimal requirements for operating Infisical.
+- [Docker Compose](https://infisical.com/docs/self-hosting/deployment-options/docker-compose.md): Read how to run Infisical with Docker Compose template.
+- [Docker Swarm](https://infisical.com/docs/self-hosting/deployment-options/docker-swarm.md): How to self-host Infisical with Docker Swarm (HA).
+- [Kubernetes via Helm Chart](https://infisical.com/docs/self-hosting/deployment-options/kubernetes-helm.md): Learn how to use Helm chart to install Infisical on your Kubernetes cluster.
+- [Docker](https://infisical.com/docs/self-hosting/deployment-options/standalone-infisical.md): Learn how to run Infisical with Docker.
+- [Infisical Enterprise](https://infisical.com/docs/self-hosting/ee.md): Find out how to activate Infisical Enterprise edition (EE) features.
+- [FAQ](https://infisical.com/docs/self-hosting/faq.md): Frequently Asked Questions about self-hosting Infisical.
+- [Programmatic Provisioning](https://infisical.com/docs/self-hosting/guides/automated-bootstrapping.md): Learn how to provision and configure Infisical instances programmatically without UI interaction
+- [Adding Custom Certificates](https://infisical.com/docs/self-hosting/guides/custom-certificates.md): Learn how to configure Infisical with custom certificates
+- [Migrate Mongo to Postgres](https://infisical.com/docs/self-hosting/guides/mongo-to-postgres.md): Learn how to migrate Infisical from MongoDB to PostgreSQL.
+- [Upgrade Infisical Instance](https://infisical.com/docs/self-hosting/guides/upgrading-infisical.md): How to upgrade Infisical self-hosted instance
+- [null](https://infisical.com/docs/self-hosting/overview.md): Learn how to self-host Infisical on your own infrastructure.
+- [AWS ECS (HA)](https://infisical.com/docs/self-hosting/reference-architectures/aws-ecs.md): Reference architecture for self-hosting Infisical on AWS ECS
+- [Linux (HA)](https://infisical.com/docs/self-hosting/reference-architectures/linux-deployment-ha.md): Infisical High Availability Deployment architecture for Linux
+- [Kubernetes (HA)](https://infisical.com/docs/self-hosting/reference-architectures/on-prem-k8s-ha.md): Reference architecture for self-hosting Infisical on Kubernetes (HA)

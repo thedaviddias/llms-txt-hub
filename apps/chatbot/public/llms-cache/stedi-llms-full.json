@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "integration-automation",
   "cachePath": "apps/chatbot/public/llms-cache/stedi-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/stedi-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

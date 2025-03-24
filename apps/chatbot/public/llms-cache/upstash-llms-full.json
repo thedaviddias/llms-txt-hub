@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "data-analytics",
   "cachePath": "apps/chatbot/public/llms-cache/upstash-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/upstash-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

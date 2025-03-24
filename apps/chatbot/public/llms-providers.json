@@ -5,7 +5,19 @@
     "website": "https://activepieces.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/activepieces-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/activepieces-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/activepieces-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/activepieces-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "AI Squared",
@@ -13,7 +25,19 @@
     "website": "https://squared.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ai-squared-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ai-squared-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ai-squared-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ai-squared-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Answer.AI",
@@ -21,7 +45,14 @@
     "website": "https://answer.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/answer-ai-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/answer-ai-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Aporia",
@@ -29,7 +60,14 @@
     "website": "https://aporia.com",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/aporia-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/aporia-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Aptible",
@@ -37,7 +75,19 @@
     "website": "https://aptible.com",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/aptible-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/aptible-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/aptible-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/aptible-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Argil AI",
@@ -45,7 +95,14 @@
     "website": "https://argil.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/argil-ai-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/argil-ai-llms.min.json"
+      }
+    ]
   },
   {
     "name": "ast-grep",
@@ -53,7 +110,19 @@
     "website": "https://ast-grep.github.io",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ast-grep-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ast-grep-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ast-grep-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ast-grep-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Axiom",
@@ -61,7 +130,19 @@
     "website": "https://axiom.co",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/axiom-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/axiom-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/axiom-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/axiom-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Axle",
@@ -69,7 +150,14 @@
     "website": "https://axle.insure",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/axle-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/axle-llms.min.json"
+      }
+    ]
   },
   {
     "name": "BaseHub",
@@ -77,7 +165,14 @@
     "website": "https://basehub.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/basehub-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/basehub-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Better Auth",
@@ -85,7 +180,14 @@
     "website": "https://www.better-auth.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/better-auth-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/better-auth-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Bucket",
@@ -93,7 +195,14 @@
     "website": "https://docs.bucket.co/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/bucket-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/bucket-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Bun",
@@ -101,7 +210,14 @@
     "website": "https://bun.sh",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/bun-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/bun-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Campsite",
@@ -109,7 +225,14 @@
     "website": "https://developers.campsite.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/campsite-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/campsite-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Chakra UI",
@@ -117,7 +240,19 @@
     "website": "https://chakra-ui.com/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/chakra-ui-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/chakra-ui-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/chakra-ui-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/chakra-ui-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Clever Cloud",
@@ -125,7 +260,14 @@
     "website": "https://clever-cloud.com",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/clever-cloud-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/clever-cloud-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Cloudflare",
@@ -133,7 +275,19 @@
     "website": "https://www.cloudflare.com/",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/cloudflare-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/cloudflare-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/cloudflare-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/cloudflare-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Cobo",
@@ -141,7 +295,19 @@
     "website": "https://cobo.com",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/cobo-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/cobo-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/cobo-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/cobo-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Codeium",
@@ -149,7 +315,19 @@
     "website": "https://docs.codeium.com",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/codeium-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/codeium-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/codeium-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/codeium-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Conductor",
@@ -157,7 +335,19 @@
     "website": "https://docs.conductor.is",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/conductor-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/conductor-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/conductor-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/conductor-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Convex",
@@ -165,7 +355,19 @@
     "website": "https://convex.dev",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/convex-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/convex-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/convex-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/convex-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Creative Handbook Production Resource Directory",
@@ -173,7 +375,14 @@
     "website": "https://www.creativehandbook.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/creative-handbook-production-resource-directory-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/creative-handbook-production-resource-directory-llms.min.json"
+      }
+    ]
   },
   {
     "name": "CrewAI",
@@ -181,7 +390,19 @@
     "website": "https://crewai.com",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/crewai-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/crewai-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/crewai-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/crewai-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Cursor",
@@ -189,7 +410,19 @@
     "website": "https://cursor.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/cursor-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/cursor-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/cursor-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/cursor-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "The Data Driven Marketer",
@@ -197,7 +430,14 @@
     "website": "https://datadrivenmarketer.me",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/the-data-driven-marketer-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/the-data-driven-marketer-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Datafold",
@@ -205,7 +445,19 @@
     "website": "https://datafold.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/datafold-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/datafold-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/datafold-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/datafold-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Demo Time",
@@ -213,7 +465,14 @@
     "website": "https://demotime.elio.dev",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/demo-time-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/demo-time-llms.min.json"
+      }
+    ]
   },
   {
     "name": "DevHub",
@@ -221,7 +480,14 @@
     "website": "https://www.devhub.com/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/devhub-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/devhub-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Dopp Finance",
@@ -229,7 +495,14 @@
     "website": "https://dopp.finance",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dopp-finance-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dopp-finance-llms.min.json"
+      }
+    ]
   },
   {
     "name": "dotenvx",
@@ -237,7 +510,19 @@
     "website": "https://dotenvx.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dotenvx-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dotenvx-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dotenvx-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dotenvx-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Drizzle ORM",
@@ -245,7 +530,19 @@
     "website": "https://orm.drizzle.team",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/drizzle-orm-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/drizzle-orm-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/drizzle-orm-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/drizzle-orm-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Dub",
@@ -253,7 +550,19 @@
     "website": "https://dub.co",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dub-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dub-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dub-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dub-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "DuckDB",
@@ -261,7 +570,14 @@
     "website": "https://duckdb.org",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/duckdb-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/duckdb-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Dynamic",
@@ -269,7 +585,19 @@
     "website": "https://dynamic.xyz",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dynamic-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dynamic-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/dynamic-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/dynamic-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "ElevenLabs",
@@ -277,7 +605,19 @@
     "website": "https://elevenlabs.io",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/elevenlabs-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/elevenlabs-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/elevenlabs-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/elevenlabs-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Emailgic",
@@ -285,7 +625,14 @@
     "website": "https://emailgic.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/emailgic-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/emailgic-llms.min.json"
+      }
+    ]
   },
   {
     "name": "EmbedChain",
@@ -293,7 +640,19 @@
     "website": "https://embedchain.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/embedchain-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/embedchain-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/embedchain-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/embedchain-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Envoyer",
@@ -301,7 +660,19 @@
     "website": "https://envoyer.io",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/envoyer-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/envoyer-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/envoyer-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/envoyer-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Evan Boehs",
@@ -309,7 +680,14 @@
     "website": "https://boehs.org",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/evan-boehs-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/evan-boehs-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Fabric",
@@ -317,7 +695,19 @@
     "website": "https://fabric.inc",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/fabric-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/fabric-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/fabric-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/fabric-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Finch",
@@ -325,7 +715,14 @@
     "website": "https://tryfinch.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/finch-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/finch-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Fireworks AI",
@@ -333,7 +730,19 @@
     "website": "https://fireworks.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/fireworks-ai-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/fireworks-ai-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/fireworks-ai-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/fireworks-ai-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Flatfile",
@@ -341,7 +750,19 @@
     "website": "https://flatfile.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/flatfile-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/flatfile-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/flatfile-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/flatfile-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "FlowX",
@@ -349,7 +770,19 @@
     "website": "https://flowx.ai",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/flowx-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/flowx-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/flowx-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/flowx-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "FractalPay",
@@ -357,7 +790,14 @@
     "website": "https://fractalpay.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/fractalpay-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/fractalpay-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Frigade",
@@ -365,7 +805,14 @@
     "website": "https://frigade.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/frigade-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/frigade-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Front Matter CMS - a CMS in your VS Code editor",
@@ -373,7 +820,14 @@
     "website": "https://frontmatter.codes",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/front-matter-cms---a-cms-in-your-vs-code-editor-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/front-matter-cms---a-cms-in-your-vs-code-editor-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Galileo",
@@ -381,7 +835,19 @@
     "website": "https://rungalileo.io",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/galileo-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/galileo-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/galileo-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/galileo-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Glama",
@@ -389,7 +855,14 @@
     "website": "https://glama.ai",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/glama-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/glama-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Goody",
@@ -397,7 +870,14 @@
     "website": "https://ongoody.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/goody-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/goody-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Helicone",
@@ -405,7 +885,14 @@
     "website": "https://helicone.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/helicone-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/helicone-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Hugging Face Accelerate",
@@ -413,7 +900,14 @@
     "website": "https://huggingface.co",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hugging-face-accelerate-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hugging-face-accelerate-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Hugging Face Diffusers",
@@ -421,7 +915,14 @@
     "website": "https://huggingface.co",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hugging-face-diffusers-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hugging-face-diffusers-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Hugging Face Hub Python Library",
@@ -429,7 +930,14 @@
     "website": "https://huggingface.co",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hugging-face-hub-python-library-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hugging-face-hub-python-library-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Hugging Face Hub",
@@ -437,7 +945,14 @@
     "website": "https://huggingface.co",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hugging-face-hub-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hugging-face-hub-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Hugging Face Transformers",
@@ -445,7 +960,14 @@
     "website": "https://huggingface.co",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hugging-face-transformers-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hugging-face-transformers-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Hyperline",
@@ -453,7 +975,19 @@
     "website": "https://hyperline.co",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hyperline-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hyperline-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hyperline-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hyperline-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Hypermode",
@@ -461,7 +995,14 @@
     "website": "https://hypermode.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/hypermode-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/hypermode-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Infisical",
@@ -469,7 +1010,19 @@
     "website": "https://infisical.com",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/infisical-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/infisical-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/infisical-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/infisical-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Inkeep",
@@ -477,7 +1030,14 @@
     "website": "https://inkeep.com",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/inkeep-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/inkeep-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Intuned",
@@ -485,7 +1045,14 @@
     "website": "https://intunedhq.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/intuned-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/intuned-llms.min.json"
+      }
+    ]
   },
   {
     "name": "IonQ",
@@ -493,7 +1060,19 @@
     "website": "https://ionq.com",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ionq-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ionq-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ionq-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ionq-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Lago",
@@ -501,7 +1080,19 @@
     "website": "https://getlago.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/lago-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/lago-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/lago-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/lago-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Langfuse",
@@ -509,7 +1100,14 @@
     "website": "https://langfuse.com",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/langfuse-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/langfuse-llms.min.json"
+      }
+    ]
   },
   {
     "name": "llms.txt",
@@ -517,7 +1115,14 @@
     "website": "https://llmstxt.org",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/llms-txt-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/llms-txt-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Loops",
@@ -525,7 +1130,19 @@
     "website": "https://loops.so",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/loops-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/loops-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/loops-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/loops-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Lots of CSVs",
@@ -533,7 +1150,14 @@
     "website": "https://lotsofcsvs.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/lots-of-csvs-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/lots-of-csvs-llms.min.json"
+      }
+    ]
   },
   {
     "name": "LuxAlgo",
@@ -541,7 +1165,19 @@
     "website": "https://luxalgo.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/luxalgo-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/luxalgo-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/luxalgo-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/luxalgo-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Mangopay",
@@ -549,7 +1185,19 @@
     "website": "https://mangopay.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/mangopay-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/mangopay-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/mangopay-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/mangopay-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "MeshConnect",
@@ -557,7 +1205,19 @@
     "website": "https://meshconnect.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/meshconnect-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/meshconnect-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/meshconnect-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/meshconnect-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Method Financial",
@@ -565,7 +1225,19 @@
     "website": "https://methodfi.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/method-financial-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/method-financial-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/method-financial-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/method-financial-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Mintlify",
@@ -573,7 +1245,19 @@
     "website": "https://mintlify.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/mintlify-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/mintlify-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/mintlify-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/mintlify-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Model Context Protocol (MCP)",
@@ -581,7 +1265,19 @@
     "website": "https://modelcontextprotocol.io",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/model-context-protocol--mcp--llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/model-context-protocol--mcp--llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/model-context-protocol--mcp--llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/model-context-protocol--mcp--llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Mystery-o-matic",
@@ -589,7 +1285,14 @@
     "website": "https://mystery-o-matic.com",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/mystery-o-matic-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/mystery-o-matic-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Netlify",
@@ -597,7 +1300,14 @@
     "website": "https://docs.netlify.com",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/netlify-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/netlify-llms.min.json"
+      }
+    ]
   },
   {
     "name": "OpenPhone",
@@ -605,7 +1315,14 @@
     "website": "https://openphone.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/openphone-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/openphone-llms.min.json"
+      }
+    ]
   },
   {
     "name": "OpenPipe",
@@ -613,7 +1330,19 @@
     "website": "https://openpipe.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/openpipe-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/openpipe-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/openpipe-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/openpipe-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "OpenRouter",
@@ -621,7 +1350,19 @@
     "website": "https://openrouter.ai/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/openrouter-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/openrouter-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/openrouter-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/openrouter-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Oxla",
@@ -629,7 +1370,19 @@
     "website": "https://oxla.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/oxla-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/oxla-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/oxla-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/oxla-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Perplexity",
@@ -637,7 +1390,19 @@
     "website": "https://perplexity.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/perplexity-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/perplexity-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/perplexity-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/perplexity-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Pinata",
@@ -645,7 +1410,19 @@
     "website": "https://docs.pinata.cloud",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/pinata-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/pinata-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/pinata-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/pinata-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Plain",
@@ -653,7 +1430,19 @@
     "website": "https://plain.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/plain-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/plain-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/plain-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/plain-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "POPSMASH",
@@ -661,7 +1450,19 @@
     "website": "https://www.popsmash.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/popsmash-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/popsmash-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/popsmash-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/popsmash-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "PrimeV",
@@ -669,7 +1470,19 @@
     "website": "https://primev.xyz",
     "category": "infrastructure-cloud",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/primev-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/primev-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/primev-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/primev-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Prisma",
@@ -677,7 +1490,19 @@
     "website": "https://prisma.io",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/prisma-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/prisma-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/prisma-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/prisma-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "ProjectDiscovery",
@@ -685,7 +1510,19 @@
     "website": "https://projectdiscovery.io",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/projectdiscovery-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/projectdiscovery-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/projectdiscovery-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/projectdiscovery-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Quill",
@@ -693,7 +1530,14 @@
     "website": "https://quillsql.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/quill-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/quill-llms.min.json"
+      }
+    ]
   },
   {
     "name": "RainbowKit",
@@ -701,7 +1545,19 @@
     "website": "https://rainbowkit.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/rainbowkit-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/rainbowkit-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/rainbowkit-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/rainbowkit-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "raincamp",
@@ -709,7 +1565,14 @@
     "website": "https://raincamp.ai",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/raincamp-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/raincamp-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Raycast",
@@ -717,7 +1580,14 @@
     "website": "https://www.raycast.com/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/raycast-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/raycast-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Rememberizer",
@@ -725,7 +1595,19 @@
     "website": "https://docs.rememberizer.ai",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/rememberizer-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/rememberizer-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/rememberizer-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/rememberizer-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Resend",
@@ -733,7 +1615,19 @@
     "website": "https://resend.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/resend-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/resend-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/resend-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/resend-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Roc",
@@ -741,7 +1635,14 @@
     "website": "https://roc-lang.org",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/roc-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/roc-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Salesbricks",
@@ -749,7 +1650,19 @@
     "website": "https://salesbricks.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/salesbricks-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/salesbricks-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/salesbricks-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/salesbricks-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Sardine",
@@ -757,7 +1670,19 @@
     "website": "https://sardine.ai",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/sardine-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/sardine-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/sardine-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/sardine-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "ScreenshotOne",
@@ -765,7 +1690,19 @@
     "website": "https://screenshotone.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/screenshotone-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/screenshotone-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/screenshotone-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/screenshotone-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "SimplePDF",
@@ -773,7 +1710,14 @@
     "website": "https://simplepdf.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/simplepdf-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/simplepdf-llms.min.json"
+      }
+    ]
   },
   {
     "name": "SkyDeck.ai",
@@ -781,7 +1725,19 @@
     "website": "https://docs.skydeck.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/skydeck-ai-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/skydeck-ai-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/skydeck-ai-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/skydeck-ai-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Smartcar",
@@ -789,7 +1745,19 @@
     "website": "https://smartcar.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/smartcar-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/smartcar-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/smartcar-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/smartcar-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Solid",
@@ -797,7 +1765,14 @@
     "website": "https://solidfi.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/solid-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/solid-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Sourcegraph",
@@ -805,7 +1780,14 @@
     "website": "https://sourcegraph.com",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/sourcegraph-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/sourcegraph-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Stedi",
@@ -813,7 +1795,19 @@
     "website": "https://stedi.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/stedi-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/stedi-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/stedi-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/stedi-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Stripe",
@@ -821,7 +1815,14 @@
     "website": "https://stripe.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/stripe-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/stripe-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Supabase",
@@ -829,7 +1830,14 @@
     "website": "https://supabase.com/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/supabase-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/supabase-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Svelte",
@@ -837,7 +1845,19 @@
     "website": "https://svelte.dev",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/svelte-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/svelte-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/svelte-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/svelte-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Tavus",
@@ -845,7 +1865,19 @@
     "website": "https://www.tavus.io",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/tavus-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/tavus-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/tavus-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/tavus-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "TheirStack",
@@ -853,7 +1885,19 @@
     "website": "https://theirstack.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/theirstack-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/theirstack-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/theirstack-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/theirstack-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Tinybird",
@@ -861,7 +1905,19 @@
     "website": "https://tinybird.co",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/tinybird-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/tinybird-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/tinybird-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/tinybird-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Trackingplan",
@@ -869,7 +1925,14 @@
     "website": "https://www.trackingplan.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/trackingplan-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/trackingplan-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Trail of Bits",
@@ -877,7 +1940,19 @@
     "website": "https://www.trailofbits.com",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/trail-of-bits-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/trail-of-bits-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/trail-of-bits-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/trail-of-bits-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Trigger.dev",
@@ -885,7 +1960,19 @@
     "website": "https://trigger.dev",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/trigger-dev-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/trigger-dev-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/trigger-dev-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/trigger-dev-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Turbo",
@@ -893,7 +1980,14 @@
     "website": "https://turbo.build",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/turbo-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/turbo-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Turso",
@@ -901,7 +1995,19 @@
     "website": "https://turso.tech",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/turso-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/turso-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/turso-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/turso-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "UnifyGTM",
@@ -909,7 +2015,14 @@
     "website": "https://unifygtm.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/unifygtm-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/unifygtm-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Unkey",
@@ -917,7 +2030,14 @@
     "website": "https://unkey.com",
     "category": "security-identity",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/unkey-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/unkey-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Unstructured",
@@ -925,7 +2045,19 @@
     "website": "https://unstructured.io",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/unstructured-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/unstructured-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/unstructured-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/unstructured-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Upstash",
@@ -933,7 +2065,19 @@
     "website": "https://upstash.com",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/upstash-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/upstash-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/upstash-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/upstash-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "UX Patterns for Devs",
@@ -941,7 +2085,19 @@
     "website": "https://uxpatterns.dev/en",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ux-patterns-for-devs-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ux-patterns-for-devs-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/ux-patterns-for-devs-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/ux-patterns-for-devs-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Velt",
@@ -949,7 +2105,19 @@
     "website": "https://velt.dev",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/velt-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/velt-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/velt-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/velt-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Vercel's AI SDK",
@@ -957,7 +2125,14 @@
     "website": "https://sdk.vercel.ai",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/vercel-s-ai-sdk-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/vercel-s-ai-sdk-llms.min.json"
+      }
+    ]
   },
   {
     "name": "viem",
@@ -965,7 +2140,19 @@
     "website": "https://viem.sh/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/viem-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/viem-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/viem-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/viem-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Vital",
@@ -973,7 +2160,19 @@
     "website": "https://tryvital.io",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/vital-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/vital-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/vital-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/vital-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Vue Macros",
@@ -981,7 +2180,19 @@
     "website": "https://vue-macros.dev/",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/vue-macros-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/vue-macros-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/vue-macros-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/vue-macros-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Warp",
@@ -989,7 +2200,19 @@
     "website": "https://www.warp.dev",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/warp-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/warp-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/warp-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/warp-llms-full.min.json"
+      }
+    ]
   },
   {
     "name": "Webrecorder",
@@ -997,7 +2220,14 @@
     "website": "https://webrecorder.net",
     "category": "data-analytics",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/webrecorder-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/webrecorder-llms.min.json"
+      }
+    ]
   },
   {
     "name": "WordLift",
@@ -1005,7 +2235,14 @@
     "website": "https://wordlift.io",
     "category": "ai-ml",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/wordlift-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/wordlift-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Workflow",
@@ -1013,7 +2250,14 @@
     "website": "https://workflow.design",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/workflow-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/workflow-llms.min.json"
+      }
+    ]
   },
   {
     "name": "ZAPHYR PHP Framework",
@@ -1021,7 +2265,14 @@
     "website": "https://zaphyr.org",
     "category": "developer-tools",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": false
+    "hasLlmsFullTxt": false,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/zaphyr-php-framework-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/zaphyr-php-framework-llms.min.json"
+      }
+    ]
   },
   {
     "name": "Zapier",
@@ -1029,6 +2280,18 @@
     "website": "https://zapier.com",
     "category": "integration-automation",
     "hasLlmsTxt": true,
-    "hasLlmsFullTxt": true
+    "hasLlmsFullTxt": true,
+    "minifiedFiles": [
+      {
+        "type": "llms.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/zapier-llms.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/zapier-llms.min.json"
+      },
+      {
+        "type": "llms-full.txt",
+        "minifiedPath": "apps/chatbot/public/llms-cache/zapier-llms-full.min.txt",
+        "minifiedMetadataPath": "apps/chatbot/public/llms-cache/zapier-llms-full.min.json"
+      }
+    ]
   }
 ]

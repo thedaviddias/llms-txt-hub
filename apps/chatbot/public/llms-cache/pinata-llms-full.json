@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "infrastructure-cloud",
   "cachePath": "apps/chatbot/public/llms-cache/pinata-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/pinata-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

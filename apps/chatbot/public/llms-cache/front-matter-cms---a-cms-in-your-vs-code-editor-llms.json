@@ -6,5 +6,6 @@
   "type": "llms.txt",
   "category": "developer-tools",
   "cachePath": "apps/chatbot/public/llms-cache/front-matter-cms---a-cms-in-your-vs-code-editor-llms.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/front-matter-cms---a-cms-in-your-vs-code-editor-llms.min.txt",
   "lastFetched": "2025-03-24"
 }

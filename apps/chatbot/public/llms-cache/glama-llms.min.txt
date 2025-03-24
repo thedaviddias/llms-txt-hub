@@ -1,0 +1,107 @@
+# glama.ai llms.txt
+> A comprehensive AI platform that offers access to MCP & AI models for analyzing, visualizing, and managing data collaboratively, ensuring user-friendly interaction and robust security features.
+## Products
+- [All-in-One AI Workspace](https://glama.ai/chat): Offer an all-in-one AI workspace for users to upload, analyze, and visualize data using various AI models.
+- [Glama AI Pricing Information](https://glama.ai/pricing): This webpage outlines the pricing and features of the Glama AI platform for various user needs.
+- [Glama System Status](https://glama.ai/status): Provides system status updates for Glama's services.
+- [AI Workspace Overview](https://glama.ai/home): To promote an AI workspace focused on data security and user control.
+## User/Support
+- [Sign Up for Glama](https://glama.ai/sign-up): Encourages users to sign up for an AI workspace with a focus on data security and control.
+- [Login Portal](https://glama.ai/sign-in): Secure login page for an AI workspace platform.
+- [Reset Password](https://glama.ai/reset-password): Facilitates password reset for users.
+- [Customer Support Information](https://glama.ai/support): Providing customer support information and resources for Glama AI users.
+- [Terms of Service](https://glama.ai/terms-of-service): Outline the terms and conditions for using Glama's AI-driven chatbot service.
+- [Privacy Policy](https://glama.ai/privacy-policy): Clarifies how user information is collected, used, and protected by Glama.
+## blog
+- [Local LLMs vs. GitHub Copilot](https://glama.ai/blog/2024-10-11-replacing-github-copilot-with-local-llms): Explains how to replace GitHub Copilot with local LLMs for improved offline coding.
+- [Automate Computer Using Claude](https://glama.ai/blog/2024-10-22-automate-computer-using-claude): Explains how to set up and use Claude's API for automating computer tasks.
+- [Accessing User-Defined Functions](https://glama.ai/blog/2024-10-27-giving-llms-access-to-calling-user-defined-functions): To introduce and explain the concept of Lams, allowing LLMs to invoke user-defined functions for enhanced interaction.
+- [Automating MCP Issue Detection](https://glama.ai/blog/2025-01-04-automating-issue-detection): Automating the detection of issues in MCP servers to improve reliability and streamline setup processes.
+- [Multi-Model AI Trust](https://glama.ai/blog/2024-10-10-no-single-llm-can-be-trusted-in-isolation): Promotes the use of multiple LLMs for reliable information and decision-making through the Glama platform.
+- [Customizing Scrollbars with CSS](https://glama.ai/blog/2024-10-25-customizing-scrollbar-using-css): Guide on customizing scrollbars with CSS for Windows to mimic macOS style.
+- [AI Development Insights](https://glama.ai/blog): Explores various AI-related topics, tools, and tutorials for developers and engineers.
+- [Reverse Engineering Minified Code](https://glama.ai/blog/2024-08-29-reverse-engineering-minified-code-using-openai): To demonstrate reverse engineering of minified code with OpenAI's tools for enhanced understanding and readability.
+- [ASCII Progress Indicators](https://glama.ai/blog/2024-09-25-ascii-progress-indicators): Showcases ASCII progress indicators implemented in a React component for enhancing chat UI responsiveness.
+- [Model Context Protocol Overview](https://glama.ai/blog/2024-11-25-model-context-protocol-quickstart): Introduce and explain the Model Context Protocol for enhancing interactions with AI models and related tools.
+- [Chat Cost Calculator API](https://glama.ai/blog/2024-09-25-chat-cost-calculator-api): Provide a free API for calculating costs of various conversational AI models.
+- [Delightful UI Design](https://glama.ai/blog/2024-10-14-craft-is-in-the-small-details): Discussing the importance of small details in creating delightful user interfaces for chat applications.
+- [LLMs in User Onboarding](https://glama.ai/blog/2024-09-19-using-llms-to-reduce-sign-up-onboarding-friction): Exploring the use of LLMs to enhance user onboarding and reduce friction in sign-up processes.
+- [Rendering Markdown in React](https://glama.ai/blog/2024-10-21-rendering-markdown-in-react): Explains methods to render Markdown in React, comparing libraries and presenting a custom React hook solution.
+- [Markdown Document Processing](https://glama.ai/blog/2024-11-17-splitting-markdown-documents-for-rag): Discusses a technique for splitting markdown documents to enhance retrieval and question-answering capabilities in generalized systems.
+- [Automating macOS with Claude](https://glama.ai/blog/2024-10-23-automating-macos-using-claude): Guide for automating macOS tasks using Claude and Python.
+- [Designing Effective API Keys](https://glama.ai/blog/2024-10-18-what-makes-a-good-api-key): Discusses best practices for designing effective API keys to improve usability and troubleshooting.
+- [Migrating to React Router](https://glama.ai/blog/2024-12-05-remix-with-fastify): Outline steps for migrating from Remix to React Router v7 using Fastify.
+- [Implementing Tool Functionality](https://glama.ai/blog/2024-10-17-implementing-tool-functionality-in-conversational-ai): Explains how to implement tool functionality in conversational AI systems.
+- [New Model Change Feature](https://glama.ai/blog/2024-09-11-using-command-bar-to-change-model): Announces a new feature for quickly changing AI models using the command bar.
+## Gateway
+- [AI Model Gateway](https://glama.ai/gateway): Connect to and manage multiple AI models via a reliable OpenAI compatible API with detailed analytics.
+- [Gateway Api Keys](https://glama.ai/settings/gateway/api-keys): Create and manage API keys for the Glama Gateway.
+- [Glama Gateway Documentation](https://glama.ai/gateway/docs): Documentation for the Glama Gateway API features and usage.
+- [GLAMA API Documentation](https://glama.ai/gateway/docs/api): Documentation for using the GLAMA API with OpenAI features and functionalities.
+- [Request Logging Configuration](https://glama.ai/gateway/docs/request-logging): Explains configuration options for logging API requests in the Glama Gateway.
+- [Request Labeling Instructions](https://glama.ai/gateway/docs/request-labeling): Explain how to request and utilize labeling for metadata in Glama API to enhance logging and filtering.
+- [Prompt Caching Guide](https://glama.ai/gateway/docs/prompt-caching): Guide on prompt caching and monitoring for different API providers.
+- [OAuth PKCE Implementation](https://glama.ai/gateway/docs/oauth-pkce): Guide users on implementing OAuth PKCE to obtain API keys for Glama Gateway.
+## Models
+- [AI Model Rates](https://glama.ai/models): List and compare various AI models with their pricing and capabilities.
+- [AI Model Pricing](https://glama.ai/models/prices): Displays pricing and details for various AI models supported by Glama.
+- [Claude-3 Opus Model Info](https://glama.ai/models/claude-3-opus-20240229): This page provides information about the Claude-3 Opus AI model, including its capabilities and pricing.
+- [Gemini Flash 1.5 Model](https://glama.ai/models/gemini-flash-1.5): Provide detailed specifications and capabilities of the Gemini Flash 1.5 AI model by Google.
+- [Jamba-Instruct Model Details](https://glama.ai/models/jamba-instruct): Information about the jamba-instruct AI model specifications and capabilities.
+- [GPT-4O Model Overview](https://glama.ai/models/gpt-4o-2024-05-13): Overview of the GPT-4O AI model, including capabilities, token limits, and usage instructions.
+- [Command-R 08 Model Info](https://glama.ai/models/command-r-08-2024): Provides information about the command-r-08-2024 AI model, including its capabilities and usage.
+- [Gemini 2.0 Flash Model](https://glama.ai/models/gemini-2.0-flash-exp): Details the Gemini 2.0 Flash experimental model's capabilities and specifications for AI interactions.
+- [Qwen 2.5 Model Info](https://glama.ai/models/qwen-2.5-7b-instruct): Provides specifications and details for the Qwen 2.5 7B instruct AI model.
+- [AI Model Information](https://glama.ai/models/nova-lite-v1): Details the nova-lite-v1 model's capabilities, pricing, and usage for AI inquiries.
+- [Qwen Turbo Model Details](https://glama.ai/models/qwen-turbo): Information about the Qwen Turbo AI model, including its capabilities, usage, and pricing.
+- [Llama 3.3 Model Details](https://glama.ai/models/llama-3.3-70b-instruct): Information about the Llama 3.3 70B model specifications and capabilities.
+- [Model Information Page](https://glama.ai/models/nova-micro-v1): Provide information about the nova-micro-v1 AI model including specifications, pricing, and usage.
+- [Mixtral Model Overview](https://glama.ai/models/mixtral-8x22b-instruct): Provides specifications and access details for the Mixtral-8x22B instruct AI model.
+- [Mistral 7B Instruct Model](https://glama.ai/models/mistral-7b-instruct): Provides information about the Mistral 7B Instruct AI model.
+- [Gemma AI Model Details](https://glama.ai/models/gemma-2-9b-it): Provide details about the Gemma 2.9B IT AI model, including its capabilities and usage.
+- [Qwen-Max Model Overview](https://glama.ai/models/qwen-max): Overview of the Qwen-Max AI model, including its capabilities, specifications, and access information.
+- [Llama 3.2 Model Details](https://glama.ai/models/llama-3.2-1b-instruct): Information about the Llama 3.2 model specifications and usage via the Glama gateway.
+- [Mistral Large Model Info](https://glama.ai/models/mistral-large-2411): Provides specifications and details for the Mistral Large AI model.
+- [Llama 3 Model Details](https://glama.ai/models/llama-3-8b-instruct): Detailing specifications and features of the Llama 3 8B Instruct AI model.
+- [Llama 3.1 Model Info](https://glama.ai/models/llama-3.1-405b-instruct): Information about the Llama 3.1 405B instruct model and its capabilities.
+- [Model Information](https://glama.ai/models/phi-3-mini-128k-instruct): Information about the phi-3-mini-128k-instruct AI model and its capabilities.
+- [DeepSeek R1 Model Info](https://glama.ai/models/deepseek-r1): Provides details about the DeepSeek R1 AI model and its capabilities.
+- [qwq-32b-preview Model Info](https://glama.ai/models/qwq-32b-preview): Provide details about the qwq-32b-preview AI model and its capabilities.
+- [Llama 3.1 Model Info](https://glama.ai/models/llama-3.1-70b-instruct): Details specifications and capabilities of the Llama 3.1 70B instruct AI model by Meta.
+- [Gemini 1.5 Flash Model](https://glama.ai/models/gemini-1.5-flash-002): Provide details and usage information for the Gemini 1.5 Flash AI model by Google.
+- [Claude 3.5 Sonnet Model](https://glama.ai/models/claude-3-5-sonnet-20241022): Overview of the Claude 3.5 Sonnet AI model specifications and usage.
+- [Gemini Pro 1.5 EXP](https://glama.ai/models/gemini-pro-1.5-exp): Information about the Gemini Pro 1.5 EXP AI model's capabilities, pricing, and API interaction.
+- [Gemini 2.0 Flash Thinking](https://glama.ai/models/gemini-2.0-flash-thinking-exp-01-21): Provides details about the Gemini 2.0 Flash Thinking AI model, including its features and usage.
+- [Nova Pro V1 Model Info](https://glama.ai/models/nova-pro-v1): Information about the Nova Pro V1 AI model and its capabilities.
+- [Qwen-Plus Model Overview](https://glama.ai/models/qwen-plus): Overview of the Qwen-Plus AI model by Alibaba with specifications and API interaction details.
+- [DeepSeek Model Details](https://glama.ai/models/deepseek-r1-distill-qwen-32b): This page presents the DeepSeek R1 Distill Qwen 32B AI model specifications and usage details.
+- [Command R Plus Model Info](https://glama.ai/models/command-r-plus-08-2024): Inform about capabilities and details of the Command R Plus model on Glama AI.
+- [Jamba Model Overview](https://glama.ai/models/jamba-1-5-mini): Information about the jamba-1-5-mini AI model and its capabilities.
+- [Jamba 1.5 Model Details](https://glama.ai/models/jamba-1-5-large): Information about the Jamba 1.5 large AI model specifications and usage.
+- [Mistral-Nemo Model Details](https://glama.ai/models/mistral-nemo): Detailing the specifications and capabilities of the Mistral-Nemo AI model.
+- [Gemini Flash 1.5 Exp](https://glama.ai/models/gemini-flash-1.5-exp): Provides specifications and capabilities for the Gemini Flash 1.5 Exp AI model by Google.
+- [AI Model Details](https://glama.ai/models/phi-3.5-mini-128k-instruct): Information about the phi-3.5-mini-128k-instruct AI model by Microsoft.
+- [Gemini 1.5 Pro Model](https://glama.ai/models/gemini-1.5-pro-001): Overview of the Gemini 1.5 Pro AI model details and capabilities.
+- [Mistral Model Overview](https://glama.ai/models/ministral-8b-2410): Provide details about the Mistral AI model ministral-8b-2410, including capabilities and pricing.
+- [Llama 3.1 Model Info](https://glama.ai/models/llama-3.1-8b-instruct): Details about the Llama 3.1 model specifications and usage for developers.
+- [Gemini 2.0 Model Info](https://glama.ai/models/gemini-2.0-flash-thinking-exp-1219): Provides details about the Gemini 2.0 Flash Thinking AI model including capabilities, usage, and pricing.
+- [Llama-3.2 Model Details](https://glama.ai/models/llama-3.2-11b-vision-instruct): Showcase the capabilities and specifications of the Llama-3.2-11b-vision-instruct AI model.
+- [Gemini 1.5 Flash Model](https://glama.ai/models/gemini-1.5-flash-001): Details specifications and capabilities of the Gemini 1.5 Flash AI model by Google.
+- [Gemini 1.5 Pro Model](https://glama.ai/models/gemini-1.5-pro-002): Information about the Gemini 1.5 Pro AI model including specifications, capabilities, and usage instructions.
+- [Mistral 3B 2410 Model Info](https://glama.ai/models/ministral-3b-2410): Provide information on the Mistral 3B 2410 AI model specifications and interaction through the Glama gateway.
+- [DeepSeek R1 Model Info](https://glama.ai/models/deepseek-r1-distill-llama-70b): Provide details about the DeepSeek R1 Distilled LLaMA 70B AI model and its capabilities.
+- [AI Model Specifications](https://glama.ai/models/command-r7b-12-2024): Details specifications and capabilities of the command-r7b-12-2024 AI model.
+- [AI Model Overview](https://glama.ai/models/phi-3-medium-128k-instruct): Information about the Phi-3 medium AI model and its usage via the Glama gateway.
+- [Claude 3.5 Haiku Model](https://glama.ai/models/claude-3-5-haiku-20241022): Overview of the Claude 3.5 Haiku AI model's capabilities, usage, and pricing.
+- [LLaMA 3 Model Details](https://glama.ai/models/llama-3-70b-instruct): Provides information about the LLaMA 3 70B Instruct AI model, its capabilities, and usage.
+- [Qwen 2.5 Model Info](https://glama.ai/models/qwen-2.5-72b-instruct): Details specifications and capabilities of the Qwen 2.5 72B Instruct AI model.
+- [DeepSeek Chat v3 Model](https://glama.ai/models/deepseek-chat-v3): Provide detailed specifications and capabilities for the deepseek-chat-v3 AI model.
+- [Claude 3.5 Model Details](https://glama.ai/models/claude-3-5-sonnet-20240620): Provide specifications and capabilities for the Claude 3.5 AI model.
+## Settings
+- [Settings](https://glama.ai/settings): Manage user settings for Glama AI.
+- [Log Settings](https://glama.ai/settings/logs): Information about request logging
+- [Analytics Settings](https://glama.ai/settings/analytics): Configure and manage analytics settings for Glama AI.
+## MCP (model context protocol)
+- [MCP Server Registry](https://glama.ai/mcp): A registry for Model Context Protocol (MCP) servers, providing search and access to various AI-enabled tools.
+- [MCP Servers List](https://glama.ai/mcp/servers): Provides a comprehensive list of Model Context Protocol (MCP) servers for various applications and functionalities.
+- [MCP Clients List](https://glama.ai/mcp/clients): Provides a comprehensive list of Model Context Protocol (MCP) clients for various applications and functionalities.

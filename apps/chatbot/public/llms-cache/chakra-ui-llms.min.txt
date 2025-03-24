@@ -1,0 +1,12 @@
+# Chakra UI v3 Documentation for LLMs
+> Chakra UI is an accessible component system for building products with speed
+## Documentation Sets
+- [Complete documentation](chakra-v3-docs-c7dlh036w-chakra-ui.vercel.app/llms-full.txt): The complete Chakra UI v3 documentation including all components, styling and theming
+- [Components](chakra-v3-docs-c7dlh036w-chakra-ui.vercel.app/llms-components.txt): Documentation for all components in Chakra UI v3.
+- [Styling](chakra-v3-docs-c7dlh036w-chakra-ui.vercel.app/llms-styling.txt): Documentation for the styling system in Chakra UI v3.
+- [Theming](chakra-v3-docs-c7dlh036w-chakra-ui.vercel.app/llms-theming.txt): Documentation for theming Chakra UI v3.
+- [Migrating to v3](chakra-v3-docs-c7dlh036w-chakra-ui.vercel.app/llms-v3-migration.txt): Documentation for migrating to Chakra UI v3.
+## Notes
+- The complete documentation includes all content from the official documentation
+- Package-specific documentation files contain only the content relevant to that package
+- The content is automatically generated from the same source as the official documentation

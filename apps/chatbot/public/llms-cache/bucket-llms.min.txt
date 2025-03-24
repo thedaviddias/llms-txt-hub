@@ -1,0 +1,63 @@
+# Bucket docs
+## Bucket docs
+- [Introduction](https://docs.bucket.co/): Welcome to Bucket, the feature flags to go fast.
+- [Getting started](https://docs.bucket.co/documentation/getting-started): Getting started with Bucket
+- [Overview](https://docs.bucket.co/supported-languages/overview): Bucket SDKs for React, Node.js, Next.js, and more. Supports OpenFeature.
+- [React SDK](https://docs.bucket.co/supported-languages/react-sdk)
+- [Reference](https://docs.bucket.co/supported-languages/react-sdk/globals)
+- [Browser SDK](https://docs.bucket.co/supported-languages/browser-sdk)
+- [Feedback](https://docs.bucket.co/supported-languages/browser-sdk/feedback)
+- [Reference](https://docs.bucket.co/supported-languages/browser-sdk/globals)
+- [Node.js SDK](https://docs.bucket.co/supported-languages/node-sdk)
+- [Reference](https://docs.bucket.co/supported-languages/node-sdk/globals)
+- [Next.js](https://docs.bucket.co/supported-languages/next.js): Next.js client for Bucket
+- [OpenFeature](https://docs.bucket.co/supported-languages/openfeature): Bucket provides OpenFeature integration for use in browser (Web) and Node.js
+- [API Introduction](https://docs.bucket.co/api/http-api): Introduction to Bucket API
+- [API Reference](https://docs.bucket.co/api/api-reference)
+- [CLI](https://docs.bucket.co/api/cli)
+- [Overview](https://docs.bucket.co/integrations/overview): Sync feature releases, access, adoption, and feedback to Linear, PostHog, Segment and more
+- [Linear](https://docs.bucket.co/integrations/linear): How Bucket integrates with Linear
+- [Datadog](https://docs.bucket.co/integrations/datadog): How Bucket integrates with Datadog
+- [Segment](https://docs.bucket.co/integrations/segment): How Bucket integrates with Segment
+- [PostHog](https://docs.bucket.co/integrations/posthog): How Bucket integrates with PostHog
+- [Amplitude](https://docs.bucket.co/integrations/amplitude): How Bucket integrates with Amplitude
+- [Mixpanel](https://docs.bucket.co/integrations/mixpanel): How Bucket integrates with Mixpanel
+- [AWS S3](https://docs.bucket.co/integrations/aws-s3): How Bucket integrates with AWS S3
+- [Slack](https://docs.bucket.co/integrations/slack): Integrate Slack to get notified about new feature changes and feedback
+- [Product overview](https://docs.bucket.co/product-handbook/product-overview)
+- [Data model](https://docs.bucket.co/product-handbook/concepts)
+- [App](https://docs.bucket.co/product-handbook/concepts/app)
+- [Environment](https://docs.bucket.co/product-handbook/concepts/environment)
+- [Feature](https://docs.bucket.co/product-handbook/concepts/feature)
+- [Feature view](https://docs.bucket.co/product-handbook/concepts/feature-view)
+- [Company](https://docs.bucket.co/product-handbook/concepts/company)
+- [Segment](https://docs.bucket.co/product-handbook/concepts/segment)
+- [User](https://docs.bucket.co/product-handbook/concepts/user)
+- [Track event](https://docs.bucket.co/product-handbook/concepts/event)
+- [Feature events](https://docs.bucket.co/product-handbook/concepts/feature-events)
+- [Feedback](https://docs.bucket.co/product-handbook/concepts/feedback)
+- [Release stage](https://docs.bucket.co/product-handbook/concepts/release-stage)
+- [Targeting rules](https://docs.bucket.co/product-handbook/concepts/targeting-rules)
+- [Filter](https://docs.bucket.co/product-handbook/concepts/filter)
+- [Feature rollouts](https://docs.bucket.co/product-handbook/feature-rollouts): Learn more about feature rollouts in Bucket
+- [Access rules](https://docs.bucket.co/product-handbook/feature-rollouts/feature-targeting-rules): Learn more about access rules in Bucket
+- [Remote config](https://docs.bucket.co/product-handbook/remote-config): Learn more about remote config in Bucket
+- [Feature adoption](https://docs.bucket.co/product-handbook/feature-usage-configuration): Learn more about feature adoption in Bucket
+- [STARS Framework](https://docs.bucket.co/product-handbook/feature-usage-configuration/stars-framework): Learn more about the STARS Framework
+- [Feature feedback](https://docs.bucket.co/product-handbook/feature-analysis): Learn more about feature feedback in Bucket
+- [Automated feedback surveys](https://docs.bucket.co/product-handbook/feature-analysis/automated-feedback-surveys): Learn more about automated feedback surveys in Bucket
+- [Give feedback button](https://docs.bucket.co/product-handbook/feature-analysis/give-feedback-button): Adding a feedback button using Bucket SDKs in a few lines of code.
+- [Feature entitlements](https://docs.bucket.co/product-handbook/feature-entitlements): Learn more about feature entitlements in Bucket
+- [Simple role-based entitlements](https://docs.bucket.co/product-handbook/feature-entitlements/simple-role-based-entitlements): Learn more about simple role-based entitlements in Bucket
+- [Creating segments](https://docs.bucket.co/product-handbook/creating-segments): Learn more about segments in Bucket
+- [Feature views](https://docs.bucket.co/product-handbook/feature-views): Learn more about feature views in Bucket
+- [Managing apps](https://docs.bucket.co/product-handbook/creating-and-managing-apps): Learn more about apps in Bucket
+- [Environments](https://docs.bucket.co/product-handbook/creating-and-managing-apps/environments): Learn more about environments in Bucket
+- [Warehouse](https://docs.bucket.co/product-handbook/data-export): Learn more about data warehouse in Bucket
+- [Data residency](https://docs.bucket.co/product-handbook/data-residency): Bucket on data residency
+- [Exclude internal usage](https://docs.bucket.co/product-handbook/exclude-internal-usage): How to exclude internal usage from your feature adoption reports
+- [Add your first feature flag](https://docs.bucket.co/guides/create-your-first-feature): Getting started with Bucket by adding your first feature flag
+- [Release beta features](https://docs.bucket.co/guides/release-beta-features): How to release beta features to your React app with Bucket
+- [Create a beta feature opt-in page](https://docs.bucket.co/guides/self-opt-in): How to create a beta feature self opt-in page in React with Bucket
+- [Changelog](https://docs.bucket.co/support/changelog): We ship product updates weekly. Follow us @bucketdotco on Twitter/X for the latest.
+- [Get support](https://docs.bucket.co/support/get-support): Need support? We're here to help

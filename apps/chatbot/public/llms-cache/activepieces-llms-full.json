@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "integration-automation",
   "cachePath": "apps/chatbot/public/llms-cache/activepieces-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/activepieces-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

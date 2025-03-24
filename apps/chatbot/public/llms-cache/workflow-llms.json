@@ -6,5 +6,6 @@
   "type": "llms.txt",
   "category": "integration-automation",
   "cachePath": "apps/chatbot/public/llms-cache/workflow-llms.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/workflow-llms.min.txt",
   "lastFetched": "2025-03-24"
 }

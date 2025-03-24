@@ -6,5 +6,6 @@
   "type": "llms.txt",
   "category": "ai-ml",
   "cachePath": "apps/chatbot/public/llms-cache/argil-ai-llms.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/argil-ai-llms.min.txt",
   "lastFetched": "2025-03-24"
 }

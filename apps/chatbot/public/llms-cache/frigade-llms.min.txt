@@ -1,0 +1,84 @@
+# Frigade
+## Docs
+- [API Authorization](https://docs.frigade.com/api-reference/authorization.md)
+- [Get User Flow State](https://docs.frigade.com/api-reference/flows/flow-states-get.md): Get the state of a User in all Flows
+- [Update User Flow State](https://docs.frigade.com/api-reference/flows/flow-states-post.md): Updates the user's state in a single Flow
+- [Delete Flow](https://docs.frigade.com/api-reference/flows/flows-delete.md): Delete a Flow
+- [Get a Flow](https://docs.frigade.com/api-reference/flows/flows-get.md): Get a single Flow by its Flow ID/slug.
+- [Update Flow](https://docs.frigade.com/api-reference/flows/flows-put.md): Update a Flow's configuration and metadata
+- [Get all Flows](https://docs.frigade.com/api-reference/flows/overview.md): Get all Flows for your organization.
+- [Delete a Group](https://docs.frigade.com/api-reference/groups/groups-delete.md)
+- [Find a Group](https://docs.frigade.com/api-reference/groups/groups-get.md): Find a group by ID
+- [Create a Group](https://docs.frigade.com/api-reference/groups/overview.md)
+- [Create or update a User](https://docs.frigade.com/api-reference/users/overview.md): Create a user, add properties, and tracking events
+- [Delete a User](https://docs.frigade.com/api-reference/users/users-delete.md)
+- [Find a User](https://docs.frigade.com/api-reference/users/users-get.md): Find a user by ID
+- [Webhooks](https://docs.frigade.com/api-reference/webhooks.md)
+- [Announcement](https://docs.frigade.com/component/announcement.md): Communicate information or drive action via modal-based announcements
+- [Banner](https://docs.frigade.com/component/banner.md): Communicate information or drive action via in-line banners
+- [Carousel](https://docs.frigade.com/component/checklist/carousel.md): A carousel checklist component to drive set up and activation
+- [Collapsible](https://docs.frigade.com/component/checklist/collapsible.md): A condensed checklist component that can be used inline or in a modal
+- [Form](https://docs.frigade.com/component/form.md): Collect user information via forms in modals or embedded in your UI
+- [Hint](https://docs.frigade.com/component/hint.md): Hints are a great way to subtly call attention to specific parts of your UI
+- [Card](https://docs.frigade.com/component/inline-card.md): Communicate information or drive action via in-line content cards
+- [Components Overview](https://docs.frigade.com/component/overview.md): Beautiful UI components, best practices built-in
+- [Progress Badge](https://docs.frigade.com/component/progress-badge.md): Display a user's progress through a Flow
+- [NPS Survey](https://docs.frigade.com/component/survey/nps.md): Collect structured and freeform feedback from your users
+- [Tour](https://docs.frigade.com/component/tour.md): Guide users through a specific product flow or feature
+- [Guide: Product Announcements](https://docs.frigade.com/guides/announcements.md)
+- [Guide: Cards and Banners](https://docs.frigade.com/guides/cards-video-demo.md): In this video, we show you how to build a GitHub style embedded card.
+- [Flow Component](https://docs.frigade.com/guides/custom/flow-component.md)
+- [JavaScript SDK](https://docs.frigade.com/guides/custom/js-sdk.md)
+- [useFlow Hook](https://docs.frigade.com/guides/custom/useflow-hook.md)
+- [Guide: Building Slack-Integrated Forms](https://docs.frigade.com/guides/form-video-demo.md): In this video, we show you how to build a Form with React, Frigade, and Next.js and how to send the form data to Slack.
+- [Guide: Build a 'New' Badge](https://docs.frigade.com/guides/new-badge-video-demo.md): In this video, we show you how to build a 'New' badge with React and Frigade.
+- [Guide: Targeting New Users](https://docs.frigade.com/guides/only-target-new-users.md): Learn how to use Frigade's [targeting](/platform/targeting) feature to only show a Flow to new users
+- [Guide: Product Tours & Hints](https://docs.frigade.com/guides/tours.md)
+- [Amplitude](https://docs.frigade.com/integrations/amplitude.md)
+- [Heap](https://docs.frigade.com/integrations/heap.md)
+- [Hubspot](https://docs.frigade.com/integrations/hubspot.md)
+- [Mixpanel](https://docs.frigade.com/integrations/mixpanel.md)
+- [Overview](https://docs.frigade.com/integrations/overview.md): Connect your favorite tools to Frigade
+- [Posthog](https://docs.frigade.com/integrations/posthog.md)
+- [Salesforce](https://docs.frigade.com/integrations/salesforce.md)
+- [Segment](https://docs.frigade.com/integrations/segment.md)
+- [Slack](https://docs.frigade.com/integrations/slack.md): Easily send messages to a Slack channel when users take actions in your Flows
+- [Frigade Documentation](https://docs.frigade.com/overview.md): Product growth and onboarding for modern software companies
+- [Analytics](https://docs.frigade.com/platform/analytics.md): Frigade provides analytics and connects to external analytics platforms
+- [Collections](https://docs.frigade.com/platform/collections.md): Launch Flows and set cool-offs without code
+- [Dynamic Variables](https://docs.frigade.com/platform/dynamic-variables.md)
+- [Environments](https://docs.frigade.com/platform/environments.md): Frigade supports development and production environments
+- [Flows](https://docs.frigade.com/platform/flows.md)
+- [Using HTML in Strings](https://docs.frigade.com/platform/html-in-strings.md)
+- [Internationalization](https://docs.frigade.com/platform/i18n.md)
+- [Admin Overview](https://docs.frigade.com/platform/overview.md): Easily manage your product onboarding from the admin dashboard
+- [Security](https://docs.frigade.com/platform/security.md): Learn about Frigade's security practices and certifications
+- [Targeting](https://docs.frigade.com/platform/targeting.md)
+- [Users and Groups](https://docs.frigade.com/platform/users-and-groups.md): Easily manage users and groups as they engage with your Flows
+- [Version Control](https://docs.frigade.com/platform/versioning.md): Manage the rollout of new Flow updates with built-in version control
+- [Quickstart Guide](https://docs.frigade.com/quickstart.md): Get set up with Frigade in less than 15 minutes
+- [Dynamically Completing a Step](https://docs.frigade.com/sdk/advanced/completing-a-step.md): Learn how to dynamically complete steps in Flows when your users take certain actions in your application.
+- [Merging a guest session with a authenticated user](https://docs.frigade.com/sdk/advanced/linking-guest-users.md): Link a guest session's state to a user when they register or log in
+- [Reverse Proxy and Custom Domains](https://docs.frigade.com/sdk/advanced/reverse-proxy.md)
+- [Automated Testing](https://docs.frigade.com/sdk/advanced/testing.md): Learn how to run unit and integration tests with your Frigade Flows
+- [V1 SDK Guide](https://docs.frigade.com/sdk/advanced/v1.md)
+- [Common Issues and Solutions](https://docs.frigade.com/sdk/common-issues.md): Find solutions to common issues with the Frigade SDK.
+- [useFlow](https://docs.frigade.com/sdk/hooks/flow.md)
+- [useFrigade](https://docs.frigade.com/sdk/hooks/frigade.md)
+- [useGroup](https://docs.frigade.com/sdk/hooks/group.md)
+- [useUser](https://docs.frigade.com/sdk/hooks/user.md)
+- [Flow JS Type Definition](https://docs.frigade.com/sdk/js/flow.md)
+- [Frigade JS Type Definition](https://docs.frigade.com/sdk/js/frigade.md)
+- [JS Quickstart](https://docs.frigade.com/sdk/js/quickstart.md)
+- [Step JS Type Definition](https://docs.frigade.com/sdk/js/step.md)
+- [Navigation](https://docs.frigade.com/sdk/navigation.md)
+- [React SDK Overview](https://docs.frigade.com/sdk/overview.md): Frigade React SDK and JavaScript SDK
+- [Provider](https://docs.frigade.com/sdk/provider.md)
+- [React SDK Quickstart](https://docs.frigade.com/sdk/quickstart.md): How to set up Frigade in your React app
+- [CSS Overrides](https://docs.frigade.com/sdk/styling/css-overrides.md)
+- [Theming](https://docs.frigade.com/sdk/styling/theming.md)
+## Optional
+- [Demo](https://demo.frigade.com)
+- [GitHub](https://github.com/frigadehq)
+- [Figma UI Kit](https://www.figma.com/community/file/1311771082704525565/frigade-product-onboarding-ui-components)
+- [Onboarding Examples](https://productonboarding.com)

@@ -1,0 +1,5 @@
+# TheirStack
+TheirStack is a sales tool designed to identify potential customers based on technology usage and hiring signals. It tracks over 21,000 technologies and analyzes 60 million job postings across 100 countries to help SaaS companies, recruiting agencies, and consulting firms to get list of companies that need what they sell
+# Main
+- [Api Reference](https://api.theirstack.com)
+- [Docs](https://theirstack.com/en/docs)

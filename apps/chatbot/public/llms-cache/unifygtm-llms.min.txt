@@ -1,0 +1,55 @@
+# Unify
+## Docs
+- [Best Practices: Optimizing Your Email Outreach](https://docs.unifygtm.com/best-practices/deliverability.md)
+- [Best Practices](https://docs.unifygtm.com/best-practices/introduction.md): Unify's recommendations for high-performance GTM.
+- [Best Practices: Plays to Book You Meetings](https://docs.unifygtm.com/best-practices/plays.md)
+- [Intent Client Usage](https://docs.unifygtm.com/developers/intent-client/client-spec.md): Learn how to send events using the Unify Intent Client.
+- [JavaScript Client](https://docs.unifygtm.com/developers/intent-client/js-client.md): Install the Unify Intent client in a frontend web application framework.
+- [Intent Client Overview](https://docs.unifygtm.com/developers/intent-client/overview.md): Learn how to start collecting website intent data in Unify.
+- [React](https://docs.unifygtm.com/developers/intent-client/react.md): Install the Unify Intent client in a React app.
+- [Website Tag](https://docs.unifygtm.com/developers/intent-client/website-tag.md): Quickly set up the Unify Intent client on a static marketing website.
+- [Onboarding Guide](https://docs.unifygtm.com/getting-started/onboarding-guide.md): Complete a few key steps to fully activate on Unify.
+- [Welcome to Unify](https://docs.unifygtm.com/getting-started/welcome.md): Unify is the all-in-one solution for sales, marketing, and go-to-market teams.
+- [Building an Agent](https://docs.unifygtm.com/reference/agents/building-an-agent.md): Learn the fundamentals of building Agents in Unify.
+- [Unify Agents](https://docs.unifygtm.com/reference/agents/overview.md): Learn what Unify Agents are and how to use them.
+- [Agent Response Types](https://docs.unifygtm.com/reference/agents/response-types.md): Control how Unify Agents respond to your questions.
+- [Domain Configuration](https://docs.unifygtm.com/reference/deliverability/domain-configuration.md): Set up domain names for Unify-managed mailboxes.
+- [Mailbox Configuration](https://docs.unifygtm.com/reference/deliverability/mailbox-configuration.md): Provision Unify-managed mailboxes for your team to send from.
+- [Unify Deliverability](https://docs.unifygtm.com/reference/deliverability/overview.md): Safeguard your deliverability while sending emails at scale.
+- [6sense Integration Guide](https://docs.unifygtm.com/reference/integrations/6sense.md): This guide outlines how start revealing anonymous visitors on your website using 6sense. If you already purchase a 6sense plan, this document is for you.
+- [Clearbit Reveal Integration Guide](https://docs.unifygtm.com/reference/integrations/clearbit.md): This guide outlines how start revealing anonymous visitors on your website using Clearbit Reveal. If you already purchase a Clearbit Reveal plan, this document is for you.
+- [Gmail Integration Guide](https://docs.unifygtm.com/reference/integrations/gmail.md): This guide outlines how start sending and receiving emails via Gmail in Unify.
+- [Google Tag Manager Integration Guide](https://docs.unifygtm.com/reference/integrations/google-tag-manager.md): This guide outlines how to install the Unify website tag using Google Tag Manager.
+- [HubSpot Integration Guide](https://docs.unifygtm.com/reference/integrations/hubspot/overview.md): This guide outlines how to connect your HubSpot CRM to Unify.
+- [Property Options](https://docs.unifygtm.com/reference/integrations/hubspot/property-options.md): Find the options for a property in HubSpot not available in the Unify UI
+- [How Bidirectional Syncs Work](https://docs.unifygtm.com/reference/integrations/salesforce/bidirectional-syncs.md): This guide explains in depth how syncs work between Salesforce and Unify.
+- [Bulk Update Records](https://docs.unifygtm.com/reference/integrations/salesforce/bulk-update-records.md): Use Salesforce reports to quickly update a large number of records in Salesforce.
+- [Configure Default Values](https://docs.unifygtm.com/reference/integrations/salesforce/default-values.md): This guide explains how to specify default values that should be used when writing to Salesforce.
+- [Toggle Lead Assignment Rules in Salesforce](https://docs.unifygtm.com/reference/integrations/salesforce/lead-assignment-rules.md): Troubleshoot a common bug in Salesforce related to lead assignment rules.
+- [Salesforce Integration Guide](https://docs.unifygtm.com/reference/integrations/salesforce/overview.md): This guide outlines how to connect your Salesforce instance to Unify.
+- [Required Permissions and Settings](https://docs.unifygtm.com/reference/integrations/salesforce/required-permissions.md): Ensure your Salesforce user has the required permissions for Unify.
+- [Segment Integration Guide](https://docs.unifygtm.com/reference/integrations/segment.md): This guide outlines how to connect your Segment workspace to Unify.
+- [Slack Integration Guide](https://docs.unifygtm.com/reference/integrations/slack.md): This guide details the process of integrating Unify with your Slack workspace.
+- [Zapier Integration Guide](https://docs.unifygtm.com/reference/integrations/zapier.md): If you use Zapier to run automations, you can connect your account to Unify and run Zaps as a part of Unify sequences.
+- [Authentication Options](https://docs.unifygtm.com/reference/management/authentication.md): Learn about the login methods available for your organization in Unify.
+- [Unify Credit System](https://docs.unifygtm.com/reference/management/credit-system.md): Learn how credits work in Unify.
+- [Organization Settings](https://docs.unifygtm.com/reference/management/organization-settings.md): Configure your organization within Unify.
+- [User Management](https://docs.unifygtm.com/reference/management/user-management.md): Manage users and permissions within Unify.
+- [Reference Guide](https://docs.unifygtm.com/reference/overview.md): Bring your most creative go-to-market ideas to life with Unify.
+- [Play Actions](https://docs.unifygtm.com/reference/plays/actions.md): Actions are the building blocks of Unify Plays.
+- [Building a Play](https://docs.unifygtm.com/reference/plays/building-a-play.md): Learn the fundamentals of creating Plays in Unify.
+- [Unify Plays](https://docs.unifygtm.com/reference/plays/overview.md): Learn what Unify Plays are and how to use them.
+- [Play Triggers](https://docs.unifygtm.com/reference/plays/triggers.md): Triggers represent the events and data sources that a Play runs on.
+- [Unify Sequences](https://docs.unifygtm.com/reference/sequences/overview.md): Learn what Unify sequences are and how to use them.
+- [Smart Snippets](https://docs.unifygtm.com/reference/sequences/smart-snippets.md): Personalize your outreach with AI-powered email copy generation.
+- [Template Variables](https://docs.unifygtm.com/reference/sequences/template-variables.md): Use template variables to personalize your emails.
+- [Champion Tracking](https://docs.unifygtm.com/reference/signals/champions.md): Automatically track your champions and take action on them.
+- [New Hire Tracking](https://docs.unifygtm.com/reference/signals/new-hires.md): Automatically track new hires at companies and take action.
+- [Unify Signals](https://docs.unifygtm.com/reference/signals/overview.md): Learn what data signals are and how to use them.
+- [Website Visitor Intent](https://docs.unifygtm.com/reference/signals/website-visitors.md): Start revealing the companies and people visiting your website.
+- [How to Create a Play](https://docs.unifygtm.com/tutorials/how-to-create-a-play.md): Learn the fundamentals and build a Unify Play from start to finish.
+- [How to Create an Audience](https://docs.unifygtm.com/tutorials/how-to-create-an-audience.md): Create dynamic lists of companies and people to view and act on.
+- [How to Create an Exclusion](https://docs.unifygtm.com/tutorials/how-to-create-an-exclusion.md): Prevent Unify from actioning on specific companies or people.
+- [How to Receive Slack Alerts](https://docs.unifygtm.com/tutorials/how-to-receive-slack-alerts.md): Receive real-time Slack alerts when companies or people enter an audience.
+- [How to Define Personas](https://docs.unifygtm.com/tutorials/how-to-use-personas.md): Create personas to prospect and reach out to your ideal buyers.
+- [Unify Tutorials](https://docs.unifygtm.com/tutorials/welcome.md): Quickly learn the basics and become a Unify expert.

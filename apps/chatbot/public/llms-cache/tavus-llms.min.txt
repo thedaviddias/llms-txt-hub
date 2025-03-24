@@ -1,0 +1,130 @@
+# Tavus
+## Docs
+- [Create Conversation](https://docs.tavus.io/api-reference/conversations/create-conversation.md): With the Tavus Conversational Video Interface (CVI) you are able to create a `conversation` with a replica in real time.
+### Conversations
+A `conversation` is a video call with a replica.
+After creating a `conversation`, a `conversation_url` will be returned in the response. The `conversation_url` can be used to join the conversation directly or can be embedded in a website. To embed the `conversation_url` in a website, you can find [instructions here](https://www.daily.co/products/prebuilt-video-call-app/quickstart/).
+Once a conversation is created, the replica will automatically join the call and will start participating.
+By providing a `callback_url`, you can receive webhooks with updates regarding the conversation state.
+[Learn about recording conversations here](/sections/conversational-video-interface/recording-rooms).
+- [Delete Conversation](https://docs.tavus.io/api-reference/conversations/delete-conversation.md): This endpoint deletes a single conversation by its unique identifier.
+- [End Conversation](https://docs.tavus.io/api-reference/conversations/end-conversation.md): This endpoint ends a single conversation by its unique identifier.
+- [Get Conversation](https://docs.tavus.io/api-reference/conversations/get-conversation.md): This endpoint returns a single conversation by its unique identifier.
+- [List Conversations](https://docs.tavus.io/api-reference/conversations/get-conversations.md): This endpoint returns a list of all Conversations created by the account associated with the API Key in use.
+- [Create Persona](https://docs.tavus.io/api-reference/personas/create-persona.md): Create and customize a digital replica's personality for Conversational Video Interface (CVI). A persona defines the replica's behavior and capabilities through configurable layers including:
+**Core Components:**
+- Replica - Choice of audio/visual appearance
+- Context - Customizable contextual information, for use by LLM
+- System Prompt - Customizable system prompt, for use by LLM
+- Layers
+- STT - Transcription, turn taking, and Sparrow-0 settings
+- LLM - Language model settings
+- TTS - Text-to-Speech settings
+{/*- STS - Speech-to-Speech settings*/}
+- Perception - Multimodal vision and understanding settings (Raven-0)
+When creating a conversation, the persona configuration determines how the replica interacts, processes information, and responds to participants. Each layer can be fine-tuned to achieve the desired conversational experience.
+- [Delete Persona](https://docs.tavus.io/api-reference/personas/delete-persona.md): This endpoint deletes a single persona by its unique identifier.
+- [Get Persona](https://docs.tavus.io/api-reference/personas/get-persona.md): This endpoint returns a single persona by its unique identifier.
+- [List Personas](https://docs.tavus.io/api-reference/personas/get-personas.md): This endpoint returns a list of all Personas created by the account associated with the API Key in use.
+- [Update Persona Context](https://docs.tavus.io/api-reference/personas/patch-persona-context.md): This replaces the existing persona context with the provided context.
+- [Create Replica](https://docs.tavus.io/api-reference/phoenix-replica-model/create-replica.md): This endpoint creates a new Replica that can be used to generate personalized videos.
+By default, all new replicas will be trained using the `phoenix-3` model. You can optionally create phoenix-2 replicas by setting the `model_name` parameter to `phoenix-2`.
+The only required body parameter is `train_video_url`. This url must be a download link such as a presigned S3 url. Please ensure you pass in a video that meets the [requirements](/sections/troubleshooting/training-video-size) for training.
+Replica training will fail without the following consent statement being present at the beginning of the video:
+> I, [FULL NAME], am currently speaking and consent Tavus to create an AI clone of me by using the audio and video samples I provide. I understand that this AI clone can be used to create videos that look and sound like me.
+Learn more about the consent statement [here](/sections/troubleshooting/consent-statement).
+Learn more about training a personal Replica [here](/sections/replicas/personal-replicas).
+- [Delete Replica](https://docs.tavus.io/api-reference/phoenix-replica-model/delete-replica.md): This endpoint deletes a single Replica by its unique identifier. Once deleted, this Replica can not be used to generate videos.
+- [Get Replica](https://docs.tavus.io/api-reference/phoenix-replica-model/get-replica.md): This endpoint returns a single Replica by its unique identifier.
+Included in the response body is a `training_progress` string that represents the progress of the Replica training. If there are any errors during training, the `status` will be `error` and the `error_message` will be populated.
+- [List Replicas](https://docs.tavus.io/api-reference/phoenix-replica-model/get-replicas.md): This endpoint returns a list of all Replicas created by the account associated with the API Key in use. In the response, a root level `data` key will contain the list of Replicas.
+- [Rename Replica](https://docs.tavus.io/api-reference/phoenix-replica-model/patch-replica-name.md): This endpoint renames a single Replica by its unique identifier.
+- [Generate Speech](https://docs.tavus.io/api-reference/speech/create-speech.md): This endpoint generates an audio file based on a script with a provided Replica.
+- [Delete Speech](https://docs.tavus.io/api-reference/speech/delete-speech.md): This endpoint deletes a single speech by its unique identifier.
+- [Get Speech](https://docs.tavus.io/api-reference/speech/get-speech.md): This endpoint returns a single speech by its unique identifier.
+- [List Speeches](https://docs.tavus.io/api-reference/speech/get-speech-list.md): This endpoint returns a list of all Speeches created by the account associated with the API Key in use.
+- [Rename Speech](https://docs.tavus.io/api-reference/speech/patch-speech-name.md): This endpoint renames a single speech by its unique identifier.
+- [Generate Video](https://docs.tavus.io/api-reference/video-request/create-video.md): This endpoint generates a new video using a Replica and either a script or an audio file.
+The only required body parameters are `replica_id` and either `script` or `audio_file`.
+The `replica_id` is a unique identifier for the Replica that will be used to generate the video. The `script` is the text that will be spoken by the Replica in the video. If you would like to generate a video using an audio file instead of a script, you can provide `audio_url` instead of `script`. Currently, `.wav` and `.mp3` files are supported for audio file input.
+If a `background_url` is provided, Tavus will record a video of the website and use it as the background for the video. If a `background_source_url` is provided, where the URL points to a download link such as a presigned S3 URL, Tavus will use the video as the background for the video. If neither are provided, the video will consist of a full screen Replica.
+To learn more about generating videos with Replicas, see [here](/sections/video-generation/overview).
+To learn more about writing an effective script for your video, see [Scripting prompting](/sections/video-generation/scripting-prompting).
+- [Delete Video](https://docs.tavus.io/api-reference/video-request/delete-video.md): This endpoint deletes a single video by its unique identifier.
+- [Get Video](https://docs.tavus.io/api-reference/video-request/get-video.md): This endpoint returns a single video by its unique identifier.
+The response body will contain a `status` string that represents the status of the video. If the video is ready, the response body will also contain a `download_url`, `stream_url`, and `hosted_url` that can be used to download, stream, and view the video respectively.
+- [List Videos](https://docs.tavus.io/api-reference/video-request/get-videos.md): This endpoint returns a list of all Videos created by the account associated with the API Key in use.
+- [Rename Video](https://docs.tavus.io/api-reference/video-request/patch-video-name.md): This endpoint renames a single video by its unique identifier.
+- [Changelog](https://docs.tavus.io/sections/changelog/changelog.md)
+- [Creating a Conversation](https://docs.tavus.io/sections/conversational-video-interface/creating-a-conversation.md)
+- [Creating a Persona](https://docs.tavus.io/sections/conversational-video-interface/creating-a-persona.md)
+- [Custom LLM Onboarding](https://docs.tavus.io/sections/conversational-video-interface/custom-llm-onboarding.md): You can integrate an OpenAI-compatible LLM to replace our existing options (`tavus-llama`, `tavus-gpt-4o`, `tavus-gpt-4o-mini`).
+- [Custom TTS Onboarding](https://docs.tavus.io/sections/conversational-video-interface/custom-tts-onboarding.md): You can integrate a variety of third-party TTS providers (cartesia, elevenlabs, playht).
+- [Overview](https://docs.tavus.io/sections/conversational-video-interface/cvi-overview.md)
+- [FAQ](https://docs.tavus.io/sections/conversational-video-interface/faq.md): Frequently asked questions about Tavus's Conversational Video Interface
+- [Layers and Modes Overview](https://docs.tavus.io/sections/conversational-video-interface/layers-and-modes-overview.md)
+- [Interactions Protocol Overview](https://docs.tavus.io/sections/conversational-video-interface/live-interactions.md)
+- [Pipecat Integration](https://docs.tavus.io/sections/conversational-video-interface/pipecat.md)
+- [Quick Start](https://docs.tavus.io/sections/conversational-video-interface/quick-start.md): This guide will walk you through the steps to quickly test out the API and start a conversation.
+- [Perception with Raven](https://docs.tavus.io/sections/conversational-video-interface/raven.md)
+- [Record and Instantly Share Conversations](https://docs.tavus.io/sections/conversational-video-interface/recording-rooms.md): You can set up a custom S3 bucket, enable recordings in rooms, and get notified when recordings are ready to be shared.
+- [Server to Server Architecture](https://docs.tavus.io/sections/conversational-video-interface/server-to-server.md)
+- [Turn Taking with Sparrow](https://docs.tavus.io/sections/conversational-video-interface/sparrow-0-turn-taking.md)
+- [Stock Personas](https://docs.tavus.io/sections/conversational-video-interface/stock-personas.md)
+- [Using Replicas in CVI](https://docs.tavus.io/sections/conversational-video-interface/using-replica-in-cvi.md)
+- [Echo Interaction](https://docs.tavus.io/sections/event-schemas/conversation-echo.md): This is an event developers may broadcast to Tavus.
+By broadcasting this event, you are able to tell the replica what to exactly say. Anything that is passed in the `text` field will be spoken by the replica.
+This is commonly used in combination with the [Interrupt Interaction](/sections/event-schemas/conversation-interrupt).
+- [Interrupt Interaction](https://docs.tavus.io/sections/event-schemas/conversation-interrupt.md): This is an event developers may broadcast to Tavus.
+By broadcasting this event, you are able to externally send interruptions for the replica to stop talking. This is commonly used in combination with [Text Echo Interactions](/sections/event-schemas/conversation-echo).
+- [Overwrite Conversational Context interaction](https://docs.tavus.io/sections/event-schemas/conversation-overwrite-context.md): This is an event developers may broadcast to Tavus.
+By broadcasting this event, you are able to overwrite the `conversational_context` that the replica uses to generate responses.
+If `conversational_context` was not provided during conversation creation, the replica will start using the `context` you provide in this event as `conversational_context`.
+Learn more about the `conversational_context`: [Create Conversation](/api-reference/conversations/create-conversation)
+- [Perception Analysis](https://docs.tavus.io/sections/event-schemas/conversation-perception-analysis.md): This is an event broadcasted by Tavus.
+This is fired after ending a conversation, when the replica has finished summarizing the visual artifacts that were detected throughout the call. This is a feature that is only available when the persona has `raven-0` specified in the [Perception Layer](/sections/conversational-video-interface/raven).
+- [Perception Tool Call Event](https://docs.tavus.io/sections/event-schemas/conversation-perception-tool-call.md): This is an event broadcasted by Tavus.
+A `perception_tool_call` event is broadcasted by Tavus when a perception tool is triggered based on visual context. The event will contain the tool name, arguments, and encoded frames that triggered said tool call.
+Perception tool calls can be used to trigger automated actions in response to visual cues detected by the Raven perception system.
+- [Replica Interrupted Event](https://docs.tavus.io/sections/event-schemas/conversation-replica-interrupted.md): This is an event broadcasted by Tavus.
+An utterance event is broadcasted by Tavus when the replica is interrupted by the user while it is speaking.
+- [Replica Started/Stopped Speaking Event](https://docs.tavus.io/sections/event-schemas/conversation-replica-started-stopped-speaking.md): This is an event broadcasted by Tavus.
+A `replica.started_speaking/stopped_speaking event` is broadcasted by Tavus at specific times:
+conversation.replica.started_speaking means the replica has just started speaking.
+conversation.replica.stopped_speaking means the replica has just stopped speaking.
+These events are intended to act as triggers for actions within your application. For instance, you may want to
+start a video or show a slide at times related to when the replica started or stopped speaking.
+The inference_id can be used to correlate other events and tie things like conversation.utterance or tool_call
+together.
+- [Text Respond Interaction](https://docs.tavus.io/sections/event-schemas/conversation-respond.md): This is an event developers may broadcast to Tavus.
+By broadcasting this event, you are able to send text that the replica will to respond to. The text you provide in the event will essentially be treated as the user transcript, and will be responded to as if the user had uttered those phrases during conversation.
+- [Sensitivity Interaction](https://docs.tavus.io/sections/event-schemas/conversation-sensitivity.md): This is an event developers may broadcast to Tavus.
+By broadcasting this event, you are able to update the VAD (Voice Activity Detection) sensitivity of the replica in
+two dimensions.
+- participant_pause_sensitivity
+- participant_interrupt_sensitivity
+The supported values are `low`, `medium`, and `high`.
+Learn more about the `sensitivity`: [Get Started with Your Own STT](/sections/conversational-video-interface/custom-stt-onboarding)
+- [Utterance Event](https://docs.tavus.io/sections/event-schemas/conversation-utterance.md): This is an event broadcasted by Tavus.
+An `utterance event` is broadcasted by Tavus at specific times: the user’s utterance is sent when the replica begins speaking, and a separate event for the replica’s utterance is also sent as the replica starts to speak. Each event contains the content of the respective utterance as well as an indication of who spoke it.
+An `utterance` includes all of the words spoken by the user or replica measured from when the person started speaking to when they finshed speaking. This could include multiple sentences or phrases.
+Utterance events can be used to keep track of what the user or the replica has said.
+- [Getting an API Key](https://docs.tavus.io/sections/guides/api-key-guide.md): Learn how to create an API key.
+- [Creating a Replica Via API](https://docs.tavus.io/sections/guides/replica-training-guide.md): Learn how to use our API endpoints to create replicas.
+- [Introduction](https://docs.tavus.io/sections/introduction.md): Take a look at our Docs and API Reference to learn how to use Tavus!
+- [Language Support](https://docs.tavus.io/sections/replicas/language-support.md)
+- [Overview](https://docs.tavus.io/sections/replicas/overview.md): Overview of Tavus' Replica offerings- Stock Replicas and Personal Replicas, all powered by the Phoenix AI model. Get tips on how to create the perfect replica, and how to get a high quality output.
+- [Personal Replicas](https://docs.tavus.io/sections/replicas/personal-replicas.md): Learn how to create a high-quality personal replica with just a few minutes of training data.
+- [Replica Training](https://docs.tavus.io/sections/replicas/replica-training.md): Learn how to create the best personal replica with a high-quality training video.
+- [Stock Replicas](https://docs.tavus.io/sections/replicas/stock-replicas.md): Explore Tavus' diverse library of ready-to-use stock replicas for effortless video creation and conversations.
+- [API Callbacks](https://docs.tavus.io/sections/troubleshooting/api-callbacks.md): This guide includes an overview of different callback formats you might see from the API.
+- [API Errors and Status Details](https://docs.tavus.io/sections/troubleshooting/api-errors.md): This guide includes an overview of errors and status details you might see from the API
+- [Consent Statement](https://docs.tavus.io/sections/troubleshooting/consent-statement.md)
+- [Script Length](https://docs.tavus.io/sections/troubleshooting/generated-content-length.md)
+- [Training Video Size](https://docs.tavus.io/sections/troubleshooting/training-video-size.md)
+- [Overview](https://docs.tavus.io/sections/video-generation/overview.md): Learn how to generate high-quality videos using Stock or Personal Replicas
+- [Replica Selection](https://docs.tavus.io/sections/video-generation/replica-selection.md): Find out how to look at all the Stock Replicas as well as your Personal Replicas
+- [Scripting](https://docs.tavus.io/sections/video-generation/scripting-prompting.md): Learn how to create a high-quality script
+## Optional
+- [Community](https://discord.gg/5Y9Er6WNN5)
+- [Status](https://status.tavus.io)

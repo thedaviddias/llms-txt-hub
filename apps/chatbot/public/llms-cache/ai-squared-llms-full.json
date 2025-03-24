@@ -6,5 +6,6 @@
   "type": "llms-full.txt",
   "category": "ai-ml",
   "cachePath": "apps/chatbot/public/llms-cache/ai-squared-llms-full.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/ai-squared-llms-full.min.txt",
   "lastFetched": "2025-03-24"
 }

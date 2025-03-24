@@ -6,5 +6,6 @@
   "type": "llms.txt",
   "category": "ai-ml",
   "cachePath": "apps/chatbot/public/llms-cache/vercel-s-ai-sdk-llms.txt",
+  "minifiedPath": "apps/chatbot/public/llms-cache/vercel-s-ai-sdk-llms.min.txt",
   "lastFetched": "2025-03-24"
 }

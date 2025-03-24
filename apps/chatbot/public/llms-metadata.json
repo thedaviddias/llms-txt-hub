@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-03-24T00:13:01.113Z",
+  "generatedAt": "2025-03-24T01:06:36.736Z",
   "totalProviders": 129,
   "successCount": 201,
   "errorCount": 3,
@@ -30,5 +30,6 @@
       "url": "https://docs.fastht.ml/llms.txt",
       "error": "Hostname/IP does not match certificate's altnames: Host: docs.fastht.ml. is not in the cert's altnames: DNS:*.github.io, DNS:*.github.com, DNS:*.githubusercontent.com, DNS:github.com, DNS:github.io, DNS:githubusercontent.com, DNS:www.github.com"
     }
-  ]
+  ],
+  "hasMinifiedVersions": true
 }

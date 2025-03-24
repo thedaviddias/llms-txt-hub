@@ -1,0 +1,630 @@
+---
+title: Backfilling a job board
+description: Learn why TheirStack is the best job board backfill solution and how to backfill a job board using webhooks
+lastModifiedAt: 2025-03-10
+url: https://theirstack.com/en/docs/backfill-job-board
+---
+## What is backfilling a job board?
+Backfilling a job board involves augmenting its own job listings with external postings from various sources. This integration allows job boards to present a broader array of opportunities to their users, helping to attract more traffic, boost user engagement, and ultimately enhance their overall value proposition.
+## Why TheirStack is the best job board backfill solution
+Backfilling job boards is a common use case for our Job data platform and it was built with this in mind:
+-  **Original job link to company website** When a job originates from a company's career page, we include the URL (`final_url`) so you can redirect users to the correct source. You can also get only jobs from career pages with the `final_url_exists` filter.
+-   **Standardized job descriptions** Our job descriptions are standardized across all information sources in Markdown format, ensuring consistency.
+-   **Company information** Most of our jobs are enriched with company information, so can use the company `domain`, `industry`, `headcount`, `revenue`, `type`, `location` and technologies used for your company profile page.
+-   **Up-to-date data** The data is up-to-date, with new jobs being added to our database every minute.
+-   **Filters** If you are a niche job board, you can use the `job_title_or` filter to get specific jobs, or the company `industry_id_or` filter to get only jobs from companies in a specific industry or any of our 20+ filters.
+- **16k+ job data sources** so you can get a wide range of jobs from all over the world. [Learn more](/en/docs/job-sources)
+## How to backfill a job board
+You have two options:
+1. **Webhook (Recommended)**: Set up a webhook to listen for the `new.job` event. By applying the necessary filters, you can ensure that you only receive the job postings that meet your specific criteria. This approach allows you to automatically receive new job listings as soon as they are published.
+- Step 1 - Create a job search with your desired criteria (e.g: location, company, technology, etc). You can create as many as you want.  It's important to create exclusive criteria to avoid receiving duplicate job postings.
+- Step 2 - Set up a webhook to listen for the `new.job` event. [How to set up a webhook](/en/docs/webhooks)
+2. **API**: Use our [Jobs API](https://api.theirstack.com) to fetch jobs periodically. Check out our [Fetch jobs periodically](/en/docs/fetch-periodically-jobs) guide for more details.
+The API approach is more cumbersome as it involves some extra steps from you, so our recommendation is to use webhooks.
+---
+title: Changelog
+description: A list of all the new features we've shipped
+lastModifiedAt: 2025-01-10
+url: https://theirstack.com/en/docs/changelog
+---
+import YoutubeIframe from '@/components/youtube-iframe'
+## March 17, 2025
+- 🆕 **Webhooks API is publicly available**: You can now use the webhooks API to integrate this feature in your own system or to automate webhook creations. Check out the [webhooks docs](https://api.theirstack.com/#tag/webhooks) for more information.
+## March 14, 2025
+- 🆕 **Roles and permissions**: We've added roles and permissions to the team. Admins can now add and remove members and receive billing alerts.
+- 🆕 **Export limit increased**: You can export CSV files with more than 100,000 records.
+## March 12, 2025
+- 🆕 *New version of the dataset endpoint* [v1/datasets/technographics](https://api.theirstack.com/#tag/datasets/POST/v1/datasets/technographics) offering technographic dataset in parquet format.
+- 🆕 *Improvement of the Requests section in the [Usage page](https://app.theirstack.com/usage)*: You can now see UI requests not only API Requests.
+- 🆕 *New button to open a search from the API request*. You can now open a search from the API request modal by clicking on the "Open search" button.
+## March 11, 2025
+- 📚 New [webhooks docs](/docs/webhooks)
+- 📚 Improved [Clay docs](/docs/clay)
+- 📚 Enhanced [Backfilling job board](/docs/backfill-job-board) post
+## March 10, 2025
+- 🆕 **Webhooks Observability**: You can now view the response body and status code for each webhook. Additionally, you can filter events by their status (success or failure) and determine if a failure was due to a timeout.
+- 🆕 **Webhooks Retry Mechanism**: Failed webhooks are now automatically retried every hour for up to 48 hours.
+- 🆕 **New version for the Technographics dataset**. Includes new columns, and renames some existing ones for consistency. Now includes columns for the 3 current sources of technographics data we have:
+- Job titles
+- Job descriptions
+- Job URLs
+Here are the columns which name has changed or have been added.
+New columns:
+- **keyword_slug** (str): Slug identifier for the technology
+- **technology_name** (str): Name of the technology
+- **subcategory_slug** (str): Slug identifier for the technology subcategory
+- **is_recruiting_agency** (bool): Indicates if the company is a recruiting agency
+- **jobs_source_description** (int): Number of jobs mentioning this technology in the job description
+- **jobs_source_description_last_180_days** (int): Number of jobs mentioning this technology in the job description in the last 180 days
+- **jobs_source_description_last_30_days** (int): Number of jobs mentioning this technology in the job description in the last 30 days
+- **jobs_source_description_last_7_days** (int): Number of jobs mentioning this technology in the job description in the last 7 days
+- **jobs_source_title** (int): Number of jobs mentioning this technology in the job title
+- **jobs_source_title_last_180_days** (int): Number of jobs mentioning this technology in the job title in the last 180 days
+- **jobs_source_title_last_30_days** (int): Number of jobs mentioning this technology in the job title in the last 30 days
+- **jobs_source_title_last_7_days** (int): Number of jobs mentioning this technology in the job title in the last 7 days
+- **jobs_source_url_last_180_days** (int): Number of jobs mentioning this technology in the ATS URL in the last 180 days
+- **jobs_source_url_last_30_days** (int): Number of jobs mentioning this technology in the ATS URL in the last 30 days
+- **jobs_source_url_last_7_days** (int): Number of jobs mentioning this technology in the ATS URL in the last 7 days
+- **first_date_found_source_title** (date): Date when the job title first mentioned the technology
+- **last_date_found_source_title** (date): Date when the job title last mentioned the technology
+- **technology_rank_url_last_date_found** (float): Rank of the technology within its category based on mentions in job ATS URLs as of the last date found
+- **rank_url_last_date_found_tie** (bool): Indicates if this technology is tied for the most mentioned in its category in job ATS URLs as of the last date found
+- **rank_last_keyword_used_final_url** (int): Rank of the technology based on the last time it was mentioned in a job ATS URL
+- **relative_occurrence_within_category_180_days** (float): Measures the relative occurrence of this technology among other technologies in the same category, in jobs by this company over the last 180 days
+- **jobs_total** (int): Total number of jobs found mentioning this technology across all sources
+- **jobs_total_last_180_days** (int): Total number of jobs mentioning this technology in the last 180 days across all sources
+- **jobs_total_last_30_days** (int): Total number of jobs mentioning this technology in the last 30 days across all sources
+- **jobs_total_last_7_days** (int): Total number of jobs mentioning this technology in the last 7 days across all sources
+Renamed Columns
+- **technology_id** → **keyword_id** (int): ID of the technology
+- **jobs** → **jobs_source_description** (int): Number of jobs mentioning this technology in the job description
+- **jobs_last_180_days** → **jobs_source_description_last_180_days** (int): Number of jobs mentioning this technology in the job description in the last 180 days
+- **jobs_last_30_days** → **jobs_source_description_last_30_days** (int): Number of jobs mentioning this technology in the job description in the last 30 days
+- **jobs_last_7_days** → **jobs_source_description_last_7_days** (int): Number of jobs mentioning this technology in the job description in the last 7 days
+- **jobs_source_final_url** → **jobs_source_url** (int): Number of jobs mentioning this technology in the ATS URL
+- **first_date_found_source_job_description** → **first_date_found_source_description** (date): Date when the job description first mentioned the technology
+- **last_date_found_source_job_description** → **last_date_found_source_description** (date): Date when the job description last mentioned the technology
+- **first_date_found_source_final_url** → **first_date_found_source_url** (date): Date when the job ATS URL first mentioned the technology
+- **last_date_found_source_final_url** → **last_date_found_source_url** (date): Date when the job ATS URL last mentioned the technology
+## March 3, 2025
+-   🆕 **Improvements on Dataset page**: You can now download the dictionary of the dataset with all the information about the fields, see the size of the dataset and the number of rows it contains.
+## February 26, 2025
+-   🆕 **Enhanced ATS URL exists filter**: We've enhanced the ATS URL exists filter to exclude jobs with URLs from 70 major job boards, such as ziprecruiter.com and thehub.io.
+## February 25, 2025
+-   🆕 **New UI redesign enhancing developer experience**: Managing webhooks, datasets, API keys and reviewing your consumption is now easier than ever.
+## February 24, 2025
+-   🆕 **Job searches are now ~4x faster**  ⚡️
+Performance improvements:
+- **Average response time**: 6.9s → 1.7s (⬇️ 75%)
+- **90th percentile response time**: 12.2s → 3s (⬇️ 75%)
+- **95th percentile response time**: 36.7s → 4.9s (⬇️ 87%)
+- **99th percentile response time**: 120s → 11s (⬇️ 91%)
+## February 18, 2025
+-   🆕 **New [datasets page](https://app.theirstack.com/datasets)**. You can now view all available datasets, and download a sample for each one.
+-   🆕 **Track company credits consumption**. You can now track the company credits consumption from the [usage page](https://app.theirstack.com/settings/usage).
+## February 17, 2025
+-   🆕 **New [invoices page](https://app.theirstack.com/settings/invoices)**. You can now view all your invoices, see the consumption for each invoice, and download them in PDF format.
+-   🆕 **Webhook executions chart on the [usage page](https://app.theirstack.com/settings/usage)**. You can now monitor the total number of webhook executions across all your webhooks.
+-   🆕 **Billing consumption alerts**. You will now get an email notification when your billing consumption exceeds 70% or reaches 100%.
+## February 12, 2025
+-   🆕 **Refresh your API key**. You can now refresh your API key through the [settings page](https://app.theirstack.com/settings/api-key). This is useful if you want to rotate your API key for security reasons.
+-   🆕 **Remove members from your organization**. You can now remove members from your organization through the [settings page](https://app.theirstack.com/settings/organization).
+-   🆕 **API Request Observability**. You can now see the status (200 OK, 402 Payment Required, 508 Request Timeout...) of your API request through the [requests page](https://app.theirstack.com/api).
+## February 6, 2025
+-   🆕 **Webhook Observability**. You can now view a chart displaying the number of webhooks sent and a table detailing each webhook event.
+## January 27, 2025
+-   🆕 **Webhooks**. You can now subscribe to webhooks to get notified when new jobs are posted. Trigger actions in Make.com, Zapier, Clay or any other tool that supports webhooks when new jobs are posted.
+<YoutubeIframe src="https://www.youtube.com/embed/gbd8IMgL-Rw" title="Webhooks" />
+## January 20, 2025
+-   🆕 **Export data to Clay.com**. You can now export your list of jobs or companies to Clay through our Webhooks integration. Click on the "Export" button in the top right corner of the table and select Webhooks, paste the Webhook URL provided by Clay, and click on "Export". In a few seconds, you will see the data in your Clay table.
+<YoutubeIframe src="https://www.youtube.com/embed/cxAOTAQ6Dsk" title="Export data to Clay.com" />
+## January 14, 2025
+-   🆕 **New filter `job_seniority_or` in our [Jobs API](https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search)**. This filter allows you to search for jobs by seniority level.
+-   🆕 **Shortened URL detection for new jobs and companies**. Our system now identifies shortened URLs (e.g., `bit.ly`, `tinyurl`, etc.) for newly discovered jobs and companies. Instead of storing the shortened URL in our database, we now retrieve and save the original URL.
+-   🐞 **Fixed an issue causing duplicate job postings**. A job is considered a duplicate if the same company posts the same job title within a 30-day window. Previously, the system identified duplicates by checking job postings from the past 30 days, instead of 30 days before and after the posting date. As a result, jobs posted more than 30 days ago were not flagged as duplicates when found again by our system.
+-   🐞 **Fixed Make.com button**. The Make.com button, which lets you copy a Make scenario that calls our API, was not authenticating correctly.
+## January 10, 2025
+-   🆕 **New field and filter `easy_apply` in our [Jobs API](https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search)**. This field indicates whether the job application can be submitted directly through the job board (`easy_apply=True`) or requires redirecting to the company's website (`easy_apply=False`). Initially, this field will be populated for new jobs sourced from LinkedIn and Indeed.
+---
+title: Clay
+description: In this guide, you'll learn how to add a new column in Clay table with TheirStack data and how to create a new table in Clay with TheirStack data.
+lastModifiedAt: 2025-03-11
+url: https://theirstack.com/en/docs/clay
+---
+We're currently in discussions with Clay to establish an official integration. Meanwhile, you can still leverage our data within Clay. Depending on your specific needs, we suggest the following approaches:
+-   [New jobs or companies table in Clay](#new-jobs-or-companies-table-in-clay) (live sync or one-time export)
+-   [Adding a new column to Clay table](#adding-a-new-column-to-clay-table) (manual sync)
+## New Jobs or Companies Table in Clay
+If you aim to create a new table with
+- A list of jobs posted in the US in the last 30 days that mention a specific keyword.
+- A list of companies that have posted a job in the last 30 days in New York.
+- A list of companies using specific technologies like Snowflake, Hubspot, Python, etc.
+- A list of companies employing a category of technologies like AI, Cloud, etc.
+with a live sync or as one-time export, follow these steps:
+1.  Go to the Clay and create a new table and select "monitor webhook" as the source. [Clay Webhook Guide](https://www.clay.com/university/guide/webhook-integration-guide)
+2.  [Setup a webhook in TheirStack](/docs/webhooks)
+## Adding a New Column to Clay Table
+If you have a list of companies in Clay and wish to add a new column with
+-   the number of developer jobs posted by this company in the last 30 days.
+-   "Yes" / "No" if they are utilizing specific technologies like Snowflake, Hubspot, Python, etc.
+-   "Yes" / "No" if they are employing a category of technologies like AI, Cloud, etc.
+follow these steps:
+1.  Go to the Clay table you want to add the column to.
+2.  Click on the "Columns" tab.
+3.  Click on the "Add Column" and select "HTTP API" [Clay HTTP API Guide](https://www.clay.com/university/guide/http-api-integration-overview)
+4.  Review our [API docs](/docs/api)
+## Frequently asked questions
+### Has anyone integrated and used TheirStack with Clay?
+We’re in talks with Clay to have an official integration with them but it’s a bit far still. But there are still other ways that customers used TheirStack with Clay. Mostly:
+-   Exporting and uploading manually a CSV from TheirStack
+-   Using the [HTTP API](https://docs.clay.com/en/articles/9672489-http-api-with-clay) function from Clay, connecting to our [API](https://api.theirstack.com/)
+---
+title: How are you positioning against Builwith?
+description:
+lastModifiedAt: 2025-01-03
+url: https://theirstack.com/en/docs/differences-with-builtwith
+---
+Our approach to sourcing tech usage data sets us apart from BuiltWith in a few key ways. First, we offer a broader technology catalog that includes not only web technologies but also CRMs, ERPs, databases, and various internal tools. BuiltWith focuses solely on web technologies.
+Additionally, instead of tracking websites, we gather data from job postings. Each month, we collect job listings from millions of companies by monitoring company websites, job boards, and other hiring platforms. When a job listing mentions a specific technology in the title or description, it indicates that the company likely uses that technology. We then assign a Confidence Score (low, medium, high) based on the frequency and context of these mentions to estimate how likely the company is to use that technology.
+Our pricing model is also unique. While BuiltWith charges based on technology reports, we base our pricing on the number of companies returned in your search.
+---
+title: Does TheirStack provide contact data?
+description: Discover how TheirStack can assist you in obtaining personal contact data through our leading data partners or our hiring manager details
+lastModifiedAt: 2025-01-16
+url: https://theirstack.com/en/docs/does-theirstack-provide-contact-data
+---
+We have direct integrations with top-tier third-party contact data providers such as Apollo.io, ContactOut, and LinkedIn ([see this guide for more information](/en/docs/finding-contact-data)).
+Additionally, we offer hiring manager information for applicable jobs, including the recruiter's name, position, and LinkedIn profile.
+However, we do not supply contact data directly for several reasons:
+-   Rather than attempting to cover multiple areas, we focus on excelling in one—helping you identify companies with strong purchasing intent. As a small company, we must choose our priorities wisely.
+-   Collecting and distributing personal contact data may not comply with GDPR regulations, despite being a common practice among many contact data providers.
+---
+title: How to fetch periodically jobs using Jobs API
+description: This guide will demonstrate how to periodically fetch jobs from the TheirStack API, ensuring fresh data and minimizing API costs.
+lastModifiedAt: 2025-01-11
+url: https://theirstack.com/en/docs/fetch-jobs-periodically
+---
+import { Alert, AlertDescription, AlertTitle } from '@/shared/ui/base/alert'
+import { TriangleAlert } from 'lucide-react'
+<Alert variant="warning">
+<TriangleAlert className="h-4 w-4" />
+<AlertTitle>Important notice</AlertTitle>
+<AlertDescription>
+We strongly recommend using our [webhooks](/docs/webhooks) to fetch jobs periodically. Using the Jobs API will make it harder to ensure fresh data and minimize API costs.
+</AlertDescription>
+</Alert>
+To integrate TheirStack's job data seamlessly into your application or database, focus on the following:
+-   [Ensure fresh data with efficient batching](#ensure-fresh-data-with-efficient-batching).
+-   [Minimize API costs by optimizing your requests](#minimize-api-costs-by-optimizing-your-requests).
+-   [Avoid missing any data during the integration process](#avoid-missing-any-data-during-the-integration-process).
+### Ensure fresh data with efficient batching
+We continuously monitor company websites and job boards to identify new job postings. To optimize performance, we recommend batching your requests with a maximum frequency of once every hour or two hours, based on your needs, and using the maximum limit of 500 jobs per page.
+### Minimize API costs by optimizing your requests
+One API Credit is consumed for each record returned from our API endpoints. If you fetch the same job multiple times, you will be charged for each fetch.
+The `discovered_at` field in the `job` object indicates the date and time when the job was first identified by TheirStack. To prevent duplicate charges when fetching jobs, you can filter by `discovered_at_gte` in your request to get only new jobs. This parameter will ensure that only jobs discovered after the specified date are fetched.
+The `discovered_at_gte` parameter is a timestamp in the format `YYYY-MM-DDTHH:MM:SSZ` and it should be the date and time of the last job you fetched.
+```sql
+SELECT MAX(discovered_at) FROM jobs;
+```
+Copy the timestamp and use it as the value for `discovered_at_gte` in your request.
+```bash
+curl --request POST \
+--url "https://api.theirstack.com/v1/jobs/search" \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <api_key>" \
+-d '{
+"offset": 0,
+"limit": 500,
+"discovered_at_gte": "2024-12-29T17:32:28Z"
+"job_title_or": [
+"Data Engineer"
+],
+"posted_at_max_age_days": 15,
+"job_country_code_or": [
+"NG"
+],
+}'
+```
+Another option is to use the `job_id_not` filter. You'd need to fetch the IDs of the jobs you already have in your system from us, and pass them to the Job Search Endpoint. This can be useful if you fetch jobs from multiple searches and the same job may appear in the results from more than one search.
+### Avoid missing any data during the integration process
+If your cron process fails—whether due to system downtime, credit depletion, or connection issues—you can resume from the last processed job using the `discovered_at_gte` parameter. This ensures you fetch only the jobs discovered after the last successful run, preventing any data loss even in periodic integrations.
+---
+title: Introduction
+description:
+lastModifiedAt: 2025-03-10
+url: https://theirstack.com/en/docs/introduction
+---
+## What is TheirStack?
+We are the largest job and technographics database. You can consume our data through our [App](https://app.theirstack.com), our APIs ([Jobs API](https://theirstack.com/en/job-posting-api), [Technographics API](https://theirstack.com/en/technographics-api)) or the full dataset ([Jobs Dataset](https://theirstack.com/en/jobs-dataset), [Technographics DataSet](https://theirstack.com/en/technographics-dataset)).
+### Job Data
+Get access to millions of job listings aggregated from multiple global sources, including major job boards like Indeed, Linkedin, Workable, Greenhouse, Lever, Infojobs, Otta, StartupJobs... offering a complete view of the job market across 195 countries.
+#### The best job data platform
+TheirStack goes beyond simple scrapers, we're a sophisticated platform delivering the most precise and current job market information. Our systems continuously collect new job postings across the internet every minute, processing approximately 160,000 new positions daily.
+- **16,000+ job data sources** including job boards, company websites, and applicant tracking systems. We excel at standardizing job information, eliminating duplicates between sources, and implementing thorough quality checks to maintain data accuracy and reliability. Data quality and freshness are at the core of what we do.
+- **30+ advanced job and company filters** to precisely target your search needs. Beyond standard filters like job title, company, and location, we enable filtering by job description, hiring manager, and company details. Each job listing is enhanced with company information including revenue, industry, size, technology stack, and more.
+- **Fast and reliable API** With an average API response time of just 1.5 seconds. We serve enriched data directly from our database without real-time external calls, ensuring consistent, reliable responses that help you deliver excellent user experiences to your customers.
+### Technographics Data
+We infer technology usage from millions of jobs worldwide. Our catalog of more than 21,000 technologies and 5M companies is the largest in the world.
+- **Assured Accuracy**. For each technology identified, we assign a [confidence score](/how-we-calculate-our-confidence-score) reflecting its data precision. This score incorporates variables such as the frequency of technology mentions in job listings, the recency of these mentions, the diversity of its usage across companies, and its prevalence within specific categories.
+- **Transparency and Validation**. Gain direct access to our data sources. We facilitate verification by [linking directly to the job postings that reference the technology](/how-we-source-tech-stack-data), alongside details about the posting company and the date. This ensures you can trust and validate the data's accuracy.
+- **Always Up-to-Date**. Our platform is [refreshed every 24 hours](/data-freshness), guaranteeing that you have access to the most current data available. Stay ahead with real-time updates and insights.
+## Start for free
+-   [Sign up and get 50 free credits](https://app.theirstack.com/signup)
+-   [Get your API key](https://app.theirstack.com/settings/api-key)
+---
+title: Job sources
+description: Our platform aggregates job listings from over 16,000 different websites. Below you'll find a breakdown of our largest job data sources and their contributions.
+lastModifiedAt: 2025-01-08
+url: https://theirstack.com/en/docs/job-sources
+---
+import JobDataSourcesTable from '@/components/content/tables/job-data-sources-table'
+<JobDataSourcesTable />
+---
+title: Pricing FAQs
+description: Frequently asked questions about our pricing.
+lastModifiedAt: 2025-03-12
+url: https://theirstack.com/en/docs/pricing
+---
+## Why can't I see a company that was previously unblurred?
+When you reveal a company, a company credit is used. This allows you to view all their jobs, technologies, and firmographics, or export that company as many times as you want for 90 days.
+Since collecting new jobs or technologies incurs a cost, it's not feasible to offer unlimited access to new data indefinitely.
+However, we are planning an enhancement to offer you a better experience: after 90 days, you will still be able to see the company, but any new jobs or technologies discovered after that period will not be accessible. This ensures you retain the data you've paid for, without receiving updates beyond the initial access period.
+---
+title: Integration guide for sales intelligence software
+description: This guide provides detailed instructions on integrating TheirStack into your product, including all possible connectors, marketing content and best practices.
+lastModifiedAt: 2024-12-31
+url: https://theirstack.com/en/docs/sales-software-integration-guide
+---
+Are you a sales intelligence platform like Clay, Databar, or Trigify? We've compiled everything you need to seamlessly integrate TheirStack as a source of job data and technographics into your product. This is a dynamic, evolving guide that improves with each integration. Your feedback and suggestions are always welcome!
+## Introduction
+At TheirStack, we are passionate about building long-term partnerships with sales intelligence platforms. Our goal is to become the largest, most reliable, and fastest-responding job and technographics database. Everything we do is driven by this vision. If you're seeking top-quality job and technographic data, we’re the ideal partner for you.
+### How API credits work
+API credits are used to make API requests. One API Credit is consumed for each record (job or company) returned from our API endpoints.
+How API credits work:
+-   Credits are only consumed when the API returns data in the response.
+-   Each API call is processed independently - repeated requests for the same data will consume credits each time.
+-   Unused paid credits will roll over and accumulate in your account.
+#### Free records count
+Get the count of records that match your search criteria is free. This is useful to show a preview to your end users.
+#### Preview mode
+Our Job Search and Company Search endpoints include a preview mode that does not consume credits. Use this mode to display a preview for your end users by using the `blur_company_data` field.
+## Connectors
+### Search jobs
+#### Content
+Short description
+```md
+Find job postings across multiple platforms (LinkedIn, Indeed, Workable, etc.) and apply over 25 filters to refine results by job role, company, and tech stack details.
+```
+Long description
+```md
+**Overview**
+Launch a comprehensive search on LinkedIn, Indeed, Glassdoor, and more than 16 other job sites. Maximize your reach and efficiency by targeting a broad spectrum of opportunities from the start. Refine your search with advanced filters:
+-   Job filters: job title, keywords in the job description, salary ranges, technology, hiring managers…
+-   Company filters: Industry, size, location, funding, revenue, technology usage, etc.
+**Common searches**
+Searching for jobs can be used by job seekers, but also many sales and marketing teams use it to find potential customers. Here are some searches that could be done:
+-   Search for jobs filtering by the country of the job
+-   Search for jobs filtering by job title
+-   Search for jobs filtering by technologies mentioned in the job
+-   Search for jobs filtering by job description
+-   Search for jobs filtering by company domain
+-   Search for jobs within a specific date range
+**Common use cases**
+Job posting data use cases are unlimited: lead generation, cross-selling and marketing campaigns.
+-   Discover companies hiring. Harness the power of job data to identify potential clients by scanning over 40 million job listings in more than 195 countries. Target companies facing challenges that your offerings can address, turning job market insights into valuable sales opportunities.
+-   Monitor your customers. Stay ahead with real-time notifications when your current or previous clients start hiring again. Leverage this data to spot upsell opportunities and re-engage with past customers, ensuring you maximize lifetime value and maintain strong client relationships.
+-   Target companies hiring specific positions. Boost your sales with targeted LinkedIn advertising campaigns. Focus your ads on individuals at companies actively hiring for positions that match your services. By aligning your marketing efforts with real-time job data, you can ensure your message reaches the right audience, enhancing engagement and conversion rates.
+```
+#### Technical details
+**Endpoint documentation:**
+[https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search](https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search)
+**Recommended filters sorted by importance:**
+| Order | Filter                       | Description                                                                                          | API Field                                                                         |
+| ----- | ---------------------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| 1     | Posted date (required)       | Last n days (default 30 days).                                                                       | `posted_at_max_age_days`, `posted_at_gte`, `posted_at_lte`                        |
+| 2     | Job Country                  | Include countries (1 to n values). Exclude countries (1 to n values).                                | `job_country_code_or` (recommended), `job_country_code_not`                       |
+| 3     | Job Title                    | Include any of these keywords in the job title (tags format, 1 to n values). Exclude keywords.       | `job_title_or` (recommended), `job_title_not`                                     |
+| 4     | Job Description              | Include any of these keywords in the job description (tags format, 1 to n values). Exclude keywords. | `job_description_pattern_or`, `job_description_pattern_not`                       |
+| 5     | Job Location                 | Include City. Text match. List of strings. Exclude City. Text match, List of strings.                | `job_location_pattern_or`, `job_location_pattern_not`                             |
+| 6     | Job Technologies             | Include technologies mentioned in the job description. Exclude technologies.                         | `company_technology_slug_or`, `company_technology_slug_and`                       |
+| 7     | Is a remote position         | Yes or no.                                                                                           | N/A                                                                               |
+| 8     | Company Industry             | List of IDs, IDs available with this endpoint.                                                       | [Industry IDs](https://api.theirstack.com/#tag/catalog/GET/v0/catalog/industries) |
+| 9     | Company Headcount            | Look for "employee_count" in the endpoint docs.                                                      | [Employee Count](https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search)        |
+| 10    | Company Headquarters Country |                                                                                                      | `company_country_code_or`                                                         |
+### Search companies by tech stack
+#### Content
+Short description
+```md
+Find companies by the technology they use.
+```
+Long description
+```md
+**Overview:**
+Discover companies using any of our 21K technologies, including programming languages, databases, tools, SaaS, CRMs, and ERPs. Our comprehensive tracking allows you to pinpoint organizations by their tech stack, offering a strategic edge in market analysis and outreach. Leveraging job postings as a primary source, we meticulously track and reveal the internal tools that power companies globally, offering an unmatched depth of technographic intelligence.
+**Common use cases:**
+Sales and marketing teams often use this endpoint to find potential customers or gather market intelligence. Here are some example searches:
+-   Find companies using particular technology: Salesforce, Clickhouse, Salesforce…
+-   Find companies using a technology category: CRM, ERP, Database, Big Data, Cloud…
+**The most reliable technology usage source:**
+-   Assured Accuracy: For each technology identified, we assign a confidence rating reflecting its data precision. This rating incorporates variables such as the frequency of technology mentions in job listings, the recency of these mentions, the diversity of its usage across companies, and its prevalence within specific categories.
+-   Transparency and Validation: Gain direct access to our data sources. We facilitate verification by linking directly to the job postings that reference the technology, alongside details about the posting company and the date. This ensures you can trust and validate the data's accuracy.
+-   Always Up-to-Date: Our platform is refreshed every 24 hours, guaranteeing that you have access to the most current data available. Stay ahead with real-time updates and insights.
+```
+#### Technical details
+**Recommended filters sorted by importance:**
+| Order | Filter                       | Description                                                                        | API Field                                                                                              |
+| ----- | ---------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| 1     | Technologies used            | Show logo, name, short description (one_liner), category, and number of companies. | `company_technology_slug_or`, `company_technology_slug_and`, `company_technology_slug_not`             |
+| 2     | Company headquarters country | Options to include or exclude countries.                                           | `company_country_code_or`, `company_country_code_not`                                                  |
+| 3     | Industry                     | Options to include or exclude industries.                                          | `industry_or`, `industry_not`                                                                          |
+| 4     | Company headcount            | Specify minimum or maximum employee count, with options for null values.           | `min_employee_count`, `max_employee_count`, `min_employee_count_or_null`, `max_employee_count_or_null` |
+| 5     | Company revenue              |                                                                                    | N/A                                                                                                    |
+| 6     | Company type                 |                                                                                    | N/A                                                                                                    |
+| 7     | Company location             |                                                                                    | N/A                                                                                                    |
+| 8     | Company website              |                                                                                    | N/A                                                                                                    |
+### Get a company's tech stack
+#### Content
+Short description
+```md
+Lists all technologies used by a company or group of companies. For each technology, it returns the confidence level (low, medium, high), the number of jobs that mention the technology, and the first and last dates it was mentioned.
+```
+Long description
+```md
+**Overview:**
+Lists all technologies used by a company or group of companies. For each technology, it returns the confidence level (low, medium, high), the number of jobs that mention the technology, and the first and last dates it was mentioned.
+**Common use cases:**
+Sales and marketing teams use this endpoint to:
+-   Identifying the technologies used by a company or a group of companies
+-   Finding all the technologies that belong to a certain category (such as databases, CRMs, programming languages, etc.) mentioned in the jobs of a company, and identifying the confidence level of the detection to infer the most likely one that is used by the company.
+-   Identifying if a company uses one or several technologies from a list of technologies that you are interested in.
+```
+#### Technical details
+**Endpoint documentation:**
+[https://api.theirstack.com/#tag/companies/POST/v1/companies/technologies](https://api.theirstack.com/#tag/companies/POST/v1/companies/technologies)
+**Recommended filters sorted by importance:**
+| Order | Filter            | Description                                                                        | API Field                                                                                  |
+| ----- | ----------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| 1     | Company website   | Website of the company you want to get the technology list                         | `company_domain`                                                                           |
+| 2     | Confidence level  | Return only technologies with a confidence level of high, medium or low.           | `confidence_level`                                                                         |
+| 3     | Technologies used | Show logo, name, short description (one_liner), category, and number of companies. | `company_technology_slug_or`, `company_technology_slug_and`, `company_technology_slug_not` |
+## Integration page
+Most sales intelligence software have a page where they list all data sources they have. This is the content we recommend you to add to this page to help your users understand what TheirStack is and how it can help them.
+Title
+```md
+TheirStack
+```
+Subtitle
+```md
+TheirStack helps you find job postings and find companies by tech stack.
+```
+Description
+```md
+TheirStack is the largest job posting and technographics database, designed to help businesses, recruiters, and sales teams identify opportunities with companies based on their technology stack and hiring needs. With a vast collection of data on which technologies companies use, along with real-time job listings, TheirStack provides a comprehensive platform for discovering leads, qualifying prospects, and strategically targeting outreach efforts.
+Through TheirStack's Job Postings data, users can access millions of job listings aggregated from multiple global sources, including major job boards, offering a complete view of the job market across 195 countries. The platform's robust filtering options allow users to refine searches by job role, company, and required technology, giving a nuanced perspective on hiring trends and job quality. This empowers recruiters and business developers to target roles and companies with precision, ensuring outreach is both relevant and impactful.
+TheirStack's Technographics data enables users to search for companies by their technology stack, providing detailed insights into tech adoption across industries. This feature supports sales and marketing teams in identifying high-potential leads based on specific technology use, allowing for strategic alignment with each company's tech landscape. Combining job market insights with technographic data, TheirStack delivers a strategic advantage for more informed and effective decision-making.
+```
+---
+title: Users and Teams
+description: Learn about users and teams in TheirStack.
+lastModifiedAt: 2025-03-14
+url: https://theirstack.com/en/docs/teams
+---
+## Team roles and permissions
+There are 2 roles in a team:
+- **Member**: Can do everything except what admins can do.
+- **Owner**:
+- Can add and remove team members.
+- Can change other members' roles.
+- Receives consumption alerts. Eg: when 75% of the credits are used.
+---
+title: TheirStack vs BrightData
+description: BrightData also provides some job scrapers for job boards like LinkedIn or Indeed. In this guide we compare TheirStack and BrightData to help you understand the differences and choose the best option for your needs.
+lastModifiedAt: 2025-01-08
+url: https://theirstack.com/en/docs/theirstack-vs-brightdata
+---
+## Quick Decision Guide
+**Choose BrightData if**
+-   You don't need a real-time solution and are fine waiting 4-5 minutes for each job search.
+-   You're comfortable implementing a complex integration with multiple API calls, retry logic, and snapshot storage.
+-   You don't need extensive filtering capabilities
+-   You’re prepared to manage separate processes for each job board and handle job deduplication yourself.
+**Choose TheirStack if**
+-   You need a real-time solution that responds in 100ms-2s
+-   You want a fast and easy integration with a single API call
+-   You want to filter by attributes like company countries, industries, company sizes, job description, etc
+-   You want all the jobs from all the job boards in one place and don't want to handle job deduplication.
+## Detailed comparison
+BrightData is a general purpose web data extraction platform, so jobs per se are not their main focus. On the other hand, jobs is at the core of what we do at TheirStack. So 100% of our effort is in building a high-quality, end-to-end job data platform.
+### Development cost and complexity
+BrightData's integration is complex:
+-   It requires at least two API calls for each search: one to create the search and another to retrieve the results.
+-   You'll need to save in your database the snapshot ID of each search so that you can retrieve the results later.
+-   You'll need to implement retry logic since the data isn't immediately available and can take several minutes to be ready.
+-   There is no pagination so you will likely miss some jobs
+-   If you need to search in multiple job boards,
+-   you'll need separate API calls for each source
+-   you'll need to handle job deduplication on your side because job boards share most of their jobs.
+TheirStack integration is straightforward with just a single API call needed. You can find our complete documentation [here](https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search).
+### Response time
+When you make a request to TheirStack, we make a search in our database, which already contains millions of jobs scraped from [thousands of job boards and websites](/en/docs/job-sources). The response comes back almost instantly - 90% of our requests finish in less than 2 seconds.
+For example, to get the last data analyst jobs posted in NYC in the last 7 days with us you'd make this call:
+```bash
+curl --request POST \
+--url "https://api.theirstack.com/v1/jobs/search" \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer <api_key>" \
+--data '{
+"posted_at_max_age_days": 7,
+"job_country_code_or": [
+"US"
+],
+"job_title_or": [
+"data analyst"
+],
+"job_location_pattern_or": [
+"new york",
+"nyc"
+]
+}'
+```
+In BrightData, when you make a search they do a live call to their job boards to get the data. This process involves 2 calls and the results not only aren't instant but take **minutes** to come back.
+To get the same data as in the previous example, first you'd make a call like this:
+```bash
+curl --request POST \
+--url "https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_lpfll7v5hcqtkxl6l&include_errors=true&type=discover_new&discover_by=keyword&limit_per_input=5" \
+--header "Authorization: Bearer <bearer_token>" \
+--header "Content-Type: application/json" \
+--data '[
+{
+"location": "New York",
+"keyword": "data analyst",
+"country": "US",
+"time_range": "Past week",
+"job_type": "",
+"experience_level": "",
+"remote": "",
+"company": ""
+}
+]'
+```
+The result of this would not be the data directly, but a snapshot ID like this:
+```json
+{
+"snapshot_id": "s_m5o15lt05g12b9s1x"
+}
+```
+You'd then need to make a second call to get the data:
+```bash
+curl --request GET \
+--url "https://api.brightdata.com/datasets/v3/snapshot/s_m5o15lt0rn12b9s1x?format=json" \
+--header "Authorization: Bearer <bearer_token>"
+```
+From our tests, this requests takes 8-10s to complete, and even after 3 or 4 minutes, the data isn't ready yet and we'd get responses like this:
+```json
+{
+"status": "running",
+"message": "Snapshot is not ready yet, try again in 10s"
+}
+```
+This invalidates using BrightData for any real-time use case you might have related to jobs. But not only that.
+### Extensive filtering capabilities
+BrightData just lets you filter by the limited set of filters LinkedIn supports.
+TheirStack lets you filter by many filters that LinkedIn or BrightData don't support and won't support anytime soon. To name a few:
+-   **Company filters:** By industry, size, country, revenue, funding, URL, LinkedIn URL or slug, etc.
+-   **Job filters:** By title, description, country, city, remote options, salary, etc. Regular expression filters are supported by many fields like title, description or locations
+### Historical data
+BrightData only provides access to recent job postings, with limited historical data availability.
+TheirStack maintains a comprehensive historical database of jobs dating back to 2019, allowing you to access and analyze job postings across much larger time spans.
+### Comprehensive documentation.
+BrightData's job scraping API documentation is limited and requires frequent communication with support to understand parameter usage and functionality.
+We are an API-first company, so our [Job Search API](https://api.theirstack.com/#tag/jobs/POST/v1/jobs/search) is at the core of what we do and we talk with users daily to make it better and add new filters and features they need. We put great care into the developer experience, and you can tell so by visiting the link above and seeing how well documented our API is, so that you don't have to waste time figuring out how each parameter works or talking to support to get help.
+### Job consolidation across multiple job boards
+BrightData offers LinkedIn, Indeed and Glassdoor job scrapers. We scrape those and more job boards, having jobs from tens of thousands of domains.
+With BrightData you would need to use one individual scraper per each job board, and then consolidate jobs into a central repository.
+With TheirStack, we consolidate jobs from all of them into a single database and provide a single API endpoint to access them so that you can get all the jobs you want with a single request, instead of having to make multiple requests to different scrapers.
+### Job deduplication
+Because BrightData has different endpoints for each job board, they don't handle job deduplication across them. But it happens many times that the same job appears on multiple job boards.
+As we offer a single entrypoint for all our job data, we have built our own job deduplication algorithm that lets us identify if the same job has already been scraped. Therefore, you won't get the same job twice and you won't have to worry about handling job deduplication yourself.
+---
+title: Webhooks
+description: Learn how to use webhooks to get notified when events occur (new jobs, tech changes, etc) in TheirStack and trigger actions in your external systems like N8N, Zapier, Make, Airtable, etc.
+lastModifiedAt: 2025-03-10
+url: https://theirstack.com/en/docs/webhooks
+---
+import YoutubeIframe from '@/components/youtube-iframe'
+## What are webhooks?
+Webhooks allow you to send data when specific events occur (new jobs, tech changes, etc) to external systems like N8N, Zapier, Make, Airtable, your own webhook endpoint, etc.
+For instance, you can configure a webhook to alert you when a new job is listed in a particular location, company, or technology sector.
+Webhooks are dependent on a search, which defines the criteria for triggering the webhook.
+There are two types of webhooks:
+- **`job.new`**: Triggered when a new job is discovered by TheirsStack.
+- **`company.new`**: Triggered when a new company is discovered by TheirsStack.
+## How to set up a webhook
+Follow these steps to set up a webhook:
+1. Create a job or company search with the criteria you are interested in.
+2. Click on the "Webhooks" button on the search page.
+3. Click on the "Create Webhook" button.
+4. Enter the webhook URL and click on the "Create" button.
+<YoutubeIframe src="https://www.youtube.com/embed/gbd8IMgL-Rw" title="Webhooks" />
+## Webhooks Applications
+- Initiate a workflow in an automation tool like Zapier, Make, N8N when a new job is posted or a company adopts a new technology (e.g., Snowflake, Hubspot, Python).
+- Send a Slack notification to your team when a new job is found or a company adopts a new technology (e.g., Snowflake, Hubspot, Python).
+- Automatically update a Google Sheet with new job or company data.
+- Trigger an email alert to a specific distribution list when a new job matches certain criteria.
+- Create a table in Airtable to store job listings.
+- Integrate with a CRM system to add new company information as leads.
+## Your own webhook endpoint
+If you are builing your own webhook endpoint, please take into account the following:
+- Return a 200 status code to indicate that the webhook event was received and processed successfully. Failed webhook events are retried every hour for 48 hours.
+- Your webhook endpoint has to be prepared to handle at least 2 concurrent requests.
+- Your webhook endpoint has to be prepared to handle duplicates. Our system is designed to not send the same job twice to your webhook URL. However, this could happen in some edge cases (e.g: you listen to two searches with not exclusive jobs).
+- When a webhook sends data, it uses an HTTP POST request, with a JSON payload.
+per
+## Faqs
+### What happens to webhook events when I run out of API credits?
+When you run out of API credits, webhook event monitoring is temporarily paused. During this period, no new events will appear in your webhook history. Monitoring automatically resumes once you purchase additional API credits.
+Whether you miss events during the pause depends on your search criteria. For example, if your webhook tracks jobs posted within the last 60 days and you lack credits for 2 days, you won't miss anything - when credits are restored, all jobs discovered during the pause will still trigger your webhook as they match your search parameters.
+### What happens if the webhook event fails?
+If the webhook event fails, it will be automatically retried every hour for 48 hours.
+### How much cost to run a webhook?
+Webhook events are billed at the same rate as API requests. They consume 1 API credit per event.
+---
+title: Why do I see a smaller number of job listings on TheirStack compared to platforms like Indeed or LinkedIn?
+description: When you search for a job on Indeed or Linkedin, you may see more results than on TheirStack. This is because Indeed uses broader keyword matching, while TheirStack prioritizes precision.
+lastModifiedAt: '2024-12-31'
+url: https://theirstack.com/en/docs/why-do-i-see-less-jobs-on-theirstack-than-indeed
+---
+The difference lies in how job searches are conducted on TheirStack versus platforms like LinkedIn, Indeed, or Glassdoor. Let's focus on Indeed as an example, though the same principles apply to other providers.
+## Search methodology
+### Keyword matching
+Job boards like Indeed use broader keyword matching:
+- **Synonyms and Related Jobs**: For example, when you search for "network engineer," Indeed may return jobs that loosely match those terms, even if they don't contain the exact keywords.
+- **Company Name Matching**: For example, when you search for "franchise", LinkedIn may return jobs where the company name contains the word 'franchise'.
+On TheirStack, we prioritize precision. Our job title filter is deterministic, meaning it only returns results with an exact match for the keywords you provide. This approach ensures greater accuracy in the search results.
+<img src="https://theirstack.com/static/generatedcontent/docs/posts/why-do-i-see-less-jobs-on-theirstack-than-indeed/indeed_job_search.png" alt="Indeed job search" className="center mt-6" />
+### Date range
+Indeed and LinkedIn typically display jobs that have been posted or reposted within the last 30 days by default, whereas TheirStack does not automatically filter jobs based on their reposted date.
+## How to Increase Results on TheirStack
+-   **Add More Keywords**: Broaden your search terms to include additional relevant keywords (see Picture A).
+<div className="flex justify-center items-center">
+<img src="https://theirstack.com/static/generatedcontent/docs/posts/why-do-i-see-less-jobs-on-theirstack-than-indeed/job_titles.png" alt="Job title lists" className="w-64" />
+</div>
+-   **Use Regex Patterns**: Leverage regular expressions for more flexible and advanced search queries (see Picture B).
+<div className="flex justify-center items-center">
+<img src="https://theirstack.com/static/generatedcontent/docs/posts/why-do-i-see-less-jobs-on-theirstack-than-indeed/job_titles_regex.png" alt="Regex patterns" className="w-64" />
+</div>
+## Upcoming Features
+We're working on
+- a new filter that incorporates a synonym dictionary, which will enhance your search capabilities.
+- a new filter that allows you to filter by reposted date.
+## Avoid Filtering by Scraping Source
+We scrape jobs from various sources, including company career pages, LinkedIn, and job boards. To avoid duplication, we save only the first instance of a job posting. For example, if a job appears on a company's career page and on Indeed, only the first source is stored.
+Filtering by `scraping_source = Indeed` will return only jobs initially found on Indeed, which may reduce the results. We recommend using broader filters for a more comprehensive search.
+---
+title: Understanding delays in job discovery
+description: Explore the reasons why jobs are sometimes discovered days after they are posted and the factors influencing this delay.
+lastModifiedAt: 2025-01-03
+url: https://theirstack.com/en/docs/why-some-jobs-are-discovered-days-after-they-are-posted
+---
+### Introduction
+When analyzing our data, you'll notice that a small percentage of jobs are discovered (`discovered_at`) after the day when they were initially posted (`posted_at`). This delay is common and is influenced by various factors beyond our control.
+### Discovery Timeline
+To illustrate this, let's examine jobs posted on a specific day (December 14th) and observe when they were discovered by us.
+<div className="flex justify-center items-center py-4">
+<img src="https://theirstack.com/static/generatedcontent/docs/posts/why-some-jobs-are-discovered-days-after-they-are-posted/chart2.png" alt="Jobs posted on December 12th" />
+</div>
+| Discovered At | Percentage of Jobs Discovered |
+| ------------- | ----------------------------- |
+| Same Day (0)  | 73%                           |
+| Next Day (1)  | 21%                           |
+| 2 Days Later  | 3%                            |
+| 3 Days Later  | 0.3%                          |
+| 4 Days Later  | 0.2%                          |
+As shown, 73% of jobs are found on the same day they are posted. However, there is a significant number of jobs discovered days later. To understand this, it's important to know how we collect our data.
+### Factors Contributing to Delays
+We scrape job boards, that at the same time scrape other job boards and career pages of companies. They also can get jobs posted directly by companies, or from companies’ ATS systems that sync with these job boards.
+While we scrape these job boards constantly, there are many reasons a job posted by a company at a certain date is not available on those job boards instantly, and therefore it’s not possible for us to discover it. To name a few:
+-   **ATSs sync delay with job boards**: The ATS that a company uses lets them sync jobs with a major job board, but the recruiter can choose which jobs to push to that job board because they charge for it. They may not initially sync it and do it after a few days to try to get more candidates. But the integration may keep the original date when the job was posted first, and show that in the final job board, instead of the date when the job was pushed. In this case, there will be a gap of a few days.
+-   **Job board scrapping delay**: A job board scrapes company career pages periodically, running daily. If a company posts a job at 14h and the job board scraper visits it at 10h every day, that job won’t be available in the job board until the day after. For companies that post many positions, it makes sense for job boards to visit those career pages with a high frequency. But visiting every career page of every company in the world periodically has a cost, so for smaller companies that very ocasionally post jobs, doing it on a weekly basis could help those job boards save money. So imagine they visit one of these companies’ career site every Monday. If they post a job on Tuesday, they won’t visit it again until next Monday, so there will be a 6-day difference between `posted_at` and `discovered_at`
+-   **Job board publishing delay**: If someone publishes a job directly on a job board we scrape, this job board may also let them set a custom `posted_at` that is days before the current date. But the job is not available at that job board until the very moment when that person publishes it there, and even if the reported `posted_at` is previous to that, that job wouldn’t have been discovered before because that person hadn’t published it in that job board yet.

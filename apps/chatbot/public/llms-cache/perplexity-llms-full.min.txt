@@ -1,0 +1,806 @@
+# Chat Completions
+Source: https://docs.perplexity.ai/api-reference/chat-completions
+post /chat/completions
+Generates a model's response for the given chat conversation.
+# Changelog
+Source: https://docs.perplexity.ai/changelog/changelog
+<AccordionGroup>
+<Accordion title="API model deprecation notice" description="January 2025">
+Please note that as of February 22, 2025, several models and model name aliases will no longer be accessible. The following model names will no longer be available via API:
+`llama-3.1-sonar-small-128k-online`
+`llama-3.1-sonar-large-128k-online`
+`llama-3.1-sonar-huge-128k-online`
+We recommend updating your applications to use our recently released Sonar or Sonar Pro models – you can learn more about them here. Thank you for being a Perplexity API user.
+</Accordion>
+<Accordion title="Build with Perplexity's new APIs" description="January 2025">
+We are expanding API offerings with the most efficient and cost-effective search solutions available:  **Sonar** and **Sonar Pro**.
+**Sonar** gives you fast, straightforward answers
+**Sonar Pro** tackles complex questions that need deeper research and provides more sources
+Both models offer built-in citations, automated scaling of rate limits, and public access to advanced features like structured outputs and search domain filters. And don’t worry, we never train on your data. Your information stays yours.
+You can learn more about our new APIs here - [http://sonar.perplexity.ai/](http://sonar.perplexity.ai/)
+</Accordion>
+<Accordion title="Citations Public Release and Increased Default Rate Limits" description="November 2024">
+We are excited to announce the public availability of citations in the Perplexity API. In addition, we have also increased our default rate limit for the sonar online models to 50 requests/min for all users.
+Effective immediately, all API users will see citations returned as part of their requests by default. This is not a breaking change. The **return\_citations** parameter will no longer have any effect.
+If you have any questions or need assistance, feel free to reach out to our team at [api@perplexity.ai](mailto:api@perplexity.ai)
+</Accordion>
+<Accordion title="Introducing New and Improved Sonar Models." description="July 2024">
+We are excited to announce the launch of our latest Perplexity Sonar models:
+**Online Models** -
+`llama-3.1-sonar-small-128k-online`
+`llama-3.1-sonar-large-128k-online`
+**Chat Models** -
+`llama-3.1-sonar-small-128k-chat`
+`llama-3.1-sonar-large-128k-chat`
+These new additions surpass the performance of the previous iteration. For detailed information on our supported models, please visit our model card documentation.
+**\[Action Required]** Model Deprecation Notice
+Please note that several models will no longer be accessible effective 8/12/2024. We recommend updating your applications to use models in the Llama-3.1 family immediately.
+The following model names will no longer be available via API -
+`llama-3-sonar-small-32k-online`
+`llama-3-sonar-large-32k-online`
+`llama-3-sonar-small-32k-chat`
+`llama-3-sonar-large-32k-chat`
+`llama-3-8b-instruct`
+`llama-3-70b-instruct`
+`mistral-7b-instruct`
+`mixtral-8x7b-instruct`
+We recommend switching to models in the Llama-3.1 family:
+**Online Models** -
+`llama-3.1-sonar-small-128k-online`
+`llama-3.1-sonar-large-128k-online`
+**Chat Models** -
+`llama-3.1-sonar-small-128k-chat`
+`llama-3.1-sonar-large-128k-chat`
+**Instruct Models** -
+`llama-3.1-70b-instruct`
+`llama-3.1-8b-instruct`
+If you have any questions, please email [support@perplexity.ai](mailto:support@perplexity.ai).
+Thank you for being a Perplexity API user.
+Stay curious,
+Team Perplexity
+</Accordion>
+<Accordion title="Model Deprecation Notice" description="April 2024">
+Please note that as of May 14, several models and model name aliases will no longer be accessible. We recommend updating your applications to use models in the Llama-3 family immediately. The following model names will no longer be available via API:
+`codellama-70b-instruct`
+`mistral-7b-instruct`
+`mixtral-8x22b-instruct`
+`pplx-7b-chat`
+`pplx-7b-online`
+`sonar-small-chat`
+`sonar-small-online`
+`pplx-70b-chat`
+`pplx-70b-online`
+`pplx-8x7b-chat`
+`pplx-8x7b-online`
+`sonar-medium-chat`
+`sonar-medium-online`
+In lieu of the above, we recommend switching to models from the Llama 3 family:
+`llama-3-sonar-small-32k-chat`
+`llama-3-sonar-small-32k-online`
+`llama-3-sonar-large-32k-chat`
+`llama-3-sonar-large-32k-online`
+`llama-3-8b-instruct`
+`llama-3-70b-instruct`
+</Accordion>
+<Accordion title="Cheaper Output Tokens" description="February 2024">
+Effective immediately, input and output tokens are now charged with the same price. Previously, output tokens were more expensive than input tokens. Prices have generally gone down as a result.
+</Accordion>
+<Accordion title="API Updates" description="February 2024">
+**Announcing Our Newest Model**
+We are excited to announce the launch of our latest Perplexity models: sonar-small-chat and sonar-medium-chat, along with their search-enhanced versions, sonar-small-online and sonar-medium-online. These new additions surpass our earlier models in cost-efficiency, speed, and performance. For detailed information on our supported models, please visit our model card documentation.
+**Expanded Context Windows**
+The context window length for several models has been doubled from 8k to 16k, including mixtral-8x7b-instruct and all Perplexity models. 4k tokens are reserved for search results in online models.
+**Model Deprecation Notice**
+Please note that as of March 15, the pplx-70b-chat, pplx-70b-online, llama-2-70b-chat, and codellama-34b-instruct models will no longer be available through the Perplexity API. We will gradually phase out less frequently used models in favor of our newer and more performant offerings.
+**Revised Pricing Structure for 8x7b Models**
+The pricing for the mixtral-8x7b-instruct model will be adjusted. Previously charged at $0.14 / $0.58 per million input and output tokens, the rates will change to $0.60 / $1.80 per million input and output tokens moving forward.
+**Increased Public Rate Limits**
+Public limits for all models have increased by \~2x. Find the current rate limits here.
+**Access to Citations and Elevated Rate Limits**
+Responding to popular demand in our API discussion forum, we are introducing URL citation access for our Online LLMs to approved users. For access to citations, or to request a rate limit increase, please complete this form.
+**Terms of Service and Data Processing Addendum**
+We wish to reiterate our commitment to data privacy for commercial application developers using the Perplexity API. The updated Terms of Service and Data Processing Addendum can be found here.
+Thank you for being a Perplexity API user.
+</Accordion>
+<Accordion title="New Model: mixtral-8x7b-instruct" description="January 2024">
+We're excited to announce that pplx-api is now serving the latest open-source mixture-of-experts model, `mixtral-8x7b-instruct`, at the blazingly fast speed of inference you are accustomed to.
+</Accordion>
+<Accordion title="Online LLMs and general availability for pplx-api" description="December 2023">
+We’re excited to share two new PPLX models: pplx-7b-online and pplx-70b-online. These first-of-a-kind models are integrated with our in-house search technology for factual grounding. Read our blog post for more information!
+[https://blog.perplexity.ai/blog/introducing-pplx-online-llms](https://blog.perplexity.ai/blog/introducing-pplx-online-llms)
+We're also announcing general availability for our API. We've rolled out usage-based pricing, which enables us to gradually relax the rate limits on our models. Follow the updated steps for getting started.
+</Accordion>
+<Accordion title="Models removed: replit-code-v1.5-3b and openhermes-2-mistral-7b" description="December 2023">
+We have removed support for `replit-code-v1.5-3b` and `openhermes-2-mistral-7b`. There are no immediate plans to add these models back. If you were a user who enjoyed `openhermes-2-mistral-7b`, try instead using our in-house models, `pplx-7b-chat`, `pplx-70b-chat`!
+</Accordion>
+<Accordion title="Versioning" description="November 2023">
+The Perplexity AI API is currently in beta release v0. Clients are not protected from backwards incompatible changes and cannot specify their desired API version. Examples of backwards incompatible changes include...
+Removing support for a given model.
+Renaming a response field.
+Removing a response field.
+Adding a required request parameter.
+Backwards incompatible changes will be documented here.
+Generally, the API is currently designed to be compatible with OpenAI client libraries. This means that, given the same request body, swapping the API base URL and adding your Perplexity API key will yield a response that can be parsed in the same way as the response OpenAI would yield, except for certain explicitly unsupported body parameters documented in the reference (link to reference).
+</Accordion>
+</AccordionGroup>
+# Forum
+Source: https://docs.perplexity.ai/discussions/discussions
+We host our discussions on GitHub. You can access our GitHub discussion forum [here](https://github.com/ppl-ai/api-discussion/discussions).
+# Frequently Asked Questions
+Source: https://docs.perplexity.ai/faq/faq
+<AccordionGroup>
+<Accordion title="Why are the results from the API different from the UI? ">
+1. The API uses the same search system as the UI with differences in configuration - so their outputs may differ.
+2. The underlying AI model might differ between the API and the UI for a given query.
+3. We give users the power to tune the API to their respective use cases using sampling parameters like `presence_penalty`, `top_p` etc and custom tuning to specific use cases might lead to less generalization of the API/different results vs the UI. We set optimized defaults and recommend not to explicitly provide sampling parameters in your API requests.
+</Accordion>
+<Accordion title="Will user data submitted through the API be used for model training or other purposes?">
+We collect the following types of information:
+**API Usage Data:** We collect billable usage metadata such as the number of requests and tokens. You can view your own usage in the [Perplexity API dashboard](https://perplexity.ai/settings/api).
+**User Account Information:** When you create an account with us, we collect your name, email address, and other relevant contact information.
+We do not retain any query data sent through the API and do not train on any of your data.
+</Accordion>
+<Accordion title="Does the API currently support web browsing?">
+Yes, the [Sonar Models](https://docs.perplexity.ai/guides/model-cards), leverage information from Perplexity’s search index and the public internet.
+</Accordion>
+<Accordion title="What are the limitations to the number of API calls?">
+You can find our [rate limits here](https://docs.perplexity.ai/guides/usage-tiers).
+</Accordion>
+<Accordion title="What's the best way to stay up to date with API updates?">
+We email users about new developments and also post in the [changelog](/changelog.mdx).
+</Accordion>
+<Accordion title="How should I respond to 401: Authorization errors?">
+401 error codes indicate that the provided API key is invalid, deleted or belongs to an account which ran out of credits. You likely need to purchase more credits in the [Perplexity API dashboard](https://perplexity.ai/settings/api). You can avoid this issue by configuring auto-top-up.
+</Accordion>
+<Accordion title="Do you support fine-tuning?">
+Currently, we do not support fine-tuning.
+</Accordion>
+<Accordion title="I have another question or an issue">
+Please reach out to [api@perplexity.ai](mailto:api@perplexity.ai) or [support@perplexity.ai](mailto:support@perplexity.ai) for other API inquiries. You can also post on our [discussion forum](https://github.com/ppl-ai/api-discussion/discussions) and we will get back to you.
+</Accordion>
+<Accordion title="Does Perplexity provide service quality assurances such as service uptime, frequency of failures, and target recovery time in the event of a failure?">
+We do not guarantee this at the moment.
+</Accordion>
+<Accordion title="Where are your DeepSeek reasoning models behind Sonar Reasoning and Sonar Reasoning Pro hosted? Is my data going to China?">
+The models are hosted in the US and we do not train on any of your data. And no, your data is not going to China.
+</Accordion>
+<Accordion title="Are your reasoning APIs that use DeepSeek uncensored?">
+Yes, our reasoning APIs that use DeepSeek's models are uncensored and on par with the other APIs in terms of content moderation.
+</Accordion>
+<Accordion title="Do you expose CoTs if I use your reasoning APIs or Deep Research API?">
+We expose the CoTs for Sonar Reasoning Pro and Sonar Reasoning. We don't currently expose the CoTs for Deep Research.
+</Accordion>
+<Accordion title="Does R1-1776 search the web?">
+R1-1776 is an offline chat model that does not search the web. So this model might not the have the most upto date information beyond its training cutoff date - which should be the same as R1.
+</Accordion>
+<Accordion title="Are the reasoning tokens in Deep Research same as CoTs in the answer?">
+Reasoning tokens in Deep Research are a bit different than the CoTs in the answer - these are tokens that we use to reason through the research material prior to generating the outputs via the CoTs.
+</Accordion>
+<Accordion title="Is the internet data access provided by the API identical to that of Perplexity's web interface?">
+Yes, the API offers exactly the same internet data access as Perplexity's web platform.
+</Accordion>
+</AccordionGroup>
+# Perplexity Crawlers
+Source: https://docs.perplexity.ai/guides/bots
+We strive to improve our service every day by delivering the best search experience possible. To achieve this, we collect data using web crawlers (“robots”) and user agents that gather and index information from the internet, operating either automatically or in response to user requests. Webmasters can use the following robots.txt tags to manage how their sites and content interact with Perplexity. Each setting works independently, and it may take up to 24 hours for our systems to reflect changes.
+| User Agent      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| :-------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| PerplexityBot   | `PerplexityBot` is designed to surface and link websites in search results on Perplexity. It is not used to crawl content for AI foundation models. To ensure your site appears in search results, we recommend allowing `PerplexityBot` in your site’s `robots.txt` file and permitting requests from our published IP ranges listed below.<br /><br />Full user-agent string: `Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; PerplexityBot/1.0; +https://perplexity.ai/perplexitybot)`<br /><br />Published IP addresses: [https://www.perplexity.com/perplexitybot.json](https://www.perplexity.com/perplexitybot.json)                                                                                                                                        |
+| Perplexity‑User | `Perplexity-User` supports user actions within Perplexity. When users ask Perplexity a question, it might visit a web page to help provide an accurate answer and include a link to the page in its response. `Perplexity-User` controls which sites these user requests can access. It is not used for web crawling or to collect content for training AI foundation models.<br /><br />Full user-agent string: `Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Perplexity-User/1.0; +https://perplexity.ai/perplexity-user)`<br /><br />Published IP addresses: [https://www.perplexity.com/perplexity-user.json](https://www.perplexity.com/perplexity-user.json)<br /><br />Since a user requested the fetch, this fetcher generally ignores robots.txt rules. |
+# Sonar Cookbook
+Source: https://docs.perplexity.ai/guides/cookbook
+Guides designed to help developers build with Sonar
+You can view the cookbook [here](https://github.com/ppl-ai/api-cookbook).
+# Initial Setup
+Source: https://docs.perplexity.ai/guides/getting-started
+Register and make a successful API request
+## Registration
+* Start by visiting the [API Settings page](https://www.perplexity.ai/pplx-api)
+<Frame>
+<img src="https://mintlify.s3.us-west-1.amazonaws.com/perplexity/images/24cc167-Screenshot_2023-11-28_at_6.19.34_PM.png" />
+</Frame>
+* Register your credit card to get started
+<Note>
+This step will not charge your credit card. It just stores payment information for later API usage.
+</Note>
+<Frame>
+<img src="https://mintlify.s3.us-west-1.amazonaws.com/perplexity/images/50d9caa-Screenshot_2023-11-28_at_6.23.21_PM.png" />
+</Frame>
+## Generate an API key
+* Every API call needs a valid API key
+<Info>
+The API key is a long-lived access token that can be used until it is manually refreshed or deleted.
+</Info>
+<Frame>
+<img src="https://mintlify.s3.us-west-1.amazonaws.com/perplexity/images/c83bb1f-Screenshot_2023-11-28_at_6.41.40_PM.png" />
+</Frame>
+Send the API key as a bearer token in the Authorization header with each API request.
+<Note>
+When you run out of credits, your API keys will be blocked until you add to your credit balance. You can avoid this by configuring "Automatic Top Up", which refreshes your balance whenever you drop below \$2.
+</Note>
+## Make your API call
+* The API is conveniently OpenAI client-compatible for easy integration with existing applications.
+```cURL cURL
+curl --location 'https://api.perplexity.ai/chat/completions' \
+--header 'accept: application/json' \
+--header 'content-type: application/json' \
+--header 'Authorization: Bearer {API_KEY}' \
+--data '{
+"model": "sonar-pro ",
+"messages": [
+{
+"role": "system",
+"content": "Be precise and concise."
+},
+{
+"role": "user",
+"content": "How many stars are there in our galaxy?"
+}
+]
+}'
+```
+```python python
+from openai import OpenAI
+YOUR_API_KEY = "INSERT API KEY HERE"
+messages = [
+{
+"role": "system",
+"content": (
+"You are an artificial intelligence assistant and you need to "
+"engage in a helpful, detailed, polite conversation with a user."
+),
+},
+{
+"role": "user",
+"content": (
+"How many stars are in the universe?"
+),
+},
+]
+client = OpenAI(api_key=YOUR_API_KEY, base_url="https://api.perplexity.ai")
+# chat completion without streaming
+response = client.chat.completions.create(
+model="sonar-pro",
+messages=messages,
+)
+print(response)
+# chat completion with streaming
+response_stream = client.chat.completions.create(
+model="sonar-pro",
+messages=messages,
+stream=True,
+)
+for response in response_stream:
+print(response)
+```
+# Integrating MCP with Perplexity's Sonar API
+Source: https://docs.perplexity.ai/guides/mcp-server
+Learn about the MCP server implementation for the Sonar API.
+## What is MCP?
+The **Model Context Protocol (MCP)** is an open standard designed to connect AI assistants with the systems where data lives. By providing a universal interface for AI applications to access structured and unstructured data, MCP eliminates the need for custom integrations, enabling AI models to retrieve real-time, relevant information more efficiently. Learn more about MCP [here](https://modelcontextprotocol.io/introduction).
+## MCP Server for Perplexity's Sonar API
+Our **MCP server implementation** for Sonar allows any AI-powered tool to perform real-time, web-wide research using Perplexity’s powerful search engine. This server acts as a bridge between AI applications and the Sonar, enabling seamless integration for retrieving and synthesizing relevant, up-to-date information from the web.
+### How It Works
+* The **Perplexity Ask MCP Server** follows MCP’s **open standard**, allowing any AI assistant or automation tool to connect to the **Sonar API** for live web searches.
+* AI models can query the server for information retrieval, leveraging Perplexity’s search capabilities to return the most relevant insights.
+### Example: Using MCP with Claude
+Claude is one example of how this MCP server can be used effectively. When connected to Claude, the **Perplexity Ask MCP Server** enables it to **perform live web searches** and return **highly relevant, up-to-date responses**, enhancing its ability to provide real-time knowledge.
+### Where to Find the Documentation
+Developers looking to integrate and deploy the **Perplexity Ask MCP Server** can find our implementation, detailed documentation, and setup instructions in our official MCP repository:
+📖 [**Perplexity Ask MCP Server**](https://github.com/ppl-ai/modelcontextprotocol/tree/main)
+This includes:
+* Implementation code
+* Setup instructions
+* Configuration steps
+* API usage guidelines
+* Deployment and troubleshooting tips
+# Models
+Source: https://docs.perplexity.ai/guides/model-cards
+Explore all available models and compare their capabilities.
+## Search Models
+*Models designed to retrieve and synthesize information efficiently.*
+<CardGroup cols={2}>
+<Card title="sonar-pro">
+<Icon icon="magnifying-glass" iconType="solid" />
+Advanced search offering with grounding, supporting complex queries and follow-ups.\
+[Learn more →](./models/sonar-pro)
+</Card>
+<Card title="sonar">
+<Icon icon="bolt" iconType="solid" />
+Lightweight, cost-effective search model with grounding.\
+[Learn more →](./models/sonar)
+</Card>
+</CardGroup>
+## Research Models
+*Models that conduct in-depth analysis and generate detailed reports.*
+<CardGroup cols={1}>
+<Card title="sonar-deep-research">
+<Icon icon="file" iconType="solid" />
+Expert-level research model conducting exhaustive searches and generating comprehensive reports.\
+[Learn more →](./models/sonar-deep-research)
+</Card>
+</CardGroup>
+## Reasoning Models
+*Models that excel at complex, multi-step tasks.*
+<CardGroup cols={2}>
+<Card title="sonar-reasoning-pro">
+<Icon icon="lightbulb" iconType="solid" />
+Premier reasoning offering powered by DeepSeek R1 with Chain of Thought (CoT).\
+[Learn more →](./models/sonar-reasoning-pro)
+</Card>
+<Card title="sonar-reasoning">
+<Icon icon="puzzle-piece" iconType="solid" />
+Fast, real-time reasoning model designed for quick problem-solving with search.\
+[Learn more →](./models/sonar-reasoning)
+</Card>
+</CardGroup>
+## Offline Models
+*Chat models that do not use our search subsystem.*
+<CardGroup cols={1}>
+<Card title="r1-1776">
+<Icon icon="scale-balanced" iconType="solid" />
+A version of DeepSeek R1 post-trained for uncensored, unbiased, and factual information.\
+[Learn more →](./models/r1-1776)
+</Card>
+</CardGroup>
+***
+<Note>
+* `sonar-reasoning-pro` and `sonar-pro` have a max output token limit of 8k.
+* The reasoning models output Chain of Thought (CoT) responses.
+* `r1-1776` is an offline chat model that does not use our search subsystem.
+</Note>
+# Pricing
+Source: https://docs.perplexity.ai/guides/pricing
+## Overview
+Perplexity AI is introducing **new pricing with search modes**, which will be available **starting today**. However, **the current (legacy) pricing remains active** and will be **deprecated on 04/18/2025**.
+### **Key Changes**
+* **New search modes** (`high`, `medium`, `low`) allow for greater control over search costs.
+* **By default**, models will continue using **legacy pricing** unless you explicitly specify a search mode in your API call.
+* **Legacy pricing will be deprecated on 04/18/2025**. Please update your integration accordingly.
+***
+## **Legacy Pricing (will be deprecated on 04/18/2025)**
+| Model                 | Input Tokens (Per Million) | Reasoning Tokens (Per Million) | Output Tokens (Per Million) | Price per 1,000 Requests |
+| --------------------- | :------------------------: | :----------------------------: | :-------------------------: | :----------------------: |
+| `sonar-deep-research` |             \$2            |               \$3              |             \$8             |            \$5           |
+| `sonar-reasoning-pro` |             \$2            |                -               |             \$8             |            \$5           |
+| `sonar-reasoning`     |             \$1            |                -               |             \$5             |            \$5           |
+| `sonar-pro`           |             \$3            |                -               |             \$15            |            \$5           |
+| `sonar`               |             \$1            |                -               |             \$1             |            \$5           |
+| `r1-1776`             |             \$2            |                -               |             \$8             |             -            |
+📌 **Important Note:** If you do not specify a search mode in your API call, billing will default to this legacy pricing.
+## **Detailed Pricing Breakdown (for "Legacy" pricing)**
+<AccordionGroup>
+<Accordion title="Detailed Pricing Breakdown for Sonar Deep Research">
+**Input Tokens**
+1. Input tokens are priced at \$2/1M tokens
+2. Input tokens comprise of Prompt tokens (user prompt) + Citation tokens (these are processed tokens from running searches)
+**Search Queries**
+1. Deep Research runs multiple searches to conduct exhaustive research
+2. Searches are priced at \$5/1000 searches
+3. A request that does 30 searches will cost \$0.15 in this step.
+**Reasoning Tokens**
+1. Reasoning is a distinct step in Deep Research since it does extensive automated reasoning through all the material it gathers during its research phase
+2. Reasoning tokens here are a bit different than the CoTs in the answer - these are tokens that we use to reason through the research material prior to generating the outputs via the CoTs.
+3. Reasoning tokens are priced at \$3/1M tokens
+**Output Tokens**
+1. Output tokens (Completion tokens) are priced at \$8/1M tokens
+**Total Price**
+Your total price per request finally is a sum of the above 4 components
+</Accordion>
+<Accordion title="Detailed Pricing Breakdown for Sonar Reasoning Pro and Sonar Pro">
+**Input Tokens**
+1. Input tokens are priced at \$2/1M tokens and \$3/1M tokens respectively
+2. Input tokens comprise of Prompt tokens (user prompt) + Citation tokens (these are processed tokens from running searches)
+**Search Queries**
+1. To give detailed answers, both the Pro APIs also run multiple searches on top of the user prompt where necessary for more exhaustive information retrieval
+2. Searches are priced at \$5/1000 searches
+3. A request that does 3 searches will cost \$0.015 in this step
+**Output Tokens**
+1. Output tokens (Completion tokens) are priced at \$8/1M tokens and \$15/1M tokens respectively
+**Total Price**
+Your total price per request finally is a sum of the above 3 components
+</Accordion>
+<Accordion title="Detailed Pricing Breakdown for Sonar Reasoning and Sonar">
+**Input Tokens**
+1. Input tokens are priced at \$1/1M tokens for both
+2. Input tokens comprise of Prompt tokens (user prompt)
+**Search Queries**
+1. Each request does 1 search priced at \$5/1000 searches
+**Output Tokens**
+1. Output tokens (Completion tokens) are priced at \$5/1M tokens and \$1/1M tokens respectively
+**Total Price**
+Your total price per request finally is a sum of the above 2 components
+</Accordion>
+</AccordionGroup>
+***
+## **New Pricing (Search Modes)**
+The **new pricing structure** introduces **search context modes**:
+* **High**: Uses the most search context for richer results.
+* **Medium**: Balanced search for cost vs. depth.
+* **Low**: Minimal search context, optimized for cost savings.
+***
+## **Non-Reasoning Models**
+*Models optimized for fast, cost-effective search and information retrieval.*
+<CardGroup cols={2}>
+<Card title="Sonar Pro">
+<Icon icon="magnifying-glass" iconType="solid" />
+Advanced search model optimized for complex queries and deeper content understanding.\
+[Learn more →](./models/sonar-pro)
+**Pricing:**
+| Metric                          | High   | Medium   | Low    |
+| ------------------------------- | :----: | :------: | :----: |
+| **Input Tokens (Per Million)**  |   \$3  |    \$3   |   \$3  |
+| **Output Tokens (Per Million)** |  \$15  |   \$15   |  \$15  |
+| **Price per 1000 Requests**     |  \$14  |   \$10   |   \$6  |
+</Card>
+<Card title="Sonar">
+<Icon icon="bolt" iconType="solid" />
+Lightweight, cost-effective search model designed for quick, grounded answers.\
+[Learn more →](./models/sonar)
+**Pricing:**
+| Metric                          | High   | Medium   | Low    |
+| ------------------------------- | :----: | :------: | :----: |
+| **Input Tokens (Per Million)**  |   \$1  |    \$1   |   \$1  |
+| **Output Tokens (Per Million)** |   \$1  |    \$1   |   \$1  |
+| **Price per 1000 Requests**     |  \$12  |    \$8   |   \$5  |
+</Card>
+</CardGroup>
+***
+## **Reasoning Models**
+*Models optimized for multi-step reasoning, problem-solving, and real-time search.*
+<CardGroup cols={2}>
+<Card title="Sonar Reasoning Pro">
+<Icon icon="brain" iconType="solid" />
+Enhanced reasoning model with multi-step problem-solving capabilities and real-time search.\
+[Learn more →](./models/sonar-reasoning-pro)
+**Pricing:**
+| Metric                          | High   | Medium   | Low    |
+| ------------------------------- | :----: | :------: | :----: |
+| **Input Tokens (Per Million)**  |   \$2  |    \$2   |   \$2  |
+| **Output Tokens (Per Million)** |   \$8  |    \$8   |   \$8  |
+| **Price per 1000 Requests**     |  \$14  |   \$10   |   \$6  |
+</Card>
+<Card title="Sonar Reasoning">
+<Icon icon="puzzle-piece" iconType="solid" />
+Quick problem-solving and reasoning model, ideal for evaluating complex queries.\
+[Learn more →](./models/sonar-reasoning)
+**Pricing:**
+| Metric                          | High   | Medium   | Low    |
+| ------------------------------- | :----: | :------: | :----: |
+| **Input Tokens (Per Million)**  |   \$1  |    \$1   |   \$1  |
+| **Output Tokens (Per Million)** |   \$5  |    \$5   |   \$5  |
+| **Price per 1000 Requests**     |  \$12  |    \$8   |   \$5  |
+</Card>
+</CardGroup>
+***
+## **Deep Research Models**
+*Models designed for exhaustive research, expert-level analysis, and detailed report generation.*
+<CardGroup cols={1}>
+<Card title="Sonar Deep Research">
+<Icon icon="chart-bar" iconType="solid" />
+Best suited for exhaustive research, generating detailed reports and in-depth insights.\
+[Learn more →](./models/sonar-deep-research)
+**Pricing:**
+| Metric                                | Cost   |
+| ------------------------------------- | :----: |
+| **Input Tokens (Per Million)**        |   \$2  |
+| **Output Tokens (Per Million)**       |   \$8  |
+| **Price per 1000 Requests**           |   \$5  |
+| **Reasoning Tokens (Per Million)**    |   \$3  |
+</Card>
+</CardGroup>
+***
+## **Offline Model**
+*For private, factual-based answering without real-time web search.*
+<CardGroup cols={1}>
+<Card title="r1-1776">
+<Icon icon="server" iconType="solid" />
+Offline chat model that does not use search but provides local AI capabilities.\
+[Learn more →](./models/r1-1776)
+**Pricing:**
+| Metric                            |  Cost   |
+| --------------------------------- | :-----: |
+| **Input Tokens (Per Million)**    | \$2     |
+| **Output Tokens (Per Million)**   | \$8     |
+</Card>
+</CardGroup>
+***
+# Prompt Guide
+Source: https://docs.perplexity.ai/guides/prompt-guide
+## System Prompt
+You can use the system prompt to provide instructions related to style, tone, and language of the response.
+<Note>
+The real-time search component of our models does not attend to the system prompt.
+</Note>
+**Example of a system prompt**
+```
+You are a helpful AI assistant.
+Rules:
+1. Provide only the final answer. It is important that you do not include any explanation on the steps below.
+2. Do not show the intermediate steps information.
+Steps:
+1. Decide if the answer should be a brief sentence or a list of suggestions.
+2. If it is a list of suggestions, first, write a brief and natural introduction based on the original query.
+3. Followed by a list of suggestions, each suggestion should be split by two newlines.
+```
+## User Prompt
+You should use the user prompt to pass in the actual query for which you need an answer for. The user prompt will be used to kick off a real-time web search to make sure the answer has the latest and the most relevant information needed.
+**Example of a user prompt**
+```
+What are the best sushi restaurants in the world currently?
+```
+# Structured Outputs Guide
+Source: https://docs.perplexity.ai/guides/structured-outputs
+<Note>
+Structured outputs is only available to users in Tier-3
+</Note>
+<Info>
+The first request with a new JSON Schema or Regex expects to incur delay on the first token. Typically, it takes 10 to 30 seconds to prepare the new schema, and may result in timeout errors. Once the schema has been prepared, the subsequent requests will not see such delay.
+</Info>
+## Overview
+We currently support two types of structured outputs: **JSON Schema** and **Regex**. LLM responses will work to match the specified format, except for the following cases:
+* The output exceeds `max_tokens`
+Enabling the structured outputs can be done by adding a `response_format` field in the request:
+**JSON Schema**
+* `response_format: { type: "json_schema", json_schema: {"schema": object} }` .
+* The schema should be a valid JSON schema object.
+**Regex** (only available for `sonar` right now)
+* `response_format: { type: "regex", regex: {"regex": str} }` .
+* The regex is a regular expression string.
+We recommend to give the LLM some hints about the output format in the prompts.
+## Examples
+### 1. Get a response in JSON format
+**Request**
+```python
+import requests
+from pydantic import BaseModel
+class AnswerFormat(BaseModel):
+first_name: str
+last_name: str
+year_of_birth: int
+num_seasons_in_nba: int
+url = "https://api.perplexity.ai/chat/completions"
+headers = {"Authorization": "Bearer YOUR_API_KEY"}
+payload = {
+"model": "sonar",
+"messages": [
+{"role": "system", "content": "Be precise and concise."},
+{"role": "user", "content": (
+"Tell me about Michael Jordan. "
+"Please output a JSON object containing the following fields: "
+"first_name, last_name, year_of_birth, num_seasons_in_nba. "
+)},
+],
+"response_format": {
+"type": "json_schema",
+"json_schema": {"schema": AnswerFormat.model_json_schema()},
+},
+}
+response = requests.post(url, headers=headers, json=payload).json()
+print(response["choices"][0]["message"]["content"])
+```
+**Response**
+```
+{"first_name":"Michael","last_name":"Jordan","year_of_birth":1963,"num_seasons_in_nba":15}
+```
+### 2. Use a regex to output the format
+**Request**
+```python python
+import requests
+url = "https://api.perplexity.ai/chat/completions"
+headers = {"Authorization": "Bearer YOUR_API_KEY"}
+payload = {
+"model": "sonar",
+"messages": [
+{"role": "system", "content": "Be precise and concise."},
+{"role": "user", "content": "What is the IPv4 address of OpenDNS DNS server?"},
+],
+"response_format": {
+"type": "regex",
+"regex": {"regex": r"(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"},
+},
+}
+response = requests.post(url, headers=headers, json=payload).json()
+print(response["choices"][0]["message"]["content"])
+```
+**Response**
+```
+208.67.222.222
+```
+## Best Practices
+### Generating responses in a JSON Format
+For Python users, we recommend using the Pydantic library to [generate JSON schema](https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_json_schema).
+**Unsupported JSON Schemas**
+Recursive JSON schema is not supported. As a result of that, unconstrained objects are not supported either. Here’s a few example of unsupported schemas:
+```
+# UNSUPPORTED!
+from typing import Any
+class UnconstrainedDict(BaseModel):
+unconstrained: dict[str, Any]
+class RecursiveJson(BaseModel):
+value: str
+child: list["RecursiveJson"]
+```
+### Generating responses using a regex
+**Supported Regex**
+* Characters: `\d`, `\w`, `\s` , `.`
+* Character classes: `[0-9A-Fa-f]` , `[^x]`
+* Quantifiers: `*`, `?` , `+`, `{3}`, `{2,4}` , `{3,}`
+* Alternation: `|`
+* Group: `( ... )`
+* Non-capturing group: `(?: ... )`
+* Positive lookahead: `(?= ... )`
+* Negative lookahead: `(?! ... )`
+**Unsupported Regex**
+* Contents of group: `\1`
+* Anchors: `^`, `$`, `\b`
+* Positive look-behind: `(?<= ... )`
+* Negative look-behind: `(?<! ... )`
+* Recursion: `(?R)`
+# Rate Limits and Usage Tiers
+Source: https://docs.perplexity.ai/guides/usage-tiers
+We follow the usage tier system below to set rate limits and give access to beta features for our APIs. You can check your usage tier by going to your [API settings page](https://www.perplexity.ai/settings/api).
+## Usage Tiers
+| Tier     | Credit Purchase (all time) |
+| -------- | -------------------------- |
+| `Tier 0` | -                          |
+| `Tier 1` | \$50                       |
+| `Tier 2` | \$250                      |
+| `Tier 3` | \$500                      |
+| `Tier 4` | \$1000                     |
+| `Tier 5` | \$5000                     |
+<Info>
+The tiers are based on cumulative purchases on a given account
+</Info>
+## Rate Limits and Beta Features
+<Tabs>
+<Tab title="Tier 0">
+| Model                 | Requests per minute (RPM) | Beta Features |
+| --------------------- | ------------------------- | ------------- |
+| `sonar-deep-research` | 5                         | -             |
+| `sonar-reasoning-pro` | 50                        | -             |
+| `sonar-reasoning`     | 50                        | -             |
+| `sonar-pro`           | 50                        | -             |
+| `sonar`               | 50                        | -             |
+| `r1-1776`             | 50                        | -             |
+</Tab>
+<Tab title="Tier 1">
+| Model                 | Requests per minute (RPM) | Beta Features |
+| --------------------- | ------------------------- | ------------- |
+| `sonar-deep-research` | 5                         | -             |
+| `sonar-reasoning-pro` | 150                       | -             |
+| `sonar-reasoning`     | 150                       | -             |
+| `sonar-pro`           | 150                       | -             |
+| `sonar`               | 150                       | -             |
+| `r1-1776`             | 150                       | -             |
+</Tab>
+<Tab title="Tier 2">
+| Model                 | Requests per minute (RPM) | Beta Features             |
+| --------------------- | ------------------------- | ------------------------- |
+| `sonar-deep-research` | 5                         | -                         |
+| `sonar-reasoning-pro` | 500                       | images, related questions |
+| `sonar-reasoning`     | 500                       | images, related questions |
+| `sonar-pro`           | 500                       | images, related questions |
+| `sonar`               | 500                       | images, related questions |
+| `r1-1776`             | 500                       | -                         |
+</Tab>
+<Tab title="Tier 3">
+| Model                 | Requests per minute (RPM) | Beta Features                                                       |
+| --------------------- | ------------------------- | ------------------------------------------------------------------- |
+| `sonar-deep-research` | 5                         | related questions, structured outputs                               |
+| `sonar-reasoning-pro` | 1000                      | images, related questions, search domain filter, structured outputs |
+| `sonar-reasoning`     | 1000                      | images, related questions, search domain filter, structured outputs |
+| `sonar-pro`           | 1000                      | images, related questions, search domain filter, structured outputs |
+| `sonar`               | 1000                      | images, related questions, search domain filter, structured outputs |
+| `r1-1776`             | 1000                      | structured outputs                                                  |
+</Tab>
+<Tab title="Tier 4">
+| Model                 | Requests per minute (RPM) | Beta Features                                                       |
+| --------------------- | ------------------------- | ------------------------------------------------------------------- |
+| `sonar-deep-research` | 5                         | related questions, structured outputs                               |
+| `sonar-reasoning-pro` | 2000                      | images, related questions, search domain filter, structured outputs |
+| `sonar-reasoning`     | 2000                      | images, related questions, search domain filter, structured outputs |
+| `sonar-pro`           | 2000                      | images, related questions, search domain filter, structured outputs |
+| `sonar`               | 2000                      | images, related questions, search domain filter, structured outputs |
+| `r1-1776`             | 2000                      | structured outputs                                                  |
+</Tab>
+<Tab title="Tier 5">
+| Model                 | Requests per minute (RPM) | Beta Features                                                       |
+| --------------------- | ------------------------- | ------------------------------------------------------------------- |
+| `sonar-deep-research` | 100                       | related questions, structured outputs                               |
+| `sonar-reasoning-pro` | 2000                      | images, related questions, search domain filter, structured outputs |
+| `sonar-reasoning`     | 2000                      | images, related questions, search domain filter, structured outputs |
+| `sonar-pro`           | 2000                      | images, related questions, search domain filter, structured outputs |
+| `sonar`               | 2000                      | images, related questions, search domain filter, structured outputs |
+| `r1-1776`             | 2000                      | structured outputs                                                  |
+</Tab>
+</Tabs>
+<Note>
+1. `r1-1776` is an offline chat model that does not use our search subsystem so image search, related questions and search domain filter aren't available for it
+2. Rate Limit for`sonar-deep-research`increases to 100rpm in Tier - 5
+</Note>
+# null
+Source: https://docs.perplexity.ai/home
+export function openSearch() {
+document.getElementById('search-bar-entry').click();
+}
+<div className="relative w-full flex items-center justify-center" style={{ height: '24rem', overflow: 'hidden'}}>
+<div className="absolute inset-0 bg-primary dark:bg-primary-light" style={{opacity: 0.05 }} />
+<div style={{ position: 'absolute', textAlign: 'center', padding: '0 1rem' }}>
+<div
+className="text-gray-900 dark:text-gray-200"
+style={{
+fontWeight: '700',
+fontSize: '40px',
+margin: '0',
+}}
+>
+Welcome to Sonar by Perplexity
+</div>
+<p
+className="prose prose-gray dark:prose-invert"
+style={{
+marginTop: '1rem',
+fontWeight: '400',
+fontSize: '16px',
+maxWidth: '50rem'
+}}
+>
+Power your products with unparalleled real-time, web-wide research and Q\&A capabilities.
+</p>
+<p
+className="prose prose-gray dark:prose-invert"
+style={{
+marginTop: '1rem',
+fontWeight: '400',
+fontSize: '16px',
+maxWidth: '42rem'
+}}
+>
+<a href="https://docs.perplexity.ai/guides/getting-started" className="text-primary dark:text-primary-light">**Get Started**</a>
+</p>
+<div className="flex items-center justify-center" />
+</div>
+</div>
+<div
+style={{marginTop: '6rem', marginBottom: '8rem', maxWidth: '70rem', marginLeft: 'auto',
+marginRight: 'auto', paddingLeft: '1.25rem',
+paddingRight: '1.25rem' }}
+>
+<div
+className="text-gray-900 dark:text-gray-200"
+style={{
+textAlign: 'center',
+fontSize: '24px',
+fontWeight: '400',
+marginBottom: '3rem',
+}}
+>
+Explore the docs
+</div>
+<h2 className="text-gray-900 dark:text-gray-200" style={{marginTop: '2rem', marginBottom: '2rem', fontWeight: '500'}} />
+<CardGroup cols={3}>
+<Card title="Quickstart" icon="play" href="https://docs.perplexity.ai/guides/getting-started" vertical>
+Start using the API in minutes
+</Card>
+<Card title="API Reference" icon="webhook" iconType="solid" href="/api-reference" vertical>
+Integrate the API into your workflows
+</Card>
+<Card title="Pricing" icon="square-dollar" href="/guides/pricing" vertical>
+Explore pricing of the API
+</Card>
+<Card title="Rate Limits and Usage Tiers" icon="chart-pyramid" href="/guides/usage-tiers" vertical>
+Understand API rate limits, features, and restrictions
+</Card>
+<Card title="Help" icon="circle-question" href="/faq/faq" vertical>
+Frequently asked questions about the API
+</Card>
+<Card title="System Status" icon="monitor-waveform" href="https://status.perplexity.com/" vertical>
+Track the status of our services including the API
+</Card>
+</CardGroup>
+</div>
+# Application Status
+Source: https://docs.perplexity.ai/system-status/system-status
+You can check the status of our services [here](https://status.perplexity.com/).
+If you experience any issues or have any questions, please contact us at [api@perplexity.ai](mailto:api@perplexity.ai) or flag a bug report in our [Discord](https://discord.com/invite/perplexity-ai) channel.
