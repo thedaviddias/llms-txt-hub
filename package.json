@@ -38,7 +38,8 @@
     "test:e2e:debug": "turbo test:e2e:debug --filter=e2e",
     "typecheck": "turbo typecheck",
     "update": "pnpm update -r",
-    "update-llms-list": "node scripts/update-llms-list.js"
+    "update-llms-list": "node scripts/update-llms-list.js",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@auto-it/all-contributors": "^11.3.0",
@@ -53,6 +54,7 @@
     "cross-env": "^7.0.3",
     "glob": "^11.0.1",
     "gray-matter": "^4.0.3",
+    "husky": "^9.1.7",
     "js-yaml": "^4.1.0",
     "lefthook": "^1.11.3",
     "turbo": "^2.4.4",
