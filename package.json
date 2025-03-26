@@ -38,8 +38,7 @@
     "test:e2e:debug": "turbo test:e2e:debug --filter=e2e",
     "typecheck": "turbo typecheck",
     "update": "pnpm update -r",
-    "update-llms-list": "node scripts/update-llms-list.js",
-    "prepare": "husky"
+    "update-llms-list": "node scripts/update-llms-list.js"
   },
   "devDependencies": {
     "@auto-it/all-contributors": "^11.3.0",
