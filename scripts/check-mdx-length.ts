@@ -1,6 +1,3 @@
-#!/usr/bin/env tsx
-
-/// <reference types="node" />
 import fs from 'node:fs'
 
 const files = process.argv.slice(2)
