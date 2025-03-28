@@ -105,6 +105,15 @@
       "contributions": [
         "content"
       ]
+    },
+    {
+      "login": "DrewDennison",
+      "name": "Drew Dennison",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1011067?v=4",
+      "profile": "http://semgrep.com",
+      "contributions": [
+        "content"
+      ]
     }
   ],
   "commitType": "docs",
