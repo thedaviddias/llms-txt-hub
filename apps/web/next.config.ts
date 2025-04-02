@@ -49,6 +49,12 @@ let nextConfig: NextConfig = {
         source: '/website/:path*',
         destination: '/websites/:path*',
         permanent: true
+      },
+      {
+        // Redirect old website URLs to new ones with -llms-txt suffix
+        source: '/websites/:slug((?!.*-llms-txt).*)',
+        destination: '/websites/:slug-llms-txt',
+        permanent: true
       }
     ]
   }

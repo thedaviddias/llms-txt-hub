@@ -102,7 +102,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       {
         type: 'add',
-        path: 'content/websites/{{dashCase name}}.mdx',
+        path: 'content/websites/{{dashCase name}}-llms-txt.mdx',
         templateFile: 'templates/mdx.hbs'
       }
     ]

@@ -10,10 +10,29 @@ const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
 
 /**
- * Submits a new LLMs entry via GitHub PR
+ * Submits a new LLMs entry by creating a pull request with an MDX file
  *
  * @param formData - Form data containing the entry details
+ * @param formData.name - Name of the website/project
+ * @param formData.description - Description of the website/project
+ * @param formData.website - URL of the website
+ * @param formData.llmsUrl - URL of the llms.txt file
+ * @param formData.llmsFullUrl - Optional URL of the llms-full.txt file
+ * @param formData.category - Category slug for the website
+ * @param formData.publishedAt - Publication date
+ *
  * @returns Object containing success status and PR URL or error message
+ * @throws Error if authentication fails or required fields are missing
+ *
+ * @example
+ * ```ts
+ * const result = await submitLlmsTxt(formData);
+ * if (result.success) {
+ *   console.log('PR created:', result.prUrl);
+ * } else {
+ *   console.error('Error:', result.error);
+ * }
+ * ```
  */
 export async function submitLlmsTxt(formData: FormData) {
   try {
@@ -151,7 +170,7 @@ ${description}
 
       // Create a new branch in the fork
       const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
-      const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, '-')}.mdx`
+      const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, '-')}-llms-txt.mdx`
 
       // Get the reference from the original repo
       const mainRef = await octokit.git
