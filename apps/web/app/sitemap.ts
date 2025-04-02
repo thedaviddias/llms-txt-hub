@@ -86,7 +86,7 @@ function getStaticRoutes(baseUrl: string): MetadataRoute.Sitemap {
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes: MetadataRoute.Sitemap = []
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
-  const contentDir = join(process.cwd(), '../../content')
+  const contentDir = join(process.cwd(), '../../packages/content/data')
 
   try {
     // Add static routes

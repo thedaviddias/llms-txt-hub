@@ -14,16 +14,16 @@
   },
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
-    "@supabase/supabase-js": "^2.49.1",
+    "@supabase/supabase-js": "^2.49.4",
     "@thedaviddias/supabase": "workspace:*",
-    "next": "15.2.3",
-    "react": "^19.0.0",
-    "react-dom": "^19",
+    "next": "15.2.4",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.17",
     "@types/react": "19.0.12",
     "@types/react-dom": "^19.0.4",
     "typescript": "^5.8.2"

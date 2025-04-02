@@ -8,6 +8,7 @@ import {
 } from '@thedaviddias/config-next'
 import { withSentry } from '@thedaviddias/observability/next-config'
 import type { NextConfig } from 'next'
+import { withContentCollections } from '@content-collections/next'
 
 export const INTERNAL_PACKAGES = [
   '@thedaviddias/design-system',
@@ -18,7 +19,8 @@ export const INTERNAL_PACKAGES = [
   '@thedaviddias/config-typescript',
   '@thedaviddias/logging',
   '@thedaviddias/supabase',
-  '@thedaviddias/utils'
+  '@thedaviddias/utils',
+  '@thedaviddias/content'
 ]
 
 let nextConfig: NextConfig = {
@@ -60,14 +62,15 @@ let nextConfig: NextConfig = {
   }
 }
 
+// Apply other plugins first
 nextConfig = withPlausibleProxyConfig(nextConfig)
-
 nextConfig = withVercelToolbarConfig(nextConfig)
-
 nextConfig = withSentry(nextConfig)
+nextConfig = withMDX()(nextConfig)
 
 if (env.ANALYZE === 'true') {
   nextConfig = withAnalyzer(nextConfig)
 }
 
-export default withMDX()(nextConfig)
+// withContentCollections must be the outermost wrapper
+export default withContentCollections(nextConfig)

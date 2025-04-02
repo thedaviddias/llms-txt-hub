@@ -1,0 +1,24 @@
+{
+  "name": "@thedaviddias/content",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./data"
+    },
+    "./data/*": "./data/*"
+  },
+  "files": [
+    "data"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.17",
+    "eslint": "^9.23.0",
+    "typescript": "^5.8.2"
+  }
+}

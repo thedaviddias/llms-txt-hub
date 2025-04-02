@@ -46,6 +46,7 @@
     "@biomejs/biome": "1.9.4",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
+    "@content-collections/mdx": "^0.2.2",
     "@manypkg/cli": "^0.23.0",
     "@turbo/gen": "^2.4.4",
     "@types/js-yaml": "^4.0.9",
@@ -54,11 +55,11 @@
     "glob": "^11.0.1",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
-    "lefthook": "^1.11.3",
+    "lefthook": "^1.11.6",
     "turbo": "^2.4.4",
     "typescript": "^5.8.2"
   },
-  "packageManager": "pnpm@10.6.5",
+  "packageManager": "pnpm@10.7.1",
   "engines": {
     "node": ">=22"
   }
