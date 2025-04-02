@@ -1,10 +1,10 @@
 'use server'
 
-import { getAllWebsites } from '@/lib/mdx'
+import { getWebsites } from '@/lib/content-loader'
 import { getFeaturedProjects, getRecentlyUpdatedProjects } from '@/lib/project-utils'
 
 export async function getHomePageData() {
-  const allProjects = await getAllWebsites()
+  const allProjects = await getWebsites()
   const featuredProjects = getFeaturedProjects(allProjects, 4)
   const recentlyUpdatedProjects = getRecentlyUpdatedProjects(allProjects, 5)
 

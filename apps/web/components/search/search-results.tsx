@@ -2,7 +2,7 @@
 
 import { EmptyState } from '@/components/empty-state'
 import { ClientProjectsList } from '@/components/projects-list'
-import type { WebsiteMetadata } from '@/lib/mdx'
+import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
 import { useSearchParams } from 'next/navigation'

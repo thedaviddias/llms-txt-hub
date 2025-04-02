@@ -91,10 +91,10 @@ const step2Schema = z.object({
         })
         .refine(value => /llms-full\.txt(?:$|\?)/i.test(value), {
           message: 'URL must end with llms-full.txt'
-        })
+        }),
+      z.null()
     ])
-    .optional()
-    .default(''),
+    .optional(),
   category: z.enum(validCategorySlugs, {
     errorMap: () => ({ message: 'Please select a valid category' })
   })
@@ -122,7 +122,7 @@ export function SubmitForm() {
       description: '',
       website: '',
       llmsUrl: '',
-      llmsFullUrl: '',
+      llmsFullUrl: null,
       category: ''
     }
   })
@@ -158,7 +158,7 @@ export function SubmitForm() {
         description: result.metadata.description || '',
         website: data.website,
         llmsUrl: result.metadata.llmsUrl || '',
-        llmsFullUrl: result.metadata.llmsFullUrl || '',
+        llmsFullUrl: result.metadata.llmsFullUrl || null,
         category: result.metadata.category || ''
       })
 
@@ -203,7 +203,6 @@ export function SubmitForm() {
         throw new Error(result.error || 'Unknown error occurred')
       }
     } catch (error) {
-      console.error('Form submission error:', error)
       toast.error(
         error instanceof Error
           ? error.message
@@ -331,7 +330,7 @@ export function SubmitForm() {
                 <FormItem>
                   <FormLabel>llms-full.txt URL (optional)</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} value={field.value ?? ''} />
                   </FormControl>
                   <FormMessage className="text-red-500 dark:text-red-400" />
                 </FormItem>

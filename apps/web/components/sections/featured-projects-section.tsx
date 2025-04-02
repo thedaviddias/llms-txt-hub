@@ -1,5 +1,5 @@
 import { LLMGrid } from '@/components/llm/llm-grid'
-import type { WebsiteMetadata } from '@/lib/mdx'
+import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'

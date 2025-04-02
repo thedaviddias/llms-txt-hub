@@ -10,15 +10,15 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@next/third-parties": "^15.2.3",
-    "next": "15.2.3",
+    "@next/third-parties": "^15.2.4",
+    "next": "15.2.4",
     "next-plausible": "*",
-    "react": "^19.0.0",
+    "react": "^19.1.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.17",
     "@types/react": "19.0.12",
     "@types/react-dom": "^19.0.4"
   }

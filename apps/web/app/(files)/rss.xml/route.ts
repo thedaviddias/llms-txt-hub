@@ -1,9 +1,9 @@
-import { type WebsiteMetadata, getAllWebsites } from '@/lib/mdx'
+import { getWebsites } from '@/lib/content-loader'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
 
 export async function GET() {
-  const websitesData = await getAllWebsites()
+  const websitesData = await getWebsites()
 
   const feed = {
     version: 'https://jsonfeed.org/version/1',
@@ -21,7 +21,7 @@ export async function GET() {
     ],
     language: 'en',
     items: [
-      ...websitesData.map((site: WebsiteMetadata) => ({
+      ...websitesData.map(site => ({
         id: site.slug,
         url: `${baseUrl}/websites/${site.slug}`,
         title: site.name,

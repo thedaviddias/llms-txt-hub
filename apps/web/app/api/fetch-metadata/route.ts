@@ -1,4 +1,4 @@
-import { getAllWebsites } from '@/lib/mdx'
+import { getWebsites } from '@/lib/content-loader'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
@@ -14,7 +14,7 @@ function cleanTitle(title: string): string {
 async function fetchMetadata(url: string) {
   try {
     // Check for duplicate websites
-    const existingWebsites = await getAllWebsites()
+    const existingWebsites = await getWebsites()
 
     const normalizedNewUrl = normalizeUrl(url, {
       stripProtocol: true,

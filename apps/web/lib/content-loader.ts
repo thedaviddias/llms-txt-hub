@@ -1,305 +1,256 @@
-import fs from 'node:fs'
-import path from 'node:path'
-import matter from 'gray-matter'
-import { resolveFromRoot } from './utils'
+import {
+  allWebsites as collectionWebsites,
+  allGuides as collectionGuides,
+  allResources as collectionResources,
+  allLegals as collectionLegals
+} from 'content-collections'
 
-// This module runs at build time only!
-// It loads all content files and prepares them for use in the application
-
-// Define the base directories using safer path resolution
-const contentBase = resolveFromRoot('content')
-const dataDir = resolveFromRoot('data')
-
-// Structure to store the loaded content
-interface ContentStore {
-  websites: any[]
-  guides: any[]
-  legal: Record<string, string>
+/**
+ * Interface for the _meta property found in content-collections items
+ */
+interface ContentMeta {
+  filePath: string
+  fileName: string
+  directory: string
+  path: string
+  extension: string
+  content?: string // Content is optional as it might not be available
 }
 
-// Define guide metadata interface for TypeScript
-interface GuideMetadata {
+/**
+ * Types for content metadata
+ */
+export interface WebsiteMetadata {
   slug: string
-  content: string
-  readingTime: number
-  date?: string // Make date optional
-  [key: string]: any // Allow for other properties
+  name: string
+  description: string
+  website: string
+  llmsUrl: string
+  llmsFullUrl?: string | null
+  category: string
+  publishedAt: string
+  isUnofficial?: boolean
+  content?: string
+  relatedWebsites?: WebsiteMetadata[]
+  previousWebsite?: WebsiteMetadata | null
+  nextWebsite?: WebsiteMetadata | null
+  _meta?: ContentMeta
 }
 
-// Initialize the content store
-const contentStore: ContentStore = {
-  websites: [],
-  guides: [],
-  legal: {}
+export interface GuideMetadata {
+  slug: string
+  title: string
+  description: string
+  date: string
+  authors: Array<{ name: string; url?: string }>
+  tags?: string[]
+  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  category: 'getting-started' | 'implementation' | 'best-practices' | 'integration'
+  published: boolean
+  publishedAt?: string
+  readingTime?: number
+  content?: string
+  _meta?: ContentMeta
 }
 
-// Function to load all website MDX files
-function loadWebsites() {
-  try {
-    // Try direct content directory first
-    const websitesDir = path.join(contentBase, 'websites')
-    if (!fs.existsSync(websitesDir)) {
-      console.warn(`Websites directory not found at ${websitesDir}, falling back to JSON`)
-      // Fall back to the JSON file if no directory
-      // Try multiple possible locations for the websites.json file
-      const possiblePaths = [
-        path.join(dataDir, 'websites.json'),
-        path.join(process.cwd(), 'data', 'websites.json'),
-        path.join(process.cwd(), '..', '..', 'data', 'websites.json'),
-        path.join(process.cwd(), '..', 'data', 'websites.json'),
-        path.join(process.cwd(), 'apps/web/data', 'websites.json'),
-        path.join(process.cwd(), 'apps', 'web', 'data', 'websites.json')
-      ]
-
-      let jsonPath: string | null = null
-      for (const p of possiblePaths) {
-        if (fs.existsSync(p)) {
-          jsonPath = p
-          console.log(`Found websites.json at: ${p}`)
-          break
-        }
-      }
-
-      if (jsonPath && fs.existsSync(jsonPath)) {
-        const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-        contentStore.websites = jsonData.map((item: any) => ({
-          slug: item.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
-          name: item.name,
-          description: item.description,
-          website: item.domain,
-          llmsUrl: item.llmsTxtUrl,
-          llmsFullUrl: item.llmsFullTxtUrl,
-          category: item.category,
-          publishedAt: item.publishedAt,
-          isUnofficial: false
-        }))
-        return
-      }
-      console.error('Neither websites directory nor JSON fallback found')
-      return
-    }
-
-    // Process official websites
-    const fileNames = fs.readdirSync(websitesDir)
-    const websites = fileNames
-      .filter(fileName => fileName.endsWith('.mdx'))
-      .map(fileName => {
-        const slug = fileName.replace(/\.mdx$/, '')
-        const fullPath = path.join(websitesDir, fileName)
-        const fileContents = fs.readFileSync(fullPath, 'utf8')
-        const { data, content } = matter(fileContents)
-
-        return {
-          slug,
-          name: data.name,
-          description: data.description,
-          website: data.website,
-          llmsUrl: data.llmsUrl,
-          llmsFullUrl: data.llmsFullUrl,
-          category: data.category,
-          publishedAt: data.publishedAt,
-          isUnofficial: false,
-          content
-        }
-      })
-
-    // Process unofficial websites
-    const unofficialDir = path.join(contentBase, 'unofficial')
-    if (fs.existsSync(unofficialDir)) {
-      const unofficialDirs = fs
-        .readdirSync(unofficialDir, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => path.join(unofficialDir, dirent.name))
-
-      for (const dir of unofficialDirs) {
-        if (fs.existsSync(dir)) {
-          const dirFiles = fs.readdirSync(dir)
-          const dirWebsites = dirFiles
-            .filter(fileName => fileName.endsWith('.mdx'))
-            .map(fileName => {
-              const slug = fileName.replace(/\.mdx$/, '')
-              const fullPath = path.join(dir, fileName)
-              const fileContents = fs.readFileSync(fullPath, 'utf8')
-              const { data, content } = matter(fileContents)
-
-              return {
-                slug,
-                name: data.name,
-                description: data.description,
-                website: data.website,
-                llmsUrl: data.llmsUrl,
-                llmsFullUrl: data.llmsFullUrl,
-                category: data.category,
-                publishedAt: data.publishedAt,
-                isUnofficial: true,
-                content
-              }
-            })
-          websites.push(...dirWebsites)
-        }
-      }
-    }
-
-    contentStore.websites = websites
-  } catch (error) {
-    console.error('Error loading websites:', error)
-    // Attempt to load from JSON as fallback
-    try {
-      // Try multiple possible locations for the websites.json file
-      const possiblePaths = [
-        path.join(dataDir, 'websites.json'),
-        path.join(process.cwd(), 'data', 'websites.json'),
-        path.join(process.cwd(), '..', '..', 'data', 'websites.json'),
-        path.join(process.cwd(), '..', 'data', 'websites.json'),
-        path.join(process.cwd(), 'apps/web/data', 'websites.json'),
-        path.join(process.cwd(), 'apps', 'web', 'data', 'websites.json')
-      ]
-
-      let jsonPath: string | null = null
-      for (const p of possiblePaths) {
-        if (fs.existsSync(p)) {
-          jsonPath = p
-          console.log(`Found websites.json at: ${p}`)
-          break
-        }
-      }
-
-      if (jsonPath && fs.existsSync(jsonPath)) {
-        const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-        contentStore.websites = jsonData.map((item: any) => ({
-          slug: item.name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
-          name: item.name,
-          description: item.description,
-          website: item.domain,
-          llmsUrl: item.llmsTxtUrl,
-          llmsFullUrl: item.llmsFullTxtUrl,
-          category: item.category,
-          publishedAt: item.publishedAt,
-          isUnofficial: false
-        }))
-      }
-    } catch (e) {
-      console.error('Error loading websites from JSON fallback:', e)
-    }
+/**
+ * Get all websites
+ *
+ * @returns Array of website metadata
+ */
+export function getWebsites() {
+  if (!collectionWebsites || collectionWebsites.length === 0) {
+    return []
   }
-}
 
-// Function to load all guide MDX files
-function loadGuides() {
-  try {
-    const guidesDir = path.join(contentBase, 'guides')
-    if (!fs.existsSync(guidesDir)) {
-      console.warn(`Guides directory not found at ${guidesDir}`)
-      return
+  // Ensure each website has a valid slug
+  const websitesWithSlugs = collectionWebsites.map(website => {
+    // If website already has a valid slug, use it
+    if (website.slug && typeof website.slug === 'string') {
+      return website
     }
 
-    const fileNames = fs.readdirSync(guidesDir)
-    const guides = fileNames
-      .filter(fileName => fileName.endsWith('.mdx'))
-      .map(fileName => {
-        const slug = fileName.replace(/\.mdx$/, '')
-        const fullPath = path.join(guidesDir, fileName)
-        const fileContents = fs.readFileSync(fullPath, 'utf8')
-        const { data, content } = matter(fileContents)
-
-        // Calculate reading time (assuming average reading speed of 200 words per minute)
-        const words = content.trim().split(/\s+/).length
-        const readingTime = Math.ceil(words / 200)
-
-        return {
-          slug,
-          ...data,
-          readingTime,
-          content
-        } as GuideMetadata
-      })
-      .sort((a, b) => {
-        // Make sure date exists before using it
-        const dateA = a.date ? new Date(a.date).getTime() : 0
-        const dateB = b.date ? new Date(b.date).getTime() : 0
-        return dateB - dateA
-      })
-
-    contentStore.guides = guides
-  } catch (error) {
-    console.error('Error loading guides:', error)
-  }
-}
-
-// Function to load legal content
-function loadLegalContent() {
-  try {
-    const legalDir = path.join(contentBase, 'legal')
-    if (!fs.existsSync(legalDir)) {
-      console.warn(`Legal directory not found at ${legalDir}`)
-      return
+    // Otherwise, derive slug from _meta.path or _meta.fileName
+    let slug = ''
+    if (website._meta?.path) {
+      slug = website._meta.path
+    } else if (website._meta?.fileName) {
+      slug = website._meta.fileName.replace(/\.mdx$/, '')
     }
 
-    const legalFiles = ['privacy.mdx', 'terms.mdx']
-    legalFiles.forEach(file => {
-      const fullPath = path.join(legalDir, file)
-      if (fs.existsSync(fullPath)) {
-        const content = fs.readFileSync(fullPath, 'utf8')
-        const key = file.replace(/\.mdx$/, '')
-        contentStore.legal[key] = content
-      }
-    })
-  } catch (error) {
-    console.error('Error loading legal content:', error)
-  }
-}
-;[
-  path.join(dataDir, 'websites.json'),
-  path.join(process.cwd(), 'data', 'websites.json'),
-  path.join(process.cwd(), '..', '..', 'data', 'websites.json'),
-  path.join(process.cwd(), '..', 'data', 'websites.json')
-].forEach(p => console.log(`- ${p} exists: ${fs.existsSync(p)}`))
+    // If we still don't have a valid slug, create one from the name
+    if (!slug && website.name) {
+      slug = website.name
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, '') // Remove non-word chars
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/--+/g, '-') // Replace multiple hyphens with single hyphen
+    }
 
-loadWebsites()
-loadGuides()
-loadLegalContent()
+    return {
+      ...website,
+      slug
+    }
+  })
 
-// Export functions to access the content
-export async function getWebsites() {
-  return contentStore.websites
+  return websitesWithSlugs.sort((a, b) => {
+    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  })
 }
 
+/**
+ * Get a website by slug
+ *
+ * @param slug - The website slug
+ * @returns Website with content and navigation, or null if not found
+ */
 export async function getWebsiteBySlug(slug: string) {
-  const website = contentStore.websites.find(w => w.slug === slug)
-  if (!website) return null
+  if (!collectionWebsites || collectionWebsites.length === 0) {
+    return null
+  }
 
-  // Get related websites with the same category
-  const relatedWebsites = contentStore.websites
-    .filter(w => w.category === website.category && w.slug !== slug)
-    .slice(0, 4)
+  const websites = getWebsites() // Use the enhanced function that ensures slugs
+
+  // Find the website with the matching slug
+  const website = websites.find(site => site.slug === slug)
+
+  if (!website) {
+    return null
+  }
+
+  // Find current index for previous/next navigation
+  const currentIndex = websites.findIndex(site => site.slug === slug)
 
   // Get previous and next websites
-  const currentIndex = contentStore.websites.findIndex(w => w.slug === slug)
-  const previousWebsite = currentIndex > 0 ? contentStore.websites[currentIndex - 1] : null
-  const nextWebsite =
-    currentIndex < contentStore.websites.length - 1 ? contentStore.websites[currentIndex + 1] : null
+  const previousWebsite = currentIndex > 0 ? websites[currentIndex - 1] : null
+  const nextWebsite = currentIndex < websites.length - 1 ? websites[currentIndex + 1] : null
+
+  // Get related websites (same category, excluding current)
+  const relatedWebsites = websites
+    .filter(site => site.category === website.category && site.slug !== slug)
+    .slice(0, 4)
+
+  // Get content from _meta if available
+  const content = website.content || (website._meta as any)?.content || ''
 
   return {
     ...website,
+    content,
     relatedWebsites,
     previousWebsite,
     nextWebsite
   }
 }
 
-export async function getGuides() {
-  return contentStore.guides
-}
-
-export async function getGuideBySlug(slug: string) {
-  return contentStore.guides.find(g => g.slug === slug) || null
-}
-
-export async function getLegalContent(key: string) {
-  const content = contentStore.legal[key]
-  if (!content) {
-    console.warn(`Legal content for ${key} not found`)
-    return `# ${key.charAt(0).toUpperCase() + key.slice(1)}\n\nContent unavailable.`
+/**
+ * Get all guides
+ *
+ * @returns Array of guide metadata
+ */
+export function getGuides() {
+  if (!collectionGuides || collectionGuides.length === 0) {
+    return []
   }
-  return content
+
+  // Map to match the Guide type expected by components
+  return collectionGuides
+    .filter(guide => guide.published)
+    .map(guide => ({
+      title: guide.title || '',
+      description: guide.description || '',
+      slug: guide.slug || '',
+      difficulty: (guide.difficulty || 'beginner') as 'beginner' | 'intermediate' | 'advanced',
+      category: (guide.category || 'getting-started') as
+        | 'getting-started'
+        | 'implementation'
+        | 'best-practices'
+        | 'integration',
+      published: guide.published !== false,
+      publishedAt: guide.publishedAt || guide.date || new Date().toISOString(),
+      date: guide.date || new Date().toISOString(),
+      authors: guide.authors || []
+    }))
+    .sort((a, b) => {
+      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    })
+}
+
+/**
+ * Get a guide by slug
+ *
+ * @param slug - The guide slug
+ * @returns Guide with content, or null if not found
+ */
+export async function getGuideBySlug(slug: string): Promise<GuideMetadata | null> {
+  const guide = collectionGuides.find(guide => guide.slug === slug && guide.published)
+
+  if (!guide) {
+    return null
+  }
+
+  // Get content from guide
+  const content = guide.content || (guide._meta as any)?.content || ''
+
+  // Ensure the guide has all required properties from GuideMetadata
+  return {
+    slug: guide.slug || slug,
+    title: guide.title || 'Untitled Guide',
+    description: guide.description || '',
+    date: guide.date || new Date().toISOString(),
+    authors: guide.authors || [],
+    tags: guide.tags || [],
+    difficulty: guide.difficulty || 'beginner',
+    category: guide.category || 'getting-started',
+    published: guide.published !== false,
+    publishedAt: guide.publishedAt || guide.date || new Date().toISOString(),
+    readingTime: guide.readingTime || 0,
+    content
+  }
+}
+
+/**
+ * Get legal content by key (e.g., 'privacy', 'terms')
+ *
+ * @param key - The legal content key
+ * @returns Legal content string
+ */
+export async function getLegalContent(key: string): Promise<string> {
+  const legal = collectionLegals.find(l => l._meta.path === key)
+
+  if (!legal) {
+    throw new Error(`Legal content "${key}" not found`)
+  }
+
+  return legal.content || (legal._meta as any)?.content || ''
+}
+
+/**
+ * Get all resources
+ *
+ * @returns Array of resources
+ */
+export function getResources() {
+  return collectionResources
+}
+
+/**
+ * Get a resource by slug
+ *
+ * @param slug - The resource slug
+ * @returns Resource with content, or null if not found
+ */
+export async function getResourceBySlug(slug: string) {
+  const resource = collectionResources.find(resource => resource.slug === slug)
+
+  if (!resource) {
+    return null
+  }
+
+  // Get content from resource
+  const content = resource.content || (resource._meta as any)?.content || ''
+
+  return {
+    ...resource,
+    content
+  }
 }

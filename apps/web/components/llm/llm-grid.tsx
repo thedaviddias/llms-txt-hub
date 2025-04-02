@@ -1,4 +1,4 @@
-import type { WebsiteMetadata } from '@/lib/mdx'
+import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { Card } from '@thedaviddias/design-system/card'
 import { cn } from '@thedaviddias/design-system/lib/utils'

@@ -3,7 +3,7 @@
 import { EmptyState } from '@/components/empty-state'
 import { ProjectList } from '@/components/project-list'
 import { categories } from '@/lib/categories'
-import type { WebsiteMetadata } from '@/lib/mdx'
+import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
@@ -35,18 +35,6 @@ function isValidWebsite(website: any): website is WebsiteMetadata {
     typeof website.category === 'string' &&
     typeof website.publishedAt === 'string'
 
-  if (!isValid) {
-    console.log('Invalid website:', website?.name, {
-      hasSlug: typeof website?.slug === 'string',
-      hasName: typeof website?.name === 'string',
-      hasDescription: typeof website?.description === 'string',
-      hasWebsite: typeof website?.website === 'string',
-      hasLlmsUrl: typeof website?.llmsUrl === 'string',
-      hasCategory: typeof website?.category === 'string',
-      hasPublishedAt: typeof website?.publishedAt === 'string'
-    })
-  }
-
   return isValid
 }
 
@@ -77,12 +65,10 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
   // Update filtered and sorted websites when filters or initial websites change
   useEffect(() => {
     let filteredWebsites = [...initialWebsites]
-    console.log('Initial websites:', filteredWebsites.length)
 
     // Filter by category if selected
     if (categoryFilter !== 'all') {
       filteredWebsites = filteredWebsites.filter(website => website.category === categoryFilter)
-      console.log('After category filter:', filteredWebsites.length, 'Category:', categoryFilter)
     }
 
     // Sort by selected criteria
@@ -93,15 +79,9 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
     } else if (sortBy === 'name') {
       filteredWebsites.sort((a, b) => a.name.localeCompare(b.name))
     }
-    console.log('After sorting:', filteredWebsites.length)
 
     // Validate websites after all filtering and sorting
     const validWebsites = filteredWebsites.filter(isValidWebsite)
-    console.log('After validation:', validWebsites.length)
-    console.log(
-      'Invalid websites:',
-      filteredWebsites.filter(w => !isValidWebsite(w)).map(w => (w as WebsiteMetadata).name)
-    )
     setWebsites(validWebsites)
   }, [initialWebsites, categoryFilter, sortBy])
 

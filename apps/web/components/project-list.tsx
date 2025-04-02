@@ -11,7 +11,7 @@ interface ProjectListProps {
     description: string
     website: string
     llmsUrl: string
-    llmsFullUrl?: string
+    llmsFullUrl?: string | null
     category?: string
     isUnofficial?: boolean
   }>

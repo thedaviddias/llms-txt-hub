@@ -1,4 +1,4 @@
-import type { WebsiteMetadata } from './mdx'
+import type { WebsiteMetadata } from './content-loader'
 
 export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 4): WebsiteMetadata[] {
   // Create a copy of all projects

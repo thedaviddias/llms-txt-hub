@@ -1,4 +1,4 @@
-import type { WebsiteMetadata, GuideMetadata } from './mdx'
+import type { WebsiteMetadata, GuideMetadata } from './content-loader'
 
 export interface SchemaOrg {
   '@context': 'https://schema.org'
@@ -133,14 +133,14 @@ export function generateGuideSchema(guide: GuideMetadata): GuideSchema {
     '@type': 'TechArticle',
     headline: guide.title,
     description: guide.description,
-    datePublished: guide.publishedAt,
+    datePublished: guide.publishedAt || guide.date,
     author: {
       '@type': 'Person',
       name: guide.authors[0].name,
       ...(guide.authors[0].url && { url: guide.authors[0].url })
     },
     articleSection: guide.category,
-    timeRequired: `PT${Math.ceil(guide.readingTime)}M`,
+    timeRequired: `PT${Math.ceil(guide.readingTime || 5)}M`,
     difficulty: guide.difficulty
   }
 }

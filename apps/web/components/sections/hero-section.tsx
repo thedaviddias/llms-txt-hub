@@ -1,9 +1,9 @@
-import { getAllWebsites } from '@/lib/mdx'
+import { getWebsites } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import Link from 'next/link'
 
 export async function HeroSection() {
-  const websites = await getAllWebsites()
+  const websites = await getWebsites()
   const websiteCount = websites.length
 
   return (

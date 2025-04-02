@@ -10,7 +10,7 @@ import { LatestNewsSection } from '@/components/sections/latest-news-section'
 import { LatestUpdatesSection } from '@/components/sections/latest-updates-section'
 import { NewsletterSection } from '@/components/sections/newsletter-section'
 import { ToolsSection } from '@/components/sections/tools-section'
-import { getAllGuides } from '@/lib/mdx'
+import { getGuides } from '@/lib/content-loader'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { CommunitiesSection } from '@/components/sections/communities-section'
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const { featuredProjects, recentlyUpdatedProjects } = await getHomePageData()
-  const featuredGuides = await getAllGuides()
+  const featuredGuides = await getGuides()
 
   return (
     <>
