@@ -2,10 +2,10 @@
   {
     "name": "Activepieces",
     "description": "Open source no-code business automation tool",
-    "url": "/activepieces",
+    "url": "/activepieces-llms-txt",
     "content": "# Activepieces\n\nActivepieces is an open source no-code business automation platform that helps you automate your work without coding knowledge.\n\n## Key Focus Areas\n\n- Business Automation\n- No-Code Solutions\n- Workflow Automation\n\n## About llms.txt Implementation\n\nActivepieces provides comprehensive documentation through their llms.txt implementation, offering details about their automation platform and integration capabilities.",
     "category": "integration-automation",
-    "slug": "activepieces",
+    "slug": "activepieces-llms-txt",
     "website": "https://activepieces.com",
     "llmsUrl": "https://www.activepieces.com/docs/llms.txt",
     "llmsFullUrl": "https://www.activepieces.com/docs/llms-full.txt"
@@ -13,10 +13,10 @@
   {
     "name": "AI Squared",
     "description": "AI integration platform for enterprise applications",
-    "url": "/ai-squared",
+    "url": "/ai-squared-llms-txt",
     "content": "# AI Squared\n\nAI Squared provides solutions for integrating AI capabilities into existing enterprise applications, making AI implementation more accessible and efficient.\n\n## Key Focus Areas\n\n- Enterprise AI Integration\n- AI Implementation\n- Business Solutions\n\n## About llms.txt Implementation\n\nAI Squared's documentation through llms.txt provides detailed information about their AI integration platform and enterprise solutions.",
     "category": "ai-ml",
-    "slug": "ai-squared",
+    "slug": "ai-squared-llms-txt",
     "website": "https://squared.ai",
     "llmsUrl": "https://docs.squared.ai/llms.txt",
     "llmsFullUrl": "https://docs.squared.ai/llms-full.txt"
@@ -24,10 +24,10 @@
   {
     "name": "Answer.AI",
     "description": "AI-powered answering and automation platform",
-    "url": "/answer-ai",
+    "url": "/answer-ai-llms-txt",
     "content": "# Answer.AI\n\nAnswer.AI provides AI-powered solutions for automated answering and information processing.\n\n## Key Focus Areas\n\n- AI-Powered Answers\n- Automation Solutions\n- Natural Language Processing\n\n## About llms.txt Implementation\n\nAnswer.AI's llms.txt documentation outlines their approach to AI-powered answering systems and automation capabilities.",
     "category": "ai-ml",
-    "slug": "answer-ai",
+    "slug": "answer-ai-llms-txt",
     "website": "https://answer.ai",
     "llmsUrl": "https://www.answer.ai/llms.txt",
     "llmsFullUrl": ""
@@ -35,10 +35,10 @@
   {
     "name": "Anthropic",
     "description": "AI research company developing safe and reliable AI systems for humanity's benefit",
-    "url": "/anthropic",
+    "url": "/anthropic-llms-txt",
     "content": "# Anthropic\n\nAnthropic focuses on developing safe and reliable AI systems through advanced research and responsible development practices.\n\n## Key Focus Areas\n\n- AI Safety\n- Machine Learning Research\n- Responsible AI Development\n\n## About llms.txt Implementation\n\nAnthropic's llms.txt documentation details their AI platform features, with comprehensive coverage in their full documentation.",
     "category": "ai-ml",
-    "slug": "anthropic",
+    "slug": "anthropic-llms-txt",
     "website": "https://docs.anthropic.com",
     "llmsUrl": "https://docs.anthropic.com/llms.txt",
     "llmsFullUrl": "https://docs.anthropic.com/llms-full.txt"
@@ -46,10 +46,10 @@
   {
     "name": "Aporia",
     "description": "ML observability and monitoring platform",
-    "url": "/aporia",
+    "url": "/aporia-llms-txt",
     "content": "# Aporia\n\nAporia is a machine learning observability platform that helps organizations monitor and improve their ML models in production.\n\n## Key Focus Areas\n\n- ML Monitoring\n- Model Observability\n- Production AI Systems\n\n## About llms.txt Implementation\n\nAporia's llms.txt provides documentation about their ML monitoring platform and observability solutions.",
     "category": "ai-ml",
-    "slug": "aporia",
+    "slug": "aporia-llms-txt",
     "website": "https://aporia.com",
     "llmsUrl": "https://gr-docs.aporia.com/llms.txt",
     "llmsFullUrl": ""
@@ -57,10 +57,10 @@
   {
     "name": "Aptible",
     "description": "Security and compliance platform for cloud infrastructure",
-    "url": "/aptible",
+    "url": "/aptible-llms-txt",
     "content": "# Aptible\n\nAptible provides security and compliance solutions for cloud infrastructure, helping organizations maintain secure and compliant operations.\n\n## Key Focus Areas\n\n- Cloud Security\n- Compliance Management\n- Infrastructure Security\n\n## About llms.txt Implementation\n\nAptible's llms.txt documentation details their security and compliance platform capabilities, with comprehensive coverage in their full documentation.",
     "category": "security-identity",
-    "slug": "aptible",
+    "slug": "aptible-llms-txt",
     "website": "https://aptible.com",
     "llmsUrl": "https://www.aptible.com/docs/llms.txt",
     "llmsFullUrl": "https://www.aptible.com/docs/llms-full.txt"
@@ -68,10 +68,10 @@
   {
     "name": "Argil AI",
     "description": "AI development and deployment platform",
-    "url": "/argil-ai",
+    "url": "/argil-ai-llms-txt",
     "content": "# Argil AI\n\nArgil AI provides tools and infrastructure for AI development and deployment, making it easier to build and scale AI applications.\n\n## Key Focus Areas\n\n- AI Development\n- Model Deployment\n- AI Infrastructure\n\n## About llms.txt Implementation\n\nArgil AI's llms.txt documentation provides information about their AI development platform and deployment capabilities.",
     "category": "ai-ml",
-    "slug": "argil-ai",
+    "slug": "argil-ai-llms-txt",
     "website": "https://argil.ai",
     "llmsUrl": "https://docs.argil.ai/llms.txt",
     "llmsFullUrl": ""
@@ -79,10 +79,10 @@
   {
     "name": "ast-grep",
     "description": "ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.",
-    "url": "/ast-grep",
+    "url": "/ast-grep-llms-txt",
     "content": "# ast-grep \n\nast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.",
     "category": "developer-tools",
-    "slug": "ast-grep",
+    "slug": "ast-grep-llms-txt",
     "website": "https://ast-grep.github.io",
     "llmsUrl": "https://ast-grep.github.io/llms.txt",
     "llmsFullUrl": "https://ast-grep.github.io/llms-full.txt"
@@ -90,10 +90,10 @@
   {
     "name": "Axiom",
     "description": "Cloud-native observability and log management platform",
-    "url": "/axiom",
+    "url": "/axiom-llms-txt",
     "content": "# Axiom\n\nAxiom is a cloud-native observability platform that helps organizations manage and analyze their logs and metrics at scale.\n\n## Key Focus Areas\n\n- Log Management\n- Observability\n- Cloud-Native Analytics\n\n## About llms.txt Implementation\n\nAxiom's llms.txt documentation covers their observability platform features and capabilities, with detailed information available in their full documentation.",
     "category": "data-analytics",
-    "slug": "axiom",
+    "slug": "axiom-llms-txt",
     "website": "https://axiom.co",
     "llmsUrl": "https://axiom.co/docs/llms.txt",
     "llmsFullUrl": "https://axiom.co/docs/llms-full.txt"
@@ -101,10 +101,10 @@
   {
     "name": "Axle",
     "description": "Insurance technology platform",
-    "url": "/axle",
+    "url": "/axle-llms-txt",
     "content": "# Axle\n\nAxle provides modern insurance technology solutions to streamline insurance operations and improve customer experience.\n\n## Key Focus Areas\n\n- Insurance Technology\n- Process Automation\n- Digital Insurance Solutions\n\n## About llms.txt Implementation\n\nAxle's llms.txt documentation outlines their insurance technology platform capabilities and features.",
     "category": "integration-automation",
-    "slug": "axle",
+    "slug": "axle-llms-txt",
     "website": "https://axle.insure",
     "llmsUrl": "https://docs.axle.insure/llms.txt",
     "llmsFullUrl": ""
@@ -112,32 +112,54 @@
   {
     "name": "BaseHub",
     "description": "Database and data infrastructure platform",
-    "url": "/basehub",
+    "url": "/basehub-llms-txt",
     "content": "# BaseHub\n\nBaseHub provides modern database and data infrastructure solutions for developers and organizations.\n\n## Key Focus Areas\n\n- Database Management\n- Data Infrastructure\n- Developer Tools\n\n## About llms.txt Implementation\n\nBaseHub's llms.txt documentation details their database platform features and infrastructure capabilities.",
     "category": "data-analytics",
-    "slug": "basehub",
+    "slug": "basehub-llms-txt",
     "website": "https://basehub.com",
     "llmsUrl": "https://docs.basehub.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
+    "name": "Best Boat Lifts",
+    "description": "Find the best boat lifts from IMM, including custom-built boat lifts for powerboats, yachts, sailboats, and PWCs.",
+    "url": "/best-boat-lifts-llms-txt",
+    "content": "# Best Boat Lifts\n\nFind the best boat lifts from IMM, including custom-built boat lifts for powerboats, yachts, sailboats, and PWCs.",
+    "category": "ai-ml",
+    "slug": "best-boat-lifts-llms-txt",
+    "website": "https://iqboatlifts.com/",
+    "llmsUrl": "https://iqboatlifts.com/llms.txt",
+    "llmsFullUrl": "https://iqboatlifts.com/llms-full.txt"
+  },
+  {
     "name": "Better Auth",
     "description": "The most comprehensive authentication library for TypeScript.",
-    "url": "/better-auth",
+    "url": "/better-auth-llms-txt",
     "content": "# Better Auth\n\nThe most comprehensive authentication library for TypeScript.",
     "category": "developer-tools",
-    "slug": "better-auth",
+    "slug": "better-auth-llms-txt",
     "website": "https://www.better-auth.com",
     "llmsUrl": "https://www.better-auth.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
+    "name": "Blacknet",
+    "description": "Blacknet: Decentralized Zero-Knowledge Finance Application Platform with Proof of Stake Consensus",
+    "url": "/blacknet-llms-txt",
+    "content": "# Blacknet\n\nBlacknet: Decentralized Zero-Knowledge Finance Application Platform with Proof of Stake Consensus",
+    "category": "integration-automation",
+    "slug": "blacknet-llms-txt",
+    "website": "https://blacknet.ninja/",
+    "llmsUrl": "https://blacknet.ninja/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Bucket",
     "description": "Welcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
-    "url": "/bucket",
+    "url": "/bucket-llms-txt",
     "content": "# Bucket\n\nWelcome to Bucket, a feature flag management tool purpose-built for B2B SaaS.",
     "category": "developer-tools",
-    "slug": "bucket",
+    "slug": "bucket-llms-txt",
     "website": "https://docs.bucket.co/",
     "llmsUrl": "https://docs.bucket.co/llms.txt",
     "llmsFullUrl": ""
@@ -145,10 +167,10 @@
   {
     "name": "Bun",
     "description": "Bun is a new JavaScript runtime with a native bundler, transpiler, task runner, and npm client built-in.",
-    "url": "/bun",
+    "url": "/bun-llms-txt",
     "content": "# Bun — A fast all\n\nBun is a new JavaScript runtime with a native bundler, transpiler, task runner, and npm client built-in.",
     "category": "developer-tools",
-    "slug": "bun",
+    "slug": "bun-llms-txt",
     "website": "https://bun.sh",
     "llmsUrl": "https://bun.sh/llms.txt",
     "llmsFullUrl": ""
@@ -156,10 +178,10 @@
   {
     "name": "Campsite",
     "description": "Organized team communication platform that replaces chaotic chat with structured discussions",
-    "url": "/campsite",
+    "url": "/campsite-llms-txt",
     "content": "# Campsite\n\nCampsite provides a structured communication platform that helps teams organize discussions and reduce chat chaos.\n\n## Key Focus Areas\n\n- Team Communication\n- Structured Discussions\n- Collaboration Tools\n\n## About llms.txt Implementation\n\nCampsite's llms.txt documentation outlines their communication platform features and capabilities.",
     "category": "integration-automation",
-    "slug": "campsite",
+    "slug": "campsite-llms-txt",
     "website": "https://developers.campsite.com",
     "llmsUrl": "https://developers.campsite.com/llms.txt",
     "llmsFullUrl": ""
@@ -167,10 +189,10 @@
   {
     "name": "Chakra UI",
     "description": "Chakra UI is a component system for building products with speed",
-    "url": "/chakra-ui",
+    "url": "/chakra-ui-llms-txt",
     "content": "# Chakra UI\n\nChakra UI is a powerful and accessible component library that provides the essential building blocks for creating modern React applications. It combines simplicity with flexibility, offering a comprehensive set of components that prioritize accessibility, customization, and developer experience.\n\n## Key Focus Areas\n\n- Accessible Components\n- Modular Design System\n- Theme Customization\n- React Server Components Support\n- Developer Experience\n\n## About llms.txt Implementation\n\nChakra UI's llms.txt documentation provides detailed information about their component system, including implementation guidelines, accessibility features, and theming capabilities. The full documentation (llms-full.txt) offers comprehensive examples, advanced usage patterns, and integration guides for various frameworks.\n\nThe library also provides specialized documentation files for different aspects of the system:\n\n- [llms-components.txt](https://chakra-ui.com/llms-components.txt): Complete documentation for all available components\n- [llms-component/[component].txt](https://chakra-ui.com/llms-component/%5Bcomponent%5D.txt): Individual component-specific documentation\n- [llms-styling.txt](https://chakra-ui.com/llms-styling.txt): Dedicated styling system documentation\n- [llms-theming.txt](https://chakra-ui.com/llms-theming.txt): Comprehensive theming system documentation\n- [llms-migration.txt](https://chakra-ui.com/llms-migration.txt): Guide for migrating from version 2 to version 3",
     "category": "developer-tools",
-    "slug": "chakra-ui",
+    "slug": "chakra-ui-llms-txt",
     "website": "https://chakra-ui.com/",
     "llmsUrl": "https://chakra-ui.com/llms.txt",
     "llmsFullUrl": "https://chakra-ui.com/llms-full.txt"
@@ -178,10 +200,10 @@
   {
     "name": "Clever Cloud",
     "description": "Cloud platform for application deployment and hosting",
-    "url": "/clever-cloud",
+    "url": "/clever-cloud-llms-txt",
     "content": "# Clever Cloud\n\nClever Cloud is a fully managed cloud platform that automates the deployment and scaling of applications and databases.\n\n## Key Focus Areas\n\n- Cloud Hosting\n- Application Deployment\n- DevOps Automation\n\n## About llms.txt Implementation\n\nClever Cloud's llms.txt documentation provides information about their cloud platform capabilities and deployment features.",
     "category": "infrastructure-cloud",
-    "slug": "clever-cloud",
+    "slug": "clever-cloud-llms-txt",
     "website": "https://clever-cloud.com",
     "llmsUrl": "https://www.clever-cloud.com/developers/llms.txt",
     "llmsFullUrl": ""
@@ -189,10 +211,10 @@
   {
     "name": "Cloudflare",
     "description": "Make employees, applications and networks faster and more secure everywhere, while reducing complexity and cost.",
-    "url": "/cloudflare",
+    "url": "/cloudflare-llms-txt",
     "content": "# Cloudflare\n\nCloudflare is a global cloud services provider that delivers a broad range of security, performance, and reliability solutions for websites, applications, and networks.\n\n## Key Focus Areas\n\n- Network Security\n- Content Delivery\n- Edge Computing\n- Zero Trust Security\n- Developer Platform\n- AI Services\n\n## Core Features\n\n- DDoS protection and mitigation\n- Web Application Firewall (WAF)\n- Global content delivery network (CDN)\n- Serverless computing with Workers\n- AI inference with Workers AI\n- Object storage with R2\n- DNS management and resolution\n- Zero Trust network access\n- Bot management\n- Load balancing and traffic optimization\n- SSL/TLS encryption\n\n## About llms.txt Implementation\n\nCloudflare's llms.txt documentation outlines their AI capabilities, including Workers AI platform for deploying and running AI models at the edge, integration options for developers, and guidelines for responsible AI usage within their ecosystem.",
     "category": "infrastructure-cloud",
-    "slug": "cloudflare",
+    "slug": "cloudflare-llms-txt",
     "website": "https://www.cloudflare.com/",
     "llmsUrl": "https://developers.cloudflare.com/llms.txt",
     "llmsFullUrl": "https://developers.cloudflare.com/llms-full.txt"
@@ -200,10 +222,10 @@
   {
     "name": "Cobo",
     "description": "Digital asset custody and management platform",
-    "url": "/cobo",
+    "url": "/cobo-llms-txt",
     "content": "# Cobo\n\nCobo provides institutional-grade digital asset custody and management solutions for the crypto industry.\n\n## Key Focus Areas\n\n- Digital Asset Custody\n- Crypto Management\n- Institutional Solutions\n\n## About llms.txt Implementation\n\nCobo's llms.txt documentation covers their digital asset platform features, with comprehensive details available in their full documentation.",
     "category": "security-identity",
-    "slug": "cobo",
+    "slug": "cobo-llms-txt",
     "website": "https://cobo.com",
     "llmsUrl": "https://www.cobo.com/developers/llms.txt",
     "llmsFullUrl": "https://www.cobo.com/developers/llms-full.txt"
@@ -211,10 +233,10 @@
   {
     "name": "Codeium",
     "description": "Free AI-powered code autocomplete and context-aware coding assistant",
-    "url": "/codeium",
+    "url": "/codeium-llms-txt",
     "content": "# Codeium\n\nCodeium provides AI-powered code completion and intelligent coding assistance to enhance developer productivity.\n\n## Key Focus Areas\n\n- Code Autocomplete\n- AI Assistance\n- Developer Productivity\n\n## About llms.txt Implementation\n\nCodeium's llms.txt documentation details their AI-powered coding features, with comprehensive coverage in their full documentation.",
     "category": "ai-ml",
-    "slug": "codeium",
+    "slug": "codeium-llms-txt",
     "website": "https://docs.codeium.com",
     "llmsUrl": "https://docs.codeium.com/llms.txt",
     "llmsFullUrl": "https://docs.codeium.com/llms-full.txt"
@@ -222,10 +244,10 @@
   {
     "name": "Conductor",
     "description": "Real-time API integration for QuickBooks Desktop with multi-language support",
-    "url": "/conductor",
+    "url": "/conductor-llms-txt",
     "content": "# Conductor\n\nConductor provides real-time API integration solutions for QuickBooks Desktop with comprehensive language support.\n\n## Key Focus Areas\n\n- QuickBooks Integration\n- API Management\n- Multi-language Support\n\n## About llms.txt Implementation\n\nConductor's llms.txt documentation details their integration platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "conductor",
+    "slug": "conductor-llms-txt",
     "website": "https://docs.conductor.is",
     "llmsUrl": "https://docs.conductor.is/llms.txt",
     "llmsFullUrl": "https://docs.conductor.is/llms-full.txt"
@@ -233,10 +255,10 @@
   {
     "name": "Convex",
     "description": "The missing half of your React app: Convex is the open-source reactive database for app developers.",
-    "url": "/convex",
+    "url": "/convex-llms-txt",
     "content": "# Convex\n\nConvex is the open source, reactive database where queries are TypeScript code running right in the\ndatabase. Just like React components react to state changes, Convex queries react to database changes.\n\nConvex provides a database, a place to write your server functions, and client libraries. It makes\nit easy to build and scale dynamic live-updating apps.\n\n## Key Focus Areas\n\n- Realtime Sync Engine\n- Application Database\n- TypeScript\n- Workflows\n- Vector Database\n- Text Search\n- File Storage\n- Authentication\n- Scheduling\n- Self-hosting\n\n## About llms.txt Implementation\n\nConvex's llms.txt documentation details their platform's features, with comprehensive coverage in their full documentation.",
     "category": "infrastructure-cloud",
-    "slug": "convex",
+    "slug": "convex-llms-txt",
     "website": "https://convex.dev",
     "llmsUrl": "https://convex.dev/llms.txt",
     "llmsFullUrl": "https://docs.convex.dev/llms.txt"
@@ -244,10 +266,10 @@
   {
     "name": "Creative Handbook Production Resource Directory",
     "description": "Creative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
-    "url": "/creative-handbook",
+    "url": "/creative-handbook-llms-txt",
     "content": "# Creative Handbook Production Resource Directory\n\nCreative Handbook Production Resource Directory In Los Angeles and the following States: Los Angeles, California, Georgia, Louisiana, Nevada, New York.",
     "category": "data-analytics",
-    "slug": "creative-handbook",
+    "slug": "creative-handbook-llms-txt",
     "website": "https://www.creativehandbook.com",
     "llmsUrl": "https://www.creativehandbook.com/llms.txt",
     "llmsFullUrl": ""
@@ -255,10 +277,10 @@
   {
     "name": "CrewAI",
     "description": "AI-powered team collaboration platform",
-    "url": "/crewai",
+    "url": "/crewai-llms-txt",
     "content": "# CrewAI\n\nCrewAI enables teams to collaborate more effectively using AI-powered tools and automation.\n\n## Key Focus Areas\n\n- Team Collaboration\n- AI Automation\n- Workflow Optimization\n\n## About llms.txt Implementation\n\nCrewAI's llms.txt documentation details their AI-powered collaboration features, with extensive information available in their full documentation.",
     "category": "ai-ml",
-    "slug": "crewai",
+    "slug": "crewai-llms-txt",
     "website": "https://crewai.com",
     "llmsUrl": "https://docs.crewai.com/llms.txt",
     "llmsFullUrl": "https://docs.crewai.com/llms-full.txt"
@@ -266,10 +288,10 @@
   {
     "name": "Cursor",
     "description": "AI-powered code editor and development environment",
-    "url": "/cursor",
+    "url": "/cursor-llms-txt",
     "content": "# Cursor\n\nCursor is an intelligent code editor that enhances developer productivity through AI-powered features and tools.\n\n## Key Focus Areas\n\n- AI-Powered Development\n- Code Intelligence\n- Developer Tools\n\n## About llms.txt Implementation\n\nCursor's llms.txt documentation outlines their AI-powered development features, with comprehensive details available in their full documentation.",
     "category": "developer-tools",
-    "slug": "cursor",
+    "slug": "cursor-llms-txt",
     "website": "https://cursor.com",
     "llmsUrl": "https://docs.cursor.com/llms.txt",
     "llmsFullUrl": "https://docs.cursor.com/llms-full.txt"
@@ -277,10 +299,10 @@
   {
     "name": "Datafold",
     "description": "Data reliability and testing platform",
-    "url": "/datafold",
+    "url": "/datafold-llms-txt",
     "content": "# Datafold\n\nDatafold helps data teams ship reliable data products faster through automated testing and monitoring.\n\n## Key Focus Areas\n\n- Data Reliability\n- Data Testing\n- Data Quality\n\n## About llms.txt Implementation\n\nDatafold's llms.txt documentation covers their data reliability platform features, with detailed information available in their full documentation.",
     "category": "data-analytics",
-    "slug": "datafold",
+    "slug": "datafold-llms-txt",
     "website": "https://datafold.com",
     "llmsUrl": "https://docs.datafold.com/llms.txt",
     "llmsFullUrl": "https://docs.datafold.com/llms-full.txt"
@@ -288,10 +310,10 @@
   {
     "name": "Demo Time",
     "description": "Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
-    "url": "/demo-time",
+    "url": "/demo-time-llms-txt",
     "content": "# Demo Time\n\nScript your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
     "category": "developer-tools",
-    "slug": "demo-time",
+    "slug": "demo-time-llms-txt",
     "website": "https://demotime.elio.dev",
     "llmsUrl": "https://demotime.elio.dev/llms.txt",
     "llmsFullUrl": ""
@@ -299,10 +321,10 @@
   {
     "name": "DevHub",
     "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
-    "url": "/dev-hub",
+    "url": "/dev-hub-llms-txt",
     "content": "# DevHub\n\nDevHub provides a comprehensive location-focused enterprise marketing platform that enables brands to manage and optimize their marketing efforts across multiple locations efficiently.\n\n## Key Focus Areas\n\n- Location-Based Marketing\n- Enterprise Brand Management\n- Marketing Automation\n\n## About llms.txt Implementation\n\nDevHub's llms.txt documentation provides detailed information about their API capabilities and integration options for location-based marketing automation.",
     "category": "developer-tools",
-    "slug": "dev-hub",
+    "slug": "dev-hub-llms-txt",
     "website": "https://www.devhub.com/",
     "llmsUrl": "https://api-docs.devhub.com/llms.txt",
     "llmsFullUrl": ""
@@ -310,10 +332,10 @@
   {
     "name": "Dopp Finance",
     "description": "Decentralized finance and trading platform",
-    "url": "/dopp-finance",
+    "url": "/dopp-finance-llms-txt",
     "content": "# Dopp Finance\n\nDopp Finance provides decentralized financial services and trading solutions for the crypto ecosystem.\n\n## Key Focus Areas\n\n- DeFi Solutions\n- Crypto Trading\n- Financial Services\n\n## About llms.txt Implementation\n\nDopp Finance's llms.txt documentation details their decentralized finance platform features and capabilities.",
     "category": "integration-automation",
-    "slug": "dopp-finance",
+    "slug": "dopp-finance-llms-txt",
     "website": "https://dopp.finance",
     "llmsUrl": "https://docs.dopp.finance/llms.txt",
     "llmsFullUrl": ""
@@ -321,10 +343,10 @@
   {
     "name": "dotenvx",
     "description": "Environment variable management tool",
-    "url": "/dotenvx",
+    "url": "/dotenvx-llms-txt",
     "content": "# dotenvx\n\ndotenvx provides advanced environment variable management and configuration solutions for modern applications.\n\n## Key Focus Areas\n\n- Environment Variables\n- Configuration Management\n- Development Tools\n\n## About llms.txt Implementation\n\ndotenvx's llms.txt documentation outlines their environment variable management features, with comprehensive details in their full documentation.",
     "category": "developer-tools",
-    "slug": "dotenvx",
+    "slug": "dotenvx-llms-txt",
     "website": "https://dotenvx.com",
     "llmsUrl": "https://dotenvx.com/llms.txt",
     "llmsFullUrl": "https://dotenvx.com/llms-full.txt"
@@ -332,10 +354,10 @@
   {
     "name": "Drizzle ORM",
     "description": "\"Headless TypeScript ORM with a head. Runs on Node, Bun and Deno. Lives on the Edge and yes, it's a JavaScript ORM too\"",
-    "url": "/drizzle-orm",
+    "url": "/drizzle-orm-llms-txt",
     "content": "# Drizzle ORM\n\nDrizzle is a modern TypeScript ORM developers wanna use in their next project. It is lightweight at only ~7.4kb minified+gzipped, and it's tree shakeable with exactly 0 dependencies. It supports every PostgreSQL, MySQL, SQLite, SingleStore and Gel databases and is serverless-ready by design.\n\n## Key Focus Areas\n\n- Type-Safe Query Building\n- Performance & Flexibility\n- Developer Experience & Ergonomics\n- Schema Migrations & Data management\n\n## About llms.txt Implementation\n\ndrizzle-orm's llms.txt documentation outlines the library's type-safe query and schema migration features, with comprehensive details available in their full documentation.",
     "category": "developer-tools",
-    "slug": "drizzle-orm",
+    "slug": "drizzle-orm-llms-txt",
     "website": "https://orm.drizzle.team",
     "llmsUrl": "https://orm.drizzle.team/llms.txt",
     "llmsFullUrl": "https://orm.drizzle.team/llms-full.txt"
@@ -343,10 +365,10 @@
   {
     "name": "Dub",
     "description": "Link management and URL shortening platform",
-    "url": "/dub",
+    "url": "/dub-llms-txt",
     "content": "# Dub\n\nDub provides modern link management and URL shortening solutions with advanced analytics and tracking capabilities.\n\n## Key Focus Areas\n\n- Link Management\n- URL Shortening\n- Analytics\n\n## About llms.txt Implementation\n\nDub's llms.txt documentation covers their link management platform features, with extensive details available in their full documentation.",
     "category": "developer-tools",
-    "slug": "dub",
+    "slug": "dub-llms-txt",
     "website": "https://dub.co",
     "llmsUrl": "https://dub.co/docs/llms.txt",
     "llmsFullUrl": "https://dub.co/docs/llms-full.txt"
@@ -354,10 +376,10 @@
   {
     "name": "DuckDB",
     "description": "In-process SQL OLAP database management system",
-    "url": "/duckdb",
+    "url": "/duckdb-llms-txt",
     "content": "# DuckDB\n\nDuckDB is an in-process SQL OLAP database management system, designed for analytical query processing.\n\n## Key Focus Areas\n\n- SQL Analytics\n- OLAP Processing\n- Data Management\n\n## About llms.txt Implementation\n\nDuckDB provides comprehensive documentation about their database system and analytical processing capabilities in their full documentation.",
     "category": "data-analytics",
-    "slug": "duckdb",
+    "slug": "duckdb-llms-txt",
     "website": "https://duckdb.org",
     "llmsUrl": "https://duckdb.org/duckdb-docs.md",
     "llmsFullUrl": ""
@@ -365,10 +387,10 @@
   {
     "name": "Dynamic",
     "description": "Web3 authentication and authorization platform",
-    "url": "/dynamic",
+    "url": "/dynamic-llms-txt",
     "content": "# Dynamic\n\nDynamic provides authentication and authorization solutions for Web3 applications and platforms.\n\n## Key Focus Areas\n\n- Web3 Authentication\n- Blockchain Integration\n- Identity Management\n\n## About llms.txt Implementation\n\nDynamic's llms.txt documentation details their Web3 authentication platform features, with comprehensive coverage in their full documentation.",
     "category": "security-identity",
-    "slug": "dynamic",
+    "slug": "dynamic-llms-txt",
     "website": "https://dynamic.xyz",
     "llmsUrl": "https://docs.dynamic.xyz/llms.txt",
     "llmsFullUrl": "https://docs.dynamic.xyz/llms-full.txt"
@@ -376,10 +398,10 @@
   {
     "name": "ElevenLabs",
     "description": "AI-powered voice synthesis platform",
-    "url": "/elevenlabs",
+    "url": "/elevenlabs-llms-txt",
     "content": "# ElevenLabs\n\nElevenLabs provides state-of-the-art AI voice synthesis technology for creating natural-sounding speech.\n\n## Key Focus Areas\n\n- Voice Synthesis\n- Text-to-Speech\n- AI Voice Technology\n\n## About llms.txt Implementation\n\nElevenLabs' llms.txt documentation covers their voice synthesis platform capabilities, with extensive details available in their full documentation.",
     "category": "ai-ml",
-    "slug": "elevenlabs",
+    "slug": "elevenlabs-llms-txt",
     "website": "https://elevenlabs.io",
     "llmsUrl": "https://elevenlabs.io/docs/llms.txt",
     "llmsFullUrl": "https://elevenlabs.io/docs/llms-full.txt"
@@ -387,10 +409,10 @@
   {
     "name": "Emailgic",
     "description": "Email automation and management platform",
-    "url": "/emailgic",
+    "url": "/emailgic-llms-txt",
     "content": "# Emailgic\n\nEmailgic provides advanced email automation and management solutions.\n\n## Key Focus Areas\n\n- Email Automation\n- Email Management\n- Communication Tools\n\n## About llms.txt Implementation\n\nEmailgic's llms.txt documentation outlines their email platform features and automation capabilities.",
     "category": "integration-automation",
-    "slug": "emailgic",
+    "slug": "emailgic-llms-txt",
     "website": "https://emailgic.com",
     "llmsUrl": "https://emailgic.com/llms.txt",
     "llmsFullUrl": ""
@@ -398,10 +420,10 @@
   {
     "name": "EmbedChain",
     "description": "AI embedding and chain management platform",
-    "url": "/embedchain",
+    "url": "/embedchain-llms-txt",
     "content": "# EmbedChain\n\nEmbedChain provides solutions for managing and deploying AI embeddings and chains efficiently.\n\n## Key Focus Areas\n\n- AI Embeddings\n- Chain Management\n- AI Infrastructure\n\n## About llms.txt Implementation\n\nEmbedChain's llms.txt documentation details their embedding platform features, with comprehensive information in their full documentation.",
     "category": "ai-ml",
-    "slug": "embedchain",
+    "slug": "embedchain-llms-txt",
     "website": "https://embedchain.ai",
     "llmsUrl": "https://docs.embedchain.ai/llms.txt",
     "llmsFullUrl": "https://docs.embedchain.ai/llms-full.txt"
@@ -409,10 +431,10 @@
   {
     "name": "Envoyer",
     "description": "Zero downtime PHP deployment platform",
-    "url": "/envoyer",
+    "url": "/envoyer-llms-txt",
     "content": "# Envoyer\n\nEnvoyer provides zero downtime deployment solutions for PHP applications with advanced deployment management features.\n\n## Key Focus Areas\n\n- Zero Downtime Deployment\n- PHP Applications\n- Deployment Management\n\n## About llms.txt Implementation\n\nEnvoyer's llms.txt documentation outlines their deployment platform capabilities, with detailed information available in their full documentation.",
     "category": "infrastructure-cloud",
-    "slug": "envoyer",
+    "slug": "envoyer-llms-txt",
     "website": "https://envoyer.io",
     "llmsUrl": "https://docs.envoyer.io/llms.txt",
     "llmsFullUrl": "https://docs.envoyer.io/llms-full.txt"
@@ -420,10 +442,10 @@
   {
     "name": "Evan Boehs",
     "description": "Personal website and development portfolio",
-    "url": "/evan-boehs",
+    "url": "/evan-boehs-llms-txt",
     "content": "# Evan Boehs\n\nEvan Boehs is a developer showcasing various projects and technical expertise through his personal website.\n\n## Key Focus Areas\n\n- Software Development\n- Technical Writing\n- Open Source Projects\n\n## About llms.txt Implementation\n\nEvan Boehs' llms.txt documentation provides information about his development work and technical projects.",
     "category": "developer-tools",
-    "slug": "evan-boehs",
+    "slug": "evan-boehs-llms-txt",
     "website": "https://boehs.org",
     "llmsUrl": "https://boehs.org/llms.txt",
     "llmsFullUrl": ""
@@ -431,10 +453,10 @@
   {
     "name": "Fabric",
     "description": "E-commerce platform and infrastructure",
-    "url": "/fabric",
+    "url": "/fabric-llms-txt",
     "content": "# Fabric\n\nFabric provides modern e-commerce infrastructure and tools for growing businesses and enterprises.\n\n## Key Focus Areas\n\n- E-commerce Platform\n- Commerce APIs\n- Business Infrastructure\n\n## About llms.txt Implementation\n\nFabric's llms.txt documentation details their e-commerce platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "fabric",
+    "slug": "fabric-llms-txt",
     "website": "https://fabric.inc",
     "llmsUrl": "https://developer.fabric.inc/llms.txt",
     "llmsFullUrl": "https://developer.fabric.inc/llms-full.txt"
@@ -442,10 +464,10 @@
   {
     "name": "FastHTML",
     "description": "High-performance HTML templating engine",
-    "url": "/fasthtml",
+    "url": "/fasthtml-llms-txt",
     "content": "# FastHTML\n\nFastHTML provides a high-performance HTML templating engine for modern web applications.\n\n## Key Focus Areas\n\n- HTML Templating\n- Performance Optimization\n- Web Development\n\n## About llms.txt Implementation\n\nFastHTML's llms.txt documentation outlines their templating engine capabilities and performance features.",
     "category": "developer-tools",
-    "slug": "fasthtml",
+    "slug": "fasthtml-llms-txt",
     "website": "https://fastht.ml",
     "llmsUrl": "https://docs.fastht.ml/llms.txt",
     "llmsFullUrl": ""
@@ -453,10 +475,10 @@
   {
     "name": "Finch",
     "description": "Universal API for employment systems",
-    "url": "/finch",
+    "url": "/finch-llms-txt",
     "content": "# Finch\n\nFinch provides a universal API that connects employment systems and streamlines HR operations.\n\n## Key Focus Areas\n\n- Employment Systems\n- HR Integration\n- API Infrastructure\n\n## About llms.txt Implementation\n\nFinch's llms.txt documentation details their employment systems API and integration capabilities.",
     "category": "integration-automation",
-    "slug": "finch",
+    "slug": "finch-llms-txt",
     "website": "https://tryfinch.com",
     "llmsUrl": "https://developer.tryfinch.com/llms.txt",
     "llmsFullUrl": ""
@@ -464,10 +486,10 @@
   {
     "name": "Fireworks AI",
     "description": "AI model deployment and inference platform",
-    "url": "/fireworks-ai",
+    "url": "/fireworks-ai-llms-txt",
     "content": "# Fireworks AI\n\nFireworks AI provides a platform for deploying and managing AI models with high-performance inference capabilities.\n\n## Key Focus Areas\n\n- AI Model Deployment\n- Inference Optimization\n- AI Infrastructure\n\n## About llms.txt Implementation\n\nFireworks AI's llms.txt documentation covers their AI platform features, with comprehensive details available in their full documentation.",
     "category": "ai-ml",
-    "slug": "fireworks-ai",
+    "slug": "fireworks-ai-llms-txt",
     "website": "https://fireworks.ai",
     "llmsUrl": "https://docs.fireworks.ai/llms.txt",
     "llmsFullUrl": "https://docs.fireworks.ai/llms-full.txt"
@@ -475,10 +497,10 @@
   {
     "name": "Flatfile",
     "description": "Data onboarding and import platform",
-    "url": "/flatfile",
+    "url": "/flatfile-llms-txt",
     "content": "# Flatfile\n\nFlatfile provides data onboarding automation solutions to streamline the process of importing customer data.\n\n## Key Focus Areas\n\n- Data Onboarding\n- Import Automation\n- Data Processing\n\n## About llms.txt Implementation\n\nFlatfile's llms.txt documentation details their data onboarding platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "flatfile",
+    "slug": "flatfile-llms-txt",
     "website": "https://flatfile.com",
     "llmsUrl": "https://flatfile.com/docs/llms.txt",
     "llmsFullUrl": "https://flatfile.com/docs/llms-full.txt"
@@ -486,10 +508,10 @@
   {
     "name": "FlowX",
     "description": "Business process automation platform",
-    "url": "/flowx",
+    "url": "/flowx-llms-txt",
     "content": "# FlowX\n\nFlowX provides a comprehensive platform for automating and optimizing business processes through AI and workflow automation.\n\n## Key Focus Areas\n\n- Process Automation\n- Workflow Management\n- Business Optimization\n\n## About llms.txt Implementation\n\nFlowX's llms.txt documentation outlines their process automation capabilities, with extensive details available in their full documentation.",
     "category": "integration-automation",
-    "slug": "flowx",
+    "slug": "flowx-llms-txt",
     "website": "https://flowx.ai",
     "llmsUrl": "https://docs.flowx.ai/llms.txt",
     "llmsFullUrl": "https://docs.flowx.ai/llms-full.txt"
@@ -497,10 +519,10 @@
   {
     "name": "FractalPay",
     "description": "Modern payment processing platform",
-    "url": "/fractalpay",
+    "url": "/fractalpay-llms-txt",
     "content": "# FractalPay\n\nFractalPay delivers modern payment processing solutions with advanced features for businesses of all sizes.\n\n## Key Focus Areas\n\n- Payment Processing\n- Financial Technology\n- Business Payments\n\n## About llms.txt Implementation\n\nFractalPay's llms.txt documentation provides information about their payment processing platform and capabilities.",
     "category": "integration-automation",
-    "slug": "fractalpay",
+    "slug": "fractalpay-llms-txt",
     "website": "https://fractalpay.com",
     "llmsUrl": "https://docs.fractalpay.com/llms.txt",
     "llmsFullUrl": ""
@@ -508,10 +530,10 @@
   {
     "name": "Frigade",
     "description": "User onboarding and product adoption platform",
-    "url": "/frigade",
+    "url": "/frigade-llms-txt",
     "content": "# Frigade\n\nFrigade helps companies create better user onboarding experiences and improve product adoption.\n\n## Key Focus Areas\n\n- User Onboarding\n- Product Adoption\n- User Experience\n\n## About llms.txt Implementation\n\nFrigade's llms.txt documentation details their user onboarding platform features and capabilities.",
     "category": "developer-tools",
-    "slug": "frigade",
+    "slug": "frigade-llms-txt",
     "website": "https://frigade.com",
     "llmsUrl": "https://docs.frigade.com/llms.txt",
     "llmsFullUrl": ""
@@ -519,10 +541,10 @@
   {
     "name": "Front Matter CMS - a CMS in your VS Code editor",
     "description": "Front Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
-    "url": "/front-matter-cms",
+    "url": "/front-matter-cms-llms-txt",
     "content": "# Front Matter CMS - a CMS in your VS Code editor\n\nFront Matter CMS - a CMS running in Visual Studio Code that helps managing your static sites. Supports Hugo, Jekyll, Docusaurus, NextJs, Gatsby, and more.",
     "category": "developer-tools",
-    "slug": "front-matter-cms",
+    "slug": "front-matter-cms-llms-txt",
     "website": "https://frontmatter.codes",
     "llmsUrl": "https://frontmatter.codes/llms.txt",
     "llmsFullUrl": ""
@@ -530,10 +552,10 @@
   {
     "name": "Galileo",
     "description": "AI-powered data quality and monitoring platform",
-    "url": "/galileo",
+    "url": "/galileo-llms-txt",
     "content": "# Galileo\n\nGalileo provides AI-powered solutions for monitoring and maintaining data quality at scale.\n\n## Key Focus Areas\n\n- Data Quality\n- AI Monitoring\n- Data Reliability\n\n## About llms.txt Implementation\n\nGalileo's llms.txt documentation outlines their data quality platform features, with comprehensive details available in their full documentation.",
     "category": "data-analytics",
-    "slug": "galileo",
+    "slug": "galileo-llms-txt",
     "website": "https://rungalileo.io",
     "llmsUrl": "https://docs.rungalileo.io/llms.txt",
     "llmsFullUrl": "https://docs.rungalileo.io/llms-full.txt"
@@ -541,10 +563,10 @@
   {
     "name": "Glama",
     "description": "Enterprise-grade security, privacy, with features like agents, MCP, prompt templates, and more.",
-    "url": "/glama",
+    "url": "/glama-llms-txt",
     "content": "# Glama\n\nEnterprise-grade security, privacy, with features like agents, MCP, prompt templates, and more.",
     "category": "infrastructure-cloud",
-    "slug": "glama",
+    "slug": "glama-llms-txt",
     "website": "https://glama.ai",
     "llmsUrl": "https://glama.ai/llms.txt",
     "llmsFullUrl": ""
@@ -552,10 +574,10 @@
   {
     "name": "Goody",
     "description": "Corporate gifting and rewards platform",
-    "url": "/goody",
+    "url": "/goody-llms-txt",
     "content": "# Goody\n\nGoody provides a modern platform for corporate gifting and rewards management.\n\n## Key Focus Areas\n\n- Corporate Gifting\n- Rewards Management\n- Employee Recognition\n\n## About llms.txt Implementation\n\nGoody's llms.txt documentation details their gifting platform features and integration capabilities.",
     "category": "integration-automation",
-    "slug": "goody",
+    "slug": "goody-llms-txt",
     "website": "https://ongoody.com",
     "llmsUrl": "https://developer.ongoody.com/llms.txt",
     "llmsFullUrl": ""
@@ -563,10 +585,10 @@
   {
     "name": "Helicone",
     "description": "LLM observability and monitoring platform",
-    "url": "/helicone",
+    "url": "/helicone-llms-txt",
     "content": "# Helicone\n\nHelicone provides observability and monitoring solutions for Large Language Models (LLMs).\n\n## Key Focus Areas\n\n- LLM Monitoring\n- AI Observability\n- Performance Analytics\n\n## About llms.txt Implementation\n\nHelicone's llms.txt documentation outlines their LLM monitoring platform features and capabilities.",
     "category": "ai-ml",
-    "slug": "helicone",
+    "slug": "helicone-llms-txt",
     "website": "https://helicone.ai",
     "llmsUrl": "https://www.helicone.ai/llms.txt",
     "llmsFullUrl": ""
@@ -574,10 +596,10 @@
   {
     "name": "Hugging Face Accelerate",
     "description": "Library for training and optimizing machine learning models",
-    "url": "/huggingface-accelerate",
+    "url": "/huggingface-accelerate-llms-txt",
     "content": "# Hugging Face Accelerate\n\nHugging Face Accelerate provides tools and libraries for efficient training of machine learning models across different platforms.\n\n## Key Focus Areas\n\n- Model Training\n- Performance Optimization\n- Distributed Computing\n\n## About llms.txt Implementation\n\nHugging Face Accelerate's llms.txt documentation details their model training and optimization capabilities.",
     "category": "ai-ml",
-    "slug": "huggingface-accelerate",
+    "slug": "huggingface-accelerate-llms-txt",
     "website": "https://huggingface.co",
     "llmsUrl": "https://huggingface-projects-docs-llms-txt.hf.space/accelerate/llms.txt",
     "llmsFullUrl": ""
@@ -585,10 +607,10 @@
   {
     "name": "Hugging Face Diffusers",
     "description": "State-of-the-art diffusion models for image and audio generation",
-    "url": "/huggingface-diffusers",
+    "url": "/huggingface-diffusers-llms-txt",
     "content": "# Hugging Face Diffusers\n\nHugging Face Diffusers provides a comprehensive library for working with state-of-the-art diffusion models.\n\n## Key Focus Areas\n\n- Diffusion Models\n- Image Generation\n- Audio Generation\n\n## About llms.txt Implementation\n\nHugging Face Diffusers' llms.txt documentation outlines their diffusion model capabilities and implementation details.",
     "category": "ai-ml",
-    "slug": "huggingface-diffusers",
+    "slug": "huggingface-diffusers-llms-txt",
     "website": "https://huggingface.co",
     "llmsUrl": "https://huggingface-projects-docs-llms-txt.hf.space/diffusers/llms.txt",
     "llmsFullUrl": ""
@@ -596,10 +618,10 @@
   {
     "name": "Hugging Face Hub",
     "description": "Platform for sharing and discovering machine learning models",
-    "url": "/huggingface-hub",
+    "url": "/huggingface-hub-llms-txt",
     "content": "# Hugging Face Hub\n\nHugging Face Hub is a central platform for sharing, discovering, and collaborating on machine learning models.\n\n## Key Focus Areas\n\n- Model Repository\n- Collaboration\n- Model Discovery\n\n## About llms.txt Implementation\n\nHugging Face Hub's llms.txt documentation details their platform features and collaboration capabilities.",
     "category": "ai-ml",
-    "slug": "huggingface-hub",
+    "slug": "huggingface-hub-llms-txt",
     "website": "https://huggingface.co",
     "llmsUrl": "https://huggingface-projects-docs-llms-txt.hf.space/hub/llms.txt",
     "llmsFullUrl": ""
@@ -607,10 +629,10 @@
   {
     "name": "Hugging Face Hub Python Library",
     "description": "Python library for interacting with the Hugging Face Hub",
-    "url": "/huggingface-hub-python",
+    "url": "/huggingface-hub-python-llms-txt",
     "content": "# Hugging Face Hub Python Library\n\nThe Hugging Face Hub Python Library provides programmatic access to the Hugging Face Hub platform.\n\n## Key Focus Areas\n\n- API Integration\n- Model Management\n- Python Tools\n\n## About llms.txt Implementation\n\nThe Hugging Face Hub Python Library's llms.txt documentation outlines their Python API features and integration capabilities.",
     "category": "ai-ml",
-    "slug": "huggingface-hub-python",
+    "slug": "huggingface-hub-python-llms-txt",
     "website": "https://huggingface.co",
     "llmsUrl": "https://huggingface-projects-docs-llms-txt.hf.space/huggingface_hub/llms.txt",
     "llmsFullUrl": ""
@@ -618,10 +640,10 @@
   {
     "name": "Hugging Face Transformers",
     "description": "State-of-the-art Natural Language Processing library",
-    "url": "/huggingface-transformers",
+    "url": "/huggingface-transformers-llms-txt",
     "content": "# Hugging Face Transformers\n\nHugging Face Transformers provides state-of-the-art machine learning models for Natural Language Processing (NLP).\n\n## Key Focus Areas\n\n- Natural Language Processing\n- Transformer Models\n- Machine Learning\n\n## About llms.txt Implementation\n\nHugging Face Transformers' llms.txt documentation details their NLP models and implementation capabilities.",
     "category": "ai-ml",
-    "slug": "huggingface-transformers",
+    "slug": "huggingface-transformers-llms-txt",
     "website": "https://huggingface.co",
     "llmsUrl": "https://huggingface-projects-docs-llms-txt.hf.space/transformers/llms.txt",
     "llmsFullUrl": ""
@@ -629,10 +651,10 @@
   {
     "name": "Hyperline",
     "description": "Data pipeline and integration platform",
-    "url": "/hyperline",
+    "url": "/hyperline-llms-txt",
     "content": "# Hyperline\n\nHyperline provides modern data pipeline and integration solutions for efficient data processing and management.\n\n## Key Focus Areas\n\n- Data Integration\n- Pipeline Management\n- Data Processing\n\n## About llms.txt Implementation\n\nHyperline's llms.txt documentation details their data pipeline features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "hyperline",
+    "slug": "hyperline-llms-txt",
     "website": "https://hyperline.co",
     "llmsUrl": "https://docs.hyperline.co/llms.txt",
     "llmsFullUrl": "https://docs.hyperline.co/llms-full.txt"
@@ -640,10 +662,10 @@
   {
     "name": "Hypermode",
     "description": "High-performance application development platform",
-    "url": "/hypermode",
+    "url": "/hypermode-llms-txt",
     "content": "# Hypermode\n\nHypermode provides tools and infrastructure for building high-performance applications with modern technologies.\n\n## Key Focus Areas\n\n- Performance Optimization\n- Application Development\n- Developer Tools\n\n## About llms.txt Implementation\n\nHypermode's llms.txt documentation outlines their platform features for high-performance application development.",
     "category": "developer-tools",
-    "slug": "hypermode",
+    "slug": "hypermode-llms-txt",
     "website": "https://hypermode.com",
     "llmsUrl": "https://docs.hypermode.com/llms.txt",
     "llmsFullUrl": ""
@@ -651,10 +673,10 @@
   {
     "name": "Infisical",
     "description": "Secure secrets management platform",
-    "url": "/infisical",
+    "url": "/infisical-llms-txt",
     "content": "# Infisical\n\nInfisical provides a secure platform for managing secrets and sensitive configuration data across applications.\n\n## Key Focus Areas\n\n- Secrets Management\n- Security\n- Configuration Management\n\n## About llms.txt Implementation\n\nInfisical's llms.txt documentation details their secrets management platform features, with comprehensive coverage in their full documentation.",
     "category": "security-identity",
-    "slug": "infisical",
+    "slug": "infisical-llms-txt",
     "website": "https://infisical.com",
     "llmsUrl": "https://infisical.com/docs/llms.txt",
     "llmsFullUrl": "https://infisical.com/docs/llms-full.txt"
@@ -662,21 +684,32 @@
   {
     "name": "Inkeep",
     "description": "AI-powered documentation and knowledge base platform",
-    "url": "/inkeep",
+    "url": "/inkeep-llms-txt",
     "content": "# Inkeep\n\nInkeep provides AI-powered solutions for managing and accessing documentation and knowledge bases effectively.\n\n## Key Focus Areas\n\n- Documentation Management\n- Knowledge Base\n- AI Search\n\n## About llms.txt Implementation\n\nInkeep's llms.txt documentation outlines their AI-powered documentation platform features and capabilities.",
     "category": "ai-ml",
-    "slug": "inkeep",
+    "slug": "inkeep-llms-txt",
     "website": "https://inkeep.com",
     "llmsUrl": "https://docs.inkeep.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
+    "name": "Inspira UI: Build beautiful websites using Vue & Nuxt",
+    "description": "Open Source components to build stunning animated interfaces effortlessly using Vue &amp; Nuxt.",
+    "url": "/inspira-ui-llms-txt",
+    "content": "",
+    "category": "developer-tools",
+    "slug": "inspira-ui-llms-txt",
+    "website": "https://inspira-ui.com/",
+    "llmsUrl": "https://inspira-ui.com/llms.txt",
+    "llmsFullUrl": "https://inspira-ui.com/llms-full.txt"
+  },
+  {
     "name": "Intuned",
     "description": "Product analytics and user behavior platform",
-    "url": "/intuned",
+    "url": "/intuned-llms-txt",
     "content": "# Intuned\n\nIntuned provides analytics and insights platform for understanding user behavior and product performance.\n\n## Key Focus Areas\n\n- Product Analytics\n- User Behavior\n- Performance Insights\n\n## About llms.txt Implementation\n\nIntuned's llms.txt documentation details their analytics platform features and capabilities for product insights.",
     "category": "data-analytics",
-    "slug": "intuned",
+    "slug": "intuned-llms-txt",
     "website": "https://intunedhq.com",
     "llmsUrl": "https://docs.intunedhq.com/llms.txt",
     "llmsFullUrl": ""
@@ -684,10 +717,10 @@
   {
     "name": "IonQ",
     "description": "Quantum computing platform and infrastructure",
-    "url": "/ionq",
+    "url": "/ionq-llms-txt",
     "content": "# IonQ\n\nIonQ provides quantum computing solutions and infrastructure for next-generation computing applications.\n\n## Key Focus Areas\n\n- Quantum Computing\n- Quantum Infrastructure\n- Quantum Development\n\n## About llms.txt Implementation\n\nIonQ's llms.txt documentation outlines their quantum computing platform features, with comprehensive details in their full documentation.",
     "category": "infrastructure-cloud",
-    "slug": "ionq",
+    "slug": "ionq-llms-txt",
     "website": "https://ionq.com",
     "llmsUrl": "https://docs.ionq.com/llms.txt",
     "llmsFullUrl": "https://docs.ionq.com/llms-full.txt"
@@ -695,10 +728,10 @@
   {
     "name": "Lago",
     "description": "Open-source metering and usage-based billing platform",
-    "url": "/lago",
+    "url": "/lago-llms-txt",
     "content": "# Lago\n\nLago provides open-source solutions for usage-based billing and metering infrastructure.\n\n## Key Focus Areas\n\n- Usage-Based Billing\n- Metering\n- Billing Infrastructure\n\n## About llms.txt Implementation\n\nLago's llms.txt documentation details their billing platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "lago",
+    "slug": "lago-llms-txt",
     "website": "https://getlago.com",
     "llmsUrl": "https://getlago.com/docs/llms.txt",
     "llmsFullUrl": "https://getlago.com/docs/llms-full.txt"
@@ -706,10 +739,10 @@
   {
     "name": "Langfuse",
     "description": "LLM observability and analytics platform",
-    "url": "/langfuse",
+    "url": "/langfuse-llms-txt",
     "content": "# Langfuse\n\nLangfuse provides observability and analytics solutions for Large Language Model applications.\n\n## Key Focus Areas\n\n- LLM Monitoring\n- Analytics\n- Performance Tracking\n\n## About llms.txt Implementation\n\nLangfuse's llms.txt documentation outlines their LLM observability platform features and analytics capabilities.",
     "category": "ai-ml",
-    "slug": "langfuse",
+    "slug": "langfuse-llms-txt",
     "website": "https://langfuse.com",
     "llmsUrl": "https://langfuse.com/llms.txt",
     "llmsFullUrl": ""
@@ -717,21 +750,32 @@
   {
     "name": "llms.txt",
     "description": "Documentation standard for LLM-powered applications",
-    "url": "/llmstxt",
+    "url": "/llmstxt-llms-txt",
     "content": "# llms.txt\n\nllms.txt defines a standard for documenting LLM-powered applications and their capabilities.\n\n## Key Focus Areas\n\n- Documentation Standards\n- LLM Integration\n- Best Practices\n\n## About llms.txt Implementation\n\nThe llms.txt documentation outlines the standard format and implementation guidelines for LLM documentation.",
     "category": "ai-ml",
-    "slug": "llmstxt",
+    "slug": "llmstxt-llms-txt",
     "website": "https://llmstxt.org",
     "llmsUrl": "https://llmstxt.org/llms.txt",
     "llmsFullUrl": ""
   },
   {
+    "name": "LM Studio",
+    "description": "Run Llama, Gemma 3, DeepSeek locally on your computer.",
+    "url": "/lm-studio-llms-txt",
+    "content": "# LM Studio\n\nRun Llama, Gemma 3, DeepSeek locally on your computer.",
+    "category": "developer-tools",
+    "slug": "lm-studio-llms-txt",
+    "website": "https://lmstudio.ai/",
+    "llmsUrl": "https://lmstudio.ai/llms.txt",
+    "llmsFullUrl": "https://lmstudio.ai/llms-full.txt"
+  },
+  {
     "name": "Loops",
     "description": "Customer communication and engagement platform",
-    "url": "/loops",
+    "url": "/loops-llms-txt",
     "content": "# Loops\n\nLoops provides tools for managing and automating customer communications and engagement.\n\n## Key Focus Areas\n\n- Customer Communication\n- Engagement Automation\n- Marketing Tools\n\n## About llms.txt Implementation\n\nLoops' llms.txt documentation details their communication platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "loops",
+    "slug": "loops-llms-txt",
     "website": "https://loops.so",
     "llmsUrl": "https://loops.so/docs/llms.txt",
     "llmsFullUrl": "https://loops.so/docs/llms-full.txt"
@@ -739,10 +783,10 @@
   {
     "name": "Lots of CSVs",
     "description": "CSV data management and processing platform",
-    "url": "/lots-of-csvs",
+    "url": "/lots-of-csvs-llms-txt",
     "content": "# Lots of CSVs\n\nLots of CSVs provides tools for managing and processing CSV data efficiently.\n\n## Key Focus Areas\n\n- CSV Processing\n- Data Management\n- File Handling\n\n## About llms.txt Implementation\n\nLots of CSVs' llms.txt documentation outlines their CSV processing platform features and capabilities.",
     "category": "data-analytics",
-    "slug": "lots-of-csvs",
+    "slug": "lots-of-csvs-llms-txt",
     "website": "https://lotsofcsvs.com",
     "llmsUrl": "https://lotsofcsvs.com/llms.txt",
     "llmsFullUrl": ""
@@ -750,10 +794,10 @@
   {
     "name": "LuxAlgo",
     "description": "Advanced trading algorithms and analysis platform",
-    "url": "/luxalgo",
+    "url": "/luxalgo-llms-txt",
     "content": "# LuxAlgo\n\nLuxAlgo provides sophisticated trading algorithms and analysis tools for financial markets.\n\n## Key Focus Areas\n\n- Trading Algorithms\n- Market Analysis\n- Financial Tools\n\n## About llms.txt Implementation\n\nLuxAlgo's llms.txt documentation details their trading platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "luxalgo",
+    "slug": "luxalgo-llms-txt",
     "website": "https://luxalgo.com",
     "llmsUrl": "https://docs.luxalgo.com/llms.txt",
     "llmsFullUrl": "https://docs.luxalgo.com/llms-full.txt"
@@ -761,10 +805,10 @@
   {
     "name": "Mangopay",
     "description": "Payment infrastructure and marketplace solutions",
-    "url": "/mangopay",
+    "url": "/mangopay-llms-txt",
     "content": "# Mangopay\n\nMangopay provides payment infrastructure and solutions for marketplaces and platforms.\n\n## Key Focus Areas\n\n- Payment Processing\n- Marketplace Solutions\n- Financial Infrastructure\n\n## About llms.txt Implementation\n\nMangopay's llms.txt documentation details their payment platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "mangopay",
+    "slug": "mangopay-llms-txt",
     "website": "https://mangopay.com",
     "llmsUrl": "https://docs.mangopay.com/llms.txt",
     "llmsFullUrl": "https://docs.mangopay.com/llms-full.txt"
@@ -772,10 +816,10 @@
   {
     "name": "MeshConnect",
     "description": "Integration and connectivity platform",
-    "url": "/meshconnect",
+    "url": "/meshconnect-llms-txt",
     "content": "# MeshConnect\n\nMeshConnect provides solutions for seamless integration and connectivity between different systems and platforms.\n\n## Key Focus Areas\n\n- System Integration\n- Connectivity Solutions\n- API Management\n\n## About llms.txt Implementation\n\nMeshConnect's llms.txt documentation details their integration platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "meshconnect",
+    "slug": "meshconnect-llms-txt",
     "website": "https://meshconnect.com",
     "llmsUrl": "https://docs.meshconnect.com/llms.txt",
     "llmsFullUrl": "https://docs.meshconnect.com/llms-full.txt"
@@ -783,10 +827,10 @@
   {
     "name": "Method Financial",
     "description": "Financial data and payment solutions platform",
-    "url": "/method-financial",
+    "url": "/method-financial-llms-txt",
     "content": "# Method Financial\n\nMethod Financial provides modern financial data infrastructure and payment solutions for businesses.\n\n## Key Focus Areas\n\n- Financial Data\n- Payment Processing\n- Banking Infrastructure\n\n## About llms.txt Implementation\n\nMethod Financial's llms.txt documentation details their financial platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "method-financial",
+    "slug": "method-financial-llms-txt",
     "website": "https://methodfi.com",
     "llmsUrl": "https://docs.methodfi.com/llms.txt",
     "llmsFullUrl": "https://docs.methodfi.com/llms-full.txt"
@@ -794,10 +838,10 @@
   {
     "name": "Mintlify",
     "description": "Modern documentation platform and tools",
-    "url": "/mintlify",
+    "url": "/mintlify-llms-txt",
     "content": "# Mintlify\n\nMintlify provides modern documentation solutions and tools for developers and teams.\n\n## Key Focus Areas\n\n- Documentation Platform\n- Developer Tools\n- Content Management\n\n## About llms.txt Implementation\n\nMintlify's llms.txt documentation outlines their documentation platform features, with comprehensive coverage in their full documentation.",
     "category": "developer-tools",
-    "slug": "mintlify",
+    "slug": "mintlify-llms-txt",
     "website": "https://mintlify.com",
     "llmsUrl": "https://mintlify.com/docs/llms.txt",
     "llmsFullUrl": "https://mintlify.com/docs/llms-full.txt"
@@ -805,10 +849,10 @@
   {
     "name": "Model Context Protocol (MCP)",
     "description": "MCP is an open protocol that standardizes how applications provide context to LLMs.",
-    "url": "/model-context-protocol",
+    "url": "/model-context-protocol-llms-txt",
     "content": "# Model Context Protocol (MCP)\n\nThe Model Context Protocol (MCP) is an open standard that defines how applications can effectively communicate context and requirements to Large Language Models (LLMs). It provides a structured way for applications to share information, constraints, and expectations with LLMs, ensuring consistent and reliable interactions.\n\n## Key Focus Areas\n\n- Context Standardization\n- LLM Integration\n- Application Communication\n- Protocol Specifications\n\n## About llms.txt Implementation\n\nThe Model Context Protocol's llms.txt documentation provides comprehensive details about the protocol specifications, integration guidelines, and best practices for implementing MCP in applications. The full documentation (llms-full.txt) includes additional examples, use cases, and advanced implementation scenarios.",
     "category": "developer-tools",
-    "slug": "model-context-protocol",
+    "slug": "model-context-protocol-llms-txt",
     "website": "https://modelcontextprotocol.io",
     "llmsUrl": "https://modelcontextprotocol.io/llms.txt",
     "llmsFullUrl": "https://modelcontextprotocol.io/llms-full.txt"
@@ -816,10 +860,10 @@
   {
     "name": "Mystery-o-matic",
     "description": "Interactive mystery and game generation platform",
-    "url": "/mystery-o-matic",
+    "url": "/mystery-o-matic-llms-txt",
     "content": "# Mystery-o-matic\n\nMystery-o-matic provides an innovative platform for generating and playing interactive mysteries and games.\n\n## Key Focus Areas\n\n- Interactive Stories\n- Game Generation\n- User Experience\n\n## About llms.txt Implementation\n\nMystery-o-matic's llms.txt documentation details their interactive story platform features and capabilities.",
     "category": "ai-ml",
-    "slug": "mystery-o-matic",
+    "slug": "mystery-o-matic-llms-txt",
     "website": "https://mystery-o-matic.com",
     "llmsUrl": "https://mystery-o-matic.com/llms.txt",
     "llmsFullUrl": ""
@@ -827,10 +871,10 @@
   {
     "name": "Netlify",
     "description": "Learn how to develop and host fast and reliable websites and apps with our enterprise-ready composable web platform.",
-    "url": "/netlify",
+    "url": "/netlify-llms-txt",
     "content": "# Netlify\n\nLearn how to develop and host fast and reliable websites and apps with our enterprise-ready composable web platform.",
     "category": "infrastructure-cloud",
-    "slug": "netlify",
+    "slug": "netlify-llms-txt",
     "website": "https://docs.netlify.com",
     "llmsUrl": "https://docs.netlify.com/llms.txt",
     "llmsFullUrl": ""
@@ -838,10 +882,10 @@
   {
     "name": "OpenPhone",
     "description": "Modern business phone system and communication platform",
-    "url": "/openphone",
+    "url": "/openphone-llms-txt",
     "content": "# OpenPhone\n\nOpenPhone provides modern business phone and communication solutions for teams and organizations.\n\n## Key Focus Areas\n\n- Business Communication\n- Phone Systems\n- Team Collaboration\n\n## About llms.txt Implementation\n\nOpenPhone's llms.txt documentation outlines their communication platform features and capabilities.",
     "category": "integration-automation",
-    "slug": "openphone",
+    "slug": "openphone-llms-txt",
     "website": "https://openphone.com",
     "llmsUrl": "https://www.openphone.com/docs/llms.txt",
     "llmsFullUrl": ""
@@ -849,10 +893,10 @@
   {
     "name": "OpenPipe",
     "description": "AI model fine-tuning and optimization platform",
-    "url": "/openpipe",
+    "url": "/openpipe-llms-txt",
     "content": "# OpenPipe\n\nOpenPipe provides tools and infrastructure for fine-tuning and optimizing AI models.\n\n## Key Focus Areas\n\n- AI Model Fine-tuning\n- Model Optimization\n- Machine Learning Tools\n\n## About llms.txt Implementation\n\nOpenPipe's llms.txt documentation details their AI platform features, with comprehensive coverage in their full documentation.",
     "category": "ai-ml",
-    "slug": "openpipe",
+    "slug": "openpipe-llms-txt",
     "website": "https://openpipe.ai",
     "llmsUrl": "https://docs.openpipe.ai/llms.txt",
     "llmsFullUrl": "https://docs.openpipe.ai/llms-full.txt"
@@ -860,10 +904,10 @@
   {
     "name": "OpenRouter",
     "description": "A unified interface for LLMs. Find the best models & prices for your prompts.",
-    "url": "/openrouter",
+    "url": "/openrouter-llms-txt",
     "content": "# OpenRouter\n\nA unified interface for LLMs. Find the best models & prices for your prompts.",
     "category": "developer-tools",
-    "slug": "openrouter",
+    "slug": "openrouter-llms-txt",
     "website": "https://openrouter.ai/",
     "llmsUrl": "https://openrouter.ai/docs/llms.txt",
     "llmsFullUrl": "https://openrouter.ai/docs/llms-full.txt"
@@ -871,10 +915,10 @@
   {
     "name": "Oxla",
     "description": "Data processing and analytics platform",
-    "url": "/oxla",
+    "url": "/oxla-llms-txt",
     "content": "# Oxla\n\nOxla provides advanced data processing and analytics solutions for modern businesses.\n\n## Key Focus Areas\n\n- Data Processing\n- Analytics\n- Business Intelligence\n\n## About llms.txt Implementation\n\nOxla's llms.txt documentation details their data platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "oxla",
+    "slug": "oxla-llms-txt",
     "website": "https://oxla.com",
     "llmsUrl": "https://docs.oxla.com/llms.txt",
     "llmsFullUrl": "https://docs.oxla.com/llms-full.txt"
@@ -882,10 +926,10 @@
   {
     "name": "Perplexity",
     "description": "AI-powered search and discovery platform",
-    "url": "/perplexity",
+    "url": "/perplexity-llms-txt",
     "content": "# Perplexity\n\nPerplexity provides AI-powered search and discovery solutions for enhanced information access.\n\n## Key Focus Areas\n\n- AI Search\n- Information Discovery\n- Knowledge Access\n\n## About llms.txt Implementation\n\nPerplexity's llms.txt documentation outlines their AI search platform features, with detailed information available in their full documentation.",
     "category": "ai-ml",
-    "slug": "perplexity",
+    "slug": "perplexity-llms-txt",
     "website": "https://perplexity.ai",
     "llmsUrl": "https://docs.perplexity.ai/llms.txt",
     "llmsFullUrl": "https://docs.perplexity.ai/llms-full.txt"
@@ -893,10 +937,10 @@
   {
     "name": "Pinata",
     "description": "Simple API platform for IPFS storage and decentralized file management",
-    "url": "/pinata",
+    "url": "/pinata-llms-txt",
     "content": "# Pinata\n\nPinata provides a simple API platform for managing IPFS storage and decentralized file systems.\n\n## Key Focus Areas\n\n- IPFS Storage\n- File Management\n- Decentralized Infrastructure\n\n## About llms.txt Implementation\n\nPinata's llms.txt documentation details their IPFS platform features, with comprehensive coverage in their full documentation.",
     "category": "infrastructure-cloud",
-    "slug": "pinata",
+    "slug": "pinata-llms-txt",
     "website": "https://docs.pinata.cloud",
     "llmsUrl": "https://docs.pinata.cloud/llms.txt",
     "llmsFullUrl": "https://docs.pinata.cloud/llms-full.txt"
@@ -904,10 +948,10 @@
   {
     "name": "Plain",
     "description": "Customer support and communication platform",
-    "url": "/plain",
+    "url": "/plain-llms-txt",
     "content": "# Plain\n\nPlain provides modern customer support and communication solutions for businesses.\n\n## Key Focus Areas\n\n- Customer Support\n- Communication Tools\n- Support Automation\n\n## About llms.txt Implementation\n\nPlain's llms.txt documentation details their support platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "plain",
+    "slug": "plain-llms-txt",
     "website": "https://plain.com",
     "llmsUrl": "https://www.plain.com/docs/llms.txt",
     "llmsFullUrl": "https://www.plain.com/docs/llms-full.txt"
@@ -915,21 +959,32 @@
   {
     "name": "POPSMASH",
     "description": "Social gaming and community platform",
-    "url": "/popsmash",
+    "url": "/popsmash-llms-txt",
     "content": "# POPSMASH\n\nPOPSMASH provides a platform for social gaming and community engagement.\n\n## Key Focus Areas\n\n- Social Gaming\n- Community Building\n- User Engagement\n\n## About llms.txt Implementation\n\nPOPSMASH's llms.txt documentation details their gaming platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "popsmash",
+    "slug": "popsmash-llms-txt",
     "website": "https://www.popsmash.com",
     "llmsUrl": "https://www.popsmash.com/llms.txt",
     "llmsFullUrl": "https://www.popsmash.com/llms-full.txt"
   },
   {
+    "name": "PostFast",
+    "description": "PostFast - Social Media Management Tool. Cross-post across multiple platforms like - X, LinkedIn, TikTok, Facebook, Instagram, BlueSky, and YouTube.",
+    "url": "/postfast-llms-txt",
+    "content": "# PostFast\n\nPostFast - Social Media Management Tool. Cross-post across multiple platforms like - X, LinkedIn, TikTok, Facebook, Instagram, BlueSky, and YouTube.",
+    "category": "integration-automation",
+    "slug": "postfast-llms-txt",
+    "website": "https://postfa.st",
+    "llmsUrl": "https://postfa.st/llms.txt",
+    "llmsFullUrl": "https://postfa.st/llms-full.txt"
+  },
+  {
     "name": "PrimeV",
     "description": "Cloud infrastructure and virtualization platform",
-    "url": "/primev",
+    "url": "/primev-llms-txt",
     "content": "# PrimeV\n\nPrimeV delivers modern cloud infrastructure and virtualization solutions for enterprises.\n\n## Key Focus Areas\n\n- Cloud Infrastructure\n- Virtualization\n- Enterprise Solutions\n\n## About llms.txt Implementation\n\nPrimeV's llms.txt documentation details their cloud platform features, with comprehensive coverage in their full documentation.",
     "category": "infrastructure-cloud",
-    "slug": "primev",
+    "slug": "primev-llms-txt",
     "website": "https://primev.xyz",
     "llmsUrl": "https://docs.primev.xyz/llms.txt",
     "llmsFullUrl": "https://docs.primev.xyz/llms-full.txt"
@@ -937,10 +992,10 @@
   {
     "name": "Prisma",
     "description": "TypeScript ORM and hosted PostgreSQL database platform",
-    "url": "/prisma",
+    "url": "/prisma-llms-txt",
     "content": "# Prisma\n\nPrisma is best known for the Prisma ORM, a TypeScript ORM. Prisma also offers products that range from caching and connection pooling for databases to a hosted PostgreSQL solution.\n\n## Key Focus Areas\n\n- Serverless Database Infrastructure\n- ORM and Data Access\n- Productivity Enhancement\n\n## About llms.txt Implementation\n\nPrisma's llms.txt documentation details their next-generation ORM ecosystem and offers extensive setup and integration guidance in the full documentation.",
     "category": "developer-tools",
-    "slug": "prisma",
+    "slug": "prisma-llms-txt",
     "website": "https://prisma.io",
     "llmsUrl": "https://prisma.io/docs/llms.txt",
     "llmsFullUrl": "https://prisma.io/docs/llms-full.txt"
@@ -948,10 +1003,10 @@
   {
     "name": "ProjectDiscovery",
     "description": "Security and vulnerability scanning platform",
-    "url": "/projectdiscovery",
+    "url": "/projectdiscovery-llms-txt",
     "content": "# ProjectDiscovery\n\nProjectDiscovery provides tools and solutions for security scanning and vulnerability detection.\n\n## Key Focus Areas\n\n- Security Scanning\n- Vulnerability Detection\n- Security Tools\n\n## About llms.txt Implementation\n\nProjectDiscovery's llms.txt documentation details their security platform features, with comprehensive coverage in their full documentation.",
     "category": "security-identity",
-    "slug": "projectdiscovery",
+    "slug": "projectdiscovery-llms-txt",
     "website": "https://projectdiscovery.io",
     "llmsUrl": "https://docs.projectdiscovery.io/llms.txt",
     "llmsFullUrl": "https://docs.projectdiscovery.io/llms-full.txt"
@@ -959,10 +1014,10 @@
   {
     "name": "Quill",
     "description": "SQL query builder and database management platform",
-    "url": "/quill",
+    "url": "/quill-llms-txt",
     "content": "# Quill\n\nQuill provides advanced SQL query building and database management solutions.\n\n## Key Focus Areas\n\n- SQL Query Building\n- Database Management\n- Data Tools\n\n## About llms.txt Implementation\n\nQuill's llms.txt documentation outlines their SQL platform features and database management capabilities.",
     "category": "data-analytics",
-    "slug": "quill",
+    "slug": "quill-llms-txt",
     "website": "https://quillsql.com",
     "llmsUrl": "https://docs.quillsql.com/llms.txt",
     "llmsFullUrl": ""
@@ -970,10 +1025,10 @@
   {
     "name": "RainbowKit",
     "description": "Web3 wallet integration toolkit",
-    "url": "/rainbowkit",
+    "url": "/rainbowkit-llms-txt",
     "content": "# RainbowKit\n\nRainbowKit provides tools and components for integrating Web3 wallets into applications.\n\n## Key Focus Areas\n\n- Web3 Integration\n- Wallet Connection\n- Developer Tools\n\n## About llms.txt Implementation\n\nRainbowKit's llms.txt documentation details their Web3 toolkit features, with comprehensive coverage in their full documentation.",
     "category": "developer-tools",
-    "slug": "rainbowkit",
+    "slug": "rainbowkit-llms-txt",
     "website": "https://rainbowkit.com",
     "llmsUrl": "https://rainbowkit.com/llms.txt",
     "llmsFullUrl": "https://rainbowkit.com/llms-full.txt"
@@ -981,10 +1036,10 @@
   {
     "name": "raincamp",
     "description": "AI-powered development and deployment platform",
-    "url": "/raincamp",
+    "url": "/raincamp-llms-txt",
     "content": "# raincamp\n\nraincamp provides AI-powered tools for streamlined development and deployment workflows.\n\n## Key Focus Areas\n\n- Development Tools\n- AI Integration\n- Deployment Automation\n\n## About llms.txt Implementation\n\nraincamp's llms.txt documentation outlines their development platform features and AI capabilities.",
     "category": "developer-tools",
-    "slug": "raincamp",
+    "slug": "raincamp-llms-txt",
     "website": "https://raincamp.ai",
     "llmsUrl": "https://raincamp.ai/llms.txt",
     "llmsFullUrl": ""
@@ -992,10 +1047,10 @@
   {
     "name": "Raycast",
     "description": "A collection of powerful productivity tools all within an extendable launcher.",
-    "url": "/raycast",
+    "url": "/raycast-llms-txt",
     "content": "# Raycast\n\nRaycast is a blazingly fast, totally extendable launcher that lets you complete tasks, calculate, share common links, and much more through a powerful keyboard-driven interface.\n\n## Key Focus Areas\n\n- Productivity Enhancement\n- Extension Ecosystem\n- Developer Workflows\n\n## About llms.txt Implementation\n\nRaycast's llms.txt documentation provides comprehensive information about their extension API and integration capabilities, enabling developers to create powerful productivity tools within the Raycast ecosystem.",
     "category": "developer-tools",
-    "slug": "raycast",
+    "slug": "raycast-llms-txt",
     "website": "https://www.raycast.com/",
     "llmsUrl": "https://raw.githubusercontent.com/raycast/extensions/refs/heads/gh-pages/llms-full.txt",
     "llmsFullUrl": ""
@@ -1003,10 +1058,10 @@
   {
     "name": "Rememberizer",
     "description": "Memory and knowledge management platform",
-    "url": "/rememberizer",
+    "url": "/rememberizer-llms-txt",
     "content": "# Rememberizer\n\nRememberizer provides tools for managing and organizing knowledge and information.\n\n## Key Focus Areas\n\n- Knowledge Management\n- Information Organization\n- Memory Tools\n\n## About llms.txt Implementation\n\nRememberizer's llms.txt documentation details their knowledge management features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "rememberizer",
+    "slug": "rememberizer-llms-txt",
     "website": "https://docs.rememberizer.ai",
     "llmsUrl": "https://llm.rememberizer.ai/llms.txt",
     "llmsFullUrl": "https://llm.rememberizer.ai/llms-full.txt"
@@ -1014,10 +1069,10 @@
   {
     "name": "Resend",
     "description": "Modern email delivery platform",
-    "url": "/resend",
+    "url": "/resend-llms-txt",
     "content": "# Resend\n\nResend provides modern email infrastructure and delivery solutions for developers.\n\n## Key Focus Areas\n\n- Email Delivery\n- Email Infrastructure\n- Developer Tools\n\n## About llms.txt Implementation\n\nResend's llms.txt documentation details their email platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "resend",
+    "slug": "resend-llms-txt",
     "website": "https://resend.com",
     "llmsUrl": "https://resend.com/docs/llms.txt",
     "llmsFullUrl": "https://resend.com/docs/llms-full.txt"
@@ -1025,10 +1080,10 @@
   {
     "name": "Roc",
     "description": "Fast and safe programming language",
-    "url": "/roc",
+    "url": "/roc-llms-txt",
     "content": "# Roc\n\nRoc is a fast, safe programming language designed for building reliable and efficient software.\n\n## Key Focus Areas\n\n- Programming Language\n- Performance\n- Safety Features\n\n## About llms.txt Implementation\n\nRoc's llms.txt documentation outlines their programming language features and capabilities.",
     "category": "developer-tools",
-    "slug": "roc",
+    "slug": "roc-llms-txt",
     "website": "https://roc-lang.org",
     "llmsUrl": "https://www.roc-lang.org/llms.txt",
     "llmsFullUrl": ""
@@ -1036,10 +1091,10 @@
   {
     "name": "Salesbricks",
     "description": "Sales automation and management platform",
-    "url": "/salesbricks",
+    "url": "/salesbricks-llms-txt",
     "content": "# Salesbricks\n\nSalesbricks provides modern sales automation and management solutions for businesses.\n\n## Key Focus Areas\n\n- Sales Automation\n- Sales Management\n- Business Tools\n\n## About llms.txt Implementation\n\nSalesbricks' llms.txt documentation details their sales platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "salesbricks",
+    "slug": "salesbricks-llms-txt",
     "website": "https://salesbricks.com",
     "llmsUrl": "https://docs.salesbricks.com/llms.txt",
     "llmsFullUrl": "https://docs.salesbricks.com/llms-full.txt"
@@ -1047,10 +1102,10 @@
   {
     "name": "Sardine",
     "description": "Fraud prevention and compliance platform",
-    "url": "/sardine",
+    "url": "/sardine-llms-txt",
     "content": "# Sardine\n\nSardine provides advanced fraud prevention and compliance solutions for digital businesses.\n\n## Key Focus Areas\n\n- Fraud Prevention\n- Compliance\n- Risk Management\n\n## About llms.txt Implementation\n\nSardine's llms.txt documentation details their fraud prevention platform features, with comprehensive coverage in their full documentation.",
     "category": "security-identity",
-    "slug": "sardine",
+    "slug": "sardine-llms-txt",
     "website": "https://sardine.ai",
     "llmsUrl": "https://docs.sardine.ai/llms.txt",
     "llmsFullUrl": "https://docs.sardine.ai/llms-full.txt"
@@ -1058,21 +1113,32 @@
   {
     "name": "ScreenshotOne",
     "description": "Simple API for automated website screenshots without browser management complexity",
-    "url": "/screenshotone",
+    "url": "/screenshotone-llms-txt",
     "content": "# ScreenshotOne\n\nScreenshotOne provides a simple API for capturing automated website screenshots without the complexity of browser management.\n\n## Key Focus Areas\n\n- Website Screenshots\n- API Integration\n- Automation Tools\n\n## About llms.txt Implementation\n\nScreenshotOne's llms.txt documentation details their screenshot API features, with comprehensive coverage in their full documentation.",
     "category": "developer-tools",
-    "slug": "screenshotone",
+    "slug": "screenshotone-llms-txt",
     "website": "https://screenshotone.com",
     "llmsUrl": "https://screenshotone.com/docs/llms.txt",
     "llmsFullUrl": "https://screenshotone.com/docs/llms-full.txt"
   },
   {
+    "name": "Semgrep",
+    "description": "We're a startup passionate about improving software security and reliability.",
+    "url": "/semgrep-llms-txt",
+    "content": "# Semgrep\n\nWe're a startup passionate about improving software security and reliability.",
+    "category": "security-identity",
+    "slug": "semgrep-llms-txt",
+    "website": "https://semgrep.com",
+    "llmsUrl": "https://semgrep.com/llms.txt",
+    "llmsFullUrl": "https://semgrep.com/llms-full.txt"
+  },
+  {
     "name": "SimplePDF",
     "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
-    "url": "/simplepdf",
+    "url": "/simplepdf-llms-txt",
     "content": "# SimplePDF\n\nPDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
     "category": "developer-tools",
-    "slug": "simplepdf",
+    "slug": "simplepdf-llms-txt",
     "website": "https://simplepdf.com",
     "llmsUrl": "https://simplepdf.com/llms.txt",
     "llmsFullUrl": ""
@@ -1080,10 +1146,10 @@
   {
     "name": "SkyDeck.ai",
     "description": "AI-powered business intelligence platform",
-    "url": "/skydeck",
+    "url": "/skydeck-llms-txt",
     "content": "# SkyDeck.ai\n\nSkyDeck.ai provides AI-powered business intelligence and analytics solutions.\n\n## Key Focus Areas\n\n- Business Intelligence\n- AI Analytics\n- Data Insights\n\n## About llms.txt Implementation\n\nSkyDeck.ai's llms.txt documentation details their AI platform features, with comprehensive coverage in their full documentation.",
     "category": "ai-ml",
-    "slug": "skydeck",
+    "slug": "skydeck-llms-txt",
     "website": "https://docs.skydeck.ai",
     "llmsUrl": "https://llm.skydeck.ai/llms.txt",
     "llmsFullUrl": "https://llm.skydeck.ai/llms-full.txt"
@@ -1091,10 +1157,10 @@
   {
     "name": "Smartcar",
     "description": "Connected car API platform",
-    "url": "/smartcar",
+    "url": "/smartcar-llms-txt",
     "content": "# Smartcar\n\nSmartcar provides API solutions for connecting and integrating with connected vehicles.\n\n## Key Focus Areas\n\n- Connected Cars\n- Vehicle APIs\n- Automotive Integration\n\n## About llms.txt Implementation\n\nSmartcar's llms.txt documentation details their connected car platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "smartcar",
+    "slug": "smartcar-llms-txt",
     "website": "https://smartcar.com",
     "llmsUrl": "https://smartcar.com/docs/llms.txt",
     "llmsFullUrl": "https://smartcar.com/docs/llms-full.txt"
@@ -1102,10 +1168,10 @@
   {
     "name": "Solid",
     "description": "Banking and financial infrastructure platform",
-    "url": "/solid",
+    "url": "/solid-llms-txt",
     "content": "# Solid\n\nSolid provides modern banking infrastructure and financial solutions for businesses.\n\n## Key Focus Areas\n\n- Banking Infrastructure\n- Financial Services\n- Payment Solutions\n\n## About llms.txt Implementation\n\nSolid's llms.txt documentation outlines their banking platform features and financial infrastructure capabilities.",
     "category": "integration-automation",
-    "slug": "solid",
+    "slug": "solid-llms-txt",
     "website": "https://solidfi.com",
     "llmsUrl": "https://docs.solidfi.com/llms.txt",
     "llmsFullUrl": ""
@@ -1113,10 +1179,10 @@
   {
     "name": "Sourcegraph",
     "description": "Code intelligence and search platform",
-    "url": "/sourcegraph",
+    "url": "/sourcegraph-llms-txt",
     "content": "# Sourcegraph\n\nSourcegraph provides powerful code search, intelligence, and navigation capabilities for developers.\n\n## Key Focus Areas\n\n- Code Search\n- Code Intelligence\n- Code Navigation\n\n## About llms.txt Implementation\n\nSourcegraph's llms.txt documentation outlines their code intelligence features, with comprehensive coverage in their full documentation.",
     "category": "developer-tools",
-    "slug": "sourcegraph",
+    "slug": "sourcegraph-llms-txt",
     "website": "https://sourcegraph.com",
     "llmsUrl": "https://docs.sourcegraph.com/llms.txt",
     "llmsFullUrl": ""
@@ -1124,10 +1190,10 @@
   {
     "name": "Stedi",
     "description": "B2B data integration and EDI platform",
-    "url": "/stedi",
+    "url": "/stedi-llms-txt",
     "content": "# Stedi\n\nStedi provides modern B2B data integration and EDI solutions for businesses.\n\n## Key Focus Areas\n\n- B2B Integration\n- EDI Solutions\n- Data Exchange\n\n## About llms.txt Implementation\n\nStedi's llms.txt documentation details their integration platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "stedi",
+    "slug": "stedi-llms-txt",
     "website": "https://stedi.com",
     "llmsUrl": "https://www.stedi.com/docs/llms.txt",
     "llmsFullUrl": "https://www.stedi.com/docs/llms-full.txt"
@@ -1135,10 +1201,10 @@
   {
     "name": "Stripe",
     "description": "Stripe powers online and in-person payment processing and financial solutions for businesses of all sizes. Accept payments, send payouts, and automate financial processes with a suite of APIs and no-code tools.",
-    "url": "/stripe",
+    "url": "/stripe-llms-txt",
     "content": "# Stripe\n\nStripe is a comprehensive payment processing platform that enables businesses to accept payments, manage subscriptions, and handle complex financial operations. With its robust API-first approach, Stripe provides developers with powerful tools to build custom payment solutions.\n\n## Key Features\n\n- **Payment Processing**: Accept credit cards, digital wallets, and local payment methods\n- **Subscription Management**: Handle recurring billing and subscription lifecycles\n- **Connect Platform**: Build marketplace and platform payment solutions\n- **Financial Reporting**: Access detailed financial reports and analytics\n- **Fraud Prevention**: Utilize machine learning-powered fraud detection",
     "category": "integration-automation",
-    "slug": "stripe",
+    "slug": "stripe-llms-txt",
     "website": "https://stripe.com",
     "llmsUrl": "http://docs.stripe.com/llms.txt",
     "llmsFullUrl": ""
@@ -1146,10 +1212,10 @@
   {
     "name": "Supabase",
     "description": "Build production-grade applications with a Postgres database, Authentication, instant APIs, Realtime, Functions, Storage and Vector embeddings. Start for free.",
-    "url": "/supabase",
+    "url": "/supabase-llms-txt",
     "content": "# Supabase\n\nSupabase is an open-source Firebase alternative providing a comprehensive suite of backend services built on PostgreSQL.\n\n## Key Focus Areas\n\n- Database Management\n- Authentication & Authorization\n- Real-time Subscriptions\n- Edge Functions\n- File Storage & CDN\n- Vector Database Capabilities\n\n## Core Features\n\n- Auto-generated REST and GraphQL APIs\n- Row Level Security (RLS)\n- Multi-region database deployments\n- Built-in authentication system\n- Real-time data synchronization\n- Edge function deployment\n- File storage with image transformations\n- Database backups and monitoring\n- Vector embeddings support\n\n## About llms.txt Implementation\n\nSupabase's llms.txt documentation details their AI integration capabilities and developer tools for building AI-powered applications with their platform.",
     "category": "developer-tools",
-    "slug": "supabase",
+    "slug": "supabase-llms-txt",
     "website": "https://supabase.com/",
     "llmsUrl": "https://supabase.com/llms.txt",
     "llmsFullUrl": ""
@@ -1157,10 +1223,10 @@
   {
     "name": "Svelte",
     "description": "Modern web application framework",
-    "url": "/svelte",
+    "url": "/svelte-llms-txt",
     "content": "# Svelte\n\nSvelte is a radical new approach to building user interfaces and web applications.\n\n## Key Focus Areas\n\n- Web Development\n- UI Framework\n- Application Building\n\n## About llms.txt Implementation\n\nSvelte's llms.txt documentation details their framework features, with comprehensive coverage in their full documentation.",
     "category": "developer-tools",
-    "slug": "svelte",
+    "slug": "svelte-llms-txt",
     "website": "https://svelte.dev",
     "llmsUrl": "https://svelte.dev/llms.txt",
     "llmsFullUrl": "https://svelte.dev/llms-full.txt"
@@ -1168,10 +1234,10 @@
   {
     "name": "Tavus",
     "description": "AI-powered video personalization platform",
-    "url": "/tavus",
+    "url": "/tavus-llms-txt",
     "content": "# Tavus\n\nTavus provides AI-powered solutions for creating personalized video content at scale.\n\n## Key Focus Areas\n\n- Video Personalization\n- AI Video Generation\n- Content Automation\n\n## About llms.txt Implementation\n\nTavus's llms.txt documentation details their video platform features, with comprehensive coverage in their full documentation.",
     "category": "ai-ml",
-    "slug": "tavus",
+    "slug": "tavus-llms-txt",
     "website": "https://www.tavus.io",
     "llmsUrl": "https://docs.tavus.io/llms.txt",
     "llmsFullUrl": "https://docs.tavus.io/llms-full.txt"
@@ -1179,10 +1245,10 @@
   {
     "name": "The Data Driven Marketer",
     "description": "Data-driven marketing insights and tools",
-    "url": "/data-driven-marketer",
+    "url": "/data-driven-marketer-llms-txt",
     "content": "# The Data Driven Marketer\n\nThe Data Driven Marketer provides insights and tools for data-driven marketing strategies.\n\n## Key Focus Areas\n\n- Marketing Analytics\n- Data-Driven Strategies\n- Marketing Optimization\n\n## About llms.txt Implementation\n\nThe Data Driven Marketer's llms.txt documentation outlines their marketing analytics features and capabilities.",
     "category": "data-analytics",
-    "slug": "data-driven-marketer",
+    "slug": "data-driven-marketer-llms-txt",
     "website": "https://datadrivenmarketer.me",
     "llmsUrl": "https://datadrivenmarketer.me/llms.txt",
     "llmsFullUrl": ""
@@ -1190,10 +1256,10 @@
   {
     "name": "TheirStack",
     "description": "Technology stack discovery platform",
-    "url": "/theirstack",
+    "url": "/theirstack-llms-txt",
     "content": "# TheirStack\n\nTheirStack provides tools for discovering and analyzing technology stacks used by companies.\n\n## Key Focus Areas\n\n- Stack Analysis\n- Technology Discovery\n- Market Intelligence\n\n## About llms.txt Implementation\n\nTheirStack's llms.txt documentation details their stack analysis features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "theirstack",
+    "slug": "theirstack-llms-txt",
     "website": "https://theirstack.com",
     "llmsUrl": "https://theirstack.com/docs/llms.txt",
     "llmsFullUrl": "https://theirstack.com/docs/llms-full.txt"
@@ -1201,10 +1267,10 @@
   {
     "name": "Tinybird",
     "description": "Real-time analytics and data processing platform",
-    "url": "/tinybird",
+    "url": "/tinybird-llms-txt",
     "content": "# Tinybird\n\nTinybird enables real-time analytics and data processing at scale.\n\n## Key Focus Areas\n\n- Real-time Analytics\n- Data Processing\n- Analytics Infrastructure\n\n## About llms.txt Implementation\n\nTinybird's llms.txt documentation details their analytics platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "tinybird",
+    "slug": "tinybird-llms-txt",
     "website": "https://tinybird.co",
     "llmsUrl": "https://www.tinybird.co/docs/llms.txt",
     "llmsFullUrl": "https://www.tinybird.co/docs/llms-full.txt"
@@ -1212,21 +1278,32 @@
   {
     "name": "Trackingplan",
     "description": "Analytics monitoring and validation platform",
-    "url": "/trackingplan",
+    "url": "/trackingplan-llms-txt",
     "content": "# Trackingplan\n\nTrackingplan provides solutions for monitoring and validating analytics implementations.\n\n## Key Focus Areas\n\n- Analytics Monitoring\n- Data Validation\n- Implementation Testing\n\n## About llms.txt Implementation\n\nTrackingplan's llms.txt documentation outlines their analytics monitoring platform features and capabilities.",
     "category": "data-analytics",
-    "slug": "trackingplan",
+    "slug": "trackingplan-llms-txt",
     "website": "https://www.trackingplan.com",
     "llmsUrl": "https://www.trackingplan.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
+    "name": "TrackVia",
+    "description": "The workflow management solution for modern businesses. Streamline operations and gain real-time insights.",
+    "url": "/trackvia-llms-txt",
+    "content": "# TrackVia\n\nThe workflow management solution for modern businesses. Streamline operations and gain real-time insights.",
+    "category": "infrastructure-cloud",
+    "slug": "trackvia-llms-txt",
+    "website": "https://trackvia.com",
+    "llmsUrl": "https://trackvia.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Trail of Bits",
     "description": "Security research and consulting platform",
-    "url": "/trail-of-bits",
+    "url": "/trail-of-bits-llms-txt",
     "content": "# Trail of Bits\n\nTrail of Bits provides advanced security research and consulting services.\n\n## Key Focus Areas\n\n- Security Research\n- Security Consulting\n- Cybersecurity Tools\n\n## About llms.txt Implementation\n\nTrail of Bits' llms.txt documentation details their security platform features, with comprehensive coverage in their full documentation.",
     "category": "security-identity",
-    "slug": "trail-of-bits",
+    "slug": "trail-of-bits-llms-txt",
     "website": "https://www.trailofbits.com",
     "llmsUrl": "https://www.trailofbits.com/llms.txt",
     "llmsFullUrl": "https://www.trailofbits.com/llms-full.txt"
@@ -1234,10 +1311,10 @@
   {
     "name": "Trigger.dev",
     "description": "Background job and workflow automation platform",
-    "url": "/trigger-dev",
+    "url": "/trigger-dev-llms-txt",
     "content": "# Trigger.dev\n\nTrigger.dev provides solutions for managing and automating background jobs and workflows.\n\n## Key Focus Areas\n\n- Job Automation\n- Workflow Management\n- Background Processing\n\n## About llms.txt Implementation\n\nTrigger.dev's llms.txt documentation details their automation platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "trigger-dev",
+    "slug": "trigger-dev-llms-txt",
     "website": "https://trigger.dev",
     "llmsUrl": "https://trigger.dev/docs/llms.txt",
     "llmsFullUrl": "https://trigger.dev/docs/llms-full.txt"
@@ -1245,10 +1322,10 @@
   {
     "name": "Turbo",
     "description": "Turbo is an incremental bundler and build system optimized for JavaScript and TypeScript, written in Rust.",
-    "url": "/turbo",
+    "url": "/turbo-llms-txt",
     "content": "# Turbo\n\nTurbo provides high-performance build system solutions for JavaScript and TypeScript codebases, with a focus on monorepo optimization.\n\n## Key Focus Areas\n\n- Incremental Builds\n- Task Orchestration\n- Caching Optimization\n- Monorepo Management\n\n## Core Features\n\n- Smart task scheduling and parallel execution\n- Local and remote caching capabilities\n- Context-aware dependency management\n- Zero runtime overhead\n- Support for multiple package managers\n\n## About llms.txt Implementation\n\nTurbo's llms.txt documentation outlines their build system capabilities and integration features for AI-assisted development workflows.",
     "category": "developer-tools",
-    "slug": "turbo",
+    "slug": "turbo-llms-txt",
     "website": "https://turbo.build",
     "llmsUrl": "https://turbo.build/llms.txt",
     "llmsFullUrl": ""
@@ -1256,10 +1333,10 @@
   {
     "name": "Turso",
     "description": "Edge database platform",
-    "url": "/turso",
+    "url": "/turso-llms-txt",
     "content": "# Turso\n\nTurso provides edge database solutions for modern applications with global distribution.\n\n## Key Focus Areas\n\n- Edge Database\n- Global Distribution\n- Performance Optimization\n\n## About llms.txt Implementation\n\nTurso's llms.txt documentation details their database platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "turso",
+    "slug": "turso-llms-txt",
     "website": "https://turso.tech",
     "llmsUrl": "https://docs.turso.tech/llms.txt",
     "llmsFullUrl": "https://docs.turso.tech/llms-full.txt"
@@ -1267,10 +1344,10 @@
   {
     "name": "UnifyGTM",
     "description": "Go-to-market strategy and execution platform",
-    "url": "/unifygtm",
+    "url": "/unifygtm-llms-txt",
     "content": "# UnifyGTM\n\nUnifyGTM provides solutions for streamlining and optimizing go-to-market strategies.\n\n## Key Focus Areas\n\n- GTM Strategy\n- Market Execution\n- Business Growth\n\n## About llms.txt Implementation\n\nUnifyGTM's llms.txt documentation outlines their go-to-market platform features and capabilities.",
     "category": "integration-automation",
-    "slug": "unifygtm",
+    "slug": "unifygtm-llms-txt",
     "website": "https://unifygtm.com",
     "llmsUrl": "https://docs.unifygtm.com/llms.txt",
     "llmsFullUrl": ""
@@ -1278,10 +1355,10 @@
   {
     "name": "Unkey",
     "description": "API key management and authentication platform",
-    "url": "/unkey",
+    "url": "/unkey-llms-txt",
     "content": "# Unkey\n\nUnkey provides modern solutions for API key management and authentication.\n\n## Key Focus Areas\n\n- API Key Management\n- Authentication\n- Security\n\n## About llms.txt Implementation\n\nUnkey's llms.txt documentation outlines their API key management platform features and capabilities.",
     "category": "security-identity",
-    "slug": "unkey",
+    "slug": "unkey-llms-txt",
     "website": "https://unkey.com",
     "llmsUrl": "https://www.unkey.com/docs/llms.txt",
     "llmsFullUrl": ""
@@ -1289,10 +1366,10 @@
   {
     "name": "Unstructured",
     "description": "Document processing and data extraction platform",
-    "url": "/unstructured",
+    "url": "/unstructured-llms-txt",
     "content": "# Unstructured\n\nUnstructured provides solutions for processing and extracting data from unstructured documents.\n\n## Key Focus Areas\n\n- Document Processing\n- Data Extraction\n- Content Analysis\n\n## About llms.txt Implementation\n\nUnstructured's llms.txt documentation details their document processing platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "unstructured",
+    "slug": "unstructured-llms-txt",
     "website": "https://unstructured.io",
     "llmsUrl": "https://docs.unstructured.io/llms.txt",
     "llmsFullUrl": "https://docs.unstructured.io/llms-full.txt"
@@ -1300,10 +1377,10 @@
   {
     "name": "Upstash",
     "description": "Serverless database and caching platform",
-    "url": "/upstash",
+    "url": "/upstash-llms-txt",
     "content": "# Upstash\n\nUpstash provides serverless database and caching solutions for modern applications.\n\n## Key Focus Areas\n\n- Serverless Database\n- Caching Solutions\n- Performance Optimization\n\n## About llms.txt Implementation\n\nUpstash's llms.txt documentation details their database platform features, with comprehensive coverage in their full documentation.",
     "category": "data-analytics",
-    "slug": "upstash",
+    "slug": "upstash-llms-txt",
     "website": "https://upstash.com",
     "llmsUrl": "https://upstash.com/docs/llms.txt",
     "llmsFullUrl": "https://upstash.com/docs/llms-full.txt"
@@ -1311,10 +1388,10 @@
   {
     "name": "UX Patterns for Devs",
     "description": "A collection of UX patterns for developers to build effective, accessible, and usable UI components.",
-    "url": "/ux-patterns-for-dev",
+    "url": "/ux-patterns-for-dev-llms-txt",
     "content": "# UX Patterns for Devs\n\nUX Patterns for Devs provides a comprehensive collection of user experience patterns and guidelines specifically designed for developers building modern web applications.\n\n## Key Focus Areas\n\n- UI Component Patterns\n- Accessibility Guidelines\n- User Experience Best Practices\n- Developer-Focused Implementation\n\n## About llms.txt Implementation\n\nUX Patterns for Devs' llms.txt documentation provides machine-readable access to their collection of UX patterns and implementation guidelines, with detailed examples available in their full documentation.",
     "category": "developer-tools",
-    "slug": "ux-patterns-for-dev",
+    "slug": "ux-patterns-for-dev-llms-txt",
     "website": "https://uxpatterns.dev/en",
     "llmsUrl": "https://uxpatterns.dev/en/llms.txt",
     "llmsFullUrl": "https://uxpatterns.dev/en/llms-full.txt"
@@ -1322,10 +1399,10 @@
   {
     "name": "Velt",
     "description": "Real-time collaboration platform",
-    "url": "/velt",
+    "url": "/velt-llms-txt",
     "content": "# Velt\n\nVelt provides real-time collaboration solutions for modern applications and platforms.\n\n## Key Focus Areas\n\n- Real-time Collaboration\n- Multi-user Features\n- Interactive Tools\n\n## About llms.txt Implementation\n\nVelt's llms.txt documentation details their collaboration platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "velt",
+    "slug": "velt-llms-txt",
     "website": "https://velt.dev",
     "llmsUrl": "https://docs.velt.dev/llms.txt",
     "llmsFullUrl": "https://docs.velt.dev/llms-full.txt"
@@ -1333,10 +1410,10 @@
   {
     "name": "Vercel's AI SDK",
     "description": "From the creators of Next.js, the AI SDK is a free open-source library that gives you the tools you need to build AI-powered products.",
-    "url": "/vercel-ai-sdk",
+    "url": "/vercel-ai-sdk-llms-txt",
     "content": "# Vercel's AI SDK\n\nVercel's AI SDK is a comprehensive TypeScript toolkit that enables developers to build AI-powered applications with seamless integration across multiple frameworks and AI providers.\n\n## Key Focus Areas\n\n- Unified Provider API\n- Streaming AI Responses\n- Framework-agnostic Development\n- Generative UI Components\n\n## About llms.txt Implementation\n\nVercel's AI SDK's llms.txt documentation provides detailed information about their TypeScript toolkit, including implementation guides, API references, and best practices for building AI-powered applications.",
     "category": "ai-ml",
-    "slug": "vercel-ai-sdk",
+    "slug": "vercel-ai-sdk-llms-txt",
     "website": "https://sdk.vercel.ai",
     "llmsUrl": "https://sdk.vercel.ai/llms.txt",
     "llmsFullUrl": ""
@@ -1344,10 +1421,10 @@
   {
     "name": "viem",
     "description": "Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js.",
-    "url": "/viem",
+    "url": "/viem-llms-txt",
     "content": "# viem\n\nviem is a TypeScript interface for Ethereum that provides low-level stateless primitives for interacting with Ethereum. It offers a modern, efficient, and lightweight alternative to traditional Ethereum libraries like ethers.js.\n\n## Key Focus Areas\n\n- Lightweight & Efficient (35kB bundle size)\n- Type-safe Ethereum Interactions\n- Modular & Composable Architecture\n- Clear API Design with TypeScript Support\n- Performance-optimized Implementation\n\n## About llms.txt Implementation\n\nviem's llms.txt documentation provides comprehensive information about its API capabilities, focusing on:\n\n- Public Actions for blockchain data reading\n- Wallet Actions for transaction management\n- Contract Interactions with type safety\n- WebSocket and HTTP transport layers\n- Chain-specific configurations",
     "category": "developer-tools",
-    "slug": "viem",
+    "slug": "viem-llms-txt",
     "website": "https://viem.sh/",
     "llmsUrl": "https://viem.sh/llms.txt",
     "llmsFullUrl": "https://viem.sh/llms-full.txt"
@@ -1355,10 +1432,10 @@
   {
     "name": "Vital",
     "description": "Health data integration platform",
-    "url": "/vital",
+    "url": "/vital-llms-txt",
     "content": "# Vital\n\nVital provides health data integration and management solutions for healthcare applications.\n\n## Key Focus Areas\n\n- Health Data Integration\n- Healthcare APIs\n- Medical Data Management\n\n## About llms.txt Implementation\n\nVital's llms.txt documentation details their health data platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "vital",
+    "slug": "vital-llms-txt",
     "website": "https://tryvital.io",
     "llmsUrl": "https://docs.tryvital.io/llms.txt",
     "llmsFullUrl": "https://docs.tryvital.io/llms-full.txt"
@@ -1366,10 +1443,10 @@
   {
     "name": "Vue Macros",
     "description": "Vue Macros\r\nModern Way to Writing Vue App - explore more macros and syntax sugar to Vue.",
-    "url": "/vue-macros",
+    "url": "/vue-macros-llms-txt",
     "content": "# Vue Macros\r\n\r\nVue Macros - Modern Way to Writing Vue App - Explore more macros and syntax sugar to Vue.",
     "category": "developer-tools",
-    "slug": "vue-macros",
+    "slug": "vue-macros-llms-txt",
     "website": "https://vue-macros.dev/",
     "llmsUrl": "https://vue-macros.dev/llms.txt",
     "llmsFullUrl": "https://vue-macros.dev/llms-full.txt"
@@ -1377,10 +1454,10 @@
   {
     "name": "Warp",
     "description": "Modern terminal and development environment",
-    "url": "/warp",
+    "url": "/warp-llms-txt",
     "content": "# Warp\n\nWarp provides a modern, AI-powered terminal experience for developers.\n\n## Key Focus Areas\n\n- Terminal Enhancement\n- Developer Productivity\n- AI-Assisted Development\n\n## About llms.txt Implementation\n\nWarp's llms.txt documentation outlines their terminal features and AI capabilities, with comprehensive coverage in their full documentation.",
     "category": "developer-tools",
-    "slug": "warp",
+    "slug": "warp-llms-txt",
     "website": "https://www.warp.dev",
     "llmsUrl": "https://docs.warp.dev/llms.txt",
     "llmsFullUrl": "https://docs.warp.dev/llms-full.txt"
@@ -1388,10 +1465,10 @@
   {
     "name": "Webrecorder",
     "description": "Web archiving and preservation platform",
-    "url": "/webrecorder",
+    "url": "/webrecorder-llms-txt",
     "content": "# Webrecorder\n\nWebrecorder provides tools for archiving and preserving web content and applications.\n\n## Key Focus Areas\n\n- Web Archiving\n- Content Preservation\n- Digital Preservation\n\n## About llms.txt Implementation\n\nWebrecorder's llms.txt documentation outlines their web archiving platform features and capabilities.",
     "category": "data-analytics",
-    "slug": "webrecorder",
+    "slug": "webrecorder-llms-txt",
     "website": "https://webrecorder.net",
     "llmsUrl": "https://webrecorder.net/llms.txt",
     "llmsFullUrl": ""
@@ -1399,10 +1476,10 @@
   {
     "name": "WordLift",
     "description": "AI-powered SEO platform that optimizes content visibility and search performance",
-    "url": "/wordlift",
+    "url": "/wordlift-llms-txt",
     "content": "# WordLift\n\nWordLift provides AI-powered SEO solutions to optimize content visibility and search performance.\n\n## Key Focus Areas\n\n- AI-Powered SEO\n- Content Optimization\n- Search Performance\n\n## About llms.txt Implementation\n\nWordLift's llms.txt documentation outlines their AI-powered SEO platform features and capabilities.",
     "category": "ai-ml",
-    "slug": "wordlift",
+    "slug": "wordlift-llms-txt",
     "website": "https://wordlift.io",
     "llmsUrl": "https://wordlift.io/llms.txt",
     "llmsFullUrl": ""
@@ -1410,10 +1487,10 @@
   {
     "name": "Workflow",
     "description": "Design and workflow automation platform",
-    "url": "/workflow",
+    "url": "/workflow-llms-txt",
     "content": "# Workflow\n\nWorkflow provides tools for designing and automating business processes and workflows.\n\n## Key Focus Areas\n\n- Workflow Design\n- Process Automation\n- Business Operations\n\n## About llms.txt Implementation\n\nWorkflow's llms.txt documentation outlines their workflow platform features and automation capabilities.",
     "category": "integration-automation",
-    "slug": "workflow",
+    "slug": "workflow-llms-txt",
     "website": "https://workflow.design",
     "llmsUrl": "https://docs.workflow.design/llms.txt",
     "llmsFullUrl": ""
@@ -1421,10 +1498,10 @@
   {
     "name": "ZAPHYR PHP Framework",
     "description": "ZAPHYR is a breath of fresh air in the PHP ecosystem, providing a flexible, modular, and lightweight open source framework for web development.",
-    "url": "/zaphyr-php-framework",
+    "url": "/zaphyr-php-framework-llms-txt",
     "content": "# ZAPHYR PHP Framework\n\nZAPHYR is a breath of fresh air in the PHP ecosystem, providing a flexible, modular, and lightweight open source framework for web development.",
     "category": "developer-tools",
-    "slug": "zaphyr-php-framework",
+    "slug": "zaphyr-php-framework-llms-txt",
     "website": "https://zaphyr.org",
     "llmsUrl": "https://zaphyr.org/llms.txt",
     "llmsFullUrl": ""
@@ -1432,10 +1509,10 @@
   {
     "name": "Zapier",
     "description": "Workflow automation and integration platform",
-    "url": "/zapier",
+    "url": "/zapier-llms-txt",
     "content": "# Zapier\n\nZapier provides automation tools for connecting apps and automating workflows.\n\n## Key Focus Areas\n\n- App Integration\n- Workflow Automation\n- Business Productivity\n\n## About llms.txt Implementation\n\nZapier's llms.txt documentation details their automation platform features, with comprehensive coverage in their full documentation.",
     "category": "integration-automation",
-    "slug": "zapier",
+    "slug": "zapier-llms-txt",
     "website": "https://zapier.com",
     "llmsUrl": "https://docs.zapier.com/llms.txt",
     "llmsFullUrl": "https://docs.zapier.com/llms-full.txt"
