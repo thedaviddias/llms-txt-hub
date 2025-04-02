@@ -33,6 +33,7 @@ export function LLMButton({ href, type, size = 'md', className }: LLMButtonProps
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      data-testid={`llm-${type}-button`}
       className={cn(
         'inline-flex items-center rounded-md bg-muted hover:bg-muted/80 transition-colors z-20 relative',
         sizeClasses[size],
