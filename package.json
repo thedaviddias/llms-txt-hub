@@ -54,6 +54,7 @@
     "cross-env": "^7.0.3",
     "glob": "^11.0.1",
     "gray-matter": "^4.0.3",
+    "husky": "^9.1.7",
     "js-yaml": "^4.1.0",
     "lefthook": "^1.11.6",
     "turbo": "^2.4.4",
