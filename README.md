@@ -49,10 +49,20 @@ Explore these tools to help you work with llms.txt files:
 
 A curated list of LLM-powered tools and resources with llms.txt implementation.
 
+### 🤖 ai ml
+
+- ![Giselle favicon](https://www.google.com/s2/favicons?domain=giselles.ai&size=128) **[Giselle](https://giselles.ai/)** - Design AI apps with Giselle's AI App Builder. Simplify tasks and create smart assistants powered by LLM technology. <sub>[llms.txt](https://docs.giselles.ai/llms.txt) • [llms-full.txt](https://docs.giselles.ai/llms-full.txt)</sub>
+
 ### 💻 developer tools
 
 - ![Docker Docs favicon](https://www.google.com/s2/favicons?domain=docs.docker.com&size=128) **[Docker Docs](https://docs.docker.com)** - Official Docker library of resources, manuals, and guides to help you containerize applications. <sub>[llms.txt](https://docs.docker.com/llms.txt)</sub>
+- ![Expo Documentation favicon](https://www.google.com/s2/favicons?domain=docs.expo.dev&size=128) **[Expo Documentation](https://docs.expo.dev)** - Build one JavaScript/TypeScript project that runs natively on all your users' devices. <sub>[llms.txt](https://docs.expo.dev/llms.txt) • [llms-full.txt](https://docs.expo.dev/llms-full.txt)</sub>
 - ![Medusa favicon](https://www.google.com/s2/favicons?domain=medusajs.com&size=128) **[Medusa](https://medusajs.com/)** - A digital commerce platform with a built-in framework for customizations. <sub>[llms.txt](https://docs.medusajs.com/llms.txt) • [llms-full.txt](https://docs.medusajs.com/llms-full.txt)</sub>
+- ![Pydantic favicon](https://www.google.com/s2/favicons?domain=docs.pydantic.dev&size=128) **[Pydantic](https://docs.pydantic.dev/latest/)** - Pydantic is the most widely used data validation library for Python. <sub>[llms.txt](https://docs.pydantic.dev/latest/llms.txt) • [llms-full.txt](https://docs.pydantic.dev/latest/llms-full.txt)</sub>
+- ![Rsbuild favicon](https://www.google.com/s2/favicons?domain=rsbuild.dev&size=128) **[Rsbuild](https://rsbuild.dev)** - Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience. <sub>[llms.txt](https://rsbuild.dev/llms.txt) • [llms-full.txt](https://rsbuild.dev/llms-full.txt)</sub>
+- ![Rslib favicon](https://www.google.com/s2/favicons?domain=lib.rsbuild.dev&size=128) **[Rslib](https://lib.rsbuild.dev)** - Rslib is a library development tool that leverages the well-designed configurations and plugins of Rsbuild. <sub>[llms.txt](https://lib.rsbuild.dev/llms.txt) • [llms-full.txt](https://lib.rsbuild.dev/llms-full.txt)</sub>
+- ![Rspack favicon](https://www.google.com/s2/favicons?domain=rspack.dev&size=128) **[Rspack](https://rspack.dev)** - Rspack is a high performance JavaScript bundler written in Rust. It offers strong compatibility with the webpack ecosystem, and lightning fast build speeds. <sub>[llms.txt](https://rspack.dev/llms.txt) • [llms-full.txt](https://rspack.dev/llms-full.txt)</sub>
+- ![Tamagui favicon](https://www.google.com/s2/favicons?domain=tamagui.dev&size=128) **[Tamagui](https://tamagui.dev)** - React style library and UI kit that unifies React Native and React web. <sub>[llms.txt](https://tamagui.dev/llms.txt)</sub>
 
 <!-- LLMS-LIST:END -->
 
