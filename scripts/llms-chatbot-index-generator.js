@@ -7,7 +7,7 @@ import axios from 'axios'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const WEBSITES_DIR = path.join(path.dirname(__dirname), 'content/websites')
+const WEBSITES_DIR = path.join(path.dirname(__dirname), 'packages/content/websites/data')
 const CACHE_PATH = path.join(path.dirname(__dirname), 'apps/chatbot/public/llms-cache')
 const METADATA_PATH = path.join(path.dirname(__dirname), 'apps/chatbot/public/llms-metadata.json')
 const PROVIDERS_LIST_PATH = path.join(

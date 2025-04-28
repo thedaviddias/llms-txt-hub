@@ -3,7 +3,7 @@ const path = require('node:path')
 const glob = require('glob')
 const matter = require('gray-matter')
 
-const possibleContentDirs = ['content/websites', 'websites']
+const possibleContentDirs = ['packages/content/data/websites', 'content/websites', 'websites']
 
 const outputPath = 'apps/web/public/search/search-index.json'
 

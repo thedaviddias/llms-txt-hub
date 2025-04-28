@@ -33,7 +33,7 @@ function getFaviconUrl(domain: string): string {
 /**
  * Generates a JSON file containing website information from MDX files
  *
- * This function reads all MDX files from the content/websites directory,
+ * This function reads all MDX files from the packages/content/data/websites directory,
  * extracts their frontmatter, and generates a JSON file with website information
  * including favicons.
  *
@@ -45,7 +45,7 @@ function getFaviconUrl(domain: string): string {
  * ```
  */
 function generateWebsitesJson(): void {
-  const websitesDir = join(process.cwd(), 'content', 'websites')
+  const websitesDir = join(process.cwd(), 'packages', 'content', 'data', 'websites')
   const outputDir = join(process.cwd(), 'data')
   const outputFile = join(outputDir, 'websites.json')
 

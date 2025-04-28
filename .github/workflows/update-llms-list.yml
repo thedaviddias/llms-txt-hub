@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "content/websites/**"
+      - "packages/content/websites/data/**"
 
 jobs:
   update-readme:
