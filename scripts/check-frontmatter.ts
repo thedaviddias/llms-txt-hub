@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import yaml from 'js-yaml'
 import type { WebsiteMetadata } from '../apps/web/lib/mdx'
 
-const websitesDirectory = path.join(process.cwd(), 'content/websites')
+const websitesDirectory = path.join(process.cwd(), 'packages/content/websites/data')
 
 async function checkFrontmatter(filePath?: string) {
   let hasErrors = false

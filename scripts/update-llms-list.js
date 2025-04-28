@@ -6,7 +6,7 @@ import matter from 'gray-matter'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const LLMS_DIR = path.join(path.dirname(__dirname), 'content/websites')
+const LLMS_DIR = path.join(path.dirname(__dirname), 'packages/content/websites/data')
 const README_PATH = path.join(path.dirname(__dirname), 'README.md')
 const PROD_URL = 'https://llmstxthub.com'
 
