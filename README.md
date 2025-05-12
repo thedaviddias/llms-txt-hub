@@ -37,12 +37,13 @@ Our list is organized into the following categories:
 
 Explore these tools to help you work with llms.txt files:
 
-| Tool                    | Description                                                                      | Link                                                                                                          |
-| ----------------------- | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| 🔍 **LLMs.txt Checker**  | Chrome extension to check if websites implement llms.txt and llms-full.txt files | [Chrome Web Store](https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej) |
-| 💻 **VS Code Extension** | Search and explore llms.txt files directly in VS Code                            | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt)       |
-| 🧠 **MCP Explorer**      | Explore and analyze llms.txt files using Model Context Protocol                  | [GitHub](https://github.com/thedaviddias/mcp-llms-txt-explorer)                                               |
-| ⚡ **Raycast Extension** | Search and explore llms.txt files directly in Raycast                            | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
+| Tool                     | Description                                                                      | Link                                                                                                          |
+| ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| 🔍 **LLMs.txt Checker**   | Chrome extension to check if websites implement llms.txt and llms-full.txt files | [Chrome Web Store](https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej) |
+| 💻 **VS Code Extension**  | Search and explore llms.txt files directly in VS Code                            | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt)       |
+| 🧠 **MCP Explorer**       | Explore and analyze llms.txt files using Model Context Protocol                  | [GitHub](https://github.com/thedaviddias/mcp-llms-txt-explorer)                                               |
+| ⚡ **Raycast Extension**  | Search and explore llms.txt files directly in Raycast                            | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
+| ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI, a pure frontend app        | [LLMs.txt Generator](https://llmstxtgenerator.co/)                                                            |
 
 <!-- LLMS-LIST:START - Do not remove or modify this section -->
 ## LLM Tools and Resources
