@@ -160,6 +160,8 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 Modern Way to Writing Vue App - explore more macros and syntax sugar to Vue. <sub>[llms.txt](https://vue-macros.dev/llms.txt) • [llms-full.txt](https://vue-macros.dev/llms-full.txt)</sub>
 - ![Warp favicon](https://www.google.com/s2/favicons?domain=www.warp.dev&size=128) **[Warp](https://www.warp.dev)** - Modern terminal and development environment <sub>[llms.txt](https://docs.warp.dev/llms.txt) • [llms-full.txt](https://docs.warp.dev/llms-full.txt)</sub>
 - ![ZAPHYR PHP Framework favicon](https://www.google.com/s2/favicons?domain=zaphyr.org&size=128) **[ZAPHYR PHP Framework](https://zaphyr.org)** - ZAPHYR is a breath of fresh air in the PHP ecosystem, providing a flexible, modular, and lightweight open source framework for web development. <sub>[llms.txt](https://zaphyr.org/llms.txt)</sub>
+- ![notion favicon](https://www.google.com/s2/favicons?domain=notion.so&size=128) **[Notion](https://notion.so)** - Notion that connect workspace for wiki, docs &amp; projects <sub>[llms.txt](https://notion,so/llms.txt)</sub>
+
 
 ### ☁️ infrastructure cloud
 
