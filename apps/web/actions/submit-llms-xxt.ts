@@ -170,7 +170,7 @@ ${description}
 
       // Create a new branch in the fork
       const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
-      const filePath = `content/websites/${name.toLowerCase().replace(/\s+/g, '-')}-llms-txt.mdx`
+      const filePath = `packages/content/websites/data/${name.toLowerCase().replace(/\s+/g, '-')}-llms-txt.mdx`
 
       // Get the reference from the original repo
       const mainRef = await octokit.git
