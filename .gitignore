@@ -46,3 +46,6 @@ lychee-out.md
 .lycheecache
 .env*.local
 .content-collections
+
+# Jetbrains
+.idea
