@@ -1,18 +1,20 @@
 import type { WebsiteMetadata } from './content-loader'
 
-export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 4): WebsiteMetadata[] {
+export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 8): WebsiteMetadata[] {
   // Separate tools/platforms from personal sites
+  // Treat projects without contentType as tools (fallback for legacy entries)
   const toolProjects = projects.filter(
     project =>
       project.contentType === 'tool' ||
       project.contentType === 'platform' ||
-      project.contentType === 'library'
+      project.contentType === 'library' ||
+      !project.contentType // fallback for entries without contentType
   )
   const personalProjects = projects.filter(project => project.contentType === 'personal')
 
-  // Prioritize tools - show mostly tools with maybe 1 personal site
-  const toolLimit = Math.min(limit - 1, toolProjects.length)
-  const personalLimit = Math.min(1, personalProjects.length)
+  // Show 6 tools since they'll be displayed in their own section
+  const toolLimit = Math.min(6, toolProjects.length)
+  const personalLimit = Math.min(2, personalProjects.length)
 
   const selectedTools = getRandomItems(toolProjects, toolLimit)
   const selectedPersonal = getRandomItems(personalProjects, personalLimit)

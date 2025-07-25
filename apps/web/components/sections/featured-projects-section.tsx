@@ -10,11 +10,13 @@ interface FeaturedProjectsSectionProps {
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
   // Separate tools from personal sites for better visual hierarchy
+  // Treat projects without contentType as tools (fallback for legacy entries)
   const toolProjects = projects.filter(
     project =>
       project.contentType === 'tool' ||
       project.contentType === 'platform' ||
-      project.contentType === 'library'
+      project.contentType === 'library' ||
+      !project.contentType // fallback for entries without contentType
   )
   const personalProjects = projects.filter(project => project.contentType === 'personal')
 
