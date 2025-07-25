@@ -1,18 +1,18 @@
 'use client'
 
-import { EmptyState } from '@/components/empty-state'
-import { ProjectList } from '@/components/project-list'
-import { categories } from '@/lib/categories'
-import type { WebsiteMetadata } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
 import {} from '@thedaviddias/design-system/select'
-import { Grid, List, Clock, SortAsc } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { LLMGrid } from './llm/llm-grid'
-import { useWebsiteFilters } from '@/hooks/use-website-filters'
 import { ToggleGroup, ToggleGroupItem } from '@thedaviddias/design-system/toggle-group'
+import { Clock, Grid, List, SortAsc } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { EmptyState } from '@/components/empty-state'
+import { ProjectList } from '@/components/project-list'
+import { useWebsiteFilters } from '@/hooks/use-website-filters'
+import { categories } from '@/lib/categories'
+import type { WebsiteMetadata } from '@/lib/content-loader'
+import { getRoute } from '@/lib/routes'
+import { LLMGrid } from './llm/llm-grid'
 
 interface ClientProjectsListProps {
   initialWebsites: WebsiteMetadata[]
@@ -54,7 +54,14 @@ function isValidWebsite(website: any): website is WebsiteMetadata {
 export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [websites, setWebsites] = useState(initialWebsites)
-  const { categoryFilter, sortBy, setCategoryFilter, setSortBy } = useWebsiteFilters()
+  const {
+    categoryFilter,
+    sortBy,
+    contentTypeFilter,
+    setCategoryFilter,
+    setSortBy,
+    setContentTypeFilter
+  } = useWebsiteFilters()
 
   // Get current category name for heading
   const currentCategoryName =
@@ -65,6 +72,18 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
   // Update filtered and sorted websites when filters or initial websites change
   useEffect(() => {
     let filteredWebsites = [...initialWebsites]
+
+    // Filter by content type
+    if (contentTypeFilter === 'tools') {
+      filteredWebsites = filteredWebsites.filter(
+        website =>
+          website.contentType === 'tool' ||
+          website.contentType === 'platform' ||
+          website.contentType === 'library'
+      )
+    } else if (contentTypeFilter === 'personal') {
+      filteredWebsites = filteredWebsites.filter(website => website.contentType === 'personal')
+    }
 
     // Filter by category if selected
     if (categoryFilter !== 'all') {
@@ -83,13 +102,40 @@ export function ClientProjectsList({ initialWebsites }: ClientProjectsListProps)
     // Validate websites after all filtering and sorting
     const validWebsites = filteredWebsites.filter(isValidWebsite)
     setWebsites(validWebsites)
-  }, [initialWebsites, categoryFilter, sortBy])
+  }, [initialWebsites, categoryFilter, sortBy, contentTypeFilter])
 
   return (
     <div>
       <h1 className="text-4xl font-bold tracking-tight mb-4">{currentCategoryName}</h1>
 
       <div className="mb-8">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <Button
+            variant={contentTypeFilter === 'all' ? 'default' : 'secondary'}
+            size="sm"
+            onClick={() => setContentTypeFilter('all')}
+            className="rounded-full hover:cursor-pointer"
+          >
+            All Types
+          </Button>
+          <Button
+            variant={contentTypeFilter === 'tools' ? 'default' : 'secondary'}
+            size="sm"
+            onClick={() => setContentTypeFilter('tools')}
+            className="rounded-full hover:cursor-pointer"
+          >
+            Tools & Platforms
+          </Button>
+          <Button
+            variant={contentTypeFilter === 'personal' ? 'default' : 'secondary'}
+            size="sm"
+            onClick={() => setContentTypeFilter('personal')}
+            className="rounded-full hover:cursor-pointer"
+          >
+            Personal Sites
+          </Button>
+        </div>
+
         <div className="flex flex-wrap gap-2">
           <Button
             variant={categoryFilter === 'all' ? 'default' : 'secondary'}

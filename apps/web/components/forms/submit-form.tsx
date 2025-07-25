@@ -1,10 +1,7 @@
 'use client'
 
-import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { categories } from '@/lib/categories'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@thedaviddias/design-system/button'
-import {} from '@thedaviddias/design-system/form'
 import {
   Form,
   FormControl,
@@ -27,6 +24,8 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
+import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
+import { categories } from '@/lib/categories'
 
 const step1Schema = z.object({
   website: z
@@ -97,6 +96,9 @@ const step2Schema = z.object({
     .optional(),
   category: z.enum(validCategorySlugs, {
     errorMap: () => ({ message: 'Please select a valid category' })
+  }),
+  contentType: z.enum(['tool', 'platform', 'personal', 'library'], {
+    errorMap: () => ({ message: 'Please select a valid content type' })
   })
 })
 
@@ -123,7 +125,8 @@ export function SubmitForm() {
       website: '',
       llmsUrl: '',
       llmsFullUrl: null,
-      category: ''
+      category: '',
+      contentType: 'tool'
     }
   })
 
@@ -159,7 +162,8 @@ export function SubmitForm() {
         website: data.website,
         llmsUrl: result.metadata.llmsUrl || '',
         llmsFullUrl: result.metadata.llmsFullUrl || null,
-        category: result.metadata.category || ''
+        category: result.metadata.category || '',
+        contentType: result.metadata.contentType || 'tool'
       })
 
       setStep(2)
@@ -359,6 +363,30 @@ export function SubmitForm() {
                           {category.name}
                         </SelectItem>
                       ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-500 dark:text-red-400" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={step2Form.control}
+              name="contentType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Content Type</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a content type" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="tool">Tool</SelectItem>
+                      <SelectItem value="platform">Platform</SelectItem>
+                      <SelectItem value="personal">Personal</SelectItem>
+                      <SelectItem value="library">Library</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-red-500 dark:text-red-400" />

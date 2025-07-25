@@ -1,8 +1,8 @@
 import {
-  allWebsites as collectionWebsites,
   allGuides as collectionGuides,
+  allLegals as collectionLegals,
   allResources as collectionResources,
-  allLegals as collectionLegals
+  allWebsites as collectionWebsites
 } from 'content-collections'
 
 /**
@@ -30,6 +30,8 @@ export interface WebsiteMetadata {
   category: string
   publishedAt: string
   isUnofficial?: boolean
+  contentType?: 'tool' | 'platform' | 'personal' | 'library'
+  priority?: 'high' | 'medium' | 'low'
   content?: string
   relatedWebsites?: WebsiteMetadata[]
   previousWebsite?: WebsiteMetadata | null

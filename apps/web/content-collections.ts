@@ -1,4 +1,5 @@
 import { defineCollection, defineConfig } from '@content-collections/core'
+
 // Paths will resolve from the project root
 const websitesPath = '../../packages/content/data/websites'
 const guidesPath = '../../packages/content/data/guides'
@@ -27,7 +28,9 @@ const websites = defineCollection({
       .optional(),
     category: z.string(),
     publishedAt: z.string(),
-    isUnofficial: z.boolean().optional().default(false)
+    isUnofficial: z.boolean().optional().default(false),
+    contentType: z.enum(['tool', 'platform', 'personal', 'library']).optional().default('tool'),
+    priority: z.enum(['high', 'medium', 'low']).optional().default('medium')
   }),
   transform: document => ({
     ...document,
