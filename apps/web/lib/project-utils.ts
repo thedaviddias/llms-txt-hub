@@ -1,6 +1,6 @@
 import type { WebsiteMetadata } from './content-loader'
 
-export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 8): WebsiteMetadata[] {
+export function getFeaturedProjects(projects: WebsiteMetadata[], _limit = 8): WebsiteMetadata[] {
   // Separate tools/platforms from personal sites
   // Treat projects without contentType as tools (fallback for legacy entries)
   const toolProjects = projects.filter(
