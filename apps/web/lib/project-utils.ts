@@ -1,32 +1,7 @@
 import type { WebsiteMetadata } from './content-loader'
 
-export function getFeaturedProjects(projects: WebsiteMetadata[], _limit = 8): WebsiteMetadata[] {
+export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 8): WebsiteMetadata[] {
   // Separate tools/platforms from personal sites
-  // Treat projects without contentType as tools (fallback for legacy entries)
-  const toolProjects = projects.filter(
-    project =>
-      project.contentType === 'tool' ||
-      project.contentType === 'platform' ||
-      project.contentType === 'library' ||
-      !project.contentType // fallback for entries without contentType
-  )
-  const personalProjects = projects.filter(project => project.contentType === 'personal')
-
-  // Show 6 tools since they'll be displayed in their own section
-  const toolLimit = Math.min(6, toolProjects.length)
-  const personalLimit = Math.min(2, personalProjects.length)
-
-  const selectedTools = getRandomItems(toolProjects, toolLimit)
-  const selectedPersonal = getRandomItems(personalProjects, personalLimit)
-
-  return [...selectedTools, ...selectedPersonal]
-}
-
-export function getRecentlyUpdatedProjects(
-  projects: WebsiteMetadata[],
-  limit = 4
-): WebsiteMetadata[] {
-  // Prioritize tools in recently updated as well
   const toolProjects = projects.filter(
     project =>
       project.contentType === 'tool' ||
@@ -35,29 +10,26 @@ export function getRecentlyUpdatedProjects(
   )
   const personalProjects = projects.filter(project => project.contentType === 'personal')
 
-  // Sort both by date
-  const sortedTools = toolProjects.sort((a, b) => {
-    const dateA = new Date(a.publishedAt).getTime()
-    const dateB = new Date(b.publishedAt).getTime()
-    return dateB - dateA
-  })
+  // Show 4 tools and 4 personal sites
+  const toolLimit = Math.min(4, toolProjects.length)
+  const personalLimit = Math.min(4, personalProjects.length)
 
-  const sortedPersonal = personalProjects.sort((a, b) => {
-    const dateA = new Date(a.publishedAt).getTime()
-    const dateB = new Date(b.publishedAt).getTime()
-    return dateB - dateA
-  })
+  const selectedTools = getRandomItems(toolProjects, toolLimit)
+  const selectedPersonal = getRandomItems(personalProjects, personalLimit)
 
-  // Return mostly tools with maybe 1 personal site
-  const toolLimit = Math.min(limit - 1, sortedTools.length)
-  const personalLimit = Math.min(1, sortedPersonal.length)
-
-  return [...sortedTools.slice(0, toolLimit), ...sortedPersonal.slice(0, personalLimit)]
+  // Combine and return
+  return [...selectedTools, ...selectedPersonal]
 }
 
-/**
- * Helper function to get random items from an array
- */
+export function getRecentlyUpdatedProjects(
+  projects: WebsiteMetadata[],
+  limit = 5
+): WebsiteMetadata[] {
+  return projects
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .slice(0, limit)
+}
+
 function getRandomItems<T>(array: T[], count: number): T[] {
   const shuffled = [...array].sort(() => 0.5 - Math.random())
   return shuffled.slice(0, count)
