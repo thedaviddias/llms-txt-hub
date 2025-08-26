@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/content/websites/data/**"
+      - "packages/content/data/websites/**"
 
 jobs:
   update-websites-json:

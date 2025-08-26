@@ -311,7 +311,7 @@ pnpm generate:website
 #### Option 3: Manual Pull Request
 
 1. Fork this repository
-2. Create a new MDX file in the /packages/content/websites/data directory
+2. Create a new MDX file in the /packages/content/data/websites directory
 3. Ensure your entry includes:
    - Project name, description, website URL, llms.txt URL, and category
 4. Submit a pull request

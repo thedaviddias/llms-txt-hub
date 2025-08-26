@@ -149,7 +149,7 @@ ${description}
 
       // Create or get fork
       console.log('Creating fork...')
-      const fork = await octokit.repos
+      const _fork = await octokit.repos
         .createFork({
           owner,
           repo
@@ -177,7 +177,7 @@ ${description}
             owner: githubUsername,
             repo
           })
-        } catch (error) {
+        } catch (_error) {
           await new Promise(resolve => setTimeout(resolve, delay))
           await waitForFork(retries - 1, delay)
         }
@@ -194,7 +194,7 @@ ${description}
         .replace(/^-|-$/g, '') // Remove leading/trailing dashes
 
       const branchName = `submit-${sanitizedName}-${Date.now()}`
-      const filePath = `packages/content/websites/data/${sanitizedName}-llms-txt.mdx`
+      const filePath = `packages/content/data/websites/${sanitizedName}-llms-txt.mdx`
 
       // Get the reference from the original repo
       const mainRef = await octokit.git
