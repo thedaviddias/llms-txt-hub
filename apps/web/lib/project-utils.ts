@@ -1,23 +1,30 @@
 import type { WebsiteMetadata } from './content-loader'
 
+// Primary categories (tools and platforms only)
+const PRIMARY_CATEGORIES = [
+  'ai-ml',
+  'developer-tools',
+  'data-analytics',
+  'integration-automation',
+  'infrastructure-cloud',
+  'security-identity'
+]
+
 export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 8): WebsiteMetadata[] {
-  // Separate tools/platforms from personal sites
-  const toolProjects = projects.filter(
-    project =>
-      project.contentType === 'tool' ||
-      project.contentType === 'platform' ||
-      project.contentType === 'library'
+  // Filter for primary category tools and personal sites separately
+  const primaryCategoryProjects = projects.filter(project =>
+    PRIMARY_CATEGORIES.includes(project.category)
   )
   const personalProjects = projects.filter(project => project.contentType === 'personal')
 
-  // Show 4 tools and 4 personal sites
-  const toolLimit = Math.min(4, toolProjects.length)
+  // Show 4 tools from primary categories and 4 personal sites
+  const toolLimit = Math.min(4, primaryCategoryProjects.length)
   const personalLimit = Math.min(4, personalProjects.length)
 
-  const selectedTools = getRandomItems(toolProjects, toolLimit)
+  const selectedTools = getRandomItems(primaryCategoryProjects, toolLimit)
   const selectedPersonal = getRandomItems(personalProjects, personalLimit)
 
-  // Combine and return
+  // Combine and return both for the component to handle separately
   return [...selectedTools, ...selectedPersonal]
 }
 

@@ -9,16 +9,25 @@ interface FeaturedProjectsSectionProps {
 }
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
-  // Separate tools from personal sites for better visual hierarchy
-  // Treat projects without contentType as tools (fallback for legacy entries)
-  const toolProjects = projects.filter(
-    project =>
-      project.contentType === 'tool' ||
-      project.contentType === 'platform' ||
-      project.contentType === 'library' ||
-      !project.contentType // fallback for entries without contentType
-  )
-  const personalProjects = projects.filter(project => project.contentType === 'personal')
+  // Separate primary category tools from personal sites
+  const toolProjects = projects
+    .filter(project => {
+      // Primary categories
+      const primaryCategories = [
+        'ai-ml',
+        'developer-tools',
+        'data-analytics',
+        'integration-automation',
+        'infrastructure-cloud',
+        'security-identity'
+      ]
+      return primaryCategories.includes(project.category)
+    })
+    .slice(0, 4) // Ensure only 4 tools are shown
+
+  const personalProjects = projects
+    .filter(project => project.contentType === 'personal')
+    .slice(0, 4) // Ensure only 4 personal sites are shown
 
   return (
     <section className="space-y-6">
@@ -29,7 +38,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
         </Link>
       </div>
 
-      {/* Show tools prominently */}
+      {/* Show only 4 tools from primary categories in one row */}
       {toolProjects.length > 0 && <LLMGrid items={toolProjects} />}
 
       {/* Show personal sites in a smaller, secondary section */}
@@ -44,7 +53,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
               View all personal sites <ArrowRight className="ml-1 size-3" />
             </Link>
           </div>
-          <LLMGrid items={personalProjects.slice(0, 2)} />
+          <LLMGrid items={personalProjects} />
         </div>
       )}
     </section>
