@@ -1,5 +1,16 @@
 [
   {
+    "name": "02AI.DEV",
+    "description": "Affordable AI planning, setup, maintenance, and development for solopreneurs.",
+    "url": "/02ai.dev-llms-txt",
+    "content": "# 02AI.DEV\n\nAffordable AI planning, setup, maintenance, and development for solopreneurs.",
+    "category": "integration-automation",
+    "slug": "02ai.dev-llms-txt",
+    "website": "https://02ai.dev",
+    "llmsUrl": "https://02ai.dev/llms.txt",
+    "llmsFullUrl": "https://02ai.dev/llms-full.txt"
+  },
+  {
     "name": "Abogado online y asesoría legal",
     "description": "¿Necesitas un abogado online de confianza al instante? En Abogado Exprés te ofrecemos asesoramiento legal rápido y online. Resolvemos tus dudas legales.",
     "url": "/abogado-online-y-asesoría-legal-llms-txt",
@@ -473,6 +484,17 @@
     "llmsFullUrl": "https://chakra-ui.com/llms-full.txt"
   },
   {
+    "name": "Checkmate Live",
+    "description": "Checkmate Live is a next-gen speed chess platform using Sixth-i AI. This llms.txt defines how LLMs and agents may interact with our data and fair play systems.",
+    "url": "/checkmate-live-llms-txt",
+    "content": "# Checkmate Live\n\nCheckmate Live is a next-gen speed chess platform using Sixth-i AI. This llms.txt defines how LLMs and agents may interact with our data and fair play systems.",
+    "category": "ai-ml",
+    "slug": "checkmate-live-llms-txt",
+    "website": "https://www.checkmate.live/",
+    "llmsUrl": "https://raw.githubusercontent.com/Checkmate-Live/checkmate-ai-integrity/main/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "CircleCI",
     "description": "CircleCI is a cloud-native CI/CD platform that helps teams build, test, and ship software quickly and at scale.",
     "url": "/circleci-llms-txt",
@@ -649,6 +671,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Corso SEO ONLINE CERTIFICATO",
+    "description": "Corso SEO ONLINE AVANZATO, CERTIFICATO E PRATICO sempre aggiornato, da guardare dove e quando vuoi e con relatori di massimo livello.",
+    "url": "/corso-seo-online-certificato-llms-txt",
+    "content": "# Corso SEO ONLINE CERTIFICATO\n\nCorso SEO ONLINE AVANZATO, CERTIFICATO E PRATICO sempre aggiornato, da guardare dove e quando vuoi e con relatori di massimo livello.",
+    "category": "data-analytics",
+    "slug": "corso-seo-online-certificato-llms-txt",
+    "website": "https://www.deepseo.it/",
+    "llmsUrl": "https://www.deepseo.it/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Count",
     "description": "Count is a canvas-based BI tool that helps data teams grow their business, not just build dashboards.",
     "url": "/count-llms-txt",
@@ -734,6 +767,17 @@
     "slug": "customer-service-ai-platform-llms-txt",
     "website": "https://www.gladly.ai/",
     "llmsUrl": "https://www.gladly.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Cyber Security News",
+    "description": "Stay ahead with the latest cyber security news from around the world. Get real-time threat intelligence, expert insights.",
+    "url": "/cyber-security-news-llms-txt",
+    "content": "# Cyber Security News\n\nStay ahead with the latest cyber security news from around the world. Get real-time threat intelligence, expert insights.",
+    "category": "security-identity",
+    "slug": "cyber-security-news-llms-txt",
+    "website": "https://cybernoz.com",
+    "llmsUrl": "https://cybernoz.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1232,6 +1276,17 @@
     "llmsFullUrl": "https://iteachipower.in/llms-full.txt"
   },
   {
+    "name": "Free AI Image Generator & Maker",
+    "description": "free, no-login, multilingual AI image generation platform. It offers high-quality image creation tools — suitable for personal and commercial use.",
+    "url": "/free-ai-image-generator-&-maker-llms-txt",
+    "content": "# Free AI Image Generator & Maker\n\nfree, no-login, multilingual AI image generation platform. It offers high-quality image creation tools — suitable for personal and commercial use.",
+    "category": "ai-ml",
+    "slug": "free-ai-image-generator-&-maker-llms-txt",
+    "website": "https://muryou-aigazou.com/",
+    "llmsUrl": "https://muryou-aigazou.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Frigade",
     "description": "User onboarding and product adoption platform",
     "url": "/frigade-llms-txt",
@@ -1450,6 +1505,17 @@
     "website": "https://heyflow.com/",
     "llmsUrl": "https://heyflow.com/llms.txt",
     "llmsFullUrl": "https://heyflow.com/llms-full.txt"
+  },
+  {
+    "name": "Home",
+    "description": "Mondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
+    "url": "/home",
+    "content": "# Home\n\nMondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
+    "category": "integration-automation",
+    "slug": "home",
+    "website": "https://mondorobot.com",
+    "llmsUrl": "https://mondorobot.com/llms.txt",
+    "llmsFullUrl": "https://mondorobot.com/llms-full.txt"
   },
   {
     "name": "HOME",
@@ -1903,6 +1969,17 @@
     "llmsFullUrl": "https://lynxjs.org/llms-full.txt"
   },
   {
+    "name": "Mailmodo",
+    "description": "Mailmodo is an AI email marketing platform that offers a complete engagement suite comprising automations, a modern AI-powered email editor, and interactive emails that boost conversions and engagement.",
+    "url": "/mailmodo-llms-txt",
+    "content": "",
+    "category": "integration-automation",
+    "slug": "mailmodo-llms-txt",
+    "website": "https://www.mailmodo.com/",
+    "llmsUrl": "https://www.mailmodo.com/llms.txt",
+    "llmsFullUrl": "https://www.mailmodo.com/llms-full.txt"
+  },
+  {
     "name": "Mangopay",
     "description": "Payment infrastructure and marketplace solutions",
     "url": "/mangopay-llms-txt",
@@ -2222,6 +2299,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "OmniMind Docs | OSS MCP Client",
+    "description": "OmniMind is an open‑source Python library that integrates the MCP with AI agents.",
+    "url": "/omnimind-docs-|-oss-mcp-client-llms-txt",
+    "content": "# OmniMind Docs | OSS MCP Client\n\nOmniMind is an open‑source Python library that integrates the MCP with AI agents.",
+    "category": "developer-tools",
+    "slug": "omnimind-docs-|-oss-mcp-client-llms-txt",
+    "website": "https://techiral.mintlify.app/",
+    "llmsUrl": "https://techiral.mintlify.app/llms.txt",
+    "llmsFullUrl": "https://techiral.mintlify.app/llms-full.txt"
+  },
+  {
     "name": "OpenPhone",
     "description": "Modern business phone system and communication platform",
     "url": "/openphone-llms-txt",
@@ -2299,6 +2387,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Pentesting & Red Teaming Company",
+    "description": "AppSecure offers offensive security services, VAPT, continuous pentesting, red teaming services by Fortune 1000 bug bounty experts. Identify vulnerabilities.",
+    "url": "/pentesting-&-red-teaming-company-llms-txt",
+    "content": "# Pentesting & Red Teaming Company\n\nAppSecure offers offensive security services, VAPT, continuous pentesting, red teaming services by Fortune 1000 bug bounty experts. Identify vulnerabilities.",
+    "category": "security-identity",
+    "slug": "pentesting-&-red-teaming-company-llms-txt",
+    "website": "https://www.appsecure.security/",
+    "llmsUrl": "https://www.appsecure.security/llms.txt",
+    "llmsFullUrl": "https://www.appsecure.security/llms-full.txt"
+  },
+  {
     "name": "Perplexity",
     "description": "AI-powered search and discovery platform",
     "url": "/perplexity-llms-txt",
@@ -2318,6 +2417,17 @@
     "slug": "personal-page-llms-txt",
     "website": "https://pixonstudio.com/",
     "llmsUrl": "https://pixonstudio.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Petite Box",
+    "description": "“Petite Box” offre box letterarie a tema, abbinando romanzi selezionati con gadget unici, snack locali e bevande tematiche.",
+    "url": "/petite-box-llms-txt",
+    "content": "# Petite Box\n\n“Petite Box” offre box letterarie a tema, abbinando romanzi selezionati con gadget unici, snack locali e bevande tematiche.",
+    "category": "integration-automation",
+    "slug": "petite-box-llms-txt",
+    "website": "https://www.petitebox.it",
+    "llmsUrl": "https://www.petitebox.it/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -3432,6 +3542,17 @@
     "llmsFullUrl": "https://docs.velt.dev/llms-full.txt"
   },
   {
+    "name": "Vendure",
+    "description": "Customizable Commerce Engine Built for Scale",
+    "url": "/vendure-llms-txt",
+    "content": "# Vendure\n\nA Customizable Commerce Engine Built for Scale",
+    "category": "developer-tools",
+    "slug": "vendure-llms-txt",
+    "website": "https://vendure.io/",
+    "llmsUrl": "https://docs.vendure.io/llms.txt",
+    "llmsFullUrl": "https://docs.vendure.io/llms-full.txt"
+  },
+  {
     "name": "Vercel's AI SDK",
     "description": "From the creators of Next.js, the AI SDK is a free open-source library that gives you the tools you need to build AI-powered products.",
     "url": "/vercel-ai-sdk-llms-txt",
@@ -3738,6 +3859,17 @@
     "website": "https://yamlresume.dev",
     "llmsUrl": "https://yamlresume.dev/llms.txt",
     "llmsFullUrl": "https://yamlresume.dev/llms-full.txt"
+  },
+  {
+    "name": "Yellowlime",
+    "description": "Digital Marketing Agency based in Utrecht, The Netherlands. Helping SMEs with online growth.",
+    "url": "/yellowlime-llms-txt",
+    "content": "# Yellowlime\n\nDigital Marketing Agency based in Utrecht, The Netherlands. Helping SMEs with online growth.",
+    "category": "developer-tools",
+    "slug": "yellowlime-llms-txt",
+    "website": "https://www.yellowlime.nl/",
+    "llmsUrl": "https://www.yellowlime.nl/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "YourOpinion.is",
