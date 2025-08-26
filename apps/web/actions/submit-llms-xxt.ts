@@ -169,8 +169,16 @@ ${description}
       await waitForFork()
 
       // Create a new branch in the fork
-      const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
-      const filePath = `packages/content/websites/data/${name.toLowerCase().replace(/\s+/g, '-')}-llms-txt.mdx`
+      // Sanitize name for use in branch and file names
+      const sanitizedName = name
+        .toLowerCase()
+        .replace(/[|&<>!$'"]/g, '') // Remove special characters
+        .replace(/\s+/g, '-') // Replace spaces with dashes
+        .replace(/-+/g, '-') // Replace multiple dashes with single dash
+        .replace(/^-|-$/g, '') // Remove leading/trailing dashes
+      
+      const branchName = `submit-${sanitizedName}-${Date.now()}`
+      const filePath = `packages/content/websites/data/${sanitizedName}-llms-txt.mdx`
 
       // Get the reference from the original repo
       const mainRef = await octokit.git
