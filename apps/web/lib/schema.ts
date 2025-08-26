@@ -1,4 +1,4 @@
-import type { WebsiteMetadata, GuideMetadata } from './content-loader'
+import type { GuideMetadata, WebsiteMetadata } from './content-loader'
 
 export interface SchemaOrg {
   '@context': 'https://schema.org'

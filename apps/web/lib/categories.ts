@@ -1,18 +1,18 @@
 import type { LucideIcon } from 'lucide-react'
-import { 
-  Brain, 
-  Code2, 
-  Cpu, 
-  Database, 
-  Lock, 
-  Workflow,
-  User,
+import {
+  Brain,
   Briefcase,
-  ShoppingCart,
-  GraduationCap,
+  Code2,
+  Cpu,
+  Database,
   FileText,
   Globe,
-  Package
+  GraduationCap,
+  Lock,
+  Package,
+  ShoppingCart,
+  User,
+  Workflow
 } from 'lucide-react'
 
 export interface Category {
@@ -74,7 +74,7 @@ export const categories: Category[] = [
     priority: 'high',
     type: 'tool'
   },
-  
+
   // Secondary Categories - Non-Tools
   {
     name: 'Personal & Portfolio',
@@ -127,7 +127,7 @@ export const categories: Category[] = [
   {
     name: 'Other',
     slug: 'other',
-    description: 'Sites that don\'t fit into other categories',
+    description: "Sites that don't fit into other categories",
     icon: Package,
     priority: 'low',
     type: 'non-tool'

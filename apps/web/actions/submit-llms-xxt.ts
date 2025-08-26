@@ -192,7 +192,7 @@ ${description}
         .replace(/\s+/g, '-') // Replace spaces with dashes
         .replace(/-+/g, '-') // Replace multiple dashes with single dash
         .replace(/^-|-$/g, '') // Remove leading/trailing dashes
-      
+
       const branchName = `submit-${sanitizedName}-${Date.now()}`
       const filePath = `packages/content/websites/data/${sanitizedName}-llms-txt.mdx`
 
