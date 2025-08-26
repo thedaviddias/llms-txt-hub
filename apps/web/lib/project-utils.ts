@@ -10,7 +10,7 @@ const PRIMARY_CATEGORIES = [
   'security-identity'
 ]
 
-export function getFeaturedProjects(projects: WebsiteMetadata[], limit = 8): WebsiteMetadata[] {
+export function getFeaturedProjects(projects: WebsiteMetadata[]): WebsiteMetadata[] {
   // Filter for primary category tools and personal sites separately
   const primaryCategoryProjects = projects.filter(project =>
     PRIMARY_CATEGORIES.includes(project.category)
