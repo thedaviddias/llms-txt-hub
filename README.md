@@ -23,79 +23,17 @@ The `llms.txt` standard helps:
 
 ## Categories
 
-We organize projects into **primary categories** (tools and platforms) and **secondary categories** (other content types). Our homepage and featured sections focus on primary categories to highlight technical tools and developer resources.
-
-### 🔧 Primary Categories (Tools & Platforms)
-
-These high-priority categories are featured prominently on our homepage and are ideal for technical tools and developer platforms:
-
-- **🤖 AI & Machine Learning** - AI models, ML tools, LLM platforms, and AI services
-- **💻 Developer Tools** - SDKs, APIs, frameworks, libraries, IDEs, and development utilities  
-- **📊 Data & Analytics** - Databases, analytics platforms, BI tools, and data processing
-- **⚡ Integration & Automation** - API platforms, workflow automation, CI/CD, and integration tools
-- **☁️ Infrastructure & Cloud** - Cloud platforms, hosting, containers, and DevOps tools
-- **🔒 Security & Identity** - Security tools, authentication, encryption, and compliance
-
-### 📝 Secondary Categories (Other Content)
-
-These categories are for content that doesn't fit primary tool categories but still provides value:
-
-- **👤 Personal & Portfolio** - Personal websites, developer portfolios, and blogs
-- **🏢 Agency & Services** - Marketing agencies, consultancies, and service providers
-- **🛒 E-commerce** - Online stores, marketplaces, and retail sites  
-- **🎓 Education** - Courses, tutorials, training platforms, and schools
-- **📰 Media & Content** - Blogs, news sites, publications, and content platforms
-- **🌍 International** - Non-English sites and international content
-- **📦 Other** - Sites that don't fit into other categories
-
-## Submission Guidelines
-
-### ✅ What We Accept
-
-**Ideal submissions include:**
-- **Developer Tools & Platforms**: APIs, SDKs, frameworks, libraries, IDEs
-- **AI/ML Services**: LLM platforms, AI tools, machine learning services
-- **Infrastructure & Cloud**: Hosting platforms, cloud services, DevOps tools
-- **Data & Analytics**: Databases, BI tools, data processing platforms
-- **Security Tools**: Authentication, encryption, compliance platforms
-- **Integration Services**: Automation tools, workflow platforms, API gateways
-- **Open Source Projects**: Well-maintained projects with active development
-- **SaaS Platforms**: Business tools and productivity platforms
-- **Educational Resources**: Technical tutorials, developer documentation
-
-### ❌ What We Don't Accept
-
-**We do not accept submissions for:**
-- **Gambling Sites** - Online casinos, sports betting, gambling platforms
-- **Adult Content** - Explicit or adult-oriented websites
-- **Illegal Services** - Any services that violate laws or promote illegal activities
-- **Spam/Low-Quality Sites** - Sites with minimal content or obvious spam
-- **Non-Functional llms.txt** - Sites without working llms.txt implementations
-- **Duplicate Submissions** - Sites already listed in our directory
-- **Personal Blogs** (unless exceptional) - Standard personal websites without significant technical value
-- **Under Construction** - Sites that are incomplete or not publicly accessible
-
-### 📋 Submission Requirements
-
-To be accepted, your submission must include:
-
-1. **Working llms.txt file** - Must be publicly accessible and properly formatted
-2. **Clear description** - Concise explanation of what your tool/service does
-3. **Active website** - Site must be functional and actively maintained  
-4. **Appropriate category** - Must fit into one of our defined categories
-5. **English content** - Primary content should be in English (international content goes in "International" category)
+We organize projects into primary categories (🤖 **AI & ML**, 💻 **Developer Tools**, 📊 **Data & Analytics**, ⚡ **Integration & Automation**, ☁️ **Infrastructure & Cloud**, 🔒 **Security & Identity**) and secondary categories (personal, agency, e-commerce, education, media, international, other).
 
 ## Developer Tools
 
-Explore these tools to help you work with llms.txt files:
-
-| Tool                     | Description                                                                      | Link                                                                                                          |
-| ------------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| 🔍 **LLMs.txt Checker**   | Chrome extension to check if websites implement llms.txt and llms-full.txt files | [Chrome Web Store](https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej) |
-| 💻 **VS Code Extension**  | Search and explore llms.txt files directly in VS Code                            | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt)       |
-| 🧠 **MCP Explorer**       | Explore and analyze llms.txt files using Model Context Protocol                  | [GitHub](https://github.com/thedaviddias/mcp-llms-txt-explorer)                                               |
-| ⚡ **Raycast Extension**  | Search and explore llms.txt files directly in Raycast                            | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
-| ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI, a pure frontend app        | [LLMs.txt Generator](https://llmstxtgenerator.co/)                                                            |
+| Tool | Description | Link |
+| ---- | ----------- | ---- |
+| 🔍 **LLMs.txt Checker** | Chrome extension to check if websites implement llms.txt files | [Chrome Web Store](https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej) |
+| 💻 **VS Code Extension** | Search and explore llms.txt files directly in VS Code | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt) |
+| 🧠 **MCP Explorer** | Explore and analyze llms.txt files using Model Context Protocol | [GitHub](https://github.com/thedaviddias/mcp-llms-txt-explorer) |
+| ⚡ **Raycast Extension** | Search and explore llms.txt files directly in Raycast | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt) |
+| ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI | [LLMs.txt Generator](https://llmstxtgenerator.co/) |
 
 <!-- LLMS-LIST:START - Do not remove or modify this section -->
 ## LLM Tools and Resources
@@ -440,3 +378,63 @@ Please read our [Contributing Guide](https://github.com/thedaviddias/llms-txt-hu
 If you find this project useful, please consider giving it a ⭐️
 
 </div>
+
+## Detailed Submission Guidelines
+
+### 🔧 Primary Categories (Tools & Platforms)
+
+These high-priority categories are featured prominently on our homepage:
+
+- **🤖 AI & Machine Learning** - AI models, ML tools, LLM platforms, and AI services
+- **💻 Developer Tools** - SDKs, APIs, frameworks, libraries, IDEs, and development utilities  
+- **📊 Data & Analytics** - Databases, analytics platforms, BI tools, and data processing
+- **⚡ Integration & Automation** - API platforms, workflow automation, CI/CD, and integration tools
+- **☁️ Infrastructure & Cloud** - Cloud platforms, hosting, containers, and DevOps tools
+- **🔒 Security & Identity** - Security tools, authentication, encryption, and compliance
+
+### 📝 Secondary Categories (Other Content)
+
+These categories are for content that doesn't fit primary tool categories:
+
+- **👤 Personal & Portfolio** - Personal websites, developer portfolios, and blogs
+- **🏢 Agency & Services** - Marketing agencies, consultancies, and service providers
+- **🛒 E-commerce** - Online stores, marketplaces, and retail sites  
+- **🎓 Education** - Courses, tutorials, training platforms, and schools
+- **📰 Media & Content** - Blogs, news sites, publications, and content platforms
+- **🌍 International** - Non-English sites and international content
+- **📦 Other** - Sites that don't fit into other categories
+
+### ✅ What We Accept
+
+**Ideal submissions include:**
+- **Developer Tools & Platforms**: APIs, SDKs, frameworks, libraries, IDEs
+- **AI/ML Services**: LLM platforms, AI tools, machine learning services
+- **Infrastructure & Cloud**: Hosting platforms, cloud services, DevOps tools
+- **Data & Analytics**: Databases, BI tools, data processing platforms
+- **Security Tools**: Authentication, encryption, compliance platforms
+- **Integration Services**: Automation tools, workflow platforms, API gateways
+- **Open Source Projects**: Well-maintained projects with active development
+- **SaaS Platforms**: Business tools and productivity platforms
+- **Educational Resources**: Technical tutorials, developer documentation
+
+### ❌ What We Don't Accept
+
+**We do not accept submissions for:**
+- **Gambling Sites** - Online casinos, sports betting, gambling platforms
+- **Adult Content** - Explicit or adult-oriented websites
+- **Illegal Services** - Any services that violate laws or promote illegal activities
+- **Spam/Low-Quality Sites** - Sites with minimal content or obvious spam
+- **Non-Functional llms.txt** - Sites without working llms.txt implementations
+- **Duplicate Submissions** - Sites already listed in our directory
+- **Personal Blogs** (unless exceptional) - Standard personal websites without significant technical value
+- **Under Construction** - Sites that are incomplete or not publicly accessible
+
+### 📋 Submission Requirements
+
+To be accepted, your submission must include:
+
+1. **Working llms.txt file** - Must be publicly accessible and properly formatted
+2. **Clear description** - Concise explanation of what your tool/service does
+3. **Active website** - Site must be functional and actively maintained  
+4. **Appropriate category** - Must fit into one of our defined categories
+5. **English content** - Primary content should be in English (international content goes in "International" category)
