@@ -2,7 +2,11 @@ import {
   allGuides as collectionGuides,
   allLegals as collectionLegals,
   allResources as collectionResources,
-  allWebsites as collectionWebsites
+  allWebsites as collectionWebsites,
+  type Guide,
+  type Legal,
+  type Resource,
+  type Website
 } from 'content-collections'
 
 /**
@@ -66,7 +70,7 @@ export function getWebsites() {
   }
 
   // Ensure each website has a valid slug
-  const websitesWithSlugs = collectionWebsites.map(website => {
+  const websitesWithSlugs = collectionWebsites.map((website: Website) => {
     // If website already has a valid slug, use it
     if (website.slug && typeof website.slug === 'string') {
       return website
@@ -95,7 +99,7 @@ export function getWebsites() {
     }
   })
 
-  return websitesWithSlugs.sort((a, b) => {
+  return websitesWithSlugs.sort((a: WebsiteMetadata, b: WebsiteMetadata) => {
     return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   })
 }
@@ -114,14 +118,14 @@ export async function getWebsiteBySlug(slug: string) {
   const websites = getWebsites() // Use the enhanced function that ensures slugs
 
   // Find the website with the matching slug
-  const website = websites.find(site => site.slug === slug)
+  const website = websites.find((site: WebsiteMetadata) => site.slug === slug)
 
   if (!website) {
     return null
   }
 
   // Find current index for previous/next navigation
-  const currentIndex = websites.findIndex(site => site.slug === slug)
+  const currentIndex = websites.findIndex((site: WebsiteMetadata) => site.slug === slug)
 
   // Get previous and next websites
   const previousWebsite = currentIndex > 0 ? websites[currentIndex - 1] : null
@@ -129,7 +133,7 @@ export async function getWebsiteBySlug(slug: string) {
 
   // Get related websites (same category, excluding current)
   const relatedWebsites = websites
-    .filter(site => site.category === website.category && site.slug !== slug)
+    .filter((site: WebsiteMetadata) => site.category === website.category && site.slug !== slug)
     .slice(0, 4)
 
   // Get content from _meta if available
@@ -156,8 +160,8 @@ export function getGuides() {
 
   // Map to match the Guide type expected by components
   return collectionGuides
-    .filter(guide => guide.published)
-    .map(guide => ({
+    .filter((guide: Guide) => guide.published)
+    .map((guide: Guide) => ({
       title: guide.title || '',
       description: guide.description || '',
       slug: guide.slug || '',
@@ -172,8 +176,10 @@ export function getGuides() {
       date: guide.date || new Date().toISOString(),
       authors: guide.authors || []
     }))
-    .sort((a, b) => {
-      return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    .sort((a: GuideMetadata, b: GuideMetadata) => {
+      return (
+        new Date(b.publishedAt || b.date).getTime() - new Date(a.publishedAt || a.date).getTime()
+      )
     })
 }
 
@@ -184,7 +190,7 @@ export function getGuides() {
  * @returns Guide with content, or null if not found
  */
 export async function getGuideBySlug(slug: string): Promise<GuideMetadata | null> {
-  const guide = collectionGuides.find(guide => guide.slug === slug && guide.published)
+  const guide = collectionGuides.find((guide: Guide) => guide.slug === slug && guide.published)
 
   if (!guide) {
     return null
@@ -217,7 +223,7 @@ export async function getGuideBySlug(slug: string): Promise<GuideMetadata | null
  * @returns Legal content string
  */
 export async function getLegalContent(key: string): Promise<string> {
-  const legal = collectionLegals.find(l => l._meta.path === key)
+  const legal = collectionLegals.find((l: Legal) => l._meta.path === key)
 
   if (!legal) {
     throw new Error(`Legal content "${key}" not found`)
@@ -242,7 +248,7 @@ export function getResources() {
  * @returns Resource with content, or null if not found
  */
 export async function getResourceBySlug(slug: string) {
-  const resource = collectionResources.find(resource => resource.slug === slug)
+  const resource = collectionResources.find((resource: Resource) => resource.slug === slug)
 
   if (!resource) {
     return null

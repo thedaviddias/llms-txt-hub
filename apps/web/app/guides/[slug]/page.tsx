@@ -1,14 +1,14 @@
-import { getGuides, getGuideBySlug } from '@/lib/content-loader'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import { GuideHeader } from '@/components/guide-header'
 import { JsonLd } from '@/components/json-ld'
-import { generateGuideSchema } from '@/lib/schema'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getRoute } from '@/lib/routes'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import { components } from '@/components/mdx'
+import { type GuideMetadata, getGuideBySlug, getGuides } from '@/lib/content-loader'
+import { getRoute } from '@/lib/routes'
+import { generateGuideSchema } from '@/lib/schema'
 
 interface GuidePageProps {
   params: {
@@ -36,7 +36,7 @@ export async function generateMetadata(props: GuidePageProps): Promise<Metadata>
 export async function generateStaticParams(): Promise<GuidePageProps['params'][]> {
   const guides = await getGuides()
 
-  return guides.map(guide => ({
+  return guides.map((guide: GuideMetadata) => ({
     slug: guide.slug
   }))
 }
