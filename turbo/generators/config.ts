@@ -27,10 +27,14 @@ const CATEGORIES = [
   'ai-ml',
   'data-analytics',
   'security-identity',
-  'infrastructure-cloud'
+  'infrastructure-cloud',
+  'personal-sites'
 ] as const
 
+const CONTENT_TYPES = ['tool', 'platform', 'personal', 'library'] as const
+
 type WebsiteCategory = (typeof CATEGORIES)[number]
+type ContentType = (typeof CONTENT_TYPES)[number]
 
 /**
  * Generator for creating new website MDX files
@@ -93,6 +97,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
       },
       {
         type: 'list',
+        name: 'contentType',
+        message: 'Select the content type:',
+        choices: CONTENT_TYPES,
+        default: 'tool'
+      },
+      {
+        type: 'list',
         name: 'category',
         message: 'Select the category:',
         choices: CATEGORIES,
@@ -102,7 +113,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
     actions: [
       {
         type: 'add',
-        path: 'packages/content/websites/data/{{dashCase name}}-llms-txt.mdx',
+        path: 'packages/content/data/websites/{{dashCase name}}-llms-txt.mdx',
         templateFile: 'templates/mdx.hbs'
       }
     ]

@@ -1,10 +1,10 @@
-import { faqItems } from '@/components/sections/faq-section'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { JsonLd } from '@/components/json-ld'
-import { generateFAQSchema } from '@/lib/schema'
+import { faqItems } from '@/components/sections/faq-section'
 import { getRoute } from '@/lib/routes'
+import { generateFAQSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'FAQ - llms.txt hub',

@@ -1,6 +1,3 @@
-import { GitHubProjectCard } from '@/components/github/github-project-card'
-import { fetchGitHubProjects, type GitHubProject } from '@/lib/github'
-import { getRoute } from '@/lib/routes'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { Card } from '@thedaviddias/design-system/card'
@@ -8,6 +5,9 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Code, ExternalLink, Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { GitHubProjectCard } from '@/components/github/github-project-card'
+import { fetchGitHubProjects, type GitHubProject } from '@/lib/github'
+import { getRoute } from '@/lib/routes'
 
 export const metadata: Metadata = {
   title: 'llms.txt Projects - Open Source Projects and Tools',
