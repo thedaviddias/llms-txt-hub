@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander'
-import chalk from 'chalk'
-import { readdir, mkdir, writeFile } from 'node:fs/promises'
-import { join, resolve } from 'node:path'
-import { config } from 'dotenv'
-import FirecrawlApp from '@mendable/firecrawl-js'
-import inquirer from 'inquirer'
 import { existsSync, readFileSync } from 'node:fs'
+import { mkdir, readdir, writeFile } from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+import FirecrawlApp from '@mendable/firecrawl-js'
+import chalk from 'chalk'
+import { Command } from 'commander'
+import { config } from 'dotenv'
+import inquirer from 'inquirer'
 
 // Load environment variables from .env file
 config()

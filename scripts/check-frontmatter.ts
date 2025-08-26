@@ -101,13 +101,14 @@ async function checkFrontmatter(filePath?: string) {
 
   if (filePath) {
     // Check a specific file
-    const fullPath = path.join(websitesDirectory, filePath)
+    // If the path is already absolute, use it directly, otherwise join with directory
+    const fullPath = path.isAbsolute(filePath) ? filePath : path.join(websitesDirectory, filePath)
     if (!fs.existsSync(fullPath)) {
       console.error(chalk.red('File not found:', fullPath))
       return
     }
     const content = fs.readFileSync(fullPath, 'utf8')
-    const fixedContent = lintAndFixFile(filePath, content)
+    const fixedContent = lintAndFixFile(path.basename(filePath), content)
     if (fixedContent) {
       fs.writeFileSync(fullPath, fixedContent)
     }

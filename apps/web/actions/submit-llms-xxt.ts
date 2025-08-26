@@ -1,10 +1,10 @@
 'use server'
 
+import { categories } from '@/lib/categories'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
-import { categories } from '@/lib/categories'
 
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
@@ -194,7 +194,7 @@ ${description}
         .replace(/^-|-$/g, '') // Remove leading/trailing dashes
 
       const branchName = `submit-${sanitizedName}-${Date.now()}`
-      const filePath = `packages/content/websites/data/${sanitizedName}-llms-txt.mdx`
+      const filePath = `packages/content/data/websites/${sanitizedName}-llms-txt.mdx`
 
       // Get the reference from the original repo
       const mainRef = await octokit.git
