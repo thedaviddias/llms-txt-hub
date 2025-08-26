@@ -12,6 +12,16 @@ interface Website {
   favicon: string
 }
 
+// Primary categories (tools and platforms only)
+const PRIMARY_CATEGORIES = [
+  'ai-ml',
+  'developer-tools',
+  'data-analytics',
+  'integration-automation',
+  'infrastructure-cloud',
+  'security-identity'
+]
+
 /**
  * Generates a Google Favicon URL for a given domain
  *
@@ -32,10 +42,11 @@ function getFaviconUrl(domain: string): string {
 
 /**
  * Generates a JSON file containing website information from MDX files
+ * Only includes websites from primary tool categories
  *
  * This function reads all MDX files from the packages/content/data/websites directory,
- * extracts their frontmatter, and generates a JSON file with website information
- * including favicons.
+ * extracts their frontmatter, filters for primary categories only, and generates 
+ * a JSON file with website information including favicons.
  *
  * @throws Will throw an error if the file system operations fail
  *
@@ -60,25 +71,33 @@ function generateWebsitesJson(): void {
 
   const mdxFiles = readdirSync(websitesDir).filter(file => file.endsWith('.mdx'))
 
-  const websites: Website[] = mdxFiles.map(file => {
-    const filePath = join(websitesDir, file)
-    const fileContent = readFileSync(filePath, 'utf-8')
-    const { data } = matter(fileContent)
+  const websites: Website[] = mdxFiles
+    .map(file => {
+      const filePath = join(websitesDir, file)
+      const fileContent = readFileSync(filePath, 'utf-8')
+      const { data } = matter(fileContent)
 
-    return {
-      name: data.name,
-      domain: data.website,
-      description: data.description,
-      llmsTxtUrl: data.llmsUrl,
-      ...(data.llmsFullUrl && { llmsFullTxtUrl: data.llmsFullUrl }),
-      category: data.category,
-      favicon: getFaviconUrl(data.website),
-      publishedAt: data.publishedAt
-    }
-  })
+      return {
+        name: data.name || data.title,
+        domain: data.website || data.url,
+        description: data.description,
+        llmsTxtUrl: data.llmsUrl,
+        ...(data.llmsFullUrl && { llmsFullTxtUrl: data.llmsFullUrl }),
+        category: data.category?.replace(/'/g, ''), // Remove quotes from category
+        favicon: getFaviconUrl(data.website || data.url),
+        publishedAt: data.publishedAt
+      }
+    })
+    .filter(website => {
+      // Only include websites from primary categories
+      return PRIMARY_CATEGORIES.includes(website.category)
+    })
 
   // Sort websites by name
   websites.sort((a, b) => a.name.localeCompare(b.name))
+
+  console.log(`Generated websites.json with ${websites.length} tools from primary categories`)
+  console.log(`Excluded ${mdxFiles.length - websites.length} sites from secondary categories`)
 
   // Write to JSON file
   writeFileSync(outputFile, JSON.stringify(websites))
