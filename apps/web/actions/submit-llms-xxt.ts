@@ -1,10 +1,10 @@
 'use server'
 
-import { categories } from '@/lib/categories'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
+import { categories } from '@/lib/categories'
 
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
@@ -149,7 +149,7 @@ ${description}
 
       // Create or get fork
       console.log('Creating fork...')
-      const fork = await octokit.repos
+      const _fork = await octokit.repos
         .createFork({
           owner,
           repo
@@ -177,7 +177,7 @@ ${description}
             owner: githubUsername,
             repo
           })
-        } catch (error) {
+        } catch (_error) {
           await new Promise(resolve => setTimeout(resolve, delay))
           await waitForFork(retries - 1, delay)
         }

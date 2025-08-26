@@ -22,7 +22,7 @@ function findWorkspaceRoot(currentPath: string): string {
       if (packageJson.name === 'llms-txt-hub') {
         return currentPath
       }
-    } catch (error) {
+    } catch (_error) {
       // Ignore JSON parse errors
     }
   }
