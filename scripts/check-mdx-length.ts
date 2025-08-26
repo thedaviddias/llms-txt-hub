@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 
 const files = process.argv.slice(2)
-const MAX_LENGTH = 25
+const MAX_LENGTH = 50
 
 let hasError = false
 

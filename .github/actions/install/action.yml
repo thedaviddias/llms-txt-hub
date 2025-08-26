@@ -6,9 +6,10 @@ runs:
   using: "composite"
   steps:
     - name: Install pnpm
-      uses: pnpm/action-setup@v4.0.0
+      uses: pnpm/action-setup@v4
       id: pnpm-install
       with:
+        version: "10.7.1"
         run_install: false
 
     - name: Setup Node.js

@@ -1,9 +1,0 @@
-# Supabase Docs
-- [Supabase Guides](https://supabase.com/llms/guides.txt)
-- [Supabase Reference (JavaScript)](https://supabase.com/llms/js.txt)
-- [Supabase Reference (Dart)](https://supabase.com/llms/dart.txt)
-- [Supabase Reference (Swift)](https://supabase.com/llms/swift.txt)
-- [Supabase Reference (Kotlin)](https://supabase.com/llms/kt.txt)
-- [Supabase Reference (Python)](https://supabase.com/llms/py.txt)
-- [Supabase Reference (C#)](https://supabase.com/llms/csharp.txt)
-- [Supabase Reference (CLI)](https://supabase.com/llms/cli.txt)

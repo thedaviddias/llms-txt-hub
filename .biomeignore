@@ -1,0 +1,23 @@
+# Ignore MDX files in content directory
+packages/content/data/websites/*.mdx
+
+# Ignore build outputs
+.next/
+*/.next/
+dist/
+build/
+out/
+
+# Ignore node_modules
+node_modules/
+
+# Ignore generated files
+apps/web/public/search/search-index.json
+data/websites.json
+
+# Ignore scripts output
+scripts/*.json
+scripts/llmstxt-directory-*.json
+
+# Ignore large generated JS files that cause timeout
+apps/validator/.next/**/*.js

@@ -1,10 +1,10 @@
-import { ClientProjectsList } from '@/components/projects-list'
-import { getWebsites } from '@/lib/content-loader'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
-import { getRoute } from '@/lib/routes'
 import { JsonLd } from '@/components/json-ld'
+import { ClientProjectsList } from '@/components/projects-list'
+import { getWebsites } from '@/lib/content-loader'
+import { getRoute } from '@/lib/routes'
 import { generateCollectionSchema } from '@/lib/schema'
 
 export function generateMetadata(): Metadata {

@@ -1,23 +1,23 @@
-import { LLMButton } from '@/components/buttons/llm-button'
-import { LLMGrid } from '@/components/llm/llm-grid'
-import { components } from '@/components/mdx'
-import { ProjectNavigation } from '@/components/project-navigation'
-import { getWebsites, getWebsiteBySlug } from '@/lib/content-loader'
+import { Alert, AlertDescription, AlertTitle } from '@thedaviddias/design-system/alert'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Card, CardContent, CardHeader } from '@thedaviddias/design-system/card'
-import { Alert, AlertTitle, AlertDescription } from '@thedaviddias/design-system/alert'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
-import { ExternalLink, Hash, AlertTriangle } from 'lucide-react'
+import { AlertTriangle, ExternalLink, Hash } from 'lucide-react'
 import type { Metadata } from 'next'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import { LLMButton } from '@/components/buttons/llm-button'
+import { JsonLd } from '@/components/json-ld'
+import { LLMGrid } from '@/components/llm/llm-grid'
+import { components } from '@/components/mdx'
+import { ProjectNavigation } from '@/components/project-navigation'
+import { ToolsSection } from '@/components/sections/tools-section'
+import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
-import { JsonLd } from '@/components/json-ld'
-import { ToolsSection } from '@/components/sections/tools-section'
 
 interface ProjectPageProps {
   params: { slug: string }
@@ -64,8 +64,8 @@ export async function generateStaticParams() {
 
     // Only include websites with valid string slugs
     const params = websites
-      .filter(website => website.slug && typeof website.slug === 'string')
-      .map(website => ({
+      .filter((website: WebsiteMetadata) => website.slug && typeof website.slug === 'string')
+      .map((website: WebsiteMetadata) => ({
         slug: website.slug
       }))
 

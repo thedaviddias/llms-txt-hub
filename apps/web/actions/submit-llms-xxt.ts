@@ -1,10 +1,10 @@
 'use server'
 
-import { categories } from '@/lib/categories'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
+import { categories } from '@/lib/categories'
 
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
@@ -77,16 +77,31 @@ export async function submitLlmsTxt(formData: FormData) {
     const llmsUrl = formData.get('llmsUrl') as string
     const llmsFullUrl = formData.get('llmsFullUrl') as string
     const categorySlug = formData.get('category') as string
+    const contentType = formData.get('contentType') as string
     const publishedAt = formData.get('publishedAt') as string
     const githubUsername = session.user.user_metadata.user_name
 
-    if (!name || !description || !website || !llmsUrl || !categorySlug || !publishedAt) {
+    if (
+      !name ||
+      !description ||
+      !website ||
+      !llmsUrl ||
+      !categorySlug ||
+      !contentType ||
+      !publishedAt
+    ) {
       throw new Error('Missing required form fields')
     }
 
     // Validate category
     if (!categories.some(category => category.slug === categorySlug)) {
       throw new Error('Invalid category selected')
+    }
+
+    // Validate content type
+    const validContentTypes = ['tool', 'platform', 'personal', 'library']
+    if (!validContentTypes.includes(contentType)) {
+      throw new Error('Invalid content type selected')
     }
 
     // Create the content for the new MDX file
@@ -97,6 +112,7 @@ export async function submitLlmsTxt(formData: FormData) {
       llmsUrl,
       llmsFullUrl: llmsFullUrl || '',
       category: categorySlug,
+      contentType,
       publishedAt
     }
 
@@ -133,7 +149,7 @@ ${description}
 
       // Create or get fork
       console.log('Creating fork...')
-      const fork = await octokit.repos
+      const _fork = await octokit.repos
         .createFork({
           owner,
           repo
@@ -161,7 +177,7 @@ ${description}
             owner: githubUsername,
             repo
           })
-        } catch (error) {
+        } catch (_error) {
           await new Promise(resolve => setTimeout(resolve, delay))
           await waitForFork(retries - 1, delay)
         }
@@ -169,8 +185,16 @@ ${description}
       await waitForFork()
 
       // Create a new branch in the fork
-      const branchName = `submit-${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`
-      const filePath = `packages/content/websites/data/${name.toLowerCase().replace(/\s+/g, '-')}-llms-txt.mdx`
+      // Sanitize name for use in branch and file names
+      const sanitizedName = name
+        .toLowerCase()
+        .replace(/[|&<>!$'"]/g, '') // Remove special characters
+        .replace(/\s+/g, '-') // Replace spaces with dashes
+        .replace(/-+/g, '-') // Replace multiple dashes with single dash
+        .replace(/^-|-$/g, '') // Remove leading/trailing dashes
+
+      const branchName = `submit-${sanitizedName}-${Date.now()}`
+      const filePath = `packages/content/data/websites/${sanitizedName}-llms-txt.mdx`
 
       // Get the reference from the original repo
       const mainRef = await octokit.git

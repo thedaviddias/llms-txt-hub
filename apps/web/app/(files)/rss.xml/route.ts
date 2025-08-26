@@ -1,4 +1,4 @@
-import { getWebsites } from '@/lib/content-loader'
+import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
 
@@ -21,7 +21,7 @@ export async function GET() {
     ],
     language: 'en',
     items: [
-      ...websitesData.map(site => ({
+      ...websitesData.map((site: WebsiteMetadata) => ({
         id: site.slug,
         url: `${baseUrl}/websites/${site.slug}`,
         title: site.name,

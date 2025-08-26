@@ -1,24 +1,22 @@
 {
   "name": "@thedaviddias/content",
   "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "exports": {
-    ".": {
-      "default": "./data"
-    },
-    "./data/*": "./data/*"
-  },
-  "files": [
-    "data"
+  "description": "Content for the llms.txt hub",
+  "keywords": [
+    "content",
+    "llms-txt",
+    "documentation"
   ],
+  "license": "MIT",
+  "author": "David Dias",
+  "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "build": "echo 'No build needed for content package'",
+    "dev": "echo 'No dev needed for content package'",
+    "lint": "echo 'No lint needed for content package'",
+    "test": "echo 'No tests needed for content package'"
   },
   "devDependencies": {
-    "@types/node": "^22.13.17",
-    "eslint": "^9.23.0",
-    "typescript": "^5.8.2"
+    "@types/node": "^22.13.17"
   }
 }

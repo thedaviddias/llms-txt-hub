@@ -38,7 +38,10 @@
     "test:e2e:debug": "turbo test:e2e:debug --filter=e2e",
     "typecheck": "turbo typecheck",
     "update": "pnpm update -r",
-    "update-llms-list": "node scripts/update-llms-list.js"
+    "update-llms-list": "node scripts/update-llms-list.js",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "contributors:check": "all-contributors check"
   },
   "devDependencies": {
     "@auto-it/all-contributors": "^11.3.0",
@@ -50,6 +53,7 @@
     "@manypkg/cli": "^0.23.0",
     "@turbo/gen": "^2.4.4",
     "@types/js-yaml": "^4.0.9",
+    "all-contributors-cli": "^6.26.1",
     "chalk": "^5.4.1",
     "cross-env": "^7.0.3",
     "glob": "^11.0.1",

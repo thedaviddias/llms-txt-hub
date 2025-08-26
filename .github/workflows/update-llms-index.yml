@@ -20,9 +20,9 @@ jobs:
           cache: 'pnpm'
       
       - name: Install pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: '10.4.1'
+          version: "10.7.1"
           run_install: false
       
       - name: Install dependencies

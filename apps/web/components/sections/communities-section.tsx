@@ -1,7 +1,7 @@
-import { Card } from '@thedaviddias/design-system/card'
-import { Section } from '@/components/layout/section'
 import { SiReddit, SiX } from '@icons-pack/react-simple-icons'
+import { Card } from '@thedaviddias/design-system/card'
 import { Linkedin } from 'lucide-react'
+import { Section } from '@/components/layout/section'
 
 const communities = [
   {

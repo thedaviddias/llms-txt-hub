@@ -1,12 +1,12 @@
-import { getGuides } from '@/lib/content-loader'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { format } from 'date-fns'
 import type { Metadata } from 'next'
-import { generateGuideSchema } from '@/lib/schema'
-import { JsonLd } from '@/components/json-ld'
 import Link from 'next/link'
+import { JsonLd } from '@/components/json-ld'
+import { type GuideMetadata, getGuides } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
+import { generateGuideSchema } from '@/lib/schema'
 export const metadata: Metadata = {
   title: 'Guides - llms.txt',
   description: 'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
@@ -33,7 +33,7 @@ export default async function GuidesPage() {
       <JsonLd
         data={{
           '@context': 'https://schema.org',
-          '@graph': guides.map(guide => generateGuideSchema(guide))
+          '@graph': guides.map((guide: GuideMetadata) => generateGuideSchema(guide))
         }}
       />
       <div className="space-y-12">
@@ -49,7 +49,7 @@ export default async function GuidesPage() {
         {guides?.length ? (
           <section className="space-y-6">
             <div className="grid gap-10">
-              {guides.map(guide => (
+              {guides.map((guide: GuideMetadata) => (
                 <article key={guide.slug} className="group relative flex flex-col space-y-2">
                   <h2 className="text-2xl font-bold">
                     <Link href={`/guides/${guide.slug}`} className="hover:underline">
