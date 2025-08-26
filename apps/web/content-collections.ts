@@ -11,9 +11,9 @@ const websites = defineCollection({
   directory: websitesPath,
   include: '**/*.mdx',
   schema: z => ({
-    name: z.string(),
+    title: z.string(),
     description: z.string(),
-    website: z.string().url(),
+    url: z.string().url(),
     llmsUrl: z.string().url(),
     // Even more flexible validation for llmsFullUrl
     llmsFullUrl: z

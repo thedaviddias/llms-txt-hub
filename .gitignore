@@ -49,3 +49,6 @@ lychee-out.md
 
 # Jetbrains
 .idea
+
+.claude/
+.cursor/

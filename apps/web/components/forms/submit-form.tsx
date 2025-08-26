@@ -25,7 +25,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
 import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { categories } from '@/lib/categories'
+import { categories, nonToolCategories, toolCategories } from '@/lib/categories'
 
 const step1Schema = z.object({
   website: z
@@ -354,11 +354,32 @@ export function SubmitForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories.map(category => (
+                      {/* Tool Categories */}
+                      <div className="px-2 py-1.5 text-sm font-semibold text-gray-500">
+                        Tools & Platforms
+                      </div>
+                      {toolCategories.map(category => (
                         <SelectItem
                           key={category.slug}
                           value={category.slug}
-                          className="bg-white dark:bg-gray-950 p-2"
+                          className="bg-white dark:bg-gray-950 p-2 pl-4"
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+
+                      {/* Separator */}
+                      <div className="my-1 h-px bg-gray-200 dark:bg-gray-700" />
+
+                      {/* Non-Tool Categories */}
+                      <div className="px-2 py-1.5 text-sm font-semibold text-gray-500">
+                        Other Sites
+                      </div>
+                      {nonToolCategories.map(category => (
+                        <SelectItem
+                          key={category.slug}
+                          value={category.slug}
+                          className="bg-white dark:bg-gray-950 p-2 pl-4"
                         >
                           {category.name}
                         </SelectItem>

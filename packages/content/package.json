@@ -17,6 +17,6 @@
     "test": "echo 'No tests needed for content package'"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^22.13.17"
   }
 }
