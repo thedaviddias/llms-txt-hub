@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
-import { getWebsites } from '@/lib/content-loader'
+import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 
 function cleanTitle(title: string): string {
   // Remove common suffixes and clean up the title
@@ -23,7 +23,7 @@ async function fetchMetadata(url: string) {
       removeQueryParameters: true
     })
 
-    const duplicateWebsite = existingWebsites.find(website => {
+    const duplicateWebsite = existingWebsites.find((website: WebsiteMetadata) => {
       const normalizedExisting = normalizeUrl(website.website, {
         stripProtocol: true,
         stripWWW: true,

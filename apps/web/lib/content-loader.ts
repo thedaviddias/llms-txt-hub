@@ -1,13 +1,10 @@
+import type { Guide, Legal, Resource, Website } from '@/.content-collections/generated'
 import {
   allGuides as collectionGuides,
   allLegals as collectionLegals,
   allResources as collectionResources,
-  allWebsites as collectionWebsites,
-  type Guide,
-  type Legal,
-  type Resource,
-  type Website
-} from 'content-collections'
+  allWebsites as collectionWebsites
+} from '@/.content-collections/generated'
 
 /**
  * Interface for the _meta property found in content-collections items
