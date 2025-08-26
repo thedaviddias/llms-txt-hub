@@ -1507,10 +1507,10 @@
     "llmsFullUrl": "https://heyflow.com/llms-full.txt"
   },
   {
-    "name": "Home",
+    "name": "Mondo Robot",
     "description": "Mondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
     "url": "/home",
-    "content": "# Home\n\nMondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
+    "content": "# Mondo Robot\n\nMondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
     "category": "integration-automation",
     "slug": "home",
     "website": "https://mondorobot.com",
@@ -1518,10 +1518,10 @@
     "llmsFullUrl": "https://mondorobot.com/llms-full.txt"
   },
   {
-    "name": "HOME",
+    "name": "Naturel Living",
     "description": "At Naturel, we want you to embrace the good life and discover how our three lifestyle pillars can enhance your everyday. Start your Naturel Living today.",
     "url": "/home-llms-txt",
-    "content": "# HOME\n\nAt Naturel, we want you to embrace the good life and discover how our three lifestyle pillars can enhance your everyday. Start your Naturel Living today.",
+    "content": "# Naturel Living\n\nAt Naturel, we want you to embrace the good life and discover how our three lifestyle pillars can enhance your everyday. Start your Naturel Living today.",
     "category": "ai-ml",
     "slug": "home-llms-txt",
     "website": "https://naturelliving.com/",
@@ -1529,10 +1529,10 @@
     "llmsFullUrl": "https://naturelliving.com/llms-full.txt"
   },
   {
-    "name": "Home - TZ",
+    "name": "TZ Machinery",
     "description": "Solution Provider and manufacturer of PET PP PS PLA plastic sheet extrusion line, fully auto thermoforming machine, plastic cup making machine.",
     "url": "/home---tz-llms-txt",
-    "content": "# Home - TZ\n\nSolution Provider and manufacturer of PET PP PS PLA plastic sheet extrusion line, fully auto thermoforming machine, plastic cup making machine.",
+    "content": "# TZ Machinery\n\nSolution Provider and manufacturer of PET PP PS PLA plastic sheet extrusion line, fully auto thermoforming machine, plastic cup making machine.",
     "category": "ai-ml",
     "slug": "home---tz-llms-txt",
     "website": "https://tz-machinery.com",
@@ -1540,10 +1540,10 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "Home • Angular",
+    "name": "Angular",
     "description": "The web development framework for building modern apps.",
     "url": "/home-•-angular-llms-txt",
-    "content": "# Home • Angular\n\nThe web development framework for building modern apps.",
+    "content": "# Angular\n\nThe web development framework for building modern apps.",
     "category": "developer-tools",
     "slug": "home-•-angular-llms-txt",
     "website": "https://angular.dev",
@@ -3865,7 +3865,7 @@
     "description": "Digital Marketing Agency based in Utrecht, The Netherlands. Helping SMEs with online growth.",
     "url": "/yellowlime-llms-txt",
     "content": "# Yellowlime\n\nDigital Marketing Agency based in Utrecht, The Netherlands. Helping SMEs with online growth.",
-    "category": "developer-tools",
+    "category": "agency-services",
     "slug": "yellowlime-llms-txt",
     "website": "https://www.yellowlime.nl/",
     "llmsUrl": "https://www.yellowlime.nl/llms.txt",
