@@ -28,7 +28,7 @@ import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import { categories, nonToolCategories, toolCategories } from '@/lib/categories'
 
 const step1Schema = z.object({
-  url: z
+  website: z
     .string()
     .url({
       message: 'Please enter a valid URL.'
@@ -42,16 +42,16 @@ const step1Schema = z.object({
 const validCategorySlugs = categories.map(category => category.slug) as [string, ...string[]]
 
 const step2Schema = z.object({
-  title: z
+  name: z
     .string()
     .min(2, {
-      message: 'Title must be at least 2 characters.'
+      message: 'Name must be at least 2 characters.'
     })
     .max(40, {
-      message: 'Title must be less than 40 characters for optimal display and SEO.'
+      message: 'Name must be less than 40 characters for optimal display and SEO.'
     })
     .refine(value => !value.endsWith('.'), {
-      message: 'Title should not end with a period.'
+      message: 'Name should not end with a period.'
     }),
   description: z
     .string()
@@ -64,7 +64,7 @@ const step2Schema = z.object({
     .refine(value => value.endsWith('.'), {
       message: 'Description should end with a period.'
     }),
-  url: z
+  website: z
     .string()
     .url({
       message: 'Please enter a valid URL.'
@@ -138,7 +138,7 @@ export function SubmitForm() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ url: data.website })
+        body: JSON.stringify({ website: data.website })
       })
 
       if (!response.ok) {
