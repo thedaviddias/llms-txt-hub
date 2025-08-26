@@ -9,7 +9,7 @@ interface FeaturedProjectsSectionProps {
 }
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
-  // Separate primary category tools from personal sites
+  // Filter for primary category tools only
   const toolProjects = projects
     .filter(project => {
       // Primary categories
@@ -23,11 +23,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
       ]
       return primaryCategories.includes(project.category)
     })
-    .slice(0, 4) // Ensure only 4 tools are shown
-
-  const personalProjects = projects
-    .filter(project => project.contentType === 'personal')
-    .slice(0, 4) // Ensure only 4 personal sites are shown
+    .slice(0, 8) // Show 8 tools (2 rows of 4)
 
   return (
     <section className="space-y-6">
@@ -38,24 +34,8 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
         </Link>
       </div>
 
-      {/* Show only 4 tools from primary categories in one row */}
+      {/* Show 8 tools from primary categories (2 rows) */}
       {toolProjects.length > 0 && <LLMGrid items={toolProjects} />}
-
-      {/* Show personal sites in a smaller, secondary section */}
-      {personalProjects.length > 0 && (
-        <div className="mt-8 pt-6 border-t">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-muted-foreground">Personal Sites</h3>
-            <Link
-              href={`${getRoute('website.list')}?contentType=personal`}
-              className="flex items-center text-sm text-muted-foreground hover:text-foreground"
-            >
-              View all personal sites <ArrowRight className="ml-1 size-3" />
-            </Link>
-          </div>
-          <LLMGrid items={personalProjects} />
-        </div>
-      )}
     </section>
   )
 }

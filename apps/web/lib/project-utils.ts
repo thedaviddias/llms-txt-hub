@@ -11,21 +11,13 @@ const PRIMARY_CATEGORIES = [
 ]
 
 export function getFeaturedProjects(projects: WebsiteMetadata[]): WebsiteMetadata[] {
-  // Filter for primary category tools and personal sites separately
+  // Filter for primary category tools only
   const primaryCategoryProjects = projects.filter(project =>
     PRIMARY_CATEGORIES.includes(project.category)
   )
-  const personalProjects = projects.filter(project => project.contentType === 'personal')
 
-  // Show 4 tools from primary categories and 4 personal sites
-  const toolLimit = Math.min(4, primaryCategoryProjects.length)
-  const personalLimit = Math.min(4, personalProjects.length)
-
-  const selectedTools = getRandomItems(primaryCategoryProjects, toolLimit)
-  const selectedPersonal = getRandomItems(personalProjects, personalLimit)
-
-  // Combine and return both for the component to handle separately
-  return [...selectedTools, ...selectedPersonal]
+  // Show 8 random tools from primary categories
+  return getRandomItems(primaryCategoryProjects, Math.min(8, primaryCategoryProjects.length))
 }
 
 export function getRecentlyUpdatedProjects(
