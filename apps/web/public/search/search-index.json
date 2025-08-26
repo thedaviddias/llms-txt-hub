@@ -1,5 +1,16 @@
 [
   {
+    "name": "Abogado online y asesoría legal",
+    "description": "¿Necesitas un abogado online de confianza al instante? En Abogado Exprés te ofrecemos asesoramiento legal rápido y online. Resolvemos tus dudas legales.",
+    "url": "https://abogadoexpres.es/",
+    "content": "# Abogado online y asesoría legal\n\n¿Necesitas un abogado online de confianza al instante? En Abogado Exprés te ofrecemos asesoramiento legal rápido y online. Resolvemos tus dudas legales.",
+    "category": "security-identity",
+    "slug": "abogado-online-y-asesoría-legal-llms-txt",
+    "website": "",
+    "llmsUrl": "https://abogadoexpres.es/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Activepieces",
     "description": "Open source no-code business automation tool",
     "url": "/activepieces-llms-txt",
@@ -9,6 +20,50 @@
     "website": "https://activepieces.com",
     "llmsUrl": "https://www.activepieces.com/docs/llms.txt",
     "llmsFullUrl": "https://www.activepieces.com/docs/llms-full.txt"
+  },
+  {
+    "name": "Affordable NVMe SSD Web Hosting Pakistan",
+    "description": "Host your site with 10x faster NVMe SSD, free SSL, cPanel & 24/7 support. Try WebHostingPk today – plans from Rs 199/month with a 1-day free trial.",
+    "url": "http://www.webhostingpk.com",
+    "content": "# Affordable NVMe SSD Web Hosting Pakistan\n\nHost your site with 10x faster NVMe SSD, free SSL, cPanel & 24/7 support. Try WebHostingPk today – plans from Rs 199/month with a 1-day free trial.",
+    "category": "developer-tools",
+    "slug": "affordable-nvme-ssd-web-hosting-pakistan-llms-txt",
+    "website": "",
+    "llmsUrl": "http://www.webhostingpk.com/llms.txt",
+    "llmsFullUrl": "http://www.webhostingpk.com/llms-full.txt"
+  },
+  {
+    "name": "Agile IT | CMMC Compliance Consultant",
+    "description": "Agile IT offers expert CMMC consulting services to ensure business meets the US DoD cybersecurity standards.",
+    "url": "https://agileit.com/",
+    "content": "# Agile IT | CMMC Compliance Consultant\n\nAgile IT offers expert CMMC consulting services to ensure business meets the US DoD cybersecurity standards.",
+    "category": "infrastructure-cloud",
+    "slug": "agile-it-cmmc-compliance-consultant-llms-txt",
+    "website": "",
+    "llmsUrl": "https://agileit.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "AI Consulting",
+    "description": "Discover expert consulting solutions for small businesses and nonprofits. Maxwell Strategy Group specializes in AI tools, market entry strategies.",
+    "url": "https://www.maxwellstrategygroup.com/",
+    "content": "# AI Consulting\n\nDiscover expert consulting solutions for small businesses and nonprofits. Maxwell Strategy Group specializes in AI tools, market entry strategies.",
+    "category": "ai-ml",
+    "slug": "ai-consulting-llms-txt",
+    "website": "",
+    "llmsUrl": "https://github.com/moizuk222-cpu/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "AI SDK",
+    "description": "The AI Toolkit for TypeScript, from the creators of Next.js.",
+    "url": "https://ai-sdk.dev/",
+    "content": "# AI SDK\n\nThe AI Toolkit for TypeScript, from the creators of Next.js.",
+    "category": "ai-ml",
+    "slug": "ai-sdk-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ai-sdk.dev/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "AI Squared",
@@ -22,6 +77,39 @@
     "llmsFullUrl": "https://docs.squared.ai/llms-full.txt"
   },
   {
+    "name": "AiCryptoCore",
+    "description": "At AiCryptoCore, we use AI to cut through the noise and deliver crypto news that helps you act smarter, faster, and with confidence.",
+    "url": "https://aicryptocore.com/",
+    "content": "# AiCryptoCore\n\nAt AiCryptoCore, we use AI to cut through the noise and deliver crypto news that helps you act smarter, faster, and with confidence.",
+    "category": "data-analytics",
+    "slug": "aicryptocore-llms-txt",
+    "website": "",
+    "llmsUrl": "https://aicryptocore.com/llms.txt",
+    "llmsFullUrl": "https://aicryptocore.com/llms-full.txt"
+  },
+  {
+    "name": "Alchemy Wares",
+    "description": "Spiritual Gifts for Awakened Souls - Incense, Crystals, Essential Oils and Candles.",
+    "url": "https://alchemywares.com",
+    "content": "# Alchemy Wares\n\nSpiritual Gifts for Awakened Souls - Incense, Crystals, Essential Oils and Candles.",
+    "category": "infrastructure-cloud",
+    "slug": "alchemy-wares-llms-txt",
+    "website": "",
+    "llmsUrl": "https://alchemywares.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Analog",
+    "description": "Analog is a fullstack meta-framework for building applications and websites with Angular.",
+    "url": "https://analogjs.org",
+    "content": "# Analog\n\nAnalog is a fullstack meta-framework for building applications and websites with Angular.",
+    "category": "developer-tools",
+    "slug": "analog-llms-txt",
+    "website": "",
+    "llmsUrl": "https://analogjs.org/llms.txt",
+    "llmsFullUrl": "https://analogjs.org/llms-full.txt"
+  },
+  {
     "name": "Answer.AI",
     "description": "AI-powered answering and automation platform",
     "url": "/answer-ai-llms-txt",
@@ -31,6 +119,17 @@
     "website": "https://answer.ai",
     "llmsUrl": "https://www.answer.ai/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Ant Design",
+    "description": "An enterprise-class UI design language and React UI library with a set of high-quality React components, one of best React UI library for enterprises.",
+    "url": "https://ant.design",
+    "content": "# Ant Design\n\nAn enterprise-class UI design language and React UI library with a set of high-quality React components, one of best React UI library for enterprises.",
+    "category": "developer-tools",
+    "slug": "ant-design-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ant.design/llms.txt",
+    "llmsFullUrl": "https://ant.design/llms-full.txt"
   },
   {
     "name": "Anthropic",
@@ -55,6 +154,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "APS SDK’s OpenAPI Specification | aps",
+    "description": "OpenAPI specifications used for generating the APS SDKs.",
+    "url": "https://wallabyway.github.io/aps-sdk-openapi/",
+    "content": "# APS SDK’s OpenAPI Specification | aps\n\nOpenAPI specifications used for generating the APS SDKs.",
+    "category": "integration-automation",
+    "slug": "aps-sdk’s-openapi-specification---aps-llms-txt",
+    "website": "",
+    "llmsUrl": "https://wallabyway.github.io/aps-sdk-openapi/llms.txt",
+    "llmsFullUrl": "https://wallabyway.github.io/aps-sdk-openapi/llms-full.txt"
+  },
+  {
     "name": "Aptible",
     "description": "Security and compliance platform for cloud infrastructure",
     "url": "/aptible-llms-txt",
@@ -64,6 +174,17 @@
     "website": "https://aptible.com",
     "llmsUrl": "https://www.aptible.com/docs/llms.txt",
     "llmsFullUrl": "https://www.aptible.com/docs/llms-full.txt"
+  },
+  {
+    "name": "APU Center",
+    "description": "We specialize in providing new, used & refurbished thermo king auxillary power units for semi trucks, available at APU Center in Springfield, MO.",
+    "url": "https://apucenter.com",
+    "content": "# APU Center\n\nWe specialize in providing new, used & refurbished thermo king auxillary power units for semi trucks, available at APU Center in Springfield, MO.",
+    "category": "ai-ml",
+    "slug": "apu-center-llms-txt",
+    "website": "",
+    "llmsUrl": "https://apucenter.com/llms.txt",
+    "llmsFullUrl": "https://apucenter.com/llms-full.txt"
   },
   {
     "name": "Argil AI",
@@ -77,6 +198,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Ark UI",
+    "description": "A headless UI library with over 45+ components designed to build reusable, scalable Design Systems that works for a wide range of JS frameworks.",
+    "url": "https://ark-ui.com",
+    "content": "# Ark UI\n\nA headless UI library with over 45+ components designed to build reusable, scalable Design Systems that works for a wide range of JS frameworks.",
+    "category": "developer-tools",
+    "slug": "ark-ui-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ark-ui.com/llms.txt",
+    "llmsFullUrl": "https://ark-ui.com/llms-full.txt"
+  },
+  {
     "name": "ast-grep",
     "description": "ast-grep(sg) is a fast and polyglot tool for code structural search, lint, rewriting at large scale.",
     "url": "/ast-grep-llms-txt",
@@ -86,6 +218,61 @@
     "website": "https://ast-grep.github.io",
     "llmsUrl": "https://ast-grep.github.io/llms.txt",
     "llmsFullUrl": "https://ast-grep.github.io/llms-full.txt"
+  },
+  {
+    "name": "Astro",
+    "description": "Astro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.",
+    "url": "https://astro.build/",
+    "content": "# Astro\n\nAstro builds fast content sites, powerful web applications, dynamic server APIs, and everything in-between.",
+    "category": "developer-tools",
+    "slug": "astro-llms-txt",
+    "website": "",
+    "llmsUrl": "https://astro.build/llms.txt",
+    "llmsFullUrl": "https://docs.astro.build/llms-full.txt"
+  },
+  {
+    "name": "Augenlasern in Zürich",
+    "description": "Muss Augenlasern in Zürich teuer sein? Nein! Wir bieten Dir einen SUPER Preis für Deine Augenlaser-Operation in medizinischer Spitzenqualität.",
+    "url": "https://www.youseezueri.ch",
+    "content": "# Augenlasern in Zürich\n\nMuss Augenlasern in Zürich teuer sein? Nein! Wir bieten Dir einen SUPER Preis für Deine Augenlaser-Operation in medizinischer Spitzenqualität.",
+    "category": "ai-ml",
+    "slug": "augenlasern-in-zürich-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.youseezueri.ch/llms.txt",
+    "llmsFullUrl": "https://www.youseezueri.ch/llms-full.txt"
+  },
+  {
+    "name": "Aureus ERP",
+    "description": "An Open-Source Laravel Enterprise Resource Planning (ERP) platform designed for Small and Medium Enterprises (SMEs) as well as large-scale enterprises.",
+    "url": "https://aureuserp.com/",
+    "content": "# Aureus ERP\n\nAn Open-Source Laravel Enterprise Resource Planning (ERP) platform designed for Small and Medium Enterprises (SMEs) as well as large-scale enterprises.",
+    "category": "integration-automation",
+    "slug": "aureus-erp-llms-txt",
+    "website": "",
+    "llmsUrl": "https://aureuserp.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Avalanche HVAC Services | Heating & Air",
+    "description": "Avalanche HVAC Services offers comprehensive HVAC Services including A/C and furnace repair, installation and maintenance in Castle Rock, CO.",
+    "url": "https://avalanchehomesystems.com",
+    "content": "# Avalanche HVAC Services | Heating & Air\n\nAvalanche HVAC Services offers comprehensive HVAC Services including A/C and furnace repair, installation and maintenance in Castle Rock, CO.",
+    "category": "ai-ml",
+    "slug": "avalanche-hvac-services---heating--and--air-llms-txt",
+    "website": "",
+    "llmsUrl": "https://avalanchehomesystems.com/llms.txt",
+    "llmsFullUrl": "https://avalanchehomesystems.com/llms-full.txt"
+  },
+  {
+    "name": "Avo",
+    "description": "Avo is the essential toolkit for building Internal Tools with Ruby on Rails.",
+    "url": "https://avohq.io",
+    "content": "# Avo\n\nAvo is the essential toolkit for building Internal Tools with Ruby on Rails.",
+    "category": "developer-tools",
+    "slug": "avo-llms-txt",
+    "website": "",
+    "llmsUrl": "https://avohq.io/llms.txt",
+    "llmsFullUrl": "https://avohq.io/llms-full.txt"
   },
   {
     "name": "Axiom",
@@ -121,6 +308,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Best App Development Company",
+    "description": "Quokka Labs is a custom app development company in India, US, UAE & UK, offering solutions for startups and enterprises. Get expert consulting today.",
+    "url": "https://quokkalabs.com/",
+    "content": "# Best App Development Company\n\nQuokka Labs is a custom app development company in India, US, UAE & UK, offering solutions for startups and enterprises. Get expert consulting today.",
+    "category": "integration-automation",
+    "slug": "best-app-development-company-llms-txt",
+    "website": "",
+    "llmsUrl": "https://quokkalabs.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Best Boat Lifts",
     "description": "Find the best boat lifts from IMM, including custom-built boat lifts for powerboats, yachts, sailboats, and PWCs.",
     "url": "/best-boat-lifts-llms-txt",
@@ -132,6 +330,17 @@
     "llmsFullUrl": "https://iqboatlifts.com/llms-full.txt"
   },
   {
+    "name": "Beta Three Professional Audio",
+    "description": "Beta Three was founded in 1988, Beta Three is professional audio manufacturer with R&D and producing;imported high precision auto-production equipment.",
+    "url": "https://www.beta3pro.com",
+    "content": "# Beta Three Professional Audio\n\nBeta Three was founded in 1988, Beta Three is professional audio manufacturer with R&D and producing;imported high precision auto-production equipment.",
+    "category": "integration-automation",
+    "slug": "beta-three-professional-audio-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.beta3pro.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Better Auth",
     "description": "The most comprehensive authentication library for TypeScript.",
     "url": "/better-auth-llms-txt",
@@ -140,6 +349,17 @@
     "slug": "better-auth-llms-txt",
     "website": "https://www.better-auth.com",
     "llmsUrl": "https://www.better-auth.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Bitcoin Cold Storage Tools",
+    "description": "Secure Bitcoin cold storage tools by Xellox. Store your crypto safely with hardware wallets and offline seed phrase protection.",
+    "url": "https://www.xellox.io",
+    "content": "# Bitcoin Cold Storage Tools\n\nSecure Bitcoin cold storage tools by Xellox. Store your crypto safely with hardware wallets and offline seed phrase protection.",
+    "category": "security-identity",
+    "slug": "bitcoin-cold-storage-tools-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.xellox.io/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -176,6 +396,28 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Bunny",
+    "description": "Bunny provides a single platform for revenue operations, SaaS billing, quoting, invoicing, revenue recognition, and analytics.",
+    "url": "https://bunny.com",
+    "content": "# Bunny\n\nBunny provides a single platform for revenue operations, SaaS billing, quoting, invoicing, revenue recognition, and analytics.",
+    "category": "data-analytics",
+    "slug": "bunny-llms-txt",
+    "website": "",
+    "llmsUrl": "https://bunny.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Callback Technologies",
+    "description": "Developer components for building virtual file systems, file security and monitoring tools, and file sharing solutions - all without writing driver-level code.",
+    "url": "https://www.callback.com/",
+    "content": "# Callback Technologies\n\nDeveloper components for building virtual file systems, file security and monitoring tools, and file sharing solutions - all without writing driver-level code.",
+    "category": "developer-tools",
+    "slug": "callback-technologies-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.callback.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Campsite",
     "description": "Organized team communication platform that replaces chaotic chat with structured discussions",
     "url": "/campsite-llms-txt",
@@ -184,6 +426,28 @@
     "slug": "campsite-llms-txt",
     "website": "https://developers.campsite.com",
     "llmsUrl": "https://developers.campsite.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Car Rental in Airports of Georgia",
+    "description": "Best rated car rental in Georgia. Best deals for economy, SUV and 4x4 cars in Tbilisi, Kutaisi and Batumi Airports. Affordable prices, driver's service.",
+    "url": "https://parent.ge",
+    "content": "# Car Rental in Airports of Georgia\n\nBest rated car rental in Georgia. Best deals for economy, SUV and 4x4 cars in Tbilisi, Kutaisi and Batumi Airports. Affordable prices, driver's service.",
+    "category": "security-identity",
+    "slug": "car-rental-in-airports-of-georgia-llms-txt",
+    "website": "",
+    "llmsUrl": "https://parent.ge/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "CData Software",
+    "description": "CData provides real-time data access across enterprise apps & infrastructure with the industry's most comprehensive connectivity platform. Get started today.",
+    "url": "https://www.cdata.com",
+    "content": "# CData Software\n\nCData provides real-time data access across enterprise apps & infrastructure with the industry's most comprehensive connectivity platform. Get started today.",
+    "category": "data-analytics",
+    "slug": "cdata-software-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.cdata.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -196,6 +460,39 @@
     "website": "https://chakra-ui.com/",
     "llmsUrl": "https://chakra-ui.com/llms.txt",
     "llmsFullUrl": "https://chakra-ui.com/llms-full.txt"
+  },
+  {
+    "name": "CircleCI",
+    "description": "CircleCI is a cloud-native CI/CD platform that helps teams build, test, and ship software quickly and at scale.",
+    "url": "https://circleci.com",
+    "content": "# CircleCI\n\nCircleCI is a cloud-native CI/CD platform that helps teams build, test, and ship software quickly and at scale.",
+    "category": "developer-tools",
+    "slug": "circleci-llms-txt",
+    "website": "",
+    "llmsUrl": "https://circleci.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "CitizenShipper",
+    "description": "An AI-enabled, two-sided marketplace where pets and other hard-to-ship items in the US.",
+    "url": "https://citizenshipper.com/",
+    "content": "",
+    "category": "ai-ml",
+    "slug": "citizen-shipper-llms-txt",
+    "website": "",
+    "llmsUrl": "https://citizenshipper.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Clerk",
+    "description": "The easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and “The Modern Web”.",
+    "url": "https://clerk.com/",
+    "content": "# Clerk\n\nThe easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and “The Modern Web”.",
+    "category": "developer-tools",
+    "slug": "clerk-llms-txt",
+    "website": "",
+    "llmsUrl": "https://clerk.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Clever Cloud",
@@ -242,6 +539,50 @@
     "llmsFullUrl": "https://docs.codeium.com/llms-full.txt"
   },
   {
+    "name": "ComfortERP",
+    "description": "Comfort ERP - All-in-one ERP solution for WordPress.",
+    "url": "https://comforterp.com/",
+    "content": "# ComfortERP\n\nComfort ERP - All-in-one ERP solution for WordPress.",
+    "category": "developer-tools",
+    "slug": "comforterp-llms-txt",
+    "website": "",
+    "llmsUrl": "https://comforterp.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "ComfortHRM",
+    "description": "Comfort HRM - Streamline your HR process. Simple, smart and scalable.",
+    "url": "https://comforthrm.com/",
+    "content": "# ComfortHRM\n\nComfort HRM - Streamline your HR process. Simple, smart and scalable.",
+    "category": "developer-tools",
+    "slug": "comforthrm-llms-txt",
+    "website": "",
+    "llmsUrl": "https://comforthrm.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Community Helm Charts",
+    "description": "Discover community-driven Helm charts for open-source tools lacking official support. Deploy apps effortlessly on Kubernetes.",
+    "url": "https://community-charts.github.io",
+    "content": "# Community Helm Charts\n\nDiscover community-driven Helm charts for open-source tools lacking official support. Deploy apps effortlessly on Kubernetes.",
+    "category": "infrastructure-cloud",
+    "slug": "community-helm-charts-for-open-llms-txt",
+    "website": "",
+    "llmsUrl": "https://community-charts.github.io/llms.txt",
+    "llmsFullUrl": "https://community-charts.github.io/llms-full.txt"
+  },
+  {
+    "name": "Concept Designs & Marketing",
+    "description": "Top digital marketing agency in Gold Coast & Northern Beaches, offering full branding solutions and strategic marketing for business success.",
+    "url": "https://www.concept-designs.com.au/",
+    "content": "# Concept Designs & Marketing\n\nTop digital marketing agency in Gold Coast & Northern Beaches, offering full branding solutions and strategic marketing for business success.",
+    "category": "integration-automation",
+    "slug": "concept-designs-&-marketing-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.concept-designs.com.au/llms.txt",
+    "llmsFullUrl": "https://www.concept-designs.com.au/llms-full.txt"
+  },
+  {
     "name": "Conductor",
     "description": "Real-time API integration for QuickBooks Desktop with multi-language support",
     "url": "/conductor-llms-txt",
@@ -253,6 +594,28 @@
     "llmsFullUrl": "https://docs.conductor.is/llms-full.txt"
   },
   {
+    "name": "Contractor Marketing Agency",
+    "description": "Your search ends here. This is high-powered digital marketing for growth ready design-build contractors. Start getting referral quality leads online.",
+    "url": "https://contractorgrowthnetwork.com/",
+    "content": "# Contractor Marketing Agency\n\nYour search ends here. This is high-powered digital marketing for growth ready design-build contractors. Start getting referral quality leads online.",
+    "category": "data-analytics",
+    "slug": "contractor-marketing-agency-llms-txt",
+    "website": "",
+    "llmsUrl": "https://contractorgrowthnetwork.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "ContraVault",
+    "description": "AI-based Enterprise B2B SaaS software used for Tender/RFP lifecycle management Software.",
+    "url": "https://www.contravault.com",
+    "content": "# ContraVault\n\nAI-based Enterprise B2B SaaS software used for Tender/RFP lifecycle management Software.",
+    "category": "ai-ml",
+    "slug": "contravault-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.contravault.com/llms.txt",
+    "llmsFullUrl": "https://www.contravault.com/llms-full.txt"
+  },
+  {
     "name": "Convex",
     "description": "The missing half of your React app: Convex is the open-source reactive database for app developers.",
     "url": "/convex-llms-txt",
@@ -262,6 +625,39 @@
     "website": "https://convex.dev",
     "llmsUrl": "https://convex.dev/llms.txt",
     "llmsFullUrl": "https://docs.convex.dev/llms.txt"
+  },
+  {
+    "name": "Copenhagen Art and Photography",
+    "description": "Art & photo series by Kasper Bergholt: Objects for an Ideal Home - Flora Excursoria Hafniensis - The Time Is Ouf of Joint.",
+    "url": "https://bergholt.net",
+    "content": "# Copenhagen Art and Photography\n\nArt & photo series by Kasper Bergholt: Objects for an Ideal Home - Flora Excursoria Hafniensis - The Time Is Ouf of Joint.",
+    "category": "ai-ml",
+    "slug": "copenhagen-art-and-photography-llms-txt",
+    "website": "",
+    "llmsUrl": "https://bergholt.net/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Count",
+    "description": "Count is a canvas-based BI tool that helps data teams grow their business, not just build dashboards.",
+    "url": "/count-llms-txt",
+    "content": "# Count\n\nCount is a canvas-based BI tool that helps data teams grow their business, not just build dashboards.",
+    "category": "data-analytics",
+    "slug": "count-llms-txt",
+    "website": "https://count.co/",
+    "llmsUrl": "https://count.co/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "CRE Data and Location Intelligence App",
+    "description": "Valuable real estate data analytics like building footprints, tax parcels, geospatial, zoning, & environmental building data all in a single platform.",
+    "url": "https://www.lightboxre.com/",
+    "content": "# CRE Data and Location Intelligence App\n\nValuable real estate data analytics like building footprints, tax parcels, geospatial, zoning, & environmental building data all in a single platform.",
+    "category": "data-analytics",
+    "slug": "cre-data-and-location-intelligence-app-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.lightboxre.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Creative Handbook Production Resource Directory",
@@ -286,6 +682,28 @@
     "llmsFullUrl": "https://docs.crewai.com/llms-full.txt"
   },
   {
+    "name": "Cross Browser & Mobile App Testing",
+    "description": "Instant access to over 5200 browsers with physical iOS and Android devices. Boost your testing with TestingBot.",
+    "url": "https://testingbot.com",
+    "content": "# Cross Browser & Mobile App Testing\n\nInstant access to over 5200 browsers with physical iOS and Android devices. Boost your testing with TestingBot.",
+    "category": "developer-tools",
+    "slug": "cross-browser-&-mobile-app-testing-llms-txt",
+    "website": "",
+    "llmsUrl": "https://testingbot.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Curling IO",
+    "description": "Online curling registration and league management made easy.",
+    "url": "https://curling.io/",
+    "content": "# Curling IO\n\nOnline curling registration and league management made easy.",
+    "category": "infrastructure-cloud",
+    "slug": "curling-io-llms-txt",
+    "website": "",
+    "llmsUrl": "https://curling.io/llms.txt",
+    "llmsFullUrl": "https://curling.io/llms-full.txt"
+  },
+  {
     "name": "Cursor",
     "description": "AI-powered code editor and development environment",
     "url": "/cursor-llms-txt",
@@ -295,6 +713,50 @@
     "website": "https://cursor.com",
     "llmsUrl": "https://docs.cursor.com/llms.txt",
     "llmsFullUrl": "https://docs.cursor.com/llms-full.txt"
+  },
+  {
+    "name": "Customer Service AI platform",
+    "description": "Gladly is the AI customer service software that powers radically efficient, radically personal support—treating people like people, not tickets.",
+    "url": "https://www.gladly.ai/",
+    "content": "# Customer Service AI platform\n\nGladly is the AI customer service software that powers radically efficient, radically personal support—treating people like people, not tickets.",
+    "category": "ai-ml",
+    "slug": "customer-service-ai-platform-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.gladly.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "daisyUI",
+    "description": "Best Tailwind Components Library - Free UI components for Tailwind CSS.",
+    "url": "/daisyui-llms-txt",
+    "content": "# daisyUI\n\nBest Tailwind Components Library - Free UI components for Tailwind CSS.",
+    "category": "developer-tools",
+    "slug": "daisyui-llms-txt",
+    "website": "https://daisyui.com/",
+    "llmsUrl": "https://daisyui.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "dat1.co",
+    "description": "Dat1 is a serverless GPU platform with fast and effortless scaling, low cold starts, and cost-efficient, pay-per-second pricing.",
+    "url": "https://dat1.co",
+    "content": "# dat1.co\n\nDat1 is a serverless GPU platform with fast and effortless scaling, low cold starts, and cost-efficient, pay-per-second pricing.",
+    "category": "ai-ml",
+    "slug": "dat1.co-llms-txt",
+    "website": "",
+    "llmsUrl": "https://dat1.co/llms.txt",
+    "llmsFullUrl": "https://dat1.co/llms-full.txt"
+  },
+  {
+    "name": "Databuddy Analytics",
+    "description": "Experience powerful, privacy-first analytics that beats GA without compromising user data. Zero cookies required, 100% data ownership.",
+    "url": "https://www.databuddy.cc",
+    "content": "# Databuddy Analytics\n\nExperience powerful, privacy-first analytics that beats GA without compromising user data. Zero cookies required, 100% data ownership.",
+    "category": "data-analytics",
+    "slug": "databuddy-analytics-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.databuddy.cc/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Datafold",
@@ -308,6 +770,28 @@
     "llmsFullUrl": "https://docs.datafold.com/llms-full.txt"
   },
   {
+    "name": "De Airsoft Winkel",
+    "description": "Ontdek topkwaliteit Airsoft Gear bij DeAirsoftWinkel! Vind de beste Airsoft Guns, Pistolen, uitrusting, munitie & meer. Bezoek De Airsoftwinkel en Shop nu.",
+    "url": "https://deairsoftwinkel.com/",
+    "content": "# De Airsoft Winkel\n\nOntdek topkwaliteit Airsoft Gear bij DeAirsoftWinkel! Vind de beste Airsoft Guns, Pistolen, uitrusting, munitie & meer. Bezoek De Airsoftwinkel en Shop nu.",
+    "category": "data-analytics",
+    "slug": "de-airsoft-winkel-llms-txt",
+    "website": "",
+    "llmsUrl": "https://deairsoftwinkel.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Deliverect",
+    "description": "Deliverect is a global ecosystem of on and off-premise solutions for digital food sales. Its API-first software helps enterprises of all sizes to sell anywhere and deliver everywhere.",
+    "url": "https://www.deliverect.com/en",
+    "content": "# Deliverect\n\nDeliverect is a global ecosystem of on and off-premise solutions for digital food sales. Its API-first software helps enterprises of all sizes to sell anywhere and deliver everywhere.",
+    "category": "other",
+    "slug": "deliverect-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.deliverect.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Demo Time",
     "description": "Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
     "url": "/demo-time-llms-txt",
@@ -319,6 +803,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Deno Documentation",
+    "description": "Guides, references, tutorials and examples for using Deno, the secure runtime for JavaScript and TypeScript.",
+    "url": "https://docs.deno.com",
+    "content": "# Deno Documentation\n\nGuides, references, tutorials and examples for using Deno, the secure runtime for JavaScript and TypeScript.",
+    "category": "developer-tools",
+    "slug": "deno-documentation-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.deno.com/llms.txt",
+    "llmsFullUrl": "https://docs.deno.com/llms-full.txt"
+  },
+  {
     "name": "DevHub",
     "description": "'DevHub's location-focused enterprise marketing platform is easy to use and configured specifically for your brand's unique needs.'",
     "url": "/dev-hub-llms-txt",
@@ -328,6 +823,72 @@
     "website": "https://www.devhub.com/",
     "llmsUrl": "https://api-docs.devhub.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "DexPaprika API | Live Crypto & Pool Data",
+    "description": "DexPaprika API streams real-time DEX token prices, liquidity pools & volumes—ideal fuel for AI agents powering trading dashboards, portfolios & DeFi apps.",
+    "url": "https://docs.dexpaprika.com/",
+    "content": "# DexPaprika API | Live Crypto & Pool Data\n\nDexPaprika API streams real-time DEX token prices, liquidity pools & volumes—ideal fuel for AI agents powering trading dashboards, portfolios & DeFi apps.",
+    "category": "data-analytics",
+    "slug": "dexpaprika-api---live-crypto--and--pool-data-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.dexpaprika.com/llms.txt",
+    "llmsFullUrl": "https://docs.dexpaprika.com/llms-full.txt"
+  },
+  {
+    "name": "Digitale Transformation",
+    "description": "Digitale Transformation mit Menschlichkeit: Maßgeschneiderte ERP-, CRM- und Automationslösungen für KMU im Handel, E-Commerce und Produktion.",
+    "url": "https://www.mateit.de",
+    "content": "# Digitale Transformation\n\nDigitale Transformation mit Menschlichkeit: Maßgeschneiderte ERP-, CRM- und Automationslösungen für KMU im Handel, E-Commerce und Produktion.",
+    "category": "integration-automation",
+    "slug": "digitale-transformation-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.mateit.de/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Docker Docs",
+    "description": "Official Docker library of resources, manuals, and guides to help you containerize applications.",
+    "url": "/docker-docs-llms-txt",
+    "content": "# Docker Docs\n\nOfficial Docker library of resources, manuals, and guides to help you containerize applications.",
+    "category": "developer-tools",
+    "slug": "docker-docs-llms-txt",
+    "website": "https://docs.docker.com",
+    "llmsUrl": "https://docs.docker.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Doctornow",
+    "description": "Korea's top telemedicine app! Remote consultations anytime. Best prices on hair loss, acne & diet medications. Sunday care available. Prescription delivery.",
+    "url": "https://doctornow.co.kr",
+    "content": "# Doctornow\n\nKorea's top telemedicine app! Remote consultations anytime. Best prices on hair loss, acne & diet medications. Sunday care available. Prescription delivery.",
+    "category": "ai-ml",
+    "slug": "doctornow-llms-txt",
+    "website": "",
+    "llmsUrl": "https://doctornow.co.kr/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Document File Translation Powered by AI",
+    "description": "Translate Document file (Excel, Word, PDF, PPT) on our ChatGPT-powered service. Just upload and our AI will auto translate.",
+    "url": "https://doc2lang.com",
+    "content": "# Document File Translation Powered by AI\n\nTranslate Document file (Excel, Word, PDF, PPT) on our ChatGPT-powered service. Just upload and our AI will auto translate.",
+    "category": "ai-ml",
+    "slug": "document-file-translation-powered-by-ai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://doc2lang.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Domain Marketplace",
+    "description": "Best domain marketplace for buying, renting, leasing, selling & trading domain names. Popular aftermarket for finding premium domains.",
+    "url": "https://namegulf.com",
+    "content": "# Domain Marketplace\n\nBest domain marketplace for buying, renting, leasing, selling & trading domain names. Popular aftermarket for finding premium domains.",
+    "category": "infrastructure-cloud",
+    "slug": "domain-marketplace-llms-txt",
+    "website": "",
+    "llmsUrl": "https://namegulf.com/llms.txt",
+    "llmsFullUrl": "https://namegulf.com/llms-full.txt"
   },
   {
     "name": "Dopp Finance",
@@ -418,6 +979,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Embed Notion Pages Into Your Website",
+    "description": "Embed your Notion pages into your website with a simple iframe. Full customisation, password protection & more. Free plan available.",
+    "url": "https://embednotionpages.com/",
+    "content": "# Embed Notion Pages Into Your Website\n\nEmbed your Notion pages into your website with a simple iframe. Full customisation, password protection & more. Free plan available.",
+    "category": "integration-automation",
+    "slug": "embed-notion-pages-into-your-website-llms-txt",
+    "website": "",
+    "llmsUrl": "https://embednotionpages.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "EmbedChain",
     "description": "AI embedding and chain management platform",
     "url": "/embedchain-llms-txt",
@@ -451,6 +1023,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Expo Documentation",
+    "description": "Build one JavaScript/TypeScript project that runs natively on all your users' devices.",
+    "url": "/expo-documentation-llms-txt",
+    "content": "# Expo Documentation\n\nBuild one JavaScript/TypeScript project that runs natively on all your users' devices.",
+    "category": "developer-tools",
+    "slug": "expo-documentation-llms-txt",
+    "website": "https://docs.expo.dev",
+    "llmsUrl": "https://docs.expo.dev/llms.txt",
+    "llmsFullUrl": "https://docs.expo.dev/llms-full.txt"
+  },
+  {
     "name": "Fabric",
     "description": "E-commerce platform and infrastructure",
     "url": "/fabric-llms-txt",
@@ -462,6 +1045,17 @@
     "llmsFullUrl": "https://developer.fabric.inc/llms-full.txt"
   },
   {
+    "name": "Fantasy Sports App Development Company",
+    "description": "Vinfotech specializes in custom software development for fantasy sports, iGaming, opinion trading platforms, and fan engagement solutions.",
+    "url": "https://www.vinfotech.com/",
+    "content": "# Fantasy Sports App Development Company\n\nVinfotech specializes in custom software development for fantasy sports, iGaming, opinion trading platforms, and fan engagement solutions.",
+    "category": "developer-tools",
+    "slug": "fantasy-sports-app-development-company-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.vinfotech.com/llms.txt",
+    "llmsFullUrl": "https://www.vinfotech.com/llms-full.txt"
+  },
+  {
     "name": "FastHTML",
     "description": "High-performance HTML templating engine",
     "url": "/fasthtml-llms-txt",
@@ -470,6 +1064,72 @@
     "slug": "fasthtml-llms-txt",
     "website": "https://fastht.ml",
     "llmsUrl": "https://docs.fastht.ml/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Fatos Militares",
+    "description": "Fatos Militares seu site de Curiosidades Militares, Notícias Militares e conhecimento em geral sobre o Mundo Militar.",
+    "url": "https://fatosmilitares.com/",
+    "content": "# Fatos Militares\n\nFatos Militares seu site de Curiosidades Militares, Notícias Militares e conhecimento em geral sobre o Mundo Militar.",
+    "category": "ai-ml",
+    "slug": "fatos-militares-llms-txt",
+    "website": "",
+    "llmsUrl": "https://fatosmilitares.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Feedback Sync",
+    "description": "Centralize customer feedback. Build a better product.\r\nTurn scattered customer feedback, an AI-driven app for Slack.",
+    "url": "https://www.feedbacksync.ai",
+    "content": "# Feedback Sync\n\nCentralize customer feedback. Build a better product.\r\nTurn scattered customer feedback, an AI-driven app for Slack.",
+    "category": "ai-ml",
+    "slug": "feedback-sync-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.feedbacksync.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Fibery",
+    "description": "Fibery is a work platform that replaces scattered tools and connects teams. Chosen by nerds, appreciated by everyone.",
+    "url": "/fibery-llms-txt",
+    "content": "# Fibery\n\nFibery is a work platform that replaces scattered tools and connects teams. Chosen by nerds, appreciated by everyone.",
+    "category": "integration-automation",
+    "slug": "fibery-llms-txt",
+    "website": "https://fibery.io",
+    "llmsUrl": "https://fibery.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Film and Screenwriter School",
+    "description": "Film Connection Film Schools Are Near You! Learn from film pros on real film shoots. A smarter way to do film school. Free application. Low tuition.",
+    "url": "https://www.filmconnection.com/ ",
+    "content": "# Film and Screenwriter School\n\nFilm Connection Film Schools Are Near You! Learn from film pros on real film shoots. A smarter way to do film school. Free application. Low tuition.",
+    "category": "ai-ml",
+    "slug": "film-and-screenwriter-school-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.filmconnection.com/llms.txt",
+    "llmsFullUrl": "https://www.filmconnection.com/llms-full.txt"
+  },
+  {
+    "name": "Film and Screenwriting School",
+    "description": "Film Connection Film Schools Are Near You! Learn from film pros on real film shoots. A smarter way to do film school. Free application. Low tuition.",
+    "url": "https://www.filmconnection.com/",
+    "content": "# Film and Screenwriting School\n\nFilm Connection Film Schools Are Near You! Learn from film pros on real film shoots. A smarter way to do film school. Free application. Low tuition.",
+    "category": "ai-ml",
+    "slug": "film-and-screenwriting-school-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.filmconnection.com/llms.txt",
+    "llmsFullUrl": "https://www.filmconnection.com/llms-full.txt"
+  },
+  {
+    "name": "Finansiering för företagare utan krångel",
+    "description": "Vi älskar småföretag! Därför har vi rätt företagsfinansiering som passar små- och medelstora företag. Välkommen till Qred Bank.",
+    "url": "https://www.qred.se/",
+    "content": "# Finansiering för företagare utan krångel\n\nVi älskar småföretag! Därför har vi rätt företagsfinansiering som passar små- och medelstora företag. Välkommen till Qred Bank.",
+    "category": "ai-ml",
+    "slug": "finansiering-för-företagare-utan-krångel-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.qred.se/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -506,6 +1166,17 @@
     "llmsFullUrl": "https://flatfile.com/docs/llms-full.txt"
   },
   {
+    "name": "Flows",
+    "description": "Flows is a fully customizable product adoption platform for modern companies building onboarding and user engagement experiences.",
+    "url": "https://flows.sh/",
+    "content": "# Flows\n\nFlows is a fully customizable product adoption platform for modern companies building onboarding and user engagement experiences.",
+    "category": "developer-tools",
+    "slug": "flows-llms-txt",
+    "website": "",
+    "llmsUrl": "https://flows.sh/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "FlowX",
     "description": "Business process automation platform",
     "url": "/flowx-llms-txt",
@@ -517,6 +1188,17 @@
     "llmsFullUrl": "https://docs.flowx.ai/llms-full.txt"
   },
   {
+    "name": "Fork Force Australia",
+    "description": "Explore Forklifts Australia for quality new & used forklifts. Hire & sales at great value across Brisbane, Sydney, Melbourne, Adelaide & more.",
+    "url": "https://www.forkforce.com.au/",
+    "content": "# Fork Force Australia\n\nExplore Forklifts Australia for quality new & used forklifts. Hire & sales at great value across Brisbane, Sydney, Melbourne, Adelaide & more.",
+    "category": "integration-automation",
+    "slug": "fork-force-australia-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.forkforce.com.au/llms.txt",
+    "llmsFullUrl": "https://www.forkforce.com.au/llms-full.txt"
+  },
+  {
     "name": "FractalPay",
     "description": "Modern payment processing platform",
     "url": "/fractalpay-llms-txt",
@@ -526,6 +1208,17 @@
     "website": "https://fractalpay.com",
     "llmsUrl": "https://docs.fractalpay.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Frank Krav Maga Self Defense Bengaluru",
+    "description": "Call Franklin Joseph @ 9886769281 > Corporate Self Defense Workshops + Krav Maga Self Defense Classes + Psychological Scientific Life Saving Skills.",
+    "url": "https://kravmagaselfdefensebengaluru.in",
+    "content": "# Frank Krav Maga Self Defense Bengaluru\n\nCall Franklin Joseph @ 9886769281 > Corporate Self Defense Workshops + Krav Maga Self Defense Classes + Psychological Scientific Life Saving Skills.",
+    "category": "security-identity",
+    "slug": "frank-krav-maga-self-defense-bengaluru-llms-txt",
+    "website": "",
+    "llmsUrl": "https://kravmagaselfdefensebengaluru.in/llms.txt",
+    "llmsFullUrl": "https://iteachipower.in/llms-full.txt"
   },
   {
     "name": "Frigade",
@@ -550,6 +1243,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Funny Stories of Horrible Stories",
+    "description": "Discover real stories of horrible bosses from around the world. Share your workplace nightmare anonymously.",
+    "url": "https://thehorriblebosses.com/",
+    "content": "# Funny Stories of Horrible Stories\n\nDiscover real stories of horrible bosses from around the world. Share your workplace nightmare anonymously.",
+    "category": "ai-ml",
+    "slug": "funny-stories-of-horrible-stories-llms-txt",
+    "website": "",
+    "llmsUrl": "https://thehorriblebosses.com/llms.txt",
+    "llmsFullUrl": "https://thehorriblebosses.com/llms-full.txt"
+  },
+  {
     "name": "Galileo",
     "description": "AI-powered data quality and monitoring platform",
     "url": "/galileo-llms-txt",
@@ -561,6 +1265,61 @@
     "llmsFullUrl": "https://docs.rungalileo.io/llms-full.txt"
   },
   {
+    "name": "Game Development Hub",
+    "description": "Outscal is a platform for game developers who want a job in the gaming industry or want to learn game development.",
+    "url": "https://outscal.com",
+    "content": "# Game Development Hub\n\nOutscal is a platform for game developers who want a job in the gaming industry or want to learn game development.",
+    "category": "developer-tools",
+    "slug": "game-development-hub-llms-txt",
+    "website": "",
+    "llmsUrl": "https://outscal.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Gaslighting Check",
+    "description": "AI-powered tool that analyzes text, audio, and conversations to detect manipulation tactics like gaslighting and emotional abuse.",
+    "url": "https://www.gaslightingcheck.com",
+    "content": "",
+    "category": "ai-ml",
+    "slug": "gaslighting-check-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.gaslightingcheck.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Geförderte Online Weiterbildung",
+    "description": "Online-Weiterbildung im IT-Bereich. Zu 100% förderfähig mit Bildungsgutschein von Arbeitsagentur und Jobcenter.",
+    "url": "https://www.dbe.academy/",
+    "content": "# Geförderte Online Weiterbildung\n\nOnline-Weiterbildung im IT-Bereich. Zu 100% förderfähig mit Bildungsgutschein von Arbeitsagentur und Jobcenter.",
+    "category": "integration-automation",
+    "slug": "geförderte-online-weiterbildung-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.dbe.academy/llms.txt",
+    "llmsFullUrl": "https://www.dbe.academy/llms-full.txt"
+  },
+  {
+    "name": "Generate AI UGC Videos for Ads",
+    "description": "Generate stunning AI UGC videos for your ads in just minutes with Tagshop. Fast, easy, and effective video creation for every brand.",
+    "url": "https://tagshop.ai/",
+    "content": "# Generate AI UGC Videos for Ads\n\nGenerate stunning AI UGC videos for your ads in just minutes with Tagshop. Fast, easy, and effective video creation for every brand.",
+    "category": "ai-ml",
+    "slug": "generate-ai-ugc-videos-for-ads-llms-txt",
+    "website": "",
+    "llmsUrl": "https://tagshop.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Giselle",
+    "description": "Design AI apps with Giselle's AI App Builder. Simplify tasks and create smart assistants powered by LLM technology.",
+    "url": "/giselle-llms-txt",
+    "content": "# Giselle\n\nDesign AI apps with Giselle's AI App Builder. Simplify tasks and create smart assistants powered by LLM technology.",
+    "category": "ai-ml",
+    "slug": "giselle-llms-txt",
+    "website": "https://giselles.ai/",
+    "llmsUrl": "https://docs.giselles.ai/llms.txt",
+    "llmsFullUrl": "https://docs.giselles.ai/llms-full.txt"
+  },
+  {
     "name": "Glama",
     "description": "Enterprise-grade security, privacy, with features like agents, MCP, prompt templates, and more.",
     "url": "/glama-llms-txt",
@@ -569,6 +1328,17 @@
     "slug": "glama-llms-txt",
     "website": "https://glama.ai",
     "llmsUrl": "https://glama.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "glucn.com",
+    "description": "Personal website and blog of glucn, a passionate full-stack developer building innovative solutions with code.",
+    "url": "https://glucn.com",
+    "content": "# glucn.com\n\nPersonal website and blog of glucn, a passionate full-stack developer building innovative solutions with code.",
+    "category": "ai-ml",
+    "slug": "glucn.com-llms-txt",
+    "website": "",
+    "llmsUrl": "https://glucn.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -583,6 +1353,39 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Greece Vacation Search",
+    "description": "Greece Vacation Search will help you find the best greek island for your vacations in Greece among the dozens of famous Greek islands.",
+    "url": "https://www.greecevacationsearch.com/",
+    "content": "# Greece Vacation Search\n\nGreece Vacation Search will help you find the best greek island for your vacations in Greece among the dozens of famous Greek islands.",
+    "category": "data-analytics",
+    "slug": "greece-vacation-search-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.greecevacationsearch.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Green Apple Travel & Tourism",
+    "description": "Global visa service, Attestation and Tour packages.",
+    "url": "https://greenappletravel.ae",
+    "content": "# Green Apple Travel & Tourism\n\nGlobal visa service, Attestation and Tour packages.",
+    "category": "integration-automation",
+    "slug": "green-apple-travel-&-tourism-llms-txt",
+    "website": "",
+    "llmsUrl": "https://greenappletravel.ae/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "GroqCloud",
+    "description": "GroqCloud offers rapid AI inference, OpenAI-compatible endpoints, easy integration, and a no-code interface for simple experimentation.",
+    "url": "https://console.groq.com/home",
+    "content": "# GroqCloud\n\nGroqCloud offers rapid AI inference, OpenAI-compatible endpoints, easy integration, and a no-code interface for simple experimentation.",
+    "category": "ai-ml",
+    "slug": "groqcloud-llms-txt",
+    "website": "",
+    "llmsUrl": "https://console.groq.com/llms.txt",
+    "llmsFullUrl": "https://console.groq.com/llms-full.txt"
+  },
+  {
     "name": "Helicone",
     "description": "LLM observability and monitoring platform",
     "url": "/helicone-llms-txt",
@@ -591,6 +1394,105 @@
     "slug": "helicone-llms-txt",
     "website": "https://helicone.ai",
     "llmsUrl": "https://www.helicone.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Help for Erectile Dysfunction",
+    "description": "The ED Treatment Information Center provides resources and support for Erectile Dysfunction sufferers and their partners.",
+    "url": "https://edtreatment.info/",
+    "content": "# Help for Erectile Dysfunction\n\nThe ED Treatment Information Center provides resources and support for Erectile Dysfunction sufferers and their partners.",
+    "category": "integration-automation",
+    "slug": "help-for-erectile-dysfunction-llms-txt",
+    "website": "",
+    "llmsUrl": "https://edtreatment.info/llms.txt",
+    "llmsFullUrl": "https://edtreatment.info/llms-full.txt"
+  },
+  {
+    "name": "HENAN PENGFEI-PVP-K30-povidone",
+    "description": "Henan Pengfei New Materials Co., Ltd. is a high-tech enterprise specializing in the research and development, production, and sales of 2-P, NVP, and PVP.",
+    "url": "https://www.pf-pvp.com/",
+    "content": "# HENAN PENGFEI-PVP-K30-povidone\n\nHenan Pengfei New Materials Co., Ltd. is a high-tech enterprise specializing in the research and development, production, and sales of 2-P, NVP, and PVP.",
+    "category": "ai-ml",
+    "slug": "henan-pengfei-pvp-k30-povidone-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.pf-pvp.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Heritage Collection",
+    "description": "Fully-furnished shophouse boutique hotel and serviced apartments in cultural districts. Flexible lease terms. Enquire for best available rates.",
+    "url": "https://hericoll.com",
+    "content": "# Heritage Collection\n\nFully-furnished shophouse boutique hotel and serviced apartments in cultural districts. Flexible lease terms. Enquire for best available rates.",
+    "category": "ai-ml",
+    "slug": "heritage-collection-llms-txt",
+    "website": "",
+    "llmsUrl": "https://hericoll.com/llms.txt",
+    "llmsFullUrl": "https://hericoll.com/llms-full.txt"
+  },
+  {
+    "name": "Heyflow",
+    "description": "Create interactive lead funnels, multi-step forms and customized landing pages that drive conversions and engage your website visitors—without writing any code.",
+    "url": "https://heyflow.com/",
+    "content": "# Heyflow\n\nCreate interactive lead funnels, multi-step forms and customized landing pages that drive conversions and engage your website visitors—without writing any code.",
+    "category": "integration-automation",
+    "slug": "heyflow-llms-txt",
+    "website": "",
+    "llmsUrl": "https://heyflow.com/llms.txt",
+    "llmsFullUrl": "https://heyflow.com/llms-full.txt"
+  },
+  {
+    "name": "HOME",
+    "description": "At Naturel, we want you to embrace the good life and discover how our three lifestyle pillars can enhance your everyday. Start your Naturel Living today.",
+    "url": "https://naturelliving.com/",
+    "content": "# HOME\n\nAt Naturel, we want you to embrace the good life and discover how our three lifestyle pillars can enhance your everyday. Start your Naturel Living today.",
+    "category": "ai-ml",
+    "slug": "home-llms-txt",
+    "website": "",
+    "llmsUrl": "https://naturelliving.com/llms.txt",
+    "llmsFullUrl": "https://naturelliving.com/llms-full.txt"
+  },
+  {
+    "name": "Home - TZ",
+    "description": "Solution Provider and manufacturer of PET PP PS PLA plastic sheet extrusion line, fully auto thermoforming machine, plastic cup making machine.",
+    "url": "https://tz-machinery.com",
+    "content": "# Home - TZ\n\nSolution Provider and manufacturer of PET PP PS PLA plastic sheet extrusion line, fully auto thermoforming machine, plastic cup making machine.",
+    "category": "ai-ml",
+    "slug": "home---tz-llms-txt",
+    "website": "",
+    "llmsUrl": "https://tz-machinery.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Home • Angular",
+    "description": "The web development framework for building modern apps.",
+    "url": "https://angular.dev",
+    "content": "# Home • Angular\n\nThe web development framework for building modern apps.",
+    "category": "developer-tools",
+    "slug": "home-•-angular-llms-txt",
+    "website": "",
+    "llmsUrl": "https://angular.dev/llms.txt",
+    "llmsFullUrl": "https://angular.dev/llms-full.txt"
+  },
+  {
+    "name": "Hono",
+    "description": "Web framework built on Web Standards for Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, Node.js, and others. Fast, but not only fast.",
+    "url": "https://hono.dev/",
+    "content": "# Hono\n\nWeb framework built on Web Standards for Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, Node.js, and others. Fast, but not only fast.",
+    "category": "developer-tools",
+    "slug": "hono-llms-txt",
+    "website": "",
+    "llmsUrl": "https://hono.dev/llms.txt",
+    "llmsFullUrl": "https://hono.dev/llms-full.txt"
+  },
+  {
+    "name": "Hotel Tarobá",
+    "description": "O Hotel Tarobá é sua melhor opção de hotel em Foz do Iguaçu, com conforto, café da manhã incluso e localização privilegiada. Reserve agora.",
+    "url": "https://www.hoteltarobafoz.com.br/",
+    "content": "# Hotel Tarobá\n\nO Hotel Tarobá é sua melhor opção de hotel em Foz do Iguaçu, com conforto, café da manhã incluso e localização privilegiada. Reserve agora.",
+    "category": "ai-ml",
+    "slug": "hotel-tarobá-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.hoteltarobafoz.com.br/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -671,6 +1573,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "ID21",
+    "description": "ID21 designs innovative workplaces that inspire collaboration, productivity, and well‑being.",
+    "url": "https://id21.com.sg/",
+    "content": "# ID21\n\nID21 designs innovative workplaces that inspire collaboration, productivity, and well‑being.",
+    "category": "ai-ml",
+    "slug": "id21-llms-txt",
+    "website": "",
+    "llmsUrl": "https://id21.com.sg/llms.txt",
+    "llmsFullUrl": "https://id21.com.sg/llms-full.txt"
+  },
+  {
     "name": "Infisical",
     "description": "Secure secrets management platform",
     "url": "/infisical-llms-txt",
@@ -726,6 +1639,61 @@
     "llmsFullUrl": "https://docs.ionq.com/llms-full.txt"
   },
   {
+    "name": "Juno",
+    "description": "Juno is an open-source, next-gen serverless platform to build and run self-contained web apps.",
+    "url": "https://juno.build/",
+    "content": "# Juno\n\nJuno is an open-source, next-gen serverless platform to build and run self-contained web apps.",
+    "category": "infrastructure-cloud",
+    "slug": "juno-llms-txt",
+    "website": "",
+    "llmsUrl": "https://juno.build/llms.txt",
+    "llmsFullUrl": "https://juno.build/llms-full.txt"
+  },
+  {
+    "name": "Ketch",
+    "description": "Ketch's privacy management software, with its Data Permissioning privacy platform, helps leverage data responsibly for deeper customer engagement and growth.",
+    "url": "https://www.ketch.com/",
+    "content": "# Ketch\n\nKetch's privacy management software, with its Data Permissioning privacy platform, helps leverage data responsibly for deeper customer engagement and growth.",
+    "category": "security-identity",
+    "slug": "ketch-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.ketch.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "KI Blog Österreich",
+    "description": "Das KI Blog aus Österreich – Verpasse keine KI-News! Entdecke aktuelle Trends, Tools & Insights für Unternehmer, Neugierige und KI-Einsteiger.",
+    "url": "https://digitalhandwerk.rocks/",
+    "content": "# KI Blog Österreich\n\nDas KI Blog aus Österreich – Verpasse keine KI-News! Entdecke aktuelle Trends, Tools & Insights für Unternehmer, Neugierige und KI-Einsteiger.",
+    "category": "ai-ml",
+    "slug": "ki-blog-österreich-llms-txt",
+    "website": "",
+    "llmsUrl": "https://digitalhandwerk.rocks/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Kruzty",
+    "description": "Live Wallpapers. Browse millions of high quality live wallpapers and give your pc an aesthetic look.",
+    "url": "https://www.kruzty.com",
+    "content": "# Kruzty\n\nLive Wallpapers. Browse millions of high quality live wallpapers and give your pc an aesthetic look.",
+    "category": "developer-tools",
+    "slug": "kruzty-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.kruzty.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Ladendirekt",
+    "description": "Kaufen günstig und bequem - Vergleichen Sie die Preise für Möbel, Mode und Elektronik mit Ladendirekt-Preisvergleich.",
+    "url": "https://ladendirekt.de/",
+    "content": "# Ladendirekt\n\nKaufen günstig und bequem - Vergleichen Sie die Preise für Möbel, Mode und Elektronik mit Ladendirekt-Preisvergleich.",
+    "category": "data-analytics",
+    "slug": "ladendirekt-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ladendirekt.de/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Lago",
     "description": "Open-source metering and usage-based billing platform",
     "url": "/lago-llms-txt",
@@ -748,6 +1716,50 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Law Firm Digital Marketing Agency",
+    "description": "Law Digital Solution is your Trusted Law Firm Digital Marketing Agency, helps law firms with digital marketing services, including SEO and web design.",
+    "url": "https://lawdigitalsolution.com/",
+    "content": "# Law Firm Digital Marketing Agency\n\nLaw Digital Solution is your Trusted Law Firm Digital Marketing Agency, helps law firms with digital marketing services, including SEO and web design.",
+    "category": "integration-automation",
+    "slug": "law-firm-digital-marketing-agency-llms-txt",
+    "website": "",
+    "llmsUrl": "https://lawdigitalsolution.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Leather Jackets, Coats For Men & Women",
+    "description": "High Quality Canada Leather Jackets, Leather Coats and Blazers with Free Shipping! Explore our stylish collection at AngelJackets CA.",
+    "url": "https://www.angeljackets.com/ca",
+    "content": "# Leather Jackets, Coats For Men & Women\n\nHigh Quality Canada Leather Jackets, Leather Coats and Blazers with Free Shipping! Explore our stylish collection at AngelJackets CA.",
+    "category": "infrastructure-cloud",
+    "slug": "leather-jackets,-coats-for-men-&-women-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.angeljackets.com/ca/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Lettermint",
+    "description": "Based in Europe, we ensure your transactional emails are secure, reliable, and always reach your customers. Never worry about email delivery again.",
+    "url": "https://lettermint.co",
+    "content": "# Lettermint\n\nBased in Europe, we ensure your transactional emails are secure, reliable, and always reach your customers. Never worry about email delivery again.",
+    "category": "integration-automation",
+    "slug": "lettermint-llms-txt",
+    "website": "",
+    "llmsUrl": "https://lettermint.co/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Liam ERD",
+    "description": "Automatically generates beautiful and easy-to-read ER diagrams from your database.",
+    "url": "https://liambx.com/",
+    "content": "# Liam ERD\n\nAutomatically generates beautiful and easy-to-read ER diagrams from your database.",
+    "category": "developer-tools",
+    "slug": "liam-erd-llms-txt",
+    "website": "",
+    "llmsUrl": "https://liambx.com/docs/llms.txt",
+    "llmsFullUrl": "https://liambx.com/docs/llms-full.txt"
+  },
+  {
     "name": "llms.txt",
     "description": "Documentation standard for LLM-powered applications",
     "url": "/llmstxt-llms-txt",
@@ -756,6 +1768,17 @@
     "slug": "llmstxt-llms-txt",
     "website": "https://llmstxt.org",
     "llmsUrl": "https://llmstxt.org/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "LLMVO",
+    "description": "Discover 50+ verified GEO companies and AI optimization tools. Find services to optimize your content for ChatGPT, Claude, and Perplexity.",
+    "url": "https://llmvo.com",
+    "content": "# LLMVO\n\nDiscover 50+ verified GEO companies and AI optimization tools. Find services to optimize your content for ChatGPT, Claude, and Perplexity.",
+    "category": "ai-ml",
+    "slug": "llmvo-llms-txt",
+    "website": "",
+    "llmsUrl": "https://llmvo.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -768,6 +1791,39 @@
     "website": "https://lmstudio.ai/",
     "llmsUrl": "https://lmstudio.ai/llms.txt",
     "llmsFullUrl": "https://lmstudio.ai/llms-full.txt"
+  },
+  {
+    "name": "LobeHub",
+    "description": "LobeChat brings you the best user experience of ChatGPT, OLLaMA, Gemini, Claude WebUI.",
+    "url": "https://lobehub.com",
+    "content": "# LobeHub\n\nLobeChat brings you the best user experience of ChatGPT, OLLaMA, Gemini, Claude WebUI.",
+    "category": "ai-ml",
+    "slug": "lobehub-llms-txt",
+    "website": "",
+    "llmsUrl": "https://lobehub.com/llms.txt",
+    "llmsFullUrl": "https://lobehub.com/llms-full.txt"
+  },
+  {
+    "name": "Localization.Asia",
+    "description": "Professional translation, transcription, and subtitling services, perfected by native language experts across Asia and beyond.",
+    "url": "https://localization.asia",
+    "content": "# Localization.Asia\n\nProfessional translation, transcription, and subtitling services powered by AI technology and perfected by native language experts across Asia and beyond.\nOffering comprehensive language solutions including document translation, audio transcription, video subtitling, and specialized data processing services with fast turnaround times and competitive pricing.",
+    "category": "localization",
+    "slug": "localization-asia-llms-txt",
+    "website": "",
+    "llmsUrl": "https://localization.asia/api/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "LogLayer",
+    "description": "A structured logging library with a fluent API for specifying log messages, metadata and errors.",
+    "url": "/loglayer-llms-txt",
+    "content": "# LogLayer - A logger for Typescript\n\nA structured logging library with a fluent API for specifying log messages, metadata and errors.",
+    "category": "developer-tools",
+    "slug": "loglayer-llms-txt",
+    "website": "https://loglayer.dev",
+    "llmsUrl": "https://loglayer.dev/llms.txt",
+    "llmsFullUrl": "https://loglayer.dev/llms-full.txt"
   },
   {
     "name": "Loops",
@@ -792,6 +1848,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Lunacy",
+    "description": "Lunacy by Icons8 is free graphic design software for Windows, macOS, Linux. Open, edit sketch files with ease. Built-in vector, photos, UI kits, and more.",
+    "url": "https://icons8.com/lunacy",
+    "content": "# Lunacy\n\nLunacy by Icons8 is free graphic design software for Windows, macOS, Linux. Open, edit sketch files with ease. Built-in vector, photos, UI kits, and more.",
+    "category": "developer-tools",
+    "slug": "lunacy-llms-txt",
+    "website": "",
+    "llmsUrl": "https://lunacy.docs.icons8.com/llms.txt",
+    "llmsFullUrl": "https://lunacy.docs.icons8.com/llms-full.txt"
+  },
+  {
     "name": "LuxAlgo",
     "description": "Advanced trading algorithms and analysis platform",
     "url": "/luxalgo-llms-txt",
@@ -803,6 +1870,28 @@
     "llmsFullUrl": "https://docs.luxalgo.com/llms-full.txt"
   },
   {
+    "name": "Luxid",
+    "description": "Luxid helps clients break open silos to create customer experiences and end-to-end journeys that drive sales and support buyers.",
+    "url": "https://www.luxidgroup.com",
+    "content": "# Luxid\n\nLuxid helps clients break open silos to create customer experiences and end-to-end journeys that drive sales and support buyers.",
+    "category": "integration-automation",
+    "slug": "luxid-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.luxidgroup.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Lynx",
+    "description": "Empower the web community and invite more to build cross-platform apps.",
+    "url": "https://lynxjs.org",
+    "content": "# Lynx\n\nEmpower the web community and invite more to build cross-platform apps.",
+    "category": "developer-tools",
+    "slug": "lynx-llms-txt",
+    "website": "",
+    "llmsUrl": "https://lynxjs.org/llms.txt",
+    "llmsFullUrl": "https://lynxjs.org/llms-full.txt"
+  },
+  {
     "name": "Mangopay",
     "description": "Payment infrastructure and marketplace solutions",
     "url": "/mangopay-llms-txt",
@@ -812,6 +1901,94 @@
     "website": "https://mangopay.com",
     "llmsUrl": "https://docs.mangopay.com/llms.txt",
     "llmsFullUrl": "https://docs.mangopay.com/llms-full.txt"
+  },
+  {
+    "name": "Marco Ronco SEO Specialist",
+    "description": "Marco Ronco SEO & Ads Google Partner. Aiuto gli imprenditori indipendenti ad intercettare i clienti ideali attraverso i motori di ricerca e monetizzarli.",
+    "url": "https://marcoronco.me/",
+    "content": "# Marco Ronco SEO Specialist\n\nMarco Ronco SEO & Ads Google Partner. Aiuto gli imprenditori indipendenti ad intercettare i clienti ideali attraverso i motori di ricerca e monetizzarli.",
+    "category": "data-analytics",
+    "slug": "marco-ronco-seo-specialist-llms-txt",
+    "website": "",
+    "llmsUrl": "https://marcoronco.me/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Marketing Doctors",
+    "description": "Marketing Doctors helps businesses grow with data-backed, honest marketing tactics that attract the right customers at the right time.",
+    "url": "https://marketingdrs.com",
+    "content": "# Marketing Doctors\n\nMarketing Doctors helps businesses grow with data-backed, honest marketing tactics that attract the right customers at the right time.",
+    "category": "integration-automation",
+    "slug": "marketing-doctors-llms-txt",
+    "website": "",
+    "llmsUrl": "https://marketingdrs.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Marketing Integration and Automation",
+    "description": "Mambo Media is a full-service digital marketing agency for demand generation and revenue-producing programs with an emphasis on modern marketing best practices.",
+    "url": "https://www.mambomedia.com/",
+    "content": "# Marketing Integration and Automation\n\nMambo Media is a full-service digital marketing agency for demand generation and revenue-producing programs with an emphasis on modern marketing best practices.",
+    "category": "integration-automation",
+    "slug": "marketing-integration-and-automation-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.mambomedia.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Material UI (aka MUI)",
+    "description": "Material UI is an open-source, comprehensive React component library that can be used in production out of the box.",
+    "url": "/material-ui-llms-txt",
+    "content": "# Material UI (MUI)\n\nMaterial UI is an open-source React component library that implements Google's Material Design. It's comprehensive and can be used in production out of the box.",
+    "category": "developer-tools",
+    "slug": "material-ui-llms-txt",
+    "website": "https://mui.com/material-ui/",
+    "llmsUrl": "https://mui.com/material-ui/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Mayank Ranjan",
+    "description": "Marketing portfolio and blog by Mayank Ranjan - SEO, growth strategies, and digital marketing insights",
+    "url": "https://ranjanmayank.in/",
+    "content": "# Mayank Ranjan\n\n\n## Pages\n\n- [Write for me](https://ranjanmayank.in/write-for-me/): Want to write for the top digital marketing blog? Accepting guest posts for SEO, Content Marketing, Social Media, Ai in Marketing and more\n- [Marketing Portfolio](https://ranjanmayank.in/portfolio/): Explore Mayank Ranjan’s Marketing Portfolio, featuring SEO, growth strategies, and successful campaigns that drive business success. 🚀 Let’s connect!\n- [Marketing Blogs](https://ranjanmayank.in/blogs/): Explore expert Marketing Blogs by Mayank Ranjan on SEO, growth, and digital strategies. Stay ahead with actionable insights and industry trends. 🚀 Read now!\n- [Services](https://ranjanmayank.in/my-services/): Explore Services by Mayank Ranjan, including SEO, personal branding, paid ads, and career consultancy. Get expert strategies to grow your brand. 🚀 Hire now!\n- [About](https://ranjanmayank.in/about-me/): Mayank Ranjan, a digital marketer &amp; SEO expert helping brands scale with data-driven strategies, personal branding, and performance marketing. 🚀 Let's connect!\n- [Contact](https://ranjanmayank.in/contact/): Contact Mayank Ranjan for digital marketing, SEO, and growth strategies. Let’s discuss how we can work together. 🚀 Contact now!\n- [Home](https://ranjanmayank.in/): Mayank Ranjan, a digital marketer &amp; SEO expert helping brands grow with data-driven strategies. Let’s connect and scale your business together!\n\n---\n\n\n## Posts\n\n- [Answer Engine Optimization (AEO): The Future Beyond SEO](https://ranjanmayank.in/blog/answer-engine-optimization-guide/): Answer Engine Optimization (AEO) 2025 expert guide. Learn strategies, tools, schema tips &amp; real-world examples to rank in Google SGE, ChatGPT &amp; AI-driven search.\n- [Digital Marketing Interview Guide 2025: 100 Questions with Winning Answers](https://ranjanmayank.in/blog/answer-engine-optimization-guide-2/): Master your 2025 digital marketing interview with 100 expert-answered questions, strategies, and real-world case studies. This updated guide is for freshers and pros.\n- [Master LinkedIn Networking: How to Send a Personalized Connection Request](https://ranjanmayank.in/blog/connection-request-on-linkedin/): Learn to Personalized Connection Request on LinkedIn to increase acceptance rates, build meaningful connections, and grow your network effectively.\n\n---\n\n\n## Projects\n\n- [Boosting Luxury Home Decor](https://ranjanmayank.in/project/boosting-luxury-home-decor/): See how Mayank Ranjan helped in Boosting Luxury Home Decor with data-driven marketing strategies. Explore insights &amp; results from this project. 🚀\n- [SEO for LED Light](https://ranjanmayank.in/project/sales-boost-for-led-lights/): Discover how Mayank Ranjan optimized SEO for LED Light brands, increasing search rankings, traffic, and conversions with data-driven strategies. 🚀\n\n---\n\n\n---\n\n\n## Stories\n\n- [How to Prepare for a Digital Marketing Interview: Step-by-Step Guide](https://ranjanmayank.in/web-stories/digital-marketing-interview-guide-2025/): Get ready to ace your next digital marketing interview with this step-by-step guide. From resume tips and essential tools to...\n\n---\n\n\n## Services\n\n- [Digital Marketing](https://ranjanmayank.in/services/digital-marketing/): Boost your business with expert Digital Marketing services by Mayank Ranjan. Get SEO, paid ads, and growth strategies for real results. 🚀 Hire now!\n- [Personal Branding](https://ranjanmayank.in/services/personal-branding/): Unlock your potential with expert Personal Branding by Mayank Ranjan. Build credibility, grow your influence, and attract new opportunities. 🚀 Hire now!\n- [Career Consultancy](https://ranjanmayank.in/services/career-consultancy/): Unlock new opportunities with professional Career Consultancy by Mayank Ranjan. Get personalized advice to grow and succeed in your career. 🚀 Book now!\n- [Marketing Mentor](https://ranjanmayank.in/services/digital-marketing-training/): Master Digital Marketing Training with Mayank Ranjan. Learn SEO, paid ads, and growth strategies to build your career or scale your business. 🚀 Enroll now!\n\n---\n\n\n---\n\n#\n# Detailed Content\n\n\n## Pages\n\n> Want to write for the top digital marketing blog? Accepting guest posts for SEO, Content Marketing, Social Media, Ai in Marketing and more\n\n- Published: 2025-06-19\n- Modified: 2025-06-19\n- URL: https://ranjanmayank.in/write-for-me/\n\nWrite for Me – Share Your Expertise Share Your Expertise with a Growing Audience of Marketers, Professionals & Career Builders Are you a marketer, content creator, career coach, or personal branding enthusiast with valuable insights to share? Do you enjoy writing articles that help professionals level up in their career, brand, or digital presence? If yes, you're invited to contribute to RanjanMayank. in, a growing platform for professionals, marketers, and learners looking to grow in the digital age. Guidelines for Submitting Your Guest Post I take pride in publishing content that is authentic, actionable, and valuable to others. If you're planning to contribute as a guest author, please ensure your submission aligns with the following guidelines: General Content Guidelines Your article must be original, unpublished, and 100% plagiarism-free. We love well-researched, data-backed articles with actionable insights, not opinion-only or generic content. The post should be well-written, proofread, and free from grammar or spelling mistakes. I prefer in-depth articles with a minimum word count of 1500 words. Exceptions may be made for highly newsworthy or data-driven content. Tone should be professional yet conversational, similar to existing content Topic Relevance Digital Marketing Fundamentals AI in Marketing Content Creation & Strategy LinkedIn Personal Branding Resume & Portfolio Building Career Growth & Job Search Freelancing & Side Hustles Social Media Marketing Digital Tools & Platforms Marketing Analytics & Tracking E-learning & Course Reviews Expert Insights & Thought Leadership Links & Media Usage You may include 2–3 contextual, non-promotional outbound links to high-quality sources (not...\n\n---\n\n> Explore Mayank Ranjan’s Marketing Portfolio, featuring SEO, growth strategies, and successful campaigns that drive business success. 🚀 Let’s connect!\n\n- Published: 2024-07-04\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/portfolio/\n\nMarketing Portfolio AllDigital MarketingE-commerceSEO View case View case\n\n---\n\n> Explore Services by Mayank Ranjan, including SEO, personal branding, paid ads, and career consultancy. Get expert strategies to grow your brand. 🚀 Hire now!\n\n- Published: 2024-07-01\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/my-services/\n\nUnique technologies & modern approach Learn More Learn More Learn More Learn More We're looking forward to start a new project Let's take your business to the next level! Request a call-back Why work with me? Proven Experience With 7+ years in digital marketing, I have successfully helped brands grow through SEO, content marketing, and paid advertising. My strategies are built on real-world experience and data-driven insights. Customer Focused Every project is tailored to meet your unique goals, whether it's scaling your business, enhancing your personal brand, or landing a new job. I focus on delivering measurable results that align with your vision. Innovative Solutions I leverage the latest tools, AI-driven insights, and market trends to create future-proof strategies. My approach ensures your brand stays competitive and ahead of the curve. Our working process Every brand and individual has a unique journey. That’s why I follow a structured yet flexible process to ensure personalized, result-oriented solutions. 1. Problem identification Analyze your current challenges, goals, and audience to identify growth opportunities. This helps us create a roadmap tailored to your brand, marketing, or career objectives. 2. Investigation Through deep market research, competitor analysis, and trend insights, we uncover the best strategies. This ensures a data-driven approach for maximum impact. 3. Strategy development We create a customized plan, integrating SEO, branding, content, and paid marketing strategies. Every step is designed to align with your vision and industry trends. 4. Results evaluation We track key performance metrics, analyze data insights, and refine strategies....\n\n---\n\n> Mayank Ranjan, a digital marketer &amp; SEO expert helping brands scale with data-driven strategies, personal branding, and performance marketing. 🚀 Let's connect!\n\n- Published: 2024-05-17\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/about-me/\n\nThe Digital Marketer You Can Count On Turning strategies into success stories since 2018. Hi, I’m Mayank Ranjan—a digital marketing professional with 7+ years of experience in crafting data-driven strategies that deliver measurable results. My expertise spans SEO, content marketing, and social media optimization, helping businesses and individuals establish a powerful online presence. 7+ Years of experience 100+ Successful Projects 100% Client Satisfaction My mission To empower businesses and individuals by transforming complex digital challenges into scalable, actionable solutions. I believe in blending creativity with analytics to craft strategies that don’t just perform—they excel. My Core Values Client-Centric Approach: Your goals are my goals. Data-Driven Strategies: Every decision is backed by insights and analytics. Continuous Learning: Staying ahead of digital trends to deliver innovative solutions. Collaboration: Building lasting relationships through trust and results. Why Work With Me? Proven Track Record With over 7 years of experience, I’ve delivered measurable results, including a 200% increase in website traffic and consistent lead generation for diverse clients. Whether you’re a startup or a growing business, I focus on real, impactful outcomes. Comprehensive Expertise I specialize in SEO, content marketing, social media strategies, and campaign management. From SEO audits to creating high-quality content, I offer tailored, end-to-end solutions that help you achieve your goals seamlessly. Results-Oriented Approach My strategies are aligned with your specific objectives, whether it’s improving search rankings, driving traffic, or boosting brand awareness. By blending creativity with analytics, I deliver results that exceed expectations. Personalized Solutions Every business is unique, and...\n\n---\n\n> Contact Mayank Ranjan for digital marketing, SEO, and growth strategies. Let’s discuss how we can work together. 🚀 Contact now!\n\n- Published: 2024-01-09\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/contact/\n\nLet's start right now! +91-9990290404 Call us: Mon - Fri 9:00 - 19:00 NOIDA Jaypee Aman, Sector 151, NOIDA, U. P. mayank@ranjanmayank. in Drop us a line anytime! mayank7677@outlook. com Waiting for your connection YouTube X Facebook Instagram Make an online enquiry Got questions? Ideas? Fill out the form below to get our proposal.\n\n---\n\n> Mayank Ranjan, a digital marketer &amp; SEO expert helping brands grow with data-driven strategies. Let’s connect and scale your business together!\n\n- Published: 2022-12-14\n- Modified: 2025-06-19\n- URL: https://ranjanmayank.in/\n\nMayank Ranjan Digital Marketer Personal Branding Content Marketing The Only Marketer You need With 7+ years of experience, I help businesses and professionals build powerful digital identities, scale their online presence, and drive measurable results. Whether it's SEO, content strategy, or personal branding, I bring data-driven solutions that make an impact. 7+ years of market experience Unique technologies & modern approach 100+ successful cases in portfolio Customer satisfaction is our top priority My Expertise I specialize in delivering customized strategies to enhance brand authority and online visibility. Know more Know more Know more Know more If you are looking for someone who can work on what you need Let's take your business to the next level! Request a call-back Selected cases View All Cases I am proud to work with these companies Latest news & articles / / / Visit Our Blog\n\n---\n\n\n---\n\n\n## Posts\n\n> Answer Engine Optimization (AEO) 2025 expert guide. Learn strategies, tools, schema tips &amp; real-world examples to rank in Google SGE, ChatGPT &amp; AI-driven search.\n\n- Published: 2025-06-10\n- Modified: 2025-06-19\n- URL: https://ranjanmayank.in/blog/answer-engine-optimization-guide/\n- Categories: Blog\n- Tags: AEO, Ai in SEO, Answer Engine Optimization, SEO\n\n“60% of search queries now end without a single click. Welcome to the zero-click era. ”We’re living through a silent revolution in how people discover information online. Search engines are no longer just directories of pages; they are now engines of answers powered by artificial intelligence, designed to predict, summarize, and deliver results instantly. This changes everything we know about visibility, rankings, and SEO. This evolution might feel unsettling if you’ve spent years optimizing websites for Google’s search engine results pages (SERPs). In the past, climbing the SERP meant more clicks. Today, however, even the top-ranked pages aren’t guaranteed traffic, because users get their answers directly from AI-powered engines without clicking through to a website. This shift is driven by platforms like Google’s Search Generative Experience (SGE), ChatGPT with browsing mode, Perplexity AI, and Bing’s Copilot, which prioritize direct answers over blue links. The goal is no longer to simply “rank”; it’s to become the most relevant, trusted, and AI-friendly source for those answers. That’s where Answer Engine Optimization (AEO) comes in. Unlike traditional SEO, which focuses on optimizing content for keyword-based ranking in search results, AEO focuses on structuring and formatting your content so that it can be extracted, interpreted, and displayed directly by AI-driven engines. This means writing with intent and clarity, integrating structured data, and ensuring your information aligns with semantic search models and entity recognition. In other words, AI isn’t just enhancing search, it’s replacing parts of it. Brands that adapt early will gain visibility not...\n\n---\n\n> Master your 2025 digital marketing interview with 100 expert-answered questions, strategies, and real-world case studies. This updated guide is for freshers and pros.\n\n- Published: 2025-05-11\n- Modified: 2025-06-19\n- URL: https://ranjanmayank.in/blog/answer-engine-optimization-guide-2/\n- Categories: Blog\n- Tags: Content Marketing Interview Questions, Digital Marketing Career Guide, Digital Marketing Interview Answers 2025, Digital Marketing Interview for Freshers and Experienced, Digital Marketing Interview Guide 2025, Digital Marketing Interview Questions 2025, Digital Marketing Interview Skills, SEO Interview Questions 2025, Technical Digital Marketing Interview Questions\n\nThe digital marketing landscape is evolving faster than ever, and in 2025, businesses are investing heavily in digital-first growth strategies. According to LinkedIn’s Global Talent Trends Report and HubSpot’s State of Marketing survey, demand for skilled digital marketers has risen by over 29% year-over-year, especially for roles specializing in SEO, content marketing, paid media, and data analytics. Companies aren't just looking for \"marketers\" anymore—they're seeking full-stack digital marketing experts who can drive measurable growth. If you’re preparing for a job in this competitive market, know this: traditional interview preparation won't cut it anymore. Simply memorizing definitions or textbook concepts isn’t enough. Today's hiring managers want candidates who can think strategically, adapt quickly to changing platforms, and demonstrate real-world marketing impact with data to back it up. That’s exactly where this guide comes in. Welcome to the Digital Marketing Interview Guide 2025: 100 Questions with Winning Answers — your ultimate preparation companion. In this guide, you’ll find:Top 100 most frequently asked digital marketing interview questions updated for 2025 hiring trends. Winning answers with expert strategies, real-world examples, and practical insights. Scenario-based case studies to help you showcase knowledge and strategic thinking. Whether you’re a fresher entering the marketing world, an experienced professional aiming for your next significant role, or someone transitioning into digital marketing from another career path, this guide is designed to equip you with everything you need to succeed. According to LinkedIn's 2025 hiring trends, recruiters' roles are evolving, and hiring managers are taking on more responsibilities in the...\n\n---\n\n> Learn to Personalized Connection Request on LinkedIn to increase acceptance rates, build meaningful connections, and grow your network effectively.\n\n- Published: 2025-01-22\n- Modified: 2025-05-12\n- URL: https://ranjanmayank.in/blog/connection-request-on-linkedin/\n- Categories: Blog\n- Tags: Linkedin\n\nIn today's fast-paced professional world, LinkedIn has transformed professional networking. More than 1 billion LinkedIn users in over 200 countries and regions worldwide compete for professional attention. With this vast professional competition, simply clicking \"Connect\" isn't enough. You had to stand out in the crowd on invite and connection requests, and what's better than the \"Personalized Connection Request\"? A personalized connection request not only grabs attention but also lays the perfect pathway for a meaningful professional relationship. If you've ever wondered why your LinkedIn requests go unanswered, this guide is for you. By following these steps and leveraging proven strategies, you can increase your connection acceptance rate and build a network that truly adds value to your professional journey. Why Personalized Connection Request? As you know, LinkedIn has become the best platform for building your professional brand and generating leads for your business. As per Hubspot, LinkedIn is 277% better at generating leads than other social media platforms. But, either you are Generating leads for your business. Building Personal Branding. Searching for Recruiters for JobYou have to start by Connecting with the Right People. Right! By the way, you must agree that it's easy to send a new connection request without adding a touch of personalization. Personalizing your connection requests can help increase the chance of their acceptance. If you don't add a touch of personalization, LinkedIn will automatically send the tedious message, \"I'd like to join your network. \" This automated msgs is one of the missed opportunities to...\n\n---\n\n\n---\n\n\n## Projects\n\n> See how Mayank Ranjan helped in Boosting Luxury Home Decor with data-driven marketing strategies. Explore insights &amp; results from this project. 🚀\n\n- Published: 2025-01-16\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/project/boosting-luxury-home-decor/\n- Project Categories: Portfolio\n\nQuisque nec convallis ex enean ut metus et nunc cursus aliquet. Phasellus vel orci vel orci tincidunt interdum quis viverra metus cursus tempor purus et tincidunt.\n\nCase overview Angie Homes is one of the prominent players in luxury decor solutions. Its goal is to grow its visibility and sales across multiple platforms, including Amazon and its Shopify website. With a large inventory of premium decor products, it aims to enhance visibility, boost organic sales, and maintain its luxury brand identity through SEO and marketplace optimization. For its products, including furniture, lighting, decor accessories, and more, the brand needed a strong strategy to stand out in the competitive luxury market while keeping keyword costs manageable. Their objective was to make Angie Homes the ‘go-to’ choice for exclusive luxury decor solutions. Involvement SEO Content Marketing Shopify Optimization Social Media Amazon Product Optimization Visit live The Brief Angie Homes aimed to enhance its visibility and boost sales on e-commerce platforms while maintaining cost efficiency. Operating in a saturated market, the brand faced challenges such as intense competition from established luxury decor brands, the need for SEO optimization tailored for Amazon, Flipkart, and Google, and ensuring a seamless shopping experience on its Shopify website. To address these challenges, the goal was to optimize product listings with compelling content and targeted keywords, improve Shopify website usability, and drive relevant traffic through targeted advertising. Our efforts were focused on achieving a 60% increase in online sales within six months. Our Approach To ensure Angie Homes achieved significant growth in a highly competitive market, we adopted a strategic and collaborative approach. By focusing on data-driven insights, competitor analysis, and multi-channel optimization, we were...\n\n---\n\n> Discover how Mayank Ranjan optimized SEO for LED Light brands, increasing search rankings, traffic, and conversions with data-driven strategies. 🚀\n\n- Published: 2024-06-19\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/project/sales-boost-for-led-lights/\n- Project Categories: Portfolio\n\nPhasellus vel orci vel orci tincidunt interdum. Nunc quis viverra metus cursus tempor purus et tincidunt.\n\nCase overview The LED lighting industry is fiercely competitive, with numerous brands striving for visibility and dominance. ledmyplace. com is a prominent player in energy-saving LED lighting solutions. The firm wanted to grow its visibility and sales in this competitive market. With a large inventory of LED products, they aim to increase their visibility and organic sales via SEO and Amazon Marketplace. For its products, including LED tube lights, panels, floodlights, and many more, the brand needed a strong strategy to stand out in the fight against intense competition and high keyword costs. Their objective was to make LEDMyplace the 'go-to' choice for high-quality yet cost-effective LED lighting solutions on Amazon. Involvement SEO Content Marketing Link Building Social Media Visit live The Brief LEDMyplace aimed to enhance its visibility and boost sales on Amazon’s competitive platform while maintaining cost-efficiency. Operating in a saturated market, the brand faced challenges such as high competition from numerous other players in the LED lighting category, expensive keyword bidding that risked profitability, and the need to manage inventory effectively while scaling up campaigns. To address these challenges, the goal was to optimize product listings with compelling content and targeted keywords, drive relevant traffic through data-driven advertising, and achieve a 50% increase in sales volume within six months. By tackling these hurdles strategically. Optimize product listings with high-traffic keywords. Build quality backlinks from industry sites Create SEO-friendly A+ content and descriptions Track and refine SEO performance regularly Our Approach To ensure LEDMyplace achieved significant growth in...\n\n---\n\n\n---\n\n\n---\n\n\n## Stories\n\n- Published: 2025-05-13\n- Modified: 2025-05-23\n- URL: https://ranjanmayank.in/web-stories/digital-marketing-interview-guide-2025/\n- Categories: Interview\n- Tags: Digital Marketing Interviews, Interview Tips\n\nGet ready to ace your next digital marketing interview with this step-by-step guide. From resume tips and essential tools to real campaign prep and smart questions\n\nHow to Prepare for a Digital Marketing Interview: Step-by-Step GuideHow to Prepare for a Digital Marketing Interview Mayank Ranjan},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]\",\"keyframes\":{\"transform\":},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(. 3,0,. 55,1)\",\"fill\":\"forwards\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]Know the BrandUnderstand their services, audience, recent campaigns, and tone. 1\",\"keyframes\":{\"transform\":},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(. 3,0,. 55,1)\",\"fill\":\"forwards\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]Understand the RoleHighlight required tools, responsibilities & KPIs. Tailor your prep around what THEY care about. 2\",\"keyframes\":{\"transform\":},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(. 3,0,. 55,1)\",\"fill\":\"forwards\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]Master the BasicsSEO, SEM, Paid Ads, Content Strategy, Email, Funnels. Be ready to explain in simple, confident terms. 3\",\"keyframes\":{\"transform\":},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(. 3,0,. 55,1)\",\"fill\":\"forwards\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]Know the ToolsGoogle Analytics 4, Meta Ads, Canva, SEMrush, GTM, ChatGPT. Walk through real data if possible. 4\",\"keyframes\":{\"transform\":},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(. 3,0,. 55,1)\",\"fill\":\"forwards\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]Answer Like a ProPractice: “Tell me about yourself” Campaign case study “What would you do if... ? ”5\",\"keyframes\":{\"transform\":},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(. 3,0,. 55,1)\",\"fill\":\"forwards\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2000,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0. 0, 1)\",\"fill\":\"both\"}]},\"delay\":0,\"duration\":2500,\"easing\":\"cubic-bezier(0. 2, 0. 6, 0....\n\n---\n\n\n---\n\n\n## Services\n\n> Boost your business with expert Digital Marketing services by Mayank Ranjan. Get SEO, paid ads, and growth strategies for real results. 🚀 Hire now!\n\n- Published: 2025-01-04\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/services/digital-marketing/\n\n- SEO \n- Content Marketing\n- Social Media Marketing\n- Paid Marketing\n\nFuture-Proof Digital Marketing Solutions for Your Brand In a digital-first world, having the right marketing strategy can make all the difference. Specialize in crafting innovative, data-driven campaigns that help brands connect with audiences, drive growth, and stand out in a competitive landscape. 1. Strategic I take the time to analyze your brand's vision and audience, crafting personalized strategies that deliver real value. 2. Innovative Leveraging cutting-edge tools and current trends, we ensure your digital marketing stays fresh, relevant, and impactful. 3. Sustainable Our adaptable approaches are designed for long-term success, evolving with your business and the ever-changing market. 4. Growth-Oriented From startups to established enterprises, our solutions are built to scale with your brand’s growth and aspirations. Services we provide Search Engine Optimization (SEO) Improve your website’s visibility on search engines with strategic keyword targeting, technical optimization, and content planning. Pay-Per-Click Advertising (PPC) Get instant results with carefully managed PPC campaigns that maximize your ROI and drive quality traffic to your website. Social Media Management Build and engage with your audience on platforms that matter. We create, manage, and optimize social campaigns to amplify your brand's voice. Content Marketing Deliver value to your audience through high-quality blogs, videos, and other content that enhances brand authority and trust. Take Your Brand to the Next Level Get in touch - let's build your Brand Start a project now\n\n---\n\n> Unlock your potential with expert Personal Branding by Mayank Ranjan. Build credibility, grow your influence, and attract new opportunities. 🚀 Hire now!\n\n- Published: 2025-01-04\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/services/personal-branding/\n\n- Linkedin Optimization\n- Portfolio Development\n- Personal Brand Strategy\n- Content Creation\n\nBuild your Future-Proof Personal Brand with Personalized Solutions Your personal brand is more than just your name; it’s your reputation, influence, and unique story. Whether you're an entrepreneur, a creator, or a professional looking to leave a lasting impact, we help craft a digital identity that truly represents who you are. 1. Thoughtful Belive in invest time in understanding your story, values, and audience to create a brand that resonates authentically. 2. Modern Leveraging the latest trends and tools, we ensure your brand stands out with a fresh, contemporary appeal. 3. Future-proof Help create strategies and designs that evolve with you, staying relevant as your personal journey grows. 4. Scalable Whether you’re starting small or scaling up, our solutions are built to grow with your ambitions and reach. Services we provide LinkedIn Optimization Your LinkedIn profile is your professional calling card. We optimize it to highlight your expertise and attract the right connections and opportunities. Portfolio Development Let your work speak for itself. We design personalized portfolios that showcase your skills, projects, and achievements with finesse. Personal Brand Strategy Stand out with a clear, actionable strategy that defines your unique voice, positioning, and goals. Content Creation Stories build connections. We craft tailored content that enhances your presence across digital platforms, reflecting your brand's essence. Your Personal Brand, Amplified let's Build you as a BRAND Start branding now\n\n---\n\n> Unlock new opportunities with professional Career Consultancy by Mayank Ranjan. Get personalized advice to grow and succeed in your career. 🚀 Book now!\n\n- Published: 2024-06-19\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/services/career-consultancy/\n\n- Resume Building\n- Portfolio Development\n- Interview Prepration\n- Job Search\n\nUnlock Your Digital Marketing Career with Expert Guidance Building a successful career in digital marketing requires the right skills, guidance, and opportunities. Our career consultancy services are designed to help aspiring digital marketers identify their strengths, enhance their expertise, and secure their dream jobs in this competitive niche. 1. Personalized Guidance We understand that every career journey is unique. Our solutions are tailored to match your goals, skills, and aspirations. 2. Industry-Relevant Insights Gain access to the latest trends, tools, and strategies in digital marketing to stay ahead in your field. 3. Future-Focused Approach We equip you with sustainable skills and resources to thrive in an ever-evolving industry. 4. Goal-Oriented Growth From skill enhancement to job placements, we guide you at every step to ensure your career growth aligns with your ambitions. Services we provide Resume Writing & Optimization Craft a compelling resume that highlights your strengths and expertise in digital marketing, ensuring you stand out to potential employers. Portfolio Development Showcase your skills, projects, and achievements with a well-organized digital marketing portfolio that leaves a lasting impression. Job Search Get guidance on finding the best opportunities in the digital marketing field, from identifying roles to preparing for interviews. Interview Preparation Ace your interviews with confidence through our expert tips, mock sessions, and feedback tailored to digital marketing roles. Transform your aspirations into achievements Get in touch - let's kickstart your career Kickstart your Career\n\n---\n\n> Master Digital Marketing Training with Mayank Ranjan. Learn SEO, paid ads, and growth strategies to build your career or scale your business. 🚀 Enroll now!\n\n- Published: 2024-06-16\n- Modified: 2025-02-06\n- URL: https://ranjanmayank.in/services/digital-marketing-training/\n\n- Marketing Fundamentals\n- AI in Marketing\n- Learn Content Creation\n- Project-based Learning\n\nMaster the Art of Digital Marketing with Expert Training The digital world is full of opportunities, and mastering digital marketing is the key to unlocking them. Our comprehensive training program is designed to equip aspiring marketers, entrepreneurs, and business owners with the knowledge and skills needed to thrive in the fast-paced world of digital marketing. 1. Strategic Approach Our curriculum is thoughtfully crafted to align with industry needs, providing actionable insights and strategies. 2. Hands-On Learning Learn modern digital marketing tools and techniques through practical projects and real-world case studies. 3. Future-Proof Skills Stay ahead of the competition by gaining expertise in the latest trends and emerging strategies in the digital marketing landscape. . 4. Job-Oriented Class Whether you’re building your career or growing your business, our training empowers you with the skills to succeed and scale. What You'll Learn Marketing Fundamentals Master the core principles of digital marketing, including SEO, social media, email marketing, and analytics, to build a strong foundation. AI in Marketing Discover how artificial intelligence is revolutionizing digital marketing and learn to implement AI tools to enhance campaign performance. Content Creation Develop the skills to create engaging, high-impact content for blogs, social media, websites, and more, tailored to your target audience. Project-Based Learning Apply your knowledge through real-world projects, gaining practical experience that prepares you for industry challenges. Unlock Your Digital Marketing Potential Dive into the world of digital marketing? Start your journey today Join the program now\n\n---\n\n\n---\n\n\n---",
+    "category": "personal",
+    "slug": "mayank-ranjan-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ranjanmayank.in/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "MDUtil: Free Markdown Tools",
+    "description": "Free online Markdown tools to preview, convert, edit and format Markdown. Quick and easy. Without installation. Without registration.",
+    "url": "https://mdutil.com/",
+    "content": "# MDUtil: Free Markdown Tools\n\nFree online Markdown tools to preview, convert, edit and format Markdown. Quick and easy. Without installation. Without registration.",
+    "category": "developer-tools",
+    "slug": "md-util-free-markdown-tools-llms-txt",
+    "website": "",
+    "llmsUrl": "https://mdutil.com/llms.txt",
+    "llmsFullUrl": "https://mdutil.com/llms-full.txt"
+  },
+  {
+    "name": "Medusa",
+    "description": "A digital commerce platform with a built-in framework for customizations.",
+    "url": "/medusa-llms-txt",
+    "content": "# Medusa\n\nA digital commerce platform with a built-in framework for customizations.",
+    "category": "developer-tools",
+    "slug": "medusa-llms-txt",
+    "website": "https://medusajs.com/",
+    "llmsUrl": "https://docs.medusajs.com/llms.txt",
+    "llmsFullUrl": "https://docs.medusajs.com/llms-full.txt"
+  },
+  {
+    "name": "Mekalite CNC Machining Services",
+    "description": "Precision CNC machining services at CNC Mekalite. Fast, reliable online quotes for custom parts with high-quality materials.",
+    "url": "https://cncmekalite.com/",
+    "content": "# Mekalite CNC Machining Services\n\nPrecision CNC machining services at CNC Mekalite. Fast, reliable online quotes for custom parts with high-quality materials.",
+    "category": "ai-ml",
+    "slug": "mekalite-cnc-machining-services-llms-txt",
+    "website": "",
+    "llmsUrl": "https://cncmekalite.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "MeshConnect",
@@ -836,6 +2013,17 @@
     "llmsFullUrl": "https://docs.methodfi.com/llms-full.txt"
   },
   {
+    "name": "MilleChek.ai",
+    "description": "MilleCheck.ai est l&#x27;outil tout-en-un qui analyse en profondeur rapidité, écoconception, SEO, sécurité et accessibilité de vos pages web afin d&#x27;optimiser les performances frontend et améliorer l&#x27;expérience utilisateur.",
+    "url": "https://millecheck.ai",
+    "content": "",
+    "category": "developer-tools",
+    "slug": "mille-chek-ai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://millecheck.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Mintlify",
     "description": "Modern documentation platform and tools",
     "url": "/mintlify-llms-txt",
@@ -845,6 +2033,17 @@
     "website": "https://mintlify.com",
     "llmsUrl": "https://mintlify.com/docs/llms.txt",
     "llmsFullUrl": "https://mintlify.com/docs/llms-full.txt"
+  },
+  {
+    "name": "Mixo",
+    "description": "AI-powered website builder that generates complete landing pages from just a sentence.",
+    "url": "https://www.mixo.io",
+    "content": "Mixo lets you launch a site faster than ordering pizza. No login, no hassle — just describe your idea and go live in seconds.",
+    "category": "Website Builder",
+    "slug": "mixo-llms-txt",
+    "website": "",
+    "llmsUrl": "",
+    "llmsFullUrl": ""
   },
   {
     "name": "Model Context Protocol (MCP)",
@@ -858,6 +2057,72 @@
     "llmsFullUrl": "https://modelcontextprotocol.io/llms-full.txt"
   },
   {
+    "name": "MODESER",
+    "description": "MODESER - Modern Tasarım Hizmetleri olarak Web Tasarım, WordPress, Dijital Pazarlama, Alan Adı, Hosting, Sunucu, E-Ticaret ve SSL çözümleri sunuyoruz.",
+    "url": "https://www.modeser.com",
+    "content": "# MODESER\n\nMODESER - Modern Tasarım Hizmetleri olarak Web Tasarım, WordPress, Dijital Pazarlama, Alan Adı, Hosting, Sunucu, E-Ticaret ve SSL çözümleri sunuyoruz.",
+    "category": "developer-tools",
+    "slug": "modeser-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.modeser.com/llms.txt",
+    "llmsFullUrl": "https://www.modeser.com/llms-full.txt"
+  },
+  {
+    "name": "MOREMEDIA®",
+    "description": "Kreative Konzepte, performante Websites und smarte digitale Lösungen: wir unterstützen KMU & Hidden Champions dabei, erfolgreicher zu kommunizieren.",
+    "url": "https://www.moremedia.at",
+    "content": "# MOREMEDIA®\n\nKreative Konzepte, performante Websites und smarte digitale Lösungen: wir unterstützen KMU & Hidden Champions dabei, erfolgreicher zu kommunizieren.",
+    "category": "developer-tools",
+    "slug": "moremedia®-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.moremedia.at/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Morphic Solutions",
+    "description": "AI automation platform that builds custom digital agents and process optimization for manufacturing, logistics, and trade companies.",
+    "url": "https://www.morphic-solutions.com/",
+    "content": "",
+    "category": "ai-ml",
+    "slug": "morphic-solutions-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.morphic-solutions.com/llms.txt",
+    "llmsFullUrl": "https://www.morphic-solutions.com/llms-full.txt"
+  },
+  {
+    "name": "Mubashir Hassan",
+    "description": "Mubashir Hassan offers expert services in Local & Ecommerce SEO, Prompt Engineering, AI/Vibe Coding, Shopify & WordPress SEO, Web Development.",
+    "url": "https://www.mubashirhassan.com",
+    "content": "# Mubashir Hassan\n\nMubashir Hassan offers expert services in Local & Ecommerce SEO, Prompt Engineering, AI/Vibe Coding, Shopify & WordPress SEO, Web Development.",
+    "category": "ai-ml",
+    "slug": "mubashir-hassan-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.mubashirhassan.com/llms.txt",
+    "llmsFullUrl": "https://www.mubashirhassan.com/llms-full.txt"
+  },
+  {
+    "name": "MUI X: Advanced React components for complex use cases",
+    "description": "MUI X: Advanced React components for complex use cases.",
+    "url": "/mui-x-llms-txt",
+    "content": "# MUI X: Advanced React components for complex use cases.\n\nBuild complex and data-rich applications using a growing list of advanced React components, like the Data Grid, Date and Time Pickers, Charts, and more!\n\n## [MUI X Data Grid](https://mui.com/x/react-data-grid/)\n\nA fast and extensible React data table and React data grid, with filtering, sorting, aggregation, and more.\n\n## [MUI X Date and Time Pickers](https://mui.com/x/react-date-pickers/)\n\nA collection of React UI components for selecting dates, times, and ranges.\n\n## [MUI X Charts](https://mui.com/x/react-charts/)\n\nA collection of React chart components for data visualization.\n\n## [MUI X Tree View](https://mui.com/x/react-tree-view/)\n\nThe Tree View component lets users navigate hierarchical lists of data with nested levels that can be expanded and collapsed.",
+    "category": "developer-tools",
+    "slug": "mui-x-llms-txt",
+    "website": "https://mui.com/x/",
+    "llmsUrl": "https://mui.com/x/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Multisynq",
+    "description": "Multisynq enables multiplayer state synchronization without a backend. Add multi-user functionality with a few lines of frontend code.",
+    "url": "https://multisynq.io",
+    "content": "# Multisynq\n\nMultisynq enables multiplayer state synchronization without a backend. Add multi-user functionality with a few lines of frontend code.",
+    "category": "developer-tools",
+    "slug": "multisynq-llms-txt",
+    "website": "",
+    "llmsUrl": "https://multisynq.io/llms.txt",
+    "llmsFullUrl": "https://multisynq.io/llms-full.txt"
+  },
+  {
     "name": "Mystery-o-matic",
     "description": "Interactive mystery and game generation platform",
     "url": "/mystery-o-matic-llms-txt",
@@ -869,6 +2134,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Nativescript",
+    "description": "NativeScript provides platform APIs directly to the JavaScript runtime ( _with strong types_) for a rich TypeScript development experience.",
+    "url": "https://docs.nativescript.org",
+    "content": "# Nativescript\n\nNativeScript provides platform APIs directly to the JavaScript runtime ( _with strong types_) for a rich TypeScript development experience.",
+    "category": "developer-tools",
+    "slug": "nativescript-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.nativescript.org/llms.txt",
+    "llmsFullUrl": "https://docs.nativescript.org/llms-full.txt"
+  },
+  {
     "name": "Netlify",
     "description": "Learn how to develop and host fast and reliable websites and apps with our enterprise-ready composable web platform.",
     "url": "/netlify-llms-txt",
@@ -877,6 +2153,61 @@
     "slug": "netlify-llms-txt",
     "website": "https://docs.netlify.com",
     "llmsUrl": "https://docs.netlify.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Nextevo",
+    "description": "Crafting the future of fashion sustainably, Nextevo transforms pineapple leaves into eco-conscious fabrics.",
+    "url": "https://nextevo.one/",
+    "content": "# Nextevo\n\nCrafting the future of fashion sustainably, Nextevo transforms pineapple leaves into eco-conscious fabrics.",
+    "category": "ai-ml",
+    "slug": "nextevo-llms-txt",
+    "website": "",
+    "llmsUrl": "https://nextevo.one/llms.txt",
+    "llmsFullUrl": "https://nextevo.one/llms-full.txt"
+  },
+  {
+    "name": "NextevoGroup",
+    "description": "We transform agricultural by-products into eco-friendly, value-added materials for sustainable solutions.",
+    "url": "https://nextevogroup.com/",
+    "content": "# NextevoGroup\n\nWe transform agricultural by-products into eco-friendly, value-added materials for sustainable solutions.",
+    "category": "ai-ml",
+    "slug": "nextevogroup-llms-txt",
+    "website": "",
+    "llmsUrl": "https://nextevogroup.com/llms.txt",
+    "llmsFullUrl": "https://nextevogroup.com/llms-full.txt"
+  },
+  {
+    "name": "NomadHelper.AI",
+    "description": "Get personalized itineraries, season planning for nomads, instant cost calculations, and smart destination recommendations.",
+    "url": "https://www.nomadhelper.ai/",
+    "content": "# NomadHelper.AI\n\nGet personalized itineraries, season planning for nomads, instant cost calculations, and smart destination recommendations.",
+    "category": "ai-ml",
+    "slug": "nomadhelper.ai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.nomadhelper.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Nonprofit Management Consulting",
+    "description": "The best nonprofit management consulting firm that helps nonprofits develop actionable strategic plans and sustainable funding structures.",
+    "url": "https://vectorsgroup.com",
+    "content": "# Nonprofit Management Consulting\n\nThe best nonprofit management consulting firm that helps nonprofits develop actionable strategic plans and sustainable funding structures.",
+    "category": "data-analytics",
+    "slug": "nonprofit-management-consulting-llms-txt",
+    "website": "",
+    "llmsUrl": "https://vectorsgroup.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "nsoftware",
+    "description": "We provide developer components that simplify network communications, security, and cloud integration.",
+    "url": "https://www.nsoftware.com",
+    "content": "# nsoftware\n\nWe provide developer components that simplify network communications, security, and cloud integration.",
+    "category": "developer-tools",
+    "slug": "nsoftware-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.nsoftware.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -913,6 +2244,17 @@
     "llmsFullUrl": "https://openrouter.ai/docs/llms-full.txt"
   },
   {
+    "name": "OpenVPN - Zero Trust VPN",
+    "description": "OpenVPN provides secure remote access with a Zero Trust VPN. Our self-hosted and cloud-managed business solutions are built on the trusted OpenVPN protocol.",
+    "url": "https://openvpn.net/",
+    "content": "# OpenVPN - Zero Trust VPN\n\nOpenVPN provides secure remote access with a Zero Trust VPN. Our self-hosted and cloud-managed business solutions are built on the trusted OpenVPN protocol.",
+    "category": "security-identity",
+    "slug": "openvpn---zero-trust-vpn-llms-txt",
+    "website": "",
+    "llmsUrl": "https://openvpn.net/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Oxla",
     "description": "Data processing and analytics platform",
     "url": "/oxla-llms-txt",
@@ -922,6 +2264,28 @@
     "website": "https://oxla.com",
     "llmsUrl": "https://docs.oxla.com/llms.txt",
     "llmsFullUrl": "https://docs.oxla.com/llms-full.txt"
+  },
+  {
+    "name": "Parcelcube Static Dimensioning Systems",
+    "description": "Logistics companies, warehouses, and e-commerce businesses use the Parcelcube dimensioning system to increase efficiency and reduce costs.",
+    "url": "https://parcelcube.com",
+    "content": "# Parcelcube Static Dimensioning Systems\n\nLogistics companies, warehouses, and e-commerce businesses use the Parcelcube dimensioning system to increase efficiency and reduce costs.",
+    "category": "integration-automation",
+    "slug": "parcelcube-static-dimensioning-systems-llms-txt",
+    "website": "",
+    "llmsUrl": "https://parcelcube.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "PayrollRabbit",
+    "description": "Generate Compliant Payslips in 60 seconds.\r\nInstantly compliant. Highly accurate. Fully automated.",
+    "url": "https://www.payrollrabbit.com",
+    "content": "# PayrollRabbit\n\nGenerate Compliant Payslips in 60 seconds.\r\nInstantly compliant. Highly accurate. Fully automated.",
+    "category": "integration-automation",
+    "slug": "payrollrabbit-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.payrollrabbit.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Perplexity",
@@ -935,6 +2299,39 @@
     "llmsFullUrl": "https://docs.perplexity.ai/llms-full.txt"
   },
   {
+    "name": "Personal Page",
+    "description": "HI THER, I AM Manoj K. Chauhan full stack designer ABOUT Designing Solutions for Over 22 Years Expertise in UI/UX design, branding, web development.",
+    "url": "https://pixonstudio.com/",
+    "content": "# Personal Page\n\nHI THER, I AM Manoj K. Chauhan full stack designer ABOUT Designing Solutions for Over 22 Years Expertise in UI/UX design, branding, web development.",
+    "category": "ai-ml",
+    "slug": "personal-page-llms-txt",
+    "website": "",
+    "llmsUrl": "https://pixonstudio.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Phare",
+    "description": "Shockingly good uptime monitoring, alerts, incidents, analytics, and status pages, all jammed into one platform.",
+    "url": "https://phare.io/",
+    "content": "",
+    "category": "developer-tools",
+    "slug": "phare-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.phare.io/llms.txt",
+    "llmsFullUrl": "https://docs.phare.io/llms-full.txt"
+  },
+  {
+    "name": "Pikaicons",
+    "description": "Browse 5,000+ beautifully crafted SVG icons for web and mobile. Free & premium icon library available. Easy integration with React, Solid, and more.",
+    "url": "https://pikaicons.com/",
+    "content": "# Pikaicons\n\nBrowse 5,000+ beautifully crafted SVG icons for web and mobile. Free & premium icon library available. Easy integration with React, Solid, and more.",
+    "category": "developer-tools",
+    "slug": "pikaicons-llms-txt",
+    "website": "",
+    "llmsUrl": "https://pikaicons.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Pinata",
     "description": "Simple API platform for IPFS storage and decentralized file management",
     "url": "/pinata-llms-txt",
@@ -946,6 +2343,17 @@
     "llmsFullUrl": "https://docs.pinata.cloud/llms-full.txt"
   },
   {
+    "name": "PlaceMania",
+    "description": "Sprievodca po nie práve turistických a krajších miesta sveta. Cestovateľské tipy, články, fakty na ktoré nezabudneš.",
+    "url": "https://www.placemania.sk/",
+    "content": "# PlaceMania\n\nSprievodca po nie práve turistických a krajších miesta sveta. Cestovateľské tipy, články, fakty na ktoré nezabudneš.",
+    "category": "integration-automation",
+    "slug": "placemania-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.placemania.sk/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Plain",
     "description": "Customer support and communication platform",
     "url": "/plain-llms-txt",
@@ -955,6 +2363,17 @@
     "website": "https://plain.com",
     "llmsUrl": "https://www.plain.com/docs/llms.txt",
     "llmsFullUrl": "https://www.plain.com/docs/llms-full.txt"
+  },
+  {
+    "name": "Plan Harmony | Travel Planning",
+    "description": "Plan trips together with friends using Plan Harmony. Build itineraries, find activities, track your budget, and create memorable travel experiences.",
+    "url": "https://planharmony.com/",
+    "content": "# Plan Harmony | Travel Planning\n\nPlan trips together with friends using Plan Harmony. Build itineraries, find activities, track your budget, and create memorable travel experiences.",
+    "category": "ai-ml",
+    "slug": "plan-harmony---travel-planning-llms-txt",
+    "website": "",
+    "llmsUrl": "https://planharmony.com/llms.txt",
+    "llmsFullUrl": "https://planharmony.com/llms-full.txt"
   },
   {
     "name": "POPSMASH",
@@ -979,6 +2398,28 @@
     "llmsFullUrl": "https://postfa.st/llms-full.txt"
   },
   {
+    "name": "Preact",
+    "description": "Fast 3kB alternative to React with the same modern API.",
+    "url": "https://preactjs.com",
+    "content": "# Preact\n\nFast 3kB alternative to React with the same modern API.",
+    "category": "developer-tools",
+    "slug": "preact-llms-txt",
+    "website": "",
+    "llmsUrl": "https://preactjs.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Prettier",
+    "description": "Prettier is an opinionated code formatter.",
+    "url": "/prettier-llms-txt",
+    "content": "# Prettier\n\nPrettier is an opinionated code formatter.",
+    "category": "developer-tools",
+    "slug": "prettier-llms-txt",
+    "website": "https://prettier.io/",
+    "llmsUrl": "https://prettier.io/llms.txt",
+    "llmsFullUrl": "https://prettier.io/llms-full.txt"
+  },
+  {
     "name": "PrimeV",
     "description": "Cloud infrastructure and virtualization platform",
     "url": "/primev-llms-txt",
@@ -1001,6 +2442,28 @@
     "llmsFullUrl": "https://prisma.io/docs/llms-full.txt"
   },
   {
+    "name": "Progress.rocks",
+    "description": "Progress.rocks offers a simple API providing progress bars in SVG format.",
+    "url": "https://progress.rocks/",
+    "content": "# Progress.rocks\n\nProgress.rocks offers a simple API providing progress bars in SVG format.",
+    "category": "developer-tools",
+    "slug": "progress.rocks-llms-txt",
+    "website": "",
+    "llmsUrl": "https://progress.rocks/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "ProGuard Pest Control",
+    "description": "ProGuard Pest Control offers expert pest and exterminator services in Boise, ID.",
+    "url": "https://proguardpest.com/",
+    "content": "# ProGuard Pest Control\n\nProGuard Pest Control offers expert pest and exterminator services in Boise, ID.",
+    "category": "ai-ml",
+    "slug": "proguard-pest-control-llms-txt",
+    "website": "",
+    "llmsUrl": "https://proguardpest.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "ProjectDiscovery",
     "description": "Security and vulnerability scanning platform",
     "url": "/projectdiscovery-llms-txt",
@@ -1012,6 +2475,39 @@
     "llmsFullUrl": "https://docs.projectdiscovery.io/llms-full.txt"
   },
   {
+    "name": "prompt-kit",
+    "description": "Core building blocks for AI apps. High-quality, accessible, and customizable components for AI interfaces. Built with React, shadcn/ui and Tailwind CSS.",
+    "url": "https://www.prompt-kit.com/",
+    "content": "# prompt-kit\n\nCore building blocks for AI apps. High-quality, accessible, and customizable components for AI interfaces. Built with React, shadcn/ui and Tailwind CSS.",
+    "category": "developer-tools",
+    "slug": "prompt-kit-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.prompt-kit.com/llms.txt",
+    "llmsFullUrl": "https://www.prompt-kit.com/llms-full.txt"
+  },
+  {
+    "name": "promptfoo",
+    "description": "Evaluate and test LLM outputs, collect human feedback, prevent regressions, and improve your prompts",
+    "url": "/promptfoo-llms-txt",
+    "content": "# promptfoo\n\npromptfoo provides comprehensive tools for testing, evaluating, and improving LLM outputs and prompt engineering.\n\n## Key Focus Areas\n\n- LLM Output Evaluation\n- Prompt Testing & Versioning\n- Red Team Testing\n- Benchmarking & Regression Testing\n\n## About llms.txt Implementation\n\npromptfoo's llms.txt provides structured documentation on testing and evaluating LLM outputs, helping developers build more reliable AI applications.",
+    "category": "ai-ml",
+    "slug": "promptfoo-llms-txt",
+    "website": "https://www.promptfoo.dev",
+    "llmsUrl": "https://www.promptfoo.dev/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Pydantic",
+    "description": "Pydantic is the most widely used data validation library for Python.",
+    "url": "/pydantic-llms-txt",
+    "content": "# Pydantic\n\nPydantic is the most widely used data validation library for Python.",
+    "category": "developer-tools",
+    "slug": "pydantic-llms-txt",
+    "website": "https://docs.pydantic.dev/latest/",
+    "llmsUrl": "https://docs.pydantic.dev/latest/llms.txt",
+    "llmsFullUrl": "https://docs.pydantic.dev/latest/llms-full.txt"
+  },
+  {
     "name": "Quill",
     "description": "SQL query builder and database management platform",
     "url": "/quill-llms-txt",
@@ -1021,6 +2517,17 @@
     "website": "https://quillsql.com",
     "llmsUrl": "https://docs.quillsql.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Qwikrank",
+    "description": "Generate SEO-Optimized Content with AI in Minutes.",
+    "url": "/qwikrank-llms-txt",
+    "content": "# Qwikrank\n\nGenerate SEO-Optimized Content with AI in Minutes.",
+    "category": "integration-automation",
+    "slug": "qwikrank-llms-txt",
+    "website": "https://qwikrank.com",
+    "llmsUrl": "https://qwikrank.com/llms.txt",
+    "llmsFullUrl": "https://qwikrank.com/llms-full.txt"
   },
   {
     "name": "RainbowKit",
@@ -1043,6 +2550,17 @@
     "website": "https://raincamp.ai",
     "llmsUrl": "https://raincamp.ai/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "RapidTextAI",
+    "description": "Advanced AI article generator powered by GPT-4, Grok, Gemini, Deepseek and more. Create comprehensive, SEO-optimized content from 3,000+ word blog posts.",
+    "url": "https://app.rapidtextai.com/",
+    "content": "# RapidTextAI\n\nAdvanced AI article generator powered by GPT-4, Grok, Gemini, Deepseek and more. Create comprehensive, SEO-optimized content from 3,000+ word blog posts.",
+    "category": "ai-ml",
+    "slug": "rapidtextai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://app.rapidtextai.com/llms.txt",
+    "llmsFullUrl": "https://app.rapidtextai.com/llms-full.txt"
   },
   {
     "name": "Raycast",
@@ -1078,6 +2596,39 @@
     "llmsFullUrl": "https://resend.com/docs/llms-full.txt"
   },
   {
+    "name": "Respond.io",
+    "description": "Respond.io is an AI-powered customer conversation platform that helps B2Cs capture, convert, and retain customers over chat, calls and email at scale.",
+    "url": "https://respond.io",
+    "content": "# Respond.io\n\nRespond.io is an AI-powered customer conversation platform that helps B2Cs capture, convert, and retain customers over chat, calls and email at scale.",
+    "category": "integration-automation",
+    "slug": "respond.io-llms-txt",
+    "website": "",
+    "llmsUrl": "https://respond.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Retainful",
+    "description": "Acquire, nuture and retain customers with the most easy-to-use email marketing software for Ecommerce - Retainful.",
+    "url": "https://www.retainful.com/",
+    "content": "# Retainful\n\nAcquire, nuture and retain customers with the most easy-to-use email marketing software for Ecommerce - Retainful.",
+    "category": "integration-automation",
+    "slug": "retainful-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.retainful.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Rims, Tires for Cars and Trucks",
+    "description": "Find custom wheels, car rims, aftermarket tires, truck wheels, and wheel and tire packages for cars, trucks, and Suvs.",
+    "url": "https://www.performanceplustire.com/",
+    "content": "# Rims, Tires for Cars and Trucks\n\nFind custom wheels, car rims, aftermarket tires, truck wheels, and wheel and tire packages for cars, trucks, and Suvs.",
+    "category": "developer-tools",
+    "slug": "rims,-tires-for-cars-and-trucks-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.performanceplustire.com/llms.txt",
+    "llmsFullUrl": "https://www.performanceplustire.com/llms-full.txt"
+  },
+  {
     "name": "Roc",
     "description": "Fast and safe programming language",
     "url": "/roc-llms-txt",
@@ -1087,6 +2638,50 @@
     "website": "https://roc-lang.org",
     "llmsUrl": "https://www.roc-lang.org/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Rsbuild",
+    "description": "Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.",
+    "url": "/rsbuild-llms-txt",
+    "content": "# Rsbuild\n\nRsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.",
+    "category": "developer-tools",
+    "slug": "rsbuild-llms-txt",
+    "website": "https://rsbuild.dev",
+    "llmsUrl": "https://rsbuild.dev/llms.txt",
+    "llmsFullUrl": "https://rsbuild.dev/llms-full.txt"
+  },
+  {
+    "name": "Rslib",
+    "description": "Rslib is a library development tool that leverages the well-designed configurations and plugins of Rsbuild.",
+    "url": "/rslib-llms-txt",
+    "content": "# Rslib\n\nRslib is a library development tool that leverages the well-designed configurations and plugins of Rsbuild.",
+    "category": "developer-tools",
+    "slug": "rslib-llms-txt",
+    "website": "https://lib.rsbuild.dev",
+    "llmsUrl": "https://lib.rsbuild.dev/llms.txt",
+    "llmsFullUrl": "https://lib.rsbuild.dev/llms-full.txt"
+  },
+  {
+    "name": "Rspack",
+    "description": "Rspack is a high performance JavaScript bundler written in Rust. It offers strong compatibility with the webpack ecosystem, and lightning fast build speeds.",
+    "url": "/rspack-llms-txt",
+    "content": "# Rspack\n\nRspack is a high performance JavaScript bundler written in Rust. It offers strong compatibility with the webpack ecosystem, and lightning fast build speeds.",
+    "category": "developer-tools",
+    "slug": "rspack-llms-txt",
+    "website": "https://rspack.dev",
+    "llmsUrl": "https://rspack.dev/llms.txt",
+    "llmsFullUrl": "https://rspack.dev/llms-full.txt"
+  },
+  {
+    "name": "Ruleta aleatoria online gratis",
+    "description": "Crea y gira tu ruleta aleatoria online gratis. Toma decisiones, elige nombres o premios al instante con Ruletaa.",
+    "url": "https://ruletaa.net/",
+    "content": "# Ruleta aleatoria online gratis\n\nCrea y gira tu ruleta aleatoria online gratis. Toma decisiones, elige nombres o premios al instante con Ruletaa.",
+    "category": "developer-tools",
+    "slug": "ruleta-aleatoria-online-gratis-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ruletaa.net/llms.txt",
+    "llmsFullUrl": "https://ruletaa.net/llms-full.txt"
   },
   {
     "name": "Salesbricks",
@@ -1100,6 +2695,17 @@
     "llmsFullUrl": "https://docs.salesbricks.com/llms-full.txt"
   },
   {
+    "name": "Salesforce Marketing Cloud Consultants",
+    "description": "Boost ROI with Salesforce Marketing Cloud. Meet your team of certified Marketing Cloud consultants and specialists in Sales Cloud and Data Cloud.",
+    "url": "/salesforce-marketing-cloud-llms-txt",
+    "content": "# Salesforce Marketing Cloud Consultants\n\nBoost ROI with Salesforce Marketing Cloud. Meet your team of certified Marketing Cloud consultants and specialists in Sales Cloud and Data Cloud.",
+    "category": "integration-automation",
+    "slug": "salesforce-marketing-cloud-llms-txt",
+    "website": "https://marcloudconsulting.com/",
+    "llmsUrl": "https://marcloudconsulting.com/llms.txt",
+    "llmsFullUrl": "https://marcloudconsulting.com/llms-full.txt"
+  },
+  {
     "name": "Sardine",
     "description": "Fraud prevention and compliance platform",
     "url": "/sardine-llms-txt",
@@ -1109,6 +2715,28 @@
     "website": "https://sardine.ai",
     "llmsUrl": "https://docs.sardine.ai/llms.txt",
     "llmsFullUrl": "https://docs.sardine.ai/llms-full.txt"
+  },
+  {
+    "name": "Schweizer Naturkosmetik mit Bio",
+    "description": "Minimalistische Naturkosmetik mit Bio-Arganöl aus fairer Produktion – ohne Alkohol, Zusatzstoffe, hochkonzentriert, natürlich für ein ausgeglichenes Hautbild.",
+    "url": "https://bepure.ch/",
+    "content": "# Schweizer Naturkosmetik mit Bio\n\nMinimalistische Naturkosmetik mit Bio-Arganöl aus fairer Produktion – ohne Alkohol, Zusatzstoffe, hochkonzentriert, natürlich für ein ausgeglichenes Hautbild.",
+    "category": "data-analytics",
+    "slug": "schweizer-naturkosmetik-mit-bio-llms-txt",
+    "website": "",
+    "llmsUrl": "https://bepure.ch/llms.txt",
+    "llmsFullUrl": "https://bepure.ch/llms-full.txt"
+  },
+  {
+    "name": "Scottish Art Prints by Carol McEwan",
+    "description": "Bring the beauty of Scotland into your home with Carol McEwan's landscape prints. Modern, high-quality art perfect for gifts, home decor, and art lovers.",
+    "url": "https://www.carolmcewan.scot",
+    "content": "# Scottish Art Prints by Carol McEwan\n\nBring the beauty of Scotland into your home with Carol McEwan's landscape prints. Modern, high-quality art perfect for gifts, home decor, and art lovers.",
+    "category": "ai-ml",
+    "slug": "scottish-art-prints-by-carol-mcewan-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.carolmcewan.scot/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "ScreenshotOne",
@@ -1122,6 +2750,39 @@
     "llmsFullUrl": "https://screenshotone.com/docs/llms-full.txt"
   },
   {
+    "name": "Secure & Fast Online Money Transfers",
+    "description": "Send money home at the best rates and low fee with a highly secure and quick platform. Sign-up today on ACE Money Transfer website.",
+    "url": "http://acemoneytransfer.com",
+    "content": "# Secure & Fast Online Money Transfers\n\nSend money home at the best rates and low fee with a highly secure and quick platform. Sign-up today on ACE Money Transfer website.",
+    "category": "integration-automation",
+    "slug": "secure-&-fast-online-money-transfers-llms-txt",
+    "website": "",
+    "llmsUrl": "http://acemoneytransfer.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Sekhlo.pk",
+    "description": "Your gateway to a world of limitless learning and earning opportunities from the comfort of your own home. At Sekhlo.pk, we believe in empowering individuals.",
+    "url": "https://www.sekhlo.pk",
+    "content": "# Sekhlo.pk\n\nYour gateway to a world of limitless learning and earning opportunities from the comfort of your own home. At Sekhlo.pk, we believe in empowering individuals.",
+    "category": "developer-tools",
+    "slug": "sekhlo.pk-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.sekhlo.pk/llms.txt",
+    "llmsFullUrl": "https://www.sekhlo.pk/llms-full.txt"
+  },
+  {
+    "name": "Self",
+    "description": "Stormkit is a hosting and deployment platform for modern web applications, offering seamless integration with Git repositories and powerful CI/CD capabilities.",
+    "url": "https://www.stormkit.io",
+    "content": "# Self\n\nStormkit is a hosting and deployment platform for modern web applications, offering seamless integration with Git repositories and powerful CI/CD capabilities.",
+    "category": "infrastructure-cloud",
+    "slug": "self-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.stormkit.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Semgrep",
     "description": "We're a startup passionate about improving software security and reliability.",
     "url": "/semgrep-llms-txt",
@@ -1133,6 +2794,50 @@
     "llmsFullUrl": "https://semgrep.com/llms-full.txt"
   },
   {
+    "name": "SEO agentūra Vilniuje ✳️ Digital Star",
+    "description": "Skaitmeninės reklamos ir SEO agentūra Vilniuje ✅ Daugiau nei 15 metų patirtis, gausybė sėkmingai įgyvendintų projektų ☑️ patyrę SEO specialistai.",
+    "url": "https://www.digitalstar.lt/",
+    "content": "# SEO agentūra Vilniuje ✳️ Digital Star\n\nSkaitmeninės reklamos ir SEO agentūra Vilniuje ✅ Daugiau nei 15 metų patirtis, gausybė sėkmingai įgyvendintų projektų ☑️ patyrę SEO specialistai.",
+    "category": "developer-tools",
+    "slug": "seo-agentūra-vilniuje-✳️-digital-star-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.digitalstar.lt/llms.txt",
+    "llmsFullUrl": "https://www.digitalstar.lt/llms-full.txt"
+  },
+  {
+    "name": "SEO KAOS",
+    "description": "SEO danışmanı Seokaos ile Google başta olmak üzere dijital ortamda işlerinizi büyütün. 7/24 SEO danışmanlığı etik ve kalıcı hizmet.",
+    "url": "https://www.seokaos.com/",
+    "content": "# SEO KAOS\n\nSEO danışmanı Seokaos ile Google başta olmak üzere dijital ortamda işlerinizi büyütün. 7/24 SEO danışmanlığı etik ve kalıcı hizmet.",
+    "category": "data-analytics",
+    "slug": "seo-kaos-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.seokaos.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "SEO2LLM",
+    "description": "Stop losing traffic to AI. SEO2LLM shows how ChatGPT, Gemini & Perplexity see your brand and gives you a clear plan to win in AI-driven search.",
+    "url": "https://www.seo2llm.com/",
+    "content": "# SEO2LLM\n\nStop losing traffic to AI. SEO2LLM shows how ChatGPT, Gemini & Perplexity see your brand and gives you a clear plan to win in AI-driven search.",
+    "category": "data-analytics",
+    "slug": "seo2llm-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.seo2llm.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Shop Positioner LLC",
+    "description": "Shop Positioner is a digital agency specializing in web design, SEO, PPC, and CRM solutions tailored for auto detailing, PPF and window tint businesses.",
+    "url": "https://shoppositioner.com/",
+    "content": "# Shop Positioner LLC\n\nShop Positioner is a digital agency specializing in web design, SEO, PPC, and CRM solutions tailored for auto detailing, PPF and window tint businesses.",
+    "category": "data-analytics",
+    "slug": "shop-positioner-llc-llms-txt",
+    "website": "",
+    "llmsUrl": "https://shoppositioner.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "SimplePDF",
     "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
     "url": "/simplepdf-llms-txt",
@@ -1141,6 +2846,17 @@
     "slug": "simplepdf-llms-txt",
     "website": "https://simplepdf.com",
     "llmsUrl": "https://simplepdf.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Singing Carrots",
+    "description": "A science-backed voice training platform that turns singing practice into an engaging, interactive game.",
+    "url": "https://singingcarrots.com/",
+    "content": "# Singing Carrots\n\nA science-backed voice training platform that turns singing practice into an engaging, interactive game.",
+    "category": "ai-ml",
+    "slug": "singing-carrots-llms-txt",
+    "website": "",
+    "llmsUrl": "https://singingcarrots.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1155,6 +2871,17 @@
     "llmsFullUrl": "https://llm.skydeck.ai/llms-full.txt"
   },
   {
+    "name": "Skywork︱The  AI Workspace Agents",
+    "description": "Skywork - Skywork turns simple input into multimodal content - docs, slides, sheets with deep research, podcasts & webpages.",
+    "url": "https://skywork.ai/",
+    "content": "# Skywork︱The  AI Workspace Agents\n\nSkywork - Skywork turns simple input into multimodal content - docs, slides, sheets with deep research, podcasts & webpages.",
+    "category": "integration-automation",
+    "slug": "skywork︱the-ai-workspace-agents-llms-txt",
+    "website": "",
+    "llmsUrl": "https://skywork.ai/llms.txt",
+    "llmsFullUrl": "https://skywork.ai/llms-full.txt"
+  },
+  {
     "name": "Smartcar",
     "description": "Connected car API platform",
     "url": "/smartcar-llms-txt",
@@ -1164,6 +2891,17 @@
     "website": "https://smartcar.com",
     "llmsUrl": "https://smartcar.com/docs/llms.txt",
     "llmsFullUrl": "https://smartcar.com/docs/llms-full.txt"
+  },
+  {
+    "name": "Sociality.io",
+    "description": "Sociality.io is an AI‑first, human‑in‑the‑loop platform for social media analytics, engagement, social listening, competitor analysis and publishing automation.",
+    "url": "https://sociality.io/",
+    "content": "# Sociality.io\n\nSociality.io is an AI‑first, human‑in‑the‑loop platform for social media analytics, engagement, social listening, competitor analysis and publishing automation.",
+    "category": "integration-automation",
+    "slug": "sociality.io-llms-txt",
+    "website": "",
+    "llmsUrl": "https://sociality.io/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Solid",
@@ -1188,6 +2926,28 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "SpacetimeDB",
+    "description": "The easiest way to build a multiplayer app/game at the speed of light.",
+    "url": "https://spacetimedb.com/",
+    "content": "# SpacetimeDB\n\nThe easiest way to build a multiplayer app/game at the speed of light.",
+    "category": "data-analytics",
+    "slug": "spacetimedb-llms-txt",
+    "website": "",
+    "llmsUrl": "https://spacetimedb.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Statusfield",
+    "description": "Real-time alerts for outages in the cloud services you rely on.",
+    "url": "https://statusfield.com",
+    "content": "# Statusfield\n\nReal-time alerts for outages in the cloud services you rely on.",
+    "category": "developer-tools",
+    "slug": "statusfield-llms-txt",
+    "website": "",
+    "llmsUrl": "https://statusfield.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Stedi",
     "description": "B2B data integration and EDI platform",
     "url": "/stedi-llms-txt",
@@ -1199,6 +2959,28 @@
     "llmsFullUrl": "https://www.stedi.com/docs/llms-full.txt"
   },
   {
+    "name": "Stephanie Kabi",
+    "description": "I'm a Growth Product Manager and Senior Product Designer based in Nairobi working with impact-focused brands and teams. Get in touch.",
+    "url": "https://stephaniekabi.com/",
+    "content": "# Stephanie Kabi\n\nI'm a Growth Product Manager and Senior Product Designer based in Nairobi working with impact-focused brands and teams. Get in touch.",
+    "category": "developer-tools",
+    "slug": "stephanie-kabi-llms-txt",
+    "website": "",
+    "llmsUrl": "https://stephaniekabi.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Stock trading & investment app",
+    "description": "Invest commission-free with Freetrade. Trade thousands of UK, US, and European stocks and ETFs easily, on desktop or mobile.",
+    "url": "https://freetrade.io",
+    "content": "# Stock trading & investment app\n\nInvest commission-free with Freetrade. Trade thousands of UK, US, and European stocks and ETFs easily, on desktop or mobile.",
+    "category": "infrastructure-cloud",
+    "slug": "stock-trading-&-investment-app-llms-txt",
+    "website": "",
+    "llmsUrl": "https://freetrade.io/llms.txt",
+    "llmsFullUrl": "https://freetrade.io/llms-full.txt"
+  },
+  {
     "name": "Stripe",
     "description": "Stripe powers online and in-person payment processing and financial solutions for businesses of all sizes. Accept payments, send payouts, and automate financial processes with a suite of APIs and no-code tools.",
     "url": "/stripe-llms-txt",
@@ -1207,6 +2989,17 @@
     "slug": "stripe-llms-txt",
     "website": "https://stripe.com",
     "llmsUrl": "http://docs.stripe.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Sunra AI",
+    "description": "Sunra.ai is a generative media platform built for developers, providing high-performance AI model inference capabilities. It specializes in running diffusion models through production-ready APIs and interactive UI playgrounds.",
+    "url": "https://sunra.ai",
+    "content": "",
+    "category": "ai-ml",
+    "slug": "sunra-ai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://sunra.ai/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1221,6 +3014,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Supadata",
+    "description": "Turn YouTube, TikTok, X videos and websites into structured data. Skip the hassle of video transcription and data scraping.",
+    "url": "https://supadata.ai",
+    "content": "# Supadata\n\nTurn YouTube, TikTok, X videos and websites into structured data. Skip the hassle of video transcription and data scraping.",
+    "category": "developer-tools",
+    "slug": "supadata-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.supadata.ai/llms.txt",
+    "llmsFullUrl": "https://docs.supadata.ai/llms-full.txt"
+  },
+  {
     "name": "Svelte",
     "description": "Modern web application framework",
     "url": "/svelte-llms-txt",
@@ -1230,6 +3034,50 @@
     "website": "https://svelte.dev",
     "llmsUrl": "https://svelte.dev/llms.txt",
     "llmsFullUrl": "https://svelte.dev/llms-full.txt"
+  },
+  {
+    "name": "Swipe, Simple Invoicing and Payments app",
+    "description": "Swipe is simple & fast GST billing software for small businesses. Manage Invoices, Quotations, Purchase Orders, Payments, and Inventory.",
+    "url": "https://getswipe.in/",
+    "content": "# Swipe, Simple Invoicing and Payments app\n\nSwipe is simple & fast GST billing software for small businesses. Manage Invoices, Quotations, Purchase Orders, Payments, and Inventory.",
+    "category": "integration-automation",
+    "slug": "swipe,-simple-invoicing-and-payments-app-llms-txt",
+    "website": "",
+    "llmsUrl": "https://getswipe.in/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Syndicats eG",
+    "description": "Digitale Geschäftsmodelle, Digitale Produkte & Prozesse. Lass machen, Syndicats.",
+    "url": "https://syndicats.de",
+    "content": "# Syndicats eG\n\nDigitale Geschäftsmodelle, Digitale Produkte & Prozesse. Lass machen, Syndicats.",
+    "category": "ai-ml",
+    "slug": "syndicats-eg-llms-txt",
+    "website": "",
+    "llmsUrl": "https://syndicats.de/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Tamagui",
+    "description": "React style library and UI kit that unifies React Native and React web.",
+    "url": "/tamagui-llms-txt",
+    "content": "# Tamagui\n\nReact style library and UI kit that unifies React Native and React web.",
+    "category": "developer-tools",
+    "slug": "tamagui-llms-txt",
+    "website": "https://tamagui.dev",
+    "llmsUrl": "https://tamagui.dev/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Taskade AI",
+    "description": "Meet your AI workforce in Taskade. Build apps from a prompt. Connect tasks, data, and agents that think, plan, and act—automating work across your team.",
+    "url": "https://www.taskade.com/",
+    "content": "# Taskade AI\n\nMeet your AI workforce in Taskade. Build apps from a prompt. Connect tasks, data, and agents that think, plan, and act—automating work across your team.",
+    "category": "ai-ml",
+    "slug": "taskade-ai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.taskade.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Tavus",
@@ -1243,6 +3091,28 @@
     "llmsFullUrl": "https://docs.tavus.io/llms-full.txt"
   },
   {
+    "name": "Television.AI",
+    "description": "Television.AI is an AI-powered video editor specialized in news and sports video production for broadcasters, publishers, and news agencies.",
+    "url": "https://www.television.ai/",
+    "content": "# Television.AI\n\nTelevision.AI is an AI-powered video editor specialized in news and sports video production for broadcasters, publishers, and news agencies.",
+    "category": "data-analytics",
+    "slug": "television.ai-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.television.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Tepelné čerpadlá IME",
+    "description": "Tepelné čerpadlá IME sú zárukou kvality, spoľahlivosti a dlhej životnosti. Dbáme na odbornú montáž, garantovaný servis, záruku a vašu spokojnosť.",
+    "url": "https://ime.sk",
+    "content": "# Tepelné čerpadlá IME\n\nTepelné čerpadlá IME sú zárukou kvality, spoľahlivosti a dlhej životnosti. Dbáme na odbornú montáž, garantovaný servis, záruku a vašu spokojnosť.",
+    "category": "ai-ml",
+    "slug": "tepelné-čerpadlá-ime-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ime.sk/llms.txt",
+    "llmsFullUrl": "https://ime.sk/llms-full.txt"
+  },
+  {
     "name": "The Data Driven Marketer",
     "description": "Data-driven marketing insights and tools",
     "url": "/data-driven-marketer-llms-txt",
@@ -1254,6 +3124,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "The Dinner Detective Murder Mystery Show",
+    "description": "True crime mystery dinner shows with a twist! Now playing in 100+ cities. Hilarious show, great meal! Private events and gift certificates.",
+    "url": "https://www.thedinnerdetective.com/",
+    "content": "# The Dinner Detective Murder Mystery Show\n\nTrue crime mystery dinner shows with a twist! Now playing in 100+ cities. Hilarious show, great meal! Private events and gift certificates.",
+    "category": "security-identity",
+    "slug": "the-dinner-detective-murder-mystery-show-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.thedinnerdetective.com/llms.txt",
+    "llmsFullUrl": "https://www.thedinnerdetective.com/llms-full.txt"
+  },
+  {
     "name": "TheirStack",
     "description": "Technology stack discovery platform",
     "url": "/theirstack-llms-txt",
@@ -1263,6 +3144,17 @@
     "website": "https://theirstack.com",
     "llmsUrl": "https://theirstack.com/docs/llms.txt",
     "llmsFullUrl": "https://theirstack.com/docs/llms-full.txt"
+  },
+  {
+    "name": "TherapyDave - Dave Lechnyr, LCSW",
+    "description": "Licensed Clinical Social Worker (LCSW, ACSW) and Certified Gottman Therapist offering couples therapy, discernment counseling, individual therapy, and relationship coaching, based in Oregon and Arizona with global coaching availability.",
+    "url": "https://therapydave.com",
+    "content": "",
+    "category": "other",
+    "slug": "therapydave",
+    "website": "",
+    "llmsUrl": "https://therapydave.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Tinybird",
@@ -1309,6 +3201,17 @@
     "llmsFullUrl": "https://www.trailofbits.com/llms-full.txt"
   },
   {
+    "name": "Travel Nepal",
+    "description": "Discover the best travel destinations, guides, and stories for Nepal.",
+    "url": "https://travelnep.com",
+    "content": "# Travel Nepal\n\nDiscover the best travel destinations, guides, and stories for Nepal.",
+    "category": "data-analytics",
+    "slug": "travel-nepal-llms-txt",
+    "website": "",
+    "llmsUrl": "https://travelnep.com/llms.txt",
+    "llmsFullUrl": "https://travelnep.com/llms-full.txt"
+  },
+  {
     "name": "Trigger.dev",
     "description": "Background job and workflow automation platform",
     "url": "/trigger-dev-llms-txt",
@@ -1318,6 +3221,17 @@
     "website": "https://trigger.dev",
     "llmsUrl": "https://trigger.dev/docs/llms.txt",
     "llmsFullUrl": "https://trigger.dev/docs/llms-full.txt"
+  },
+  {
+    "name": "TrueProfit",
+    "description": "Instantly track your Net Profit. Say goodbye to these spreadsheet nightmares: Stay on top of your true business health with our Net Profit Analytics dashboard.",
+    "url": "/trueprofit-llms-txt",
+    "content": "# TrueProfit\n\nInstantly track your Net Profit. Say goodbye to these spreadsheet nightmares: Stay on top of your true business health with our Net Profit Analytics dashboard.",
+    "category": "data-analytics",
+    "slug": "trueprofit-llms-txt",
+    "website": "https://trueprofit.io/",
+    "llmsUrl": "https://trueprofit.io/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Turbo",
@@ -1331,6 +3245,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "TurboDocx",
+    "description": "TurboDocx is an AI-powered document and slide deck automation platform. It helps businesses generate professional documents—like statements of work, runbooks, reports, and sales presentations—by pulling structured data from tools like CRMs, project management systems, and spreadsheets. Users can use their own branded templates, and TurboDocx takes care of the formatting, content population, and even e-signatures. It works via web app, API, SDK, and integrations—making it ideal for teams and software platforms that want to eliminate manual copy-paste and deliver polished outputs at scale.",
+    "url": "https://turbodocx.com",
+    "content": "# TurboDocs\n\nTurboDocx is an AI-powered document and slide deck automation platform. It helps businesses generate professional documents—like statements of work, runbooks, reports, and sales presentations—by pulling structured data from tools like CRMs, project management systems, and spreadsheets. Users can use their own branded templates, and TurboDocx takes care of the formatting, content population, and even e-signatures. It works via web app, API, SDK, and integrations—making it ideal for teams and software platforms that want to eliminate manual copy-paste and deliver polished outputs at scale.",
+    "category": "integration-automation",
+    "slug": "turbo-docx-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.turbodocx.com/llms.txt",
+    "llmsFullUrl": "https://docs.turbodocx.com/llms-full.txt"
+  },
+  {
     "name": "Turso",
     "description": "Edge database platform",
     "url": "/turso-llms-txt",
@@ -1342,6 +3267,50 @@
     "llmsFullUrl": "https://docs.turso.tech/llms-full.txt"
   },
   {
+    "name": "TwicPics by Frontify",
+    "description": "TwicPics delivers perfectly sized media to your websites and applications in real-time to provide the best possible experience to all your end users.",
+    "url": "https://www.twicpics.com",
+    "content": "# TwicPics by Frontify\n\nTwicPics delivers perfectly sized media to your websites and applications in real-time to provide the best possible experience to all your end users.",
+    "category": "developer-tools",
+    "slug": "twicpics-by-frontify-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.twicpics.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "UFC Velvet",
+    "description": "UFC Velvet offers delicious plant-based milk made from almonds and coconuts—creamy, dairy-free, and perfect for your healthy lifestyle.",
+    "url": "https://ufcvelvet.com/",
+    "content": "# UFC Velvet\n\nUFC Velvet offers delicious plant-based milk made from almonds and coconuts—creamy, dairy-free, and perfect for your healthy lifestyle.",
+    "category": "ai-ml",
+    "slug": "ufc-velvet-llms-txt",
+    "website": "",
+    "llmsUrl": "https://ufcvelvet.com/llms.txt",
+    "llmsFullUrl": "https://ufcvelvet.com/llms-full.txt"
+  },
+  {
+    "name": "uminai MCP",
+    "description": "Curated collection of MCP Servers, MCP Clients including Awesome MCP Servers and workflow for LLM integration.",
+    "url": "https://mcp.umin.ai",
+    "content": "# uminai MCP\n\nCurated collection of MCP Servers, MCP Clients including Awesome MCP Servers and workflow for LLM integration.",
+    "category": "data-analytics",
+    "slug": "uminai-mcp-llms-txt",
+    "website": "",
+    "llmsUrl": "https://mcp.umin.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "underrun.io",
+    "description": "Convince Customers from Day One with Public Onboarding Plans.",
+    "url": "https://underrun.io",
+    "content": "# underrun.io\n\nConvince Customers from Day One with Public Onboarding Plans.",
+    "category": "integration-automation",
+    "slug": "underrun.io-llms-txt",
+    "website": "",
+    "llmsUrl": "https://underrun.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "UnifyGTM",
     "description": "Go-to-market strategy and execution platform",
     "url": "/unifygtm-llms-txt",
@@ -1351,6 +3320,17 @@
     "website": "https://unifygtm.com",
     "llmsUrl": "https://docs.unifygtm.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "UniWebView",
+    "description": "UniWebView is a modern web view component for mobile Unity 3D games for native iOS/Android. Integrating web content to your games was never easier.",
+    "url": "/uniwebview-llms-txt",
+    "content": "# UniWebView\n\nUniWebView is a modern web view component for mobile Unity 3D games for native iOS/Android. Integrating web content to your games was never easier.",
+    "category": "developer-tools",
+    "slug": "uniwebview-llms-txt",
+    "website": "https://docs.uniwebview.com",
+    "llmsUrl": "https://docs.uniwebview.com/llms.txt",
+    "llmsFullUrl": "https://docs.uniwebview.com/llms-full.txt"
   },
   {
     "name": "Unkey",
@@ -1386,6 +3366,28 @@
     "llmsFullUrl": "https://upstash.com/docs/llms-full.txt"
   },
   {
+    "name": "useapi.net",
+    "description": "Experimental API for popular AI services by useapi.net.",
+    "url": "https://useapi.net",
+    "content": "# useapi.net\n\nExperimental API for popular AI services by useapi.net.",
+    "category": "developer-tools",
+    "slug": "useapi.net-llms-txt",
+    "website": "",
+    "llmsUrl": "https://useapi.net/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Utrecht Golf Instructor Marina Romanik",
+    "description": "Book golf lesson in Utrecht with Marina. Ideal for beginners and experienced players alike. Skilled in teaching both kids and adults.",
+    "url": "https://romanik.nl/",
+    "content": "# Utrecht Golf Instructor Marina Romanik\n\nBook golf lesson in Utrecht with Marina. Ideal for beginners and experienced players alike. Skilled in teaching both kids and adults.",
+    "category": "data-analytics",
+    "slug": "utrecht-golf-instructor-marina-romanik-llms-txt",
+    "website": "",
+    "llmsUrl": "https://romanik.nl/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "UX Patterns for Devs",
     "description": "A collection of UX patterns for developers to build effective, accessible, and usable UI components.",
     "url": "/ux-patterns-for-dev-llms-txt",
@@ -1395,6 +3397,17 @@
     "website": "https://uxpatterns.dev/en",
     "llmsUrl": "https://uxpatterns.dev/en/llms.txt",
     "llmsFullUrl": "https://uxpatterns.dev/en/llms-full.txt"
+  },
+  {
+    "name": "Various Interactive",
+    "description": "Various Interactive ist eine interdisziplinäre Digitalagentur. Various Interactive bietet spannende Lösungen und frische Ansätze für Ihre digitale Zukunft.",
+    "url": "https://various.at",
+    "content": "# Various Interactive\n\nVarious Interactive ist eine interdisziplinäre Digitalagentur. Various Interactive bietet spannende Lösungen und frische Ansätze für Ihre digitale Zukunft.",
+    "category": "integration-automation",
+    "slug": "various-interactive-llms-txt",
+    "website": "",
+    "llmsUrl": "https://various.at/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Velt",
@@ -1419,6 +3432,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Video and audio frameworks for .Net",
+    "description": "Video and audio frameworks for developers. .Net, C++, and Delphi solutions for Windows, macOS, iOS, Android, and Linux.",
+    "url": "https://www.visioforge.com/",
+    "content": "# Video and audio frameworks for .Net\n\nVideo and audio frameworks for developers. .Net, C++, and Delphi solutions for Windows, macOS, iOS, Android, and Linux.",
+    "category": "developer-tools",
+    "slug": "video-and-audio-frameworks-for-.net-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.visioforge.com/llms.txt",
+    "llmsFullUrl": "https://www.visioforge.com/llms-full.txt"
+  },
+  {
     "name": "viem",
     "description": "Build reliable Ethereum apps & libraries with lightweight, composable, & type-safe modules from viem - a modern, efficient alternative to ethers.js.",
     "url": "/viem-llms-txt",
@@ -1428,6 +3452,17 @@
     "website": "https://viem.sh/",
     "llmsUrl": "https://viem.sh/llms.txt",
     "llmsFullUrl": "https://viem.sh/llms-full.txt"
+  },
+  {
+    "name": "Vignette ID",
+    "description": "Vignette ID is the first multi-country road toll app in Europe. Buy vignettes for multiple cars and countries in just a few clicks.",
+    "url": "https://e-vignettes.eu",
+    "content": "# Vignette ID\n\nVignette ID is the first multi-country road toll app in Europe. Buy vignettes for multiple cars and countries in just a few clicks.",
+    "category": "integration-automation",
+    "slug": "vignette-id-llms-txt",
+    "website": "",
+    "llmsUrl": "https://e-vignettes.eu/llms.txt",
+    "llmsFullUrl": "https://e-vignettes.eu/llms-full.txt"
   },
   {
     "name": "Vital",
@@ -1441,6 +3476,28 @@
     "llmsFullUrl": "https://docs.tryvital.io/llms-full.txt"
   },
   {
+    "name": "Voxel Busters",
+    "description": "Voxel Busters delivers professional Unity plugins for mobile game developers, to seamlessly integrate essential iOS & Android features in Unity game engine.",
+    "url": "https://voxelbusters.com",
+    "content": "# Voxel Busters\n\nVoxel Busters delivers professional Unity plugins for mobile game developers, to seamlessly integrate essential iOS & Android features in Unity game engine.",
+    "category": "developer-tools",
+    "slug": "voxel-busters-llms-txt",
+    "website": "",
+    "llmsUrl": "https://voxelbusters.com/llms.txt",
+    "llmsFullUrl": "https://voxelbusters.com/llms-full.txt"
+  },
+  {
+    "name": "Voyager Shuffle",
+    "description": "Play fun and interactive web games from Star Dream Cruises—designed to entertain guests and enhance the cruise experience online.",
+    "url": "https://games.stardreamcruises.com/",
+    "content": "# Voyager Shuffle\n\nPlay fun and interactive web games from Star Dream Cruises—designed to entertain guests and enhance the cruise experience online.",
+    "category": "ai-ml",
+    "slug": "voyager-shuffle-llms-txt",
+    "website": "",
+    "llmsUrl": "https://games.stardreamcruises.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Vue Macros",
     "description": "Vue Macros\r\nModern Way to Writing Vue App - explore more macros and syntax sugar to Vue.",
     "url": "/vue-macros-llms-txt",
@@ -1450,6 +3507,17 @@
     "website": "https://vue-macros.dev/",
     "llmsUrl": "https://vue-macros.dev/llms.txt",
     "llmsFullUrl": "https://vue-macros.dev/llms-full.txt"
+  },
+  {
+    "name": "Wandio",
+    "description": "Create personalized travel plans based on your style, duration, and time of year. Tailored travel itinerary planner with interactive maps.",
+    "url": "https://www.wandio.org",
+    "content": "# Wandio\n\nCreate personalized travel plans based on your style, duration, and time of year. Tailored travel itinerary planner with interactive maps.",
+    "category": "ai-ml",
+    "slug": "wandio-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.wandio.org/llms.txt",
+    "llmsFullUrl": "https://www.wandio.org/llms-full.txt"
   },
   {
     "name": "Warp",
@@ -1463,6 +3531,39 @@
     "llmsFullUrl": "https://docs.warp.dev/llms-full.txt"
   },
   {
+    "name": "Weather.com",
+    "description": "National and Local weather provider",
+    "url": "https://weather.com",
+    "content": "",
+    "category": "data-analytics",
+    "slug": "weather-com-llms-txt",
+    "website": "",
+    "llmsUrl": "https://weather.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Web Design Company Qatar",
+    "description": "Web Design Company Qatar PaPaYa Web Design is the best Website Design Company Qatar . We specialize in offering Mobile app development ..",
+    "url": "https://www.papayaqatar.com",
+    "content": "# Web Design Company Qatar\n\nWeb Design Company Qatar PaPaYa Web Design is the best Website Design Company Qatar . We specialize in offering Mobile app development ..",
+    "category": "ai-ml",
+    "slug": "web-design-company-qatar-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.papayaqatar.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Web Development & WordPress Maintenance",
+    "description": "Freelance Agency for Managed WordPress Websites and Ecommerce Stores. Speed Optimized and Ultra Secure. WordPress Consulting.",
+    "url": "https://weblynx.pro/",
+    "content": "# Web Development & WordPress Maintenance\n\nFreelance Agency for Managed WordPress Websites and Ecommerce Stores. Speed Optimized and Ultra Secure. WordPress Consulting.",
+    "category": "data-analytics",
+    "slug": "web-development-&-wordpress-maintenance-llms-txt",
+    "website": "",
+    "llmsUrl": "https://weblynx.pro/llms.txt",
+    "llmsFullUrl": "https://weblynx.pro/llms-full.txt"
+  },
+  {
     "name": "Webrecorder",
     "description": "Web archiving and preservation platform",
     "url": "/webrecorder-llms-txt",
@@ -1471,6 +3572,72 @@
     "slug": "webrecorder-llms-txt",
     "website": "https://webrecorder.net",
     "llmsUrl": "https://webrecorder.net/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Wedgwood Insurance",
+    "description": "We are Newfoundland's top insurance broker. We offer advice on home, car, tenant, and commercial insurance. Get a quote today.",
+    "url": "https://wedgwoodinsurance.com",
+    "content": "# Wedgwood Insurance\n\nWe are Newfoundland's top insurance broker. We offer advice on home, car, tenant, and commercial insurance. Get a quote today.",
+    "category": "data-analytics",
+    "slug": "wedgwood-insurance-llms-txt",
+    "website": "",
+    "llmsUrl": "https://wedgwoodinsurance.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Welcome to Alen Malkoc",
+    "description": "Hi, I’m Alen Malkoč — a serial entrepreneur behind HulkApps and Shop Circle, now building AI-native companies from Sarajevo.",
+    "url": "https://www.alenmalkoc.com",
+    "content": "# Welcome to Alen Malkoc\n\nHi, I’m Alen Malkoč — a serial entrepreneur behind HulkApps and Shop Circle, now building AI-native companies from Sarajevo.",
+    "category": "developer-tools",
+    "slug": "welcome-to-alen-malkoc-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.alenmalkoc.com/llms.txt",
+    "llmsFullUrl": "https://www.alenmalkoc.com/llms-full.txt"
+  },
+  {
+    "name": "Welcome to Bunny",
+    "description": "Bunny is a subscription management and billing platform for B2B SaaS companies. It provides recurring and usage billing, invoicing, quoting and analytics.",
+    "url": "https://docs.bunny.com",
+    "content": "# Welcome to Bunny\n\nBunny is a subscription management and billing platform for B2B SaaS companies. It provides recurring and usage billing, invoicing, quoting and analytics.",
+    "category": "data-analytics",
+    "slug": "welcome-to-bunny-llms-txt",
+    "website": "",
+    "llmsUrl": "https://docs.bunny.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Welcome to HTMLHint",
+    "description": "The web's most popular static code analysis tool you need for your HTML. Available as a CLI tool, VS Code extension, and more.",
+    "url": "https://htmlhint.com",
+    "content": "# Welcome to HTMLHint\n\nThe web's most popular static code analysis tool you need for your HTML. Available as a CLI tool, VS Code extension, and more.",
+    "category": "developer-tools",
+    "slug": "welcome-to-htmlhint-llms-txt",
+    "website": "",
+    "llmsUrl": "https://htmlhint.com/llms.txt",
+    "llmsFullUrl": "https://htmlhint.com/llms-full.txt"
+  },
+  {
+    "name": "WF Content Creator Platform",
+    "description": "Discover top KOLs and influencers in Southeast Asia with Wunderfauks' powerful analytics and campaign tools.",
+    "url": "https://kol.wunderfauks.com/",
+    "content": "# WF Content Creator Platform\n\nDiscover top KOLs and influencers in Southeast Asia with Wunderfauks' powerful analytics and campaign tools.",
+    "category": "ai-ml",
+    "slug": "wf-content-creator-platform-llms-txt",
+    "website": "",
+    "llmsUrl": "https://kol.wunderfauks.com/llms.txt",
+    "llmsFullUrl": "https://kol.wunderfauks.com/llms-full.txt"
+  },
+  {
+    "name": "Wild In Africa",
+    "description": "Handmade beaded bracelets supporting wildlife conservation. Founded by National Geographic filmmaker Shannon Wild. Order now & #WearYourKarma.",
+    "url": "https://wildinafrica.store/",
+    "content": "# Wild In Africa\n\nHandmade beaded bracelets supporting wildlife conservation. Founded by National Geographic filmmaker Shannon Wild. Order now & #WearYourKarma.",
+    "category": "integration-automation",
+    "slug": "wild-in-africa-llms-txt",
+    "website": "",
+    "llmsUrl": "https://wildinafrica.store/apps/llmstxt/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1485,6 +3652,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Workbookly",
+    "description": "Transform YouTube videos into interactive workbooks for educators and learners.",
+    "url": "https://workbookly.app",
+    "content": "# Workbookly\n\nTransform YouTube videos into interactive workbooks for educators and learners.",
+    "category": "integration-automation",
+    "slug": "workbookly-llms-txt",
+    "website": "",
+    "llmsUrl": "https://workbookly.app/llms.txt",
+    "llmsFullUrl": "https://workbookly.app/llms-full.txt"
+  },
+  {
     "name": "Workflow",
     "description": "Design and workflow automation platform",
     "url": "/workflow-llms-txt",
@@ -1494,6 +3672,94 @@
     "website": "https://workflow.design",
     "llmsUrl": "https://docs.workflow.design/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Wot Design Uni",
+    "description": "A uni-app component library built with reference to wot-design.",
+    "url": "https://wot-design-uni.cn/",
+    "content": "# Wot Design Uni\n\nA uni-app component library built with reference to wot-design.",
+    "category": "developer-tools",
+    "slug": "wot-design-uni-llms-txt",
+    "website": "",
+    "llmsUrl": "https://wot-design-uni.cn/llms.txt",
+    "llmsFullUrl": "https://wot-design-uni.cn/llms-full.txt"
+  },
+  {
+    "name": "Wot UI",
+    "description": "一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件，支持暗黑模式、国际化和自定义主题.",
+    "url": "https://wot-design-uni.cn",
+    "content": "# Wot UI\n\n一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件，支持暗黑模式、国际化和自定义主题.",
+    "category": "developer-tools",
+    "slug": "wot-ui-llms-txt",
+    "website": "",
+    "llmsUrl": "https://wot-design-uni.cn/llms.txt",
+    "llmsFullUrl": "https://wot-design-uni.cn/llms-full.txt"
+  },
+  {
+    "name": "X-CMD",
+    "description": "A compact yet powerful command-line toolkit. Bootstrap 1000+ command line tools in seconds.",
+    "url": "https://www.x-cmd.com",
+    "content": "# X-CMD\n\nA compact yet powerful command-line toolkit. Bootstrap 1000+ command line tools in seconds.",
+    "category": "developer-tools",
+    "slug": "x-cmd-llms-txt",
+    "website": "",
+    "llmsUrl": "https://x-cmd.com/llms.txt",
+    "llmsFullUrl": "https://x-cmd.com/llms-full.txt"
+  },
+  {
+    "name": "Xomatic",
+    "description": "Transform your business with cutting-edge AI automation solutions. Scalable, secure, and powerful tools for modern enterprises.",
+    "url": "https://www.xomatic.ai",
+    "content": "# Xomatic\n\nTransform your business with cutting-edge AI automation solutions. Scalable, secure, and powerful tools for modern enterprises.",
+    "category": "ai-ml",
+    "slug": "xomatic-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.xomatic.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "YAMLResume",
+    "description": "YAMLResume allows people to create and version control resumes using YAML and generate pixel perfect PDFs with professional layout and typesetting in a breeze.",
+    "url": "https://yamlresume.dev",
+    "content": "",
+    "category": "developer-tools",
+    "slug": "yaml-resume-llms-txt",
+    "website": "",
+    "llmsUrl": "https://yamlresume.dev/llms.txt",
+    "llmsFullUrl": "https://yamlresume.dev/llms-full.txt"
+  },
+  {
+    "name": "YourOpinion.is",
+    "description": "Free Surveys in Seconds. No Account, No Fuss. Just compose the questions, get a link, and share.",
+    "url": "https://youropinion.is",
+    "content": "# YourOpinion.is\n\nFree Surveys in Seconds. No Account, No Fuss. Just compose the questions, get a link, and share.",
+    "category": "infrastructure-cloud",
+    "slug": "youropinion.is-llms-txt",
+    "website": "",
+    "llmsUrl": "https://youropinion.is/llms.txt",
+    "llmsFullUrl": "https://youropinion.is/llms-full.txt"
+  },
+  {
+    "name": "Zag",
+    "description": "State machines for accessible, interactive and performant UI components.",
+    "url": "https://zagjs.com",
+    "content": "# Zag\n\nState machines for accessible, interactive and performant UI components.",
+    "category": "developer-tools",
+    "slug": "zag-llms-txt",
+    "website": "",
+    "llmsUrl": "https://zagjs.com/llms.txt",
+    "llmsFullUrl": "https://zagjs.com/llms-full.txt"
+  },
+  {
+    "name": "Zap.ts ⚡️",
+    "description": "The boilerplate to build applications as fast as a zap.",
+    "url": "https://zap-ts.alexandretrotel.org",
+    "content": "# Zap.ts ⚡️\n\nThe boilerplate to build applications as fast as a zap.",
+    "category": "developer-tools",
+    "slug": "zap.ts-⚡️-llms-txt",
+    "website": "",
+    "llmsUrl": "https://zap-ts.alexandretrotel.org/llms.txt",
+    "llmsFullUrl": "https://zap-ts.alexandretrotel.org/llms-full.txt"
   },
   {
     "name": "ZAPHYR PHP Framework",
@@ -1516,5 +3782,104 @@
     "website": "https://zapier.com",
     "llmsUrl": "https://docs.zapier.com/llms.txt",
     "llmsFullUrl": "https://docs.zapier.com/llms-full.txt"
+  },
+  {
+    "name": "ZODORI",
+    "description": "Zodori creates artisan jewelry from rare woods and fine gemstones, each piece inspired by ancient wisdom and heritage, crafted into meaningful wearable art.",
+    "url": "https://zodoristudio.com",
+    "content": "# ZODORI\n\nZodori creates artisan jewelry from rare woods and fine gemstones, each piece inspired by ancient wisdom and heritage, crafted into meaningful wearable art.",
+    "category": "integration-automation",
+    "slug": "zodori-llms-txt",
+    "website": "",
+    "llmsUrl": "https://zodoristudio.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Zoomry_conveyor_shiploader manufacturer",
+    "description": "Zoomry is a global provider of bulk material handling solutions. specialize in telescopic stacker, belt conveyor and ship loaders.",
+    "url": "https://zoomry-ind.com",
+    "content": "# Zoomry_conveyor_shiploader manufacturer\n\nZoomry is a global provider of bulk material handling solutions. specialize in telescopic stacker, belt conveyor and ship loaders.",
+    "category": "integration-automation",
+    "slug": "zoomry_conveyor_shiploader-manufacturer-llms-txt",
+    "website": "",
+    "llmsUrl": "https://zoomry-ind.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Флорен – Студія фітодизайну",
+    "description": "Флорен — студія фітодизайну в Києві, що спеціалізується на кімнатних рослинах та професійному озелененні офісів та приміщень.",
+    "url": "https://floren.com.ua",
+    "content": "# Флорен – Студія фітодизайну\n\nФлорен — студія фітодизайну в Києві, що спеціалізується на кімнатних рослинах та професійному озелененні офісів та приміщень.",
+    "category": "ai-ml",
+    "slug": "флорен-–-студія-фітодизайну-llms-txt",
+    "website": "",
+    "llmsUrl": "https://floren.com.ua/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Фондация Up with Down",
+    "description": "За щастлив и пълноценен живот  на децата  със синдром на Даун.",
+    "url": "https://upwithdown.bg/",
+    "content": "# Фондация Up with Down\n\nЗа щастлив и пълноценен живот  на децата  със синдром на Даун.",
+    "category": "data-analytics",
+    "slug": "фондация-up-with-down-llms-txt",
+    "website": "",
+    "llmsUrl": "https://upwithdown.bg/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "万悉科技是面向GEO的AI商品内容优化平台提升AI搜索时代的商品可见性",
+    "description": "Trendee 是一款人工智能驱动的趋势预测引擎,助您探索未来时尚潮流.Trendee 利用 Gen AI 和海量消费者数据，提供切实可行的洞察.",
+    "url": "https://trendeetech.cn/",
+    "content": "# 万悉科技是面向GEO的AI商品内容优化平台提升AI搜索时代的商品可见性\n\nTrendee 是一款人工智能驱动的趋势预测引擎,助您探索未来时尚潮流.Trendee 利用 Gen AI 和海量消费者数据，提供切实可行的洞察.",
+    "category": "data-analytics",
+    "slug": "万悉科技是面向geo的ai商品内容优化平台提升ai搜索时代的商品可见性-llms-txt",
+    "website": "",
+    "llmsUrl": "https://trendeetech.cn/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "在线工具集",
+    "description": "免费在线工具宝库！提供JSON格式化/验证/转换、数据加密解密、IP地址/天气查询、健康计算器、单位转换、UUID生成、编码转换及数独游戏等实用工具。所有操作本地完成，确保数据安全隐私，无需注册即点即用.",
+    "url": "https://www.tooljson.com",
+    "content": "# 在线工具集\n\n免费在线工具宝库！提供JSON格式化/验证/转换、数据加密解密、IP地址/天气查询、健康计算器、单位转换、UUID生成、编码转换及数独游戏等实用工具。所有操作本地完成，确保数据安全隐私，无需注册即点即用.",
+    "category": "developer-tools",
+    "slug": "在线工具集-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.tooljson.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "短剧演员集中营微信公众号",
+    "description": "通过演员照片智能查找短剧作品的AI搜索工具，支持无演员姓名查询、所有男演员、所有女演员、持续更新的演员库.",
+    "url": "https://dj.110visa.com",
+    "content": "# 短剧演员集中营微信公众号\n\n通过演员照片智能查找短剧作品的AI搜索工具，支持无演员姓名查询、所有男演员、所有女演员、持续更新的演员库.",
+    "category": "data-analytics",
+    "slug": "短剧演员集中营微信公众号-llms-txt",
+    "website": "",
+    "llmsUrl": "https://dj.110visa.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "轻触开关_USB母座_防水连接器厂家",
+    "description": "东莞市颖鑫电子有限公司厂家供应micro USB连接器,小型防水轻触开关,防水按键开关,拨动开关,电位器,DC插头,TYPE-c,网线插座,USB母座公头,贴片按键开关等防水按钮电子元件品类供应及采购信息,为企业提供电器元气件.",
+    "url": "https://www.zhendongkaiguan.cn/",
+    "content": "# 轻触开关_USB母座_防水连接器厂家\n\n东莞市颖鑫电子有限公司厂家供应micro USB连接器,小型防水轻触开关,防水按键开关,拨动开关,电位器,DC插头,TYPE-c,网线插座,USB母座公头,贴片按键开关等防水按钮电子元件品类供应及采购信息,为企业提供电器元气件.",
+    "category": "data-analytics",
+    "slug": "轻触开关_usb母座_防水连接器厂家-llms-txt",
+    "website": "",
+    "llmsUrl": "https://www.zhendongkaiguan.cn/llms.txt",
+    "llmsFullUrl": "https://www.zhendongkaiguan.cn/llms-full.txt"
+  },
+  {
+    "name": "退職あんしん代行 | AI×弁護士監修で2,980円",
+    "description": "AI技術×弁護士監修による業界最安値2,980円の退職代行サービス。料金も明確、最短即日対応可能。民法第627条に基づく退職権利の専門相談も24時間365日受付中。安心の格安料金でプロの退職手続きをサポート.",
+    "url": "https://taishoku-anshin-daiko.com",
+    "content": "# 退職あんしん代行 | AI×弁護士監修で2,980円\n\nAI技術×弁護士監修による業界最安値2,980円の退職代行サービス。料金も明確、最短即日対応可能。民法第627条に基づく退職権利の専門相談も24時間365日受付中。安心の格安料金でプロの退職手続きをサポート.",
+    "category": "integration-automation",
+    "slug": "退職あんしん代行-ai×弁護士監修で2,980円-llms-txt",
+    "website": "",
+    "llmsUrl": "https://taishoku-anshin-daiko.com/llms.txt",
+    "llmsFullUrl": "https://taishoku-anshin-daiko.com/llms-full.txt"
   }
 ]
