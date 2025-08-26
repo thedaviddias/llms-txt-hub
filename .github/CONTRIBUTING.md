@@ -10,7 +10,7 @@ There are two ways to contribute a new website to our list:
 
 The easiest way to contribute is through our web interface:
 
-1. Visit our website
+1. Visit [our website](https://llmstxt.com/)
 2. Log in with your GitHub account
 3. Submit your website through our user-friendly form
 4. Your submission will be automatically validated and processed
