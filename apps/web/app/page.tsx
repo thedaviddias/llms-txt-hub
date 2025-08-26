@@ -1,6 +1,9 @@
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { CategoriesSection } from '@/components/sections/categories-section'
+import { CommunitiesSection } from '@/components/sections/communities-section'
 import { FAQSection } from '@/components/sections/faq-section'
 import { FeaturedGuidesSection } from '@/components/sections/featured-guides-section'
 import { FeaturedProjectsSection } from '@/components/sections/featured-projects-section'
@@ -11,9 +14,6 @@ import { LatestUpdatesSection } from '@/components/sections/latest-updates-secti
 import { NewsletterSection } from '@/components/sections/newsletter-section'
 import { ToolsSection } from '@/components/sections/tools-section'
 import { getGuides } from '@/lib/content-loader'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
-import { CommunitiesSection } from '@/components/sections/communities-section'
 
 export const metadata: Metadata = {
   title: 'llms.txt hub - Discover AI-Ready Documentation',

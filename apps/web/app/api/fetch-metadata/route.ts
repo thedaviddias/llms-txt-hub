@@ -1,7 +1,7 @@
-import { getWebsites } from '@/lib/content-loader'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
+import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 
 function cleanTitle(title: string): string {
   // Remove common suffixes and clean up the title
@@ -23,7 +23,7 @@ async function fetchMetadata(url: string) {
       removeQueryParameters: true
     })
 
-    const duplicateWebsite = existingWebsites.find(website => {
+    const duplicateWebsite = existingWebsites.find((website: WebsiteMetadata) => {
       const normalizedExisting = normalizeUrl(website.website, {
         stripProtocol: true,
         stripWWW: true,
@@ -100,13 +100,13 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { url } = body
+    const { website } = body
 
-    if (!url) {
-      return NextResponse.json({ error: 'URL is required' }, { status: 400 })
+    if (!website) {
+      return NextResponse.json({ error: 'Website URL is required' }, { status: 400 })
     }
 
-    const metadata = await fetchMetadata(url)
+    const metadata = await fetchMetadata(website)
     return NextResponse.json(metadata)
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })

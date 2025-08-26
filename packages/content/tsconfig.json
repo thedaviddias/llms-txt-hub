@@ -1,17 +1,17 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../configs/typescript/base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "target": "ES2022",
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./data/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["data/**/*"],
   "exclude": ["node_modules", "dist"]
 }

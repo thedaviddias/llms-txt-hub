@@ -27,10 +27,14 @@ const CATEGORIES = [
   'ai-ml',
   'data-analytics',
   'security-identity',
-  'infrastructure-cloud'
+  'infrastructure-cloud',
+  'personal-sites'
 ] as const
 
+const CONTENT_TYPES = ['tool', 'platform', 'personal', 'library'] as const
+
 type WebsiteCategory = (typeof CATEGORIES)[number]
+type ContentType = (typeof CONTENT_TYPES)[number]
 
 /**
  * Generator for creating new website MDX files
@@ -90,6 +94,13 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         type: 'input',
         name: 'llmsFullUrl',
         message: 'Enter the URL to the full llms.txt file:'
+      },
+      {
+        type: 'list',
+        name: 'contentType',
+        message: 'Select the content type:',
+        choices: CONTENT_TYPES,
+        default: 'tool'
       },
       {
         type: 'list',

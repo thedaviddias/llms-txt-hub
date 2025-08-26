@@ -1,10 +1,10 @@
-import type { WebsiteMetadata } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
+import { Badge } from '@thedaviddias/design-system/badge'
 import { Card } from '@thedaviddias/design-system/card'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import Link from 'next/link'
-import { Badge } from '@thedaviddias/design-system/badge'
+import type { WebsiteMetadata } from '@/lib/content-loader'
+import { getRoute } from '@/lib/routes'
 
 interface LLMGridProps {
   items: WebsiteMetadata[]
@@ -44,6 +44,11 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                       {item.name}
                     </Link>
                   </h3>
+                  {item.contentType === 'personal' && (
+                    <Badge variant="secondary" className="text-xs">
+                      Personal
+                    </Badge>
+                  )}
                   {item.isUnofficial && (
                     <Badge
                       variant="outline"
@@ -87,6 +92,11 @@ export function LLMGrid({ items = [], variant = 'default', className }: LLMGridP
                       {item.name}
                     </Link>
                   </h3>
+                  {item.contentType === 'personal' && (
+                    <Badge variant="secondary" className="text-xs">
+                      Personal
+                    </Badge>
+                  )}
                   {item.isUnofficial && (
                     <Badge
                       variant="outline"
