@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs'
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import matter from 'gray-matter'
 
@@ -45,7 +45,7 @@ function getFaviconUrl(domain: string): string {
  * Only includes websites from primary tool categories
  *
  * This function reads all MDX files from the packages/content/data/websites directory,
- * extracts their frontmatter, filters for primary categories only, and generates 
+ * extracts their frontmatter, filters for primary categories only, and generates
  * a JSON file with website information including favicons.
  *
  * @throws Will throw an error if the file system operations fail
@@ -78,13 +78,13 @@ function generateWebsitesJson(): void {
       const { data } = matter(fileContent)
 
       return {
-        name: data.name || data.title,
-        domain: data.website || data.url,
+        name: data.name,
+        domain: data.website,
         description: data.description,
         llmsTxtUrl: data.llmsUrl,
         ...(data.llmsFullUrl && { llmsFullTxtUrl: data.llmsFullUrl }),
         category: data.category?.replace(/'/g, ''), // Remove quotes from category
-        favicon: getFaviconUrl(data.website || data.url),
+        favicon: getFaviconUrl(data.website),
         publishedAt: data.publishedAt
       }
     })
