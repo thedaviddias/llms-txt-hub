@@ -1,10 +1,18 @@
-import type { User } from '@supabase/supabase-js'
-
 export interface AuthUser {
   id: string
   email?: string | null
   name?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  username?: string | null
   imageUrl?: string | null
+  user_metadata?: {
+    user_name?: string | null
+    full_name?: string | null
+    avatar_url?: string | null
+    github_username?: string | null
+  } | null
+  publicMetadata?: any
 }
 
 export interface AuthSession {
@@ -15,7 +23,7 @@ export interface AuthSession {
 export interface AuthContext {
   isLoaded: boolean
   isSignedIn: boolean
-  user: User | null
+  user: AuthUser | null
   signIn: () => Promise<void>
   signOut: () => Promise<void>
 }

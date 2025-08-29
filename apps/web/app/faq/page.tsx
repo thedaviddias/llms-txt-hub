@@ -5,14 +5,14 @@ import { JsonLd } from '@/components/json-ld'
 import { faqItems } from '@/components/sections/faq-section'
 import { getRoute } from '@/lib/routes'
 import { generateFAQSchema } from '@/lib/schema'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
-export const metadata: Metadata = {
-  title: 'FAQ - llms.txt hub',
-  description: 'Frequently asked questions about llms.txt and the llms.txt hub.',
-  alternates: {
-    canonical: getRoute('faq')
-  }
-}
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Frequently Asked Questions',
+  description: 'Frequently asked questions about llms.txt standard and the llms.txt hub directory.',
+  path: '/faq',
+  keywords: ['FAQ', 'questions', 'help', 'llms.txt guide', 'how to']
+})
 
 export default function FAQPage() {
   const breadcrumbItems = [{ name: 'FAQ', href: getRoute('faq') }]

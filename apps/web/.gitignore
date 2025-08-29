@@ -1,1 +1,4 @@
 .content-collections
+
+# clerk configuration (can include secrets)
+/.clerk/

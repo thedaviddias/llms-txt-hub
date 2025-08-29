@@ -31,8 +31,8 @@ interface Website {
   category: string
   publishedAt: string
   isUnofficial?: boolean
-  contentType?: 'tool' | 'platform' | 'personal' | 'library'
   priority?: 'high' | 'medium' | 'low'
+  featured?: boolean
   content?: string
   relatedWebsites?: WebsiteMetadata[]
   previousWebsite?: WebsiteMetadata | null
@@ -45,6 +45,7 @@ interface Guide {
   title: string
   description: string
   date: string
+  image?: string
   authors: Array<{ name: string; url?: string }>
   tags?: string[]
   difficulty: 'beginner' | 'intermediate' | 'advanced'
@@ -86,7 +87,7 @@ interface ContentMeta {
   directory: string
   path: string
   extension: string
-  content?: string // Content is optional as it might not be available
+  content?: string
 }
 
 /**
@@ -102,7 +103,7 @@ export interface WebsiteMetadata {
   category: string
   publishedAt: string
   isUnofficial?: boolean
-  contentType?: 'tool' | 'platform' | 'personal' | 'library'
+  featured?: boolean
   priority?: 'high' | 'medium' | 'low'
   content?: string
   relatedWebsites?: WebsiteMetadata[]
@@ -116,6 +117,7 @@ export interface GuideMetadata {
   title: string
   description: string
   date: string
+  image?: string
   authors: Array<{ name: string; url?: string }>
   tags?: string[]
   difficulty: 'beginner' | 'intermediate' | 'advanced'
@@ -169,7 +171,7 @@ export function getWebsites(): WebsiteMetadata[] {
 
   return websitesWithSlugs.sort((a: Website, b: Website) => {
     return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  }) as WebsiteMetadata[]
+  })
 }
 
 /**
@@ -205,7 +207,7 @@ export async function getWebsiteBySlug(slug: string) {
     .slice(0, 4)
 
   // Get content from _meta if available
-  const content = website.content || (website._meta as any)?.content || ''
+  const content = website.content || website._meta?.content || ''
 
   return {
     ...website,
@@ -233,6 +235,7 @@ export function getGuides() {
       title: guide.title || '',
       description: guide.description || '',
       slug: guide.slug || '',
+      image: guide.image || undefined,
       difficulty: (guide.difficulty || 'beginner') as 'beginner' | 'intermediate' | 'advanced',
       category: (guide.category || 'getting-started') as
         | 'getting-started'
@@ -265,7 +268,7 @@ export async function getGuideBySlug(slug: string): Promise<GuideMetadata | null
   }
 
   // Get content from guide
-  const content = guide.content || (guide._meta as any)?.content || ''
+  const content = guide.content || guide._meta?.content || ''
 
   // Ensure the guide has all required properties from GuideMetadata
   return {
@@ -297,7 +300,7 @@ export async function getLegalContent(key: string): Promise<string> {
     throw new Error(`Legal content "${key}" not found`)
   }
 
-  return legal.content || (legal._meta as any)?.content || ''
+  return legal.content || legal._meta?.content || ''
 }
 
 /**
@@ -323,7 +326,7 @@ export async function getResourceBySlug(slug: string) {
   }
 
   // Get content from resource
-  const content = resource.content || (resource._meta as any)?.content || ''
+  const content = resource.content || resource._meta?.content || ''
 
   return {
     ...resource,

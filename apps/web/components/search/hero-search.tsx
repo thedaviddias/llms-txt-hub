@@ -1,8 +1,9 @@
 'use client'
 
-import { useSearch } from '@/hooks/use-search'
+import { logger } from '@thedaviddias/logging'
 import { Loader2, Search } from 'lucide-react'
 import { useState } from 'react'
+import { useSearch } from '@/hooks/use-search'
 
 export function HeroSearch() {
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()
@@ -16,7 +17,7 @@ export function HeroSearch() {
         await handleSearch(searchQuery)
         // Don't clear the query immediately - it will be handled by the search page
       } catch (error) {
-        console.error('Search error:', error)
+        logger.error('Search error:', { data: error, tags: { type: 'component' } })
       } finally {
         setIsLoading(false)
       }

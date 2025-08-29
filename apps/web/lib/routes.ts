@@ -13,7 +13,11 @@ export const routes = {
     latest: '/websites?sort=latest',
     withCategory: '/websites?category=[category]'
   },
+  category: {
+    page: '/[category]'
+  },
   about: '/about',
+  favorites: '/favorites',
   guides: {
     list: '/guides',
     guide: '/guides/[slug]'
@@ -22,11 +26,19 @@ export const routes = {
   login: '/login',
   news: '/news',
   privacy: '/privacy',
+  cookies: '/cookies',
   projects: '/projects',
   search: '/search',
   submit: '/submit',
   terms: '/terms',
-  rss: '/rss.xml'
+  rss: '/rss.xml',
+  members: {
+    list: '/members',
+    page: '/members/[page]'
+  },
+  profile: {
+    detail: '/u/[slug]'
+  }
 } as const
 
 type StaticRoutes =
@@ -36,18 +48,27 @@ type StaticRoutes =
   | 'website.featured'
   | 'website.latest'
   | 'about'
+  | 'favorites'
   | 'guides.list'
   | 'faq'
   | 'login'
   | 'news'
   | 'privacy'
+  | 'cookies'
   | 'projects'
   | 'search'
   | 'submit'
   | 'terms'
   | 'rss'
+  | 'members.list'
 
-type DynamicRoutes = 'website.detail' | 'website.withCategory' | 'guides.guide'
+type DynamicRoutes =
+  | 'website.detail'
+  | 'website.withCategory'
+  | 'guides.guide'
+  | 'category.page'
+  | 'profile.detail'
+  | 'members.page'
 
 type Routes = StaticRoutes | DynamicRoutes
 
@@ -55,6 +76,9 @@ type DynamicRouteParams = {
   'website.detail': { slug: string }
   'website.withCategory': { category: string }
   'guides.guide': { slug: string }
+  'category.page': { category: string }
+  'profile.detail': { slug: string }
+  'members.page': { page: string }
 }
 
 /**

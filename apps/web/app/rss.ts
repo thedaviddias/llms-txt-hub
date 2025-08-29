@@ -1,3 +1,4 @@
+import { logger } from '@thedaviddias/logging'
 import { XMLParser } from 'fast-xml-parser'
 
 /**
@@ -113,7 +114,7 @@ export default async function getRSSFeed(
 
     return { items: formattedItems }
   } catch (error) {
-    console.error('Failed to fetch or parse RSS feed:', error)
+    logger.error('Failed to fetch or parse RSS feed:', { data: error, tags: { type: 'page' } })
     throw new Error('Failed to fetch or parse RSS feed')
   }
 }

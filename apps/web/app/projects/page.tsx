@@ -1,32 +1,22 @@
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
-import { Card } from '@thedaviddias/design-system/card'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Code, ExternalLink, Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { GitHubProjectCard } from '@/components/github/github-project-card'
+import { Card } from '@/components/ui/card'
 import { fetchGitHubProjects, type GitHubProject } from '@/lib/github'
 import { getRoute } from '@/lib/routes'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
-export const metadata: Metadata = {
-  title: 'llms.txt Projects - Open Source Projects and Tools',
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Open Source Projects',
   description:
     'Explore open-source projects, tools, and libraries implementing the llms.txt standard.',
-  openGraph: {
-    title: 'llms.txt Projects - Open Source Projects and Tools',
-    description:
-      'Explore open-source projects, tools, and libraries implementing the llms.txt standard.',
-    url: `${getBaseUrl()}/projects`,
-    images: [
-      {
-        url: `${getBaseUrl()}/opengraph-image.png`,
-        width: 1200,
-        height: 630
-      }
-    ]
-  }
-}
+  path: '/projects',
+  keywords: ['open source', 'GitHub projects', 'llms.txt tools', 'libraries', 'implementations']
+})
 
 export default async function ProjectsPage() {
   // Fetch projects with both topics
@@ -49,7 +39,7 @@ export default async function ProjectsPage() {
   const featuredProject = sortedProjects[0]
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       <div className="space-y-12">
         <Breadcrumb items={[{ name: 'Projects', href: '/projects' }]} baseUrl={getBaseUrl()} />
 

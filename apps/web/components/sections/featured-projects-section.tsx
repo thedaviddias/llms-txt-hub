@@ -1,5 +1,4 @@
-import { ArrowRight } from 'lucide-react'
-import Link from 'next/link'
+import { Section } from '@/components/layout/section'
 import { LLMGrid } from '@/components/llm/llm-grid'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
@@ -9,33 +8,16 @@ interface FeaturedProjectsSectionProps {
 }
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
-  // Filter for primary category tools only
-  const toolProjects = projects
-    .filter(project => {
-      // Primary categories
-      const primaryCategories = [
-        'ai-ml',
-        'developer-tools',
-        'data-analytics',
-        'integration-automation',
-        'infrastructure-cloud',
-        'security-identity'
-      ]
-      return primaryCategories.includes(project.category)
-    })
-    .slice(0, 8) // Show 8 tools (2 rows of 4)
-
+  // Projects are already filtered and limited to 6 featured items
   return (
-    <section className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Featured Tools & Platforms</h2>
-        <Link href={getRoute('website.featured')} className="flex items-center">
-          View all <ArrowRight className="ml-2 size-4" />
-        </Link>
-      </div>
-
-      {/* Show 8 tools from primary categories (2 rows) */}
-      {toolProjects.length > 0 && <LLMGrid items={toolProjects} />}
-    </section>
+    <Section
+      title="Featured Tools & Platforms"
+      description="Discover the most popular AI-ready websites and development tools"
+      viewAllHref={getRoute('category.page', { category: 'featured' })}
+      viewAllText="All featured"
+    >
+      {/* Show featured projects (max 6) */}
+      {projects.length > 0 && <LLMGrid items={projects} />}
+    </Section>
   )
 }

@@ -1,11 +1,6 @@
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
-import { JsonLd } from '@/components/json-ld'
-import { ClientProjectsList } from '@/components/projects-list'
-import { getWebsites } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
-import { generateCollectionSchema } from '@/lib/schema'
+import { redirect } from 'next/navigation'
 
 export function generateMetadata(): Metadata {
   const baseUrl = getBaseUrl()
@@ -14,22 +9,12 @@ export function generateMetadata(): Metadata {
     title: 'Websites - llms.txt hub',
     description: 'Discover a curated list of websites that implement the llms.txt standard.',
     alternates: {
-      canonical: `${baseUrl}/websites`
+      canonical: `${baseUrl}/`
     }
   }
 }
 
-export default async function ProjectsPage() {
-  const websites = await getWebsites()
-  const baseUrl = getBaseUrl()
-  const breadcrumbItems = [{ name: 'Websites', href: getRoute('website.list') }]
-
-  return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <JsonLd data={generateCollectionSchema(websites)} />
-      <Breadcrumb items={breadcrumbItems} baseUrl={baseUrl} />
-
-      <ClientProjectsList initialWebsites={websites} />
-    </div>
-  )
+export default function ProjectsPage() {
+  // Redirect to homepage where all websites are now displayed
+  redirect('/')
 }

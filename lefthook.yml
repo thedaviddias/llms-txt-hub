@@ -1,32 +1,100 @@
+# Lefthook Configuration
+# Using existing validation scripts
+
 pre-commit:
   parallel: true
   commands:
+    # Code formatting and linting
     check:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
       run: pnpm dlx @biomejs/biome check --write --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       stage_fixed: true
+    
+    # Package.json sorting
     sort-package-json:
       glob: "**/{package.json}"
       exclude: "node_modules/**"
       run: pnpm dlx sort-package-json {staged_files}
+      stage_fixed: true
+    
+    # MDX content validation
     check-frontmatter:
       glob: "packages/content/data/websites/*.mdx"
       run: pnpm tsx scripts/check-frontmatter.ts {staged_files}
+    
     check-mdx-length:
       glob: "packages/content/data/websites/*.mdx"
       run: pnpm tsx scripts/check-mdx-length.ts {staged_files}
+    
+    # TypeScript as casts validation
+    check-as-casts:
+      glob: "**/*.{ts,tsx}"
+      exclude: |
+        **/node_modules/**
+        **/*.test.*
+        **/*.spec.*
+      run: node scripts/validation/check-as-casts.js {staged_files}
+    
+    # Barrel files validation
+    check-barrel-files:
+      glob: "**/index.{js,ts,jsx,tsx}"
+      exclude: "**/node_modules/**"
+      run: node scripts/validation/check-barrel-files.js {staged_files}
+    
+    # Console logs validation
+    check-console-logs:
+      glob: "**/*.{js,jsx,ts,tsx}"
+      exclude: |
+        **/node_modules/**
+        **/*.test.*
+        **/*.spec.*
+        **/scripts/**
+        **/packages/validators/**
+        **/packages/generator/**
+      run: node scripts/validation/check-console-logs.js {staged_files}
+    
+    # Directory structure validation
+    check-directory-structure:
+      run: node scripts/validation/check-directory-structure.js
+    
+    # File complexity validation
+    check-file-complexity:
+      glob: "**/*.{js,jsx,ts,tsx}"
+      exclude: |
+        **/node_modules/**
+        **/*.test.*
+        **/*.spec.*
+      run: node scripts/validation/check-file-complexity.js {staged_files}
+    
+    # JSDoc validation
+    check-jsdoc:
+      glob: "**/*.{js,jsx,ts,tsx}"
+      exclude: |
+        **/node_modules/**
+        **/*.test.*
+        **/*.spec.*
+      run: node scripts/validation/check-jsdoc.js {staged_files}
+    
+    # Relative imports validation
+    check-relative-imports:
+      glob: "apps/web/**/*.{ts,tsx,js,jsx}"
+      exclude: "apps/web/**/node_modules/**"
+      run: pnpm tsx scripts/check-relative-imports.ts {staged_files}
+    
+    # Test modified test files
+    test-modified:
+      glob: "apps/web/**/*.{test,spec}.{js,ts,tsx}"
+      run: cd apps/web && pnpm test:related {staged_files}
 
-# Build commit messages interactively.
-# prepare-commit-msg:
-#   commands:
-#     commitzen:
-#       interactive: true
-#       run: pnpm commit
-#       env:
-#         LEFTHOOK: 0
+# Pre-push validation
+pre-push:
+  commands:
+    # Run tests
+    test-all:
+      run: turbo test --filter=web
 
-# Validate commit messages; can be used with or without cz.
+# Commit message validation
 commit-msg:
   commands:
-    "lint commit message":
+    lint-commit-message:
       run: pnpm commitlint --edit {1}

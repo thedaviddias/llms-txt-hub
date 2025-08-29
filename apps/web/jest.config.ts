@@ -12,17 +12,68 @@ const config: Config.InitialOptions = {
   collectCoverage: false,
   coverageDirectory: 'coverage',
 
+  // Coverage thresholds for quality gates
+  coverageThreshold: {
+    global: {
+      branches: 60,
+      functions: 60,
+      lines: 70,
+      statements: 70
+    },
+    // Critical paths require higher coverage
+    './lib/security-utils.ts': {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    },
+    './lib/auth-utils.ts': {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
+    }
+  },
+
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['**/*.{ts,tsx}', '!**/*.d.ts', '!**/*.test.ts'],
+  collectCoverageFrom: [
+    'app/**/*.{ts,tsx}',
+    'lib/**/*.{ts,tsx}',
+    'components/**/*.{ts,tsx}',
+    'hooks/**/*.{ts,tsx}',
+    'contexts/**/*.{ts,tsx}',
+    '!**/*.d.ts',
+    '!**/*.test.{ts,tsx}',
+    '!**/*.stories.{ts,tsx}',
+    '!**/node_modules/**',
+    '!**/.next/**',
+    '!**/coverage/**',
+    '!**/dist/**',
+    '!**/build/**',
+    '!**/__tests__/**',
+    '!**/test-utils/**',
+    '!**/mocks/**'
+  ],
   coveragePathIgnorePatterns: ['/node_modules/', '/.next/', '/coverage/'],
-  testMatch: ['**/__tests__/**/*.ts?(x)', '**/?(*.)+(test).ts?(x)'],
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+
+  // Coverage report formats
+  coverageReporters: ['text', 'lcov', 'html', 'json-summary'],
+  testMatch: ['**/__tests__/**/*.test.ts?(x)', '**/?(*.)+(test).ts?(x)'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/.next/',
+    '<rootDir>/__tests__/mocks/'
+  ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     'lucide-react': require.resolve('lucide-react'),
+    'react-markdown': '<rootDir>/__mocks__/react-markdown.tsx',
+    nuqs: '<rootDir>/__mocks__/nuqs.ts',
     '^@thedaviddias/([^/]+)$': ['<rootDir>/../../packages/$1/src', '<rootDir>/../../packages/$1'],
+    '^@thedaviddias/design-system/lib/utils$':
+      '<rootDir>/../../packages/design-system/lib/utils.ts',
     '^@thedaviddias/design-system/(.*)$':
       '<rootDir>/../../packages/design-system/components/shadcn/$1.tsx',
     '^@thedaviddias/([^/]+)/(.*)$': [
@@ -33,7 +84,12 @@ const config: Config.InitialOptions = {
 
   roots: ['<rootDir>'],
   maxWorkers: '50%',
-  verbose: true,
+  verbose: false,
+
+  // Performance optimizations
+  cache: true,
+  bail: 1, // Stop running tests after the first test failure
+  clearMocks: true,
 
   // Use .env.test for environment variables during tests
   testEnvironmentOptions: {
@@ -41,7 +97,7 @@ const config: Config.InitialOptions = {
   },
 
   transformIgnorePatterns: [
-    'node_modules/(?!(@thedaviddias|lucide-react|next-themes|sonner|@octokit|@t3-oss|@hookform|@radix-ui)/)'
+    'node_modules/(?!(@thedaviddias|lucide-react|next-themes|sonner|@octokit|@t3-oss|@hookform|@radix-ui|@clerk|cheerio|normalize-url|react-markdown|remark.*|rehype.*|unified|bail|is-plain-obj|trough|vfile|nuqs)/)'
   ],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname']

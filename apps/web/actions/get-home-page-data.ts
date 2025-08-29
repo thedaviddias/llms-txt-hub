@@ -6,7 +6,7 @@ import { getFeaturedProjects, getRecentlyUpdatedProjects } from '@/lib/project-u
 export async function getHomePageData() {
   const allProjects = await getWebsites()
   const featuredProjects = getFeaturedProjects(allProjects)
-  const recentlyUpdatedProjects = getRecentlyUpdatedProjects(allProjects, 5)
+  const recentlyUpdatedProjects = getRecentlyUpdatedProjects(allProjects, 6)
 
   return {
     allProjects,

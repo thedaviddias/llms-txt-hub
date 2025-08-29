@@ -1,19 +1,31 @@
 import { readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { logger } from '@thedaviddias/logging'
 import type { MetadataRoute } from 'next'
+import { categories } from '@/lib/categories'
 
 /**
  * Map of content paths that should be overridden to different URLs
  */
 const URL_OVERRIDES: Record<string, string> = {
   'legal/privacy': 'privacy',
-  'legal/terms': 'terms'
+  'legal/terms': 'terms',
+  'legal/cookies': 'cookies'
 }
 
 /**
  * Static routes that should be included in the sitemap
  */
-const STATIC_ROUTES = ['faq', 'projects', 'websites', 'news', 'guides', 'about']
+const STATIC_ROUTES = [
+  'faq',
+  'projects',
+  'websites',
+  'news',
+  'guides',
+  'about',
+  'members',
+  'submit'
+]
 
 /**
  * Recursively get all MDX pages from a directory
@@ -48,7 +60,7 @@ function getContentPages(dir: string, baseDir = ''): string[] {
       }
     }
   } catch (error) {
-    console.error(`Error reading directory ${dir}:`, error)
+    logger.error(`Error reading directory ${dir}:`, { data: error, tags: { type: 'page' } })
   }
 
   return pages
@@ -62,8 +74,18 @@ function getContentPages(dir: string, baseDir = ''): string[] {
  */
 function getPriority(path: string): number {
   if (!path) return 1 // Homepage
+
+  // Category pages get high priority based on their type
+  const category = categories.find(c => c.slug === path)
+  if (category) {
+    if (category.priority === 'high') return 0.9
+    if (category.priority === 'medium') return 0.8
+    return 0.7 // low priority categories
+  }
+
   if (path.startsWith('guides/')) return 0.8
   if (path.startsWith('resources/')) return 0.7
+  if (path.startsWith('u/')) return 0.3 // User profiles get lower priority
   if (STATIC_ROUTES.includes(path)) return 0.9 // High priority for main static routes
   return 0.5 // Other pages
 }
@@ -89,6 +111,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const contentDir = join(process.cwd(), '../../packages/content/data')
 
   try {
+    // Add the root URL first
+    routes.push({
+      url: baseUrl,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 1
+    })
+
+    // Add category pages with proper SEO metadata
+    categories.forEach(category => {
+      routes.push({
+        url: `${baseUrl}/${category.slug}`,
+        lastModified: new Date(),
+        changeFrequency: category.priority === 'high' ? 'daily' : 'weekly',
+        priority: getPriority(category.slug)
+      })
+    })
+
     // Add static routes
     routes.push(...getStaticRoutes(baseUrl))
 
@@ -102,16 +142,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: getPriority(page)
       })
     })
-
-    // Add the root URL
-    routes.push({
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1
-    })
   } catch (error) {
-    console.error('Error generating sitemap:', error)
+    logger.error('Error generating sitemap:', { data: error, tags: { type: 'page' } })
   }
 
   return routes

@@ -9,6 +9,7 @@ import { components } from '@/components/mdx'
 import { type GuideMetadata, getGuideBySlug, getGuides } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { generateGuideSchema } from '@/lib/schema'
+import { generateDynamicMetadata } from '@/lib/seo/seo-config'
 
 interface GuidePageProps {
   params: {
@@ -24,13 +25,14 @@ export async function generateMetadata(props: GuidePageProps): Promise<Metadata>
     return {}
   }
 
-  return {
-    title: `${guide.title} - llms.txt Hub`,
-    description: guide?.description,
-    alternates: {
-      canonical: getRoute('guides.guide', { slug })
-    }
-  }
+  return generateDynamicMetadata({
+    type: 'guide',
+    name: guide.title,
+    description: guide.description || `Learn about ${guide.title} in our comprehensive guide`,
+    slug: guide.slug,
+    publishedAt: guide.date,
+    additionalKeywords: ['guide', 'tutorial', 'how-to', 'llms.txt implementation']
+  })
 }
 
 export async function generateStaticParams(): Promise<GuidePageProps['params'][]> {

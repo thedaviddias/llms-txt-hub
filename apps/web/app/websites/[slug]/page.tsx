@@ -1,7 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from '@thedaviddias/design-system/alert'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { Card, CardContent, CardHeader } from '@thedaviddias/design-system/card'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import { AlertTriangle, ExternalLink, Hash } from 'lucide-react'
@@ -15,9 +14,11 @@ import { LLMGrid } from '@/components/llm/llm-grid'
 import { components } from '@/components/mdx'
 import { ProjectNavigation } from '@/components/project-navigation'
 import { ToolsSection } from '@/components/sections/tools-section'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
+import { generateAltText, generateDynamicMetadata } from '@/lib/seo/seo-config'
 
 interface ProjectPageProps {
   params: { slug: string }
@@ -33,19 +34,14 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       return {}
     }
 
-    return {
-      title: `${project.name} | llms.txt hub`,
+    return generateDynamicMetadata({
+      type: 'website',
+      name: project.name,
       description: project.description,
-      publisher: 'llms.txt hub',
-      category: project.category,
-      classification: project.category,
-      openGraph: {
-        title: `${project.name} | llms.txt hub`,
-        description: project.description,
-        url: `${getBaseUrl()}/websites/${project.slug}`,
-        type: 'website'
-      }
-    }
+      slug: project.slug,
+      additionalKeywords: [project.category, 'llms.txt'].filter(Boolean) as string[],
+      publishedAt: project.publishedAt
+    })
   } catch (error) {
     return {
       title: 'Website | llms.txt hub',
@@ -86,13 +82,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     }
 
     const breadcrumbItems = [
-      { name: 'Websites', href: getRoute('website.list') },
+      { name: 'Websites', href: getRoute('home') },
       { name: project.name, href: getRoute('website.detail', { slug: project.slug }) }
     ]
 
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto space-y-8">
+      <div className="container mx-auto px-6 py-8">
+        <div className="max-w-4xl mx-auto space-y-8">
           <JsonLd
             data={{
               '@context': 'https://schema.org',
@@ -100,45 +96,55 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             }}
           />
           <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
-          <Card>
+          <Card className="overflow-hidden bg-gradient-to-br from-slate-50/50 via-white to-slate-50/30 dark:from-slate-800/20 dark:via-slate-900/10 dark:to-slate-800/20">
             <CardHeader className="border-b pb-8">
               <div className="flex items-start gap-4">
-                <img
-                  src={getFaviconUrl(project.website) || '/placeholder.svg'}
-                  alt={`${project.name} favicon`}
-                  width={48}
-                  height={48}
-                  className="rounded-lg"
-                />
-                <div className="space-y-2 flex-1">
+                <div className="relative overflow-hidden rounded-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 blur-xl" />
+                  <img
+                    src={getFaviconUrl(project.website) || '/placeholder.svg'}
+                    alt={generateAltText('favicon', project.name)}
+                    width={56}
+                    height={56}
+                    className="rounded-lg relative z-10 shadow-sm"
+                    loading="eager"
+                  />
+                </div>
+                <div className="space-y-3 flex-1">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
-                      <div className="flex items-center gap-3 flex-wrap">
-                        <h1 className="text-3xl font-bold">{project.name}</h1>
-                        {project.isUnofficial && (
-                          <Badge
-                            variant="outline"
-                            className="text-sm border-yellow-500/20 bg-yellow-500/10 dark:border-yellow-400/30 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-500/20 dark:hover:bg-yellow-400/20 transition-colors"
-                          >
-                            Unofficial
-                          </Badge>
-                        )}
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <h1 className="text-2xl font-bold">{project.name}</h1>
+                          {project.isUnofficial && (
+                            <Badge
+                              variant="outline"
+                              className="text-xs border-yellow-500/20 bg-yellow-500/10 dark:border-yellow-400/30 dark:bg-yellow-400/10 text-yellow-700 dark:text-yellow-300"
+                            >
+                              Unofficial
+                            </Badge>
+                          )}
+                        </div>
                         <Link
                           href={project.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-3 py-1 text-sm bg-secondary hover:bg-secondary/80 text-secondary-foreground rounded-md transition-colors"
+                          className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 hover:text-foreground transition-all hover:gap-2 group"
                         >
-                          Visit Website
-                          <ExternalLink className="h-3.5 w-3.5" />
+                          <span className="border-b border-dashed border-foreground/30 group-hover:border-foreground/50">
+                            {project.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                          </span>
+                          <ExternalLink className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
                         </Link>
                       </div>
-                      <p className="text-muted-foreground mt-1">{project.description}</p>
+                      <p className="text-muted-foreground mt-2.5 leading-relaxed">
+                        {project.description}
+                      </p>
                     </div>
                   </div>
                   {project.category && (
                     <Link
-                      href={getRoute('website.withCategory', { category: project.category })}
+                      href={getRoute('category.page', { category: project.category })}
                       className="inline-flex items-center hover:opacity-80 transition-opacity"
                     >
                       <Badge
@@ -162,19 +168,80 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             </CardContent>
           </Card>
-          <div className="prose dark:prose-invert max-w-none">
-            <MDXRemote source={project.content || ''} components={components} />
-          </div>
+          {/* Content Section with SEO Fallback */}
+          {project.content ? (
+            <div className="prose dark:prose-invert max-w-none">
+              <MDXRemote source={project.content} components={components} />
+            </div>
+          ) : (
+            <Card>
+              <CardContent className="pt-6 space-y-6">
+                {/* Simple structured content for SEO */}
+                <div>
+                  <h2 className="text-lg font-semibold mb-3">About {project.name}</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.description} This platform provides AI-ready documentation through the
+                    llms.txt standard, making it easy for AI assistants to understand and interact
+                    with their services.
+                  </p>
+                </div>
 
-          <ToolsSection layout="compact" />
+                {/* Key Information */}
+                <div>
+                  <h3 className="text-base font-semibold mb-3">Key Information</h3>
+                  <dl className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+                    <div>
+                      <dt className="text-sm font-medium text-muted-foreground">Category</dt>
+                      <dd className="text-sm mt-0.5">
+                        {project.category ? project.category.replace(/-/g, ' ') : 'General'}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-sm font-medium text-muted-foreground">Type</dt>
+                      <dd className="text-sm mt-0.5">Website</dd>
+                    </div>
+                    <div>
+                      <dt className="text-sm font-medium text-muted-foreground">Documentation</dt>
+                      <dd className="text-sm mt-0.5">llms.txt compatible</dd>
+                    </div>
+                    <div>
+                      <dt className="text-sm font-medium text-muted-foreground">Added</dt>
+                      <dd className="text-sm mt-0.5">
+                        {project.publishedAt
+                          ? new Date(project.publishedAt).toLocaleDateString()
+                          : 'Recently'}
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+
+                {/* How to Use */}
+                <div>
+                  <h3 className="text-base font-semibold mb-3">How to Access</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Access the AI-ready documentation for {project.name} through the links below.
+                    The llms.txt file provides a concise overview, while the full version includes
+                    comprehensive documentation.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          <ToolsSection layout="default" showImages={false} />
           <ProjectNavigation
             previousWebsite={project.previousWebsite}
             nextWebsite={project.nextWebsite}
           />
           {project.relatedWebsites?.length > 0 && (
-            <div className="mt-8">
-              <h2 className="text-2xl font-bold mb-4">Related Projects</h2>
-              <LLMGrid items={project.relatedWebsites} variant="compact" />
+            <div className="space-y-4">
+              <h2 className="text-xl font-bold">Related Projects</h2>
+              <LLMGrid
+                items={project.relatedWebsites.slice(0, 3)}
+                analyticsSource="related-projects"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                overrideGrid={true}
+              />
             </div>
           )}
         </div>
@@ -182,7 +249,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     )
   } catch (error) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-6 py-8">
         <Alert variant="destructive" className="mb-6">
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Error loading website</AlertTitle>

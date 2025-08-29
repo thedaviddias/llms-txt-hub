@@ -1,8 +1,8 @@
+import { ArrowRight, Rss } from 'lucide-react'
+import Link from 'next/link'
 import { LLMGrid } from '@/components/llm/llm-grid'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { ArrowRight, Rss } from 'lucide-react'
-import Link from 'next/link'
 
 interface LatestUpdatesSectionProps {
   projects: WebsiteMetadata[]
@@ -22,8 +22,8 @@ export function LatestUpdatesSection({ projects }: LatestUpdatesSectionProps) {
             <span className="sr-only">RSS Feed for latest updates</span>
           </Link>
         </div>
-        <Link href={getRoute('website.latest')} className="flex items-center">
-          View all <ArrowRight className="ml-2 size-4" />
+        <Link href={getRoute('home')} className="flex items-center">
+          All updates <ArrowRight className="ml-2 size-4" />
         </Link>
       </div>
       <LLMGrid items={projects} variant="compact" />
