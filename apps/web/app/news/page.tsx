@@ -11,6 +11,17 @@ import { Card } from '@/components/ui/card'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { formatDate } from '@/lib/utils'
 
+/**
+ * Strips HTML tags from a string to create safe plain text
+ *
+ * @param html - The HTML string to sanitize
+ * @returns Plain text with HTML tags removed
+ */
+function stripHtmlTags(html: string): string {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '').trim()
+}
+
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Latest News',
   description:
@@ -61,7 +72,7 @@ async function getNewsItems(): Promise<{ items: NewsItem[] }> {
         title: item.title || '',
         link: item.link || '',
         pubDate: item.pubDate || '',
-        description: item.description || ''
+        description: stripHtmlTags(item.description || '')
       }))
     }
   } catch (error) {

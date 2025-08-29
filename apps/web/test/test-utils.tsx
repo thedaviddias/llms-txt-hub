@@ -1,4 +1,5 @@
 import { render as rtlRender } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { Toaster } from 'sonner'
 
@@ -66,4 +67,4 @@ export const createMockRouter = (props: any) => ({
 
 // Re-export everything
 export * from '@testing-library/react'
-export { render }
+export { render, userEvent }

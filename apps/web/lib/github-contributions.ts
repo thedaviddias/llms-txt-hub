@@ -1,8 +1,8 @@
 import { logger } from '@thedaviddias/logging'
 import { GitHubAPIClient } from '@/lib/github-security-utils'
-import { hashSensitiveData } from "@/lib/server-crypto"
+import { hashSensitiveData } from '@/lib/server-crypto'
 
-interface GitHubContribution {
+export interface GitHubContribution {
   type: 'pull_request' | 'issue' | 'commit'
   title: string
   url: string
@@ -11,7 +11,7 @@ interface GitHubContribution {
   merged?: boolean
 }
 
-interface ContributionSummary {
+export interface ContributionSummary {
   total: number
   pullRequests: number
   issues: number
@@ -42,6 +42,13 @@ export async function getUserContributions(username: string): Promise<Contributi
   const githubClient = GitHubAPIClient.getInstance()
   const contributions: GitHubContribution[] = []
 
+  logger.info('getUserContributions: Starting fetch', {
+    data: {
+      usernameHash: hashSensitiveData(username)
+    },
+    tags: { type: 'github', component: 'contributions' }
+  })
+
   try {
     // Only log errors and warnings, not every fetch attempt
 
@@ -50,6 +57,14 @@ export async function getUserContributions(username: string): Promise<Contributi
     const prsResult = await githubClient.makeSecureRequest<any>(prsUrl)
 
     if (prsResult.data) {
+      logger.info('getUserContributions: PRs fetched successfully', {
+        data: {
+          usernameHash: hashSensitiveData(username),
+          prCount: prsResult.data.items?.length || 0
+        },
+        tags: { type: 'github', component: 'contributions' }
+      })
+
       prsResult.data.items?.forEach((pr: any) => {
         contributions.push({
           type: 'pull_request',
@@ -60,6 +75,14 @@ export async function getUserContributions(username: string): Promise<Contributi
           merged: !!pr.pull_request?.merged_at
         })
       })
+    } else if (prsResult.error) {
+      logger.warn('getUserContributions: PR fetch failed', {
+        data: {
+          usernameHash: hashSensitiveData(username),
+          error: prsResult.error
+        },
+        tags: { type: 'github', component: 'contributions', error: 'pr-fetch-failed' }
+      })
     }
     // Silently handle PR search failures - user may have no PRs or API may be temporarily unavailable
 
@@ -68,6 +91,14 @@ export async function getUserContributions(username: string): Promise<Contributi
     const issuesResult = await githubClient.makeSecureRequest<any>(issuesUrl)
 
     if (issuesResult.data) {
+      logger.info('getUserContributions: Issues fetched successfully', {
+        data: {
+          usernameHash: hashSensitiveData(username),
+          issueCount: issuesResult.data.items?.length || 0
+        },
+        tags: { type: 'github', component: 'contributions' }
+      })
+
       issuesResult.data.items?.forEach((issue: any) => {
         contributions.push({
           type: 'issue',
@@ -76,6 +107,14 @@ export async function getUserContributions(username: string): Promise<Contributi
           created_at: issue.created_at,
           state: issue.state
         })
+      })
+    } else if (issuesResult.error) {
+      logger.warn('getUserContributions: Issues fetch failed', {
+        data: {
+          usernameHash: hashSensitiveData(username),
+          error: issuesResult.error
+        },
+        tags: { type: 'github', component: 'contributions', error: 'issues-fetch-failed' }
       })
     }
     // Silently handle Issues search failures - user may have no issues or API may be temporarily unavailable
@@ -89,13 +128,26 @@ export async function getUserContributions(username: string): Promise<Contributi
     const issues = contributions.filter(c => c.type === 'issue').length
     const commits = contributions.filter(c => c.type === 'commit').length
 
-    return {
+    const result = {
       total: pullRequests + issues + commits,
       pullRequests,
       issues,
       commits,
       contributions: contributions.slice(0, 10) // Limit to 10 most recent
     }
+
+    logger.info('getUserContributions: Fetch completed successfully', {
+      data: {
+        usernameHash: hashSensitiveData(username),
+        total: result.total,
+        pullRequests: result.pullRequests,
+        issues: result.issues,
+        commits: result.commits
+      },
+      tags: { type: 'github', component: 'contributions' }
+    })
+
+    return result
   } catch (error) {
     // Log error without exposing sensitive information
     logger.error('Error fetching GitHub contributions', {

@@ -74,11 +74,19 @@ describe('Check Username API Route', () => {
 
     // Setup default mocks
     mockAuth.mockResolvedValue({
-      user: { id: 'test-user-id', email: 'test@example.com' },
-      session: null
+      user: {
+        id: 'test-user-id',
+        email: 'test@example.com',
+        user_metadata: {
+          user_name: null,
+          full_name: null,
+          avatar_url: null
+        }
+      },
+      provider_token: undefined
     })
 
-    mockDOMPurify.mockImplementation((text: string) => text)
+    mockDOMPurify.mockImplementation((text: string | Node) => text as string)
   })
 
   describe('Authentication', () => {
@@ -100,8 +108,16 @@ describe('Check Username API Route', () => {
 
     it('returns 401 when user session lacks ID', async () => {
       mockAuth.mockResolvedValueOnce({
-        user: { email: 'test@example.com' },
-        session: null
+        user: {
+          id: '',
+          email: 'test@example.com',
+          user_metadata: {
+            user_name: null,
+            full_name: null,
+            avatar_url: null
+          }
+        },
+        provider_token: undefined
       })
 
       const request = new Request('http://localhost/api/user/check-username', {
@@ -345,8 +361,16 @@ describe('Check Username API Route', () => {
     it('enforces rate limiting after max requests', async () => {
       // Use a unique user ID for this test to avoid conflicts
       mockAuth.mockResolvedValue({
-        user: { id: 'rate-limit-test-user' },
-        session: null
+        user: {
+          id: 'rate-limit-test-user',
+          email: 'rate-limit@example.com',
+          user_metadata: {
+            user_name: null,
+            full_name: null,
+            avatar_url: null
+          }
+        },
+        provider_token: undefined
       })
 
       // Make 20 requests (the limit)
@@ -381,8 +405,16 @@ describe('Check Username API Route', () => {
     it('applies rate limiting per user', async () => {
       // First user makes requests
       mockAuth.mockResolvedValue({
-        user: { id: 'user-1' },
-        session: null
+        user: {
+          id: 'user-1',
+          email: 'user1@example.com',
+          user_metadata: {
+            user_name: null,
+            full_name: null,
+            avatar_url: null
+          }
+        },
+        provider_token: undefined
       })
 
       const request1 = new Request('http://localhost/api/user/check-username', {
@@ -396,8 +428,16 @@ describe('Check Username API Route', () => {
 
       // Different user can also make requests
       mockAuth.mockResolvedValue({
-        user: { id: 'user-2' },
-        session: null
+        user: {
+          id: 'user-2',
+          email: 'user2@example.com',
+          user_metadata: {
+            user_name: null,
+            full_name: null,
+            avatar_url: null
+          }
+        },
+        provider_token: undefined
       })
 
       const request2 = new Request('http://localhost/api/user/check-username', {
@@ -415,8 +455,16 @@ describe('Check Username API Route', () => {
     it('handles Clerk API errors gracefully', async () => {
       // Use unique user ID to avoid rate limiting
       mockAuth.mockResolvedValue({
-        user: { id: 'error-test-user-1' },
-        session: null
+        user: {
+          id: 'error-test-user-1',
+          email: 'error1@example.com',
+          user_metadata: {
+            user_name: null,
+            full_name: null,
+            avatar_url: null
+          }
+        },
+        provider_token: undefined
       })
 
       mockClerkUsers.getUserList.mockRejectedValueOnce(new Error('Clerk API error'))
@@ -438,8 +486,16 @@ describe('Check Username API Route', () => {
     it('handles malformed JSON gracefully', async () => {
       // Use unique user ID to avoid rate limiting
       mockAuth.mockResolvedValue({
-        user: { id: 'error-test-user-2' },
-        session: null
+        user: {
+          id: 'error-test-user-2',
+          email: 'error2@example.com',
+          user_metadata: {
+            user_name: null,
+            full_name: null,
+            avatar_url: null
+          }
+        },
+        provider_token: undefined
       })
 
       const request = new Request('http://localhost/api/user/check-username', {

@@ -33,6 +33,14 @@ export class GitHubAPIClient {
   }
 
   /**
+   * Clear rate limit cache (useful for debugging)
+   */
+  public clearRateLimitCache(): void {
+    this.rateLimitInfo.clear()
+    this.requestQueue.clear()
+  }
+
+  /**
    * Make a secure request to GitHub API with rate limiting
    */
   async makeSecureRequest<T>(
@@ -238,13 +246,6 @@ export class GitHubAPIClient {
    */
   getRateLimitStatus(): RateLimitInfo | null {
     return this.rateLimitInfo.get('global') || null
-  }
-
-  /**
-   * Clear rate limit cache (for testing)
-   */
-  clearRateLimitCache(): void {
-    this.rateLimitInfo.clear()
   }
 }
 

@@ -131,10 +131,14 @@ ${description}
       // Sanitize name for use in branch and file names
       const sanitizedName = name
         .toLowerCase()
-        .replace(/[|&<>!$'"]/g, '') // Remove special characters
-        .replace(/\s+/g, '-') // Replace spaces with dashes
-        .replace(/-+/g, '-') // Replace multiple dashes with single dash
-        .replace(/^-|-$/g, '') // Remove leading/trailing dashes
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '') // strip diacritics
+        .replace(/[^a-z0-9- ]+/g, ' ') // disallow slashes, dots, etc.
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+      if (!sanitizedName) throw new Error('Invalid name after sanitization')
 
       const branchName = `submit-${sanitizedName}-${Date.now()}`
       const filePath = `packages/content/data/websites/${sanitizedName}-llms-txt.mdx`
@@ -240,10 +244,10 @@ ${description}
 
 ${attribution}
 
-**Website:** ${website}  
-**llms.txt:** ${llmsUrl}  
+**Website:** ${website}
+**llms.txt:** ${llmsUrl}
 ${llmsFullUrl ? `**llms-full.txt:** ${llmsFullUrl}  ` : ''}
-**Category:** ${categorySlug}  
+**Category:** ${categorySlug}
 
 ---
 ${useUserToken ? 'This PR was created by the submitter.' : 'This PR was created via admin token for a user without GitHub repository access.'}

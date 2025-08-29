@@ -32,7 +32,7 @@ export const handlers = [
   }),
 
   http.patch('/api/user/profile', async ({ request }) => {
-    const updates = await request.json()
+    const updates = (await request.json()) as Record<string, any>
 
     const updatedUser = {
       ...MOCK_DATA.users.default,
@@ -132,94 +132,73 @@ export const handlers = [
   http.post('/api/user/check-username', async ({ request }) => {
     const { username } = (await request.json()) as { username: string }
 
-    const reservedUsernames = ['admin', 'api', 'app', 'www', 'mail']
-    const takenUsernames = ['testuser', 'johnsmith', 'taken']
-
-    if (!username || username.length < 3) {
-      return HttpResponse.json(createApiError('Username must be at least 3 characters'), {
-        status: 400
-      })
+    if (!username) {
+      return HttpResponse.json(createApiError('Username is required'), { status: 400 })
     }
 
-    if (reservedUsernames.includes(username.toLowerCase())) {
-      return HttpResponse.json(
-        createApiResponse({
-          available: false,
-          reason: 'reserved',
-          message: 'This username is reserved'
-        })
-      )
+    if (username === 'taken') {
+      return HttpResponse.json(createApiError('Username already taken'), { status: 409 })
     }
 
-    if (takenUsernames.includes(username.toLowerCase())) {
-      return HttpResponse.json(
-        createApiResponse({
-          available: false,
-          reason: 'taken',
-          message: 'This username is already taken'
-        })
-      )
-    }
-
-    return HttpResponse.json(
-      createApiResponse({
-        available: true,
-        username
-      })
-    )
+    return HttpResponse.json(createApiResponse({ available: true }))
   }),
 
-  // ===== Projects =====
+  // ===== Project Management =====
 
   http.get('/api/projects', async ({ request }) => {
     const url = new URL(request.url)
+    const page = url.searchParams.get('page') || '1'
+    const limit = url.searchParams.get('limit') || '10'
     const category = url.searchParams.get('category')
     const search = url.searchParams.get('search')
-    const page = Number.parseInt(url.searchParams.get('page') || '1')
-    const limit = Number.parseInt(url.searchParams.get('limit') || '10')
 
-    let projects = [...MOCK_DATA.projects]
+    await delay(100)
 
-    // Filter by category
+    let filteredProjects = MOCK_DATA.projects
+
     if (category) {
-      projects = projects.filter(p => p.category === category)
+      filteredProjects = filteredProjects.filter(p => p.category === category)
     }
 
-    // Filter by search
     if (search) {
-      const searchLower = search.toLowerCase()
-      projects = projects.filter(
-        p =>
-          p.title.toLowerCase().includes(searchLower) ||
-          p.description.toLowerCase().includes(searchLower) ||
-          p.tags.some(tag => tag.toLowerCase().includes(searchLower))
+      filteredProjects = filteredProjects.filter(p =>
+        p.title.toLowerCase().includes(search.toLowerCase())
       )
     }
 
-    // Pagination
-    const totalCount = projects.length
-    const totalPages = Math.ceil(totalCount / limit)
-    const start = (page - 1) * limit
-    const paginatedProjects = projects.slice(start, start + limit)
-
-    await delay(100)
+    const startIndex = (Number.parseInt(page) - 1) * Number.parseInt(limit)
+    const endIndex = startIndex + Number.parseInt(limit)
+    const paginatedProjects = filteredProjects.slice(startIndex, endIndex)
 
     return HttpResponse.json(
       createApiResponse({
         projects: paginatedProjects,
         pagination: {
-          page,
-          limit,
-          totalCount,
-          totalPages,
-          hasMore: page < totalPages
+          page: Number.parseInt(page),
+          limit: Number.parseInt(limit),
+          total: filteredProjects.length,
+          totalPages: Math.ceil(filteredProjects.length / Number.parseInt(limit))
         }
       })
     )
   }),
 
+  http.get('/api/projects/:id', async ({ params }) => {
+    const { id } = params
+
+    if (id === 'not-found') {
+      return HttpResponse.json(createApiError('Project not found'), { status: 404 })
+    }
+
+    await delay(50)
+
+    const project = MOCK_DATA.projects.find(p => p.id === id) || MOCK_DATA.projects[0]
+
+    return HttpResponse.json(createApiResponse(project))
+  }),
+
   http.post('/api/projects', async ({ request }) => {
-    const projectData = await request.json()
+    const projectData = (await request.json()) as Record<string, any>
 
     // Validation
     const requiredFields = ['title', 'url', 'category']
@@ -253,7 +232,7 @@ export const handlers = [
   }),
 
   http.patch('/api/user/settings', async ({ request }) => {
-    const updates = await request.json()
+    const updates = (await request.json()) as Record<string, any>
 
     const updatedSettings = {
       ...MOCK_DATA.settings,
@@ -300,9 +279,9 @@ export const handlers = [
   // ===== Analytics =====
 
   http.post('/api/analytics/track', async ({ request }) => {
-    const event = await request.json()
+    const event = (await request.json()) as { name?: string }
 
-    if (!event.name) {
+    if (!event?.name) {
       return HttpResponse.json(createApiError('Event name is required'), { status: 400 })
     }
 
@@ -358,7 +337,8 @@ export const errorHandlers = {
 export const delayHandlers = {
   slow: handlers.map(handler => {
     // Add 2 second delay to all handlers
-    return http.all('*', async ({ request }) => {
+    // @ts-ignore - MSW v2 type compatibility issue
+    return http.all('*', async () => {
       await delay(2000)
       return handler
     })
@@ -366,7 +346,8 @@ export const delayHandlers = {
 
   timeout: handlers.map(handler => {
     // Add 30 second delay to simulate timeout
-    return http.all('*', async ({ request }) => {
+    // @ts-ignore - MSW v2 type compatibility issue
+    return http.all('*', async () => {
       await delay(30000)
       return handler
     })

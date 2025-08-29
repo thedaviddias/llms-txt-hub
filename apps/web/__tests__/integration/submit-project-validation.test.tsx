@@ -4,8 +4,7 @@
  * Tests form validation, error handling, and error recovery.
  */
 
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { fireEvent, render, screen, waitFor, userEvent } from '@/__tests__/utils/test-utils.helper'
 import { expectValidationErrors } from '@/__tests__/utils/form-test-helpers'
 import { TestSubmitProjectForm } from '@/__tests__/utils/test-components'
 

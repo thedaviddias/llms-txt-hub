@@ -14,6 +14,12 @@ import { generateDisplayName, getUsernameFromMetadata, hasSharedInfo } from '@/l
 import { generateDynamicMetadata } from '@/lib/seo/seo-config'
 import { findUserBySlug } from '@/lib/user-search'
 
+// Force dynamic rendering to ensure fresh data
+export const dynamic = 'force-dynamic'
+
+// Revalidate every 5 minutes to ensure fresh contribution data
+export const revalidate = 300
+
 interface ProfilePageProps {
   params: Promise<{
     slug: string
@@ -51,6 +57,12 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const session = await auth()
   const { slug } = await params
+
+  // Add cache control headers to prevent browser caching
+  const headers = new Headers()
+  headers.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+  headers.set('Pragma', 'no-cache')
+  headers.set('Expires', '0')
 
   logger.info('ProfilePage: Attempting to load profile', {
     data: {
@@ -148,15 +160,53 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   }
 
   // Get GitHub contributions for any valid GitHub username
-  const contributions = githubUsername
-    ? await getUserContributions(githubUsername)
-    : {
+  let contributions
+  if (githubUsername) {
+    logger.info('ProfilePage: Fetching contributions', {
+      data: {
+        usernameHash: hashSensitiveData(githubUsername),
+        hasSession: !!session?.user?.id
+      },
+      tags: { type: 'page', component: 'contributions' }
+    })
+
+    try {
+      contributions = await getUserContributions(githubUsername)
+      logger.info('ProfilePage: Contributions fetched successfully', {
+        data: {
+          usernameHash: hashSensitiveData(githubUsername),
+          total: contributions.total,
+          pullRequests: contributions.pullRequests,
+          issues: contributions.issues,
+          commits: contributions.commits
+        },
+        tags: { type: 'page', component: 'contributions' }
+      })
+    } catch (error) {
+      logger.error('ProfilePage: Error fetching contributions', {
+        data: {
+          usernameHash: hashSensitiveData(githubUsername),
+          error: error instanceof Error ? error.message : 'Unknown error'
+        },
+        tags: { type: 'page', component: 'contributions', error: 'fetch-failed' }
+      })
+      contributions = {
         total: 0,
         pullRequests: 0,
         issues: 0,
         commits: 0,
         contributions: []
       }
+    }
+  } else {
+    contributions = {
+      total: 0,
+      pullRequests: 0,
+      issues: 0,
+      commits: 0,
+      contributions: []
+    }
+  }
 
   return (
     <div className="container max-w-6xl mx-auto px-6 py-8">

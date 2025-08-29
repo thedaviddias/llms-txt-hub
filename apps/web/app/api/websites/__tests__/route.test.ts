@@ -24,7 +24,8 @@ describe('/api/websites', () => {
           category: 'Tools',
           slug: 'example-website',
           llmsUrl: 'https://example.com/llms.txt',
-          llmsFullUrl: 'https://example.com/llms-full.txt'
+          llmsFullUrl: 'https://example.com/llms-full.txt',
+          publishedAt: '2024-01-01'
         },
         {
           name: 'Another Site',
@@ -32,11 +33,12 @@ describe('/api/websites', () => {
           website: 'https://another.com',
           category: 'Education',
           slug: 'another-site',
-          llmsUrl: 'https://another.com/llms.txt'
+          llmsUrl: 'https://another.com/llms.txt',
+          publishedAt: '2024-01-02'
         }
       ]
 
-      mockGetWebsites.mockResolvedValue(mockWebsites)
+      mockGetWebsites.mockReturnValue(mockWebsites)
 
       const response = await GET()
       const data = await response.json()
@@ -47,7 +49,7 @@ describe('/api/websites', () => {
     })
 
     it('should return empty array when no websites found', async () => {
-      mockGetWebsites.mockResolvedValue([])
+      mockGetWebsites.mockReturnValue([])
 
       const response = await GET()
       const data = await response.json()
@@ -59,7 +61,9 @@ describe('/api/websites', () => {
 
     it('should handle content loader errors gracefully', async () => {
       const contentError = new Error('Failed to load content')
-      mockGetWebsites.mockRejectedValue(contentError)
+      mockGetWebsites.mockImplementation(() => {
+        throw contentError
+      })
 
       const response = await GET()
       const data = await response.json()
@@ -73,9 +77,11 @@ describe('/api/websites', () => {
     })
 
     it('should handle file system errors', async () => {
-      const fsError = new Error('ENOENT: no such file or directory')
+      const fsError = new Error('ENOENT: no such file or directory') as Error & { code?: string }
       fsError.code = 'ENOENT'
-      mockGetWebsites.mockRejectedValue(fsError)
+      mockGetWebsites.mockImplementation(() => {
+        throw fsError
+      })
 
       const response = await GET()
       const data = await response.json()
@@ -90,7 +96,9 @@ describe('/api/websites', () => {
 
     it('should handle malformed content gracefully', async () => {
       const malformedError = new Error('Invalid frontmatter syntax')
-      mockGetWebsites.mockRejectedValue(malformedError)
+      mockGetWebsites.mockImplementation(() => {
+        throw malformedError
+      })
 
       const response = await GET()
       const data = await response.json()
@@ -104,7 +112,7 @@ describe('/api/websites', () => {
     })
 
     it('should return proper JSON content type', async () => {
-      mockGetWebsites.mockResolvedValue([])
+      mockGetWebsites.mockReturnValue([])
 
       const response = await GET()
 
@@ -119,10 +127,11 @@ describe('/api/websites', () => {
         website: `https://example${index}.com`,
         category: 'Tools',
         slug: `website-${index}`,
-        llmsUrl: `https://example${index}.com/llms.txt`
+        llmsUrl: `https://example${index}.com/llms.txt`,
+        publishedAt: '2024-01-01'
       }))
 
-      mockGetWebsites.mockResolvedValue(largeDataset)
+      mockGetWebsites.mockReturnValue(largeDataset)
 
       const startTime = Date.now()
       const response = await GET()
@@ -143,11 +152,12 @@ describe('/api/websites', () => {
           category: 'Tools',
           slug: 'complete-website',
           llmsUrl: 'https://complete.com/llms.txt',
-          llmsFullUrl: 'https://complete.com/llms-full.txt'
+          llmsFullUrl: 'https://complete.com/llms-full.txt',
+          publishedAt: '2024-01-01'
         }
       ]
 
-      mockGetWebsites.mockResolvedValue(mockWebsites)
+      mockGetWebsites.mockReturnValue(mockWebsites)
 
       const response = await GET()
       const data = await response.json()

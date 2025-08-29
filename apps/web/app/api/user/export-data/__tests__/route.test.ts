@@ -231,8 +231,8 @@ describe('/api/user/export-data', () => {
         })
       )
 
-      const logCall = mockLogger.info.mock.calls[0][1]
-      expect(logCall.data.exportSize).toBeGreaterThan(0)
+      const logCall = mockLogger.info.mock.calls[0][1] as any
+      expect(logCall?.data?.exportSize).toBeGreaterThan(0)
     })
   })
 })

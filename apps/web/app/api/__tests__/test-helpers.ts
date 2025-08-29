@@ -8,11 +8,11 @@
 import { NextRequest } from 'next/server'
 
 /**
- * Creates a mock NextRequest for testing
+ * Creates a NextRequest for testing Next.js API routes
  *
  * @param url - The URL for the request
  * @param options - Request options
- * @returns Mock NextRequest instance
+ * @returns NextRequest instance
  */
 export function createMockRequest(
   url: string,
@@ -31,22 +31,18 @@ export function createMockRequest(
     })
   }
 
-  const request = new NextRequest(fullUrl.toString(), {
+  const requestOptions: any = {
     method: options.method || 'GET',
-    headers: options.headers || {},
-    ...(options.body && {
-      body: typeof options.body === 'string' ? options.body : JSON.stringify(options.body)
-    })
-  })
-
-  // Mock the json method if body exists
-  if (options.body) {
-    request.json = jest
-      .fn()
-      .mockResolvedValue(typeof options.body === 'string' ? JSON.parse(options.body) : options.body)
+    headers: options.headers || {}
   }
 
-  return request
+  // Add body if provided
+  if (options.body) {
+    requestOptions.body =
+      typeof options.body === 'string' ? options.body : JSON.stringify(options.body)
+  }
+
+  return new NextRequest(fullUrl.toString(), requestOptions)
 }
 
 /**

@@ -21,9 +21,30 @@ export const revalidate = 1800
  */
 function generateSlugFromUser(user: Member): string {
   if (!user) return ''
+
   const username = user.username || user.publicMetadata?.github_username
   if (!username) return user.id
-  return username
+
+  // Normalize the username: trim, lowercase
+  let slug = username.trim().toLowerCase()
+
+  // Replace whitespace with dashes
+  slug = slug.replace(/\s+/g, '-')
+
+  // Remove or replace unsafe characters - keep only a-z, 0-9, hyphens, and underscores
+  slug = slug.replace(/[^a-z0-9-_]/g, '')
+
+  // Remove multiple consecutive dashes
+  slug = slug.replace(/-+/g, '-')
+
+  // Remove leading and trailing dashes
+  slug = slug.replace(/^-+|-+$/g, '')
+
+  // If the resulting slug is empty, fallback to user.id
+  if (!slug) return user.id
+
+  // URL encode the final slug for extra safety
+  return encodeURIComponent(slug)
 }
 
 /**

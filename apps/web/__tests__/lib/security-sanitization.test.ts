@@ -72,20 +72,32 @@ describe('Input Sanitization', () => {
       const input = 'Hello <script>alert("xss")</script> World'
       const result = sanitizeText(input)
       expect(result).not.toContain('<script')
-      expect(result).not.toContain('alert')
+      expect(result).not.toContain('</script>')
+      expect(result).toContain('Hello')
+      expect(result).toContain('World')
+      // Script content should be removed for security
+      expect(result).not.toContain('alert("xss")')
     })
 
     it('removes style tags', () => {
       const input = 'Text with <style>body{background:red}</style> styling'
       const result = sanitizeText(input)
       expect(result).not.toContain('<style')
-      expect(result).not.toContain('background:red')
+      expect(result).not.toContain('</style>')
+      expect(result).toContain('Text with')
+      expect(result).toContain('styling')
+      // Style content should be removed for security
+      expect(result).not.toContain('body{background:red}')
     })
 
     it('removes iframe tags', () => {
       const input = 'Text with <iframe src="evil.com"></iframe> frame'
       const result = sanitizeText(input)
       expect(result).not.toContain('<iframe')
+      expect(result).not.toContain('</iframe>')
+      expect(result).toContain('Text with')
+      expect(result).toContain('frame')
+      // Iframe content should be removed for security
       expect(result).not.toContain('evil.com')
     })
 
@@ -100,8 +112,9 @@ describe('Input Sanitization', () => {
       const input = '<p onclick="alert(1)">Click me</p>'
       const result = sanitizeText(input)
       expect(result).not.toContain('onclick')
-      expect(result).not.toContain('alert(1)')
       expect(result).toContain('<p>Click me</p>')
+      // Event handler content should be removed for security
+      expect(result).not.toContain('alert(1)')
     })
 
     it('sanitizes dangerous XSS vectors', () => {
@@ -114,10 +127,14 @@ describe('Input Sanitization', () => {
       htmlVectors.forEach(vector => {
         const sanitized = sanitizeText(vector)
         expect(sanitized).not.toContain('<script')
+        expect(sanitized).not.toContain('</script>')
         expect(sanitized).not.toContain('<img')
         expect(sanitized).not.toContain('<svg')
         expect(sanitized).not.toContain('onerror=')
         expect(sanitized).not.toContain('onload=')
+        // Verify that dangerous content is removed for security
+        expect(sanitized).not.toContain('alert("xss")')
+        expect(sanitized).not.toContain('alert(1)')
       })
 
       // Note: Plain text like "javascript:alert(1)" is safe as text content

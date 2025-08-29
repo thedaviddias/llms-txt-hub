@@ -46,20 +46,33 @@ async function fetchMetadata(url: string) {
       removeQueryParameters: true
     })
 
-    const duplicateWebsite = existingWebsites.find((website: WebsiteMetadata) => {
-      const normalizedExisting = normalizeUrl(website.website, {
-        stripProtocol: true,
-        stripWWW: true,
-        removeTrailingSlash: true,
-        removeQueryParameters: true
-      })
-
-      // Check if either URL is a base path of the other
-      return (
-        normalizedExisting.startsWith(normalizedNewUrl) ||
-        normalizedNewUrl.startsWith(normalizedExisting)
-      )
-    })
+    const toKey = (u: string) => {
+      try {
+        const { hostname, pathname } = new URL(
+          normalizeUrl(u, {
+            stripWWW: true,
+            removeTrailingSlash: true,
+            removeQueryParameters: true
+          })
+        )
+        const path = pathname.endsWith('/') ? pathname : `${pathname}/`
+        return { hostname, path }
+      } catch {
+        return null
+      }
+    }
+    const newKey = toKey(url)
+    const duplicateWebsite = newKey
+      ? existingWebsites.find((w: WebsiteMetadata) => {
+          const k = toKey(w.website)
+          if (!k || k.hostname !== newKey.hostname) return false
+          return (
+            k.path === newKey.path ||
+            k.path.startsWith(newKey.path) ||
+            newKey.path.startsWith(k.path)
+          )
+        })
+      : undefined
 
     if (duplicateWebsite) {
       return { isDuplicate: true, existingWebsite: duplicateWebsite }

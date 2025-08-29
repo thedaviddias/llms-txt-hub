@@ -19,6 +19,8 @@ export function Footer() {
               <a
                 href="https://llmstxt.org/"
                 className="underline plausible-event-name=External+Link+Click"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 llms.txt standard.
               </a>
@@ -29,6 +31,8 @@ export function Footer() {
                 <Link
                   href="https://github.com/thedaviddias/llms-txt-hub"
                   className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=GitHub plausible-event-source=Footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <SiGithub className="h-5 w-5" />
                   <span className="sr-only">GitHub</span>
@@ -36,6 +40,8 @@ export function Footer() {
                 <Link
                   href="https://www.reddit.com/r/llmstxt/"
                   className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=Reddit plausible-event-source=Footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <SiReddit className="h-5 w-5" />
                   <span className="sr-only">Reddit</span>
@@ -43,6 +49,8 @@ export function Footer() {
                 <Link
                   href="https://x.com/llmstxthub"
                   className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=Twitter plausible-event-source=Footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <SiX className="h-5 w-5" />
                   <span className="sr-only">X (Twitter)</span>
@@ -53,6 +61,8 @@ export function Footer() {
               title="Install llms-txt Raycast Extension"
               href="https://www.raycast.com/thedaviddias/llms-txt"
               className="plausible-event-name=Tool+Click"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <img
                 src="https://www.raycast.com/thedaviddias/llms-txt/install_button@2x.png"

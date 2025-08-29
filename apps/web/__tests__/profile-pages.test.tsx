@@ -3,7 +3,8 @@
  */
 
 import { jest } from '@jest/globals'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/__tests__/utils/test-utils.helper'
+import * as Auth from '@thedaviddias/auth'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -68,14 +69,20 @@ describe.skip('Profile Pages', () => {
   describe('Connect GitHub Page', () => {
     it('should render connect GitHub page without crashing', async () => {
       // Mock auth without GitHub for this test
-      jest.spyOn(require('@thedaviddias/auth'), 'useAuth').mockReturnValueOnce({
+      jest.spyOn(Auth, 'useAuth').mockReturnValueOnce({
         user: {
           id: 'test-user-id',
           email: 'test@example.com',
           user_metadata: {}
         },
-        signOut: jest.fn()
-      })
+        signOut: jest.fn() as () => Promise<void>,
+        isLoaded: true,
+        isSignedIn: true,
+        signIn: jest.fn(),
+        getSession: jest.fn(),
+        getToken: jest.fn(),
+        openSignIn: jest.fn()
+      } as any)
 
       const ConnectGitHubPage = (await import('../app/auth/connect-github/page')).default
       render(<ConnectGitHubPage />)

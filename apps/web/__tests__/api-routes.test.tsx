@@ -3,11 +3,14 @@
  */
 
 import { jest } from '@jest/globals'
+import * as Auth from '@thedaviddias/auth'
 
 // Mock auth
 jest.mock('@thedaviddias/auth', () => ({
   auth: jest.fn()
 }))
+
+const mockAuth = jest.mocked(Auth.auth)
 
 // Mock logger
 jest.mock('@thedaviddias/logging', () => ({
@@ -21,8 +24,7 @@ jest.mock('@thedaviddias/logging', () => ({
 describe('API Routes', () => {
   describe('/api/user/export-data', () => {
     it('should return 401 when user is not authenticated', async () => {
-      const auth = require('@thedaviddias/auth').auth
-      auth.mockResolvedValueOnce(null)
+      mockAuth.mockResolvedValueOnce(null)
 
       const { GET } = await import('../app/api/user/export-data/route')
       const response = await GET()
@@ -33,16 +35,17 @@ describe('API Routes', () => {
     })
 
     it('should return user data when authenticated', async () => {
-      const auth = require('@thedaviddias/auth').auth
-      auth.mockResolvedValueOnce({
+      mockAuth.mockResolvedValueOnce({
         user: {
           id: 'test-user-id',
           email: 'test@example.com',
           user_metadata: {
-            github_username: 'testuser',
-            user_name: 'testuser'
+            user_name: 'testuser',
+            full_name: null,
+            avatar_url: null
           }
-        }
+        },
+        provider_token: 'test-token'
       })
 
       const { GET } = await import('../app/api/user/export-data/route')
@@ -66,8 +69,7 @@ describe('API Routes', () => {
 
   describe('/api/user/delete-account', () => {
     it('should return 401 when user is not authenticated', async () => {
-      const auth = require('@thedaviddias/auth').auth
-      auth.mockResolvedValueOnce(null)
+      mockAuth.mockResolvedValueOnce(null)
 
       const { DELETE } = await import('../app/api/user/delete-account/route')
       const response = await DELETE()

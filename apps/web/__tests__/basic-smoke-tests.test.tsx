@@ -4,8 +4,9 @@
  */
 
 import { jest } from '@jest/globals'
-import { render } from '@testing-library/react'
+import { render } from '@/__tests__/utils/test-utils.helper'
 import { FavoritesProvider } from '@/contexts/favorites-context'
+import NotFound from '../app/not-found'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
@@ -250,7 +251,6 @@ describe('Error Handling', () => {
   })
 
   it('should render NotFound component', async () => {
-    const NotFound = require('../app/not-found').default
     const { container } = render(<NotFound />)
     expect(container).toBeInTheDocument()
   })

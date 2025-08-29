@@ -50,7 +50,8 @@ export const GithubStars = ({ variant = 'default', mobileCompact = false }: Star
       <Link
         href="https://github.com/thedaviddias/llms-txt-hub"
         target="_blank"
-        className="!no-underline plausible-event-name=Star+Github inline-flex items-center gap-1 py-1.5 px-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors sm:gap-1.5 sm:px-3 sm:py-1.5 sm:bg-white dark:sm:bg-neutral-900 sm:hover:bg-neutral-100 dark:sm:hover:bg-neutral-800 sm:text-neutral-900 dark:sm:text-neutral-100 sm:rounded-lg sm:border sm:border-neutral-400 dark:sm:border-neutral-700 sm:focus:outline-none sm:focus:ring-2 sm:focus:ring-offset-2 sm:focus:ring-neutral-200 dark:sm:focus:ring-neutral-700"
+        rel="noopener noreferrer"
+        className="!no-underline plausible-event-name=Star+GitHub inline-flex items-center gap-1 py-1.5 px-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors sm:gap-1.5 sm:px-3 sm:py-1.5 sm:bg-white dark:sm:bg-neutral-900 sm:hover:bg-neutral-100 dark:sm:hover:bg-neutral-800 sm:text-neutral-900 dark:sm:text-neutral-100 sm:rounded-lg sm:border sm:border-neutral-400 dark:sm:border-neutral-700 sm:focus:outline-none sm:focus:ring-2 sm:focus:ring-offset-2 sm:focus:ring-neutral-200 dark:sm:focus:ring-neutral-700"
         aria-label="Star on GitHub"
       >
         <SiGithub className="w-4 h-4 hidden sm:block" aria-hidden="true" />
@@ -67,7 +68,8 @@ export const GithubStars = ({ variant = 'default', mobileCompact = false }: Star
       <Link
         href="https://github.com/thedaviddias/llms-txt-hub"
         target="_blank"
-        className="!no-underline plausible-event-name=Star+Github inline-flex items-center gap-2 px-2 py-1 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-medium text-neutral-900 dark:text-neutral-100 rounded-lg border border-neutral-400 dark:border-neutral-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-200 dark:focus:ring-neutral-700"
+        rel="noopener noreferrer"
+        className="!no-underline plausible-event-name=Star+GitHub inline-flex items-center gap-2 px-2 py-1 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-medium text-neutral-900 dark:text-neutral-100 rounded-lg border border-neutral-400 dark:border-neutral-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-200 dark:focus:ring-neutral-700"
         aria-label="Star on GitHub"
       >
         <SiGithub className="w-4 h-4" aria-hidden="true" />

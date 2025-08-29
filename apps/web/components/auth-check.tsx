@@ -63,6 +63,8 @@ export function AuthCheck({ children, requireGitHub = false, fallbackContent }: 
                 <Link
                   href="https://github.com/thedaviddias/llms-txt-hub?tab=readme-ov-file#adding-your-project"
                   className="text-primary hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   submit directly to the GitHub repository
                 </Link>
@@ -126,6 +128,8 @@ export function AuthCheck({ children, requireGitHub = false, fallbackContent }: 
                 <Link
                   href="https://github.com/thedaviddias/llms-txt-hub?tab=readme-ov-file#adding-your-project"
                   className="text-primary hover:underline"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   submit directly to the GitHub repository
                 </Link>

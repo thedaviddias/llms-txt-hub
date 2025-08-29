@@ -3,7 +3,7 @@
  */
 
 import { jest } from '@jest/globals'
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/__tests__/utils/test-utils.helper'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({

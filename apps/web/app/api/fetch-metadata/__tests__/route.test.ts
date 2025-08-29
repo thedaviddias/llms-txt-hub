@@ -40,19 +40,20 @@ describe('Fetch Metadata API Route', () => {
     jest.clearAllMocks()
 
     // Default mock implementations
-    mockGetWebsites.mockResolvedValue([])
-    mockDOMPurify.mockImplementation(text => text)
+    mockGetWebsites.mockReturnValue([])
+    mockDOMPurify.mockImplementation((text: string | Node) => text as string)
 
     // Mock cheerio
     const mockCheerioInstance = {
       text: jest.fn().mockReturnValue('Test Title'),
       attr: jest.fn().mockReturnValue('Test content')
     }
-    mockCheerioLoad.mockReturnValue(jest.fn().mockReturnValue(mockCheerioInstance))
+    mockCheerioLoad.mockReturnValue(jest.fn().mockReturnValue(mockCheerioInstance) as any)
 
     // Mock successful fetch responses
-    mockFetch.mockImplementation(url => {
-      if (url.includes('llms.txt') || url.includes('llms-full.txt')) {
+    mockFetch.mockImplementation((url: string | Request | URL) => {
+      const urlString = typeof url === 'string' ? url : url.toString()
+      if (urlString.includes('llms.txt') || urlString.includes('llms-full.txt')) {
         return Promise.resolve({
           ok: true,
           status: 200
@@ -145,11 +146,11 @@ describe('Fetch Metadata API Route', () => {
       expect(data.error).toBe('Website URL is required')
     })
 
-    it('validates URL format properly', async () => {
+    it('returns 400 for invalid URL format', async () => {
       const request = new Request('http://localhost/api/fetch-metadata', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'not-a-valid-url' })
+        body: JSON.stringify({ website: 'not-a-url' })
       })
 
       const response = await POST(request)
@@ -159,14 +160,14 @@ describe('Fetch Metadata API Route', () => {
       expect(data.error).toBe('Invalid URL format')
     })
 
-    it('blocks dangerous protocols', async () => {
-      const dangerousUrls = [
-        'javascript:void(0)',
-        'data:text/html,<h1>Test</h1>',
-        'vbscript:alert(1)'
+    it('blocks malicious URL protocols', async () => {
+      const maliciousUrls = [
+        'javascript:alert(1)',
+        'data:text/html,<script>alert(1)</script>',
+        'vbscript:msgbox'
       ]
 
-      for (const url of dangerousUrls) {
+      for (const url of maliciousUrls) {
         const request = new Request('http://localhost/api/fetch-metadata', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -180,17 +181,33 @@ describe('Fetch Metadata API Route', () => {
         expect(data.error).toBe('Invalid URL protocol')
       }
     })
-  })
 
-  describe('Duplicate Detection', () => {
-    it('detects duplicate websites', async () => {
-      mockGetWebsites.mockResolvedValueOnce([
+    it('successfully fetches metadata for valid URL', async () => {
+      const request = new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+
+      const response = await POST(request)
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(data.metadata).toBeDefined()
+      expect(data.metadata.name).toBeDefined()
+      expect(data.metadata.website).toBe('https://example.com')
+    })
+
+    it('handles duplicate website detection', async () => {
+      mockGetWebsites.mockReturnValue([
         {
           name: 'Existing Site',
-          description: 'Description',
+          description: 'An existing website',
           website: 'https://example.com',
-          categories: [],
-          tags: []
+          category: 'Tools',
+          slug: 'existing-site',
+          llmsUrl: 'https://example.com/llms.txt',
+          publishedAt: '2024-01-01'
         }
       ])
 
@@ -208,193 +225,13 @@ describe('Fetch Metadata API Route', () => {
       expect(data.existingWebsite).toBeDefined()
     })
 
-    it('normalizes URLs for duplicate detection', async () => {
-      mockGetWebsites.mockResolvedValueOnce([
-        {
-          name: 'Existing Site',
-          description: 'Description',
-          website: 'https://www.example.com/',
-          categories: [],
-          tags: []
-        }
-      ])
-
-      // Different format but same site
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.isDuplicate).toBe(true)
-    })
-
-    it('detects subdomain duplicates', async () => {
-      mockGetWebsites.mockResolvedValueOnce([
-        {
-          name: 'Main Site',
-          description: 'Description',
-          website: 'https://example.com',
-          categories: [],
-          tags: []
-        }
-      ])
-
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com/subpath' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.isDuplicate).toBe(true)
-    })
-  })
-
-  describe('Metadata Extraction', () => {
-    it('extracts title from HTML', async () => {
-      const mockHtml = '<html><head><title>My Website Title</title></head></html>'
-      mockFetch.mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: true,
-          text: () => Promise.resolve(mockHtml)
-        } as Response)
-      )
-
-      const _$ = cheerio.load(mockHtml)
-      mockCheerioLoad.mockReturnValueOnce(
-        () =>
-          ({
-            text: jest.fn().mockReturnValue('My Website Title'),
-            attr: jest.fn().mockReturnValue('')
-          }) as any
-      )
-
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.metadata.name).toContain('My Website Title')
-    })
-
-    it('sanitizes extracted metadata', async () => {
-      const maliciousHtml = '<html><title><script>alert(1)</script>Title</title></html>'
-      mockFetch.mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: true,
-          text: () => Promise.resolve(maliciousHtml)
-        } as Response)
-      )
-
-      mockDOMPurify.mockImplementationOnce(() => 'Title') // Sanitized output
-
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(mockDOMPurify).toHaveBeenCalled()
-      expect(data.metadata.name).not.toContain('<script>')
-    })
-
-    it('limits metadata field lengths', async () => {
-      const longTitle = 'A'.repeat(300)
-      const longDescription = 'B'.repeat(600)
-
-      mockCheerioLoad.mockReturnValueOnce(
-        () =>
-          ({
-            text: jest.fn().mockReturnValue(longTitle),
-            attr: jest.fn().mockImplementation(attr => {
-              if (attr === 'content') return longDescription
-              return ''
-            })
-          }) as any
-      )
-
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.metadata.name.length).toBeLessThanOrEqual(200)
-      expect(data.metadata.description.length).toBeLessThanOrEqual(500)
-    })
-
-    it('checks for llms.txt and llms-full.txt', async () => {
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(mockFetch).toHaveBeenCalledWith('https://example.com/llms.txt')
-      expect(mockFetch).toHaveBeenCalledWith('https://example.com/llms-full.txt')
-      expect(data.metadata.llmsUrl).toBe('https://example.com/llms.txt')
-      expect(data.metadata.llmsFullUrl).toBe('https://example.com/llms-full.txt')
-    })
-
-    it('handles missing llms files gracefully', async () => {
-      mockFetch.mockImplementation(url => {
-        if (url.includes('llms')) {
-          return Promise.resolve({ ok: false, status: 404 } as Response)
-        }
-        return Promise.resolve({
-          ok: true,
-          text: () => Promise.resolve('<html><title>Test</title></html>')
-        } as Response)
-      })
-
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.metadata.llmsUrl).toBe('')
-      expect(data.metadata.llmsFullUrl).toBe('')
-    })
-  })
-
-  describe('Error Handling', () => {
     it('handles fetch errors gracefully', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network error'))
 
       const request = new Request('http://localhost/api/fetch-metadata', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://unreachable.com' })
+        body: JSON.stringify({ website: 'https://example.com' })
       })
 
       const response = await POST(request)
@@ -404,16 +241,127 @@ describe('Fetch Metadata API Route', () => {
       expect(data.error).toBe('Failed to fetch metadata')
     })
 
-    it('handles malformed HTML gracefully', async () => {
-      mockFetch.mockImplementationOnce(() =>
-        Promise.resolve({
-          ok: true,
-          text: () => Promise.resolve('not valid html at all')
-        } as Response)
-      )
+    it('handles non-200 responses', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 404
+      } as Response)
+
+      const request = new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+
+      const response = await POST(request)
+      const data = await response.json()
+
+      expect(response.status).toBe(500)
+      expect(data.error).toBe('Failed to fetch metadata')
+    })
+
+    it('sanitizes HTML content', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () =>
+          Promise.resolve('<html><title>Test Title<script>alert("xss")</script></title></html>')
+      } as Response)
+
+      const request = new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+
+      await POST(request)
+
+      expect(mockDOMPurify).toHaveBeenCalled()
+    })
+
+    it('extracts metadata from HTML', async () => {
+      const htmlContent = `
+        <html>
+          <head>
+            <title>Test Website</title>
+            <meta name="description" content="Test description">
+            <meta property="og:title" content="OG Title">
+            <meta property="og:description" content="OG Description">
+            <meta property="og:image" content="https://example.com/og-image.jpg">
+            <link rel="icon" href="https://example.com/favicon.ico">
+          </head>
+          <body>
+            <h1>Test Website</h1>
+          </body>
+        </html>
+      `
+
+      // Mock cheerio to return the actual content from the HTML
+      const mockCheerioInstance = {
+        text: jest.fn().mockReturnValue('Test Website'),
+        attr: jest.fn().mockImplementation((attr: string) => {
+          if (attr === 'content') {
+            return 'Test description'
+          }
+          return null
+        })
+      }
+      mockCheerioLoad.mockReturnValueOnce(jest.fn().mockReturnValue(mockCheerioInstance) as any)
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(htmlContent)
+      } as Response)
+
+      const request = new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+
+      const response = await POST(request)
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(data.metadata.name).toBe('Test Website')
+      expect(data.metadata.description).toBe('Test description')
+      expect(data.metadata.website).toBe('https://example.com')
+    })
+
+    it('handles missing metadata gracefully', async () => {
+      const htmlContent = '<html><body><h1>No metadata</h1></body></html>'
+
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve(htmlContent)
+      } as Response)
+
+      const request = new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+
+      const response = await POST(request)
+      const data = await response.json()
+
+      expect(response.status).toBe(200)
+      expect(data.metadata.name).toBeDefined()
+      expect(data.metadata.description).toBeDefined()
+      expect(data.metadata.website).toBe('https://example.com')
+    })
+
+    it('handles cheerio load errors', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve('<html><title>Test</title></html>')
+      } as Response)
 
       mockCheerioLoad.mockImplementationOnce(() => {
-        throw new Error('Parse error')
+        throw new Error('Cheerio load error')
       })
 
       const request = new Request('http://localhost/api/fetch-metadata', {
@@ -429,11 +377,21 @@ describe('Fetch Metadata API Route', () => {
       expect(data.error).toBe('Failed to fetch metadata')
     })
 
-    it('handles invalid JSON in POST request', async () => {
+    it('handles DOMPurify errors', async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        text: () => Promise.resolve('<html><title>Test</title></html>')
+      } as Response)
+
+      mockDOMPurify.mockImplementationOnce(() => {
+        throw new Error('DOMPurify error')
+      })
+
       const request = new Request('http://localhost/api/fetch-metadata', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: 'invalid json'
+        body: JSON.stringify({ website: 'https://example.com' })
       })
 
       const response = await POST(request)

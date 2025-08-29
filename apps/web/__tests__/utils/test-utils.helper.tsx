@@ -68,7 +68,63 @@ export function customRender(
   }
 }
 
-// Re-export everything from testing-library-react
-export * from '@testing-library/react'
+// Re-export specific RTL helpers (excluding render to avoid duplicate export)
+export {
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+  within,
+  cleanup,
+  getByRole,
+  getByLabelText,
+  getByPlaceholderText,
+  getByText,
+  getByDisplayValue,
+  getByAltText,
+  getByTitle,
+  getByTestId,
+  queryByRole,
+  queryByLabelText,
+  queryByPlaceholderText,
+  queryByText,
+  queryByDisplayValue,
+  queryByAltText,
+  queryByTitle,
+  queryByTestId,
+  findByRole,
+  findByLabelText,
+  findByPlaceholderText,
+  findByText,
+  findByDisplayValue,
+  findByAltText,
+  findByTitle,
+  findByTestId,
+  getAllByRole,
+  getAllByLabelText,
+  getAllByPlaceholderText,
+  getAllByText,
+  getAllByDisplayValue,
+  getAllByAltText,
+  getAllByTitle,
+  getAllByTestId,
+  queryAllByRole,
+  queryAllByLabelText,
+  queryAllByPlaceholderText,
+  queryAllByText,
+  queryAllByDisplayValue,
+  queryAllByAltText,
+  queryAllByTitle,
+  queryAllByTestId,
+  findAllByRole,
+  findAllByLabelText,
+  findAllByPlaceholderText,
+  findAllByText,
+  findAllByDisplayValue,
+  findAllByAltText,
+  findAllByTitle,
+  findAllByTestId
+} from '@testing-library/react'
+
 export { default as userEvent } from '@testing-library/user-event'
 export { customRender as render }

@@ -53,6 +53,7 @@ export default async function ProjectsPage() {
               href="https://github.com/topics/llms-txt"
               className="underline hover:text-primary"
               target="_blank"
+              rel="noopener noreferrer"
             >
               llms-txt
             </Link>{' '}
@@ -61,6 +62,7 @@ export default async function ProjectsPage() {
               href="https://github.com/topics/llmstxt"
               className="underline hover:text-primary"
               target="_blank"
+              rel="noopener noreferrer"
             >
               llmstxt
             </Link>{' '}
@@ -78,7 +80,12 @@ export default async function ProjectsPage() {
                   <div className="flex items-center gap-3">
                     <Code className="size-6" />
                     <h3 className="text-2xl font-bold">
-                      <Link href={featuredProject.url} className="hover:underline" target="_blank">
+                      <Link
+                        href={featuredProject.url}
+                        className="hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {featuredProject.fullName}
                         <ExternalLink className="inline-block ml-2 h-5 w-5" />
                       </Link>
@@ -92,13 +99,17 @@ export default async function ProjectsPage() {
                 <p className="text-lg text-muted-foreground">{featuredProject.description}</p>
                 <div className="flex items-center gap-2">
                   <Button asChild>
-                    <Link href={featuredProject.url} target="_blank">
+                    <Link href={featuredProject.url} target="_blank" rel="noopener noreferrer">
                       View Project
                       <ExternalLink className="ml-2 size-4" />
                     </Link>
                   </Button>
                   <Button variant="outline" asChild>
-                    <Link href="https://github.com/topics/llms-txt" target="_blank">
+                    <Link
+                      href="https://github.com/topics/llms-txt"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Browse All Projects
                       <ExternalLink className="ml-2 size-4" />
                     </Link>
@@ -128,7 +139,11 @@ export default async function ProjectsPage() {
             </p>
             <div className="flex justify-center gap-4">
               <Button asChild>
-                <Link href="https://github.com/topics/llms-txt" target="_blank">
+                <Link
+                  href="https://github.com/topics/llms-txt"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Browse GitHub Topic
                   <ExternalLink className="ml-2 size-4" />
                 </Link>

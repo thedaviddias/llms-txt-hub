@@ -44,7 +44,13 @@ describe('/api/members/contributions', () => {
   describe('POST /api/members/contributions', () => {
     it('should return contributions for valid usernames', async () => {
       const usernames = ['user1', 'user2', 'user3']
-      const mockContributions = { total: 50 }
+      const mockContributions = {
+        total: 50,
+        pullRequests: 20,
+        issues: 15,
+        commits: 15,
+        contributions: []
+      }
 
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
@@ -72,7 +78,13 @@ describe('/api/members/contributions', () => {
 
     it('should handle users with no contributions', async () => {
       const usernames = ['user-no-contrib']
-      const mockContributions = { total: 0 }
+      const mockContributions = {
+        total: 0,
+        pullRequests: 0,
+        issues: 0,
+        commits: 0,
+        contributions: []
+      }
 
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
@@ -97,7 +109,13 @@ describe('/api/members/contributions', () => {
       const usernames = ['valid-user', 'error-user']
 
       mockGetUserContributions
-        .mockResolvedValueOnce({ total: 10 })
+        .mockResolvedValueOnce({
+          total: 10,
+          pullRequests: 5,
+          issues: 3,
+          commits: 2,
+          contributions: []
+        })
         .mockRejectedValueOnce(new Error('GitHub API error'))
 
       const request = createMockRequest('/api/members/contributions', {
@@ -178,7 +196,13 @@ describe('/api/members/contributions', () => {
 
     it('should filter out invalid usernames', async () => {
       const usernames = ['valid-user', '', null, undefined, 123, 'another-valid']
-      const mockContributions = { total: 5 }
+      const mockContributions = {
+        total: 5,
+        pullRequests: 2,
+        issues: 2,
+        commits: 1,
+        contributions: []
+      }
 
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
@@ -217,7 +241,13 @@ describe('/api/members/contributions', () => {
     it('should process usernames in batches', async () => {
       // Create 25 usernames to test batching (batch size is 10)
       const usernames = Array.from({ length: 25 }, (_, i) => `user${i}`)
-      const mockContributions = { total: 1 }
+      const mockContributions = {
+        total: 1,
+        pullRequests: 0,
+        issues: 1,
+        commits: 0,
+        contributions: []
+      }
 
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
@@ -241,7 +271,13 @@ describe('/api/members/contributions', () => {
       const usernames = ['user1', 'user2']
 
       mockGetUserContributions
-        .mockResolvedValueOnce({ total: 5 })
+        .mockResolvedValueOnce({
+          total: 5,
+          pullRequests: 2,
+          issues: 2,
+          commits: 1,
+          contributions: []
+        })
         .mockRejectedValueOnce(new Error('API rate limit exceeded'))
 
       const request = createMockRequest('/api/members/contributions', {
@@ -266,7 +302,13 @@ describe('/api/members/contributions', () => {
 
     it('should accept usernames with whitespace (not trimmed in API call)', async () => {
       const usernames = ['  user1  ', ' user2 ']
-      const mockContributions = { total: 1 }
+      const mockContributions = {
+        total: 1,
+        pullRequests: 0,
+        issues: 1,
+        commits: 0,
+        contributions: []
+      }
 
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
@@ -290,9 +332,17 @@ describe('/api/members/contributions', () => {
       const usernames = ['user1', 'user2']
 
       // Mock one success and one that throws during Promise resolution
-      mockGetUserContributions.mockResolvedValueOnce({ total: 5 }).mockImplementationOnce(() => {
-        throw new Error('Immediate rejection')
-      })
+      mockGetUserContributions
+        .mockResolvedValueOnce({
+          total: 5,
+          pullRequests: 2,
+          issues: 2,
+          commits: 1,
+          contributions: []
+        })
+        .mockImplementationOnce(() => {
+          throw new Error('Immediate rejection')
+        })
 
       const request = createMockRequest('/api/members/contributions', {
         method: 'POST',
@@ -335,7 +385,13 @@ describe('/api/members/contributions', () => {
     it('should handle large batch processing with delays', async () => {
       // Test with enough users to trigger multiple batches
       const usernames = Array.from({ length: 35 }, (_, i) => `user${i}`)
-      const mockContributions = { total: 1 }
+      const mockContributions = {
+        total: 1,
+        pullRequests: 0,
+        issues: 1,
+        commits: 0,
+        contributions: []
+      }
 
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
@@ -364,7 +420,13 @@ describe('/api/members/contributions', () => {
         ...MALICIOUS_INPUTS.xss.slice(0, 2) // Test a couple XSS attempts
       ]
 
-      const mockContributions = { total: 1 }
+      const mockContributions = {
+        total: 1,
+        pullRequests: 0,
+        issues: 1,
+        commits: 0,
+        contributions: []
+      }
       mockGetUserContributions.mockResolvedValue(mockContributions)
 
       const request = createMockRequest('/api/members/contributions', {

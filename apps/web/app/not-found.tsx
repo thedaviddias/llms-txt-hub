@@ -19,8 +19,10 @@ export default async function NotFound() {
             <Link
               href="https://github.com/thedaviddias/llms-txt-hub/issues/new/choose"
               className="text-foreground"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              report an issue on Github
+              report an issue on GitHub
             </Link>
             .
           </p>

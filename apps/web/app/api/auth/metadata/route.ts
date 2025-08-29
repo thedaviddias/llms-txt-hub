@@ -12,14 +12,13 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { authLevel, canSubmitPR, githubConnected } = body
 
-    const client = await clerkClient()
-
     // Update user's public metadata
+    const client = await clerkClient()
     await client.users.updateUserMetadata(userId, {
       publicMetadata: {
-        authLevel: authLevel || 'email_only',
-        canSubmitPR: canSubmitPR || false,
-        githubConnected: githubConnected || false,
+        authLevel: authLevel ?? 'email_only',
+        canSubmitPR: canSubmitPR ?? false,
+        githubConnected: githubConnected ?? false,
         lastUpdated: new Date().toISOString()
       }
     })

@@ -4,7 +4,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { RenderOptions } from '@testing-library/react'
-import { ThemeProvider } from '@thedaviddias/design-system/theme-provider'
+import { ThemeProvider } from 'next-themes'
 import type { ReactNode } from 'react'
 import { FavoritesProvider } from '@/contexts/favorites-context'
 
@@ -31,11 +31,6 @@ export function createTestQueryClient() {
       mutations: {
         retry: false
       }
-    },
-    logger: {
-      log: () => {},
-      warn: () => {},
-      error: () => {}
     }
   })
 }
@@ -49,9 +44,7 @@ export function createTestQueryClient() {
 export function TestProviders({
   children,
   queryClient,
-  theme = 'light',
-  _user = null,
-  _isAuthenticated = false
+  theme = 'light'
 }: {
   children: ReactNode
   queryClient?: QueryClient

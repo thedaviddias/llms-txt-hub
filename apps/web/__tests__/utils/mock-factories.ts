@@ -8,22 +8,38 @@
  * @param overrides - Optional properties to override default values
  * @returns Mock user object
  */
-export const createMockUser = (overrides: Partial<any> = {}) => ({
-  id: 'test-user-id',
-  email: 'test@example.com',
-  name: 'Test User',
-  user_metadata: {
+export const createMockUser = (overrides: Partial<any> = {}) => {
+  // Extract nested overrides to prevent clobbering
+  const {
+    user_metadata: userMetadataOverrides,
+    publicMetadata: publicMetadataOverrides,
+    ...topLevelOverrides
+  } = overrides
+
+  // Merge nested objects with defaults
+  const mergedUserMetadata = {
     user_name: 'testuser',
     avatar_url: 'https://example.com/avatar.jpg',
-    ...overrides.user_metadata
-  },
-  publicMetadata: {
+    ...userMetadataOverrides
+  }
+
+  const mergedPublicMetadata = {
     isProfilePrivate: false,
-    ...overrides.publicMetadata
-  },
-  createdAt: '2024-01-01T00:00:00Z',
-  ...overrides
-})
+    ...publicMetadataOverrides
+  }
+
+  // Return mock user with properly merged nested objects
+  // Note: We explicitly set the nested objects to prevent top-level overrides from clobbering them
+  return {
+    id: 'test-user-id',
+    email: 'test@example.com',
+    name: 'Test User',
+    user_metadata: mergedUserMetadata,
+    publicMetadata: mergedPublicMetadata,
+    createdAt: '2024-01-01T00:00:00Z',
+    ...topLevelOverrides
+  }
+}
 
 /**
  * Creates a mock project object for testing

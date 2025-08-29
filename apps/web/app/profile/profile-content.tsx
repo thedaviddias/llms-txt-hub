@@ -16,7 +16,7 @@ import {
   User
 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { EditProfileModal } from '@/components/profile/edit-profile-modal'
@@ -26,6 +26,7 @@ import { UserMessageBanner } from '@/components/ui/user-message-banner'
 export default function ProfileContent() {
   const { user, signOut, isLoaded } = useAuth()
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isDeleting, setIsDeleting] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -42,12 +43,13 @@ export default function ProfileContent() {
         toast.info(message)
       }
 
-      // Clean up URL
-      const newUrl = new URL(window.location.href)
-      newUrl.searchParams.delete('message')
-      window.history.replaceState({}, '', newUrl.toString())
+      // Clean up URL using Next.js router
+      const newSearchParams = new URLSearchParams(searchParams)
+      newSearchParams.delete('message')
+      const newUrl = pathname + (newSearchParams.toString() ? `?${newSearchParams.toString()}` : '')
+      router.replace(newUrl, { scroll: false })
     }
-  }, [searchParams])
+  }, [searchParams, pathname, router])
 
   // Redirect if not authenticated (but only after auth has loaded)
   useEffect(() => {
@@ -96,8 +98,8 @@ export default function ProfileContent() {
     )
   }
 
-  const hasGitHubAuth = user.user_metadata?.github_username || user.user_metadata?.user_name
-  const displayName = hasGitHubAuth || user.email?.split('@')[0] || 'User'
+  const hasGitHubAuth = Boolean(user.publicMetadata?.github_username)
+  const displayName = user.publicMetadata?.user_name || user.email?.split('@')[0] || 'User'
   const accountType = hasGitHubAuth ? 'GitHub' : 'Email'
   const isProfilePrivate = user.publicMetadata?.isProfilePrivate === true
 

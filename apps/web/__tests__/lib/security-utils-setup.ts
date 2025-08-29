@@ -4,22 +4,24 @@
  * Mock implementations and common utilities for testing security functions
  */
 
-// Mock Request for Node environment
-global.Request = jest.fn().mockImplementation((url, init) => {
-  const headers = new Map()
-  if (init?.headers) {
-    Object.entries(init.headers).forEach(([key, value]) => {
-      headers.set(key.toLowerCase(), value as string)
-    })
-  }
-  return {
-    url,
-    headers: {
-      get: (key: string) => headers.get(key.toLowerCase()) || null,
-      set: (key: string, value: string) => headers.set(key.toLowerCase(), value)
+// Mock Request for Node environment (only if not already available)
+if (typeof global.Request === 'undefined') {
+  global.Request = jest.fn().mockImplementation((url, init) => {
+    const headers = new Map()
+    if (init?.headers) {
+      Object.entries(init.headers).forEach(([key, value]) => {
+        headers.set(key.toLowerCase(), value as string)
+      })
     }
-  }
-}) as any
+    return {
+      url,
+      headers: {
+        get: (key: string) => headers.get(key.toLowerCase()) || null,
+        set: (key: string, value: string) => headers.set(key.toLowerCase(), value)
+      }
+    }
+  }) as any
+}
 
 // Mock Headers
 global.Headers = jest.fn().mockImplementation(init => {

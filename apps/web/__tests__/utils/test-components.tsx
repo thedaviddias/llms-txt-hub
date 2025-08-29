@@ -16,11 +16,7 @@ import {
 } from './form-handlers'
 
 // Get mocks from global scope (set up in individual tests)
-declare const global: {
-  mockCheckUrl: jest.Mock
-  mockFetchMetadata: jest.Mock
-  mockSubmitProject: jest.Mock
-}
+// Note: Mocks are available on globalThis (mockCheckUrl, mockFetchMetadata, mockSubmitProject)
 
 /**
  * Simplified submit form component for testing project submission flow
@@ -67,7 +63,7 @@ export const TestSubmitProjectForm = () => {
 
     try {
       setIsLoading(true)
-      await global.mockSubmitProject(formData)
+      await (globalThis as any).mockSubmitProject(formData)
       setIsSuccess(true)
     } catch (_error) {
       setErrors(prev => ({ ...prev, submit: 'Failed to submit project' }))
@@ -94,7 +90,7 @@ export const TestSubmitProjectForm = () => {
 
     try {
       setIsLoading(true)
-      global
+      ;(globalThis as any)
         .mockSubmitProject(formData)
         .then(() => setIsSuccess(true))
         .catch(() => setErrors(prev => ({ ...prev, submit: 'Failed to submit project' })))
@@ -230,8 +226,7 @@ export const TestSubmitProjectForm = () => {
                   setFormData({ ...formData, tags: newTags })
                   if (newTags.length > 0) {
                     setErrors(prev => {
-                      const newErrors = { ...prev }
-                      newErrors.tags = undefined
+                      const { tags, ...newErrors } = prev
                       return newErrors
                     })
                   }
@@ -253,8 +248,7 @@ export const TestSubmitProjectForm = () => {
                   setFormData({ ...formData, tags: newTags })
                   if (newTags.length > 0) {
                     setErrors(prev => {
-                      const newErrors = { ...prev }
-                      newErrors.tags = undefined
+                      const { tags, ...newErrors } = prev
                       return newErrors
                     })
                   }
@@ -276,8 +270,7 @@ export const TestSubmitProjectForm = () => {
                   setFormData({ ...formData, tags: newTags })
                   if (newTags.length > 0) {
                     setErrors(prev => {
-                      const newErrors = { ...prev }
-                      newErrors.tags = undefined
+                      const { tags, ...newErrors } = prev
                       return newErrors
                     })
                   }

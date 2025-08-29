@@ -223,7 +223,7 @@ export function useApiLoadMore<T>({
     if (items.length === 0 && !isLoading && !error) {
       fetchData(initialPage, false, searchQuery, filter)
     }
-  }, []) // Only run on mount
+  }, [fetchData, initialPage, searchQuery, filter, items.length, isLoading, error])
 
   return {
     items,

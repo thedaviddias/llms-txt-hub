@@ -53,10 +53,9 @@ export default defineConfig({
     // Mobile testing (reduced for speed)
     {
       name: 'mobile',
+      testMatch: ['**/pages.spec.ts', '**/interactions.spec.ts'],
       use: {
-        ...devices['Pixel 5'],
-        // Only run on critical tests to save time
-        testMatch: ['**/pages.spec.ts', '**/interactions.spec.ts']
+        ...devices['Pixel 5']
       }
     }
 
@@ -83,8 +82,6 @@ export default defineConfig({
       SENTRY_ORG: 'dummy_org',
       SENTRY_PROJECT: 'dummy_project',
       LOG_LEVEL: 'error',
-      // Disable analytics for testing
-      NODE_ENV: 'test',
       // Faster builds
       NEXT_TELEMETRY_DISABLED: '1'
     }

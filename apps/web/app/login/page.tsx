@@ -11,6 +11,56 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Card } from '@/components/ui/card'
 
+/**
+ * Sanitizes and validates a redirect URL to prevent open redirect vulnerabilities
+ *
+ * @param redirectUrl - The redirect URL from query parameters
+ * @returns A safe relative path or '/' as fallback
+ */
+function sanitizeRedirectUrl(redirectUrl: string | null): string {
+  if (!redirectUrl) return '/'
+
+  // Remove leading/trailing whitespace
+  const trimmed = redirectUrl.trim()
+  if (!trimmed) return '/'
+
+  // Reject URLs with protocols (http:, https:, etc.)
+  if (/^[a-zA-Z]+:/.test(trimmed)) {
+    logger.warn('Redirect URL contains protocol, rejecting:', { data: { url: trimmed } })
+    return '/'
+  }
+
+  // Reject URLs starting with // (protocol-relative URLs)
+  if (trimmed.startsWith('//')) {
+    logger.warn('Redirect URL is protocol-relative, rejecting:', { data: { url: trimmed } })
+    return '/'
+  }
+
+  // Only allow relative paths starting with /
+  if (!trimmed.startsWith('/')) {
+    logger.warn('Redirect URL is not a relative path, rejecting:', { data: { url: trimmed } })
+    return '/'
+  }
+
+  // Normalize the path: resolve dot segments and remove duplicate slashes
+  try {
+    // Use URL constructor to normalize the path (relative to current origin)
+    const normalized = new URL(trimmed, 'http://localhost').pathname
+
+    // Ensure it still starts with / after normalization
+    if (!normalized.startsWith('/')) {
+      return '/'
+    }
+
+    return normalized
+  } catch (error) {
+    logger.warn('Failed to normalize redirect URL, using fallback:', {
+      data: { url: trimmed, error }
+    })
+    return '/'
+  }
+}
+
 export default function LoginPage() {
   const { user } = useUser()
   const { signIn, isLoaded: signInLoaded, setActive: setSignInActive } = useSignIn()
@@ -26,8 +76,8 @@ export default function LoginPage() {
   const [authMode, setAuthMode] = useState<'signin' | 'signup' | null>(null)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
-  // Get redirect URL from query params
-  const redirectTo = searchParams.get('redirect') || '/'
+  // Get and sanitize redirect URL from query params
+  const redirectTo = sanitizeRedirectUrl(searchParams.get('redirect'))
 
   // If user is already signed in, redirect
   useEffect(() => {
@@ -494,6 +544,8 @@ export default function LoginPage() {
           <Link
             href="https://github.com/thedaviddias/llms-txt-hub"
             className="text-muted-foreground hover:text-primary transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Submit via GitHub
           </Link>

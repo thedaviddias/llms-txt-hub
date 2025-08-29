@@ -17,6 +17,13 @@ export function ContributionBadge({ username }: ContributionBadgeProps) {
 
   // Use Intersection Observer to lazy load contribution data
   useEffect(() => {
+    // Check if IntersectionObserver is available (not in SSR/jsdom)
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
+      // Fallback: set visibility immediately if IntersectionObserver is not available
+      setIsVisible(true)
+      return
+    }
+
     const observer = new IntersectionObserver(
       entries => {
         const entry = entries[0]
@@ -36,9 +43,8 @@ export function ContributionBadge({ username }: ContributionBadgeProps) {
     }
 
     return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current)
-      }
+      // Clean up observer to prevent memory leaks
+      observer.disconnect()
     }
   }, [isLoading, isContributor])
 

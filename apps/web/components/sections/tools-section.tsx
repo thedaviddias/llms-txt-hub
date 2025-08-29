@@ -26,6 +26,7 @@ export function ToolsSection({ layout = 'default', showImages = true }: ToolsSec
           <Link
             href="https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej"
             target="_blank"
+            rel="noopener noreferrer"
             className="group"
           >
             <Card className="h-full transition-all hover:border-primary hover:bg-muted/50">
@@ -57,6 +58,7 @@ export function ToolsSection({ layout = 'default', showImages = true }: ToolsSec
           <Link
             href="https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt"
             target="_blank"
+            rel="noopener noreferrer"
             className="group"
           >
             <Card className="h-full transition-all hover:border-primary hover:bg-muted/50">
@@ -88,6 +90,7 @@ export function ToolsSection({ layout = 'default', showImages = true }: ToolsSec
           <Link
             href="https://github.com/thedaviddias/mcp-llms-txt-explorer"
             target="_blank"
+            rel="noopener noreferrer"
             className="group"
           >
             <Card className="h-full transition-all hover:border-primary hover:bg-muted/50">
@@ -119,6 +122,7 @@ export function ToolsSection({ layout = 'default', showImages = true }: ToolsSec
           <Link
             href="https://www.raycast.com/thedaviddias/llms-txt"
             target="_blank"
+            rel="noopener noreferrer"
             className="group"
           >
             <Card className="h-full transition-all hover:border-primary hover:bg-muted/50">

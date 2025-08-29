@@ -1,12 +1,33 @@
 import { canUserSubmitViaGitHub, getUserAuthInfo, isEmailOnlyUser } from '@/lib/auth-utils'
+import type { User } from '@clerk/nextjs/server'
 
-// Mock the Clerk user object structure
-interface MockClerkUser {
+// Create mock types that include all required properties
+type MockEmailAddress = {
   id: string
-  emailAddresses?: Array<{ emailAddress: string }>
-  externalAccounts?: Array<{ provider: string; username?: string }>
-  username?: string | null
-  publicMetadata?: Record<string, any>
+  emailAddress: string
+  verification: { status: string }
+  linkedTo: any[]
+}
+
+type MockExternalAccount = {
+  id: string
+  identificationId: string
+  externalId: string
+  approvedScopes: string
+  provider: string
+  emailAddress: string
+  firstName: string
+  lastName: string
+  imageUrl: string
+  username: string
+  publicMetadata: Record<string, any>
+  label: string
+  verification: { status: string }
+}
+
+type MockUser = Pick<User, 'id' | 'username' | 'publicMetadata'> & {
+  emailAddresses: MockEmailAddress[]
+  externalAccounts: MockExternalAccount[]
 }
 
 describe('auth-utils', () => {
@@ -23,15 +44,38 @@ describe('auth-utils', () => {
     })
 
     it('should return correct auth data for GitHub user', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_123',
-        emailAddresses: [{ emailAddress: 'test@example.com' }],
-        externalAccounts: [{ provider: 'oauth_github' }],
+        emailAddresses: [
+          {
+            id: 'email_1',
+            emailAddress: 'test@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
+        externalAccounts: [
+          {
+            id: 'ext_1',
+            identificationId: 'ident_1',
+            externalId: 'ext_id_1',
+            approvedScopes: 'read:user',
+            provider: 'oauth_github',
+            emailAddress: 'test@example.com',
+            firstName: 'Test',
+            lastName: 'User',
+            imageUrl: 'https://example.com/avatar.jpg',
+            username: 'testuser',
+            publicMetadata: {},
+            label: 'GitHub',
+            verification: { status: 'verified' }
+          }
+        ],
         username: 'testuser',
         publicMetadata: {}
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'github_connected',
@@ -43,15 +87,22 @@ describe('auth-utils', () => {
     })
 
     it('should return correct auth data for email-only user', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_456',
-        emailAddresses: [{ emailAddress: 'email@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_2',
+            emailAddress: 'email@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
         username: null,
         publicMetadata: {}
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'email_only',
@@ -63,15 +114,22 @@ describe('auth-utils', () => {
     })
 
     it('should handle user with explicit canSubmitPR metadata', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_789',
-        emailAddresses: [{ emailAddress: 'vip@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_3',
+            emailAddress: 'vip@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
         username: null,
         publicMetadata: { canSubmitPR: true, authLevel: 'github_full' }
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'github_full',
@@ -83,15 +141,22 @@ describe('auth-utils', () => {
     })
 
     it('should default to email_only for invalid auth level', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_invalid',
-        emailAddresses: [{ emailAddress: 'test@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_4',
+            emailAddress: 'test@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
         username: null,
         publicMetadata: { authLevel: 'invalid_level' }
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'email_only',
@@ -103,15 +168,31 @@ describe('auth-utils', () => {
     })
 
     it('should handle user without email addresses', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_no_email',
         emailAddresses: [],
-        externalAccounts: [{ provider: 'oauth_github' }],
+        externalAccounts: [
+          {
+            id: 'ext_2',
+            identificationId: 'ident_2',
+            externalId: 'ext_id_2',
+            approvedScopes: 'read:user',
+            provider: 'oauth_github',
+            emailAddress: 'noemail@example.com',
+            firstName: 'No',
+            lastName: 'Email',
+            imageUrl: 'https://example.com/avatar2.jpg',
+            username: 'noemailtuser',
+            publicMetadata: {},
+            label: 'GitHub',
+            verification: { status: 'verified' }
+          }
+        ],
         username: 'noemailtuser',
         publicMetadata: {}
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'github_connected',
@@ -123,15 +204,38 @@ describe('auth-utils', () => {
     })
 
     it('should handle user with non-GitHub OAuth', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_oauth',
-        emailAddresses: [{ emailAddress: 'oauth@example.com' }],
-        externalAccounts: [{ provider: 'google' }],
+        emailAddresses: [
+          {
+            id: 'email_5',
+            emailAddress: 'oauth@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
+        externalAccounts: [
+          {
+            id: 'ext_3',
+            identificationId: 'ident_3',
+            externalId: 'ext_id_3',
+            approvedScopes: 'email profile',
+            provider: 'google',
+            emailAddress: 'oauth@example.com',
+            firstName: 'OAuth',
+            lastName: 'User',
+            imageUrl: 'https://example.com/avatar3.jpg',
+            username: 'oauthuser',
+            publicMetadata: {},
+            label: 'Google',
+            verification: { status: 'verified' }
+          }
+        ],
         username: null,
         publicMetadata: {}
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'email_only',
@@ -143,15 +247,22 @@ describe('auth-utils', () => {
     })
 
     it('should handle empty publicMetadata', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_empty_meta',
-        emailAddresses: [{ emailAddress: 'empty@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_6',
+            emailAddress: 'empty@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
         username: null,
         publicMetadata: {}
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'email_only',
@@ -163,14 +274,22 @@ describe('auth-utils', () => {
     })
 
     it('should handle missing publicMetadata', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_no_meta',
-        emailAddresses: [{ emailAddress: 'nometa@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_7',
+            emailAddress: 'nometa@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
-        username: null
+        username: null,
+        publicMetadata: {}
       }
 
-      const result = getUserAuthInfo(mockUser)
+      const result = getUserAuthInfo(mockUser as User)
 
       expect(result).toEqual({
         authLevel: 'email_only',
@@ -184,28 +303,58 @@ describe('auth-utils', () => {
 
   describe('canUserSubmitViaGitHub', () => {
     it('should return true for GitHub user with permissions', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_123',
-        emailAddresses: [{ emailAddress: 'test@example.com' }],
-        externalAccounts: [{ provider: 'oauth_github' }],
+        emailAddresses: [
+          {
+            id: 'email_8',
+            emailAddress: 'test@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
+        externalAccounts: [
+          {
+            id: 'ext_4',
+            identificationId: 'ident_4',
+            externalId: 'ext_id_4',
+            approvedScopes: 'read:user',
+            provider: 'oauth_github',
+            emailAddress: 'test@example.com',
+            firstName: 'Test',
+            lastName: 'User',
+            imageUrl: 'https://example.com/avatar4.jpg',
+            username: 'testuser',
+            publicMetadata: {},
+            label: 'GitHub',
+            verification: { status: 'verified' }
+          }
+        ],
         username: 'testuser',
         publicMetadata: {}
       }
 
-      const result = canUserSubmitViaGitHub(mockUser)
+      const result = canUserSubmitViaGitHub(mockUser as User)
       expect(result).toBe(true)
     })
 
     it('should return false for email-only user', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_456',
-        emailAddresses: [{ emailAddress: 'email@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_9',
+            emailAddress: 'email@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
         username: null,
         publicMetadata: {}
       }
 
-      const result = canUserSubmitViaGitHub(mockUser)
+      const result = canUserSubmitViaGitHub(mockUser as User)
       expect(result).toBe(false)
     })
 
@@ -217,28 +366,58 @@ describe('auth-utils', () => {
 
   describe('isEmailOnlyUser', () => {
     it('should return true for email-only user', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_456',
-        emailAddresses: [{ emailAddress: 'email@example.com' }],
+        emailAddresses: [
+          {
+            id: 'email_10',
+            emailAddress: 'email@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
         externalAccounts: [],
         username: null,
         publicMetadata: {}
       }
 
-      const result = isEmailOnlyUser(mockUser)
+      const result = isEmailOnlyUser(mockUser as User)
       expect(result).toBe(true)
     })
 
     it('should return false for GitHub user', () => {
-      const mockUser: MockClerkUser = {
+      const mockUser: MockUser = {
         id: 'user_123',
-        emailAddresses: [{ emailAddress: 'test@example.com' }],
-        externalAccounts: [{ provider: 'oauth_github' }],
+        emailAddresses: [
+          {
+            id: 'email_11',
+            emailAddress: 'test@example.com',
+            verification: { status: 'verified' },
+            linkedTo: []
+          }
+        ],
+        externalAccounts: [
+          {
+            id: 'ext_5',
+            identificationId: 'ident_5',
+            externalId: 'ext_id_5',
+            approvedScopes: 'read:user',
+            provider: 'oauth_github',
+            emailAddress: 'test@example.com',
+            firstName: 'Test',
+            lastName: 'User',
+            imageUrl: 'https://example.com/avatar5.jpg',
+            username: 'testuser',
+            publicMetadata: {},
+            label: 'GitHub',
+            verification: { status: 'verified' }
+          }
+        ],
         username: 'testuser',
         publicMetadata: {}
       }
 
-      const result = isEmailOnlyUser(mockUser)
+      const result = isEmailOnlyUser(mockUser as User)
       expect(result).toBe(false)
     })
 
