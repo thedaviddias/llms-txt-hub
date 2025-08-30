@@ -11,16 +11,21 @@ const clerk = createClerkClient({
 // Simple in-memory rate limiting for username checks
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 
-function checkRateLimit(userId: string): { allowed: boolean; resetTime?: number } {
-  const now = Date.now()
-  const windowMs = 60 * 1000 // 1 minute window
-  const maxRequests = 20 // Max 20 username checks per minute per user
+interface CheckRateLimitInput {
+  identifier: string
+  maxRequests?: number
+  windowMs?: number
+}
 
-  const userLimit = rateLimitMap.get(userId)
+function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTime?: number } {
+  const { identifier, maxRequests = 20, windowMs = 60 * 1000 } = input
+  const now = Date.now()
+
+  const userLimit = rateLimitMap.get(identifier)
 
   if (!userLimit || now > userLimit.resetTime) {
     // Reset or initialize
-    rateLimitMap.set(userId, { count: 1, resetTime: now + windowMs })
+    rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs })
     return { allowed: true }
   }
 
@@ -42,7 +47,7 @@ export async function POST(request: Request) {
     }
 
     // Check rate limit
-    const rateLimit = checkRateLimit(session.user.id)
+    const rateLimit = checkRateLimit({ identifier: session.user.id })
     if (!rateLimit.allowed) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again later.' },
