@@ -1,8 +1,9 @@
 'use client'
 
-import { StatCard } from '@/components/stats/stat-card'
+import { logger } from '@thedaviddias/logging'
 import { Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { StatCard } from '@/components/stats/stat-card'
 
 /**
  * A client component that displays GitHub stars count in a stat card
@@ -27,7 +28,7 @@ export function GitHubStarsCard() {
       })
       .then(data => setStars(data.stargazers_count))
       .catch(error => {
-        console.error('Error fetching GitHub stars:', error)
+        logger.error('Error fetching GitHub stars:', { data: error, tags: { type: 'component' } })
         setStars(0)
       })
   }, [])

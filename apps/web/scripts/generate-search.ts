@@ -51,7 +51,7 @@ async function generateSearchIndex() {
   }
 
   fs.writeFileSync(searchIndexPath, JSON.stringify(entries))
-  console.log(`Search index generated at ${searchIndexPath}`)
+  // Search index generated successfully
 }
 
 generateSearchIndex().catch(console.error)

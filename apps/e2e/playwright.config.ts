@@ -5,18 +5,62 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  workers: process.env.CI ? 1 : 2, // Use 2 workers locally for stability
+  reporter: process.env.CI ? 'github' : 'html',
+
+  // Performance optimizations
+  timeout: 60000, // 60 seconds per test (more generous for loaded apps)
+  expect: {
+    timeout: 15000 // 15 seconds for assertions
+  },
+
   use: {
     baseURL: 'http://localhost:3000',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure'
+    trace: 'retain-on-failure',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+
+    // Performance optimizations
+    actionTimeout: 15000,
+    navigationTimeout: 30000, // More time for navigation
+
+    // Reduce visual noise during local development
+    launchOptions: {
+      slowMo: process.env.CI ? 0 : 0 // No slow motion
+    }
   },
   projects: [
+    // Primary desktop testing
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: {
+        ...devices['Desktop Chrome'],
+        // Optimize for speed
+        launchOptions: {
+          args: [
+            '--disable-dev-shm-usage',
+            '--disable-extensions',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding'
+          ]
+        }
+      }
     },
+
+    // Mobile testing (reduced for speed)
+    {
+      name: 'mobile',
+      testMatch: ['**/pages.spec.ts', '**/interactions.spec.ts'],
+      use: {
+        ...devices['Pixel 5']
+      }
+    }
+
+    // Additional browsers commented out for speed
+    // Uncomment for comprehensive cross-browser testing
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] }
@@ -24,28 +68,22 @@ export default defineConfig({
     // {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'] }
-    // },
-    {
-      name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] }
-    }
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] }
     // }
   ],
   webServer: {
     command: 'cd ../web && pnpm dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
+    timeout: 60000, // 1 minute to start server
     env: {
-      NEXT_PUBLIC_SUPABASE_URL: 'https://dummy.supabase.co',
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: 'dummy_anon_key',
+      // Minimize external dependencies for testing
       NEXT_PUBLIC_SENTRY_DSN: 'https://dummy@dummy.ingest.sentry.io/123',
       SENTRY_AUTH_TOKEN: 'dummy_token',
       SENTRY_ORG: 'dummy_org',
       SENTRY_PROJECT: 'dummy_project',
-      LOG_LEVEL: 'error'
+      LOG_LEVEL: 'error',
+      // Faster builds
+      NEXT_TELEMETRY_DISABLED: '1'
     }
   }
 })

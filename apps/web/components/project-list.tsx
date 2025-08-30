@@ -1,8 +1,8 @@
-import { LLMButton } from '@/components/buttons/llm-button'
-import { getRoute } from '@/lib/routes'
 import { Badge } from '@thedaviddias/design-system/badge'
-import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import Link from 'next/link'
+import { LLMButton } from '@/components/buttons/llm-button'
+import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
+import { getRoute } from '@/lib/routes'
 
 interface ProjectListProps {
   items: Array<{
@@ -17,6 +17,11 @@ interface ProjectListProps {
   }>
 }
 
+/**
+ * Displays a list of projects with metadata and action buttons
+ * @param props - The component props
+ * @returns React component that renders project cards
+ */
 export function ProjectList({ items = [] }: ProjectListProps) {
   if (!items?.length) {
     return null
@@ -32,11 +37,10 @@ export function ProjectList({ items = [] }: ProjectListProps) {
             className="relative border rounded-lg p-4 hover:bg-muted/50 transition-colors group relative"
           >
             <div className="flex items-start gap-4">
-              <img
-                src={getFaviconUrl(item.website) || '/placeholder.svg'}
-                alt={`${item.name} favicon`}
-                width={32}
-                height={32}
+              <FaviconWithFallback
+                website={item.website}
+                name={item.name}
+                size={32}
                 className="rounded-sm"
               />
               <div className="grow">

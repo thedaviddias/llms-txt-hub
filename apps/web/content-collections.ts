@@ -29,8 +29,8 @@ const websites = defineCollection({
     category: z.string(),
     publishedAt: z.string(),
     isUnofficial: z.boolean().optional().default(false),
-    contentType: z.enum(['tool', 'platform', 'personal', 'library']).optional().default('tool'),
-    priority: z.enum(['high', 'medium', 'low']).optional().default('medium')
+    priority: z.enum(['high', 'medium', 'low']).optional().default('medium'),
+    featured: z.boolean().optional().default(false)
   }),
   transform: document => ({
     ...document,
@@ -46,6 +46,7 @@ const guides = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.string(),
+    image: z.string().optional(),
     authors: z.array(
       z.object({
         name: z.string(),

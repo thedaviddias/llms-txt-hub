@@ -1,4 +1,5 @@
 import { Octokit } from '@octokit/rest'
+import { logger } from '@thedaviddias/logging'
 
 const octokit = process.env.GITHUB_TOKEN
   ? new Octokit({
@@ -15,9 +16,14 @@ export interface GitHubProject {
   lastUpdated: string
 }
 
+/**
+ * Fetches GitHub repositories matching a specific topic tag
+ * @param tag - The GitHub topic to search for
+ * @returns Promise resolving to array of GitHubProject objects
+ */
 export async function fetchGitHubProjects(tag: string): Promise<GitHubProject[]> {
   if (!process.env.GITHUB_TOKEN) {
-    console.warn('GITHUB_TOKEN not set - GitHub API requests will be rate-limited')
+    logger.warn('GITHUB_TOKEN not set - GitHub API requests will be rate-limited')
   }
 
   try {
@@ -42,7 +48,7 @@ export async function fetchGitHubProjects(tag: string): Promise<GitHubProject[]>
         lastUpdated: item.updated_at
       }))
   } catch (error) {
-    console.error('Error fetching GitHub projects:', error)
+    logger.error('Error fetching GitHub projects:', { data: error, tags: { type: 'library' } })
     return []
   }
 }

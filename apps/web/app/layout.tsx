@@ -1,12 +1,17 @@
+import { ClerkProvider } from '@clerk/nextjs'
+import { VercelToolbar } from '@vercel/toolbar/next'
 import type { Metadata } from 'next'
 import type React from 'react'
 import '../../../packages/design-system/styles/globals.css'
-import { Footer } from '@/components/layout/footer'
-import { Header } from '@/components/layout/header'
 import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 import { SentryUserProvider } from '@thedaviddias/observability/providers'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import { AnalyticsTracker } from '@/components/analytics-tracker'
+import { Footer } from '@/components/layout/footer'
+import { Header } from '@/components/layout/header'
+import { BackToTop } from '@/components/ui/back-to-top'
+import { FavoritesProvider } from '@/contexts/favorites-context'
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
@@ -20,18 +25,25 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={fonts}>
-        <DesignSystemProvider plausibleDomain="llmstxthub.com">
-          <SentryUserProvider>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-          </SentryUserProvider>
-        </DesignSystemProvider>
-      </body>
-    </html>
+    <ClerkProvider signInUrl="/login" signUpUrl="/login" signInFallbackRedirectUrl="/">
+      <html lang="en" suppressHydrationWarning>
+        <body className={fonts}>
+          <DesignSystemProvider plausibleDomain="llmstxthub.com">
+            <SentryUserProvider>
+              <FavoritesProvider>
+                <AnalyticsTracker />
+                <div className="flex min-h-screen flex-col">
+                  <Header />
+                  <main className="flex flex-1 flex-col">{children}</main>
+                  <Footer />
+                </div>
+                <BackToTop />
+                <VercelToolbar />
+              </FavoritesProvider>
+            </SentryUserProvider>
+          </DesignSystemProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

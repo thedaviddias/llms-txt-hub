@@ -1,9 +1,9 @@
 'use client'
 
-import type React from 'react'
-
 import { Button } from '@thedaviddias/design-system/button'
-import Link from 'next/link'
+import type React from 'react'
+import { useState } from 'react'
+import { NewsletterModal } from '@/components/newsletter-modal'
 
 /**
  * Newsletter subscription form component
@@ -11,9 +11,17 @@ import Link from 'next/link'
  * @returns React component that renders a newsletter subscription form
  */
 export function NewsletterForm() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
-    <Button asChild>
-      <Link href="https://thedaviddias.substack.com/">Subscribe</Link>
-    </Button>
+    <>
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        className="plausible-event-name=Newsletter+Click"
+      >
+        Subscribe
+      </Button>
+      <NewsletterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   )
 }

@@ -13,7 +13,10 @@ export function FallbackProvider({ children }: PropsWithChildren) {
         signIn: async () => {},
         signOut: async () => {},
         getSession: async () => ({ user: null, isSignedIn: false }),
-        getUser: async () => null
+        getUser: async () => null,
+        reloadUser: async () => {
+          // No-op for fallback provider
+        }
       }}
     >
       {children}

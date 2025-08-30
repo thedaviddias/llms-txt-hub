@@ -4,23 +4,45 @@ import * as Sentry from '@sentry/nextjs'
 import { UpstashCache } from '@thedaviddias/caching/upstash'
 import { createRateLimiter, slidingWindow } from '@thedaviddias/rate-limiting'
 import { NextResponse } from 'next/server'
-import { resolveFromRoot } from '@/lib/utils'
+
+// Inline server-only function to avoid import issues
+function resolveFromRoot(...paths: string[]): string {
+  return path.resolve(process.cwd(), ...paths)
+}
 
 const CACHE_TTL = 3600 // 1 hour in seconds
 
-// Initialize file content cache with namespace
-const fileCache = new UpstashCache('file_content')
+// Lazy initialization functions
+let fileCache: UpstashCache | null = null
+let llmsRateLimiter: ReturnType<typeof createRateLimiter> | null = null
+let llmsFullRateLimiter: ReturnType<typeof createRateLimiter> | null = null
 
-// Create rate limiters with different limits for each file type
-const llmsRateLimiter = createRateLimiter({
-  prefix: 'llms_txt',
-  limiter: slidingWindow(20, '300 s') // 20 requests per 5 minutes
-})
+const getFileCache = (): UpstashCache => {
+  if (!fileCache) {
+    fileCache = new UpstashCache('file_content')
+  }
+  return fileCache
+}
 
-const llmsFullRateLimiter = createRateLimiter({
-  prefix: 'llms_full_txt',
-  limiter: slidingWindow(10, '300 s') // 10 requests per 5 minutes
-})
+const getLlmsRateLimiter = () => {
+  if (!llmsRateLimiter) {
+    llmsRateLimiter = createRateLimiter({
+      prefix: 'llms_txt',
+      limiter: slidingWindow(20, '300 s') // 20 requests per 5 minutes
+    })
+  }
+  return llmsRateLimiter
+}
+
+const getLlmsFullRateLimiter = () => {
+  if (!llmsFullRateLimiter) {
+    llmsFullRateLimiter = createRateLimiter({
+      prefix: 'llms_full_txt',
+      limiter: slidingWindow(10, '300 s') // 10 requests per 5 minutes
+    })
+  }
+  return llmsFullRateLimiter
+}
 
 export async function GET(
   request: Request,
@@ -45,7 +67,7 @@ export async function GET(
     }
 
     // Apply rate limiting based on file type
-    const rateLimiter = file === 'llms.txt' ? llmsRateLimiter : llmsFullRateLimiter
+    const rateLimiter = file === 'llms.txt' ? getLlmsRateLimiter() : getLlmsFullRateLimiter()
     const { success, limit, reset, remaining } = await rateLimiter.limit(ip)
 
     if (!success) {
@@ -76,6 +98,7 @@ export async function GET(
     let isCacheHit = false
 
     try {
+      const fileCache = getFileCache()
       content = await fileCache.get<string>(cacheKey)
       isCacheHit = !!content
     } catch (error) {
@@ -128,6 +151,7 @@ export async function GET(
 
       // Store in cache
       try {
+        const fileCache = getFileCache()
         await fileCache.set(cacheKey, content, { ttl: CACHE_TTL })
       } catch (error) {
         // Log cache error but continue serving content

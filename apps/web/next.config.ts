@@ -18,7 +18,6 @@ export const INTERNAL_PACKAGES = [
   '@thedaviddias/config-next',
   '@thedaviddias/config-typescript',
   '@thedaviddias/logging',
-  '@thedaviddias/supabase',
   '@thedaviddias/utils',
   '@thedaviddias/content'
 ]
@@ -30,12 +29,22 @@ let nextConfig: NextConfig = {
 
   pageExtensions: ['mdx', 'ts', 'tsx'],
 
+  // Configure Turbopack to support MDX and other extensions
+  turbopack: {
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json']
+  },
+
   images: {
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'www.google.com',
         pathname: '/s2/favicons/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 't0.gstatic.com',
+        pathname: '/faviconV2/**'
       },
       {
         protocol: 'https',

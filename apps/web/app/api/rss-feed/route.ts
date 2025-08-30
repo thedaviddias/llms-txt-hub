@@ -1,3 +1,4 @@
+import { logger } from '@thedaviddias/logging'
 import { XMLParser } from 'fast-xml-parser'
 import { NextResponse } from 'next/server'
 
@@ -50,7 +51,7 @@ export async function GET() {
 
     return NextResponse.json({ items: formattedItems })
   } catch (error) {
-    console.error('Failed to fetch or parse RSS feed:', error)
+    logger.error('Failed to fetch or parse RSS feed:', { data: error, tags: { type: 'api' } })
     return NextResponse.json({ error: 'Failed to fetch or parse RSS feed' }, { status: 500 })
   }
 }
