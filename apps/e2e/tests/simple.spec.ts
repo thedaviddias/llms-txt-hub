@@ -82,7 +82,7 @@ test.describe('Navigation Tests', () => {
 
     // Try to find and click a navigation link
     const navLink = page
-      .locator('a[href*="/about"], a[href*="/guides"], a[href*="/websites"]')
+      .locator('a[href*="/projects"], a[href*="/guides"], a[href*="/websites"]')
       .first()
 
     if (await navLink.isVisible()) {
