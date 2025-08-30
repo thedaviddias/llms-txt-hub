@@ -18,8 +18,12 @@ test.describe('Main Pages', () => {
     await expect(heading).toBeVisible()
 
     // Check at least some key content is present
-    const hasContent = await page.locator('text=/featured|recently|projects/i').first().isVisible()
-    expect(hasContent).toBeTruthy()
+    await expect(
+      page
+        .getByRole('heading', { name: /featured|recent(ly)?|projects/i })
+        .first()
+        .or(page.getByRole('region', { name: /featured|recent|projects/i }).first())
+    ).toBeVisible()
   })
 
   test('about page should load and display content', async ({ page }) => {
@@ -50,9 +54,13 @@ test.describe('Main Pages', () => {
     await expect(page).toHaveTitle(/Websites.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    // Check for search/filter functionality - look for search input
-    const searchInput = page.getByPlaceholder(/search/i)
-    await expect(searchInput.first()).toBeVisible()
+    // Check for search/filter functionality - search input
+    const searchInput = page
+      .getByRole('searchbox', { name: /search/i })
+      .or(page.getByRole('textbox', { name: /search/i }))
+      .or(page.getByPlaceholder(/search/i))
+      .first()
+    await expect(searchInput).toBeVisible()
   })
 
   test('members page should load and display member list', async ({ page }) => {
@@ -62,8 +70,12 @@ test.describe('Main Pages', () => {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
     // Should have search functionality or member content
-    const hasContent = await page.locator('text=/search|member|community/i').first().isVisible()
-    expect(hasContent).toBeTruthy()
+    await expect(
+      page
+        .getByRole('textbox', { name: /search/i })
+        .or(page.getByRole('list').first())
+        .or(page.getByText(/member|community/i).first())
+    ).toBeVisible()
   })
 
   test('projects page should load and display projects', async ({ page }) => {
@@ -79,11 +91,12 @@ test.describe('Main Pages', () => {
     await expect(page).toHaveTitle(/FAQ.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     // Check FAQ content exists
-    const hasFAQContent = await page
-      .locator('text=/FAQ|frequently|question|what is/i')
-      .first()
-      .isVisible()
-    expect(hasFAQContent).toBeTruthy()
+    await expect(
+      page
+        .getByRole('heading', { name: /FAQ|Frequently Asked Questions/i })
+        .first()
+        .or(page.getByRole('region', { name: /FAQ/i }).first())
+    ).toBeVisible()
   })
 
   test('news page should load and display news items', async ({ page }) => {
@@ -128,7 +141,7 @@ test.describe('Search and Navigation', () => {
     const guidesLink = page.getByRole('link', { name: /guides/i }).first()
     if (await guidesLink.isVisible()) {
       await guidesLink.click()
-      await expect(page.url()).toContain('/guides')
+      await expect(page).toHaveURL(/\/guides/)
     }
 
     // Test navigation to projects
@@ -136,7 +149,7 @@ test.describe('Search and Navigation', () => {
     const projectsLink = page.getByRole('link', { name: /projects/i }).first()
     if (await projectsLink.isVisible()) {
       await projectsLink.click()
-      await expect(page.url()).toContain('/projects')
+      await expect(page).toHaveURL(/\/projects/)
     }
   })
 })
@@ -197,10 +210,10 @@ test.describe('Responsive Design', () => {
 
 test.describe('Performance and Accessibility', () => {
   test('homepage should load within reasonable time', async ({ page }) => {
-    const startTime = Date.now()
+    const startTime = performance.now()
     await page.goto('/')
     await page.waitForLoadState('domcontentloaded')
-    const loadTime = Date.now() - startTime
+    const loadTime = performance.now() - startTime
 
     // Should load within 10 seconds (generous for CI)
     expect(loadTime).toBeLessThan(10000)
