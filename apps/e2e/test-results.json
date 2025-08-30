@@ -1,0 +1,292 @@
+{
+  "config": {
+    "configFile": "/Users/thedaviddias/Projects/llms-txt-hub/apps/e2e/playwright.config.ci.ts",
+    "rootDir": "/Users/thedaviddias/Projects/llms-txt-hub/apps/e2e/tests",
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      ["github", null],
+      [
+        "html",
+        {
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/thedaviddias/Projects/llms-txt-hub/apps/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/thedaviddias/Projects/llms-txt-hub/apps/e2e/tests",
+        "testIgnore": [],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.51.1",
+    "workers": 3,
+    "webServer": {
+      "command": "cd ../web && pnpm build && pnpm start",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": false,
+      "timeout": 180000,
+      "env": {
+        "NODE_ENV": "production",
+        "NEXT_TELEMETRY_DISABLED": "1",
+        "NEXT_PUBLIC_SENTRY_DSN": "",
+        "SENTRY_AUTH_TOKEN": "",
+        "LOG_LEVEL": "error"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "simple.spec.ts",
+      "file": "simple.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Basic Page Load Tests",
+          "file": "simple.spec.ts",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "homepage loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-7bc9d60c201f3f7a36c2",
+              "file": "simple.spec.ts",
+              "line": 10,
+              "column": 7
+            },
+            {
+              "title": "about page loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-4b7d04ecee9c9f5253d3",
+              "file": "simple.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "guides page loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-3a56403b6c6b66909725",
+              "file": "simple.spec.ts",
+              "line": 28,
+              "column": 7
+            },
+            {
+              "title": "websites page loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-a666f5385df3e949766b",
+              "file": "simple.spec.ts",
+              "line": 38,
+              "column": 7
+            },
+            {
+              "title": "members page loads",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-5b66906330803af4935c",
+              "file": "simple.spec.ts",
+              "line": 47,
+              "column": 7
+            },
+            {
+              "title": "search functionality exists",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-32ae4463428b5656e2fc",
+              "file": "simple.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "404 page handles non-existent routes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-2fc42070db1e3ed45a5f",
+              "file": "simple.spec.ts",
+              "line": 67,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Navigation Tests",
+          "file": "simple.spec.ts",
+          "line": 79,
+          "column": 6,
+          "specs": [
+            {
+              "title": "can navigate between pages",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-0f859df372a76c9f61e8",
+              "file": "simple.spec.ts",
+              "line": 80,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "Responsive Tests",
+          "file": "simple.spec.ts",
+          "line": 107,
+          "column": 6,
+          "specs": [
+            {
+              "title": "homepage works on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "b095e72a376a9d09f724-a822835796df14dd7e21",
+              "file": "simple.spec.ts",
+              "line": 108,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-08-30T21:41:22.758Z",
+    "duration": 11.037000000000035,
+    "expected": 0,
+    "skipped": 9,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
