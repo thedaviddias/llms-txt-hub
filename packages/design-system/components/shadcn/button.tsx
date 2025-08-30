@@ -32,6 +32,13 @@ const buttonVariants = cva(
   }
 )
 
+/**
+ * Button component for user interactions
+ * @param variant - The visual style variant of the button
+ * @param size - The size of the button
+ * @param asChild - Whether to render as a child component
+ * @param className - Additional CSS classes
+ */
 function Button({
   className,
   variant,

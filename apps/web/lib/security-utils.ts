@@ -30,9 +30,10 @@ export interface CheckRateLimitInput {
  * @param input.windowMs - Time window in milliseconds (default: 60000)
  * @returns Object with allowed status and reset time
  */
-export function checkRateLimit(
-  input: CheckRateLimitInput
-): { allowed: boolean; resetTime?: number } {
+export function checkRateLimit(input: CheckRateLimitInput): {
+  allowed: boolean
+  resetTime?: number
+} {
   const { identifier, maxRequests = 10, windowMs = 60 * 1000 } = input
   const now = Date.now()
 

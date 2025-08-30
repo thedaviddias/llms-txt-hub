@@ -19,6 +19,11 @@ const alertVariants = cva(
   }
 )
 
+/**
+ * Alert component for displaying important messages
+ * @param variant - The visual style variant of the alert
+ * @param className - Additional CSS classes
+ */
 function Alert({
   className,
   variant,
@@ -34,6 +39,10 @@ function Alert({
   )
 }
 
+/**
+ * AlertTitle component for alert headings
+ * @param className - Additional CSS classes
+ */
 function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
@@ -44,6 +53,10 @@ function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+/**
+ * AlertDescription component for alert body text
+ * @param className - Additional CSS classes
+ */
 function AlertDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
