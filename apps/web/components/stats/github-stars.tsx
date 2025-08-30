@@ -57,7 +57,7 @@ export const GithubStars = ({ variant = 'default', mobileCompact = false }: Star
         <SiGithub className="w-4 h-4 hidden sm:block" aria-hidden="true" />
         <span className="sm:inline-flex sm:items-center sm:px-1.5 sm:py-0.5 sm:rounded sm:bg-neutral-100 dark:sm:bg-neutral-700 sm:text-neutral-900 dark:sm:text-neutral-100 inline-flex items-center gap-0.5">
           <StarIcon className="w-4 h-4" aria-hidden="true" />
-          <span>{stars}</span>
+          <span className="text-xs sm:text-sm">{stars}</span>
         </span>
       </Link>
     )

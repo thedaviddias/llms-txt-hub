@@ -23,6 +23,12 @@ const badgeVariants = cva(
   }
 )
 
+/**
+ * Badge component for displaying labels and status indicators
+ * @param variant - The visual style variant of the badge
+ * @param asChild - Whether to render as a child component
+ * @param className - Additional CSS classes
+ */
 function Badge({
   className,
   variant,
