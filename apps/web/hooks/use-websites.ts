@@ -1,8 +1,8 @@
 'use client'
 
+import type { WebsiteMetadata } from '@/lib/content-loader'
 import { logger } from '@thedaviddias/logging'
 import { useEffect, useState } from 'react'
-import type { WebsiteMetadata } from '@/lib/content-loader'
 
 export function useWebsites() {
   const [websites, setWebsites] = useState<WebsiteMetadata[]>([])

@@ -1,12 +1,12 @@
 'use client'
 
-import { ExternalLink, Home as HomeIcon, Trophy } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { FavoritesLink } from '@/components/ui/favorites-link'
 import { categories } from '@/lib/categories'
 import { getRoute } from '@/lib/routes'
 import { tools } from '@/lib/tools'
+import { ExternalLink, Home as HomeIcon, Trophy } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface AppSidebarProps {
   currentCategory?: string

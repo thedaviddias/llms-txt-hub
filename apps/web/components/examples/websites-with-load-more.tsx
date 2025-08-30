@@ -1,13 +1,13 @@
 'use client'
 
-import { Badge } from '@thedaviddias/design-system/badge'
-import Link from 'next/link'
 import { EmptyState } from '@/components/empty-state'
 import { Card } from '@/components/ui/card'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { WebsitesPaginatedGrid } from '@/components/ui/paginated-content'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
+import { Badge } from '@thedaviddias/design-system/badge'
+import Link from 'next/link'
 
 interface WebsitesWithLoadMoreProps {
   websites: WebsiteMetadata[]

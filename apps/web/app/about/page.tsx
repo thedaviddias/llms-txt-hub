@@ -1,10 +1,10 @@
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { Button } from '@thedaviddias/design-system/button'
 import { Code, FileText, Zap } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { getRoute } from '@/lib/routes'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'About',

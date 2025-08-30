@@ -1,5 +1,8 @@
 'use client'
 
+import { EditProfileModal } from '@/components/profile/edit-profile-modal'
+import { Card } from '@/components/ui/card'
+import { UserMessageBanner } from '@/components/ui/user-message-banner'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -19,9 +22,6 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { EditProfileModal } from '@/components/profile/edit-profile-modal'
-import { Card } from '@/components/ui/card'
-import { UserMessageBanner } from '@/components/ui/user-message-banner'
 
 export default function ProfileContent() {
   const { user, signOut, isLoaded } = useAuth()

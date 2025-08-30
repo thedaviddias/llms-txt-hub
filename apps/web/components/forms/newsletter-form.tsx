@@ -1,9 +1,9 @@
 'use client'
 
+import { NewsletterModal } from '@/components/newsletter-modal'
 import { Button } from '@thedaviddias/design-system/button'
 import type React from 'react'
 import { useState } from 'react'
-import { NewsletterModal } from '@/components/newsletter-modal'
 
 /**
  * Newsletter subscription form component

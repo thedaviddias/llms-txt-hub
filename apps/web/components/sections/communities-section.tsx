@@ -1,7 +1,7 @@
-import { SiReddit, SiX } from '@icons-pack/react-simple-icons'
-import { Linkedin } from 'lucide-react'
 import { Section } from '@/components/layout/section'
 import { Card } from '@/components/ui/card'
+import { SiReddit, SiX } from '@icons-pack/react-simple-icons'
+import { Linkedin } from 'lucide-react'
 
 const communities = [
   {

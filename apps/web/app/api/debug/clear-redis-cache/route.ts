@@ -1,7 +1,13 @@
-import { type NextRequest, NextResponse } from 'next/server'
-import { del, CACHE_KEYS } from '@/lib/redis'
+import { CACHE_KEYS, del } from '@/lib/redis'
 import { logger } from '@thedaviddias/logging'
+import { type NextRequest, NextResponse } from 'next/server'
 
+/**
+ * POST handler for clearing Redis cache for a specific user
+ * 
+ * @param request - NextRequest containing username in body
+ * @returns Promise resolving to NextResponse with cache clear result or error
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()

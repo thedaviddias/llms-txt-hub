@@ -1,6 +1,6 @@
+import { hashSensitiveData } from '@/lib/server-crypto'
 import { logger } from '@thedaviddias/logging'
 import { sql } from '@vercel/postgres'
-import { hashSensitiveData } from "@/lib/server-crypto"
 
 interface RateLimitOptions {
   windowMs: number // Time window in milliseconds

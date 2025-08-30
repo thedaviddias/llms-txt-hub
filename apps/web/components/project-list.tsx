@@ -1,8 +1,8 @@
-import { Badge } from '@thedaviddias/design-system/badge'
-import Link from 'next/link'
 import { LLMButton } from '@/components/buttons/llm-button'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { getRoute } from '@/lib/routes'
+import { Badge } from '@thedaviddias/design-system/badge'
+import Link from 'next/link'
 
 interface ProjectListProps {
   items: Array<{

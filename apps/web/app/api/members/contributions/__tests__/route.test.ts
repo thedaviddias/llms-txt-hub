@@ -1,8 +1,8 @@
-import { logger } from '@thedaviddias/logging'
-import { NextRequest } from 'next/server'
-import { createMockRequest, MALICIOUS_INPUTS } from '@/app/api/__tests__/test-helpers'
+import { MALICIOUS_INPUTS, createMockRequest } from '@/app/api/__tests__/test-helpers'
 import { POST } from '@/app/api/members/contributions/route'
 import { getUserContributions } from '@/lib/github-contributions'
+import { logger } from '@thedaviddias/logging'
+import { NextRequest } from 'next/server'
 
 // Mock dependencies
 jest.mock('@thedaviddias/logging', () => ({

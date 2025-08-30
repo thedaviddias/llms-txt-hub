@@ -1,13 +1,13 @@
 'use client'
 
-import { useAuth } from '@thedaviddias/auth'
-import { logger } from '@thedaviddias/logging'
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import {
   getFavoritesFromStorage,
   saveFavoritesToStorage,
   toggleFavorite as toggleFavoriteLogic
 } from '@/lib/favorites'
+import { useAuth } from '@thedaviddias/auth'
+import { logger } from '@thedaviddias/logging'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 interface FavoritesContextType {
   favorites: Set<string>

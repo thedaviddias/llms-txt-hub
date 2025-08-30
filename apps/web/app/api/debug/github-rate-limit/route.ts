@@ -1,10 +1,15 @@
-import { NextResponse } from 'next/server'
 import { GitHubAPIClient } from '@/lib/github-security-utils'
 import { logger } from '@thedaviddias/logging'
+import { NextResponse } from 'next/server'
 
+/**
+ * GET handler for GitHub rate limit debugging
+ * 
+ * @returns Promise resolving to NextResponse with rate limit info or error
+ */
 export async function GET() {
   try {
-    const githubClient = GitHubAPIClient.getInstance()
+    const _githubClient = GitHubAPIClient.getInstance()
 
     // Make a simple request to check rate limit
     const response = await fetch('https://api.github.com/rate_limit', {

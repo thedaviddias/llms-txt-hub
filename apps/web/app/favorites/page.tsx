@@ -1,6 +1,3 @@
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { Heart } from 'lucide-react'
-import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { AppSidebar } from '@/components/layout/app-sidebar'
@@ -9,6 +6,9 @@ import { NewsletterSection } from '@/components/sections/newsletter-section'
 import { WebsitesListWithSearch } from '@/components/websites-list-with-search'
 import { getGuides } from '@/lib/content-loader'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { Heart } from 'lucide-react'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Your Favorite Websites - llms.txt hub',

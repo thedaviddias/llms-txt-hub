@@ -1,14 +1,14 @@
+import { GitHubProjectCard } from '@/components/github/github-project-card'
+import { Card } from '@/components/ui/card'
+import { type GitHubProject, fetchGitHubProjects } from '@/lib/github'
+import { getRoute } from '@/lib/routes'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Code, ExternalLink, Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { GitHubProjectCard } from '@/components/github/github-project-card'
-import { Card } from '@/components/ui/card'
-import { fetchGitHubProjects, type GitHubProject } from '@/lib/github'
-import { getRoute } from '@/lib/routes'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Open Source Projects',
@@ -18,10 +18,15 @@ export const metadata: Metadata = generateBaseMetadata({
   keywords: ['open source', 'GitHub projects', 'llms.txt tools', 'libraries', 'implementations']
 })
 
+// Revalidate Projects page hourly to reduce API load
+export const revalidate = 3600
+
 export default async function ProjectsPage() {
-  // Fetch projects with both topics
-  const projects1 = await fetchGitHubProjects('llms-txt')
-  const projects2 = await fetchGitHubProjects('llmstxt')
+  // Fetch projects with both topics concurrently
+  const [projects1, projects2] = await Promise.all([
+    fetchGitHubProjects('llms-txt'),
+    fetchGitHubProjects('llmstxt')
+  ])
 
   // Create a Map to deduplicate projects by full name
   const projectsMap = new Map<string, GitHubProject>()

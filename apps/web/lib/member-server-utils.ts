@@ -2,10 +2,10 @@
  * Server-side member processing utilities
  */
 
+import { hashSensitiveData } from '@/lib/server-crypto'
 import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
 import { unstable_cache } from 'next/cache'
-import { hashSensitiveData } from "@/lib/server-crypto"
 
 const clerk = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!
@@ -219,7 +219,7 @@ export const getCachedMembers = unstable_cache(
   },
   ['all-members-v4-migrated'], // Changed cache key to support migrated users
   {
-    revalidate: 900, // Cache for 15 minutes for debugging
+    revalidate: 1800, // Cache for 30 minutes
     tags: ['members']
   }
 )

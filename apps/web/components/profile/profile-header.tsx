@@ -1,13 +1,13 @@
 'use client'
 
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
+import { escapeHtml } from '@/lib/security-utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { Briefcase, Calendar, Edit, Eye, EyeOff, FileText, Github, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
-import { escapeHtml } from '@/lib/security-utils'
 import { EditProfileModal } from './edit-profile-modal'
 
 interface ProfileHeaderProps {

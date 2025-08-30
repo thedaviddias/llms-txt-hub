@@ -1,3 +1,7 @@
+import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
+import { Card } from '@/components/ui/card'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import { formatDate } from '@/lib/utils'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { logger } from '@thedaviddias/logging'
@@ -6,10 +10,6 @@ import { XMLParser } from 'fast-xml-parser'
 import { ExternalLink, Rss } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
-import { Card } from '@/components/ui/card'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { formatDate } from '@/lib/utils'
 
 /**
  * Strips HTML tags from a string to create safe plain text

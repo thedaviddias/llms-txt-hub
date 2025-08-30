@@ -1,6 +1,6 @@
+import { getRoute } from '@/lib/routes'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import { getRoute } from '@/lib/routes'
 
 interface ProjectNavigationProps {
   previousWebsite: { slug: string; name: string } | null

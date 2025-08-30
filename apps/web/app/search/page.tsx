@@ -1,12 +1,12 @@
-import { ExternalLink, Home as HomeIcon } from 'lucide-react'
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Suspense } from 'react'
 import { SearchResults } from '@/components/search/search-results'
 import { categories } from '@/lib/categories'
 import { getRoute } from '@/lib/routes'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { tools } from '@/lib/tools'
+import { ExternalLink, Home as HomeIcon } from 'lucide-react'
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { Suspense } from 'react'
 
 export const dynamic = 'force-dynamic'
 

@@ -1,13 +1,13 @@
 'use client'
 
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { Card } from '@/components/ui/card'
+import { UserMessageBanner } from '@/components/ui/user-message-banner'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Github, Mail } from 'lucide-react'
 import Link from 'next/link'
 import type React from 'react'
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { Card } from '@/components/ui/card'
-import { UserMessageBanner } from '@/components/ui/user-message-banner'
 
 interface AuthCheckProps {
   children: React.ReactNode

@@ -2,8 +2,8 @@
  * Tests for profile-related pages to ensure they load without errors
  */
 
-import { jest } from '@jest/globals'
 import { render, screen } from '@/__tests__/utils/test-utils.helper'
+import { jest } from '@jest/globals'
 import * as Auth from '@thedaviddias/auth'
 
 // Mock next/navigation

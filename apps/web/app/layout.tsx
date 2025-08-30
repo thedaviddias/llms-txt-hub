@@ -3,15 +3,16 @@ import { VercelToolbar } from '@vercel/toolbar/next'
 import type { Metadata } from 'next'
 import type React from 'react'
 import '../../../packages/design-system/styles/globals.css'
-import { fonts } from '@thedaviddias/design-system/lib/fonts'
-import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
-import { SentryUserProvider } from '@thedaviddias/observability/providers'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
+import { CSRFProvider } from '@/components/csrf-provider'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { BackToTop } from '@/components/ui/back-to-top'
 import { FavoritesProvider } from '@/contexts/favorites-context'
+import { fonts } from '@thedaviddias/design-system/lib/fonts'
+import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
+import { SentryUserProvider } from '@thedaviddias/observability/providers'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <SentryUserProvider>
               <FavoritesProvider>
                 <AnalyticsTracker />
+                <CSRFProvider />
                 <div className="flex min-h-screen flex-col">
                   <Header />
                   <main className="flex flex-1 flex-col">{children}</main>

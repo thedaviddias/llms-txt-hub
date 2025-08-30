@@ -1,8 +1,8 @@
 'use client'
 
+import { analytics } from '@/lib/analytics'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
-import { analytics } from '@/lib/analytics'
 
 interface AnalyticsLinkProps {
   href: string

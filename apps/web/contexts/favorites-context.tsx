@@ -2,7 +2,7 @@
 
 import { useAuth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
-import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react'
+import { type ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 export interface FavoritesContextValue {
   favorites: string[]

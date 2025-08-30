@@ -1,8 +1,3 @@
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import { GuideHeader } from '@/components/guide-header'
 import { JsonLd } from '@/components/json-ld'
 import { components } from '@/components/mdx'
@@ -10,6 +5,11 @@ import { type GuideMetadata, getGuideBySlug, getGuides } from '@/lib/content-loa
 import { getRoute } from '@/lib/routes'
 import { generateGuideSchema } from '@/lib/schema'
 import { generateDynamicMetadata } from '@/lib/seo/seo-config'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import { notFound } from 'next/navigation'
 
 interface GuidePageProps {
   params: {
