@@ -4,8 +4,8 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : 2, // Use 2 workers locally for stability
+  retries: process.env.CI ? 1 : 0, // Reduce retries from 2 to 1 on CI
+  workers: process.env.CI ? 2 : 4, // Increase workers on CI from 1 to 2
   reporter: process.env.CI ? 'github' : 'html',
 
   // Performance optimizations
