@@ -116,10 +116,10 @@ export function LLMGrid({
                     <FavoriteButton slug={item.slug} size="sm" variant="default" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-xs sm:text-sm md:text-base">
+                    <h3 className="font-semibold text-xs sm:text-sm md:text-base truncate">
                       <Link
                         href={getRoute('website.detail', { slug: item.slug })}
-                        className="block after:absolute after:inset-0 after:content-[''] z-10"
+                        className="block after:absolute after:inset-0 after:content-[''] after:pointer-events-none z-10"
                         data-analytics="website-click"
                         data-website-name={item.name}
                         data-website-slug={item.slug}

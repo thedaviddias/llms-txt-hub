@@ -28,6 +28,12 @@ const toggleVariants = cva(
   }
 )
 
+/**
+ * Toggle component for binary state switches
+ * @param variant - The visual style variant of the toggle
+ * @param size - The size of the toggle
+ * @param className - Additional CSS classes
+ */
 function Toggle({
   className,
   variant,

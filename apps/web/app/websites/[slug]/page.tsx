@@ -5,6 +5,7 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import { AlertTriangle, ExternalLink, Hash } from 'lucide-react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -24,6 +25,12 @@ interface ProjectPageProps {
   params: { slug: string }
 }
 
+/**
+ * Generates metadata for the website page
+ *
+ * @param params - Page parameters containing the website slug
+ * @returns Promise<Metadata> - Generated metadata for the page
+ */
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params
 
@@ -42,7 +49,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       additionalKeywords: [project.category, 'llms.txt'].filter(Boolean) as string[],
       publishedAt: project.publishedAt
     })
-  } catch (error) {
+  } catch (_error) {
     return {
       title: 'Website | llms.txt hub',
       description: 'Website information'
@@ -50,6 +57,11 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   }
 }
 
+/**
+ * Generates static parameters for all website pages
+ *
+ * @returns Promise<Array<{ slug: string }>> - Array of website slugs for static generation
+ */
 export async function generateStaticParams() {
   try {
     const websites = await getWebsites()
@@ -66,11 +78,17 @@ export async function generateStaticParams() {
       }))
 
     return params
-  } catch (error) {
+  } catch (_error) {
     return []
   }
 }
 
+/**
+ * Website detail page component
+ *
+ * @param params - Page parameters containing the website slug
+ * @returns Promise<JSX.Element> - Rendered website page
+ */
 export default async function ProjectPage({ params }: ProjectPageProps) {
   try {
     const { slug } = await params
@@ -107,13 +125,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 hover:text-foreground transition-all hover:gap-2 group"
                   >
-                    <img
+                    <Image
                       src={getFaviconUrl(project.website) || '/placeholder.svg'}
                       alt={generateAltText('favicon', project.name)}
                       width={56}
                       height={56}
                       className="rounded-lg relative z-10 shadow-sm"
-                      loading="eager"
+                      priority
                     />
                   </Link>
                 </div>
@@ -166,7 +184,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6 py-0 px-0">
+            <CardContent className="pt-6 pb-0 px-0">
               <div className="flex flex-wrap gap-4">
                 <LLMButton href={project.llmsUrl} type="llms" size="lg" />
                 {project.llmsFullUrl && (
@@ -254,7 +272,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </div>
     )
-  } catch (error) {
+  } catch (_error) {
     return (
       <div className="container mx-auto px-6 py-8">
         <Alert variant="destructive" className="mb-6">
