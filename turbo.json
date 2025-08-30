@@ -59,6 +59,10 @@
       "cache": false,
       "dependsOn": ["^build"]
     },
+    "test:e2e:ci": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
     "test:e2e:smoke": {
       "cache": false
     },
