@@ -78,6 +78,14 @@ function getClientIp(request: NextRequest): string {
  */
 const rateLimitCache = new Map<string, { count: number; resetTime: number }>()
 
+/**
+ * Check rate limit for a given identifier and resource
+ * @param identifier - Unique identifier for the client (e.g., IP address)
+ * @param resource - Resource being accessed (e.g., API endpoint)
+ * @param maxRequests - Maximum number of requests allowed
+ * @param windowMs - Time window in milliseconds
+ * @returns Rate limit status with allowed flag, remaining requests, and reset time
+ */
 async function checkRateLimit(
   identifier: string,
   resource: string,
@@ -162,7 +170,12 @@ function generateNonce(): string {
   const array = new Uint8Array(16)
   crypto.getRandomValues(array)
   // Use btoa instead of Buffer for Edge Runtime compatibility
-  return btoa(String.fromCharCode(...array))
+  // Convert Uint8Array to string manually for Edge Runtime compatibility
+  let binary = ''
+  for (let i = 0; i < array.length; i++) {
+    binary += String.fromCharCode(array[i])
+  }
+  return btoa(binary)
 }
 
 /**
@@ -225,6 +238,20 @@ function addSecurityHeaders(response: NextResponse, nonce?: string): NextRespons
 async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   const clientIp = getClientIp(req)
   const pathname = req.nextUrl.pathname
+
+  // Skip rate limiting for static assets and regular page loads
+  if (
+    // Static assets
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/robots.txt') ||
+    pathname.startsWith('/sitemap') ||
+    pathname.includes('.') || // Files with extensions (CSS, JS, images, etc.)
+    // Regular page loads (non-API routes)
+    (!pathname.startsWith('/api/') && req.method === 'GET')
+  ) {
+    return null
+  }
 
   // Determine rate limit config based on route
   let maxRequests = 60 // Default: 60 requests per minute
