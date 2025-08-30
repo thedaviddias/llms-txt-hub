@@ -25,6 +25,7 @@
     "syncpack:list": "pnpm dlx syncpack list-mismatches",
     "test": "turbo test --cache-dir=.turbo",
     "test:e2e": "turbo test:e2e --filter=e2e",
+    "test:e2e:ci": "turbo test:e2e:ci --filter=e2e",
     "test:e2e:smoke": "turbo test:e2e:smoke --filter=e2e",
     "test:e2e:ui": "turbo test:e2e:ui --filter=e2e",
     "test:e2e:debug": "turbo test:e2e:debug --filter=e2e",
