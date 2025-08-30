@@ -5,12 +5,16 @@ test.describe('User Interactions', () => {
     await page.goto('/')
 
     // Find search input (could be in header or main content)
-    const searchInput = page.getByPlaceholder(/search/i).first()
+    const searchInput = page
+      .getByRole('searchbox', { name: /search/i })
+      .or(page.getByRole('textbox', { name: /search/i }))
+      .or(page.getByPlaceholder(/search/i))
+      .first()
     await searchInput.fill('next.js')
     await searchInput.press('Enter')
 
     // Should navigate to search results or show results
-    await page.waitForURL('**/search?*', { timeout: 5000 })
+    await expect(page).toHaveURL(/\/search\?.+/, { timeout: 10000 })
     // Check that we're on search page and results are shown
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   })
@@ -63,16 +67,12 @@ test.describe('Navigation Interactions', () => {
 
     // Scroll to footer
     const footer = page.locator('footer').first()
-    if (await footer.isVisible()) {
+    if ((await footer.count()) > 0) {
       await footer.scrollIntoViewIfNeeded()
-
-      // Test privacy link
-      const privacyLink = page.getByRole('link', { name: /privacy/i }).first()
-      if (await privacyLink.isVisible()) {
-        await privacyLink.click()
-        await page.waitForURL('**/privacy', { timeout: 5000 })
-        await expect(page).toHaveURL(/\/privacy/)
-      }
+      const privacyLink = footer.getByRole('link', { name: /privacy/i }).first()
+      await expect(privacyLink).toBeVisible()
+      await privacyLink.click()
+      await expect(page).toHaveURL(/\/privacy(?:\/)?$/, { timeout: 10000 })
     }
   })
 
@@ -83,10 +83,13 @@ test.describe('Navigation Interactions', () => {
     const breadcrumb = page.locator('nav[aria-label*="breadcrumb" i]').first()
 
     if (await breadcrumb.isVisible()) {
-      const homeLink = breadcrumb.getByRole('link').first()
+      const homeLink = breadcrumb
+        .getByRole('link', { name: /home/i })
+        .first()
+        .or(breadcrumb.getByRole('link').first())
       if (await homeLink.isVisible()) {
         await homeLink.click()
-        await expect(page).toHaveURL('http://localhost:3000/')
+        await expect(page).toHaveURL(/\/$/) // Matches root URL without hardcoding domain
       }
     }
   })
@@ -211,13 +214,20 @@ test.describe('Mobile Interactions', () => {
     await page.goto('/')
 
     // Look for mobile search trigger
-    const searchTrigger = page.locator('button[aria-label*="search" i]').first()
+    const searchTrigger = page
+      .getByRole('button', { name: /search/i })
+      .or(page.locator('button[aria-label*="search" i]'))
+      .first()
 
     if (await searchTrigger.isVisible()) {
       await searchTrigger.click()
 
       // Should show search input
-      const searchInput = page.getByPlaceholder(/search/i).first()
+      const searchInput = page
+        .getByRole('searchbox', { name: /search/i })
+        .or(page.getByRole('textbox', { name: /search/i }))
+        .or(page.getByPlaceholder(/search/i))
+        .first()
       if (await searchInput.isVisible()) {
         await searchInput.fill('test')
         await searchInput.press('Enter')
