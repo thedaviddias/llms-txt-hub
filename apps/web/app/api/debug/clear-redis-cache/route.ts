@@ -1,10 +1,10 @@
-import { CACHE_KEYS, del } from '@/lib/redis'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { CACHE_KEYS, del } from '@/lib/redis'
 
 /**
  * POST handler for clearing Redis cache for a specific user
- * 
+ *
  * @param request - NextRequest containing username in body
  * @returns Promise resolving to NextResponse with cache clear result or error
  */

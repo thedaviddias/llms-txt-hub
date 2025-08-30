@@ -93,6 +93,7 @@ describe('csrf-protection', () => {
 
     it('should set secure flag in production', async () => {
       const originalEnv = process.env.NODE_ENV
+      // @ts-expect-error - testing environment variable change
       process.env.NODE_ENV = 'production'
 
       try {
@@ -106,6 +107,7 @@ describe('csrf-protection', () => {
           })
         )
       } finally {
+        // @ts-expect-error - restoring environment variable
         process.env.NODE_ENV = originalEnv
       }
     })

@@ -1,10 +1,10 @@
-import { CACHE_KEYS, get } from '@/lib/redis'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { CACHE_KEYS, get } from '@/lib/redis'
 
 /**
  * GET handler for debugging Redis cache status
- * 
+ *
  * @param request - NextRequest with username query parameter
  * @returns Promise resolving to NextResponse with cache status or error
  */

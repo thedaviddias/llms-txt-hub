@@ -1,9 +1,9 @@
-import { createCSRFToken } from '@/lib/csrf-protection'
 import { NextResponse } from 'next/server'
+import { createCSRFToken } from '@/lib/csrf-protection'
 
 /**
  * GET handler for CSRF token generation
- * 
+ *
  * @returns Promise resolving to NextResponse with CSRF token or error
  */
 export async function GET() {

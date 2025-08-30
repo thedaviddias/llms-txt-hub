@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
-import { getUserContributions } from '@/lib/github-contributions'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { getUserContributions } from '@/lib/github-contributions'
 
 /**
  * Creates a SHA-256 hash of the username for logging purposes
@@ -16,7 +16,7 @@ function hashUsername(username: string | null | undefined): string {
 
 /**
  * GET handler for debugging GitHub contributions fetching
- * 
+ *
  * @param request - NextRequest with username query parameter
  * @returns Promise resolving to NextResponse with contributions data or error
  */

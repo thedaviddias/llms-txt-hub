@@ -1,10 +1,10 @@
-import { GitHubAPIClient } from '@/lib/github-security-utils'
 import { logger } from '@thedaviddias/logging'
 import { NextResponse } from 'next/server'
+import { GitHubAPIClient } from '@/lib/github-security-utils'
 
 /**
  * POST handler for clearing GitHub API cache
- * 
+ *
  * @returns Promise resolving to NextResponse with success or error message
  */
 export async function POST() {
