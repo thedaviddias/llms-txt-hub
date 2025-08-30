@@ -81,18 +81,25 @@ test.describe('Navigation Tests', () => {
     // Start at homepage
     await page.goto('/', { waitUntil: 'domcontentloaded' })
 
-    // Try to find and click a navigation link
+    // Try to find navigation links in nav/header first, fallback to any matching link
     const navLink = page
+      .locator(
+        'nav a[href*="/projects"], nav a[href*="/guides"], nav a[href*="/websites"], header a[href*="/projects"], header a[href*="/guides"], header a[href*="/websites"]'
+      )
+      .first()
+
+    const fallbackLink = page
       .locator('a[href*="/projects"], a[href*="/guides"], a[href*="/websites"]')
       .first()
 
-    if (await navLink.isVisible()) {
-      await navLink.click()
+    const linkToClick = (await navLink.isVisible()) ? navLink : fallbackLink
+
+    if (await linkToClick.isVisible()) {
+      await linkToClick.click()
       await page.waitForLoadState('domcontentloaded')
 
-      // Check we navigated away from homepage
-      const currentUrl = page.url()
-      expect(currentUrl).not.toBe('http://localhost:3000/')
+      // Check we navigated to the expected page
+      await expect(page).toHaveURL(/\/(projects|guides|websites)/)
     }
   })
 })
