@@ -70,12 +70,8 @@ test.describe('Main Pages', () => {
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
     // Should have search functionality or member content
-    await expect(
-      page
-        .getByRole('textbox', { name: /search/i })
-        .or(page.getByRole('list').first())
-        .or(page.getByText(/member|community/i).first())
-    ).toBeVisible()
+    const memberSearchInput = page.getByPlaceholder(/search members/i)
+    await expect(memberSearchInput).toBeVisible()
   })
 
   test('projects page should load and display projects', async ({ page }) => {
@@ -88,7 +84,7 @@ test.describe('Main Pages', () => {
   test('faq page should load and display FAQ content', async ({ page }) => {
     await page.goto('/faq')
 
-    await expect(page).toHaveTitle(/FAQ.*llms\.txt hub/i)
+    await expect(page).toHaveTitle(/Frequently Asked Questions.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
     // Check FAQ content exists
     await expect(
