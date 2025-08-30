@@ -19,78 +19,78 @@ describe('Rate Limiting', () => {
 
   describe('checkRateLimit', () => {
     it('allows first request', () => {
-      const result = checkRateLimit('test-key')
+      const result = checkRateLimit({ identifier: 'test-key' })
       expect(result.allowed).toBe(true)
       expect(result.resetTime).toBeUndefined()
     })
 
     it('allows requests within limit', () => {
-      const key = 'test-key-within-limit'
+      const identifier = 'test-key-within-limit'
       const options = { windowMs: 60000, maxRequests: 3 }
 
       for (let i = 0; i < 3; i++) {
-        const result = checkRateLimit(key, options)
+        const result = checkRateLimit({ identifier, ...options })
         expect(result.allowed).toBe(true)
       }
     })
 
     it('blocks requests exceeding limit', () => {
-      const key = 'test-key-exceeding-limit'
+      const identifier = 'test-key-exceeding-limit'
       const options = { windowMs: 60000, maxRequests: 2 }
 
-      checkRateLimit(key, options) // 1st request
-      checkRateLimit(key, options) // 2nd request
+      checkRateLimit({ identifier, ...options }) // 1st request
+      checkRateLimit({ identifier, ...options }) // 2nd request
 
-      const result = checkRateLimit(key, options) // 3rd request (should be blocked)
+      const result = checkRateLimit({ identifier, ...options }) // 3rd request (should be blocked)
       expect(result.allowed).toBe(false)
       expect(result.resetTime).toBeDefined()
     })
 
     it('resets limit after time window', () => {
-      const key = 'test-key-reset'
+      const identifier = 'test-key-reset'
       const options = { windowMs: 1000, maxRequests: 1 }
 
-      checkRateLimit(key, options) // 1st request
-      const blockedResult = checkRateLimit(key, options) // 2nd request (blocked)
+      checkRateLimit({ identifier, ...options }) // 1st request
+      const blockedResult = checkRateLimit({ identifier, ...options }) // 2nd request (blocked)
       expect(blockedResult.allowed).toBe(false)
 
       // Advance time past the window
       jest.advanceTimersByTime(1001)
 
-      const allowedResult = checkRateLimit(key, options) // Should be allowed now
+      const allowedResult = checkRateLimit({ identifier, ...options }) // Should be allowed now
       expect(allowedResult.allowed).toBe(true)
     })
 
     it('handles different keys independently', () => {
       const options = { windowMs: 60000, maxRequests: 1 }
 
-      const result1 = checkRateLimit('key1', options)
-      const result2 = checkRateLimit('key2', options)
+      const result1 = checkRateLimit({ identifier: 'key1', ...options })
+      const result2 = checkRateLimit({ identifier: 'key2', ...options })
 
       expect(result1.allowed).toBe(true)
       expect(result2.allowed).toBe(true)
     })
 
     it('uses correct default options', () => {
-      const key = 'test-defaults'
+      const identifier = 'test-defaults'
 
       // Should allow default number of requests (10)
       for (let i = 0; i < 10; i++) {
-        const result = checkRateLimit(key)
+        const result = checkRateLimit({ identifier })
         expect(result.allowed).toBe(true)
       }
 
       // 11th request should be blocked
-      const result = checkRateLimit(key)
+      const result = checkRateLimit({ identifier })
       expect(result.allowed).toBe(false)
     })
 
     it('handles concurrent requests correctly', () => {
-      const key = 'test-concurrent'
+      const identifier = 'test-concurrent'
       const options = { windowMs: 60000, maxRequests: 2 }
 
       // Simulate concurrent requests
-      const results = Array.from({ length: 5 }, () => checkRateLimit(key, options))
+      const results = Array.from({ length: 5 }, () => checkRateLimit({ identifier, ...options }))
 
       const allowedCount = results.filter(r => r.allowed).length
       const blockedCount = results.filter(r => !r.allowed).length
