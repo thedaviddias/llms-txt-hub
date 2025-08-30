@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
 import { SearchResults } from '@/components/search/search-results'
 import { useSearch } from '@/components/search/use-search'
+import { render, screen } from '@testing-library/react'
 
 // Mock Next.js navigation hooks
 jest.mock('next/navigation', () => ({

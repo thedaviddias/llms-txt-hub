@@ -1,13 +1,13 @@
 'use client'
 
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { categories } from '@/lib/categories'
+import { getRoute } from '@/lib/routes'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { logger } from '@thedaviddias/logging'
 import { ArrowRight, Clock, Search, TrendingUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { categories } from '@/lib/categories'
-import { getRoute } from '@/lib/routes'
 import { Favicon } from './favicon'
 
 interface SearchSuggestion {

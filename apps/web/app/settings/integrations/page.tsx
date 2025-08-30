@@ -1,5 +1,7 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -7,8 +9,6 @@ import { AlertTriangle, CheckCircle, ExternalLink, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 
 export default function IntegrationsSettingsPage() {
   const { user } = useAuth()

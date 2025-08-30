@@ -1,5 +1,5 @@
-import * as DesignSystemCard from '@thedaviddias/design-system/card'
 import { cn } from '@/lib/utils'
+import * as DesignSystemCard from '@thedaviddias/design-system/card'
 
 // Custom Card components with consistent styling
 

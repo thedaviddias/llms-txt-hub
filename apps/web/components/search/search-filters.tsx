@@ -1,5 +1,6 @@
 'use client'
 
+import { categories } from '@/lib/categories'
 import { Button } from '@thedaviddias/design-system/button'
 import { Checkbox } from '@thedaviddias/design-system/checkbox'
 import {
@@ -9,7 +10,6 @@ import {
 } from '@thedaviddias/design-system/dropdown-menu'
 import { Filter, X } from 'lucide-react'
 import { useState } from 'react'
-import { categories } from '@/lib/categories'
 
 interface SearchFiltersProps {
   selectedCategories: string[]

@@ -1,10 +1,10 @@
 'use client'
 
+import { AuthCheck } from '@/components/auth-check'
+import { SubmitForm } from '@/components/forms/submit-form'
 import { useAuth } from '@thedaviddias/auth'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { AuthCheck } from '@/components/auth-check'
-import { SubmitForm } from '@/components/forms/submit-form'
 
 export default function SubmitPage() {
   const { user, isLoaded } = useAuth()

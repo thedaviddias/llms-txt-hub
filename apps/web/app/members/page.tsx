@@ -1,17 +1,14 @@
+import { Card, CardContent } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
+import { type Member, getCachedMembers } from '@/lib/member-server-utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Calendar } from 'lucide-react'
 import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
-import { getCachedMembers, type Member } from '@/lib/member-server-utils'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { MembersSearch } from './members-search'
 
 // Force dynamic rendering since we use searchParams
 export const dynamic = 'force-dynamic'
-
-// Revalidate every 30 minutes
-export const revalidate = 1800
 
 /**
  * Generate a URL-safe slug from user data

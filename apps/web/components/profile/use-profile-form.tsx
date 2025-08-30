@@ -1,10 +1,11 @@
 'use client'
 
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { fetchWithCSRF } from '@/lib/csrf-client'
 import { useAuth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
 
 interface FormData {
   firstName: string
@@ -108,7 +109,7 @@ export function useProfileForm({
     try {
       if (!user) throw new Error('User not found')
 
-      const response = await fetch('/api/user/update-metadata', {
+      const response = await fetchWithCSRF('/api/user/update-metadata', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

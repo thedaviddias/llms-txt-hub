@@ -1,11 +1,11 @@
 'use server'
 
+import { categories } from '@/lib/categories'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
-import { categories } from '@/lib/categories'
 
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'

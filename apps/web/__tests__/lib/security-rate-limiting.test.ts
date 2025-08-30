@@ -102,8 +102,11 @@ describe('Rate Limiting', () => {
 
   describe('getRateLimitKey', () => {
     it('creates key from IP address', () => {
-      const request = createMockRequest('https://example.com', {
-        'x-forwarded-for': '192.168.1.1'
+      const request = createMockRequest({
+        url: 'https://example.com',
+        headers: {
+          'x-forwarded-for': '192.168.1.1'
+        }
       })
 
       const key = getRateLimitKey(request)
@@ -111,8 +114,11 @@ describe('Rate Limiting', () => {
     })
 
     it('falls back to x-real-ip header', () => {
-      const request = createMockRequest('https://example.com', {
-        'x-real-ip': '10.0.0.1'
+      const request = createMockRequest({
+        url: 'https://example.com',
+        headers: {
+          'x-real-ip': '10.0.0.1'
+        }
       })
 
       const key = getRateLimitKey(request)
@@ -120,16 +126,19 @@ describe('Rate Limiting', () => {
     })
 
     it('uses default IP when headers missing', () => {
-      const request = createMockRequest('https://example.com')
+      const request = createMockRequest({ url: 'https://example.com' })
 
       const key = getRateLimitKey(request)
       expect(key).toBe('ratelimit:unknown')
     })
 
     it('prefers x-forwarded-for over x-real-ip', () => {
-      const request = createMockRequest('https://example.com', {
-        'x-forwarded-for': '192.168.1.1',
-        'x-real-ip': '10.0.0.1'
+      const request = createMockRequest({
+        url: 'https://example.com',
+        headers: {
+          'x-forwarded-for': '192.168.1.1',
+          'x-real-ip': '10.0.0.1'
+        }
       })
 
       const key = getRateLimitKey(request)
@@ -137,8 +146,11 @@ describe('Rate Limiting', () => {
     })
 
     it('handles multiple IPs in x-forwarded-for', () => {
-      const request = createMockRequest('https://example.com', {
-        'x-forwarded-for': '192.168.1.1, 10.0.0.1, 127.0.0.1'
+      const request = createMockRequest({
+        url: 'https://example.com',
+        headers: {
+          'x-forwarded-for': '192.168.1.1, 10.0.0.1, 127.0.0.1'
+        }
       })
 
       const key = getRateLimitKey(request)
@@ -146,8 +158,11 @@ describe('Rate Limiting', () => {
     })
 
     it('trims whitespace from IP addresses', () => {
-      const request = createMockRequest('https://example.com', {
-        'x-forwarded-for': '  192.168.1.1  '
+      const request = createMockRequest({
+        url: 'https://example.com',
+        headers: {
+          'x-forwarded-for': '  192.168.1.1  '
+        }
       })
 
       const key = getRateLimitKey(request)

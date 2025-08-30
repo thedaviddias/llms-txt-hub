@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '@thedaviddias/design-system/button'
-import { AlertCircle, Users } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useMembersList } from '@/hooks/use-members-list'
 import { analytics } from '@/lib/analytics'
+import { Button } from '@thedaviddias/design-system/button'
+import { AlertCircle, Users } from 'lucide-react'
 import { MemberCardItem } from './member-card-item'
 import { MembersSearchControls } from './members-search-controls'
 

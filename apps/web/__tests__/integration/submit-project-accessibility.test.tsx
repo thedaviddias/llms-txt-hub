@@ -4,9 +4,9 @@
  * Tests keyboard navigation, screen reader support, and ARIA attributes.
  */
 
-import { fireEvent, render, screen, waitFor, userEvent } from '@/__tests__/utils/test-utils.helper'
 import { expectKeyboardNavigation } from '@/__tests__/utils/form-test-helpers'
 import { TestSubmitProjectForm } from '@/__tests__/utils/test-components'
+import { fireEvent, render, screen, userEvent, waitFor } from '@/__tests__/utils/test-utils.helper'
 
 // Mock the API calls
 const mockCheckUrl = jest.fn()

@@ -1,11 +1,11 @@
 'use client'
 
+import { Card, CardContent } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Calendar, Star } from 'lucide-react'
 import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
 
 interface Member {
   id: string

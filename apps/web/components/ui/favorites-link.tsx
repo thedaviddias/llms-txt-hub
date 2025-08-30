@@ -1,11 +1,11 @@
 'use client'
 
+import { useFavorites } from '@/contexts/favorites-context'
+import { getRoute } from '@/lib/routes'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useFavorites } from '@/contexts/favorites-context'
-import { getRoute } from '@/lib/routes'
 
 interface FavoritesLinkProps {
   className?: string

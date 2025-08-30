@@ -1,10 +1,10 @@
 'use client'
 
+import { useFavorites } from '@/contexts/favorites-context'
 import { useAuth } from '@thedaviddias/auth'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
-import { useFavorites } from '@/contexts/favorites-context'
 
 interface FavoriteButtonProps {
   slug: string

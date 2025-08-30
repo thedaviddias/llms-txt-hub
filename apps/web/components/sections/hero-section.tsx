@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { AnimatedBackground } from '@/components/ui/animated-background'
 import { getWebsites } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
+import Link from 'next/link'
 
 /**
  * Hero section component for the homepage

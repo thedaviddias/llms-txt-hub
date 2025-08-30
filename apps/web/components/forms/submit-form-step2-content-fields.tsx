@@ -1,5 +1,7 @@
 'use client'
 
+import { CharacterCounter } from '@/components/ui/character-counter'
+import { nonToolCategories, toolCategories } from '@/lib/categories'
 import {
   FormControl,
   FormField,
@@ -17,8 +19,6 @@ import {
 } from '@thedaviddias/design-system/select'
 import { Textarea } from '@thedaviddias/design-system/textarea'
 import type { UseFormReturn } from 'react-hook-form'
-import { CharacterCounter } from '@/components/ui/character-counter'
-import { nonToolCategories, toolCategories } from '@/lib/categories'
 import { MDXTextarea } from './mdx-textarea'
 import type { Step2Data } from './submit-form-schemas'
 

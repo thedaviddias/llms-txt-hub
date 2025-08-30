@@ -1,11 +1,11 @@
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
 import { JsonLd } from '@/components/json-ld'
 import { faqItems } from '@/components/sections/faq-section'
 import { getRoute } from '@/lib/routes'
 import { generateFAQSchema } from '@/lib/schema'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Frequently Asked Questions',

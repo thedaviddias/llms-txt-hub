@@ -1,8 +1,8 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Github, User as UserIcon } from 'lucide-react'
-import { Card } from '@/components/ui/card'
 
 interface UserData {
   id: string

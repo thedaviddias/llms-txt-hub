@@ -1,13 +1,13 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { ArrowLeft, Bell, Github, Shield, User } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 
 const settingsNavigation = [
   {

@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Card } from '@/components/ui/card'
+import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 
 interface TestimonialCardProps {
   quote: string

@@ -7,11 +7,11 @@
 
 import React, { useId } from 'react'
 import {
+  type FormData,
+  type FormErrors,
   createInputChangeHandler,
   createSelectChangeHandler,
   createUrlBlurHandler,
-  type FormData,
-  type FormErrors,
   validateCurrentForm
 } from './form-handlers'
 

@@ -1,12 +1,12 @@
 'use client'
 
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Button } from '@thedaviddias/design-system/button'
 import { Calendar, Github, Search } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface Member {
   id: string

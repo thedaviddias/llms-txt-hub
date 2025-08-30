@@ -7,10 +7,10 @@
 import './security-utils-setup'
 import { createSafeErrorMessage, validateOrigin, validateUsername } from '@/lib/security-utils'
 import {
-  createMockRequest,
   INVALID_USERNAMES,
   VALID_USERNAMES,
-  XSS_ATTACK_VECTORS
+  XSS_ATTACK_VECTORS,
+  createMockRequest
 } from './security-utils-setup'
 
 describe('Input Validation', () => {
@@ -112,8 +112,11 @@ describe('Input Validation', () => {
   describe('validateOrigin', () => {
     it('validates allowed origins', () => {
       const allowedOrigins = ['https://example.com', 'https://app.example.com']
-      const request = createMockRequest('https://example.com/api', {
-        origin: 'https://example.com'
+      const request = createMockRequest({
+        url: 'https://example.com/api',
+        headers: {
+          origin: 'https://example.com'
+        }
       })
 
       const result = validateOrigin(request, allowedOrigins)
@@ -122,8 +125,11 @@ describe('Input Validation', () => {
 
     it('rejects disallowed origins', () => {
       const allowedOrigins = ['https://example.com']
-      const request = createMockRequest('https://example.com/api', {
-        origin: 'https://evil.com'
+      const request = createMockRequest({
+        url: 'https://example.com/api',
+        headers: {
+          origin: 'https://evil.com'
+        }
       })
 
       const result = validateOrigin(request, allowedOrigins)
@@ -133,7 +139,7 @@ describe('Input Validation', () => {
 
     it('rejects requests without origin header', () => {
       const allowedOrigins = ['https://example.com']
-      const request = createMockRequest('https://example.com/api')
+      const request = createMockRequest({ url: 'https://example.com/api' })
 
       const result = validateOrigin(request, allowedOrigins)
       expect(result.valid).toBe(false)
@@ -142,8 +148,11 @@ describe('Input Validation', () => {
 
     it('handles case-sensitive origin matching', () => {
       const allowedOrigins = ['https://example.com']
-      const request = createMockRequest('https://example.com/api', {
-        origin: 'https://EXAMPLE.COM'
+      const request = createMockRequest({
+        url: 'https://example.com/api',
+        headers: {
+          origin: 'https://EXAMPLE.COM'
+        }
       })
 
       const result = validateOrigin(request, allowedOrigins)
@@ -152,8 +161,11 @@ describe('Input Validation', () => {
 
     it('validates exact subdomain matches', () => {
       const allowedOrigins = ['https://app.example.com']
-      const request = createMockRequest('https://example.com/api', {
-        origin: 'https://evil.app.example.com'
+      const request = createMockRequest({
+        url: 'https://example.com/api',
+        headers: {
+          origin: 'https://evil.app.example.com'
+        }
       })
 
       const result = validateOrigin(request, allowedOrigins)
@@ -168,7 +180,10 @@ describe('Input Validation', () => {
       ]
 
       allowedOrigins.forEach(origin => {
-        const request = createMockRequest('https://example.com/api', { origin })
+        const request = createMockRequest({
+          url: 'https://example.com/api',
+          headers: { origin }
+        })
         const result = validateOrigin(request, allowedOrigins)
         expect(result.valid).toBe(true)
       })
@@ -179,7 +194,10 @@ describe('Input Validation', () => {
       const malformedOrigins = ['not-a-url', 'example.com', '//example.com', 'javascript:alert(1)']
 
       malformedOrigins.forEach(origin => {
-        const request = createMockRequest('https://example.com/api', { origin })
+        const request = createMockRequest({
+          url: 'https://example.com/api',
+          headers: { origin }
+        })
         const result = validateOrigin(request, allowedOrigins)
         expect(result.valid).toBe(false)
       })

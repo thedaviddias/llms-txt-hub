@@ -1,13 +1,13 @@
 'use client'
 
+import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
+import { Card } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
 import { Skeleton } from '@thedaviddias/design-system/skeleton'
 import { logger } from '@thedaviddias/logging'
 import { ArrowRight, ExternalLink, Rss } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
-import { Card } from '@/components/ui/card'
-import { getRoute } from '@/lib/routes'
 
 interface NewsItem {
   title: string

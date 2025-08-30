@@ -4,10 +4,10 @@
  * Tests metadata extraction, URL validation, duplicate detection, and sanitization.
  */
 
-import * as cheerio from 'cheerio'
-import DOMPurify from 'isomorphic-dompurify'
 import { GET, POST } from '@/app/api/fetch-metadata/route'
 import { getWebsites } from '@/lib/content-loader'
+import * as cheerio from 'cheerio'
+import DOMPurify from 'isomorphic-dompurify'
 
 // Mock dependencies
 jest.mock('@/lib/content-loader')

@@ -1,4 +1,4 @@
-import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
+import { type WebsiteMetadata, getWebsites } from '@/lib/content-loader'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
 

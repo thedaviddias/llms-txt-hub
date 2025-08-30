@@ -1,4 +1,10 @@
 'use client'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { SearchAutocomplete } from '@/components/search/search-autocomplete'
+import { GithubStars } from '@/components/stats/github-stars'
+import { useSearch } from '@/hooks/use-search'
+import { getRoute } from '@/lib/routes'
 import { useAuth } from '@thedaviddias/auth'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
@@ -13,12 +19,6 @@ import { Eye, EyeOff, LogOut, Menu, Plus, Search, Settings, User } from 'lucide-
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { SearchAutocomplete } from '@/components/search/search-autocomplete'
-import { GithubStars } from '@/components/stats/github-stars'
-import { useSearch } from '@/hooks/use-search'
-import { getRoute } from '@/lib/routes'
 import { MobileDrawer } from './mobile-drawer'
 
 interface NavLinkProps {

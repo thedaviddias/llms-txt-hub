@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
 import { analytics } from '@/lib/analytics'
+import { useEffect } from 'react'
 
 /**
  * Client-side analytics tracker that listens for clicks on elements with data-analytics attributes

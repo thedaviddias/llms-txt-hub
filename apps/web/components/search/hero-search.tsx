@@ -1,9 +1,9 @@
 'use client'
 
+import { useSearch } from '@/hooks/use-search'
 import { logger } from '@thedaviddias/logging'
 import { Loader2, Search } from 'lucide-react'
 import { useState } from 'react'
-import { useSearch } from '@/hooks/use-search'
 
 export function HeroSearch() {
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()

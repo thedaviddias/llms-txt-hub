@@ -1,5 +1,7 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -7,8 +9,6 @@ import { AlertCircle, AlertTriangle, Loader2, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useId, useState } from 'react'
 import { toast } from 'sonner'
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 
 interface User {
   id: string

@@ -1,5 +1,5 @@
-import { logger } from '@thedaviddias/logging'
 import { POST } from '@/app/api/user/update-metadata/route'
+import { logger } from '@thedaviddias/logging'
 
 // Mock dependencies
 jest.mock('@clerk/backend', () => {

@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react'
 import { BackToTop } from '@/components/ui/back-to-top'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 // Mock window.scrollTo
 const mockScrollTo = jest.fn()

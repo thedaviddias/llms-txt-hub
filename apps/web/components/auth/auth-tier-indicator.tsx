@@ -1,12 +1,12 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { Check, Eye, Github, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
-import { Card } from '@/components/ui/card'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
 
 export type AuthTier = 'anonymous' | 'email' | 'github'
 

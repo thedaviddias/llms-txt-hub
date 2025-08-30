@@ -1,10 +1,10 @@
+import { Card, CardContent } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
+import type { Guide } from '@/types/types'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Book, GraduationCap } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Card, CardContent } from '@/components/ui/card'
-import { getRoute } from '@/lib/routes'
-import type { Guide } from '@/types/types'
 
 interface GuideCardProps {
   guide: Guide

@@ -1,6 +1,6 @@
+import { getWebsites } from '@/lib/content-loader'
 import { logger } from '@thedaviddias/logging'
 import { NextResponse } from 'next/server'
-import { getWebsites } from '@/lib/content-loader'
 
 export async function GET() {
   try {

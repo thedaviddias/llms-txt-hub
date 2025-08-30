@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
+import { hashSensitiveData } from '@/lib/server-crypto'
 import { logger } from '@thedaviddias/logging'
 import { cookies } from 'next/headers'
-import { hashSensitiveData } from "@/lib/server-crypto"
 
 const CSRF_TOKEN_NAME = 'csrf_token'
 const CSRF_HEADER_NAME = 'x-csrf-token'
@@ -238,50 +238,4 @@ export async function enforceCSRFProtection(request: Request): Promise<Response 
 export async function generateCSRFMetaTag(): Promise<string> {
   const token = await createCSRFToken()
   return `<meta name="csrf-token" content="${token}">`
-}
-
-/**
- * Hook for client-side CSRF token management
- */
-export function getCSRFTokenForClient(): string {
-  // This would be used in client components to get the token
-  // from the meta tag or cookie
-  if (typeof window === 'undefined') {
-    return ''
-  }
-
-  // Try to get from meta tag first
-  const metaTag = document.querySelector('meta[name="csrf-token"]')
-  if (metaTag) {
-    return metaTag.getAttribute('content') || ''
-  }
-
-  // Fallback to cookie (if accessible)
-  const match = document.cookie.match(new RegExp(`${CSRF_TOKEN_NAME}=([^;]+)`))
-  if (match?.[1]) {
-    try {
-      const tokenData: CSRFToken = JSON.parse(decodeURIComponent(match[1]))
-      return tokenData.token
-    } catch {
-      return ''
-    }
-  }
-
-  return ''
-}
-
-/**
- * Add CSRF token to fetch requests automatically
- */
-export function fetchWithCSRF(url: string, options: RequestInit = {}): Promise<Response> {
-  const token = getCSRFTokenForClient()
-
-  if (token && !['GET', 'HEAD'].includes(options.method || 'GET')) {
-    options.headers = {
-      ...options.headers,
-      [CSRF_HEADER_NAME]: token
-    }
-  }
-
-  return fetch(url, options)
 }

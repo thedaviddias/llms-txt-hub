@@ -1,7 +1,7 @@
-import { SiGithub, SiReddit, SiX } from '@icons-pack/react-simple-icons'
-import Link from 'next/link'
 import { ModeToggle } from '@/components/mode-toggle'
 import { getRoute } from '@/lib/routes'
+import { SiGithub, SiReddit, SiX } from '@icons-pack/react-simple-icons'
+import Link from 'next/link'
 
 /**
  * Footer component with site navigation and external links

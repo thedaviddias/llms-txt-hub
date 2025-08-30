@@ -1,11 +1,11 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
-import { Badge } from '@thedaviddias/design-system/badge'
-import { Calendar } from 'lucide-react'
-import Link from 'next/link'
 import { Section } from '@/components/layout/section'
 import { Card, CardContent } from '@/components/ui/card'
 import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { getRoute } from '@/lib/routes'
+import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
+import { Badge } from '@thedaviddias/design-system/badge'
+import { Calendar } from 'lucide-react'
+import Link from 'next/link'
 
 interface Member {
   id: string

@@ -1,9 +1,9 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
 import { Button } from '@thedaviddias/design-system/button'
 import { AlertCircle, AlertTriangle, CheckCircle, Github, Info, Mail, User, X } from 'lucide-react'
 import Link from 'next/link'
-import { Card } from '@/components/ui/card'
 
 type IconName =
   | 'user'

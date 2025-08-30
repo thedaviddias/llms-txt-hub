@@ -1,5 +1,5 @@
-import type { Metadata } from 'next'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Sign In',

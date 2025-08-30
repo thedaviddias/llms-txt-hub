@@ -1,13 +1,13 @@
 'use client'
 
+import { NewsletterModal } from '@/components/newsletter-modal'
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Mail } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
-import { NewsletterModal } from '@/components/newsletter-modal'
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 
 export default function NotificationsSettingsPage() {
   const { user } = useAuth()

@@ -1,8 +1,8 @@
-import { ExternalLink, Github, Star } from 'lucide-react'
-import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import type { GitHubProject } from '@/lib/github'
 import { formatDate } from '@/lib/utils'
+import { ExternalLink, Github, Star } from 'lucide-react'
+import Link from 'next/link'
 
 interface GitHubProjectCardProps {
   project: GitHubProject
