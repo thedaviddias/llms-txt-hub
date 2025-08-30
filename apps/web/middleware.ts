@@ -21,6 +21,7 @@ const isPublicRoute = createRouteMatcher([
   '/guides(.*)',
   '/news(.*)',
   '/tools(.*)',
+  '/resources(.*)',
   '/categories(.*)',
   '/members(.*)',
   '/u(.*)', // User profiles
@@ -32,7 +33,7 @@ const isPublicRoute = createRouteMatcher([
   '/favorites(.*)',
   '/cookies(.*)',
   // Category pages
-  '/(ai-ml|developer-tools|data-analytics|integration-automation|infrastructure-cloud|security-identity|automation-workflow|finance-fintech|marketing-sales|e-commerce|content-media|business-operations|personal|agency-services|other)(.*)',
+  '/(ai-ml|developer-tools|data-analytics|integration-automation|infrastructure-cloud|security-identity|automation-workflow|finance-fintech|marketing-sales|ecommerce-retail|content-media|business-operations|personal|agency-services|international|other)(.*)',
   // Static files
   '/robots.txt',
   '/llms.txt',

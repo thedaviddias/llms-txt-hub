@@ -35,7 +35,7 @@ export const tools: Tool[] = [
     name: 'Raycast Extension',
     slug: 'raycast-extension',
     icon: Command,
-    url: 'https://www.raycast.com/thedaviddias/llms-txt-hub',
+    url: 'https://www.raycast.com/thedaviddias/llms-txt',
     description: 'Search llms.txt hub from Raycast'
   }
 ]
