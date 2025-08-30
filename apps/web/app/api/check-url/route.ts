@@ -11,16 +11,21 @@ function getRateLimitKey(request: NextRequest): string {
   return `url-check:${ip}`
 }
 
-function checkRateLimit(key: string): { allowed: boolean; resetTime?: number } {
-  const now = Date.now()
-  const windowMs = 60 * 1000 // 1 minute window
-  const maxRequests = 10 // Max 10 requests per minute per IP
+interface CheckRateLimitInput {
+  identifier: string
+  maxRequests?: number
+  windowMs?: number
+}
 
-  const record = requestCounts.get(key)
+function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTime?: number } {
+  const { identifier, maxRequests = 10, windowMs = 60 * 1000 } = input
+  const now = Date.now()
+
+  const record = requestCounts.get(identifier)
 
   if (!record || now > record.resetTime) {
     // First request or window expired
-    requestCounts.set(key, { count: 1, resetTime: now + windowMs })
+    requestCounts.set(identifier, { count: 1, resetTime: now + windowMs })
     return { allowed: true }
   }
 
@@ -36,7 +41,7 @@ export async function POST(request: NextRequest) {
   try {
     // Check rate limiting
     const rateLimitKey = getRateLimitKey(request)
-    const rateLimit = checkRateLimit(rateLimitKey)
+    const rateLimit = checkRateLimit({ identifier: rateLimitKey })
 
     if (!rateLimit.allowed) {
       const retryAfter = rateLimit.resetTime

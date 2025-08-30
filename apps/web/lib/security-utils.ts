@@ -13,25 +13,34 @@ export interface RateLimitOptions {
   maxRequests: number
 }
 
+export interface CheckRateLimitInput {
+  identifier: string
+  resource?: string
+  maxRequests?: number
+  windowMs?: number
+}
+
 /**
- * Check rate limit for a given key
+ * Check rate limit for a given identifier
  *
- * @param key - The key to check rate limit for
- * @param options - Rate limit options
+ * @param input - Object containing rate limit parameters
+ * @param input.identifier - The identifier to check rate limit for (e.g., clientIp or userId)
+ * @param input.resource - Optional resource being accessed (e.g., pathname or endpoint)
+ * @param input.maxRequests - Maximum requests allowed (default: 10)
+ * @param input.windowMs - Time window in milliseconds (default: 60000)
  * @returns Object with allowed status and reset time
  */
 export function checkRateLimit(
-  key: string,
-  options: RateLimitOptions = { windowMs: 60 * 1000, maxRequests: 10 }
+  input: CheckRateLimitInput
 ): { allowed: boolean; resetTime?: number } {
+  const { identifier, maxRequests = 10, windowMs = 60 * 1000 } = input
   const now = Date.now()
-  const { windowMs, maxRequests } = options
 
-  const record = rateLimitMap.get(key)
+  const record = rateLimitMap.get(identifier)
 
   if (!record || now > record.resetTime) {
     // First request or window expired
-    rateLimitMap.set(key, { count: 1, resetTime: now + windowMs })
+    rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs })
     return { allowed: true }
   }
 

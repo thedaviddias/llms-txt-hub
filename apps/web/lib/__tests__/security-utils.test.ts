@@ -26,19 +26,19 @@ describe('security-utils', () => {
 
   describe('checkRateLimit', () => {
     it('should allow first request', () => {
-      const result = checkRateLimit('test-key')
+      const result = checkRateLimit({ identifier: 'test-key' })
 
       expect(result.allowed).toBe(true)
       expect(result.resetTime).toBeUndefined()
     })
 
     it('should allow requests within limit', () => {
-      const key = 'test-key'
+      const identifier = 'test-key'
       const options = { windowMs: 60000, maxRequests: 3 }
 
-      const result1 = checkRateLimit(key, options)
-      const result2 = checkRateLimit(key, options)
-      const result3 = checkRateLimit(key, options)
+      const result1 = checkRateLimit({ identifier, ...options })
+      const result2 = checkRateLimit({ identifier, ...options })
+      const result3 = checkRateLimit({ identifier, ...options })
 
       expect(result1.allowed).toBe(true)
       expect(result2.allowed).toBe(true)
@@ -46,12 +46,12 @@ describe('security-utils', () => {
     })
 
     it('should deny requests over limit', () => {
-      const key = 'test-key'
+      const identifier = 'test-key'
       const options = { windowMs: 60000, maxRequests: 2 }
 
-      checkRateLimit(key, options)
-      checkRateLimit(key, options)
-      const result = checkRateLimit(key, options)
+      checkRateLimit({ identifier, ...options })
+      checkRateLimit({ identifier, ...options })
+      const result = checkRateLimit({ identifier, ...options })
 
       expect(result.allowed).toBe(false)
       expect(result.resetTime).toBeDefined()
@@ -59,16 +59,16 @@ describe('security-utils', () => {
     })
 
     it('should reset after time window', () => {
-      const key = 'test-key'
+      const identifier = 'test-key'
       const options = { windowMs: 1, maxRequests: 1 }
 
       // First request should be allowed
-      const result1 = checkRateLimit(key, options)
+      const result1 = checkRateLimit({ identifier, ...options })
       expect(result1.allowed).toBe(true)
 
       // Wait for window to expire
       setTimeout(() => {
-        const result2 = checkRateLimit(key, options)
+        const result2 = checkRateLimit({ identifier, ...options })
         expect(result2.allowed).toBe(true)
       }, 10)
     })
@@ -76,23 +76,23 @@ describe('security-utils', () => {
     it('should handle different keys independently', () => {
       const options = { windowMs: 60000, maxRequests: 1 }
 
-      const result1 = checkRateLimit('key1', options)
-      const result2 = checkRateLimit('key2', options)
+      const result1 = checkRateLimit({ identifier: 'key1', ...options })
+      const result2 = checkRateLimit({ identifier: 'key2', ...options })
 
       expect(result1.allowed).toBe(true)
       expect(result2.allowed).toBe(true)
     })
 
     it('should use default options when none provided', () => {
-      const result = checkRateLimit('test-key')
+      const result = checkRateLimit({ identifier: 'test-key' })
       expect(result.allowed).toBe(true)
 
       // Should use default maxRequests of 10
       for (let i = 0; i < 9; i++) {
-        checkRateLimit('test-key')
+        checkRateLimit({ identifier: 'test-key' })
       }
 
-      const finalResult = checkRateLimit('test-key')
+      const finalResult = checkRateLimit({ identifier: 'test-key' })
       expect(finalResult.allowed).toBe(false)
     })
   })

@@ -41,11 +41,11 @@ const isPublicRoute = createRouteMatcher([
 ])
 
 /**
- * Edge Runtime compatible hash function for sensitive data
+ * Generate full SHA-256 hash for rate limiting keys
  * @param data - The data to hash
- * @returns A hashed version of the data for logging
+ * @returns Full SHA-256 hex string
  */
-async function hashSensitiveData(data: string): Promise<string> {
+async function generateFullHash(data: string): Promise<string> {
   const encoder = new TextEncoder()
   const dataBuffer = encoder.encode(data)
   const hashBuffer = await crypto.subtle.digest('SHA-256', dataBuffer)
@@ -53,7 +53,16 @@ async function hashSensitiveData(data: string): Promise<string> {
   return Array.from(hashArray)
     .map(b => b.toString(16).padStart(2, '0'))
     .join('')
-    .slice(0, 12)
+}
+
+/**
+ * Edge Runtime compatible hash function for sensitive data
+ * @param data - The data to hash
+ * @returns A truncated hashed version of the data for logging
+ */
+async function hashSensitiveData(data: string): Promise<string> {
+  const fullHash = await generateFullHash(data)
+  return fullHash.slice(0, 12)
 }
 
 /**
@@ -74,17 +83,31 @@ function getClientIp(request: NextRequest): string {
 }
 
 /**
+ * Input parameters for rate limit checking
+ */
+interface CheckRateLimitInput {
+  identifier: string
+  resource: string
+  maxRequests: number
+  windowMs: number
+}
+
+/**
  * Simple in-memory rate limiter for Edge Runtime
  */
 const rateLimitCache = new Map<string, { count: number; resetTime: number }>()
 
+/**
+ * Check rate limit for a given identifier and resource
+ * @param input - Rate limit parameters
+ * @returns Rate limit status with allowed flag, remaining requests, and reset time
+ */
 async function checkRateLimit(
-  identifier: string,
-  resource: string,
-  maxRequests: number,
-  windowMs: number
+  input: CheckRateLimitInput
 ): Promise<{ allowed: boolean; remaining: number; resetTime: Date; retryAfter?: number }> {
-  const key = `${await hashSensitiveData(identifier)}:${resource}`
+  const { identifier, resource, maxRequests, windowMs } = input
+  const fullHash = await generateFullHash(identifier)
+  const key = `${fullHash}:${resource}`
   const now = Date.now()
   const resetTime = new Date(now + windowMs)
 
@@ -162,7 +185,13 @@ function generateNonce(): string {
   const array = new Uint8Array(16)
   crypto.getRandomValues(array)
   // Use btoa instead of Buffer for Edge Runtime compatibility
-  return btoa(String.fromCharCode(...array))
+  // Convert Uint8Array to string manually for Edge Runtime compatibility
+  let binary = ''
+  for (let i = 0; i < array.length; i++) {
+    binary += String.fromCharCode(array[i])
+  }
+  const base64 = btoa(binary)
+  return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 }
 
 /**
@@ -226,6 +255,20 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   const clientIp = getClientIp(req)
   const pathname = req.nextUrl.pathname
 
+  // Skip rate limiting for static assets and regular page loads
+  if (
+    // Static assets
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/robots.txt') ||
+    pathname.startsWith('/sitemap') ||
+    pathname.includes('.') || // Files with extensions (CSS, JS, images, etc.)
+    // Regular page loads (non-API routes) - exclude search route
+    (!pathname.startsWith('/api/') && req.method === 'GET' && pathname !== '/search')
+  ) {
+    return null
+  }
+
   // Determine rate limit config based on route
   let maxRequests = 60 // Default: 60 requests per minute
   let windowMs = 60 * 1000 // 1 minute
@@ -241,7 +284,12 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     maxRequests = 10 // 10 actions per minute
   }
 
-  const result = await checkRateLimit(clientIp, pathname, maxRequests, windowMs)
+  const result = await checkRateLimit({
+    identifier: clientIp,
+    resource: pathname,
+    maxRequests,
+    windowMs
+  })
 
   if (!result.allowed) {
     logger.warn('Rate limit exceeded', {
