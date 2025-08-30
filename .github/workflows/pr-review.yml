@@ -70,7 +70,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: pnpm test:e2e
+        run: pnpm test:e2e:ci
 
       - name: Upload test results
         if: always()
