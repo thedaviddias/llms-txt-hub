@@ -3,6 +3,15 @@ import { Button } from '@thedaviddias/design-system/button'
 import { Skeleton } from '@thedaviddias/design-system/skeleton'
 import { Rss } from 'lucide-react'
 
+/**
+ * Renders a static loading skeleton for the list page.
+ *
+ * Shows a header with a title placeholder and a disabled "Follow RSS Feed" button,
+ * followed by five card placeholders (each with a title, content block, and metadata row)
+ * used while the actual list content is loading.
+ *
+ * @returns The React element containing the loading skeleton UI.
+ */
 export default function Loading() {
   return (
     <div className="container mx-auto px-4 py-8">

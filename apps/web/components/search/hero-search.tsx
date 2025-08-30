@@ -5,6 +5,16 @@ import { logger } from '@thedaviddias/logging'
 import { Loader2, Search } from 'lucide-react'
 import { useState } from 'react'
 
+/**
+ * A search input component for the hero section that triggers a site search.
+ *
+ * Renders a text input bound to the `useSearch` hook and a submit button. On submit, if the
+ * query is non-empty it sets a local loading state, calls `handleSearch(searchQuery)` and
+ * restores the loading state when complete. Errors during the search are logged; the input
+ * value is not cleared here (the search page handles that).
+ *
+ * @returns The rendered search form as a JSX element.
+ */
 export function HeroSearch() {
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()
   const [isLoading, setIsLoading] = useState(false)

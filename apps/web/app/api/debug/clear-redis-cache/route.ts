@@ -3,10 +3,17 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { CACHE_KEYS, del } from '@/lib/redis'
 
 /**
- * POST handler for clearing Redis cache for a specific user
+ * Clears Redis cache entry for a user's GitHub contributions.
  *
- * @param request - NextRequest containing username in body
- * @returns Promise resolving to NextResponse with cache clear result or error
+ * Expects a JSON body containing `username`. If `username` is missing the handler
+ * responds with 400. It deletes the Redis key formed as
+ * `${CACHE_KEYS.GITHUB_CONTRIBUTIONS}${username}` and returns a JSON response
+ * containing `username`, `cacheKey`, `deleted` (truthy when a key was removed),
+ * a human-readable `message`, and a `timestamp`. On internal errors it responds
+ * with 500 and a JSON payload containing `error`, `details`, and `timestamp`.
+ *
+ * @param request - NextRequest whose JSON body must include `username`.
+ * @returns NextResponse with the result of the cache clear operation or error details.
  */
 export async function POST(request: NextRequest) {
   try {

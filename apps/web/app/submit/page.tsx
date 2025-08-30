@@ -6,6 +6,16 @@ import { useAuth } from '@thedaviddias/auth'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
+/**
+ * Page component that guards and renders the project submission form.
+ *
+ * When auth state is loading it renders a centered "Loading..." placeholder.
+ * If auth is loaded and there is no authenticated user it redirects to `/login`
+ * with a message query and renders nothing. For authenticated users it renders
+ * the submission form wrapped in an `AuthCheck` (with `requireGitHub: false`).
+ *
+ * @returns The page's JSX content.
+ */
 export default function SubmitPage() {
   const { user, isLoaded } = useAuth()
   const router = useRouter()

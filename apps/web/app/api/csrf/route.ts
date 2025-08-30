@@ -2,9 +2,12 @@ import { NextResponse } from 'next/server'
 import { createCSRFToken } from '@/lib/csrf-protection'
 
 /**
- * GET handler for CSRF token generation
+ * GET handler that returns a freshly generated CSRF token.
  *
- * @returns Promise resolving to NextResponse with CSRF token or error
+ * Generates a token (via createCSRFToken) and responds with JSON { token } on success.
+ * If token generation fails, responds with JSON { error: 'Failed to generate CSRF token' } and HTTP 500.
+ *
+ * @returns A NextResponse containing the token on success, or an error message with status 500 on failure.
  */
 export async function GET() {
   try {

@@ -48,12 +48,11 @@ interface CreateMockRequestInput {
 }
 
 /**
- * Helper to create a mock request for testing
+ * Create a Request-like mock for tests using the provided URL and headers.
  *
- * @param input - Input parameters for creating the mock request
- * @param input.url - Request URL
- * @param input.headers - Request headers (optional)
- * @returns Mock request object
+ * @param input.url - URL for the mock request
+ * @param input.headers - Optional headers to initialize on the mock (plain object of headerName→value)
+ * @returns A Request instance (or the test environment's mocked Request) with the given URL and headers
  */
 export function createMockRequest({ url, headers = {} }: CreateMockRequestInput) {
   return new Request(url, { headers })

@@ -12,13 +12,18 @@ interface ProfileContributionsProps {
 }
 
 /**
- * ProfileContributions component that displays GitHub contributions for a user
+ * Server component that fetches and renders a user's recent GitHub contributions.
  *
- * @param props - Component props
- * @param props.githubUsername - GitHub username to fetch contributions for
- * @param props.isOwnProfile - Whether this is the current user's own profile
- * @param props.username - Display username for messaging
- * @returns React component displaying contributions or empty state
+ * When a `githubUsername` is provided this component attempts to fetch contribution
+ * totals and a list of recent contributions. If fetching fails or no username is
+ * provided, it renders an empty state. The empty-state messaging varies depending
+ * on whether the profile is the current user's (`isOwnProfile`) and whether a
+ * display `username` is available.
+ *
+ * @param githubUsername - GitHub username to fetch contributions for; when absent the component shows an appropriate empty state.
+ * @param isOwnProfile - True if the rendered profile belongs to the current signed-in user; affects empty-state guidance.
+ * @param username - Display username used to conditionally surface a verification note when the profile is the user's own and no GitHub account is linked.
+ * @returns A React element showing contribution totals and a list of recent contributions, or an informative empty state.
  */
 export async function ProfileContributions({
   githubUsername,

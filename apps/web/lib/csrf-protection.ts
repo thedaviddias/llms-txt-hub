@@ -233,7 +233,12 @@ export async function enforceCSRFProtection(request: Request): Promise<Response 
 }
 
 /**
- * Generate CSRF meta tag for HTML pages
+ * Create a new CSRF token (stored in the HTTP-only cookie) and return an HTML meta tag embedding the token.
+ *
+ * This calls createCSRFToken(), which persists the token and its expiry in a secure, HTTP-only cookie,
+ * then returns a string of the form `<meta name="csrf-token" content="...">` suitable for inclusion in server-rendered HTML.
+ *
+ * @returns An HTML meta tag string containing the newly generated CSRF token.
  */
 export async function generateCSRFMetaTag(): Promise<string> {
   const token = await createCSRFToken()

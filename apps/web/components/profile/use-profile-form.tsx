@@ -24,9 +24,20 @@ interface UseProfileFormProps {
 }
 
 /**
- * Custom hook for handling profile form submission and validation
- * @param props - Hook configuration
- * @returns Form handlers and state
+ * React hook for validating and submitting a user profile edit form.
+ *
+ * Performs client-side validation, submits profile metadata to the server via a
+ * CSRF-protected request, triggers analytics events, reloads the current user,
+ * and navigates or refreshes the UI when appropriate.
+ *
+ * @param onSuccess - Callback invoked after a successful profile update (before navigation).
+ * @param usernameError - External username validation error (prevents submission while present).
+ * @param isCheckingUsername - When true, submission is blocked until username availability check completes.
+ * @returns An object with:
+ *  - isLoading: boolean indicating whether a submission is in progress.
+ *  - error: current error message (empty when none).
+ *  - setError: function to override the error message.
+ *  - handleSubmit: async function to validate and submit FormData.
  */
 export function useProfileForm({
   onSuccess,

@@ -23,6 +23,20 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+/**
+ * Renders the Profile Settings UI for the signed-in user.
+ *
+ * Displays account overview, privacy status, GitHub integration, account actions, and a danger zone
+ * for account deletion. While mounted it:
+ * - Shows a toast for a `message` URL parameter (info/success/error) and removes that param from the URL.
+ * - Redirects to the login page if authentication has finished loading and there is no user.
+ *
+ * The component also provides an inline "Edit Profile" modal and a "Delete Account" action which,
+ * after user confirmation, sends a DELETE request to `/api/user/delete-account`, signs the user out
+ * on success, and navigates to the home page. Error conditions during deletion are surfaced via toast.
+ *
+ * @returns The profile settings React element.
+ */
 export default function ProfileContent() {
   const { user, signOut, isLoaded } = useAuth()
   const router = useRouter()

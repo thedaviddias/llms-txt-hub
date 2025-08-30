@@ -3,9 +3,11 @@
 import { useEffect } from 'react'
 
 /**
- * CSRF Provider component that initializes CSRF token on the client side
+ * Initializes the CSRF token on the client by fetching `/api/csrf` and storing it in a meta tag.
  *
- * @returns null - This component doesn't render anything
+ * Runs once on mount; if the fetched JSON contains a `token`, ensures a `meta[name="csrf-token"]` element exists (creates it if missing) and sets its `content` to the token. This component has no UI.
+ *
+ * @returns null — this component renders nothing
  */
 export function CSRFProvider() {
   useEffect(() => {

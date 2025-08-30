@@ -9,6 +9,23 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+/**
+ * Renders the Privacy Settings page and manages client-side privacy interactions.
+ *
+ * This component displays controls for profile visibility and data-rights actions,
+ * keeps local UI state in sync with the authenticated user's public metadata,
+ * and performs the necessary side effects when the user updates settings:
+ * - Toggling profile visibility sends a POST to `/api/user/update-metadata`, updates local state optimistically,
+ *   and on success reloads user data and refreshes the router. On failure it reverts local state and shows an error.
+ * - Exporting data issues a GET to `/api/user/export-data` and triggers a JSON download of the returned payload.
+ *
+ * It also logs analytics events for page view, settings changes, profile visibility toggles, and data exports.
+ *
+ * The "Public Profile" control is disabled while the profile is considered incomplete
+ * (missing first name, username, and GitHub username) to prevent accidental visibility changes.
+ *
+ * @returns The privacy settings page UI (JSX element).
+ */
 export default function PrivacySettingsPage() {
   const { user, isLoaded, reloadUser } = useAuth()
   const router = useRouter()

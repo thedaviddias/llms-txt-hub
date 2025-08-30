@@ -51,6 +51,20 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   })
 }
 
+/**
+ * Renders the public profile page for a user identified by slug.
+ *
+ * Loads session and user data server-side, enforces privacy and visibility rules
+ * (returns a 404 via `notFound()` when the profile is not visible to the viewer),
+ * and renders the profile header, notices, and contributions component.
+ *
+ * Side effects:
+ * - May call `notFound()` to return a 404 when the profile is not accessible.
+ * - Sets response headers to prevent browser caching.
+ *
+ * @param params - A promise resolving to an object with `slug: string` identifying the profile to render.
+ * @returns A JSX element containing the profile page layout.
+ */
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const session = await auth()
   const { slug } = await params

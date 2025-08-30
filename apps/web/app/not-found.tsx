@@ -2,6 +2,15 @@ import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import Link from 'next/link'
 
+/**
+ * Renders a 404 "Page Not Found" UI.
+ *
+ * Returns a centered page containing a "404" badge, a title, a brief description with a link
+ * to the repository's GitHub issues page, and a button that navigates back to the homepage.
+ * The homepage URL is computed at render time via `getRoute('home')`.
+ *
+ * @returns A JSX element for the 404 page.
+ */
 export default async function NotFound() {
   return (
     <main className="mx-auto relative container flex flex-col items-center justify-center px-4">

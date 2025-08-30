@@ -6,6 +6,20 @@ import { useRouter } from 'next/navigation'
 import type React from 'react'
 import { useCallback, useState } from 'react'
 
+/**
+ * Client hook managing a search input and initiating navigation to the app's search route.
+ *
+ * Provides controlled search state, a debounced value (300ms), and an async handler that
+ * navigates to the resolved search route with the query encoded. `handleSearch` resolves
+ * immediately for empty or whitespace-only queries; otherwise it calls `router.push(...)`
+ * and resolves after ~100ms to allow navigation to start.
+ *
+ * Returns an object with:
+ * - `searchQuery`: current input value
+ * - `setSearchQuery`: updater for the input value
+ * - `debouncedSearchQuery`: `searchQuery` debounced by 300ms
+ * - `handleSearch(searchQuery: string): Promise<void>`: triggers navigation to `getRoute('search')?q=...`
+ */
 export function useSearch() {
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)

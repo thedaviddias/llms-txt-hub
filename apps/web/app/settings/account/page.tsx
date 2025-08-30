@@ -7,6 +7,20 @@ import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { useEffect } from 'react'
 
+/**
+ * Renders the Account Settings page.
+ *
+ * Displays account information, security settings, and a danger zone for destructive actions.
+ * On mount, records a settings page view via the analytics service.
+ *
+ * Derived values passed to child components:
+ * - hasGitHubAuth: true when the user's metadata contains a GitHub username or name.
+ * - displayName: GitHub username/name when available, otherwise the email local-part or a fallback.
+ * - accountType: "GitHub" when GitHub auth is present, otherwise "Email".
+ * - userData: a sanitized user object (id, optional email, optional user_metadata with github_username and user_name) or null.
+ *
+ * @returns The Account Settings page JSX.
+ */
 export default function AccountSettingsPage() {
   const { user } = useAuth()
 

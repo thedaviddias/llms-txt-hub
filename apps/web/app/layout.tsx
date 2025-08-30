@@ -24,6 +24,16 @@ type RootLayoutProps = {
   children: React.ReactNode
 }
 
+/**
+ * Root layout component that composes global providers and the top-level page chrome.
+ *
+ * Renders global providers (authentication via Clerk, design system, Sentry user context,
+ * favorites context, analytics tracking, and CSRF protection) and the app shell
+ * (Header, main content, Footer) plus utility UI (BackToTop, Vercel toolbar).
+ *
+ * @param children - The page content to render inside the layout's main region.
+ * @returns The root JSX structure for the application.
+ */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <ClerkProvider signInUrl="/login" signUpUrl="/login" signInFallbackRedirectUrl="/">

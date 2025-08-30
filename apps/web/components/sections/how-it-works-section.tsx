@@ -2,6 +2,18 @@ import { Section } from '@/components/layout/section'
 import { Card, CardContent } from '@/components/ui/card'
 import { Code2, FileText, Zap } from 'lucide-react'
 
+/**
+ * Renders the "How llms.txt Works" section composed of three informational cards.
+ *
+ * Purely presentational React component that returns a Section containing three Cards:
+ * 1) Create llms.txt
+ * 2) Define Structure
+ * 3) Enhance AI Interactions
+ *
+ * No props, state, or side effects.
+ *
+ * @returns A JSX element containing the section and its three step cards.
+ */
 export function HowItWorksSection() {
   return (
     <Section

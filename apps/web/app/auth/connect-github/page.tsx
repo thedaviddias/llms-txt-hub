@@ -9,6 +9,23 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+/**
+ * Renders the "Connect GitHub" page allowing an authenticated user to link their GitHub account.
+ *
+ * If no user is present the component redirects to the login flow with a redirect back to
+ * /auth/connect-github. If the current user already has GitHub linked it redirects to /profile
+ * with a message indicating GitHub is already connected.
+ *
+ * The component displays:
+ * - A loading state while the user is being resolved.
+ * - A confirmation view when GitHub is already connected.
+ * - A connect flow that initiates GitHub OAuth by navigating the browser to
+ *   /login?provider=github&redirect=/profile?message=GitHub account connected successfully.
+ *
+ * If the OAuth redirect attempt fails, a toast error is shown and the connect button is re-enabled.
+ *
+ * @returns The React element for the Connect GitHub page.
+ */
 export default function ConnectGitHubPage() {
   const { user } = useAuth()
   const router = useRouter()

@@ -12,6 +12,17 @@ import { ChevronDown, Filter, Search, Star, Users } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 
+/**
+ * Client-side search and filter UI for member listing that keeps URL query params in sync.
+ *
+ * Renders a debounced search input and a filter dropdown. Initializes its internal `search` and
+ * `filter` state from the current URL query parameters, debounces user typing (300ms) before
+ * applying the search param, and updates the URL (removing the `page` param) whenever search or
+ * filter changes. Updates are performed with a non-blocking transition.
+ *
+ * @returns The component JSX that provides a searchable, filterable control for members and
+ *          synchronizes those controls with the browser URL.
+ */
 export function MembersSearch() {
   const router = useRouter()
   const pathname = usePathname()

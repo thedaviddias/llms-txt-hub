@@ -3,9 +3,14 @@ import { NextResponse } from 'next/server'
 import { GitHubAPIClient } from '@/lib/github-security-utils'
 
 /**
- * POST handler for clearing GitHub API cache
+ * POST handler that clears the GitHub API rate-limit cache.
  *
- * @returns Promise resolving to NextResponse with success or error message
+ * Clears the singleton GitHubAPIClient's rate-limit cache and returns a JSON response
+ * with a success message and ISO timestamp. On failure returns a JSON error object
+ * including `details` and `timestamp` and an HTTP 500 status. The operation is logged.
+ *
+ * @returns NextResponse containing either `{ message, timestamp }` on success or
+ * `{ error, details, timestamp }` with status 500 on failure.
  */
 export async function POST() {
   try {

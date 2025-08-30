@@ -21,6 +21,16 @@ export const metadata: Metadata = generateBaseMetadata({
 // Revalidate Projects page hourly to reduce API load
 export const revalidate = 3600
 
+/**
+ * Server component page that lists open-source projects implementing the llms.txt standard.
+ *
+ * Fetches projects from the GitHub topics `llms-txt` and `llmstxt` concurrently, deduplicates
+ * repositories by full name, sorts them by star count (descending), and selects the top project
+ * as the featured project. Renders the featured project (if any), a grid of remaining projects,
+ * and CTAs for browsing the GitHub topic or submitting a project.
+ *
+ * @returns A React Server Component (JSX) rendering the Projects page.
+ */
 export default async function ProjectsPage() {
   // Fetch projects with both topics concurrently
   const [projects1, projects2] = await Promise.all([

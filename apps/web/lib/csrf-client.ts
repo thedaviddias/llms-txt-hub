@@ -3,7 +3,12 @@
 const CSRF_HEADER_NAME = 'x-csrf-token'
 
 /**
- * Get CSRF token from meta tag for client-side usage
+ * Returns the CSRF token read from the document meta tag `meta[name="csrf-token"]`.
+ *
+ * This is safe to call during server-side rendering — it returns an empty string when `window`
+ * is unavailable or when the meta tag (or its `content`) is missing.
+ *
+ * @returns The CSRF token string, or an empty string if not found or not running in a browser.
  */
 export function getCSRFTokenForClient(): string {
   if (typeof window === 'undefined') {
@@ -20,8 +25,16 @@ export function getCSRFTokenForClient(): string {
 }
 
 /**
- * Add CSRF token to fetch requests automatically
- * This is the client-side version that can be used in React components
+ * Performs a fetch request and automatically attaches the CSRF token when appropriate.
+ *
+ * If a client-side CSRF token is available (read via `getCSRFTokenForClient()`) and the request
+ * method is not `GET` or `HEAD`, the header `x-csrf-token` will be added to the request.
+ *
+ * Note: this function may mutate the supplied `options` object by assigning `options.headers`.
+ *
+ * @param url - Request URL
+ * @param options - Fetch options; headers will be merged with the CSRF header when added
+ * @returns A promise that resolves to the fetch Response
  */
 export function fetchWithCSRF(url: string, options: RequestInit = {}): Promise<Response> {
   const token = getCSRFTokenForClient()

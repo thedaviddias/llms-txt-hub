@@ -10,6 +10,20 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+/**
+ * Integrations settings page component that renders GitHub integration state and controls.
+ *
+ * Renders the GitHub integration card showing connected status, connected account details,
+ * active features, and account management (disconnect). If not connected, shows benefits
+ * of connecting and a Connect button.
+ *
+ * Side effects:
+ * - Emits analytics events on mount and on user interactions (connect, disconnect attempt, profile navigation).
+ * - Shows a browser confirmation dialog when attempting to disconnect GitHub.
+ * - Displays toast notifications for the (currently placeholder) disconnect flow.
+ *
+ * @returns The JSX element for the integrations settings page.
+ */
 export default function IntegrationsSettingsPage() {
   const { user } = useAuth()
   const [isDisconnecting, setIsDisconnecting] = useState(false)

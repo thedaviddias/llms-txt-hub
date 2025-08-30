@@ -9,6 +9,21 @@ import { Mail } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+/**
+ * Notifications settings page component.
+ *
+ * Renders notification-related preferences (including a newsletter card) and manages local UI state:
+ * - controls a `settings` object with boolean flags for various notification channels (emailNewsletter, emailUpdates,
+ *   emailSubmissions, emailSecurity, pushNotifications, weeklyDigest, communityUpdates)
+ * - toggles a newsletter modal
+ *
+ * Side effects:
+ * - on mount, records a settings page view via analytics
+ * - when a setting is changed, updates local state, records the toggle via analytics, and shows a success toast
+ * - when subscribing to the newsletter, records the signup via analytics and opens the newsletter modal
+ *
+ * @returns The notifications settings page JSX.
+ */
 export default function NotificationsSettingsPage() {
   const { user } = useAuth()
   const [showNewsletterModal, setShowNewsletterModal] = useState(false)

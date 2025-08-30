@@ -15,10 +15,16 @@ function hashUsername(username: string | null | undefined): string {
 }
 
 /**
- * GET handler for debugging GitHub contributions fetching
+ * HTTP GET handler that fetches a GitHub user's contribution data for debugging.
  *
- * @param request - NextRequest with username query parameter
- * @returns Promise resolving to NextResponse with contributions data or error
+ * Expects a `username` query parameter. Returns 400 if missing. On success returns a JSON
+ * payload { username, contributions, timestamp }. On failure logs a hashed username and
+ * returns a 500 JSON error response with `Cache-Control: no-store`. In non-production
+ * environments the error response includes `details` with the underlying error message.
+ *
+ * The handler logs username information as a SHA-256 hex digest (not the raw username).
+ *
+ * @returns A NextResponse containing either the contributions payload or an error object.
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
