@@ -88,6 +88,10 @@ export function Header() {
       setSearchQuery('')
       setShowAutocomplete(false)
       setShowMobileAutocomplete(false)
+      if (showMobileSearch) {
+        setShowMobileSearch(false)
+        setShowMobileAutocomplete(false)
+      }
     }
   }
 
