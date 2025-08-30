@@ -1,6 +1,6 @@
-import { logger } from '@thedaviddias/logging'
 import { GET } from '@/app/api/websites/route'
 import { getWebsites } from '@/lib/content-loader'
+import { logger } from '@thedaviddias/logging'
 
 // Mock dependencies
 jest.mock('@/lib/content-loader')

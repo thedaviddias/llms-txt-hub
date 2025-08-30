@@ -1,8 +1,8 @@
 'use client'
 
-import { useMemo } from 'react'
 import { useFavorites } from '@/contexts/favorites-context'
 import type { WebsiteMetadata } from '@/lib/content-loader'
+import { useMemo } from 'react'
 
 export function useFavoritesFilter(websites: WebsiteMetadata[]) {
   const { favorites } = useFavorites()

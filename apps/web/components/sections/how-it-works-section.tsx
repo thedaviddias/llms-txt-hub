@@ -1,6 +1,6 @@
-import { Code2, FileText, Zap } from 'lucide-react'
 import { Section } from '@/components/layout/section'
 import { Card, CardContent } from '@/components/ui/card'
+import { Code2, FileText, Zap } from 'lucide-react'
 
 export function HowItWorksSection() {
   return (

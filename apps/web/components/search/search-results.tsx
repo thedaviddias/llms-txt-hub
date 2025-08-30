@@ -1,12 +1,12 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
 import { EmptyState } from '@/components/empty-state'
 import { SearchFilters } from '@/components/search/search-filters'
 import { useSearch } from '@/components/search/use-search'
 import { WebsitesListWithSort } from '@/components/websites-list-with-sort'
 import { getRoute } from '@/lib/routes'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useMemo, useState } from 'react'
 
 /**
  * Search results component for displaying and filtering websites

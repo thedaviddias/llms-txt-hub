@@ -1,9 +1,9 @@
 'use client'
 
+import { analytics } from '@/lib/analytics'
 import { Button } from '@thedaviddias/design-system/button'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { analytics } from '@/lib/analytics'
 
 interface LoadMoreProps {
   onLoadMore: () => Promise<void> | void

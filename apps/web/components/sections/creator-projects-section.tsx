@@ -1,11 +1,11 @@
 'use client'
 
-import { Badge } from '@thedaviddias/design-system/badge'
-import { Button } from '@thedaviddias/design-system/button'
-import { ExternalLink, Github, Star } from 'lucide-react'
 import { Section } from '@/components/layout/section'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { analytics } from '@/lib/analytics'
+import { Badge } from '@thedaviddias/design-system/badge'
+import { Button } from '@thedaviddias/design-system/button'
+import { ExternalLink, Github, Star } from 'lucide-react'
 
 interface Project {
   name: string

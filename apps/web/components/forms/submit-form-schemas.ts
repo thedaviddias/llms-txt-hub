@@ -1,5 +1,5 @@
-import * as z from 'zod'
 import { categories } from '@/lib/categories'
+import * as z from 'zod'
 
 /**
  * Validation schema for Step 1 of the submit form

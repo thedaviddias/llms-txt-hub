@@ -1,5 +1,6 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
 import { useSignIn, useSignUp, useUser } from '@clerk/nextjs'
 import { Button } from '@thedaviddias/design-system/button'
 import { Input } from '@thedaviddias/design-system/input'
@@ -9,7 +10,6 @@ import { CheckCircle, Github, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Card } from '@/components/ui/card'
 
 /**
  * Sanitizes and validates a redirect URL to prevent open redirect vulnerabilities

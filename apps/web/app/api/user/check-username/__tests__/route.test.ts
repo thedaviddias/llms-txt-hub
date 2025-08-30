@@ -28,12 +28,12 @@ jest.mock('@clerk/backend', () => {
   }
 })
 
-import { auth } from '@thedaviddias/auth'
-import DOMPurify from 'isomorphic-dompurify'
 import { MALICIOUS_INPUTS } from '@/app/api/__tests__/test-helpers'
 // Import route AFTER mocks are set up
 import { POST } from '@/app/api/user/check-username/route'
 import { clearRateLimiting } from '@/lib/security-utils'
+import { auth } from '@thedaviddias/auth'
+import DOMPurify from 'isomorphic-dompurify'
 
 // Mock environment variable for Clerk
 process.env.CLERK_SECRET_KEY = 'test_secret_key'

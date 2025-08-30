@@ -1,9 +1,9 @@
 'use client'
 
+import { getUserContributions } from '@/lib/github-contributions'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Star } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { getUserContributions } from '@/lib/github-contributions'
 
 interface ContributionBadgeProps {
   username: string

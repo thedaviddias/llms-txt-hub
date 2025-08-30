@@ -1,7 +1,3 @@
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { CategoryWebsitesList } from '@/components/category-websites-list'
 import { JsonLd } from '@/components/json-ld'
@@ -13,6 +9,10 @@ import { categories, getCategoryBySlug } from '@/lib/categories'
 import { getGuides } from '@/lib/content-loader'
 import { getCategorySEO } from '@/lib/seo/category-seo'
 import { generateDynamicMetadata, optimizeMetaDescription } from '@/lib/seo/seo-config'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>

@@ -38,13 +38,24 @@ global.Headers = jest.fn().mockImplementation(init => {
 }) as any
 
 /**
+ * Input parameters for creating a mock request
+ */
+interface CreateMockRequestInput {
+  /** Request URL */
+  url: string
+  /** Request headers (optional, defaults to empty object) */
+  headers?: Record<string, string>
+}
+
+/**
  * Helper to create a mock request for testing
  *
- * @param url - Request URL
- * @param headers - Request headers
+ * @param input - Input parameters for creating the mock request
+ * @param input.url - Request URL
+ * @param input.headers - Request headers (optional)
  * @returns Mock request object
  */
-export function createMockRequest(url: string, headers: Record<string, string> = {}) {
+export function createMockRequest({ url, headers = {} }: CreateMockRequestInput) {
   return new Request(url, { headers })
 }
 

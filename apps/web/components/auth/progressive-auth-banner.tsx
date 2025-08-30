@@ -1,11 +1,11 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Github, Heart, Mail, Users, X, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Card } from '@/components/ui/card'
 
 interface ProgressiveAuthBannerProps {
   context?: 'favorites' | 'community' | 'submit' | 'general'

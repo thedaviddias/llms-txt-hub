@@ -1,10 +1,10 @@
 'use client'
 
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { Github, Shield } from 'lucide-react'
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 
 interface SecuritySectionProps {
   hasGitHubAuth: boolean

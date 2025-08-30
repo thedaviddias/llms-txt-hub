@@ -5,11 +5,11 @@
  * All API endpoints should be mocked here for consistency.
  */
 
-import { delay, HttpResponse, http } from 'msw'
-import { createApiError, createApiResponse, MOCK_DATA } from './data.mock'
+import { http, HttpResponse, delay } from 'msw'
+import { MOCK_DATA, createApiError, createApiResponse } from './data.mock'
 
 // Base API URL - adjust based on your environment
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+const _API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 // ============================================================================
 // API HANDLERS
@@ -166,18 +166,18 @@ export const handlers = [
       )
     }
 
-    const startIndex = (Number.parseInt(page) - 1) * Number.parseInt(limit)
-    const endIndex = startIndex + Number.parseInt(limit)
+    const startIndex = (Number.parseInt(page, 10) - 1) * Number.parseInt(limit, 10)
+    const endIndex = startIndex + Number.parseInt(limit, 10)
     const paginatedProjects = filteredProjects.slice(startIndex, endIndex)
 
     return HttpResponse.json(
       createApiResponse({
         projects: paginatedProjects,
         pagination: {
-          page: Number.parseInt(page),
-          limit: Number.parseInt(limit),
+          page: Number.parseInt(page, 10),
+          limit: Number.parseInt(limit, 10),
           total: filteredProjects.length,
-          totalPages: Math.ceil(filteredProjects.length / Number.parseInt(limit))
+          totalPages: Math.ceil(filteredProjects.length / Number.parseInt(limit, 10))
         }
       })
     )
@@ -337,7 +337,7 @@ export const errorHandlers = {
 export const delayHandlers = {
   slow: handlers.map(handler => {
     // Add 2 second delay to all handlers
-    // @ts-ignore - MSW v2 type compatibility issue
+    // @ts-expect-error - MSW v2 type compatibility issue
     return http.all('*', async () => {
       await delay(2000)
       return handler
@@ -346,7 +346,7 @@ export const delayHandlers = {
 
   timeout: handlers.map(handler => {
     // Add 30 second delay to simulate timeout
-    // @ts-ignore - MSW v2 type compatibility issue
+    // @ts-expect-error - MSW v2 type compatibility issue
     return http.all('*', async () => {
       await delay(30000)
       return handler

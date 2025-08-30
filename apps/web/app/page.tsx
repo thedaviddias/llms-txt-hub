@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { AppSidebar } from '@/components/layout/app-sidebar'
@@ -14,7 +13,8 @@ import { ToolsSection } from '@/components/sections/tools-section'
 import { StaticWebsitesList } from '@/components/static-websites-list'
 import { getGuides } from '@/lib/content-loader'
 import { getLatestMembers } from '@/lib/members'
-import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo/seo-config'
+import { KEYWORDS, generateBaseMetadata, generateWebsiteSchema } from '@/lib/seo/seo-config'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Discover AI-Ready Documentation - llms.txt hub',

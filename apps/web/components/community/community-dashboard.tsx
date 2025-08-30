@@ -1,5 +1,9 @@
 'use client'
 
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { ProgressiveAuthBanner } from '@/components/auth/progressive-auth-banner'
+import { Card } from '@/components/ui/card'
+import { useFavorites } from '@/contexts/favorites-context'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -7,10 +11,6 @@ import { Progress } from '@thedaviddias/design-system/progress'
 import { Award, Calendar, Github, Heart, Mail, Star, TrendingUp, Users, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { ProgressiveAuthBanner } from '@/components/auth/progressive-auth-banner'
-import { Card } from '@/components/ui/card'
-import { useFavorites } from '@/contexts/favorites-context'
 
 interface CommunityStats {
   totalProjects: number

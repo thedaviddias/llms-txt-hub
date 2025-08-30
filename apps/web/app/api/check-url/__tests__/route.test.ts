@@ -4,8 +4,8 @@
  * Tests URL validation, rate limiting, security checks, and error handling.
  */
 
-import { testApiHandler } from 'next-test-api-route-handler'
 import * as appHandler from '@/app/api/check-url/route'
+import { testApiHandler } from 'next-test-api-route-handler'
 
 // Ensure fetch is available globally for tests
 if (!global.fetch) {
