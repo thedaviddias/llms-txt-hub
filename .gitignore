@@ -33,7 +33,10 @@ npm-debug.log*
 # typescript
 *.tsbuildinfo
 
-/test-results/
+# Test artifacts
+**/test-results/
+**/playwright-report/
+**/.last-run.json
 
 # Sentry Config File
 .env.sentry-build-plugin
