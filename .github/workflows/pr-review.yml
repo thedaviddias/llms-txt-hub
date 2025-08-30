@@ -20,6 +20,12 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Debug - Print cache info
+        run: |
+          echo "pnpm store path: $(pnpm store path)"
+          echo "pnpm store status:"
+          pnpm store status || true
+
       - name: Check Frontmatter
         run: pnpm check:frontmatter
 
@@ -73,3 +79,13 @@ jobs:
           name: playwright-report
           path: apps/e2e/playwright-report/
           retention-days: 30
+
+      - name: Upload Playwright traces (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: |
+            apps/e2e/test-results/**/*.zip
+            apps/e2e/test-results/**/*.webm
+          retention-days: 7
