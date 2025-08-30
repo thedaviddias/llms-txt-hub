@@ -1,14 +1,3 @@
-import { LLMButton } from '@/components/buttons/llm-button'
-import { JsonLd } from '@/components/json-ld'
-import { LLMGrid } from '@/components/llm/llm-grid'
-import { components } from '@/components/mdx'
-import { ProjectNavigation } from '@/components/project-navigation'
-import { ToolsSection } from '@/components/sections/tools-section'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { type WebsiteMetadata, getWebsiteBySlug, getWebsites } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
-import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
-import { generateAltText, generateDynamicMetadata } from '@/lib/seo/seo-config'
 import { Alert, AlertDescription, AlertTitle } from '@thedaviddias/design-system/alert'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
@@ -16,9 +5,20 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import { AlertTriangle, ExternalLink, Hash } from 'lucide-react'
 import type { Metadata } from 'next'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { MDXRemote } from 'next-mdx-remote/rsc'
+import { LLMButton } from '@/components/buttons/llm-button'
+import { JsonLd } from '@/components/json-ld'
+import { LLMGrid } from '@/components/llm/llm-grid'
+import { components } from '@/components/mdx'
+import { ProjectNavigation } from '@/components/project-navigation'
+import { ToolsSection } from '@/components/sections/tools-section'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
+import { getRoute } from '@/lib/routes'
+import { generateArticleSchema, generateWebsiteSchema } from '@/lib/schema'
+import { generateAltText, generateDynamicMetadata } from '@/lib/seo/seo-config'
 
 interface ProjectPageProps {
   params: { slug: string }
@@ -97,18 +97,25 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           />
           <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
           <Card className="overflow-hidden bg-gradient-to-br from-slate-50/50 via-white to-slate-50/30 dark:from-slate-800/20 dark:via-slate-900/10 dark:to-slate-800/20">
-            <CardHeader className="border-b pb-8">
+            <CardHeader className="border-b pb-8 px-0">
               <div className="flex items-start gap-4">
                 <div className="relative overflow-hidden rounded-lg">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 blur-xl" />
-                  <img
-                    src={getFaviconUrl(project.website) || '/placeholder.svg'}
-                    alt={generateAltText('favicon', project.name)}
-                    width={56}
-                    height={56}
-                    className="rounded-lg relative z-10 shadow-sm"
-                    loading="eager"
-                  />
+                  <Link
+                    href={project.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 hover:text-foreground transition-all hover:gap-2 group"
+                  >
+                    <img
+                      src={getFaviconUrl(project.website) || '/placeholder.svg'}
+                      alt={generateAltText('favicon', project.name)}
+                      width={56}
+                      height={56}
+                      className="rounded-lg relative z-10 shadow-sm"
+                      loading="eager"
+                    />
+                  </Link>
                 </div>
                 <div className="space-y-3 flex-1">
                   <div className="flex items-start justify-between gap-4">
@@ -159,7 +166,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
+            <CardContent className="pt-6 py-0 px-0">
               <div className="flex flex-wrap gap-4">
                 <LLMButton href={project.llmsUrl} type="llms" size="lg" />
                 {project.llmsFullUrl && (

@@ -146,7 +146,7 @@ export function Header() {
       <header className="sticky top-0 z-50 bg-background border-b">
         <div className="w-full px-4 sm:px-6 h-16 flex 2xl:grid 2xl:grid-cols-3 items-center justify-between 2xl:justify-center gap-3 sm:gap-4">
           {/* Logo + Menu - Left */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Mobile menu toggle */}
             <button
               type="button"
@@ -160,8 +160,8 @@ export function Header() {
               href={getRoute('home')}
               className="text-lg font-semibold whitespace-nowrap plausible-event-name=External+Link+Click"
             >
-              <span className="block sm:inline">llms.txt</span>
-              <span className="block sm:inline sm:ml-1">hub</span>
+              <span className="inline">llms.txt</span>
+              <span className="inline ml-1">hub</span>
             </Link>
           </div>
 

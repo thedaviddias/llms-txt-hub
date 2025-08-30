@@ -1,11 +1,11 @@
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
 import { JsonLd } from '@/components/json-ld'
 import { GuideCard } from '@/components/sections/guide-card'
 import { type GuideMetadata, getGuides } from '@/lib/content-loader'
 import { generateGuideSchema } from '@/lib/schema'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Developer Guides',
   description:
@@ -43,7 +43,7 @@ export default async function GuidesPage() {
 
         {guides?.length ? (
           <section className="space-y-6">
-            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6">
+            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {guides.map((guide: GuideMetadata) => (
                 <GuideCard key={guide.slug} guide={guide} />
               ))}

@@ -1,13 +1,13 @@
 'use client'
 
+import { Badge } from '@thedaviddias/design-system/badge'
+import { cn } from '@thedaviddias/design-system/lib/utils'
+import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { FavoriteButton } from '@/components/ui/favorite-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { Badge } from '@thedaviddias/design-system/badge'
-import { cn } from '@thedaviddias/design-system/lib/utils'
-import Link from 'next/link'
 
 interface LLMGridProps {
   items: WebsiteMetadata[]
@@ -48,7 +48,7 @@ export function LLMGrid({
               <FaviconWithFallback website={item.website} name={item.name} size={32} />
               <div className="flex-1 min-w-0 space-y-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-sm sm:text-base truncate">
+                  <h3 className="font-semibold text-xs sm:text-sm md:text-base truncate">
                     <Link
                       href={getRoute('website.detail', { slug: item.slug })}
                       className="block after:absolute after:inset-0 after:content-[''] z-10"
@@ -116,7 +116,7 @@ export function LLMGrid({
                     <FavoriteButton slug={item.slug} size="sm" variant="default" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-sm sm:text-base">
+                    <h3 className="font-semibold text-xs sm:text-sm md:text-base">
                       <Link
                         href={getRoute('website.detail', { slug: item.slug })}
                         className="block after:absolute after:inset-0 after:content-[''] z-10"
