@@ -1,3 +1,8 @@
+/**
+ * Gets the favicon URL for a given website using Google's favicon service
+ * @param website - The website URL to get the favicon for
+ * @returns The favicon URL or placeholder if not found
+ */
 export function getFaviconUrl(website: string) {
   try {
     if (!website || typeof website !== 'string') {
@@ -7,8 +12,9 @@ export function getFaviconUrl(website: string) {
 
     // Handle URLs that don't start with http:// or https://
     const normalizedUrl = website.startsWith('http') ? website : `https://${website}`
-    const domain = new URL(normalizedUrl).hostname
-    return `https://www.google.com/s2/favicons?sz=32&domain=${domain}`
+
+    // Use the newer Google favicon API endpoint that works better
+    return `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(normalizedUrl)}&size=32`
   } catch (error) {
     console.error(`Error getting favicon for ${website}:`, error)
     return '/placeholder.svg'

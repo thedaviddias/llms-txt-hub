@@ -1,10 +1,10 @@
 # @thedaviddias/auth
 
-A comprehensive authentication package built for Next.js applications using Supabase as the authentication provider. This package provides a complete authentication solution with both server and client-side utilities, React components, and middleware support.
+A comprehensive authentication package built for Next.js applications using Clerk as the authentication provider. This package provides a complete authentication solution with both server and client-side utilities, React components, and middleware support.
 
 ## Features
 
-- 🔐 Complete Supabase authentication integration
+- 🔐 Complete Clerk authentication integration
 - ⚡️ Server and client-side utilities
 - 🎣 Type-safe React hooks for authentication state
 - 🧩 Pre-built authentication components
@@ -25,13 +25,13 @@ This package requires the following peer dependencies:
 
 - Next.js 15.x
 - React 19.x
-- Supabase project and credentials
+- Clerk project and credentials
 
-You'll need to set up your Supabase environment variables:
+You'll need to set up your Clerk environment variables:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=your-project-url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-publishable-key
+CLERK_SECRET_KEY=your-secret-key
 ```
 
 ## Usage
@@ -142,6 +142,7 @@ Provides authentication methods and state:
   signOut(): Promise<void>
   getSession(): Promise<{ user: AuthUser | null; isSignedIn: boolean }>
   getUser(): Promise<AuthUser | null>
+  reloadUser(): Promise<void>
 }
 ```
 
@@ -159,7 +160,7 @@ Provides the current user state:
 Main provider component for authentication context.
 
 #### `SignIn`
-Pre-built sign-in component with Supabase authentication.
+Pre-built sign-in component with Clerk authentication.
 
 #### `FallbackProvider`
 A mock provider for testing and development environments.
@@ -172,7 +173,16 @@ interface AuthUser {
   id: string
   email?: string | null
   name?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  username?: string | null
   imageUrl?: string | null
+  user_metadata?: {
+    user_name?: string | null
+    full_name?: string | null
+    avatar_url?: string | null
+  }
+  publicMetadata?: Record<string, unknown>
 }
 ```
 
@@ -186,6 +196,7 @@ interface AuthProvider {
   signOut(): Promise<void>
   getSession(): Promise<{ user: AuthUser | null; isSignedIn: boolean }>
   getUser(): Promise<AuthUser | null>
+  reloadUser(): Promise<void>
 }
 ```
 
@@ -204,7 +215,7 @@ try {
 
 ## Security Considerations
 
-1. Always use environment variables for Supabase credentials
+1. Always use environment variables for Clerk credentials
 2. Implement proper CORS policies
 3. Use middleware to protect sensitive routes
 4. Keep authentication tokens secure

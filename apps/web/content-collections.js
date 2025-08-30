@@ -1,4 +1,5 @@
 import { defineCollection, defineConfig } from '@content-collections/core'
+
 // Paths will resolve from the project root
 const websitesPath = '../../packages/content/data/websites'
 const guidesPath = '../../packages/content/data/guides'

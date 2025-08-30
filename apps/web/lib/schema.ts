@@ -167,3 +167,72 @@ export function generateFAQSchema(
     }))
   }
 }
+
+/**
+ * Generates enhanced schema.org structured data for the homepage
+ *
+ * @param websites - Array of website metadata
+ * @returns Schema.org structured data graph for homepage
+ */
+export function generateHomepageSchema(websites: WebsiteMetadata[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://llmstxthub.com/#website',
+        url: 'https://llmstxthub.com',
+        name: 'llms.txt Hub',
+        description: 'The largest directory of AI-ready websites with llms.txt files',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://llmstxthub.com/search?q={search_term_string}',
+          'query-input': 'required name=search_term_string'
+        }
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://llmstxthub.com/#organization',
+        name: 'llms.txt Hub',
+        url: 'https://llmstxthub.com',
+        description: 'Curating and organizing AI-ready websites with llms.txt implementations',
+        sameAs: ['https://github.com/thedaviddias/llms-txt-hub']
+      },
+      {
+        '@type': 'ItemList',
+        '@id': 'https://llmstxthub.com/#websitelist',
+        name: 'AI-Ready Websites Directory',
+        description: 'Curated list of websites implementing the llms.txt standard',
+        numberOfItems: websites.length,
+        itemListElement: websites.slice(0, 20).map((website, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'SoftwareApplication',
+            name: website.name,
+            url: website.website,
+            description: website.description,
+            applicationCategory: website.category,
+            operatingSystem: 'Web Browser',
+            offers: {
+              '@type': 'Offer',
+              price: '0',
+              priceCurrency: 'USD'
+            }
+          }
+        }))
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://llmstxthub.com'
+          }
+        ]
+      }
+    ]
+  }
+}

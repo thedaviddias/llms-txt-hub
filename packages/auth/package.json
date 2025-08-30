@@ -13,10 +13,8 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.6.1",
-    "@supabase/supabase-js": "^2.49.4",
-    "@thedaviddias/supabase": "workspace:*",
-    "next": "15.2.4",
+    "@clerk/nextjs": "^6.31.5",
+    "next": "15.5.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "server-only": "^0.0.1"

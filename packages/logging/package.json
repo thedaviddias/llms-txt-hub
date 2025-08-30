@@ -16,5 +16,8 @@
     "@thedaviddias/config-typescript": "workspace:*",
     "@types/node": "^22.13.17",
     "typescript": "^5.8.2"
+  },
+  "optionalDependencies": {
+    "@sentry/nextjs": "^10.7.0"
   }
 }

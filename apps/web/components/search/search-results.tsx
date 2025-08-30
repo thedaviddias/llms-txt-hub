@@ -1,287 +1,36 @@
 'use client'
 
-import { EmptyState } from '@/components/empty-state'
-import { ClientProjectsList } from '@/components/projects-list'
-import type { WebsiteMetadata } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
-import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { EmptyState } from '@/components/empty-state'
+import { SearchFilters } from '@/components/search/search-filters'
+import { useSearch } from '@/components/search/use-search'
+import { WebsitesListWithSort } from '@/components/websites-list-with-sort'
+import { getRoute } from '@/lib/routes'
 
-// Move all the types and utility functions from the page component
-type SearchIndexEntry = {
-  title?: string
-  description?: string
-  url?: string
-  content?: string
-  category?: string
-  slug?: string
-  name?: string
-  website?: string
-  llmsUrl?: string
-  llmsFullUrl?: string
-  publishedAt?: string
-}
-
-function canTransformToWebsiteMetadata(entry: SearchIndexEntry): boolean {
-  try {
-    if (!entry) return false
-
-    // Explicitly exclude .DS_Store entries
-    if (entry.url === '/.DS_Store' || entry.slug === '.DS_Store') {
-      return false
-    }
-
-    // We only need either a slug/url to create a slug, and a name/title for display
-    const hasMinimumData = Boolean(
-      (entry.slug || entry.url) && (entry.name || entry.title || entry.description)
-    )
-
-    return hasMinimumData
-  } catch (error) {
-    console.error('Error in canTransformToWebsiteMetadata:', error, 'Entry:', entry)
-    return false
-  }
-}
-
-function transformToWebsiteMetadata(entry: SearchIndexEntry): WebsiteMetadata {
-  try {
-    // Generate a slug from URL if not available
-    let slug = entry.slug
-    if (!slug && entry.url) {
-      // Try to extract a meaningful slug from the URL
-      const urlParts = (entry.url || '').split('/').filter(Boolean)
-      slug = urlParts[urlParts.length - 1] || 'unknown'
-    }
-
-    return {
-      slug: slug || 'unknown',
-      name: entry.name || entry.title || 'Unknown',
-      description: entry.description || '',
-      website: entry.website || entry.url || '#',
-      llmsUrl: entry.llmsUrl || '#', // Default to # if not available
-      llmsFullUrl: entry.llmsFullUrl,
-      category: entry.category || '',
-      publishedAt: entry.publishedAt || ''
-    }
-  } catch (error) {
-    console.error('Error in transformToWebsiteMetadata:', error, 'Entry:', entry)
-    // Return a minimal valid entry to prevent breaking the entire search
-    return {
-      slug: 'error',
-      name: 'Error processing result',
-      description: '',
-      website: '#',
-      llmsUrl: '#',
-      category: '',
-      publishedAt: ''
-    }
-  }
-}
-
-function matchesSearchQuery(entry: SearchIndexEntry, query: string): boolean {
-  try {
-    if (!entry || !query) return false
-
-    // Normalize the query
-    const normalizedQuery = query.toLowerCase().trim()
-    if (!normalizedQuery) return true // Empty query matches everything
-
-    // Split query into words for more flexible matching
-    const queryWords = normalizedQuery.split(/\s+/).filter(Boolean)
-
-    // Create a string with all searchable content from the entry
-    const searchableContent = Object.entries(entry)
-      .filter(([key, value]) => {
-        // Only include string values and exclude some keys
-        return typeof value === 'string' && !['llmsUrl', 'llmsFullUrl', 'lastUpdated'].includes(key)
-      })
-      .map(([_, value]) => String(value)) // Ensure value is a string
-      .join(' ')
-      .toLowerCase()
-
-    // For partial matches, check if any query word is a substring of the content
-    return queryWords.some(word => searchableContent.includes(word))
-  } catch (error) {
-    console.error('Error in matchesSearchQuery:', error, 'Entry:', entry, 'Query:', query)
-    // Return false instead of throwing to prevent breaking the entire search
-    return false
-  }
-}
-
+/**
+ * Search results component for displaying and filtering websites
+ *
+ * @returns React component
+ */
 export function SearchResults() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q') || ''
-  const [results, setResults] = useState<WebsiteMetadata[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const { results, loading, error } = useSearch(query)
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
-  useEffect(() => {
-    async function fetchSearchResults() {
-      if (!query) {
-        setResults([])
-        setLoading(false)
-        return
-      }
-
-      setLoading(true)
-      setError(null)
-
-      try {
-        // Fetch the search index with cache busting to prevent stale data
-        const cacheBuster = new Date().getTime()
-        const response = await fetch(`/search/search-index.json?_=${cacheBuster}`, {
-          headers: {
-            'Cache-Control': 'no-cache',
-            Pragma: 'no-cache'
-          }
-        })
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch search index: ${response.status} ${response.statusText}`)
-        }
-
-        let searchIndex: SearchIndexEntry[] = []
-
-        try {
-          const text = await response.text()
-
-          // Log the raw response for debugging
-          console.log('Raw search index response (first 200 chars):', text.substring(0, 200))
-
-          try {
-            const data = JSON.parse(text)
-            searchIndex = Array.isArray(data) ? data : []
-          } catch (jsonError) {
-            console.error('JSON parse error:', jsonError)
-            throw new Error(`Failed to parse search index: ${jsonError}`)
-          }
-        } catch (parseError) {
-          console.error('Error processing search index:', parseError)
-          throw new Error(`Error processing search index: ${parseError}`)
-        }
-
-        console.log(`Searching for: "${query}" in ${searchIndex.length} entries`)
-
-        // Safely filter results with error handling
-        let filteredResults: SearchIndexEntry[] = []
-        try {
-          // Filter results based on the query using our improved matching function
-          filteredResults = searchIndex.filter(entry => {
-            try {
-              return matchesSearchQuery(entry, query)
-            } catch (matchError) {
-              console.error('Error matching entry:', matchError, entry)
-              return false
-            }
-          })
-          console.log(`Found ${filteredResults.length} matches before validation`)
-        } catch (filterError) {
-          console.error('Error during filtering:', filterError)
-          throw new Error(`Error filtering search results: ${filterError}`)
-        }
-
-        // Safely validate results with error handling
-        let validResults: SearchIndexEntry[] = []
-        try {
-          // Validate and transform search results to match WebsiteMetadata format
-          validResults = filteredResults.filter(entry => {
-            try {
-              return canTransformToWebsiteMetadata(entry)
-            } catch (validationError) {
-              console.error('Error validating entry:', validationError, entry)
-              return false
-            }
-          })
-          console.log(`Found ${validResults.length} valid results after validation`)
-        } catch (validationError) {
-          console.error('Error during validation:', validationError)
-          throw new Error(`Error validating search results: ${validationError}`)
-        }
-
-        if (validResults.length === 0) {
-          // If no valid results after strict filtering, try a more lenient approach
-          // This is a fallback to ensure we show something if possible
-          try {
-            const lenientResults = filteredResults
-              .map(entry => {
-                try {
-                  return transformToWebsiteMetadata(entry)
-                } catch (e) {
-                  console.warn('Error transforming entry:', e)
-                  return null
-                }
-              })
-              .filter(Boolean) as WebsiteMetadata[]
-
-            console.log(`Found ${lenientResults.length} results with lenient validation`)
-            setResults(lenientResults)
-            return
-          } catch (lenientError) {
-            console.error('Error during lenient processing:', lenientError)
-            // Continue to try the standard approach
-          }
-        }
-
-        try {
-          const transformedResults = validResults.map(entry => {
-            try {
-              return transformToWebsiteMetadata(entry)
-            } catch (transformError) {
-              console.error('Error transforming entry:', transformError, entry)
-              // Return a minimal valid entry to prevent breaking the entire search
-              return {
-                slug: 'error',
-                name: 'Error processing result',
-                description: '',
-                website: '#',
-                llmsUrl: '#',
-                category: '',
-                publishedAt: ''
-              }
-            }
-          })
-
-          // Validate all website URLs before rendering to prevent URL construction errors
-          const sanitizedResults = transformedResults.map(result => {
-            // Ensure website is a valid URL or use a fallback
-            if (!result.website || result.website === '#') {
-              return result
-            }
-
-            try {
-              // Test if it's a valid URL by trying to construct it
-              new URL(
-                result.website.startsWith('http') ? result.website : `https://${result.website}`
-              )
-              return result
-            } catch (urlError) {
-              console.warn(`Invalid website URL found: ${result.website}`, urlError)
-              // Return the result but with a safe website value
-              return {
-                ...result,
-                website: '#'
-              }
-            }
-          })
-
-          console.log(`Transformed ${sanitizedResults.length} valid results`)
-          setResults(sanitizedResults)
-        } catch (transformError) {
-          console.error('Error during transformation:', transformError)
-          throw new Error(`Error transforming search results: ${transformError}`)
-        }
-      } catch (error) {
-        console.error('Error fetching or processing search results:', error)
-        setError(error instanceof Error ? error.message : 'An unknown error occurred')
-        setResults([])
-      } finally {
-        setLoading(false)
-      }
+  // Filter results based on selected categories
+  const filteredResults = useMemo(() => {
+    if (selectedCategories.length === 0) {
+      return results
     }
+    return results.filter(result => selectedCategories.includes(result.category))
+  }, [results, selectedCategories])
 
-    fetchSearchResults()
-  }, [query])
+  // Get available categories from current results
+  const availableCategories = useMemo(() => {
+    return [...new Set(results.map(result => result.category))]
+  }, [results])
 
   useEffect(() => {
     if (query) {
@@ -309,24 +58,137 @@ export function SearchResults() {
     )
   }
 
-  return (
-    <>
-      {loading ? (
-        <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500" />
+  if (loading) {
+    return (
+      <div className="flex justify-center py-8">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500" />
+      </div>
+    )
+  }
+
+  if (!query) {
+    return (
+      <EmptyState
+        title="Start Your Search"
+        description="Type something in the search bar above to find AI documentation and tools."
+        actionLabel="Explore All Projects"
+        actionHref={getRoute('home')}
+      />
+    )
+  }
+
+  if (results.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-8">
+          <h2 className="text-xl font-semibold mb-2">Nothing Found</h2>
+          <p className="text-muted-foreground mb-6">
+            We couldn't find any results for "{query}". Try using different keywords or check your
+            spelling.
+          </p>
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <p>Search suggestions:</p>
+            <ul className="list-disc list-inside space-y-1 max-w-md mx-auto">
+              <li>Check for typos in your search terms</li>
+              <li>Try more general keywords (e.g., "AI" instead of "artificial intelligence")</li>
+              <li>Browse by category using the sidebar</li>
+              <li>Submit your own llms.txt if you have one</li>
+            </ul>
+          </div>
         </div>
-      ) : results.length > 0 ? (
-        <ErrorBoundaryCustom>
-          <ClientProjectsList initialWebsites={results} />
-        </ErrorBoundaryCustom>
-      ) : (
         <EmptyState
-          title="No results found"
-          description={`We couldn't find any results for "${query}". Try using different keywords or check your spelling.`}
-          actionLabel="Submit llms.txt"
+          title="Add Your your llms.txt"
+          description="Don't see your project listed? Submit your llms.txt to be included in the directory."
+          actionLabel="Add Your your llms.txt"
           actionHref={getRoute('submit')}
         />
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-6">
+      {/* Results Summary and Filters */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+          <div>
+            <h2 className="text-lg font-semibold">
+              {filteredResults.length} result{filteredResults.length !== 1 ? 's' : ''} for "{query}"
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              {selectedCategories.length > 0 ? (
+                <>
+                  Filtered by {selectedCategories.length} categor
+                  {selectedCategories.length !== 1 ? 'ies' : 'y'}
+                  {results.length !== filteredResults.length && (
+                    <> • {results.length} total results</>
+                  )}
+                </>
+              ) : (
+                <>
+                  Found in {availableCategories.length} categor
+                  {availableCategories.length !== 1 ? 'ies' : 'y'}
+                </>
+              )}
+            </p>
+          </div>
+
+          <SearchFilters
+            selectedCategories={selectedCategories}
+            onCategoryChange={setSelectedCategories}
+            availableCategories={availableCategories}
+            resultCount={results.length}
+          />
+        </div>
+      </div>
+
+      {/* Category Breakdown for unfiltered results */}
+      {results.length > 3 && selectedCategories.length === 0 && (
+        <div className="border rounded-lg p-4 bg-muted/20">
+          <h3 className="text-sm font-semibold mb-3">Results by category:</h3>
+          <div className="flex flex-wrap gap-2">
+            {Object.entries(
+              results.reduce<Record<string, number>>((acc, result) => {
+                acc[result.category] = (acc[result.category] || 0) + 1
+                return acc
+              }, {})
+            ).map(([category, count]) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategories([category])}
+                className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-background border hover:bg-muted/50 transition-colors cursor-pointer"
+              >
+                {category} ({count})
+              </button>
+            ))}
+          </div>
+        </div>
       )}
-    </>
+
+      {/* No results after filtering */}
+      {filteredResults.length === 0 && selectedCategories.length > 0 ? (
+        <div className="text-center py-8">
+          <h3 className="text-lg font-semibold mb-2">No results match your filters</h3>
+          <p className="text-muted-foreground mb-4">
+            Try removing some category filters or search with different terms.
+          </p>
+          <button
+            type="button"
+            onClick={() => setSelectedCategories([])}
+            className="text-primary hover:text-primary/80 text-sm font-medium"
+          >
+            Clear all filters
+          </button>
+        </div>
+      ) : (
+        /* Results */
+        <WebsitesListWithSort
+          initialWebsites={filteredResults}
+          emptyTitle="No results found"
+          emptyDescription={`We couldn't find any results for "${query}". Try using different keywords or check your spelling.`}
+        />
+      )}
+    </div>
   )
 }

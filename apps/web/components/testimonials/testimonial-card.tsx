@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
-import { Card } from '@thedaviddias/design-system/card'
+import { Card } from '@/components/ui/card'
 
 interface TestimonialCardProps {
   quote: string
@@ -10,7 +10,7 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ quote, author, position, avatarSrc }: TestimonialCardProps) {
   return (
-    <Card className="p-6 space-y-4">
+    <Card className="p-6 space-y-4 transition-all hover:border-primary hover:bg-muted/50">
       <p className="italic">"{quote}"</p>
       <div className="flex items-center gap-4">
         <Avatar>

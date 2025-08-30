@@ -1,35 +1,30 @@
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import { format } from 'date-fns'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { JsonLd } from '@/components/json-ld'
+import { GuideCard } from '@/components/sections/guide-card'
 import { type GuideMetadata, getGuides } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
 import { generateGuideSchema } from '@/lib/schema'
-export const metadata: Metadata = {
-  title: 'Guides - llms.txt',
-  description: 'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
-  openGraph: {
-    title: 'Guides - llms.txt',
-    description:
-      'Learn how to implement and use llms.txt effectively with our comprehensive guides.',
-    url: getRoute('guides.list'),
-    images: [
-      {
-        url: `${getBaseUrl()}/opengraph-image.png`,
-        width: 1200,
-        height: 630
-      }
-    ]
-  }
-}
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Developer Guides',
+  description:
+    'Learn how to implement and use llms.txt effectively with our comprehensive developer guides and tutorials.',
+  path: '/guides',
+  keywords: [
+    'llms.txt guides',
+    'AI documentation tutorial',
+    'LLM implementation',
+    'developer guides',
+    'technical tutorials'
+  ]
+})
 
 export default async function GuidesPage() {
   const guides = await getGuides()
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="container mx-auto py-8">
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -48,45 +43,9 @@ export default async function GuidesPage() {
 
         {guides?.length ? (
           <section className="space-y-6">
-            <div className="grid gap-10">
+            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6">
               {guides.map((guide: GuideMetadata) => (
-                <article key={guide.slug} className="group relative flex flex-col space-y-2">
-                  <h2 className="text-2xl font-bold">
-                    <Link href={`/guides/${guide.slug}`} className="hover:underline">
-                      {guide.title}
-                    </Link>
-                  </h2>
-                  {guide.description && (
-                    <p className="text-muted-foreground">{guide.description}</p>
-                  )}
-                  <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                    <time dateTime={guide.date}>
-                      {format(new Date(guide.date), 'MMMM dd, yyyy')}
-                    </time>
-                    <span>•</span>
-                    <div className="flex items-center space-x-1">
-                      {guide.authors?.map(
-                        (author: { name: string; url?: string }, index: number) => (
-                          <span key={author.name}>
-                            {author.url ? (
-                              <Link
-                                href={author.url}
-                                className="hover:underline"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {author.name}
-                              </Link>
-                            ) : (
-                              author.name
-                            )}
-                            {index < guide.authors.length - 1 && ', '}
-                          </span>
-                        )
-                      )}
-                    </div>
-                  </div>
-                </article>
+                <GuideCard key={guide.slug} guide={guide} />
               ))}
             </div>
           </section>

@@ -1,11 +1,10 @@
 'use client'
 
-import { useAuth } from '@thedaviddias/auth'
+import { useClerk, useUser } from '@clerk/nextjs'
 import { Button } from '@thedaviddias/design-system/button'
-import { keys } from '@thedaviddias/supabase/keys'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
 import type { PropsWithChildren } from 'react'
+import { useEffect } from 'react'
 
 interface SignInProps extends PropsWithChildren {
   /**
@@ -33,15 +32,12 @@ interface SignInProps extends PropsWithChildren {
  * ```
  */
 export function SignIn({ redirectUrl = '/', onSignIn, children }: SignInProps) {
-  const { user, signIn } = useAuth()
+  const { user } = useUser()
+  const { redirectToSignIn } = useClerk()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const hasSupabaseConfig = Boolean(
-    keys().NEXT_PUBLIC_SUPABASE_URL && keys().NEXT_PUBLIC_SUPABASE_ANON_KEY
-  )
 
-  // We don't need the useEffect redirect anymore since it's handled by Supabase OAuth
-  // The only case we need to handle is if the user is already signed in
+  // If user is already signed in, redirect them
   useEffect(() => {
     if (user) {
       const finalRedirect = searchParams.get('redirectTo') || redirectUrl
@@ -53,13 +49,9 @@ export function SignIn({ redirectUrl = '/', onSignIn, children }: SignInProps) {
     if (onSignIn) {
       await onSignIn()
     } else {
-      await signIn()
+      // Redirect to our custom login page
+      router.push('/login')
     }
-  }
-
-  // If no auth is configured, just render children
-  if (!hasSupabaseConfig) {
-    return <>{children}</>
   }
 
   // Fallback to Button if children is just text or other non-element

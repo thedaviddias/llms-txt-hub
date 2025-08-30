@@ -1,0 +1,375 @@
+'use client'
+
+import { Button } from '@thedaviddias/design-system/button'
+import { AlertCircle, Users } from 'lucide-react'
+import { parseAsInteger, parseAsString, useQueryState } from 'nuqs'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useContributions } from '@/hooks/use-contributions'
+import { useApiLoadMore } from '@/hooks/use-load-more'
+import { analytics } from '@/lib/analytics'
+import { MemberCardItem } from './member-card-item'
+import { MembersSearchControls } from './members-search-controls'
+
+interface Member {
+  id: string
+  firstName?: string | null
+  lastName?: string | null
+  username?: string | null
+  imageUrl?: string | null
+  createdAt: string
+  publicMetadata?: {
+    github_username?: string | null
+    migrated_from?: string | null
+  }
+  hasContributions?: boolean
+}
+
+interface MembersWithLoadMoreProps {
+  variant?: 'button' | 'auto' | 'scroll'
+}
+
+/**
+ * Generates a URL slug from a user's username or ID
+ * @param user - Member object to generate slug from
+ * @returns URL-safe slug string for user profile
+ */
+function generateSlugFromUser(user: Member): string {
+  if (!user) return ''
+  const username = user.username || user.publicMetadata?.github_username
+  // Use full user ID for email-only users
+  if (!username) return user.id
+  return username
+}
+
+type MemberFilter = 'all' | 'contributors' | 'community'
+
+const memberFilterParser = parseAsString
+  .withDefault('all')
+  .withOptions({
+    shallow: false
+  })
+  .withValidate((value: string): MemberFilter => {
+    if (value === 'contributors' || value === 'community' || value === 'all') {
+      return value
+    }
+    return 'all'
+  })
+
+/**
+ * Interactive component displaying community members with pagination and search functionality
+ * @param props - Component props
+ * @param props.variant - Loading behavior: 'scroll' for infinite scroll, 'button' for manual load, 'auto' for automatic
+ * @returns JSX component with member cards, search, and pagination
+ */
+export function MembersWithLoadMore({ variant = 'scroll' }: MembersWithLoadMoreProps) {
+  // Use nuqs for URL state management
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchQuery, setSearchQuery] = useQueryState('search', parseAsString.withDefault(''))
+  const [memberFilter, setMemberFilter] = useQueryState('filter', memberFilterParser)
+
+  const [searchDebounced, setSearchDebounced] = useState(searchQuery)
+  const loadMoreRef = useRef<HTMLDivElement>(null)
+  const [isInfiniteScrolling, setIsInfiniteScrolling] = useState(false)
+
+  // Debounce search query
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setSearchDebounced(searchQuery)
+      // Reset to page 1 when search changes
+      if (searchQuery !== searchDebounced) {
+        setPage(1)
+      }
+    }, 300)
+    return () => clearTimeout(timeoutId)
+  }, [searchQuery, searchDebounced, setPage])
+
+  // Use API-based loading with 20 items per page
+  const {
+    items: members,
+    hasMore,
+    isLoading,
+    isLoadingMore,
+    currentPage,
+    totalCount,
+    error,
+    loadMore,
+    reset
+  } = useApiLoadMore<Member>({
+    apiEndpoint: '/api/members',
+    initialPage: page,
+    itemsPerPage: 20,
+    searchQuery: searchDebounced,
+    filter: memberFilter === 'all' ? '' : memberFilter
+  })
+
+  // Get usernames for contribution loading
+  const usernames = useMemo(() => {
+    return members
+      .map(member => member.username || member.publicMetadata?.github_username || '')
+      .filter(Boolean)
+  }, [members])
+
+  // Load contributions in background
+  const { contributions } = useContributions({
+    usernames,
+    enabled: members.length > 0
+  })
+
+  // Enhance members with contribution data
+  const membersWithContributions = useMemo(() => {
+    return members.map(member => {
+      const username = member.username || member.publicMetadata?.github_username
+      const hasContributions = username ? contributions[username] : false
+      return {
+        ...member,
+        hasContributions: hasContributions === true
+      }
+    })
+  }, [members, contributions])
+
+  // Filter members based on contribution status
+  const filteredMembers = useMemo(() => {
+    if (memberFilter === 'contributors') {
+      return membersWithContributions.filter(member => member.hasContributions === true)
+    }
+    if (memberFilter === 'community') {
+      return membersWithContributions.filter(member => member.hasContributions !== true)
+    }
+    return membersWithContributions
+  }, [membersWithContributions, memberFilter])
+
+  // Handle load more with page update
+  const handleLoadMore = useCallback(async () => {
+    if (!hasMore || isLoadingMore || isInfiniteScrolling) return
+
+    setIsInfiniteScrolling(true)
+    await loadMore()
+    setPage(currentPage + 1)
+    setIsInfiniteScrolling(false)
+  }, [hasMore, isLoadingMore, isInfiniteScrolling, loadMore, currentPage, setPage])
+
+  // Setup intersection observer for infinite scroll
+  useEffect(() => {
+    if (variant !== 'scroll') return
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const target = entries[0]
+        if (target.isIntersecting && hasMore && !isLoadingMore && !isInfiniteScrolling) {
+          handleLoadMore()
+        }
+      },
+      {
+        root: null,
+        rootMargin: '100px',
+        threshold: 0.1
+      }
+    )
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current)
+    }
+
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current)
+      }
+    }
+  }, [variant, hasMore, isLoadingMore, isInfiniteScrolling, handleLoadMore])
+
+  // Handle search input changes
+  const handleSearchChange = useCallback(
+    (value: string) => {
+      setSearchQuery(value)
+    },
+    [setSearchQuery]
+  )
+
+  // Handle filter change
+  const handleFilterChange = useCallback(
+    (newFilter: MemberFilter) => {
+      setMemberFilter(newFilter)
+      setPage(1) // Reset to first page when filter changes
+      reset() // Reset the loaded items
+    },
+    [setMemberFilter, setPage, reset]
+  )
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Card>
+          <CardContent className="flex items-center space-x-2 pt-6">
+            <AlertCircle className="h-5 w-5 text-destructive" />
+            <p>Error loading members: {error}</p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-6">
+      <MembersSearchControls
+        searchQuery={searchQuery}
+        memberFilter={memberFilter}
+        totalMembers={totalCount}
+        onSearchChange={handleSearchChange}
+        onFilterChange={handleFilterChange}
+      />
+
+      {/* Member Count */}
+      {totalCount > 0 && (
+        <p className="text-sm text-muted-foreground">
+          Showing {filteredMembers.length} of {totalCount} members
+          {searchQuery && ` matching "${searchQuery}"`}
+        </p>
+      )}
+
+      {/* Loading State */}
+      {isLoading ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {[...Array(20)].map((_, i) => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-4">
+                  <div className="h-12 w-12 rounded-full bg-muted" />
+                  <div className="space-y-2 flex-1">
+                    <div className="h-4 w-3/4 bg-muted rounded" />
+                    <div className="h-3 w-1/2 bg-muted rounded" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <>
+          {/* Members Grid */}
+          {filteredMembers.length > 0 ? (
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredMembers.map((member, index) => {
+                const displayName =
+                  member.firstName && member.lastName
+                    ? `${member.firstName} ${member.lastName}`
+                    : member.firstName || member.lastName || 'Anonymous'
+                const username = member.username || member.publicMetadata?.github_username
+                const slug = generateSlugFromUser(member)
+                const badge = getMemberBadgeSync(member)
+                const joinedDate = new Date(member.createdAt)
+
+                return (
+                  <Link
+                    key={member.id}
+                    href={`/u/${slug}`}
+                    onClick={() => {
+                      analytics.track('member_profile_click', {
+                        memberId: member.id,
+                        memberUsername: username || 'anonymous'
+                      })
+                    }}
+                    className="group"
+                    style={{
+                      animationDelay: `${index * 50}ms`,
+                      animation: 'fadeInUp 0.5s ease-out forwards'
+                    }}
+                  >
+                    <Card className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
+                      <CardContent className="p-6">
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-center space-x-4">
+                            <Avatar className="h-12 w-12 border-2 border-muted">
+                              <AvatarImage src={member.imageUrl || ''} alt={displayName} />
+                              <AvatarFallback>
+                                {displayName
+                                  .split(' ')
+                                  .map(n => n[0])
+                                  .join('')
+                                  .toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="space-y-1">
+                              <h3 className="font-semibold text-sm leading-tight group-hover:text-primary transition-colors">
+                                {displayName}
+                              </h3>
+                              {username && (
+                                <p className="text-xs text-muted-foreground">@{username}</p>
+                              )}
+                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                <Calendar className="h-3 w-3" />
+                                <span>Joined {joinedDate.toLocaleDateString()}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Badge */}
+                        {badge && (
+                          <div className="mt-3 flex flex-wrap gap-1">
+                            <Badge variant={badge.variant} className="text-xs">
+                              {badge.label}
+                            </Badge>
+                            {member.hasContributions && (
+                              <Badge variant="secondary" className="text-xs">
+                                <Star className="mr-1 h-3 w-3" />
+                                Contributor
+                              </Badge>
+                            )}
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )
+              })}
+            </div>
+          ) : (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12 text-center">
+                <Users className="mb-4 h-12 w-12 text-muted-foreground" />
+                <p className="text-lg font-semibold">No members found</p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {searchQuery
+                    ? `No members match "${searchQuery}"`
+                    : memberFilter !== 'all'
+                      ? 'No members in this category'
+                      : 'No members yet'}
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Load More */}
+          {hasMore && (
+            <div className="flex justify-center py-4">
+              {variant === 'button' && (
+                <Button
+                  onClick={handleLoadMore}
+                  disabled={isLoadingMore}
+                  variant="outline"
+                  size="lg"
+                >
+                  {isLoadingMore ? 'Loading...' : 'Load More Members'}
+                </Button>
+              )}
+
+              {variant === 'scroll' && (
+                <div ref={loadMoreRef} className="flex items-center justify-center py-4">
+                  {isLoadingMore && (
+                    <div className="flex items-center space-x-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      <span className="text-sm text-muted-foreground">Loading more members...</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  )
+}
+
+// Export as default for lazy loading
+export default MembersWithLoadMore

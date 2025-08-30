@@ -8,40 +8,18 @@
       "env": [
         "FLAGS_SECRET",
         "GITHUB_TOKEN",
-        "KV_REST_API_READ_ONLY_TOKEN",
-        "KV_REST_API_TOKEN",
-        "KV_REST_API_URL",
-        "KV_URL",
-        "POSTGRES_DATABASE",
-        "POSTGRES_HOST",
-        "POSTGRES_PASSWORD",
-        "POSTGRES_PRISMA_URL",
-        "POSTGRES_URL_NON_POOLING",
-        "POSTGRES_URL",
-        "POSTGRES_USER",
-        "REDIS_URL",
-        "RESEND_FROM",
-        "RESEND_TOKEN",
+        "STORAGE_KV_URL",
+        "STORAGE_KV_REST_API_READ_ONLY_TOKEN",
+        "STORAGE_REDIS_URL",
+        "STORAGE_KV_REST_API_TOKEN",
+        "STORAGE_KV_REST_API_URL",
         "RSS_FEED_URL",
         "SENTRY_AUTH_TOKEN",
         "SENTRY_ORG",
         "SENTRY_PROJECT",
-        "SUPABASE_ANON_KEY",
-        "SUPABASE_JWT_SECRET",
-        "SUPABASE_SERVICE_ROLE_KEY",
-        "SUPABASE_URL",
-        "UPSTASH_REDIS_REST_TOKEN",
-        "UPSTASH_REDIS_REST_URL"
+        "CLERK_SECRET_KEY",
+        "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"
       ]
-    },
-    "supabase:typegen": {
-      "cache": false
-    },
-    "db:generate": {
-      "cache": false
-    },
-    "db:push": {
-      "cache": false
     },
     "clean": {
       "cache": false
@@ -57,11 +35,13 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "env": ["CLERK_SECRET_KEY", "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"]
     },
     "test": {
       "cache": false,
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "env": ["CLERK_SECRET_KEY", "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"]
     },
     "test:watch": {
       "cache": false,
@@ -71,6 +51,12 @@
       "cache": false,
       "dependsOn": ["^build"]
     },
+    "test:e2e:smoke": {
+      "cache": false
+    },
+    "test:e2e:fast": {
+      "cache": false
+    },
     "test:e2e:ui": {
       "cache": false,
       "dependsOn": ["^build"]
@@ -78,6 +64,15 @@
     "test:e2e:debug": {
       "cache": false,
       "dependsOn": ["^build"]
+    },
+    "test:e2e:headed": {
+      "cache": false
+    },
+    "test:install": {
+      "cache": false
+    },
+    "test:related": {
+      "cache": false
     }
   }
 }

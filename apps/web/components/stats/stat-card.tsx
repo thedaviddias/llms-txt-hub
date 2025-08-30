@@ -1,6 +1,6 @@
-import { Card } from '@thedaviddias/design-system/card'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@thedaviddias/design-system/tooltip'
 import type { LucideIcon } from 'lucide-react'
+import { Card } from '@/components/ui/card'
 
 interface StatCardProps {
   title: string
@@ -13,7 +13,7 @@ export function StatCard({ title, value, icon: Icon, description }: StatCardProp
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Card className="p-6 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg cursor-help">
+        <Card className="p-6 text-center transition-all duration-200 hover:border-primary hover:scale-105 hover:shadow-lg cursor-help">
           <Icon className="h-8 w-8 mx-auto mb-2 text-primary" />
           <h3 className="text-lg font-semibold">{title}</h3>
           <p className="text-3xl font-bold">{value}</p>

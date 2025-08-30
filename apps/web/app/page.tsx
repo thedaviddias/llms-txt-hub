@@ -1,80 +1,70 @@
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
-import { CategoriesSection } from '@/components/sections/categories-section'
-import { CommunitiesSection } from '@/components/sections/communities-section'
-import { FAQSection } from '@/components/sections/faq-section'
+import { AppSidebar } from '@/components/layout/app-sidebar'
+import { CreatorProjectsSection } from '@/components/sections/creator-projects-section'
 import { FeaturedGuidesSection } from '@/components/sections/featured-guides-section'
 import { FeaturedProjectsSection } from '@/components/sections/featured-projects-section'
 import { HeroSection } from '@/components/sections/hero-section'
 import { HowItWorksSection } from '@/components/sections/how-it-works-section'
-import { LatestNewsSection } from '@/components/sections/latest-news-section'
-import { LatestUpdatesSection } from '@/components/sections/latest-updates-section'
+import { LatestMembersSection } from '@/components/sections/latest-members-section'
 import { NewsletterSection } from '@/components/sections/newsletter-section'
+import { RecentlyAddedSection } from '@/components/sections/recently-added-section'
 import { ToolsSection } from '@/components/sections/tools-section'
+import { StaticWebsitesList } from '@/components/static-websites-list'
 import { getGuides } from '@/lib/content-loader'
+import { getLatestMembers } from '@/lib/members'
+import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo/seo-config'
 
-export const metadata: Metadata = {
-  title: 'llms.txt hub - Discover AI-Ready Documentation',
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Discover AI-Ready Documentation - llms.txt hub',
   description:
-    'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
-  openGraph: {
-    title: 'llms.txt hub - Discover AI-Ready Documentation',
-    description:
-      'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
-    url: 'https://llmstxthub.com',
-    siteName: 'llms.txt hub',
-    images: [
-      {
-        url: `${getBaseUrl()}/opengraph-image.png`,
-        width: 1200,
-        height: 630
-      }
-    ],
-    locale: 'en_US',
-    type: 'website'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'llms.txt hub - Discover AI-Ready Documentation',
-    description:
-      'Explore AI-friendly websites and tools implementing the llms.txt standard. Find and submit llms.txt files for better AI integration.',
-    images: [`${getBaseUrl()}/opengraph-image.png`]
-  }
-}
+    'Explore 500+ AI-friendly websites and tools implementing the llms.txt standard. Find APIs, platforms, and documentation optimized for LLM integration.',
+  keywords: [...KEYWORDS.homepage, ...KEYWORDS.global],
+  path: '/'
+})
 
 export default async function Home() {
-  const { featuredProjects, recentlyUpdatedProjects } = await getHomePageData()
+  const { allProjects, featuredProjects, recentlyUpdatedProjects } = await getHomePageData()
   const featuredGuides = await getGuides()
+  const latestMembers = await getLatestMembers(6)
+
+  // Sort projects alphabetically by name server-side
+  const sortedProjects = [...allProjects].sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <>
-      <JsonLd
-        data={{
-          '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: 'llms.txt hub',
-          url: 'https://llmstxthub.com',
-          description:
-            'Discover AI-Ready Documentation and explore websites implementing the llms.txt standard.'
-        }}
-      />
-      <div className="max-w-6xl mx-auto px-4 py-8 space-y-16">
+      <JsonLd data={generateWebsiteSchema()} />
+      <div className="w-full space-y-16">
         <HeroSection />
-        <FeaturedProjectsSection projects={featuredProjects} />
-        <FeaturedGuidesSection guides={featuredGuides} />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <LatestUpdatesSection projects={recentlyUpdatedProjects} />
-          <LatestNewsSection />
+      </div>
+      <div className="border-t">
+        <div className="relative flex h-full w-full max-w-full flex-row flex-nowrap">
+          <AppSidebar featuredCount={featuredProjects.length} />
+
+          <div className="relative flex h-full w-full flex-col px-6 pt-6 pb-16 space-y-8">
+            <section>
+              <FeaturedProjectsSection projects={featuredProjects} />
+            </section>
+
+            {/* Recently Added Section */}
+            <section>
+              <RecentlyAddedSection websites={recentlyUpdatedProjects} />
+            </section>
+
+            {/* All Websites Section */}
+            <section>
+              <StaticWebsitesList websites={sortedProjects} />
+            </section>
+
+            <ToolsSection />
+            <FeaturedGuidesSection guides={featuredGuides} />
+            <LatestMembersSection members={latestMembers} />
+            <HowItWorksSection />
+            <CreatorProjectsSection />
+            <NewsletterSection />
+          </div>
         </div>
-        <ToolsSection />
-        <CategoriesSection />
-        <HowItWorksSection />
-        {/* <CommunityStatsSection allProjects={allProjects} /> */}
-        <FAQSection />
-        <CommunitiesSection />
-        <NewsletterSection />
       </div>
     </>
   )

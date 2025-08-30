@@ -2,6 +2,7 @@
 
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
+import { logger } from '@thedaviddias/logging'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
 import { categories } from '@/lib/categories'
@@ -30,7 +31,7 @@ const repo = 'llms-txt-hub'
  * if (result.success) {
  *   console.log('PR created:', result.prUrl);
  * } else {
- *   console.error('Error:', result.error);
+ *   logger.error('Error:', { data: result.error, tags: { type: 'action' } });
  * }
  * ```
  */
@@ -38,37 +39,9 @@ export async function submitLlmsTxt(formData: FormData) {
   try {
     const session = await auth()
 
-    if (!session) {
-      throw new Error('Unauthorized: No session found')
+    if (!session?.user) {
+      throw new Error('Authentication required')
     }
-
-    if (!session.provider_token) {
-      throw new Error('Unauthorized: No provider token found')
-    }
-
-    // Validate session structure
-    if (!session.user?.user_metadata?.user_name) {
-      throw new Error('Invalid session: Missing user metadata')
-    }
-
-    // Handle different possible token structures
-    let access_token: string
-    const provider_token = session.provider_token
-
-    if (typeof provider_token === 'string') {
-      access_token = provider_token
-    } else if (typeof provider_token === 'object' && provider_token !== null) {
-      const tokenObj = provider_token as { access_token?: string; token?: string }
-      access_token = tokenObj.access_token || tokenObj.token || ''
-    } else {
-      throw new Error('Invalid provider token format')
-    }
-
-    if (!access_token) {
-      throw new Error('Invalid provider token: No access token found')
-    }
-
-    const octokit = new Octokit({ auth: access_token })
 
     // Validate form data
     const name = formData.get('name') as string
@@ -77,31 +50,50 @@ export async function submitLlmsTxt(formData: FormData) {
     const llmsUrl = formData.get('llmsUrl') as string
     const llmsFullUrl = formData.get('llmsFullUrl') as string
     const categorySlug = formData.get('category') as string
-    const contentType = formData.get('contentType') as string
     const publishedAt = formData.get('publishedAt') as string
-    const githubUsername = session.user.user_metadata.user_name
 
-    if (
-      !name ||
-      !description ||
-      !website ||
-      !llmsUrl ||
-      !categorySlug ||
-      !contentType ||
-      !publishedAt
-    ) {
+    // Get user info for attribution
+    const githubUsername = session.user.user_metadata?.user_name
+    const userEmail = session.user.email
+    const displayName = githubUsername || userEmail?.split('@')[0] || 'Anonymous'
+
+    // Try to get user's GitHub token first, fall back to admin token
+    let access_token: string | null = null
+    let useUserToken = false
+
+    // Check if user has GitHub auth with token
+    if (session.provider_token && githubUsername) {
+      const provider_token = session.provider_token
+
+      if (typeof provider_token === 'string') {
+        access_token = provider_token
+        useUserToken = true
+      } else if (typeof provider_token === 'object' && provider_token !== null) {
+        const tokenObj = provider_token as { access_token?: string; token?: string }
+        access_token = tokenObj.access_token || tokenObj.token || null
+        useUserToken = !!access_token
+      }
+    }
+
+    // Fall back to admin token if user doesn't have one
+    if (!access_token) {
+      access_token = process.env.GITHUB_TOKEN || null
+      useUserToken = false
+
+      if (!access_token) {
+        throw new Error('GitHub token not configured')
+      }
+    }
+
+    const octokit = new Octokit({ auth: access_token })
+
+    if (!name || !description || !website || !llmsUrl || !categorySlug || !publishedAt) {
       throw new Error('Missing required form fields')
     }
 
     // Validate category
     if (!categories.some(category => category.slug === categorySlug)) {
       throw new Error('Invalid category selected')
-    }
-
-    // Validate content type
-    const validContentTypes = ['tool', 'platform', 'personal', 'library']
-    if (!validContentTypes.includes(contentType)) {
-      throw new Error('Invalid content type selected')
     }
 
     // Create the content for the new MDX file
@@ -112,7 +104,6 @@ export async function submitLlmsTxt(formData: FormData) {
       llmsUrl,
       llmsFullUrl: llmsFullUrl || '',
       category: categorySlug,
-      contentType,
       publishedAt
     }
 
@@ -132,99 +123,73 @@ ${description}
 `
 
     try {
-      // First verify repository access and get default branch
-      console.log('Verifying repository access...')
-      const repo_info = await octokit.repos
-        .get({
-          owner,
-          repo
-        })
-        .catch(error => {
-          throw new Error(
-            `Repository access error: ${error.message}. Please ensure you have access to ${owner}/${repo}`
-          )
-        })
-
+      // Get repository info and default branch
+      logger.info('Verifying repository access...')
+      const repo_info = await octokit.repos.get({ owner, repo })
       const defaultBranch = repo_info.data.default_branch
 
-      // Create or get fork
-      console.log('Creating fork...')
-      const _fork = await octokit.repos
-        .createFork({
-          owner,
-          repo
-        })
-        .catch(async error => {
-          // If fork already exists, get it
-          if (error.status === 422) {
-            const forks = await octokit.repos.listForks({
-              owner,
-              repo
-            })
-            const existingFork = forks.data.find(f => f.owner.login === githubUsername)
-            if (existingFork) {
-              return { data: existingFork }
-            }
-          }
-          throw new Error(`Failed to create fork: ${error.message}`)
-        })
-
-      // Wait for fork to be ready
-      const waitForFork = async (retries = 5, delay = 2000): Promise<void> => {
-        if (retries === 0) throw new Error('Fork not ready after maximum retries')
-        try {
-          await octokit.repos.get({
-            owner: githubUsername,
-            repo
-          })
-        } catch (_error) {
-          await new Promise(resolve => setTimeout(resolve, delay))
-          await waitForFork(retries - 1, delay)
-        }
-      }
-      await waitForFork()
-
-      // Create a new branch in the fork
       // Sanitize name for use in branch and file names
       const sanitizedName = name
         .toLowerCase()
-        .replace(/[|&<>!$'"]/g, '') // Remove special characters
-        .replace(/\s+/g, '-') // Replace spaces with dashes
-        .replace(/-+/g, '-') // Replace multiple dashes with single dash
-        .replace(/^-|-$/g, '') // Remove leading/trailing dashes
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '') // strip diacritics
+        .replace(/[^a-z0-9- ]+/g, ' ') // disallow slashes, dots, etc.
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '')
+      if (!sanitizedName) throw new Error('Invalid name after sanitization')
 
       const branchName = `submit-${sanitizedName}-${Date.now()}`
       const filePath = `packages/content/data/websites/${sanitizedName}-llms-txt.mdx`
 
-      // Get the reference from the original repo
-      const mainRef = await octokit.git
-        .getRef({
-          owner,
-          repo,
-          ref: `heads/${defaultBranch}`
-        })
-        .catch(error => {
-          throw new Error(
-            `Failed to get default branch reference: ${error.message}. Branch: ${defaultBranch}`
-          )
-        })
+      // Get the main branch reference
+      const mainRef = await octokit.git.getRef({
+        owner,
+        repo,
+        ref: `heads/${defaultBranch}`
+      })
 
-      // Create branch in fork
-      await octokit.git
-        .createRef({
+      let branchOwner: string
+      let headRef: string
+
+      if (useUserToken && githubUsername) {
+        // User has GitHub token - create fork and branch in fork
+        logger.info('Creating fork for user...')
+
+        try {
+          await octokit.repos.createFork({ owner, repo })
+        } catch (error: any) {
+          // Fork might already exist, that's okay
+          if (error.status !== 422) {
+            throw new Error(`Failed to create fork: ${error.message}`)
+          }
+        }
+
+        // Wait for fork to be ready
+        const waitForFork = async (retries = 5): Promise<void> => {
+          for (let i = 0; i < retries; i++) {
+            try {
+              await octokit.repos.get({ owner: githubUsername, repo })
+              return
+            } catch (_error) {
+              if (i === retries - 1) throw new Error('Fork not ready after maximum retries')
+              await new Promise(resolve => setTimeout(resolve, 2000))
+            }
+          }
+        }
+        await waitForFork()
+
+        // Create branch in user's fork
+        await octokit.git.createRef({
           owner: githubUsername,
           repo,
           ref: `refs/heads/${branchName}`,
           sha: mainRef.data.object.sha
         })
-        .catch(error => {
-          throw new Error(`Failed to create new branch in fork: ${error.message}`)
-        })
 
-      // Create file in fork
-      console.log('Creating new file:', filePath)
-      await octokit.repos
-        .createOrUpdateFileContents({
+        // Create file in user's fork
+        await octokit.repos.createOrUpdateFileContents({
           owner: githubUsername,
           repo,
           path: filePath,
@@ -232,34 +197,63 @@ ${description}
           content: Buffer.from(content).toString('base64'),
           branch: branchName
         })
-        .catch(error => {
-          throw new Error(`Failed to create file in fork: ${error.message}`)
-        })
 
-      // Create pull request from fork
-      console.log('Creating pull request')
-      const pr = await octokit.pulls
-        .create({
+        branchOwner = githubUsername
+        headRef = `${githubUsername}:${branchName}`
+      } else {
+        // Use admin token - create branch directly in main repo
+        logger.info('Creating branch directly in main repo...')
+
+        // Create branch in main repo
+        await octokit.git.createRef({
           owner,
           repo,
-          title: `feat: add ${name} to llms.txt hub`,
-          head: `${githubUsername}:${branchName}`,
-          base: defaultBranch,
-          body: `This PR adds ${name} to the llms.txt hub.
-
-Submitted by: @${githubUsername}
-
-Website: ${website}
-llms.txt: ${llmsUrl}
-${llmsFullUrl ? `llms-full.txt: ${llmsFullUrl}` : ''}
-${categorySlug ? `Category: ${categorySlug}` : ''}
-
-
-Please review your PR, a reviewer will merge it if appropriate.`
+          ref: `refs/heads/${branchName}`,
+          sha: mainRef.data.object.sha
         })
-        .catch(error => {
-          throw new Error(`Failed to create pull request: ${error.message}`)
+
+        // Create file in main repo branch
+        await octokit.repos.createOrUpdateFileContents({
+          owner,
+          repo,
+          path: filePath,
+          message: `Add ${name} to llms.txt directory`,
+          content: Buffer.from(content).toString('base64'),
+          branch: branchName
         })
+
+        branchOwner = owner
+        headRef = branchName
+      }
+
+      // Create appropriate attribution
+      const attribution =
+        useUserToken && githubUsername
+          ? `Submitted by: @${githubUsername}`
+          : `Submitted by: ${displayName}${userEmail ? ` (${userEmail})` : ''}`
+
+      // Create pull request
+      logger.info('Creating pull request')
+      const pr = await octokit.pulls.create({
+        owner,
+        repo,
+        title: `feat: add ${name} to llms.txt hub`,
+        head: headRef,
+        base: defaultBranch,
+        body: `This PR adds ${name} to the llms.txt hub.
+
+${attribution}
+
+**Website:** ${website}
+**llms.txt:** ${llmsUrl}
+${llmsFullUrl ? `**llms-full.txt:** ${llmsFullUrl}  ` : ''}
+**Category:** ${categorySlug}
+
+---
+${useUserToken ? 'This PR was created by the submitter.' : 'This PR was created via admin token for a user without GitHub repository access.'}
+
+Please review and merge if appropriate.`
+      })
 
       revalidatePath('/')
       return { success: true, prUrl: pr.data.html_url }
@@ -269,14 +263,17 @@ Please review your PR, a reviewer will merge it if appropriate.`
       )
     }
   } catch (error) {
-    console.error('Error in submitLlmsTxt:', error)
+    logger.error('Error in submitLlmsTxt:', { data: error, tags: { type: 'action' } })
     let errorMessage = 'Failed to create PR'
 
     if (error instanceof Error) {
-      console.error('Error details:', {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
+      logger.error('Error details:', {
+        data: {
+          name: error.name,
+          message: error.message,
+          stack: error.stack
+        },
+        tags: { type: 'action' }
       })
       errorMessage = error.message
     }

@@ -5,7 +5,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 /**
  * Endpoint to check content paths and debug content-collections issues
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   const paths = {
     cwd: process.cwd(),
     relPath: path.resolve(process.cwd(), '../../packages/content/data'),

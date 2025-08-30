@@ -64,7 +64,7 @@ function generateWebsitesJson(): void {
   try {
     mkdirSync(outputDir, { recursive: true })
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') {
+    if (error instanceof Error && 'code' in error && error.code !== 'EEXIST') {
       throw error
     }
   }
@@ -96,8 +96,8 @@ function generateWebsitesJson(): void {
   // Sort websites by name
   websites.sort((a, b) => a.name.localeCompare(b.name))
 
-  console.log(`Generated websites.json with ${websites.length} tools from primary categories`)
-  console.log(`Excluded ${mdxFiles.length - websites.length} sites from secondary categories`)
+  // Generated websites.json with tools from primary categories
+  // Excluded sites from secondary categories
 
   // Write to JSON file
   writeFileSync(outputFile, JSON.stringify(websites))

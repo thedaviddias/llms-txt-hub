@@ -11,6 +11,10 @@ out/
 # Ignore node_modules
 node_modules/
 
+# Ignore content-collections generated files (huge files)
+.content-collections/
+**/.content-collections/
+
 # Ignore generated files
 apps/web/public/search/search-index.json
 data/websites.json
@@ -21,3 +25,48 @@ scripts/llmstxt-directory-*.json
 
 # Ignore large generated JS files that cause timeout
 apps/validator/.next/**/*.js
+
+# Ignore other large generated files
+**/*.chunk.js
+**/*.bundle.js
+**/webpack-stats.json
+**/_generated.js
+**/generated/*.js
+
+# Ignore TypeScript lib files
+**/typescript/lib/
+node_modules/typescript/
+
+# Ignore all turbo cache
+.turbo/
+**/.turbo/
+
+# Ignore lockfiles
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Ignore environment files
+.env*
+*.env
+
+# Ignore all markdown
+*.md
+*.mdx
+
+# Ignore test coverage
+coverage/
+**/coverage/
+
+# Ignore all config files that aren't JS/TS
+*.toml
+*.yml
+*.yaml
+.syncpackrc
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore CSV files
+*.csv

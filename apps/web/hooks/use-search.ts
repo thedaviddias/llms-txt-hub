@@ -1,11 +1,10 @@
 'use client'
 
-import type React from 'react'
-
-import { getRoute } from '@/lib/routes'
 import { useDebounce } from '@thedaviddias/hooks/use-debounce'
 import { useRouter } from 'next/navigation'
+import type React from 'react'
 import { useCallback, useState } from 'react'
+import { getRoute } from '@/lib/routes'
 
 export function useSearch() {
   const [searchQuery, setSearchQuery] = useState('')

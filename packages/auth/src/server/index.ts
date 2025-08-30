@@ -1,46 +1,53 @@
 'use server'
 
 import 'server-only'
-import { createServerClient } from '@supabase/ssr'
-import type { User } from '@supabase/supabase-js'
-import { keys } from '@thedaviddias/supabase/keys'
-import { cookies } from 'next/headers'
+import { auth as clerkAuth, currentUser as clerkCurrentUser } from '@clerk/nextjs/server'
+import type { AuthUser } from '../core/types'
 
 export async function auth() {
-  if (!keys().NEXT_PUBLIC_SUPABASE_URL || !keys().NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  const { userId } = await clerkAuth()
+
+  if (!userId) {
     return null
   }
 
-  const supabase = createServerClient(
-    keys().NEXT_PUBLIC_SUPABASE_URL,
-    keys().NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    {
-      cookies: {
-        async get(name: string) {
-          const cookieStore = await cookies()
-          return cookieStore.get(name)?.value
-        }
-      }
-    }
-  )
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser()
+  const user = await clerkCurrentUser()
 
   if (!user) {
     return null
   }
 
-  // Get session for additional context if needed
-  const {
-    data: { session }
-  } = await supabase.auth.getSession()
-
-  return session
+  // Return session-like object for compatibility
+  return {
+    user: {
+      id: user.id,
+      email: user.primaryEmailAddress?.emailAddress || null,
+      user_metadata: {
+        user_name: user.username || null,
+        full_name: user.fullName || null,
+        avatar_url: user.imageUrl || null
+      }
+    },
+    // For compatibility with existing code that expects provider_token
+    provider_token: process.env.GITHUB_TOKEN
+  }
 }
 
-export async function currentUser(): Promise<User | null> {
-  const session = await auth()
-  return session?.user ?? null
+export async function currentUser(): Promise<AuthUser | null> {
+  const user = await clerkCurrentUser()
+
+  if (!user) {
+    return null
+  }
+
+  return {
+    id: user.id,
+    email: user.primaryEmailAddress?.emailAddress || null,
+    name: user.fullName || user.username || null,
+    user_metadata: {
+      user_name: user.username || null,
+      full_name: user.fullName || null,
+      avatar_url: user.imageUrl || null
+    }
+  }
 }

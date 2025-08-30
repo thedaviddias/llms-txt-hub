@@ -1,12 +1,13 @@
 'use client'
 
-import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
-import { getRoute } from '@/lib/routes'
-import { Card } from '@thedaviddias/design-system/card'
 import { Skeleton } from '@thedaviddias/design-system/skeleton'
+import { logger } from '@thedaviddias/logging'
 import { ArrowRight, ExternalLink, Rss } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
+import { Card } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
 
 interface NewsItem {
   title: string
@@ -32,7 +33,7 @@ export function LatestNews() {
         const data = await response.json()
         setNews(data.items.slice(0, NUMBER_OF_NEWS_ITEMS))
       } catch (error) {
-        console.error('Failed to fetch news:', error)
+        logger.error('Failed to fetch news:', { data: error, tags: { type: 'component' } })
         setError('Failed to load latest news. Please try again later.')
       } finally {
         setIsLoading(false)
@@ -58,7 +59,7 @@ export function LatestNews() {
           </div>
           <div className="flex items-center gap-2">
             <Link href={getRoute('news')} className="flex items-center">
-              View all <ArrowRight className="ml-2 size-4" />
+              All news <ArrowRight className="ml-2 size-4" />
             </Link>
           </div>
         </div>
@@ -90,7 +91,7 @@ export function LatestNews() {
         </div>
         <div className="flex items-center gap-2">
           <Link href={getRoute('news')} className="flex items-center">
-            View all <ArrowRight className="ml-2 size-4" />
+            All news <ArrowRight className="ml-2 size-4" />
           </Link>
         </div>
       </div>

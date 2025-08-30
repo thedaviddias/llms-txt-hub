@@ -1,8 +1,11 @@
-import { getRoute } from '@/lib/routes'
 import { SiGithub, SiReddit, SiX } from '@icons-pack/react-simple-icons'
 import Link from 'next/link'
-import { ModeToggle } from '../mode-toggle'
+import { ModeToggle } from '@/components/mode-toggle'
+import { getRoute } from '@/lib/routes'
 
+/**
+ * Footer component with site navigation and external links
+ */
 export function Footer() {
   return (
     <footer className="border-t py-8 md:py-12">
@@ -13,7 +16,12 @@ export function Footer() {
             <h3 className="font-semibold">llms.txt hub</h3>
             <p className="text-sm text-muted-foreground">
               Discover AI-ready documentation and explore websites implementing the proposed{' '}
-              <a href="https://llmstxt.org/" className="underline">
+              <a
+                href="https://llmstxt.org/"
+                className="underline plausible-event-name=External+Link+Click"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 llms.txt standard.
               </a>
             </p>
@@ -22,16 +30,28 @@ export function Footer() {
               <div className="flex space-x-4">
                 <Link
                   href="https://github.com/thedaviddias/llms-txt-hub"
-                  className="hover:text-foreground"
+                  className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=GitHub plausible-event-source=Footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <SiGithub className="h-5 w-5" />
                   <span className="sr-only">GitHub</span>
                 </Link>
-                <Link href="https://www.reddit.com/r/llmstxt/" className="hover:text-foreground">
+                <Link
+                  href="https://www.reddit.com/r/llmstxt/"
+                  className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=Reddit plausible-event-source=Footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <SiReddit className="h-5 w-5" />
                   <span className="sr-only">Reddit</span>
                 </Link>
-                <Link href="https://x.com/llmstxthub" className="hover:text-foreground">
+                <Link
+                  href="https://x.com/llmstxthub"
+                  className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=Twitter plausible-event-source=Footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <SiX className="h-5 w-5" />
                   <span className="sr-only">X (Twitter)</span>
                 </Link>
@@ -40,6 +60,9 @@ export function Footer() {
             <a
               title="Install llms-txt Raycast Extension"
               href="https://www.raycast.com/thedaviddias/llms-txt"
+              className="plausible-event-name=Tool+Click"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <img
                 src="https://www.raycast.com/thedaviddias/llms-txt/install_button@2x.png"
@@ -54,22 +77,42 @@ export function Footer() {
               <h4 className="font-medium mb-3">Directory</h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href={getRoute('website.list')} className="hover:text-foreground">
-                    Websites
-                  </Link>
-                </li>
-                <li>
-                  <Link href={getRoute('guides.list')} className="hover:text-foreground">
-                    Guides
-                  </Link>
-                </li>
-                <li>
-                  <Link href={getRoute('projects')} className="hover:text-foreground">
+                  <Link
+                    href={getRoute('projects')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
                     Projects
                   </Link>
                 </li>
                 <li>
-                  <Link href={getRoute('faq')} className="hover:text-foreground">
+                  <Link
+                    href={getRoute('guides.list')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
+                    Guides
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={getRoute('members.list')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
+                    Members
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={getRoute('news')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
+                    News
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={getRoute('faq')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
                     FAQ
                   </Link>
                 </li>
@@ -84,7 +127,10 @@ export function Footer() {
                   </Link>
                 </li> */}
                 <li>
-                  <Link href={getRoute('submit')} className="hover:text-foreground">
+                  <Link
+                    href={getRoute('submit')}
+                    className="hover:text-foreground plausible-event-name=Submit+Website"
+                  >
                     Submit llms.txt
                   </Link>
                 </li>
@@ -94,18 +140,35 @@ export function Footer() {
               <h4 className="font-medium mb-3">Resources</h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href={getRoute('about')} className="hover:text-foreground">
+                  <Link
+                    href={getRoute('about')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href={getRoute('privacy')} className="hover:text-foreground">
+                  <Link
+                    href={getRoute('privacy')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href={getRoute('terms')} className="hover:text-foreground">
+                  <Link
+                    href={getRoute('terms')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
                     Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href={getRoute('cookies')}
+                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                  >
+                    Cookie Policy
                   </Link>
                 </li>
               </ul>
@@ -118,7 +181,7 @@ export function Footer() {
             Made with ❤️ by{' '}
             <a
               href="https://thedaviddias.com"
-              className="font-bold underline dark:text-gray-300"
+              className="font-bold underline dark:text-gray-300 plausible-event-name=External+Link+Click"
               target="_blank"
               rel="noopener noreferrer"
             >

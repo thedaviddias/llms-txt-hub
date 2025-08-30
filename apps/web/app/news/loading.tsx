@@ -1,7 +1,7 @@
 import { Button } from '@thedaviddias/design-system/button'
-import { Card } from '@thedaviddias/design-system/card'
 import { Skeleton } from '@thedaviddias/design-system/skeleton'
 import { Rss } from 'lucide-react'
+import { Card } from '@/components/ui/card'
 
 export default function Loading() {
   return (

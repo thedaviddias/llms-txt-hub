@@ -1,4 +1,4 @@
-import { Section } from '../layout/section'
+import { Section } from '@/components/layout/section'
 
 export const faqItems = [
   {

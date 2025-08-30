@@ -15,6 +15,7 @@ export interface Guide {
   difficulty: 'beginner' | 'intermediate' | 'advanced'
   category: 'getting-started' | 'implementation' | 'best-practices' | 'integration'
   icon?: string
+  image?: string
   published: boolean
-  publishedAt: string
+  publishedAt?: string
 }

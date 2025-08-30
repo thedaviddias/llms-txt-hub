@@ -1,7 +1,7 @@
 import { SiReddit, SiX } from '@icons-pack/react-simple-icons'
-import { Card } from '@thedaviddias/design-system/card'
 import { Linkedin } from 'lucide-react'
 import { Section } from '@/components/layout/section'
+import { Card } from '@/components/ui/card'
 
 const communities = [
   {
@@ -43,7 +43,7 @@ export function CommunitiesSection() {
               rel="noopener noreferrer"
               className="block"
             >
-              <Card className="p-6 flex flex-col items-center text-center space-y-4 hover:bg-muted/50 transition-colors">
+              <Card className="p-6 flex flex-col items-center text-center space-y-4 transition-all hover:border-primary hover:bg-muted/50">
                 <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
                   <Icon className="size-6" />
                 </div>

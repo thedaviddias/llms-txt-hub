@@ -28,10 +28,14 @@ export const ModeToggle = () => {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end" className="w-40">
         {themes.map(({ label, value }) => (
-          <DropdownMenuItem key={value} onClick={() => setTheme(value)}>
-            {label}
+          <DropdownMenuItem
+            key={value}
+            onClick={() => setTheme(value)}
+            className="text-sm cursor-pointer"
+          >
+            <span className="cursor-pointer">{label}</span>
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

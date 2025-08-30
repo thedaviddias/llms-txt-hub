@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { logger } from '@thedaviddias/logging'
 import matter from 'gray-matter'
 import { NextResponse } from 'next/server'
 
@@ -65,15 +66,9 @@ function getResources(): Resource[] {
   })
 }
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const [websites, resources] = [getWebsites(), getResources()]
-
-    // Get base URL
-    const baseUrl =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:3000'
-        : `https://${process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000'}`
 
     // Generate the text content
     let content = `# LLMs.txt Hub Directory
@@ -112,7 +107,7 @@ The following websites have implemented llms.txt:\n\n`
       }
     })
   } catch (error) {
-    console.error('Error generating content:', error)
+    logger.error('Error generating content:', { data: error, tags: { type: 'page' } })
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

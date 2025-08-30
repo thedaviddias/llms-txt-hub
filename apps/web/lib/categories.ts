@@ -7,7 +7,6 @@ import {
   Database,
   FileText,
   Globe,
-  GraduationCap,
   Lock,
   Package,
   ShoppingCart,
@@ -25,7 +24,14 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  // Primary Categories - Tools & Platforms
+  {
+    name: 'Developer Tools',
+    slug: 'developer-tools',
+    description: 'APIs, frameworks, libraries, IDEs, and development utilities',
+    icon: Code2,
+    priority: 'high',
+    type: 'tool'
+  },
   {
     name: 'AI & Machine Learning',
     slug: 'ai-ml',
@@ -35,26 +41,10 @@ export const categories: Category[] = [
     type: 'tool'
   },
   {
-    name: 'Developer Tools',
-    slug: 'developer-tools',
-    description: 'SDKs, APIs, frameworks, libraries, IDEs, and development utilities',
-    icon: Code2,
-    priority: 'high',
-    type: 'tool'
-  },
-  {
     name: 'Data & Analytics',
     slug: 'data-analytics',
     description: 'Databases, analytics platforms, BI tools, and data processing',
     icon: Database,
-    priority: 'high',
-    type: 'tool'
-  },
-  {
-    name: 'Integration & Automation',
-    slug: 'integration-automation',
-    description: 'API platforms, workflow automation, CI/CD, and integration tools',
-    icon: Workflow,
     priority: 'high',
     type: 'tool'
   },
@@ -74,12 +64,58 @@ export const categories: Category[] = [
     priority: 'high',
     type: 'tool'
   },
-
-  // Secondary Categories - Non-Tools
   {
-    name: 'Personal & Portfolio',
+    name: 'Automation & Workflow',
+    slug: 'automation-workflow',
+    description: 'Workflow automation, integration platforms, and productivity tools',
+    icon: Workflow,
+    priority: 'medium',
+    type: 'tool'
+  },
+  {
+    name: 'Finance & Fintech',
+    slug: 'finance-fintech',
+    description: 'Financial services, payment platforms, and fintech tools',
+    icon: Briefcase,
+    priority: 'medium',
+    type: 'tool'
+  },
+  {
+    name: 'Marketing & Sales',
+    slug: 'marketing-sales',
+    description: 'Marketing tools, CRM, sales platforms, and customer engagement',
+    icon: User,
+    priority: 'medium',
+    type: 'tool'
+  },
+  {
+    name: 'E-commerce',
+    slug: 'ecommerce-retail',
+    description: 'Online stores, marketplaces, and retail platforms',
+    icon: ShoppingCart,
+    priority: 'low',
+    type: 'non-tool'
+  },
+  {
+    name: 'Content & Media',
+    slug: 'content-media',
+    description: 'Publishing platforms, content management, and media tools',
+    icon: FileText,
+    priority: 'low',
+    type: 'non-tool'
+  },
+  {
+    name: 'Business Operations',
+    slug: 'business-operations',
+    description: 'Business management, operations, and enterprise tools',
+    icon: Briefcase,
+    priority: 'low',
+    type: 'non-tool'
+  },
+  {
+    name: 'Personal',
     slug: 'personal',
-    description: 'Personal websites, developer portfolios, and blogs',
+    description: 'Personal websites, portfolios, and blogs',
     icon: User,
     priority: 'low',
     type: 'non-tool'
@@ -87,39 +123,15 @@ export const categories: Category[] = [
   {
     name: 'Agency & Services',
     slug: 'agency-services',
-    description: 'Marketing agencies, consultancies, and service providers',
+    description: 'Agencies, consultancies, and service providers',
     icon: Briefcase,
-    priority: 'low',
-    type: 'non-tool'
-  },
-  {
-    name: 'E-commerce',
-    slug: 'ecommerce',
-    description: 'Online stores, marketplaces, and retail sites',
-    icon: ShoppingCart,
-    priority: 'low',
-    type: 'non-tool'
-  },
-  {
-    name: 'Education',
-    slug: 'education',
-    description: 'Courses, tutorials, training platforms, and schools',
-    icon: GraduationCap,
-    priority: 'low',
-    type: 'non-tool'
-  },
-  {
-    name: 'Media & Content',
-    slug: 'media-content',
-    description: 'Blogs, news sites, publications, and content platforms',
-    icon: FileText,
     priority: 'low',
     type: 'non-tool'
   },
   {
     name: 'International',
     slug: 'international',
-    description: 'Non-English sites and international content',
+    description: 'Non-English and international websites',
     icon: Globe,
     priority: 'low',
     type: 'non-tool'
@@ -127,7 +139,7 @@ export const categories: Category[] = [
   {
     name: 'Other',
     slug: 'other',
-    description: "Sites that don't fit into other categories",
+    description: "Everything else that doesn't fit other categories",
     icon: Package,
     priority: 'low',
     type: 'non-tool'

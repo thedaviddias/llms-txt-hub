@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@thedaviddias/design-system/button'
+import { logger } from '@thedaviddias/logging'
 import { AlertCircle } from 'lucide-react'
 import { useEffect } from 'react'
 
@@ -12,7 +13,7 @@ export default function NewsError({
   reset: () => void
 }) {
   useEffect(() => {
-    console.error('News page error:', error)
+    logger.error('News page error:', { data: error, tags: { type: 'page' } })
   }, [error])
 
   return (

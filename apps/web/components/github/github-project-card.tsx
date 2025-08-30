@@ -1,9 +1,8 @@
+import { ExternalLink, Github, Star } from 'lucide-react'
+import Link from 'next/link'
+import { Card } from '@/components/ui/card'
 import type { GitHubProject } from '@/lib/github'
 import { formatDate } from '@/lib/utils'
-import { Card } from '@thedaviddias/design-system/card'
-import { Github, Star } from 'lucide-react'
-import { ExternalLink } from 'lucide-react'
-import Link from 'next/link'
 
 interface GitHubProjectCardProps {
   project: GitHubProject
@@ -11,7 +10,7 @@ interface GitHubProjectCardProps {
 
 export function GitHubProjectCard({ project }: GitHubProjectCardProps) {
   return (
-    <Card className="p-6">
+    <Card className="p-6 transition-all hover:border-primary hover:bg-muted/50">
       <article className="space-y-4">
         <div className="space-y-2">
           <div className="flex items-center justify-between">

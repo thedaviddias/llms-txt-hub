@@ -7,7 +7,7 @@ import type { AuthUser } from '@thedaviddias/auth'
 /**
  * Configure Sentry user context with GitHub user information
  *
- * @param user - Supabase user object containing GitHub user data
+ * @param user - Auth user object containing user data
  */
 export function configureSentryUser(user: AuthUser | null) {
   if (!user) {

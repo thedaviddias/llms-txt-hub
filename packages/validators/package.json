@@ -1,0 +1,23 @@
+{
+  "name": "@thedaviddias/validators",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Code validation and quality checks for the llms-txt-hub project",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "validate:all": "pnpm validate:imports && pnpm validate:types && pnpm validate:security",
+    "validate:imports": "tsx src/validate-imports.ts",
+    "validate:security": "tsx src/validate-security.ts",
+    "validate:types": "tsx src/validate-types.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "glob": "^11.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.17",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
