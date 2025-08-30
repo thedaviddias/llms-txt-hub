@@ -1,10 +1,4 @@
 'use client'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { SearchAutocomplete } from '@/components/search/search-autocomplete'
-import { GithubStars } from '@/components/stats/github-stars'
-import { useSearch } from '@/hooks/use-search'
-import { getRoute } from '@/lib/routes'
 import { useAuth } from '@thedaviddias/auth'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
@@ -15,10 +9,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@thedaviddias/design-system/dropdown-menu'
-import { Eye, EyeOff, LogOut, Menu, Plus, Search, Settings, User } from 'lucide-react'
+import { Eye, EyeOff, LogOut, Menu, Plus, Search, Settings, User, UserPlus } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { SearchAutocomplete } from '@/components/search/search-autocomplete'
+import { GithubStars } from '@/components/stats/github-stars'
+import { useSearch } from '@/hooks/use-search'
+import { getRoute } from '@/lib/routes'
 import { MobileDrawer } from './mobile-drawer'
 
 interface NavLinkProps {
@@ -144,7 +144,7 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-background border-b">
-        <div className="w-full px-6 h-16 flex 2xl:grid 2xl:grid-cols-3 items-center justify-between 2xl:justify-center gap-4">
+        <div className="w-full px-4 sm:px-6 h-16 flex 2xl:grid 2xl:grid-cols-3 items-center justify-between 2xl:justify-center gap-3 sm:gap-4">
           {/* Logo + Menu - Left */}
           <div className="flex items-center gap-3">
             {/* Mobile menu toggle */}
@@ -158,9 +158,10 @@ export function Header() {
             </button>
             <Link
               href={getRoute('home')}
-              className="text-lg font-semibold plausible-event-name=External+Link+Click"
+              className="text-lg font-semibold whitespace-nowrap plausible-event-name=External+Link+Click"
             >
-              llms.txt hub
+              <span className="block sm:inline">llms.txt</span>
+              <span className="block sm:inline sm:ml-1">hub</span>
             </Link>
           </div>
 
@@ -197,7 +198,7 @@ export function Header() {
           </div>
 
           {/* Navigation + Actions - Right */}
-          <div className="flex items-center gap-4 2xl:justify-end">
+          <div className="flex items-center gap-2 sm:gap-4 2xl:justify-end">
             {/* Desktop navigation */}
             <nav className="hidden lg:flex items-center gap-4">
               <NavLink href={getRoute('projects')}>Projects</NavLink>
@@ -328,8 +329,8 @@ export function Header() {
                 href="/login"
                 className="inline-flex items-center justify-center rounded-lg text-sm font-medium py-1.5 px-3 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors plausible-event-name=Login"
               >
-                <span className="hidden md:inline">Sign Up</span>
-                <span className="md:hidden">Sign Up</span>
+                <UserPlus className="h-4 w-4 sm:hidden" />
+                <span className="hidden sm:inline">Sign Up</span>
               </Link>
             )}
           </div>
@@ -350,7 +351,7 @@ export function Header() {
             />
             {/* Search container */}
             <div className="md:hidden fixed inset-x-0 top-16 z-50 bg-background">
-              <div className="px-4 py-3 border-t">
+              <div className="px-4 sm:px-6 py-3 border-t">
                 <form onSubmit={onSubmit} className="relative">
                   <input
                     ref={mobileSearchInputRef}
