@@ -90,7 +90,7 @@ export function LLMGrid({
                   {stripHtmlTags(item.description)}
                 </p>
               </div>
-              <div className="flex-shrink-0 ml-2 relative z-20">
+              <div className="flex-shrink-0 ml-2">
                 <FavoriteButton slug={item.slug} size="sm" variant="ghost" />
               </div>
             </div>
@@ -134,12 +134,7 @@ export function LLMGrid({
                 <div className="space-y-1.5 sm:space-y-2">
                   <div className="flex items-start justify-between">
                     <FaviconWithFallback website={item.website} name={item.name} size={32} />
-                    <FavoriteButton
-                      slug={item.slug}
-                      size="sm"
-                      variant="default"
-                      className="relative z-20"
-                    />
+                    <FavoriteButton slug={item.slug} size="sm" variant="default" />
                   </div>
                   <div className="flex items-center gap-2">
                     <h3 className="font-bold text-xs sm:text-sm md:text-base truncate">

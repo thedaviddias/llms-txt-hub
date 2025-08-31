@@ -59,6 +59,7 @@ jobs:
     needs: [validate]
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    environment: Production - llms-txt-hub
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -71,6 +72,9 @@ jobs:
 
       - name: Run Playwright tests
         run: pnpm test:e2e:ci
+        env:
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
 
       - name: Upload test results
         if: always()
