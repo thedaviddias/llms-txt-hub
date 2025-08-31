@@ -80,7 +80,11 @@ export default defineConfig({
       // Disable external services for speed
       NEXT_PUBLIC_SENTRY_DSN: '',
       SENTRY_AUTH_TOKEN: '',
-      LOG_LEVEL: 'error'
+      LOG_LEVEL: 'error',
+      // Dummy Clerk keys for e2e testing (not real keys, just to pass validation)
+      // The pk_test_ key needs to be base64 encoded with proper format
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_Y2xlcmsuZXhhbXBsZS5jb20k',
+      CLERK_SECRET_KEY: 'sk_test_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
     }
   }
 })
