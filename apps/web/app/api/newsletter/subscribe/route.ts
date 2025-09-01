@@ -1,13 +1,13 @@
-import { type NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
+import { validateCSRFToken } from '@/lib/csrf-protection'
 import * as Sentry from '@sentry/nextjs'
 import { logger } from '@thedaviddias/logging'
-import { 
-  createNewsletterProvider, 
-  getProviderFromEnv, 
-  subscribeSchema 
+import {
+  createNewsletterProvider,
+  getProviderFromEnv,
+  subscribeSchema
 } from '@thedaviddias/newsletter'
-import { validateCSRFToken } from '@/lib/csrf-protection'
+import { type NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
 
 // Get provider configuration from environment
 const providerConfig = getProviderFromEnv()
@@ -22,7 +22,7 @@ const provider = providerConfig ? createNewsletterProvider(providerConfig) : nul
 export async function POST(request: NextRequest) {
   try {
     // Debug logging
-    logger.debug('Newsletter API called', { 
+    logger.debug('Newsletter API called', {
       data: { hasProvider: !!provider, provider: providerConfig?.provider },
       tags: { type: 'newsletter' }
     })
@@ -86,18 +86,20 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: result.message,
-      subscriber: result.subscriber ? {
-        id: result.subscriber.id,
-        email: result.subscriber.email,
-        status: result.subscriber.status
-      } : undefined
+      subscriber: result.subscriber
+        ? {
+            id: result.subscriber.id,
+            email: result.subscriber.email,
+            status: result.subscriber.status
+          }
+        : undefined
     })
   } catch (error) {
-    logger.error('Newsletter subscription error', { 
+    logger.error('Newsletter subscription error', {
       data: error,
       tags: { type: 'newsletter' }
     })
-    
+
     // Capture error in Sentry with context
     if (error instanceof Error) {
       Sentry.captureException(error, {

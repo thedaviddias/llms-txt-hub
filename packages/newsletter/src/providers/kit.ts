@@ -37,7 +37,8 @@ export class KitProvider implements NewsletterProviderInterface {
       // Groups/tags are passed per-request since each project may have different ones
       // Only use default tags as fallback if no groups provided
       const tags =
-        data.groups?.map(tag => Number(tag)).filter(tag => !isNaN(tag)) || this.config.defaultTagIds
+        data.groups?.map(tag => Number(tag)).filter(tag => !Number.isNaN(tag)) ||
+        this.config.defaultTagIds
       if (tags && tags.length > 0) {
         requestBody.tags = tags
       }
@@ -72,7 +73,7 @@ export class KitProvider implements NewsletterProviderInterface {
                 }
               }
             }
-          } catch (parseError) {
+          } catch {
             // If we can't parse the error, fall back to generic message
           }
         }

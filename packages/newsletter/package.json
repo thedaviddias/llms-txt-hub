@@ -2,35 +2,17 @@
   "name": "@thedaviddias/newsletter",
   "version": "1.0.0",
   "description": "Universal newsletter subscription package supporting multiple providers",
-  "keywords": [
-    "newsletter",
-    "email",
-    "subscription",
-    "mailerlite",
-    "convertkit",
-    "substack"
-  ],
+  "keywords": ["newsletter", "email", "subscription", "mailerlite", "convertkit", "substack"],
   "license": "MIT",
   "author": "David Dias <thedaviddias@gmail.com> (https://thedaviddias.dev/)",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./keys": {
-      "types": "./dist/keys.d.ts",
-      "import": "./dist/keys.mjs",
-      "require": "./dist/keys.js"
-    }
+    ".": "./src/index.ts",
+    "./keys": "./src/keys.ts"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@sentry/nextjs": "^10.7.0",
@@ -39,8 +21,8 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
     "@types/node": "^22.13.17",
-    "tsup": "^8.0.1",
     "typescript": "^5.8.2"
   }
 }

@@ -1,11 +1,11 @@
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
 import { JsonLd } from '@/components/json-ld'
 import { GuideCard } from '@/components/sections/guide-card'
 import { type GuideMetadata, getGuides } from '@/lib/content-loader'
 import { generateGuideSchema } from '@/lib/schema'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Developer Guides',
   description:

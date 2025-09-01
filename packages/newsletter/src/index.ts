@@ -49,7 +49,7 @@ export function getProviderFromEnv(): ProviderConfig | null {
       formId: process.env.CONVERTKIT_FORM_ID,
       defaultTagIds: process.env.CONVERTKIT_TAG_IDS?.split(',')
         .map(id => Number(id.trim()))
-        .filter(id => !isNaN(id))
+        .filter(id => !Number.isNaN(id))
     }
   }
 

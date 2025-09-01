@@ -4,7 +4,7 @@ import { Button } from '@thedaviddias/design-system/button'
 import { Input } from '@thedaviddias/design-system/input'
 import { Label } from '@thedaviddias/design-system/label'
 import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, useId, useState } from 'react'
 
 interface EmailSubscriptionFormProps {
   /** Form title */
@@ -27,6 +27,7 @@ export function EmailSubscriptionForm({
   compact = false,
   className = ''
 }: EmailSubscriptionFormProps) {
+  const emailId = useId()
   const [formData, setFormData] = useState<FormData>({
     email: ''
   })
@@ -76,7 +77,7 @@ export function EmailSubscriptionForm({
         setSubmitStatus('error')
         setErrorMessage(result.error || 'Failed to subscribe. Please try again.')
       }
-    } catch (error) {
+    } catch (_error) {
       setSubmitStatus('error')
       setErrorMessage('Network error. Please check your connection and try again.')
     } finally {
@@ -91,7 +92,7 @@ export function EmailSubscriptionForm({
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">{description}</p>
         </div>
-        
+
         <div className={`${compact ? 'max-w-lg mx-auto' : ''}`}>
           <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
             <div className="flex items-center space-x-3">
@@ -120,18 +121,18 @@ export function EmailSubscriptionForm({
 
       {/* Email Field */}
       <div className={`space-y-2 ${compact ? 'max-w-lg mx-auto' : ''}`}>
-        <Label htmlFor="email" className={compact ? 'sr-only' : ''}>
+        <Label htmlFor={emailId} className={compact ? 'sr-only' : ''}>
           Email address *
         </Label>
         <div className={`flex gap-2 ${compact ? '' : 'flex-col sm:flex-row'}`}>
           <Input
-            id="email"
+            id={emailId}
             type="email"
             placeholder="Enter your email"
             value={formData.email}
             onChange={e => handleEmailChange(e.target.value)}
             required
-            className={`px-4 py-2 rounded-lg flex-1`}
+            className="plausible-event-name=Newsletter+Input+Focus px-4 py-2 rounded-lg flex-1"
           />
           <Button
             type="submit"

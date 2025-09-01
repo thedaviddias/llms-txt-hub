@@ -1,9 +1,9 @@
+import { getContributionTypeLabel, getUserContributions } from '@/lib/github-contributions'
+import { hashSensitiveData } from '@/lib/server-crypto'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { logger } from '@thedaviddias/logging'
 import { Bug, FileText, GitPullRequest, User } from 'lucide-react'
 import Link from 'next/link'
-import { getContributionTypeLabel, getUserContributions } from '@/lib/github-contributions'
-import { hashSensitiveData } from '@/lib/server-crypto'
 
 interface ProfileContributionsProps {
   githubUsername: string | null
