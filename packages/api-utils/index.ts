@@ -68,10 +68,10 @@ export interface ApiHandlerOptions {
  * ```
  */
 export function withApiHandler<T = unknown>(
-  handler: (request: NextRequest) => Promise<ApiResponse<T>>,
+  handler: (request: NextRequest) => Promise<ApiResponse<T> | Response>,
   options: ApiHandlerOptions = {}
 ) {
-  return async (request: NextRequest): Promise<NextResponse> => {
+  return async (request: NextRequest): Promise<Response> => {
     const {
       logErrors = true,
       defaultErrorMessage = 'An error occurred processing your request',
@@ -84,7 +84,7 @@ export function withApiHandler<T = unknown>(
 
       // If result is already a Response, return it
       if (result instanceof Response) {
-        return result instanceof NextResponse ? result : new NextResponse(result.body, result)
+        return result
       }
 
       // Check if result is an error response
@@ -103,14 +103,14 @@ export function withApiHandler<T = unknown>(
       // Handle ApiException specifically
       if (error instanceof ApiException) {
         if (logErrors) {
-          logger.warn('API exception occurred', {
+          logger.error('API exception occurred', {
             data: {
               message: error.message,
               statusCode: error.statusCode,
               details: error.details,
               path: request.nextUrl.pathname
             },
-            tags: { type: 'api', ...tags }
+            tags: { type: 'api', severity: 'warn', ...tags }
           })
         }
 
@@ -174,7 +174,27 @@ export function validateRequiredFields(
   body: Record<string, unknown>,
   requiredFields: string[]
 ): void {
-  const missingFields = requiredFields.filter(field => !body[field])
+  const missingFields = requiredFields.filter(field => {
+    // Field not present in object
+    if (!(field in body)) {
+      return true
+    }
+    
+    const value = body[field]
+    
+    // null or undefined
+    if (value == null) {
+      return true
+    }
+    
+    // For strings, trim and check if empty
+    if (typeof value === 'string' && value.trim() === '') {
+      return true
+    }
+    
+    // All other values (including false, 0) are valid
+    return false
+  })
 
   if (missingFields.length > 0) {
     throw new ApiException(`Missing required fields: ${missingFields.join(', ')}`, 400, {

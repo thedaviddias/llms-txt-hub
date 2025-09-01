@@ -8,15 +8,15 @@ let redisClient: Redis | null = null
 const getRedisClient = (): Redis => {
   if (!redisClient) {
     const config = keys()
-    if (!config.UPSTASH_REDIS_REST_URL || !config.UPSTASH_REDIS_REST_TOKEN) {
+    if (!config.STORAGE_REDIS_URL || !config.STORAGE_KV_REST_API_TOKEN) {
       throw new Error(
-        'Upstash Redis configuration is missing. Please set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables.'
+        'Vercel Redis configuration is missing. Please set STORAGE_REDIS_URL and STORAGE_KV_REST_API_TOKEN environment variables.'
       )
     }
 
     redisClient = new Redis({
-      url: config.UPSTASH_REDIS_REST_URL,
-      token: config.UPSTASH_REDIS_REST_TOKEN
+      url: config.STORAGE_REDIS_URL,
+      token: config.STORAGE_KV_REST_API_TOKEN
     })
   }
   return redisClient
@@ -44,22 +44,36 @@ export const RATE_LIMITS = {
  * Uses multiple fallbacks for identification
  */
 function getClientId(request: NextRequest): string {
-  // Try to get real IP from headers (Vercel/Cloudflare)
-  const forwardedFor = request.headers.get('x-forwarded-for')
-  if (forwardedFor) {
-    // Take the first IP from the chain
-    const firstIp = forwardedFor.split(',')[0]?.trim()
-    if (firstIp) return firstIp
+  // Helper to validate basic IP format (v4 or v6)
+  const isValidIp = (ip: string): boolean => {
+    if (!ip || ip.length === 0) return false
+    // Basic validation: contains dots (IPv4) or colons (IPv6), no spaces
+    return (ip.includes('.') || ip.includes(':')) && !ip.includes(' ')
   }
 
-  // Fallback headers
+  // 1. Prefer Vercel-specific header (prevents spoofing)
+  const vercelForwarded = request.headers.get('x-vercel-forwarded-for')
+  if (vercelForwarded) {
+    const firstIp = vercelForwarded.split(',')[0]?.trim()
+    if (firstIp && isValidIp(firstIp)) return firstIp
+  }
+
+  // 2. Standard forwarded-for header (first hop)
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    const firstIp = forwardedFor.split(',')[0]?.trim()
+    if (firstIp && isValidIp(firstIp)) return firstIp
+  }
+
+  // 3. Real IP header
   const realIp = request.headers.get('x-real-ip')
-  if (realIp) return realIp
+  if (realIp && isValidIp(realIp.trim())) return realIp.trim()
 
+  // 4. Cloudflare connecting IP
   const cfConnectingIp = request.headers.get('cf-connecting-ip')
-  if (cfConnectingIp) return cfConnectingIp
+  if (cfConnectingIp && isValidIp(cfConnectingIp.trim())) return cfConnectingIp.trim()
 
-  // Fallback to user agent hash for client-side requests
+  // 5. Fallback to user agent hash for client-side requests
   const userAgent = request.headers.get('user-agent')
   if (userAgent) {
     // Simple hash function for user agent
@@ -72,7 +86,7 @@ function getClientId(request: NextRequest): string {
     return `ua:${Math.abs(hash)}`
   }
 
-  // Ultimate fallback
+  // 6. Ultimate fallback
   return 'unknown'
 }
 

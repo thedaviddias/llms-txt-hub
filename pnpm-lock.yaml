@@ -403,10 +403,10 @@ importers:
       '@thedaviddias/logging':
         specifier: workspace:*
         version: link:../logging
+    devDependencies:
       next:
         specifier: 15.5.2
         version: 15.5.2(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.51.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-    devDependencies:
       typescript:
         specifier: ^5.8.2
         version: 5.9.2

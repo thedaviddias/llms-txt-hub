@@ -7,8 +7,9 @@ import type { URLValidationOptions, ValidationResult } from './types'
  * Check if URL contains malicious protocols
  */
 export function hasMaliciousProtocol(url: string): boolean {
-  const lowerUrl = url.toLowerCase().trim()
-  return MALICIOUS_PROTOCOLS.some(protocol => lowerUrl.includes(protocol))
+  const trimmed = url.trim()
+  // Match malicious protocols only at the start (case-insensitive)
+  return /^(javascript|data|vbscript|file):/i.test(trimmed)
 }
 
 /**
@@ -139,18 +140,26 @@ export function validateEmail(
     domainBlacklist = []
   } = options || {}
 
-  if (
-    !validator.isEmail(trimmed, {
-      allow_display_name: allowDisplayName,
-      require_display_name: requireDisplayName,
-      allow_utf8_local_part: allowUtf8LocalPart,
-      require_tld: requireTld,
-      ignore_max_length: ignoreMaxLength,
-      domain_specific_validation: true,
-      host_whitelist: domainWhitelist,
-      host_blacklist: domainBlacklist
-    })
-  ) {
+  const emailOptions: any = {
+    allow_display_name: allowDisplayName,
+    require_display_name: requireDisplayName,
+    allow_utf8_local_part: allowUtf8LocalPart,
+    require_tld: requireTld,
+    ignore_max_length: ignoreMaxLength,
+    domain_specific_validation: true
+  }
+
+  // Only add host_whitelist if non-empty
+  if (domainWhitelist.length > 0) {
+    emailOptions.host_whitelist = domainWhitelist
+  }
+
+  // Only add host_blacklist if non-empty
+  if (domainBlacklist.length > 0) {
+    emailOptions.host_blacklist = domainBlacklist
+  }
+
+  if (!validator.isEmail(trimmed, emailOptions)) {
     return { valid: false, error: 'Invalid email format' }
   }
 

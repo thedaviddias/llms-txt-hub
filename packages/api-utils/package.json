@@ -12,10 +12,13 @@
     "lint": "biome check ."
   },
   "dependencies": {
-    "@thedaviddias/logging": "workspace:*",
-    "next": "15.5.2"
+    "@thedaviddias/logging": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0"
   },
   "devDependencies": {
+    "next": "15.5.2",
     "typescript": "^5.8.2"
   }
 }

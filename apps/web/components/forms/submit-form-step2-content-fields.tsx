@@ -141,7 +141,7 @@ Brief overview of how users can get started with this project, including any set
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
               </FormControl>
-              <SelectContent>
+              <SelectContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
                 {/* Tool Categories */}
                 <div className="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
                   Tools & Platforms

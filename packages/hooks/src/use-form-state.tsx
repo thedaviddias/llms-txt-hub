@@ -142,10 +142,19 @@ export function useFormState<T = unknown>(
   const isError = status === 'error'
 
   const setField = useCallback(<K extends keyof T>(field: K, value: T[K]) => {
-    setData(prev => ({
-      ...prev,
-      [field]: value
-    }))
+    setData(prev => {
+      // Runtime guard: check if prev is object-like
+      if (typeof prev !== 'object' || prev === null) {
+        const error = `setField requires object-like form data, but received: ${typeof prev}`
+        console.error(error)
+        throw new Error(error)
+      }
+      
+      return {
+        ...prev,
+        [field]: value
+      }
+    })
   }, [])
 
   const reset = useCallback(() => {
@@ -227,26 +236,30 @@ function defaultGetErrorMessage(error: unknown): string {
 }
 
 /**
+ * Input type for useSimpleFormState hook
+ */
+export interface UseSimpleFormStateInput {
+  onSubmit: () => Promise<unknown>
+  options?: Partial<Omit<UseFormStateOptions<void>, 'initialData'>>
+}
+
+/**
  * Hook variant for simple forms without complex data
  *
- * @param onSubmit - Submit handler
- * @param options - Additional options
+ * @param input - Object containing onSubmit handler and optional options
  * @returns Simplified form state and submit function
  *
  * @example
  * ```tsx
- * const { isLoading, error, submit } = useSimpleFormState(
- *   async () => {
+ * const { isLoading, error, submit } = useSimpleFormState({
+ *   onSubmit: async () => {
  *     await api.deleteAccount()
  *   },
- *   { onSuccess: () => router.push('/goodbye') }
- * )
+ *   options: { onSuccess: () => router.push('/goodbye') }
+ * })
  * ```
  */
-export function useSimpleFormState(
-  onSubmit: () => Promise<unknown>,
-  options?: Partial<Omit<UseFormStateOptions<void>, 'initialData'>>
-) {
+export function useSimpleFormState({ onSubmit, options }: UseSimpleFormStateInput) {
   const [state, actions] = useFormState({
     initialData: undefined as undefined,
     ...options

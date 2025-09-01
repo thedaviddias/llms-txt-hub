@@ -6,7 +6,7 @@ import validator from 'validator'
 import { sanitizeErrorMessage } from './security-utils-helpers'
 
 // Re-export helpers for backward compatibility
-export { clearRateLimiting, getRateLimitKey } from './security-utils-helpers'
+export { checkRateLimit, clearRateLimiting, getRateLimitKey } from './security-utils-helpers'
 
 /**
  * Sanitize text input to prevent XSS attacks

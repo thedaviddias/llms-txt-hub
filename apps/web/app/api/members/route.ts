@@ -1,6 +1,6 @@
 import { logger } from '@thedaviddias/logging'
 import { withRateLimit } from '@thedaviddias/rate-limiting'
-import type { NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { getClerk } from '@/lib/clerk'
 
 /**
