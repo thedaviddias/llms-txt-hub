@@ -1,7 +1,7 @@
 'use client'
+import { SearchAutocomplete } from '@/components/search/search-autocomplete'
 import { Search } from 'lucide-react'
 import { useRef } from 'react'
-import { SearchAutocomplete } from '@/components/search/search-autocomplete'
 
 interface DesktopSearchFormProps {
   searchQuery: string

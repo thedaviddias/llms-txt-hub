@@ -1,13 +1,13 @@
 'use client'
 
-import { Badge } from '@thedaviddias/design-system/badge'
-import { cn } from '@thedaviddias/design-system/lib/utils'
-import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { FavoriteButton } from '@/components/ui/favorite-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
+import { Badge } from '@thedaviddias/design-system/badge'
+import { cn } from '@thedaviddias/design-system/lib/utils'
+import Link from 'next/link'
 
 interface LLMGridProps {
   items: WebsiteMetadata[]

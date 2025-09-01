@@ -1,27 +1,15 @@
 'use client'
 
-import { NewsletterModal } from '@/components/newsletter-modal'
-import { Button } from '@thedaviddias/design-system/button'
-import type React from 'react'
-import { useState } from 'react'
+import { EmailSubscriptionForm } from './email-subscription-form'
 
 /**
  * Newsletter subscription form component
+ * Uses our API backend to support dynamic tag assignment
  *
  * @returns React component that renders a newsletter subscription form
  */
 export function NewsletterForm() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  return (
-    <>
-      <Button
-        onClick={() => setIsModalOpen(true)}
-        className="plausible-event-name=Newsletter+Click"
-      >
-        Subscribe
-      </Button>
-      <NewsletterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-    </>
-  )
+  // Groups/tags are handled server-side through the API
+  // The form just collects the email, and the backend adds appropriate groups
+  return <EmailSubscriptionForm compact />
 }

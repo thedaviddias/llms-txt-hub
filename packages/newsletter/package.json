@@ -1,0 +1,28 @@
+{
+  "name": "@thedaviddias/newsletter",
+  "version": "1.0.0",
+  "description": "Universal newsletter subscription package supporting multiple providers",
+  "keywords": ["newsletter", "email", "subscription", "mailerlite", "convertkit", "substack"],
+  "license": "MIT",
+  "author": "David Dias <thedaviddias@gmail.com> (https://thedaviddias.dev/)",
+  "exports": {
+    ".": "./src/index.ts",
+    "./keys": "./src/keys.ts"
+  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sentry/nextjs": "^10.7.0",
+    "@t3-oss/env-nextjs": "^0.12.0",
+    "@thedaviddias/logging": "workspace:*",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
+    "@types/node": "^22.13.17",
+    "typescript": "^5.8.2"
+  }
+}

@@ -128,7 +128,12 @@ function findBarrelFiles(dir, basePath = '') {
       barrelFiles.push(...findBarrelFiles(fullPath, relativePath))
     } else if (entry.isFile() && BARREL_FILE_PATTERNS.includes(entry.name)) {
       // Check if this barrel file is in the allowed list
-      if (!ALLOWED_INDEX_FILES.includes(relativePath)) {
+      // Also allow package entry points (packages/*/src/index.ts or configs/*/index.ts)
+      const isPackageEntry =
+        relativePath.match(/packages\/[^/]+\/src\/index\.(ts|js|mjs)$/) ||
+        relativePath.match(/configs\/[^/]+\/index\.(ts|js|mjs)$/)
+
+      if (!ALLOWED_INDEX_FILES.includes(relativePath) && !isPackageEntry) {
         // Check if file contains barrel export patterns
         if (isBarrelFile(fullPath)) {
           barrelFiles.push(relativePath)
@@ -164,7 +169,16 @@ function main() {
       } else if (stat.isFile() && BARREL_FILE_PATTERNS.includes(path.basename(target))) {
         // Handle individual index files
         const relativePath = path.relative('.', target).replace(/\\/g, '/')
-        if (!ALLOWED_INDEX_FILES.includes(relativePath) && isBarrelFile(target)) {
+        // Check if it's a package entry point
+        const isPackageEntry =
+          relativePath.match(/packages\/[^/]+\/src\/index\.(ts|js|mjs)$/) ||
+          relativePath.match(/configs\/[^/]+\/index\.(ts|js|mjs)$/)
+
+        if (
+          !ALLOWED_INDEX_FILES.includes(relativePath) &&
+          !isPackageEntry &&
+          isBarrelFile(target)
+        ) {
           allBarrelFiles.push(relativePath)
         }
       }

@@ -33,17 +33,6 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "1RPC",
-    "description": "1rpc.io - Information and resources",
-    "url": "/1rpc-llms-txt",
-    "content": "# 1RPC\n\n1rpc.io - Information and resources",
-    "category": "other",
-    "slug": "1rpc-llms-txt",
-    "website": "https://1rpc.io",
-    "llmsUrl": "https://1rpc.io/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "48 Club",
     "description": "48.club - Information and resources",
     "url": "/48-club-llms-txt",
@@ -207,17 +196,6 @@
     "website": "https://www.adiacent.com",
     "llmsUrl": "https://www.adiacent.com/llms.txt",
     "llmsFullUrl": "https://www.adiacent.com/llms-full.txt"
-  },
-  {
-    "name": "Adly",
-    "description": "adly.tech - Information and resources",
-    "url": "/adly-llms-txt",
-    "content": "# Adly\n\nadly.tech - Information and resources",
-    "category": "other",
-    "slug": "adly-llms-txt",
-    "website": "https://adly.tech",
-    "llmsUrl": "https://adly.tech/llms.txt",
-    "llmsFullUrl": ""
   },
   {
     "name": "Admira",
@@ -517,17 +495,6 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "Alpha Network",
-    "description": "Alpha Network - Developer tools and platform",
-    "url": "/alpha-network-llms-txt",
-    "content": "# Alpha Network\n\nAlpha Network - Developer tools and platform",
-    "category": "developer-tools",
-    "slug": "alpha-network-llms-txt",
-    "website": "https://alphaos.net",
-    "llmsUrl": "https://alphaos.net/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "Alphagate",
     "description": "alphagate.io - Information and resources",
     "url": "/alphagate-llms-txt",
@@ -746,17 +713,6 @@
     "website": "https://aptible.com",
     "llmsUrl": "https://www.aptible.com/docs/llms.txt",
     "llmsFullUrl": "https://www.aptible.com/docs/llms-full.txt"
-  },
-  {
-    "name": "APU Center",
-    "description": "We specialize in providing new, used & refurbished thermo king auxillary power units for semi trucks, available at APU Center in Springfield, MO.",
-    "url": "/apu-center-llms-txt",
-    "content": "# APU Center\n\nWe specialize in providing new, used & refurbished thermo king auxillary power units for semi trucks, available at APU Center in Springfield, MO.",
-    "category": "ai-ml",
-    "slug": "apu-center-llms-txt",
-    "website": "https://apucenter.com",
-    "llmsUrl": "https://apucenter.com/llms.txt",
-    "llmsFullUrl": "https://apucenter.com/llms-full.txt"
   },
   {
     "name": "Arbiscan",
@@ -1639,17 +1595,6 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "Capfizz",
-    "description": "With its pioneering and satisfying many investors in the world. Grass is a pioneering project in the field of Sentry Node that has been achieving many expectations and CapFizz will continue the vision in this billion dollar field.",
-    "url": "/capfizz-llms-txt",
-    "content": "# Capfizz\n\nWith its pioneering and satisfying many investors in the world. Grass is a pioneering project in the field of Sentry Node that has been achieving many expectations and CapFizz will continue the vision in this billion dollar field.",
-    "category": "finance-fintech",
-    "slug": "capfizz-llms-txt",
-    "website": "https://capfizz.com",
-    "llmsUrl": "https://docs.capfizz.com/v2/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "CaptivateRecipes",
     "description": "Captivate Recipes offers delicious recipes for every occasion. Explore cuisines, discover cooking tips, and join food lovers",
     "url": "/captivaterecipes-llms-txt",
@@ -1812,17 +1757,6 @@
     "slug": "chaingpt-llms-txt",
     "website": "https://chaingpt.org",
     "llmsUrl": "https://docs.chaingpt.org/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "Chainspect",
-    "description": "Chainspect is Web3''s top blockchain performance tracker focused on technical metrics like TPS, Max TPS, Finality, and Block Time across 50+ blockchains",
-    "url": "/chainspect-llms-txt",
-    "content": "# Chainspect\n\nChainspect is Web3's top blockchain performance tracker focused on technical metrics like TPS, Max TPS, Finality, and Block Time across 50+ blockchains",
-    "category": "finance-fintech",
-    "slug": "chainspect-llms-txt",
-    "website": "https://chainspect.app",
-    "llmsUrl": "https://chainspect.app/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -3509,17 +3443,6 @@
     "llmsFullUrl": "https://www.vinfotech.com/llms-full.txt"
   },
   {
-    "name": "FastHTML",
-    "description": "High-performance HTML templating engine",
-    "url": "/fasthtml-llms-txt",
-    "content": "# FastHTML\n\nFastHTML provides a high-performance HTML templating engine for modern web applications.\n\n## Key Focus Areas\n\n- HTML Templating\n- Performance Optimization\n- Web Development\n\n## About llms.txt Implementation\n\nFastHTML's llms.txt documentation outlines their templating engine capabilities and performance features.",
-    "category": "developer-tools",
-    "slug": "fasthtml-llms-txt",
-    "website": "https://fastht.ml",
-    "llmsUrl": "https://docs.fastht.ml/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "Fatos Militares",
     "description": "Fatos Militares seu site de Curiosidades Militares, Notícias Militares e conhecimento em geral sobre o Mundo Militar.",
     "url": "/fatos-militares-llms-txt",
@@ -3803,17 +3726,6 @@
     "slug": "front-matter-cms-llms-txt",
     "website": "https://frontmatter.codes",
     "llmsUrl": "https://frontmatter.codes/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "Funky Pearls Radio",
-    "description": "Radio Disco Funk En Ligne 🪩 Funky Pearls Rejoins-nous en Direct sur Funky Pearls Radio !",
-    "url": "/funky-pearls-radio-llms-txt",
-    "content": "# Funky Pearls Radio\n\nRadio Disco Funk En Ligne 🪩 Funky Pearls Rejoins-nous en Direct sur Funky Pearls Radio !",
-    "category": "other",
-    "slug": "funky-pearls-radio-llms-txt",
-    "website": "https://funkypearls.radio",
-    "llmsUrl": "https://funkypearls.radio/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -4598,17 +4510,6 @@
     "llmsFullUrl": "https://docs.infera.org/llms-full.txt"
   },
   {
-    "name": "Infinity Wallet",
-    "description": "A one-stop crypto wallet to explore DeFi, Web3 and NFTs! The best crypto wallet for secure self-custody to buy, sell, pay, discover DApps, & swap crypto.",
-    "url": "/infinity-wallet-llms-txt",
-    "content": "# Infinity Wallet\n\nA one-stop crypto wallet to explore DeFi, Web3 and NFTs! The best crypto wallet for secure self-custody to buy, sell, pay, discover DApps, & swap crypto.",
-    "category": "finance-fintech",
-    "slug": "infinity-wallet-llms-txt",
-    "website": "https://infinitywallet.io",
-    "llmsUrl": "https://docs.infinitywallet.io/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "Infisical",
     "description": "Secure secrets management platform",
     "url": "/infisical-llms-txt",
@@ -5115,17 +5016,6 @@
     "llmsFullUrl": "https://getkoala.com/docs/llms-full.txt"
   },
   {
-    "name": "Kroma",
-    "description": "Kroma aims to be a New Universal ZK Rollup on Ethereum",
-    "url": "/kroma-llms-txt",
-    "content": "# Kroma\n\nKroma aims to be a New Universal ZK Rollup on Ethereum",
-    "category": "finance-fintech",
-    "slug": "kroma-llms-txt",
-    "website": "https://kroma.network",
-    "llmsUrl": "https://docs.kroma.network/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
     "name": "Kruzty",
     "description": "Live Wallpapers. Browse millions of high quality live wallpapers and give your pc an aesthetic look.",
     "url": "/kruzty-llms-txt",
@@ -5619,17 +5509,6 @@
     "website": "https://lobehub.com",
     "llmsUrl": "https://lobehub.com/llms.txt",
     "llmsFullUrl": "https://lobehub.com/llms-full.txt"
-  },
-  {
-    "name": "Localization.Asia",
-    "description": "Professional translation, transcription, and subtitling services, perfected by native language experts across Asia and beyond.",
-    "url": "/localization-asia-llms-txt",
-    "content": "# Localization.Asia\n\nProfessional translation, transcription, and subtitling services powered by AI technology and perfected by native language experts across Asia and beyond.\nOffering comprehensive language solutions including document translation, audio transcription, video subtitling, and specialized data processing services with fast turnaround times and competitive pricing.",
-    "category": "business-operations",
-    "slug": "localization-asia-llms-txt",
-    "website": "https://localization.asia",
-    "llmsUrl": "https://localization.asia/api/llms.txt",
-    "llmsFullUrl": ""
   },
   {
     "name": "LogLayer",
@@ -6432,17 +6311,6 @@
     "slug": "nonprofit-management-llms-txt",
     "website": "https://vectorsgroup.com",
     "llmsUrl": "https://vectorsgroup.com/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "Nova Store",
-    "description": "Expert French encryption documentation service for iOS apps. Get ANSSI compliance certification for your iOS app deployment in France. Complete solution for French regulatory requirements.",
-    "url": "/nova-store-llms-txt",
-    "content": "# Nova Store\n\nExpert French encryption documentation service for iOS apps. Get ANSSI compliance certification for your iOS app deployment in France. Complete solution for French regulatory requirements.",
-    "category": "developer-tools",
-    "slug": "nova-store-llms-txt",
-    "website": "https://www.novastore.dev",
-    "llmsUrl": "https://www.novastore.dev/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -7370,17 +7238,6 @@
     "llmsFullUrl": "https://www.performanceplustire.com/llms-full.txt"
   },
   {
-    "name": "Rizk",
-    "description": "Prevent AI failures before they happen. Rizk is an open-source policy enforcement tool that ensures AI agents comply with security, privacy, and ethical guidelines in real-time.",
-    "url": "/rizk-llms-txt",
-    "content": "# Rizk\n\nPrevent AI failures before they happen. Rizk is an open-source policy enforcement tool that ensures AI agents comply with security, privacy, and ethical guidelines in real-time.",
-    "category": "ai-ml",
-    "slug": "rizk-llms-txt",
-    "website": "https://rizk.tools",
-    "llmsUrl": "https://docs.rizk.tools/llms.txt",
-    "llmsFullUrl": "https://docs.rizk.tools/llms-full.txt"
-  },
-  {
     "name": "Roc",
     "description": "Fast and safe programming language",
     "url": "/roc-llms-txt",
@@ -8225,17 +8082,6 @@
     "slug": "swipe-llms-txt",
     "website": "https://getswipe.in/",
     "llmsUrl": "https://getswipe.in/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "SWRED",
-    "description": "Diseño web integral Mobile First Responsive Hosting Dominio internacional Tienda e-commerce Clientes en España, USA. LATAM Más de 20 años de experiencia",
-    "url": "/swred-llms-txt",
-    "content": "# SWRED\n\nDiseño web integral Mobile First Responsive Hosting Dominio internacional Tienda e-commerce Clientes en España, USA. LATAM Más de 20 años de experiencia",
-    "category": "other",
-    "slug": "swred-llms-txt",
-    "website": "https://swred.com",
-    "llmsUrl": "https://swred.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -9623,17 +9469,6 @@
     "website": "https://youform.com",
     "llmsUrl": "https://youform.com/blog/LLMs.txt",
     "llmsFullUrl": ""
-  },
-  {
-    "name": "YourOpinion.is",
-    "description": "Free Surveys in Seconds. No Account, No Fuss. Just compose the questions, get a link, and share.",
-    "url": "/youropinion-is-llms-txt",
-    "content": "# YourOpinion.is\n\nFree Surveys in Seconds. No Account, No Fuss. Just compose the questions, get a link, and share.",
-    "category": "infrastructure-cloud",
-    "slug": "youropinion-is-llms-txt",
-    "website": "https://youropinion.is",
-    "llmsUrl": "https://youropinion.is/llms.txt",
-    "llmsFullUrl": "https://youropinion.is/llms-full.txt"
   },
   {
     "name": "Zag",
