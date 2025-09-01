@@ -3,55 +3,10 @@
  */
 import DOMPurify from 'isomorphic-dompurify'
 import validator from 'validator'
-import { rateLimitMap, sanitizeErrorMessage } from './security-utils-helpers'
+import { sanitizeErrorMessage } from './security-utils-helpers'
 
 // Re-export helpers for backward compatibility
 export { clearRateLimiting, getRateLimitKey } from './security-utils-helpers'
-
-export interface RateLimitOptions {
-  windowMs: number
-  maxRequests: number
-}
-
-export interface CheckRateLimitInput {
-  identifier: string
-  resource?: string
-  maxRequests?: number
-  windowMs?: number
-}
-
-/**
- * Check rate limit for a given identifier
- *
- * @param input - Object containing rate limit parameters
- * @param input.identifier - The identifier to check rate limit for (e.g., clientIp or userId)
- * @param input.resource - Optional resource being accessed (e.g., pathname or endpoint)
- * @param input.maxRequests - Maximum requests allowed (default: 10)
- * @param input.windowMs - Time window in milliseconds (default: 60000)
- * @returns Object with allowed status and reset time
- */
-export function checkRateLimit(input: CheckRateLimitInput): {
-  allowed: boolean
-  resetTime?: number
-} {
-  const { identifier, maxRequests = 10, windowMs = 60 * 1000 } = input
-  const now = Date.now()
-
-  const record = rateLimitMap.get(identifier)
-
-  if (!record || now > record.resetTime) {
-    // First request or window expired
-    rateLimitMap.set(identifier, { count: 1, resetTime: now + windowMs })
-    return { allowed: true }
-  }
-
-  if (record.count >= maxRequests) {
-    return { allowed: false, resetTime: record.resetTime }
-  }
-
-  record.count++
-  return { allowed: true }
-}
 
 /**
  * Sanitize text input to prevent XSS attacks

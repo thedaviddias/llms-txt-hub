@@ -1,8 +1,8 @@
-import { getUserContributions } from '@/lib/github-contributions'
-import { withRateLimit } from '@/lib/rate-limiter'
-import { CACHE_KEYS, CACHE_TTL, get, set } from '@/lib/redis'
 import { logger } from '@thedaviddias/logging'
+import { withRateLimit } from '@thedaviddias/rate-limiting'
 import { type NextRequest, NextResponse } from 'next/server'
+import { getUserContributions } from '@/lib/github-contributions'
+import { CACHE_KEYS, CACHE_TTL, get, set } from '@/lib/redis'
 
 interface ContributionsRequest {
   usernames: string[]
