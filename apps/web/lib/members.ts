@@ -1,10 +1,6 @@
-import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
+import { getClerk, safeSerializeError } from './clerk'
 import { getUserContributions } from './github-contributions'
-
-const clerk = createClerkClient({
-  secretKey: process.env.CLERK_SECRET_KEY!
-})
 
 export interface Member {
   id: string
@@ -56,6 +52,14 @@ function hasSharedInfo(user: any): boolean {
  */
 export async function getLatestMembers(limit = 6): Promise<Member[]> {
   try {
+    const clerk = getClerk()
+
+    // Return empty array if Clerk is not configured
+    if (!clerk) {
+      logger.warn('Clerk client not available, returning empty members list')
+      return []
+    }
+
     // Fetch a reasonable number of recent users to filter from
     const response = await clerk.users.getUserList({
       limit: Math.min(limit * 3, 100), // Fetch more than needed to account for private profiles
@@ -100,7 +104,10 @@ export async function getLatestMembers(limit = 6): Promise<Member[]> {
 
     return latestMembers
   } catch (error) {
-    logger.error('Error fetching latest members:', { data: error, tags: { type: 'library' } })
+    logger.error('Error fetching latest members:', {
+      data: safeSerializeError(error),
+      tags: { type: 'library' }
+    })
     return []
   }
 }

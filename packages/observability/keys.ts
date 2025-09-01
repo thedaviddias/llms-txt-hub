@@ -1,15 +1,19 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+/**
+ * Builds the Observability env contract (server/client) and parses process.env.
+ * @returns Parsed env accessors for Sentry configuration.
+ */
 export const keys = () =>
   createEnv({
     server: {
-      SENTRY_ORG: z.string().min(1).optional(),
-      SENTRY_PROJECT: z.string().min(1).optional(),
-      SENTRY_AUTH_TOKEN: z.string().min(1).optional()
+      SENTRY_ORG: z.string().trim().min(1).optional(),
+      SENTRY_PROJECT: z.string().trim().min(1).optional(),
+      SENTRY_AUTH_TOKEN: z.string().trim().min(1).optional()
     },
     client: {
-      NEXT_PUBLIC_SENTRY_DSN: z.string().min(1).url().optional()
+      NEXT_PUBLIC_SENTRY_DSN: z.string().trim().url().optional()
     },
     runtimeEnv: {
       SENTRY_ORG: process.env.SENTRY_ORG,

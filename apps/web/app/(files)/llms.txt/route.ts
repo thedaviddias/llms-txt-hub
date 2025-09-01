@@ -1,74 +1,15 @@
-import fs from 'node:fs'
-import path from 'node:path'
 import { logger } from '@thedaviddias/logging'
-import matter from 'gray-matter'
 import { NextResponse } from 'next/server'
+import { getResources, getWebsites } from '@/lib/content-loader'
 
-const contentDirectory = path.join(process.cwd(), '../../content')
-
-interface Website {
-  name: string
-  description: string
-  website: string
-  llmsUrl?: string
-  llmsFullUrl?: string
-  category: string
-  slug: string
-}
-
-interface Resource {
-  title: string
-  description: string
-  link: string
-  type: string
-  slug: string
-}
-
-function getWebsites(): Website[] {
-  const websitesPath = path.join(contentDirectory, 'websites')
-  const files = fs.readdirSync(websitesPath).filter(file => file.endsWith('.mdx'))
-
-  return files.map(file => {
-    const fullPath = path.join(websitesPath, file)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data } = matter(fileContents)
-    const slug = file.replace('.mdx', '')
-
-    return {
-      name: data.name || '',
-      description: data.description || '',
-      website: data.website || '',
-      llmsUrl: data.llmsUrl,
-      llmsFullUrl: data.llmsFullUrl,
-      category: data.category || 'uncategorized',
-      slug
-    }
-  })
-}
-
-function getResources(): Resource[] {
-  const resourcesPath = path.join(contentDirectory, 'resources')
-  const files = fs.readdirSync(resourcesPath).filter(file => file.endsWith('.mdx'))
-
-  return files.map(file => {
-    const fullPath = path.join(resourcesPath, file)
-    const fileContents = fs.readFileSync(fullPath, 'utf8')
-    const { data } = matter(fileContents)
-    const slug = file.replace('.mdx', '')
-
-    return {
-      title: data.title || '',
-      description: data.description || '',
-      link: data.link || '',
-      type: data.type || 'general',
-      slug
-    }
-  })
-}
-
+/**
+ * GET /llms.txt - Generates a text file listing all websites implementing llms.txt
+ * @returns Text response with website directory and resources
+ */
 export async function GET() {
   try {
-    const [websites, resources] = [getWebsites(), getResources()]
+    const websites = getWebsites()
+    const resources = getResources()
 
     // Generate the text content
     let content = `# LLMs.txt Hub Directory
@@ -93,7 +34,9 @@ The following websites have implemented llms.txt:\n\n`
     // Add resources
     content += '\n## Resources\n'
     for (const resource of resources) {
-      content += `- [${resource.title}](${resource.link})${resource.description ? `: ${resource.description}` : ''} [${resource.type}]\n`
+      const link = resource.url || '#'
+      const category = resource.category || 'general'
+      content += `- [${resource.title}](${link})${resource.description ? `: ${resource.description}` : ''} [${category}]\n`
     }
 
     content += `\n## Contributing

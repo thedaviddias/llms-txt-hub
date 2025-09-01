@@ -2,10 +2,10 @@
  * Server-side member processing utilities
  */
 
-import { hashSensitiveData } from '@/lib/server-crypto'
 import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
 import { unstable_cache } from 'next/cache'
+import { hashSensitiveData } from '@/lib/server-crypto'
 
 const clerk = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!
@@ -139,23 +139,38 @@ export async function processUser(user: any): Promise<Member> {
 
 /**
  * Generate demo data for development/fallback
+ * Uses deterministic values based on index for consistent E2E testing
  *
  * @param count - Number of demo users to generate
  * @returns Array of demo member objects
  */
 export function generateDemoData(count: number): Member[] {
-  return Array.from({ length: count }, (_, i) => ({
-    id: `demo-user-${i + 1}`,
-    firstName: 'Demo',
-    lastName: `User ${i + 1}`,
-    username: `demo_user_${i + 1}`,
-    imageUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=demo-${i + 1}`,
-    createdAt: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
-    publicMetadata: {
-      github_username: Math.random() > 0.5 ? `github_demo_${i + 1}` : null,
-      migrated_from: null
+  return Array.from({ length: count }, (_, i) => {
+    // Deterministic date: start from fixed date (2024-01-01) and add days based on index
+    // This ensures consistent dates across all test runs
+    const baseDate = new Date(Date.UTC(2024, 0, 1)) // January 1, 2024 UTC
+    const createdAt = new Date(baseDate.getTime() + i * 86_400_000).toISOString() // Add i days
+
+    // Deterministic github_username: even indices get github username
+    const github_username = i % 2 === 0 ? `github-demo${i + 1}` : null
+
+    // Deterministic hasContributions: 70% have contributions (i % 10 < 7)
+    const hasContributions = i % 10 < 7
+
+    return {
+      id: `demo-user-${i + 1}`,
+      firstName: 'Demo',
+      lastName: `User ${i + 1}`,
+      username: `demo_user_${i + 1}`,
+      imageUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=demo-${i + 1}`,
+      createdAt,
+      publicMetadata: {
+        github_username,
+        migrated_from: null
+      },
+      hasContributions
     }
-  }))
+  })
 }
 
 // Cache the members data with Next.js 15's unstable_cache
@@ -210,8 +225,27 @@ export const getCachedMembers = unstable_cache(
 
       return allUsers
     } catch (error) {
+      // Log sanitized error information without raw Error object
+      const errorInfo: Record<string, unknown> =
+        error instanceof Error
+          ? {
+              message: error.message,
+              name: error.name
+            }
+          : { message: 'Unknown error occurred' }
+
+      // Add optional error properties if they exist
+      if (error && typeof error === 'object') {
+        if ('status' in error && error.status) {
+          errorInfo.status = error.status
+        }
+        if ('code' in error && error.code) {
+          errorInfo.code = error.code
+        }
+      }
+
       logger.error('Error fetching members', {
-        data: { error: error instanceof Error ? error.message : 'Unknown error' },
+        data: errorInfo,
         tags: { type: 'page', security: 'error' }
       })
       return generateDemoData(50)
