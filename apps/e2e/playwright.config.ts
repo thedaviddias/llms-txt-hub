@@ -77,11 +77,15 @@ export default defineConfig({
     timeout: 60000, // 1 minute to start server
     env: {
       // Minimize external dependencies for testing
-      NEXT_PUBLIC_SENTRY_DSN: 'https://dummy@dummy.ingest.sentry.io/123',
-      SENTRY_AUTH_TOKEN: 'dummy_token',
-      SENTRY_ORG: 'dummy_org',
-      SENTRY_PROJECT: 'dummy_project',
-      LOG_LEVEL: 'error',
+      NEXT_PUBLIC_SENTRY_DSN:
+        process.env.NEXT_PUBLIC_SENTRY_DSN || 'https://dummy@dummy.ingest.sentry.io/123',
+      SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN || 'dummy_token',
+      SENTRY_ORG: process.env.SENTRY_ORG || 'dummy_org',
+      SENTRY_PROJECT: process.env.SENTRY_PROJECT || 'dummy_project',
+      LOG_LEVEL: process.env.LOG_LEVEL || 'error',
+      // Clerk test keys (if needed for auth testing)
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || '',
+      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || '',
       // Faster builds
       NEXT_TELEMETRY_DISABLED: '1'
     }

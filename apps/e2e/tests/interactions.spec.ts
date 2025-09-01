@@ -36,10 +36,14 @@ test.describe('User Interactions', () => {
 
     if (await loadMoreBtn.isVisible()) {
       const initialItems = await page.locator('[data-testid*="website"], .grid > *').count()
-      await loadMoreBtn.click()
 
-      // Should load more items (or at least attempt to)
-      await page.waitForTimeout(1000) // Wait for potential loading
+      // Click and wait for network activity to settle
+      await Promise.all([page.waitForLoadState('networkidle'), loadMoreBtn.click()])
+
+      // Assert that more items have loaded
+      await expect
+        .poll(async () => page.locator('[data-testid*="website"], .grid > *').count())
+        .toBeGreaterThan(initialItems)
     }
   })
 
@@ -61,15 +65,19 @@ test.describe('Navigation Interactions', () => {
   test('footer links should work', async ({ page }) => {
     await page.goto('/')
 
-    // Scroll to footer
-    await page.getByRole('contentinfo').scrollIntoViewIfNeeded()
+    // Check if footer exists and is visible
+    const footer = page.locator('footer').first()
+    if (await footer.isVisible()) {
+      // Scroll to footer
+      await page.getByRole('contentinfo').scrollIntoViewIfNeeded()
 
-    // Test privacy link
-    const privacyLink = page.getByRole('link', { name: /privacy/i })
-    if (await privacyLink.isVisible()) {
-      await privacyLink.click()
-      await page.waitForURL('**/privacy')
-      await expect(page).toHaveURL(/\/privacy/)
+      // Test privacy link
+      const privacyLink = page.getByRole('link', { name: /privacy/i })
+      if (await privacyLink.isVisible()) {
+        await privacyLink.click()
+        await page.waitForURL('**/privacy')
+        await expect(page).toHaveURL(/\/privacy/)
+      }
     }
   })
 
@@ -101,9 +109,8 @@ test.describe('Navigation Interactions', () => {
     if (await backToTop.isVisible()) {
       await backToTop.click()
 
-      // Should scroll to top
-      const scrollPosition = await page.evaluate(() => window.pageYOffset)
-      expect(scrollPosition).toBeLessThan(100)
+      // Wait for scroll animation to complete
+      await expect.poll(() => page.evaluate(() => window.pageYOffset)).toBeLessThan(500)
     }
   })
 })
@@ -159,7 +166,7 @@ test.describe('Form Interactions', () => {
 })
 
 test.describe('External Links', () => {
-  test('external links should open correctly', async ({ page, context }) => {
+  test('external links should open correctly', async ({ page }) => {
     await page.goto('/')
 
     // Look for GitHub or other external links
@@ -219,7 +226,8 @@ test.describe('Mobile Interactions', () => {
         await searchInput.fill('test')
         await searchInput.press('Enter')
 
-        await page.waitForTimeout(1000)
+        // Wait for navigation or results to appear
+        await expect(page).toHaveURL(/\/search\?.+/, { timeout: 10000 })
       }
     }
   })

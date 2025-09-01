@@ -1,7 +1,7 @@
-import { withRateLimit } from '@/lib/rate-limiter'
-import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { getClerk } from '@/lib/clerk'
+import { withRateLimit } from '@/lib/rate-limiter'
 
 /**
  * Determines if a user has shared enough information to be displayed publicly
@@ -74,20 +74,27 @@ export async function GET(
           tags: { type: 'api' }
         })
 
-        // Fallback to mock data if Clerk is not configured
+        // Fallback to mock data if Clerk is not configured (deterministic values for E2E)
         const mockMembers: MemberData[] = Array.from({ length: limit }, (_, i) => {
           const id = `demo-user-${page}-${i + 1}`
+          const globalIndex = page * limit + i
+
+          // Deterministic date: subtract (globalIndex % 365) days from now
+          const daysOffset = globalIndex % 365
+          const createdAt = new Date(Date.now() - daysOffset * 24 * 60 * 60 * 1000).toISOString()
+
+          // Deterministic github_username: even global indices get github username
+          const github_username = globalIndex % 2 === 0 ? `github-demo${globalIndex + 1}` : null
+
           return {
             id,
             firstName: 'Demo User',
-            lastName: `${page * limit + i + 1}`,
-            username: `demo_user_${page * limit + i + 1}`,
+            lastName: `${globalIndex + 1}`,
+            username: `demo_user_${globalIndex + 1}`,
             imageUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${id}`,
-            createdAt: new Date(
-              Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
-            ).toISOString(),
+            createdAt,
             publicMetadata: {
-              github_username: Math.random() > 0.5 ? `github-demo${page * limit + i + 1}` : null,
+              github_username,
               migrated_from: null
             }
           }
@@ -131,10 +138,13 @@ export async function GET(
         })
       }
 
-      // Create Clerk client instance
-      const clerk = createClerkClient({
-        secretKey: process.env.CLERK_SECRET_KEY!
-      })
+      // Get shared Clerk client instance
+      const clerk = getClerk()
+
+      if (!clerk) {
+        logger.warn('Clerk client not available in members API route')
+        return NextResponse.json({ error: 'Authentication service unavailable' }, { status: 503 })
+      }
 
       let clerkResponse
       try {
@@ -148,26 +158,38 @@ export async function GET(
           data: { userCount: clerkResponse.data.length, page, limit },
           tags: { type: 'api' }
         })
-      } catch (clerkError: any) {
+      } catch (clerkError) {
         logger.error('Error fetching from Clerk:', {
-          data: { error: clerkError.message, page, limit, offset },
+          data: {
+            error: clerkError instanceof Error ? clerkError.message : 'Unknown Clerk error',
+            page,
+            limit,
+            offset
+          },
           tags: { type: 'api' }
         })
 
-        // Fallback to mock data if Clerk fails
+        // Fallback to mock data if Clerk fails (deterministic values for E2E)
         const mockMembers: MemberData[] = Array.from({ length: limit }, (_, i) => {
           const id = `fallback-user-${page}-${i + 1}`
+          const globalIndex = page * limit + i
+
+          // Deterministic date: subtract (globalIndex % 365) days from now
+          const daysOffset = globalIndex % 365
+          const createdAt = new Date(Date.now() - daysOffset * 24 * 60 * 60 * 1000).toISOString()
+
+          // Deterministic github_username: even global indices get github username
+          const github_username = globalIndex % 2 === 0 ? `github-user${globalIndex + 1}` : null
+
           return {
             id,
             firstName: 'User',
-            lastName: `${page * limit + i + 1}`,
-            username: `user${page * limit + i + 1}`,
+            lastName: `${globalIndex + 1}`,
+            username: `user${globalIndex + 1}`,
             imageUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=${id}`,
-            createdAt: new Date(
-              Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
-            ).toISOString(),
+            createdAt,
             publicMetadata: {
-              github_username: Math.random() > 0.5 ? `github-user${page * limit + i + 1}` : null,
+              github_username,
               migrated_from: null
             }
           }
@@ -267,7 +289,29 @@ export async function GET(
         pagination: paginationData
       })
     } catch (error) {
-      logger.error('Error fetching paginated members:', { data: error, tags: { type: 'api' } })
+      // Log sanitized error information without raw Error object
+      const errorInfo: Record<string, unknown> =
+        error instanceof Error
+          ? {
+              message: error.message,
+              name: error.name
+            }
+          : { message: 'Unknown error occurred' }
+
+      // Add optional error properties if they exist
+      if (error && typeof error === 'object') {
+        if ('status' in error && error.status) {
+          errorInfo.status = error.status
+        }
+        if ('code' in error && error.code) {
+          errorInfo.code = error.code
+        }
+      }
+
+      logger.error('Error fetching paginated members:', {
+        data: errorInfo,
+        tags: { type: 'api' }
+      })
       return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
   })

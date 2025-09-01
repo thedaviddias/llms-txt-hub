@@ -1,13 +1,13 @@
 'use client'
 
+import { Badge } from '@thedaviddias/design-system/badge'
+import { cn } from '@thedaviddias/design-system/lib/utils'
+import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { FavoriteButton } from '@/components/ui/favorite-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { Badge } from '@thedaviddias/design-system/badge'
-import { cn } from '@thedaviddias/design-system/lib/utils'
-import Link from 'next/link'
 
 interface LLMGridProps {
   items: WebsiteMetadata[]
@@ -93,6 +93,8 @@ export function LLMGrid({
       }
     >
       {items.map((item, index) => {
+        if (!item?.slug) return null
+
         const isVisible = !maxItems || index < maxItems
 
         return (
@@ -119,7 +121,7 @@ export function LLMGrid({
                     <h3 className="font-semibold text-xs sm:text-sm md:text-base truncate">
                       <Link
                         href={getRoute('website.detail', { slug: item.slug })}
-                        className="block after:absolute after:inset-0 after:content-[''] after:pointer-events-none z-10"
+                        className="block after:absolute after:inset-0 after:content-[''] z-10"
                         data-analytics="website-click"
                         data-website-name={item.name}
                         data-website-slug={item.slug}
