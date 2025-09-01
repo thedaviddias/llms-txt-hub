@@ -25,7 +25,7 @@ export function NavLink({ href, children, exact = false }: NavLinkProps) {
     ? pathname === href
     : href === '/'
       ? pathname === '/'
-      : pathname === href || pathname.startsWith(href + '/')
+      : pathname === href || pathname.startsWith(`${href}/`)
 
   return (
     <Link

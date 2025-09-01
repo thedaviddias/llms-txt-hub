@@ -70,6 +70,14 @@ function isAllowedIndexFile(filePath) {
   // Normalize path for comparison
   const normalizedPath = filePath.replace(/\\/g, '/')
 
+  // Check if it's a package entry point (packages/*/src/index.ts or configs/*/index.ts)
+  if (
+    normalizedPath.match(/packages\/[^/]+\/src\/index\.(ts|js|mjs)$/) ||
+    normalizedPath.match(/configs\/[^/]+\/index\.(ts|js|mjs)$/)
+  ) {
+    return true
+  }
+
   return ALLOWED_INDEX_FILES.some(allowed => {
     // For root files (like './index.ts'), check exact match or if it's at the root
     if (allowed.startsWith('./')) {
@@ -109,7 +117,7 @@ function isBarrelFile(filePath) {
 
     // Consider it a barrel if it has enough re-exports
     return exportCount >= MIN_EXPORTS_FOR_BARREL
-  } catch (error) {
+  } catch {
     return false
   }
 }
@@ -136,7 +144,7 @@ function findAllIndexFiles(startDir = '.') {
           indexFiles.push(fullPath)
         }
       })
-    } catch (error) {
+    } catch {
       // Skip directories we can't read
     }
   }
