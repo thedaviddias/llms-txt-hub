@@ -42,6 +42,7 @@
     "@thedaviddias/flags": "workspace:*",
     "@thedaviddias/hooks": "workspace:*",
     "@thedaviddias/logging": "workspace:*",
+    "@thedaviddias/newsletter": "workspace:*",
     "@thedaviddias/observability": "workspace:*",
     "@thedaviddias/rate-limiting": "workspace:*",
     "@thedaviddias/utils": "workspace:*",

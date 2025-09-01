@@ -7,8 +7,6 @@ import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
 import { type FormEvent, useState } from 'react'
 
 interface EmailSubscriptionFormProps {
-  /** Default groups to apply to all subscribers */
-  defaultGroups?: string[]
   /** Form title */
   title?: string
   /** Form description */
@@ -24,7 +22,6 @@ interface FormData {
 }
 
 export function EmailSubscriptionForm({
-  defaultGroups = [],
   title = 'Never miss an update from llms.txt hub!',
   description = 'Join our newsletter for AI documentation insights and best practices.',
   compact = false,
@@ -62,8 +59,8 @@ export function EmailSubscriptionForm({
           'X-CSRF-Token': csrfToken
         },
         body: JSON.stringify({
-          email: formData.email,
-          groups: defaultGroups.length > 0 ? defaultGroups : undefined
+          email: formData.email
+          // Groups are handled server-side based on provider configuration
         })
       })
 
@@ -89,18 +86,25 @@ export function EmailSubscriptionForm({
 
   if (submitStatus === 'success') {
     return (
-      <div
-        className={`p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg ${className}`}
-      >
-        <div className="flex items-center space-x-3">
-          <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-          <div>
-            <h3 className="font-medium text-green-800 dark:text-green-200">
-              Successfully subscribed!
-            </h3>
-            <p className="text-sm text-green-600 dark:text-green-300">
-              Thank you for subscribing! Please check your email to confirm your subscription.
-            </p>
+      <div className={`space-y-4 ${className}`}>
+        <div className="space-y-2 text-center">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300">{description}</p>
+        </div>
+        
+        <div className={`${compact ? 'max-w-lg mx-auto' : ''}`}>
+          <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <div className="flex items-center space-x-3">
+              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-green-800 dark:text-green-200">
+                  Successfully subscribed!
+                </h3>
+                <p className="text-sm text-green-600 dark:text-green-300">
+                  Thank you for subscribing! Please check your email to confirm your subscription.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

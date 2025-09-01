@@ -9,10 +9,11 @@ import { EmailSubscriptionForm } from './email-subscription-form'
  * @returns React component that renders a newsletter subscription form
  */
 export function NewsletterForm() {
+  // Groups/tags are handled server-side through the API
+  // The form just collects the email, and the backend adds appropriate groups
   return (
     <EmailSubscriptionForm
       compact
-      defaultGroups={process.env.NEXT_PUBLIC_NEWSLETTER_GROUP_IDS?.split(',') || []}
     />
   )
 }
