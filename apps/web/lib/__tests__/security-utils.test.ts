@@ -9,12 +9,33 @@ import {
 } from '../security-utils'
 
 // Mock the helpers module
-jest.mock('../security-utils-helpers', () => ({
-  rateLimitMap: new Map(),
-  sanitizeErrorMessage: jest.fn(msg => msg),
-  clearRateLimiting: jest.fn(),
-  getRateLimitKey: jest.fn((ip, action) => `${ip}:${action}`)
-}))
+jest.mock('../security-utils-helpers', () => {
+  const mockRateLimitMap = new Map()
+  
+  return {
+    rateLimitMap: mockRateLimitMap,
+    sanitizeErrorMessage: jest.fn(msg => msg),
+    clearRateLimiting: jest.fn(() => mockRateLimitMap.clear()),
+    getRateLimitKey: jest.fn((ip, action) => `${ip}:${action}`),
+    checkRateLimit: jest.fn(({ identifier, windowMs = 60000, maxRequests = 10 }) => {
+      const now = Date.now()
+      const record = mockRateLimitMap.get(identifier)
+
+      if (!record || now > record.resetTime) {
+        const resetTime = now + windowMs
+        mockRateLimitMap.set(identifier, { count: 1, resetTime })
+        return { allowed: true, resetTime }
+      }
+
+      if (record.count < maxRequests) {
+        record.count++
+        return { allowed: true, resetTime: record.resetTime }
+      }
+
+      return { allowed: false, resetTime: record.resetTime }
+    })
+  }
+})
 
 const { rateLimitMap, sanitizeErrorMessage } = require('../security-utils-helpers')
 
@@ -29,7 +50,8 @@ describe('security-utils', () => {
       const result = checkRateLimit({ identifier: 'test-key' })
 
       expect(result.allowed).toBe(true)
-      expect(result.resetTime).toBeUndefined()
+      expect(result.resetTime).toBeDefined()
+      expect(typeof result.resetTime).toBe('number')
     })
 
     it('should allow requests within limit', () => {

@@ -4,11 +4,11 @@ import { z } from 'zod'
 export const keys = () =>
   createEnv({
     server: {
-      UPSTASH_REDIS_REST_URL: z.string().min(1).url().optional(),
-      UPSTASH_REDIS_REST_TOKEN: z.string().min(1).optional()
+      STORAGE_REDIS_URL: z.string().min(1).url().optional(),
+      STORAGE_KV_REST_API_TOKEN: z.string().min(1).optional()
     },
     runtimeEnv: {
-      UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
-      UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN
+      STORAGE_REDIS_URL: process.env.STORAGE_REDIS_URL,
+      STORAGE_KV_REST_API_TOKEN: process.env.STORAGE_KV_REST_API_TOKEN
     }
   })

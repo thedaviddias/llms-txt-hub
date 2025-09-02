@@ -12,7 +12,10 @@ try {
   allWebsites = collections.allWebsites || []
 } catch {
   // Fallback for CI/build environments where content-collections hasn't been generated yet
-  console.warn('Content collections not available, using empty arrays')
+  // Only warn if not in test environment
+  if (process.env.NODE_ENV !== 'test') {
+    console.warn('Content collections not available, using empty arrays')
+  }
 }
 
 const collectionGuides = allGuides

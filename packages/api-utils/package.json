@@ -1,19 +1,24 @@
 {
-  "name": "@thedaviddias/hooks",
+  "name": "@thedaviddias/api-utils",
   "version": "0.1.0",
   "private": true,
   "sideEffects": false,
   "exports": {
-    "./use-debounce": "./src/use-debounce.tsx",
-    "./use-form-state": "./src/use-form-state.tsx"
+    ".": "./index.ts"
   },
+  "main": "./index.ts",
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "lint": "biome check ."
   },
+  "dependencies": {
+    "@thedaviddias/logging": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0"
+  },
   "devDependencies": {
-    "@types/react": "19.0.12",
-    "react": "^19.1.0",
+    "next": "15.5.2",
     "typescript": "^5.8.2"
   }
 }

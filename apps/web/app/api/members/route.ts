@@ -1,7 +1,7 @@
 import { logger } from '@thedaviddias/logging'
+import { withRateLimit } from '@thedaviddias/rate-limiting'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getClerk } from '@/lib/clerk'
-import { withRateLimit } from '@/lib/rate-limiter'
 
 /**
  * Determines if a user has shared enough information to be displayed publicly
