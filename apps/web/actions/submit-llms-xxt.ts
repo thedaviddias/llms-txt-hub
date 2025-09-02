@@ -1,9 +1,11 @@
 'use server'
 
 import { categories } from '@/lib/categories'
+import { getStoredCSRFToken } from '@/lib/csrf-protection'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
+import crypto from 'node:crypto'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
 
@@ -41,6 +43,52 @@ export async function submitLlmsTxt(formData: FormData) {
 
     if (!session?.user) {
       throw new Error('Authentication required')
+    }
+
+    // Validate CSRF token
+    const submittedCSRFToken = formData.get('_csrf') as string
+    if (!submittedCSRFToken) {
+      logger.error('Server Action CSRF validation failed - no token provided', {
+        data: {
+          action: 'submitLlmsTxt',
+          userId: session.user.id,
+          timestamp: new Date().toISOString()
+        },
+        tags: { type: 'security', component: 'csrf', action: 'missing-token', severity: 'high' }
+      })
+      throw new Error('Security validation failed')
+    }
+
+    // Get stored CSRF token
+    const storedToken = await getStoredCSRFToken()
+    if (!storedToken) {
+      logger.error('Server Action CSRF validation failed - no stored token', {
+        data: {
+          action: 'submitLlmsTxt',
+          userId: session.user.id,
+          timestamp: new Date().toISOString()
+        },
+        tags: { type: 'security', component: 'csrf', action: 'missing-stored', severity: 'high' }
+      })
+      throw new Error('Security validation failed')
+    }
+
+    // Validate CSRF token using timing-safe comparison
+    const isValidCSRF = crypto.timingSafeEqual(
+      Buffer.from(storedToken.token),
+      Buffer.from(submittedCSRFToken)
+    )
+
+    if (!isValidCSRF) {
+      logger.error('Server Action CSRF validation failed - token mismatch', {
+        data: {
+          action: 'submitLlmsTxt',
+          userId: session.user.id,
+          timestamp: new Date().toISOString()
+        },
+        tags: { type: 'security', component: 'csrf', action: 'invalid-token', severity: 'high' }
+      })
+      throw new Error('Security validation failed')
     }
 
     // Validate form data

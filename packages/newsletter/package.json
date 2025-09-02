@@ -2,7 +2,14 @@
   "name": "@thedaviddias/newsletter",
   "version": "1.0.0",
   "description": "Universal newsletter subscription package supporting multiple providers",
-  "keywords": ["newsletter", "email", "subscription", "mailerlite", "convertkit", "substack"],
+  "keywords": [
+    "newsletter",
+    "email",
+    "subscription",
+    "mailerlite",
+    "convertkit",
+    "substack"
+  ],
   "license": "MIT",
   "author": "David Dias <thedaviddias@gmail.com> (https://thedaviddias.dev/)",
   "exports": {

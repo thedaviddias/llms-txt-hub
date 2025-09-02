@@ -4,7 +4,8 @@
   "private": true,
   "sideEffects": false,
   "exports": {
-    "./use-debounce": "./src/use-debounce.tsx"
+    "./use-debounce": "./src/use-debounce.tsx",
+    "./use-form-state": "./src/use-form-state.tsx"
   },
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",

@@ -96,11 +96,18 @@ export function SubmitForm() {
     trackFormStepComplete(1, 'submit-form', 'submit-page')
 
     try {
+      // Get CSRF token from meta tag for API call
+      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+      }
+      if (csrfMetaTag?.content) {
+        headers['x-csrf-token'] = csrfMetaTag.content
+      }
+
       const response = await fetch('/api/fetch-metadata', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers,
         body: JSON.stringify({ website: data.website })
       })
 
@@ -163,6 +170,12 @@ export function SubmitForm() {
       const formData = new FormData()
       // Set current date for publishedAt
       const currentDate = new Date().toISOString().split('T')[0]
+
+      // Get CSRF token from meta tag
+      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+      if (csrfMetaTag?.content) {
+        formData.append('_csrf', csrfMetaTag.content)
+      }
 
       // Process values before adding to formData
       const processedValues = {

@@ -71,6 +71,8 @@ const config: Config.InitialOptions = {
     'lucide-react': require.resolve('lucide-react'),
     'react-markdown': '<rootDir>/__mocks__/react-markdown.tsx',
     nuqs: '<rootDir>/__mocks__/nuqs.ts',
+    '@t3-oss/env-nextjs': '<rootDir>/__mocks__/@t3-oss/env-nextjs.ts',
+    '@thedaviddias/rate-limiting': '<rootDir>/__mocks__/@thedaviddias/rate-limiting.ts',
     '^@thedaviddias/([^/]+)$': ['<rootDir>/../../packages/$1/src', '<rootDir>/../../packages/$1'],
     '^@thedaviddias/design-system/lib/utils$':
       '<rootDir>/../../packages/design-system/lib/utils.ts',

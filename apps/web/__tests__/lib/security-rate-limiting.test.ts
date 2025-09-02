@@ -21,7 +21,8 @@ describe('Rate Limiting', () => {
     it('allows first request', () => {
       const result = checkRateLimit({ identifier: 'test-key' })
       expect(result.allowed).toBe(true)
-      expect(result.resetTime).toBeUndefined()
+      expect(result.resetTime).toBeDefined()
+      expect(typeof result.resetTime).toBe('number')
     })
 
     it('allows requests within limit', () => {

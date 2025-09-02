@@ -1,6 +1,5 @@
 'use client'
 
-import { useDebounce } from '@/hooks/use-debounce'
 import { Button } from '@thedaviddias/design-system/button'
 import {
   DropdownMenu,
@@ -8,10 +7,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@thedaviddias/design-system/dropdown-menu'
+import { useDebounce } from '@thedaviddias/hooks/use-debounce'
 import { ChevronDown, Filter, Search, Star, Users } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 
+/**
+ * Search component for filtering and navigating members
+ * @returns Member search component with filters
+ */
 export function MembersSearch() {
   const router = useRouter()
   const pathname = usePathname()

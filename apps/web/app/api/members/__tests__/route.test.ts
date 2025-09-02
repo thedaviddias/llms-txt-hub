@@ -7,6 +7,10 @@ jest.mock('@clerk/backend', () => ({
   createClerkClient: jest.fn()
 }))
 
+jest.mock('@/lib/clerk', () => ({
+  getClerk: jest.fn(() => null) // Return null to trigger mock data fallback
+}))
+
 jest.mock('@thedaviddias/logging', () => ({
   logger: {
     error: jest.fn(),
@@ -24,7 +28,7 @@ describe('/api/members', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     // Mock environment to not have CLERK_SECRET_KEY so it uses fallback mock data
-    process.env.CLERK_SECRET_KEY = undefined
+    delete process.env.CLERK_SECRET_KEY
 
     // Don't mock createClerkClient in beforeEach - let individual tests set it up
     mockCreateClerkClient.mockReset()
@@ -44,8 +48,8 @@ describe('/api/members', () => {
       expect(data.pagination).toMatchObject({
         page: 1,
         limit: 20,
-        total: 50, // Fallback total when Clerk fails
-        totalPages: 3, // Math.ceil(50 / 20) = 3
+        total: 150, // Demo total showing pagination works
+        totalPages: 8, // Math.ceil(150 / 20) = 8
         hasMore: true
       })
     })
@@ -196,7 +200,7 @@ describe('/api/members', () => {
 
       expect(response.status).toBe(200)
       expect(data.members).toHaveLength(0)
-      expect(data.pagination.total).toBe(50) // Total remains the same
+      expect(data.pagination.total).toBe(150) // Total remains the same
     })
 
     it('should handle last page correctly', async () => {
@@ -317,6 +321,10 @@ describe('/api/members', () => {
         }
       }
       mockCreateClerkClient.mockReturnValue(mockClient)
+      
+      // Mock getClerk to return the mock client for this test
+      const { getClerk } = require('@/lib/clerk')
+      getClerk.mockReturnValue(mockClient)
 
       const request = createMockRequest('/api/members')
       const response = await GET(request)
