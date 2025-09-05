@@ -197,7 +197,7 @@ async function validateCSRFToken(request: NextRequest): Promise<boolean> {
     try {
       // Clone the request to avoid consuming the original body
       const clonedRequest = request.clone()
-      
+
       if (contentType.includes('multipart/form-data')) {
         const formData = await clonedRequest.formData()
         csrfToken = formData.get('_csrf') as string | null
@@ -215,7 +215,7 @@ async function validateCSRFToken(request: NextRequest): Promise<boolean> {
   // Get token from cookie (it's stored as JSON with token and expiresAt)
   const cookieValue = request.cookies.get('csrf_token')?.value || null
   if (!cookieValue) return false
-  
+
   let cookieToken: string | null = null
   try {
     const tokenData = JSON.parse(cookieValue)
@@ -334,6 +334,9 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap') ||
     pathname.includes('.') || // Files with extensions (CSS, JS, images, etc.)
+    // Plausible Analytics proxy endpoints
+    pathname === '/api/event' ||
+    pathname.startsWith('/js/script') ||
     // Regular page loads (non-API routes) - exclude search route
     (!pathname.startsWith('/api/') && req.method === 'GET' && pathname !== '/search')
   ) {
@@ -422,9 +425,9 @@ export default clerkMiddleware(async (auth, req) => {
             ipHash: await hashSensitiveData(clientIp),
             timestamp: new Date().toISOString()
           },
-          tags: { 
-            type: 'security', 
-            component: 'csrf', 
+          tags: {
+            type: 'security',
+            component: 'csrf',
             action: 'blocked',
             severity: 'high'
           }
