@@ -1,13 +1,13 @@
 'use server'
 
-import { categories } from '@/lib/categories'
-import { getStoredCSRFToken } from '@/lib/csrf-protection'
+import crypto from 'node:crypto'
 import { Octokit } from '@octokit/rest'
 import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
-import crypto from 'node:crypto'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
+import { categories } from '@/lib/categories'
+import { getStoredCSRFToken } from '@/lib/csrf-protection'
 
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
@@ -278,7 +278,7 @@ ${description}
       const attribution =
         useUserToken && githubUsername
           ? `Submitted by: @${githubUsername}`
-          : `Submitted by: ${displayName}${userEmail ? ` (${userEmail})` : ''}`
+          : `Submitted by: ${displayName}`
 
       // Create pull request
       logger.info('Creating pull request')
