@@ -1,40 +1,33 @@
-import type { ReactNode } from 'react'
 import { PlausibleAnalyticsComponent } from './providers/plausible'
 
 interface AnalyticsProviderProps {
-  readonly children: ReactNode
   readonly plausibleDomain: string
 }
 
 /**
- * Provider component that wraps the application with analytics tracking
+ * Provider component that injects analytics tracking script
  *
  * @param props - Component properties
- * @param props.children - Child elements to be wrapped
  * @param props.plausibleDomain - Domain for Plausible Analytics tracking (e.g., "example.com")
  *
  * @throws Will throw an error in development if plausibleDomain is empty
- * @returns React component wrapped with analytics when enabled
+ * @returns Analytics script component
  *
  * @example
  * ```tsx
- * <AnalyticsProvider plausibleDomain="example.com">
- *   <App />
- * </AnalyticsProvider>
+ * <AnalyticsProvider plausibleDomain="example.com" />
  * ```
  */
-export function AnalyticsProvider({ children, plausibleDomain }: AnalyticsProviderProps) {
+export function AnalyticsProvider({ plausibleDomain }: AnalyticsProviderProps) {
   // Validate domain in development
   if (process.env.NODE_ENV === 'development' && !plausibleDomain.trim()) {
     throw new Error('plausibleDomain is required for AnalyticsProvider')
   }
 
-  // Skip analytics wrapper if domain is empty in production
+  // Skip analytics if domain is empty in production
   if (!plausibleDomain.trim()) {
-    return children
+    return null
   }
 
-  return (
-    <PlausibleAnalyticsComponent domain={plausibleDomain}>{children}</PlausibleAnalyticsComponent>
-  )
+  return <PlausibleAnalyticsComponent domain={plausibleDomain} />
 }
