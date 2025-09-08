@@ -1,19 +1,20 @@
 import PlausibleProvider from 'next-plausible'
-import type { ReactNode } from 'react'
 
 type PlausibleAnalyticsProps = {
   domain: string
-  children: ReactNode
 }
 
-export const PlausibleAnalyticsComponent = ({ domain, children }: PlausibleAnalyticsProps) => {
+export const PlausibleAnalyticsComponent = ({ domain }: PlausibleAnalyticsProps) => {
   if (!domain) {
-    return children
+    return null
   }
 
   return (
-    <PlausibleProvider domain={domain} enabled={true} trackOutboundLinks={true} taggedEvents={true}>
-      {children}
-    </PlausibleProvider>
+    <PlausibleProvider
+      domain={domain}
+      enabled={true}
+      trackOutboundLinks={true}
+      taggedEvents={true}
+    />
   )
 }

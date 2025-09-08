@@ -3,16 +3,17 @@ import { VercelToolbar } from '@vercel/toolbar/next'
 import type { Metadata } from 'next'
 import type React from 'react'
 import '../../../packages/design-system/styles/globals.css'
+import { AnalyticsHead } from '@thedaviddias/analytics/head'
+import { fonts } from '@thedaviddias/design-system/lib/fonts'
+import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
+import { SentryUserProvider } from '@thedaviddias/observability/providers'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
 import { CSRFProvider } from '@/components/csrf-provider'
 import { Footer } from '@/components/layout/footer'
 import { Header } from '@/components/layout/header'
 import { BackToTop } from '@/components/ui/back-to-top'
 import { FavoritesProvider } from '@/contexts/favorites-context'
-import { fonts } from '@thedaviddias/design-system/lib/fonts'
-import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
-import { SentryUserProvider } from '@thedaviddias/observability/providers'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 
 export const metadata: Metadata = {
   title: 'llms.txt hub',
@@ -28,8 +29,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <ClerkProvider signInUrl="/login" signUpUrl="/login" signInFallbackRedirectUrl="/">
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <AnalyticsHead domain="llmstxthub.com" />
+        </head>
         <body className={fonts}>
-          <DesignSystemProvider plausibleDomain="llmstxthub.com">
+          <DesignSystemProvider>
             <SentryUserProvider>
               <FavoritesProvider>
                 <AnalyticsTracker />
