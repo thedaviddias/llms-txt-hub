@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { AppSidebar } from '@/components/layout/app-sidebar'
@@ -13,8 +14,7 @@ import { ToolsSection } from '@/components/sections/tools-section'
 import { StaticWebsitesList } from '@/components/static-websites-list'
 import { getGuides } from '@/lib/content-loader'
 import { getLatestMembers } from '@/lib/members'
-import { KEYWORDS, generateBaseMetadata, generateWebsiteSchema } from '@/lib/seo/seo-config'
-import type { Metadata } from 'next'
+import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Discover AI-Ready Documentation - llms.txt hub',
@@ -25,7 +25,8 @@ export const metadata: Metadata = generateBaseMetadata({
 })
 
 export default async function Home() {
-  const { allProjects, featuredProjects, recentlyUpdatedProjects } = await getHomePageData()
+  const { allProjects, featuredProjects, recentlyUpdatedProjects, totalCount } =
+    await getHomePageData()
   const featuredGuides = await getGuides()
   const latestMembers = await getLatestMembers(6)
 
@@ -54,7 +55,7 @@ export default async function Home() {
 
             {/* All Websites Section */}
             <section>
-              <StaticWebsitesList websites={sortedProjects} />
+              <StaticWebsitesList websites={sortedProjects} totalCount={totalCount} />
             </section>
 
             <ToolsSection />

@@ -1,15 +1,14 @@
 'use client'
+import { Button } from '@thedaviddias/design-system/button'
+import { ChevronDown } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { EmptyState } from '@/components/empty-state'
 import { LLMGrid } from '@/components/llm/llm-grid'
+import { WebsitesSearchControls } from '@/components/websites-search-controls'
 import { useFavoritesFilter } from '@/hooks/use-favorites-filter'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { Button } from '@thedaviddias/design-system/button'
-import { ToggleGroup, ToggleGroupItem } from '@thedaviddias/design-system/toggle-group'
-import { ChevronDown, Clock, Heart, Search, SortAsc } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
 
 interface WebsitesListWithSearchProps {
   initialWebsites: WebsiteMetadata[]
@@ -17,6 +16,7 @@ interface WebsitesListWithSearchProps {
   emptyDescription?: string
   initialRows?: number
   initialShowFavoritesOnly?: boolean
+  totalCount?: number
 }
 
 /**
@@ -28,17 +28,39 @@ export function WebsitesListWithSearch({
   emptyTitle = 'No websites found',
   emptyDescription = 'There are no websites available. Try checking back later or submit a new website.',
   initialRows = 3,
-  initialShowFavoritesOnly = false
+  initialShowFavoritesOnly = false,
+  totalCount
 }: WebsitesListWithSearchProps) {
-  const router = useRouter()
   const [sortBy, setSortBy] = useState<'name' | 'latest'>('latest')
   const [searchQuery, setSearchQuery] = useState('')
   const [showAll, setShowAll] = useState(false)
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(initialShowFavoritesOnly)
   const [isClient, setIsClient] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [allWebsites, setAllWebsites] = useState<WebsiteMetadata[]>(initialWebsites)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
   const { trackSearch, trackSortChange, trackShowAll, trackShowLess } = useAnalyticsEvents()
-  const { favoriteWebsites, hasFavorites } = useFavoritesFilter(initialWebsites)
+  const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
+
+  /**
+   * Load more websites from the API when user clicks "Show all"
+   */
+  const loadMoreWebsites = useCallback(async () => {
+    if (isLoadingMore || !totalCount || allWebsites.length >= totalCount) return
+
+    setIsLoadingMore(true)
+    try {
+      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=50`)
+      if (response.ok) {
+        const data = await response.json()
+        setAllWebsites(prev => [...prev, ...data.websites])
+      }
+    } catch (error) {
+      console.error('Failed to load more websites:', error)
+    } finally {
+      setIsLoadingMore(false)
+    }
+  }, [allWebsites.length, totalCount, isLoadingMore])
 
   // Load state from localStorage on mount
   useEffect(() => {
@@ -78,7 +100,7 @@ export function WebsitesListWithSearch({
 
   // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
-    let websites = showFavoritesOnly ? [...favoriteWebsites] : [...initialWebsites]
+    let websites = showFavoritesOnly ? [...favoriteWebsites] : [...allWebsites]
 
     // Filter by search query
     if (searchQuery.trim()) {
@@ -102,14 +124,14 @@ export function WebsitesListWithSearch({
     } else {
       return websites.sort((a, b) => a.name.localeCompare(b.name))
     }
-  }, [initialWebsites, favoriteWebsites, showFavoritesOnly, sortBy, searchQuery])
+  }, [allWebsites, favoriteWebsites, showFavoritesOnly, sortBy, searchQuery])
 
   // Calculate initial visible items and show more logic
   const itemsPerRow = 6 // Maximum columns on largest screens
   const initialVisibleItems = initialRows * itemsPerRow
   const hasMoreToShow =
     filteredAndSortedWebsites.length > initialVisibleItems && !searchQuery.trim()
-  const _shouldUseLoadMore = filteredAndSortedWebsites.length > 50 && !searchQuery.trim()
+  const hasMoreWebsitesToLoad = totalCount ? allWebsites.length < totalCount : false
 
   if (initialWebsites.length === 0) {
     return (
@@ -125,90 +147,18 @@ export function WebsitesListWithSearch({
   return (
     <div className="space-y-6">
       {/* Search and Sort Controls */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        {/* Search Input - Same design as header */}
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            if (searchQuery.trim()) {
-              // Track search event
-              trackSearch(searchQuery, filteredAndSortedWebsites.length, 'homepage-search')
-              router.push(`/search?q=${encodeURIComponent(searchQuery)}`)
-            }
-          }}
-          className="relative flex-1 max-w-md"
-        >
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-            className="w-full rounded-lg border border-input bg-background px-4 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          />
-          <button
-            type="submit"
-            className="absolute inset-y-0 right-0 flex items-center px-2 text-muted-foreground"
-            aria-label="Search"
-          >
-            <Search className="h-4 w-4" />
-          </button>
-        </form>
-
-        {/* Filter and Sort Controls */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-          {/* Favorites Filter */}
-          {hasFavorites && (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-md border text-sm transition-colors cursor-pointer ${
-                  showFavoritesOnly
-                    ? 'bg-accent text-accent-foreground border-accent'
-                    : 'bg-background hover:bg-muted/50 border-border'
-                }`}
-              >
-                <Heart
-                  className={`h-4 w-4 ${showFavoritesOnly ? 'fill-red-500 text-red-500' : 'text-muted-foreground'}`}
-                />
-                <span>{showFavoritesOnly ? 'Show All' : 'Favorites Only'}</span>
-              </button>
-            </div>
-          )}
-
-          {/* Sort Controls */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Sort by:</span>
-            <ToggleGroup
-              type="single"
-              value={sortBy}
-              onValueChange={(value: string) => {
-                if (value && value !== sortBy) {
-                  // Track sort change
-                  trackSortChange(sortBy, value, 'homepage-sort')
-                  setSortBy(value as 'name' | 'latest')
-                }
-              }}
-              className="bg-background border rounded-md"
-            >
-              <ToggleGroupItem
-                value="name"
-                className="px-3 py-2 h-10 data-[state=on]:bg-accent cursor-pointer"
-              >
-                <SortAsc className="size-4 mr-2" />
-                <span className="text-sm">Name</span>
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="latest"
-                className="px-3 py-2 h-10 data-[state=on]:bg-accent cursor-pointer"
-              >
-                <Clock className="size-4 mr-2" />
-                <span className="text-sm">Latest</span>
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </div>
-        </div>
-      </div>
+      <WebsitesSearchControls
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        showFavoritesOnly={showFavoritesOnly}
+        setShowFavoritesOnly={setShowFavoritesOnly}
+        hasFavorites={hasFavorites}
+        filteredCount={filteredAndSortedWebsites.length}
+        trackSearch={trackSearch}
+        trackSortChange={trackSortChange}
+      />
 
       {/* Results Grid */}
       {filteredAndSortedWebsites.length === 0 ? (
@@ -253,23 +203,35 @@ export function WebsitesListWithSearch({
               className={`mt-8 text-center transition-opacity duration-300 ${isLoading ? 'opacity-50' : 'opacity-100'}`}
             >
               <Button
-                onClick={() => {
-                  // Track show all/less event
+                onClick={async () => {
                   if (!showAll) {
+                    // Track show all event
                     trackShowAll('websites', filteredAndSortedWebsites.length, 'homepage-show-all')
+
+                    // Load more websites if we don't have all of them yet
+                    if (hasMoreWebsitesToLoad) {
+                      await loadMoreWebsites()
+                    }
                   } else {
+                    // Track show less event
                     trackShowLess('homepage-show-less')
                   }
                   setShowAll(!showAll)
                 }}
                 variant="outline"
                 className="min-w-[200px] transition-all duration-300 hover:scale-105"
-                disabled={isLoading}
+                disabled={isLoading || isLoadingMore}
               >
                 <ChevronDown
                   className={`mr-2 h-4 w-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                 />
-                {showAll ? 'Show less' : 'Show all websites'}
+                {isLoadingMore
+                  ? 'Loading...'
+                  : showAll
+                    ? 'Show less'
+                    : hasMoreWebsitesToLoad
+                      ? `Show all ${totalCount} websites`
+                      : 'Show all websites'}
               </Button>
             </div>
           )}
