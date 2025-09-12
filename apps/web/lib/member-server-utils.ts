@@ -91,35 +91,9 @@ export async function processUser(user: any): Promise<Member> {
     }
   }
 
-  // Check contributions for any valid GitHub username
-  if (githubUsername && typeof githubUsername === 'string') {
-    try {
-      const { getUserContributions } = await import('@/lib/github-contributions')
-      const contributions = await getUserContributions(githubUsername)
-      hasContributions = contributions.total > 0
-
-      // Log for debugging
-      logger.info('Contribution check completed', {
-        data: {
-          usernameHash: hashSensitiveData(githubUsername || ''),
-          hasContributions,
-          total: contributions.total,
-          pullRequests: contributions.pullRequests,
-          issues: contributions.issues
-        },
-        tags: { type: 'members', security: 'audit' }
-      })
-    } catch (error) {
-      logger.warn('Contribution check failed', {
-        data: {
-          usernameHash: hashSensitiveData(githubUsername || ''),
-          error: error instanceof Error ? error.message : 'Unknown error'
-        },
-        tags: { type: 'members', security: 'error' }
-      })
-      hasContributions = false
-    }
-  }
+  // Skip contribution checking for performance - GitHub API rate limits
+  // Contribution data can be fetched client-side when needed
+  hasContributions = false
 
   return {
     id: user.id,

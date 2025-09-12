@@ -5,7 +5,7 @@ import Link from 'next/link'
 interface EmptyStateProps {
   title: string
   description: string
-  actionLabel: string
+  actionLabel?: string
   actionHref?: string
   onAction?: () => void
 }
