@@ -50,13 +50,28 @@ export function WebsitesListWithSearch({
    */
   const loadMoreWebsites = useCallback(async () => {
     if (isLoadingMore || !hasMoreWebsites || !totalCount) return
-    
+
     setIsLoadingMore(true)
     try {
       const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
       if (response.ok) {
         const data = await response.json()
-        setAllWebsites(prev => [...prev, ...data.websites])
+        console.log('API Response:', {
+          receivedWebsites: data.websites.length,
+          hasMore: data.hasMore,
+          totalCount: data.totalCount,
+          currentLength: allWebsites.length
+        })
+        
+        setAllWebsites(prev => {
+          const newWebsites = [...prev, ...data.websites]
+          console.log('State Update:', {
+            previousLength: prev.length,
+            newWebsitesLength: data.websites.length,
+            totalNewLength: newWebsites.length
+          })
+          return newWebsites
+        })
         setHasMoreWebsites(data.hasMore && data.websites.length > 0)
       }
     } catch (error) {
@@ -202,7 +217,7 @@ export function WebsitesListWithSearch({
             >
               <LLMGrid
                 items={filteredAndSortedWebsites}
-                maxItems={searchQuery.trim() ? undefined : initialVisibleItems}
+                maxItems={undefined}
                 animateIn={!searchQuery.trim() && !isLoading}
                 className="transition-all duration-500 ease-in-out"
               />
@@ -222,7 +237,8 @@ export function WebsitesListWithSearch({
                   {isLoadingMore ? 'Loading...' : 'Load More (Test)'}
                 </button>
                 <p className="text-xs text-muted-foreground mt-2">
-                  Current: {allWebsites.length} / {totalCount} | Has More: {hasMoreWebsites ? 'Yes' : 'No'}
+                  Current: {allWebsites.length} / {totalCount} | Has More:{' '}
+                  {hasMoreWebsites ? 'Yes' : 'No'}
                 </p>
               </div>
 
