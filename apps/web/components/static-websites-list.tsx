@@ -14,7 +14,7 @@ export function StaticWebsitesList({ websites, totalCount }: StaticWebsitesListP
   return (
     <Section
       title="All Websites"
-      description="Browse the complete directory of websites implementing the llms.txt standard"
+      description="Browse the complete directory of websites implementing the llms.txt standard. Click 'Load all' to see the full collection."
     >
       <WebsitesListWithSearch
         initialWebsites={websites}

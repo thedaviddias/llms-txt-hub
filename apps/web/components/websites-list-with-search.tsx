@@ -44,16 +44,28 @@ export function WebsitesListWithSearch({
 
   /**
    * Load more websites from the API when user clicks "Show all"
+   * Continues loading until all websites are fetched
    */
   const loadMoreWebsites = useCallback(async () => {
     if (isLoadingMore || !totalCount || allWebsites.length >= totalCount) return
 
     setIsLoadingMore(true)
     try {
-      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=50`)
-      if (response.ok) {
-        const data = await response.json()
-        setAllWebsites(prev => [...prev, ...data.websites])
+      let currentOffset = allWebsites.length
+      let hasMore = true
+
+      // Load in batches of 50 until we have all websites
+      while (hasMore && currentOffset < totalCount) {
+        const response = await fetch(`/api/websites/paginated?offset=${currentOffset}&limit=50`)
+        if (response.ok) {
+          const data = await response.json()
+          setAllWebsites(prev => [...prev, ...data.websites])
+
+          currentOffset += data.websites.length
+          hasMore = data.hasMore && data.websites.length > 0
+        } else {
+          hasMore = false
+        }
       }
     } catch (error) {
       console.error('Failed to load more websites:', error)
@@ -226,11 +238,11 @@ export function WebsitesListWithSearch({
                   className={`mr-2 h-4 w-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                 />
                 {isLoadingMore
-                  ? 'Loading...'
+                  ? 'Loading all websites...'
                   : showAll
                     ? 'Show less'
                     : hasMoreWebsitesToLoad
-                      ? `Show all ${totalCount} websites`
+                      ? `Load all ${totalCount} websites`
                       : 'Show all websites'}
               </Button>
             </div>
