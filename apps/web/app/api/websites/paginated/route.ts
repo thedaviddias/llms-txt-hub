@@ -20,7 +20,7 @@ interface PaginatedWebsitesResponse {
 
 /**
  * API endpoint for paginated website loading
- * Used to load additional websites when user clicks "Show all" or for pagination
+ * Used for infinite scroll - loads 24 websites at a time by default
  */
 export async function GET(request: Request) {
   try {
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     const page = Math.max(1, Number.parseInt(searchParams.get('page') || '1', 10))
     const limit = Math.min(
       100,
-      Math.max(10, Number.parseInt(searchParams.get('limit') || '50', 10))
+      Math.max(10, Number.parseInt(searchParams.get('limit') || '24', 10))
     )
     const offset = Number.parseInt(searchParams.get('offset') || '0', 10)
 
