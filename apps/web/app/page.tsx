@@ -28,7 +28,7 @@ export default async function Home() {
   const { allProjects, featuredProjects, recentlyUpdatedProjects, totalCount } =
     await getHomePageData()
   const featuredGuides = await getGuides()
-  const latestMembers = await getLatestMembers(6)
+  const latestMembers = await getLatestMembers(6, false) // Skip contributions to avoid GitHub API rate limits
 
   // Sort projects alphabetically by name server-side
   const sortedProjects = [...allProjects].sort((a, b) => a.name.localeCompare(b.name))
