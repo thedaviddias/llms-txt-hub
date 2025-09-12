@@ -42,7 +42,6 @@ export function MembersSearch() {
     setSearchQuery(value)
   }, [])
 
-
   const handleClearSearch = useCallback(() => {
     setSearchQuery('')
   }, [])
@@ -75,7 +74,6 @@ export function MembersSearch() {
           </div>
         )}
       </div>
-
     </div>
   )
 }

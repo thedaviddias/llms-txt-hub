@@ -1,9 +1,9 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Calendar } from 'lucide-react'
 import Link from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import type { Member } from '@/lib/member-server-utils'
 
 interface MemberCardProps {
@@ -25,9 +25,7 @@ export function MemberCard({ member, userSlug, displayName }: MemberCardProps) {
   if (member.createdAt) {
     // Try parsing as number first (timestamp)
     const timestamp = Number(member.createdAt)
-    const date = !Number.isNaN(timestamp)
-      ? new Date(timestamp)
-      : new Date(member.createdAt)
+    const date = !Number.isNaN(timestamp) ? new Date(timestamp) : new Date(member.createdAt)
 
     if (!Number.isNaN(date.getTime())) {
       joinDate = date.toLocaleDateString('en-US', {
@@ -56,9 +54,7 @@ export function MemberCard({ member, userSlug, displayName }: MemberCardProps) {
 
           <div className="space-y-1">
             <h3 className="font-semibold text-base truncate">{displayName}</h3>
-            {username && (
-              <p className="text-sm text-muted-foreground truncate">@{username}</p>
-            )}
+            {username && <p className="text-sm text-muted-foreground truncate">@{username}</p>}
             <div className="flex items-center justify-center">
               <Badge variant={badge.variant} className="text-xs px-1.5 py-0.5">
                 {badge.label}

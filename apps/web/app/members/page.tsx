@@ -1,6 +1,6 @@
-import type { Member } from '@/lib/member-server-utils'
-import { MembersSearch } from './members-search'
+import { getCachedMembers } from '@/lib/member-server-utils'
 import { MembersList } from './members-list'
+import { MembersSearch } from './members-search'
 
 // Force dynamic rendering since we use searchParams
 export const dynamic = 'force-dynamic'
@@ -11,17 +11,8 @@ export const dynamic = 'force-dynamic'
  * @returns Metadata object for Next.js
  */
 export async function generateMetadata() {
-  // Fetch total count for metadata
-  const membersResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/members/paginated?page=1&limit=1`,
-    { cache: 'no-store' }
-  )
-
-  let totalCount = 0
-  if (membersResponse.ok) {
-    const data = await membersResponse.json()
-    totalCount = data.totalCount
-  }
+  const allMembers = await getCachedMembers()
+  const totalCount = allMembers.length
 
   return {
     title: `Members (${totalCount}) | LLMs.txt Hub`,
@@ -43,23 +34,35 @@ export default async function MembersPage({
   const params = await searchParams
   const searchQuery = params.search || ''
   const page = Number.parseInt(params.page || '1', 10)
+  const limit = 24
 
-  // Fetch initial page of members
-  const membersResponse = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/members/paginated?page=${page}&limit=24${
-      searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''
-    }`,
-    { cache: 'no-store' }
-  )
+  // Get all members and filter/search them server-side
+  const allMembers = await getCachedMembers()
+  let filteredMembers = allMembers
 
-  let initialMembers: Member[] = []
-  let initialTotalCount = 0
+  // Apply search filter if provided
+  if (searchQuery.trim()) {
+    const lowerCaseSearchQuery = searchQuery.toLowerCase().trim()
+    filteredMembers = allMembers.filter(member => {
+      const displayName =
+        member.firstName && member.lastName
+          ? `${member.firstName} ${member.lastName}`.toLowerCase()
+          : (member.firstName || member.lastName || member.username || '').toLowerCase()
+      const username = (
+        member.username ||
+        member.publicMetadata?.github_username ||
+        ''
+      ).toLowerCase()
 
-  if (membersResponse.ok) {
-    const data = await membersResponse.json()
-    initialMembers = data.members
-    initialTotalCount = data.totalCount
+      return displayName.includes(lowerCaseSearchQuery) || username.includes(lowerCaseSearchQuery)
+    })
   }
+
+  // Calculate pagination
+  const totalCount = filteredMembers.length
+  const startIndex = (page - 1) * limit
+  const endIndex = startIndex + limit
+  const initialMembers = filteredMembers.slice(startIndex, endIndex)
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -67,8 +70,8 @@ export default async function MembersPage({
         <h1 className="text-3xl font-bold mb-2">Community Members</h1>
         <p className="text-muted-foreground">
           {searchQuery
-            ? `${initialMembers.length} of ${initialTotalCount} members`
-            : `${initialTotalCount} members and growing`}
+            ? `${initialMembers.length} of ${totalCount} members`
+            : `${totalCount} members and growing`}
         </p>
       </div>
 
@@ -80,15 +83,13 @@ export default async function MembersPage({
         {initialMembers.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
-              {searchQuery
-                ? `No members found matching "${searchQuery}"`
-                : 'No members found'}
+              {searchQuery ? `No members found matching "${searchQuery}"` : 'No members found'}
             </p>
           </div>
         ) : (
           <MembersList
             initialMembers={initialMembers}
-            initialTotalCount={initialTotalCount}
+            initialTotalCount={totalCount}
             initialPage={page}
             initialSearchQuery={searchQuery}
           />

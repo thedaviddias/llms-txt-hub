@@ -1,10 +1,10 @@
 'use client'
 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
-import { MemberCard } from './member-card'
-import { generateSlugFromUser } from '@/lib/profile-utils'
 import type { Member } from '@/lib/member-server-utils'
+import { generateSlugFromUser } from '@/lib/profile-utils'
+import { MemberCard } from './member-card'
 
 interface MembersListProps {
   initialMembers: Member[]
@@ -23,7 +23,7 @@ interface PaginatedMembersResponse {
 
 /**
  * Client-side members list with pagination and search
- * Handles loading more members and server-side search
+ * Handles pagination navigation and server-side search
  */
 export function MembersList({
   initialMembers,
@@ -32,22 +32,25 @@ export function MembersList({
   initialSearchQuery = ''
 }: MembersListProps) {
   const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
   const [members, setMembers] = useState<Member[]>(initialMembers)
   const [totalCount, setTotalCount] = useState(initialTotalCount)
   const [currentPage, setCurrentPage] = useState(initialPage)
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
-  const [hasMore, setHasMore] = useState(initialMembers.length < initialTotalCount)
+  const [isLoading, setIsLoading] = useState(false)
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery)
+
+  const totalPages = Math.ceil(totalCount / 24)
 
   // Update state when search params change
   useEffect(() => {
     const newSearchQuery = searchParams.get('search') || ''
     const newPage = Number.parseInt(searchParams.get('page') || '1', 10)
-    
+
     if (newSearchQuery !== searchQuery || newPage !== currentPage) {
       setSearchQuery(newSearchQuery)
       setCurrentPage(newPage)
-      
+
       // Fetch new data
       fetchMembers(newPage, newSearchQuery)
     }
@@ -57,12 +60,13 @@ export function MembersList({
    * Fetch members from the API with pagination and search
    */
   const fetchMembers = useCallback(async (page: number, search: string) => {
+    setIsLoading(true)
     try {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: '24'
       })
-      
+
       if (search.trim()) {
         params.set('search', search.trim())
       }
@@ -70,38 +74,72 @@ export function MembersList({
       const response = await fetch(`/api/members/paginated?${params.toString()}`)
       if (response.ok) {
         const data: PaginatedMembersResponse = await response.json()
-        
-        if (page === 1) {
-          // Replace members for first page or new search
-          setMembers(data.members)
-        } else {
-          // Append members for pagination
-          setMembers(prev => [...prev, ...data.members])
-        }
-        
+        setMembers(data.members)
         setTotalCount(data.totalCount)
-        setHasMore(data.hasMore)
       }
     } catch (error) {
       console.error('Failed to fetch members:', error)
+    } finally {
+      setIsLoading(false)
     }
   }, [])
 
   /**
-   * Load more members for pagination
+   * Navigate to a specific page
    */
-  const loadMoreMembers = useCallback(async () => {
-    if (isLoadingMore || !hasMore) return
+  const goToPage = useCallback(
+    (page: number) => {
+      if (page < 1 || page > totalPages || page === currentPage || isLoading) return
 
-    setIsLoadingMore(true)
-    try {
-      const nextPage = currentPage + 1
-      await fetchMembers(nextPage, searchQuery)
-      setCurrentPage(nextPage)
-    } finally {
-      setIsLoadingMore(false)
+      const params = new URLSearchParams(searchParams)
+      params.set('page', page.toString())
+      router.push(`${pathname}?${params.toString()}`)
+    },
+    [currentPage, totalPages, isLoading, searchParams, router, pathname]
+  )
+
+  /**
+   * Generate page numbers to display
+   */
+  const getPageNumbers = useCallback(() => {
+    const pages: (number | string)[] = []
+    const maxVisible = 7 // Show up to 7 page numbers
+
+    if (totalPages <= maxVisible) {
+      // Show all pages if total is small
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i)
+      }
+    } else {
+      // Always show first page
+      pages.push(1)
+
+      if (currentPage > 4) {
+        pages.push('...')
+      }
+
+      // Show pages around current page
+      const start = Math.max(2, currentPage - 1)
+      const end = Math.min(totalPages - 1, currentPage + 1)
+
+      for (let i = start; i <= end; i++) {
+        if (i !== 1 && i !== totalPages) {
+          pages.push(i)
+        }
+      }
+
+      if (currentPage < totalPages - 3) {
+        pages.push('...')
+      }
+
+      // Always show last page
+      if (totalPages > 1) {
+        pages.push(totalPages)
+      }
     }
-  }, [isLoadingMore, hasMore, currentPage, searchQuery, fetchMembers])
+
+    return pages
+  }, [currentPage, totalPages])
 
   return (
     <div className="space-y-6">
@@ -125,48 +163,91 @@ export function MembersList({
         })}
       </div>
 
-      {/* Load More Button */}
-      {hasMore && (
-        <div className="text-center" aria-live="polite">
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <nav
+          className="flex items-center justify-center space-x-1"
+          aria-label="Pagination Navigation"
+        >
+          {/* Previous Button */}
           <button
             type="button"
-            onClick={loadMoreMembers}
-            disabled={isLoadingMore}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-h-[36px]"
-            aria-label={`Load more members. Currently showing ${members.length} of ${totalCount} members.`}
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1 || isLoading}
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500"
+            aria-label="Go to previous page"
           >
-            {isLoadingMore ? (
-              <>
-                <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                <span>Loading...</span>
-              </>
-            ) : (
-              <>
-                <span>Load More</span>
-                <span className="text-sm opacity-75">
-                  ({totalCount - members.length} remaining)
-                </span>
-              </>
-            )}
+            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <title>Previous page</title>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Previous
           </button>
 
-          {/* Progress indicator */}
-          <p className="text-xs text-muted-foreground mt-3">
-            Showing {members.length} of {totalCount} members
-          </p>
+          {/* Page Numbers */}
+          {getPageNumbers().map((page, index) => (
+            <div key={index}>
+              {page === '...' ? (
+                <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border-t border-b border-gray-300">
+                  ...
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => goToPage(page as number)}
+                  disabled={isLoading}
+                  className={`inline-flex items-center px-3 py-2 text-sm font-medium border-t border-b ${
+                    currentPage === page
+                      ? 'text-white bg-primary border-primary'
+                      : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-50 hover:text-gray-700'
+                  } disabled:opacity-50 disabled:cursor-not-allowed`}
+                  aria-label={`Go to page ${page}`}
+                  aria-current={currentPage === page ? 'page' : undefined}
+                >
+                  {page}
+                </button>
+              )}
+            </div>
+          ))}
+
+          {/* Next Button */}
+          <button
+            type="button"
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages || isLoading}
+            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500"
+            aria-label="Go to next page"
+          >
+            Next
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <title>Next page</title>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </nav>
+      )}
+
+      {/* Loading indicator */}
+      {isLoading && (
+        <div className="flex justify-center py-4">
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
         </div>
       )}
 
-      {/* End of results */}
-      {!hasMore && members.length > 0 && (
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground">
-            {searchQuery
-              ? `Showing all ${members.length} results for "${searchQuery}"`
-              : `You've reached the end! Showing all ${members.length} members.`}
-          </p>
-        </div>
-      )}
+      {/* Results summary */}
+      <div className="text-center">
+        <p className="text-sm text-muted-foreground">
+          {searchQuery
+            ? `Showing ${members.length} of ${totalCount} results for "${searchQuery}"`
+            : `Showing ${members.length} of ${totalCount} members`}
+          {totalPages > 1 && ` • Page ${currentPage} of ${totalPages}`}
+        </p>
+      </div>
     </div>
   )
 }
