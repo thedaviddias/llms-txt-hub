@@ -66,7 +66,7 @@ export async function generateMetadata() {
 export default async function MembersPage({
   searchParams
 }: {
-  searchParams: Promise<{ search?: string; filter?: string; page?: string }>
+  searchParams: Promise<{ search?: string; page?: string }>
 }) {
   // Get all members (this will be cached and served statically)
   const allMembers = await getCachedMembers()
@@ -76,7 +76,6 @@ export default async function MembersPage({
 
   // Apply client-side filtering based on search params
   const searchQuery = params.search?.toLowerCase() || ''
-  const filterType = params.filter || 'all'
 
   const filteredMembers = allMembers.filter(member => {
     // Apply search filter
@@ -96,14 +95,7 @@ export default async function MembersPage({
       }
     }
 
-    // Apply filter type
-    if (filterType === 'contributors') {
-      return member.hasContributions === true
-    } else if (filterType === 'community') {
-      return member.hasContributions === false || member.hasContributions === undefined
-    }
-
-    return true // 'all' filter
+    return true
   })
 
   return (
@@ -111,7 +103,7 @@ export default async function MembersPage({
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Community Members</h1>
         <p className="text-muted-foreground">
-          {searchQuery || filterType !== 'all'
+          {searchQuery
             ? `${filteredMembers.length} of ${allMembers.length} members`
             : `${allMembers.length} members and growing`}
         </p>
@@ -127,7 +119,7 @@ export default async function MembersPage({
             <p className="text-muted-foreground">
               {searchQuery
                 ? `No members found matching "${params.search}"`
-                : `No ${filterType === 'contributors' ? 'contributors' : 'community members'} found`}
+                : 'No members found'}
             </p>
           </div>
         ) : (

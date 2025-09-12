@@ -1,14 +1,7 @@
 'use client'
 
-import { Button } from '@thedaviddias/design-system/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@thedaviddias/design-system/dropdown-menu'
 import { useDebounce } from '@thedaviddias/hooks/use-debounce'
-import { ChevronDown, Filter, Search, Star, Users } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState, useTransition } from 'react'
 
@@ -23,7 +16,6 @@ export function MembersSearch() {
   const [isPending, startTransition] = useTransition()
 
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '')
-  const [filter, setFilter] = useState(searchParams.get('filter') || 'all')
 
   // Debounce the search query
   const debouncedSearch = useDebounce(searchQuery, 300)
@@ -38,27 +30,18 @@ export function MembersSearch() {
       params.delete('search')
     }
 
-    if (filter !== 'all') {
-      params.set('filter', filter)
-    } else {
-      params.delete('filter')
-    }
-
-    // Reset page when search/filter changes
+    // Reset page when search changes
     params.delete('page')
 
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`)
     })
-  }, [debouncedSearch, filter, pathname, router, searchParams])
+  }, [debouncedSearch, pathname, router, searchParams])
 
   const handleSearchChange = useCallback((value: string) => {
     setSearchQuery(value)
   }, [])
 
-  const handleFilterChange = useCallback((newFilter: string) => {
-    setFilter(newFilter)
-  }, [])
 
   const handleClearSearch = useCallback(() => {
     setSearchQuery('')
@@ -93,35 +76,6 @@ export function MembersSearch() {
         )}
       </div>
 
-      {/* Filter Dropdown */}
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">
-            <Filter className="mr-2 h-4 w-4" />
-            {filter === 'contributors' && 'Contributors'}
-            {filter === 'community' && 'Community'}
-            {filter === 'all' && 'All Members'}
-            <ChevronDown className="ml-2 h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48">
-          <DropdownMenuItem onClick={() => handleFilterChange('all')}>
-            <Users className="mr-2 h-4 w-4" />
-            All Members
-            {filter === 'all' && <span className="ml-auto">✓</span>}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleFilterChange('contributors')}>
-            <Star className="mr-2 h-4 w-4" />
-            Contributors
-            {filter === 'contributors' && <span className="ml-auto">✓</span>}
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleFilterChange('community')}>
-            <Users className="mr-2 h-4 w-4" />
-            Community
-            {filter === 'community' && <span className="ml-auto">✓</span>}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     </div>
   )
 }

@@ -240,7 +240,7 @@ export function WebsitesListWithSearch({
             onAction={() => setSearchQuery('')}
           />
         ) : (
-          <EmptyState title={emptyTitle} description={emptyDescription} actionLabel={undefined} />
+          <EmptyState title={emptyTitle} description={emptyDescription} />
         )
       ) : (
         <div>
@@ -286,7 +286,7 @@ export function WebsitesListWithSearch({
                     <>
                       <span>Load More</span>
                       <span className="text-sm opacity-75">
-                        ({totalCount - allWebsites.length} remaining)
+                        ({totalCount ? totalCount - allWebsites.length : 0} remaining)
                       </span>
                     </>
                   )}
