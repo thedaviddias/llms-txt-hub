@@ -216,26 +216,21 @@ export function WebsitesListWithSearch({
           {!searchQuery.trim() && !showFavoritesOnly && (
             <>
               {/* Trigger Point - Invisible sentinel for intersection observer */}
-              <div 
-                ref={sentinelRef} 
-                className="h-4" 
-                aria-hidden="true"
-                role="presentation"
-              />
-              
+              <div ref={sentinelRef} className="h-4" aria-hidden="true" role="presentation" />
+
               {/* Loading Indicator - Shows when content is being fetched */}
               {isLoadingMore && (
-                <div className="mt-8 text-center" role="status" aria-live="polite">
+                <div className="mt-8 text-center" aria-live="polite">
                   <div className="inline-flex items-center gap-2 text-muted-foreground">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
                     <span>Loading more websites...</span>
                   </div>
                 </div>
               )}
-              
+
               {/* End of Content Indicator */}
               {!hasMoreWebsites && allWebsites.length > 0 && (
-                <div className="mt-8 text-center" role="status" aria-live="polite">
+                <div className="mt-8 text-center" aria-live="polite">
                   <p className="text-sm text-muted-foreground">
                     You've reached the end! Showing all {allWebsites.length} websites.
                   </p>
