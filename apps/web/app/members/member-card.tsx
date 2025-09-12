@@ -1,81 +1,77 @@
+import { Card, CardContent } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
-import { Card, CardContent } from '@thedaviddias/design-system/card'
+import { Badge } from '@thedaviddias/design-system/badge'
 import { Calendar } from 'lucide-react'
 import Link from 'next/link'
-
-interface Member {
-  id: string
-  firstName?: string | null
-  lastName?: string | null
-  username?: string | null
-  imageUrl?: string | null
-  createdAt: string
-  publicMetadata?: {
-    github_username?: string | null
-    migrated_from?: string | null
-    isProfilePrivate?: boolean
-  }
-}
+import type { Member } from '@/lib/member-server-utils'
 
 interface MemberCardProps {
   member: Member
-  children?: React.ReactNode
+  userSlug: string
+  displayName: string
 }
 
-function generateSlugFromUser(user: Member): string {
-  if (!user) return ''
-  const username = user.username || user.publicMetadata?.github_username
-  if (!username) return user.id
-  return username
-}
-
-export function MemberCard({ member, children }: MemberCardProps) {
-  const displayName =
-    member.firstName && member.lastName
-      ? `${member.firstName} ${member.lastName}`
-      : member.firstName || member.lastName || 'Anonymous'
+/**
+ * Individual member card component
+ * Displays member information in a card format
+ */
+export function MemberCard({ member, userSlug, displayName }: MemberCardProps) {
   const username = member.username || member.publicMetadata?.github_username
-  const slug = generateSlugFromUser(member)
-  const joinedDate = new Date(member.createdAt)
+  const badge = getMemberBadgeSync(member.hasContributions)
+
+  // Parse the date - it might be a timestamp number as string or ISO string
+  let joinDate = 'Member'
+  if (member.createdAt) {
+    // Try parsing as number first (timestamp)
+    const timestamp = Number(member.createdAt)
+    const date = !Number.isNaN(timestamp)
+      ? new Date(timestamp)
+      : new Date(member.createdAt)
+
+    if (!Number.isNaN(date.getTime())) {
+      joinDate = date.toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric'
+      })
+    }
+  }
 
   return (
-    <Link href={`/u/${slug}`} className="group block">
-      <Card className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1">
-        <CardContent className="p-6">
-          <div className="flex items-start justify-between">
-            <div className="flex items-center space-x-4">
-              <Avatar className="h-12 w-12 border-2 border-muted">
-                <AvatarImage src={member.imageUrl || ''} alt={displayName} />
-                <AvatarFallback>
-                  {displayName
-                    .split(' ')
-                    .map(n => n[0])
-                    .join('')
-                    .toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="space-y-1">
-                <h3 className="font-semibold text-sm leading-tight group-hover:text-primary transition-colors">
-                  {displayName}
-                </h3>
-                {username && <p className="text-xs text-muted-foreground">@{username}</p>}
-                <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <Calendar className="h-3 w-3" />
-                  <span>Joined {joinedDate.toLocaleDateString()}</span>
-                </div>
-              </div>
+    <Card className="transition-all hover:border-primary hover:bg-muted/50">
+      <CardContent className="p-2">
+        <Link href={`/u/${userSlug}`} className="block text-center space-y-1">
+          <Avatar className="w-14 h-14 sm:w-16 sm:h-16 mx-auto">
+            {member.imageUrl ? (
+              <AvatarImage
+                src={member.imageUrl}
+                alt={`${displayName}'s profile picture - llms.txt hub community member`}
+              />
+            ) : (
+              <AvatarFallback className="text-base sm:text-lg">
+                {displayName.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            )}
+          </Avatar>
+
+          <div className="space-y-1">
+            <h3 className="font-semibold text-base truncate">{displayName}</h3>
+            {username && (
+              <p className="text-sm text-muted-foreground truncate">@{username}</p>
+            )}
+            <div className="flex items-center justify-center">
+              <Badge variant={badge.variant} className="text-xs px-1.5 py-0.5">
+                {badge.label}
+              </Badge>
             </div>
           </div>
 
-          {/* Badges */}
-          {children && (
-            <div className="mt-3 flex flex-wrap gap-1">
-              {/* Additional badges (like contribution badge) can be added via children */}
-              {children}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </Link>
+          <div className="flex items-center justify-center gap-1.5 text-sm text-muted-foreground">
+            <Calendar className="w-3.5 h-3.5" />
+            <span>{joinDate}</span>
+          </div>
+        </Link>
+      </CardContent>
+    </Card>
   )
 }
