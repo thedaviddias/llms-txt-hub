@@ -39,7 +39,10 @@ export function WebsitesListWithSearch({
   const [hasMoreWebsites, setHasMoreWebsites] = useState(
     totalCount ? initialWebsites.length < totalCount : false
   )
-
+  const sentinelId = useId()
+  const { trackSearch, trackSortChange } = useAnalyticsEvents()
+  const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
+  
   // Debug initial state
   useEffect(() => {
     console.log('Component initialized:', {
@@ -49,8 +52,6 @@ export function WebsitesListWithSearch({
       sentinelId
     })
   }, [])
-  const { trackSearch, trackSortChange } = useAnalyticsEvents()
-  const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
 
   /**
    * Load more websites from the API when user scrolls to bottom
