@@ -240,7 +240,7 @@ export function WebsitesListWithSearch({
             onAction={() => setSearchQuery('')}
           />
         ) : (
-          <EmptyState title={emptyTitle} description={emptyDescription} />
+          <EmptyState title={emptyTitle} description={emptyDescription} actionLabel={undefined} />
         )
       ) : (
         <div>
