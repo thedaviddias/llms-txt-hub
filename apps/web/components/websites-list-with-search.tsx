@@ -62,7 +62,7 @@ export function WebsitesListWithSearch({
           totalCount: data.totalCount,
           currentLength: allWebsites.length
         })
-        
+
         setAllWebsites(prev => {
           const newWebsites = [...prev, ...data.websites]
           console.log('State Update:', {
@@ -119,7 +119,7 @@ export function WebsitesListWithSearch({
       },
       {
         threshold: 0.1,
-        rootMargin: '200px'
+        rootMargin: '400px'
       }
     )
 
