@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { EmptyState } from '@/components/empty-state'
 import { LLMGrid } from '@/components/llm/llm-grid'
@@ -39,15 +39,14 @@ export function WebsitesListWithSearch({
   const [hasMoreWebsites, setHasMoreWebsites] = useState(
     totalCount ? initialWebsites.length < totalCount : false
   )
-  const sentinelId = useId()
-  const sentinelRef = useRef<HTMLDivElement>(null)
   const isLoadingRef = useRef(false)
   const { trackSearch, trackSortChange } = useAnalyticsEvents()
   const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
 
   /**
-   * Load more websites from the API when user scrolls to bottom
+   * Load more websites from the API when user clicks Load More button
    * Loads 24 websites at a time for optimal performance
+   * Follows Load More UX pattern for better performance and user control
    */
   const loadMoreWebsites = useCallback(async () => {
     if (isLoadingRef.current || isLoadingMore || !hasMoreWebsites || !totalCount) return
@@ -94,34 +93,7 @@ export function WebsitesListWithSearch({
     }
   }, [sortBy, isClient])
 
-  // Infinite Scroll Implementation - Following UX Pattern
-  useEffect(() => {
-    if (!isClient || searchQuery.trim() || showFavoritesOnly || !hasMoreWebsites) return
-
-    const observer = new IntersectionObserver(
-      entries => {
-        const target = entries[0]
-        if (target.isIntersecting && hasMoreWebsites && !isLoadingMore) {
-          loadMoreWebsites()
-        }
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '200px' // Load content when 200px away from trigger point
-      }
-    )
-
-    const sentinel = sentinelRef.current
-    if (sentinel) {
-      observer.observe(sentinel)
-    }
-
-    return () => {
-      if (sentinel) {
-        observer.unobserve(sentinel)
-      }
-    }
-  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
+  // Load More Pattern - No automatic loading, user controls when to load more
 
   // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
@@ -212,31 +184,42 @@ export function WebsitesListWithSearch({
             </div>
           </div>
 
-          {/* Infinite Scroll Components - Following UX Pattern */}
+          {/* Load More Pattern - Following UX Pattern */}
           {!searchQuery.trim() && !showFavoritesOnly && (
-            <>
-              {/* Trigger Point - Invisible sentinel for intersection observer */}
-              <div ref={sentinelRef} className="h-4" aria-hidden="true" role="presentation" />
-
-              {/* Loading Indicator - Shows when content is being fetched */}
-              {isLoadingMore && (
-                <div className="mt-8 text-center" aria-live="polite">
-                  <div className="inline-flex items-center gap-2 text-muted-foreground">
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
-                    <span>Loading more websites...</span>
-                  </div>
+            <div className="mt-8 text-center" aria-live="polite">
+              {hasMoreWebsites ? (
+                <button
+                  type="button"
+                  onClick={loadMoreWebsites}
+                  disabled={isLoadingMore}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[120px]"
+                  aria-label={`Load 24 more websites. Currently showing ${allWebsites.length} of ${totalCount} websites.`}
+                >
+                  {isLoadingMore ? (
+                    <>
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      <span>Loading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Load More</span>
+                      <span className="text-sm opacity-75">
+                        ({totalCount - allWebsites.length} remaining)
+                      </span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <div className="text-sm text-muted-foreground">
+                  <p>You've reached the end! Showing all {allWebsites.length} websites.</p>
                 </div>
               )}
-
-              {/* End of Content Indicator */}
-              {!hasMoreWebsites && allWebsites.length > 0 && (
-                <div className="mt-8 text-center" aria-live="polite">
-                  <p className="text-sm text-muted-foreground">
-                    You've reached the end! Showing all {allWebsites.length} websites.
-                  </p>
-                </div>
-              )}
-            </>
+              
+              {/* Progress indicator */}
+              <p className="text-xs text-muted-foreground mt-3">
+                Showing {allWebsites.length} of {totalCount} websites
+              </p>
+            </div>
           )}
         </div>
       )}
