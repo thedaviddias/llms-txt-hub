@@ -227,10 +227,9 @@ export function WebsitesListWithSearch({
           <div className="flex flex-col items-center justify-center py-12">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mb-4" />
             <p className="text-sm text-muted-foreground">
-              {isSearching 
+              {isSearching
                 ? `Searching all ${totalCount} websites for "${searchQuery}"...`
-                : `Preparing search for "${searchQuery}"...`
-              }
+                : `Preparing search for "${searchQuery}"...`}
             </p>
           </div>
         ) : searchQuery.trim() && !isSearchPending && !isSearching ? (
