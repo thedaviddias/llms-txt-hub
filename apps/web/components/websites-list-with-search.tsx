@@ -58,22 +58,7 @@ export function WebsitesListWithSearch({
       const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
       if (response.ok) {
         const data = await response.json()
-        console.log('API Response:', {
-          receivedWebsites: data.websites.length,
-          hasMore: data.hasMore,
-          totalCount: data.totalCount,
-          currentLength: allWebsites.length
-        })
-        
-        setAllWebsites(prev => {
-          const newWebsites = [...prev, ...data.websites]
-          console.log('State Update:', {
-            previousLength: prev.length,
-            newWebsitesLength: data.websites.length,
-            totalNewLength: newWebsites.length
-          })
-          return newWebsites
-        })
+        setAllWebsites(prev => [...prev, ...data.websites])
         setHasMoreWebsites(data.hasMore && data.websites.length > 0)
       }
     } catch (error) {
@@ -109,7 +94,7 @@ export function WebsitesListWithSearch({
     }
   }, [sortBy, isClient])
 
-  // Intersection Observer for infinite scroll
+  // Infinite Scroll Implementation - Following UX Pattern
   useEffect(() => {
     if (!isClient || searchQuery.trim() || showFavoritesOnly || !hasMoreWebsites) return
 
@@ -122,7 +107,7 @@ export function WebsitesListWithSearch({
       },
       {
         threshold: 0.1,
-        rootMargin: '400px'
+        rootMargin: '200px' // Load content when 200px away from trigger point
       }
     )
 
@@ -135,40 +120,6 @@ export function WebsitesListWithSearch({
       if (sentinel) {
         observer.unobserve(sentinel)
       }
-    }
-  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
-
-  // Backup scroll event listener for fast scrolling
-  useEffect(() => {
-    if (!isClient || searchQuery.trim() || showFavoritesOnly || !hasMoreWebsites) return
-
-    const handleScroll = () => {
-      if (isLoadingRef.current || isLoadingMore || !hasMoreWebsites) return
-
-      const sentinel = sentinelRef.current
-      if (!sentinel) return
-
-      const rect = sentinel.getBoundingClientRect()
-      const windowHeight = window.innerHeight
-      
-      // If sentinel is within 500px of viewport, load more
-      if (rect.top <= windowHeight + 500) {
-        loadMoreWebsites()
-      }
-    }
-
-    // Throttle scroll events
-    let timeoutId: NodeJS.Timeout
-    const throttledHandleScroll = () => {
-      clearTimeout(timeoutId)
-      timeoutId = setTimeout(handleScroll, 100)
-    }
-
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
-    
-    return () => {
-      window.removeEventListener('scroll', throttledHandleScroll)
-      clearTimeout(timeoutId)
     }
   }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
 
@@ -261,40 +212,30 @@ export function WebsitesListWithSearch({
             </div>
           </div>
 
-          {/* Infinite Scroll Sentinel and Loading Indicator */}
+          {/* Infinite Scroll Components - Following UX Pattern */}
           {!searchQuery.trim() && !showFavoritesOnly && (
             <>
-              {/* Temporary test button - remove after testing */}
-              <div className="mt-8 text-center">
-                <button
-                  onClick={loadMoreWebsites}
-                  disabled={isLoadingMore || !hasMoreWebsites}
-                  className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-                >
-                  {isLoadingMore ? 'Loading...' : 'Load More (Test)'}
-                </button>
-                <p className="text-xs text-muted-foreground mt-2">
-                  Current: {allWebsites.length} / {totalCount} | Has More:{' '}
-                  {hasMoreWebsites ? 'Yes' : 'No'}
-                </p>
-              </div>
-
-              {/* Scroll Sentinel for infinite scroll */}
-              <div ref={sentinelRef} className="h-8" />
-
-              {/* Loading indicator */}
+              {/* Trigger Point - Invisible sentinel for intersection observer */}
+              <div 
+                ref={sentinelRef} 
+                className="h-4" 
+                aria-hidden="true"
+                role="presentation"
+              />
+              
+              {/* Loading Indicator - Shows when content is being fetched */}
               {isLoadingMore && (
-                <div className="mt-8 text-center">
+                <div className="mt-8 text-center" role="status" aria-live="polite">
                   <div className="inline-flex items-center gap-2 text-muted-foreground">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
                     <span>Loading more websites...</span>
                   </div>
                 </div>
               )}
-
-              {/* End of results indicator */}
+              
+              {/* End of Content Indicator */}
               {!hasMoreWebsites && allWebsites.length > 0 && (
-                <div className="mt-8 text-center">
+                <div className="mt-8 text-center" role="status" aria-live="polite">
                   <p className="text-sm text-muted-foreground">
                     You've reached the end! Showing all {allWebsites.length} websites.
                   </p>
