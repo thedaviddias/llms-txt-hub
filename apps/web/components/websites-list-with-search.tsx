@@ -45,7 +45,7 @@ export function WebsitesListWithSearch({
 
   /**
    * Load more websites from the API when user clicks Load More button
-   * Loads 24 websites at a time for optimal performance
+   * Loads 48 websites at a time for optimal performance
    * Follows Load More UX pattern for better performance and user control
    */
   const loadMoreWebsites = useCallback(async () => {
@@ -54,7 +54,7 @@ export function WebsitesListWithSearch({
     isLoadingRef.current = true
     setIsLoadingMore(true)
     try {
-      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
+      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=48`)
       if (response.ok) {
         const data = await response.json()
         setAllWebsites(prev => [...prev, ...data.websites])
@@ -192,8 +192,8 @@ export function WebsitesListWithSearch({
                   type="button"
                   onClick={loadMoreWebsites}
                   disabled={isLoadingMore}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-h-[44px] min-w-[120px]"
-                  aria-label={`Load 24 more websites. Currently showing ${allWebsites.length} of ${totalCount} websites.`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors min-h-[36px]"
+                  aria-label={`Load 48 more websites. Currently showing ${allWebsites.length} of ${totalCount} websites.`}
                 >
                   {isLoadingMore ? (
                     <>
@@ -214,7 +214,7 @@ export function WebsitesListWithSearch({
                   <p>You've reached the end! Showing all {allWebsites.length} websites.</p>
                 </div>
               )}
-              
+
               {/* Progress indicator */}
               <p className="text-xs text-muted-foreground mt-3">
                 Showing {allWebsites.length} of {totalCount} websites
