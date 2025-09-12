@@ -39,9 +39,40 @@ export function WebsitesListWithSearch({
   const [hasMoreWebsites, setHasMoreWebsites] = useState(
     totalCount ? initialWebsites.length < totalCount : false
   )
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState<WebsiteMetadata[]>([])
+  const [searchTotalCount, setSearchTotalCount] = useState(0)
   const isLoadingRef = useRef(false)
   const { trackSearch, trackSortChange } = useAnalyticsEvents()
   const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
+
+  /**
+   * Search all websites using server-side search
+   * Searches across all 887+ websites regardless of what's loaded on the page
+   */
+  const searchAllWebsites = useCallback(async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([])
+      setSearchTotalCount(0)
+      return
+    }
+
+    setIsSearching(true)
+    try {
+      const response = await fetch(`/api/websites/search?q=${encodeURIComponent(query.trim())}&limit=100`)
+      if (response.ok) {
+        const data = await response.json()
+        setSearchResults(data.websites)
+        setSearchTotalCount(data.totalCount)
+      }
+    } catch (error) {
+      console.error('Failed to search websites:', error)
+      setSearchResults([])
+      setSearchTotalCount(0)
+    } finally {
+      setIsSearching(false)
+    }
+  }, [])
 
   /**
    * Load more websites from the API when user clicks Load More button
@@ -93,23 +124,48 @@ export function WebsitesListWithSearch({
     }
   }, [sortBy, isClient])
 
+  // Debounced search effect
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery.trim()) {
+        searchAllWebsites(searchQuery)
+      } else {
+        setSearchResults([])
+        setSearchTotalCount(0)
+      }
+    }, 300) // 300ms debounce
+
+    return () => clearTimeout(timeoutId)
+  }, [searchQuery, searchAllWebsites])
+
   // Load More Pattern - No automatic loading, user controls when to load more
 
   // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
-    let websites = showFavoritesOnly ? [...favoriteWebsites] : [...allWebsites]
-
-    // Filter by search query
+    // If searching, use search results
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim()
-      websites = websites.filter(website => {
-        return (
-          website.name.toLowerCase().includes(query) ||
-          website.description.toLowerCase().includes(query) ||
-          website.category.toLowerCase().includes(query)
-        )
-      })
+      let websites = [...searchResults]
+      
+      // Apply favorites filter to search results
+      if (showFavoritesOnly) {
+        const favoriteSlugs = new Set(favoriteWebsites.map(w => w.slug))
+        websites = websites.filter(website => favoriteSlugs.has(website.slug))
+      }
+
+      // Sort search results
+      if (sortBy === 'latest') {
+        return websites.sort((a, b) => {
+          const dateA = new Date(a.publishedAt).getTime()
+          const dateB = new Date(b.publishedAt).getTime()
+          return dateB - dateA
+        })
+      } else {
+        return websites.sort((a, b) => a.name.localeCompare(b.name))
+      }
     }
+
+    // If not searching, use loaded websites
+    let websites = showFavoritesOnly ? [...favoriteWebsites] : [...allWebsites]
 
     // Sort
     if (sortBy === 'latest') {
@@ -121,7 +177,7 @@ export function WebsitesListWithSearch({
     } else {
       return websites.sort((a, b) => a.name.localeCompare(b.name))
     }
-  }, [allWebsites, favoriteWebsites, showFavoritesOnly, sortBy, searchQuery])
+  }, [allWebsites, favoriteWebsites, showFavoritesOnly, sortBy, searchQuery, searchResults])
 
   // Calculate initial visible items for search results
   const itemsPerRow = 6 // Maximum columns on largest screens
@@ -165,10 +221,15 @@ export function WebsitesListWithSearch({
       ) : (
         <div>
           <h2 className="text-2xl font-semibold mb-6 sr-only">Websites</h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            {searchQuery &&
-              `Showing ${filteredAndSortedWebsites.length} result${filteredAndSortedWebsites.length !== 1 ? 's' : ''} for "${searchQuery}"`}
-          </p>
+                 <p className="text-sm text-muted-foreground mb-4">
+                   {searchQuery && (
+                     isSearching ? (
+                       `Searching all ${totalCount} websites for "${searchQuery}"...`
+                     ) : (
+                       `Showing ${filteredAndSortedWebsites.length} of ${searchTotalCount} result${searchTotalCount !== 1 ? 's' : ''} for "${searchQuery}"`
+                     )
+                   )}
+                 </p>
 
           {/* Grid with Animation */}
           <div className="relative">
@@ -185,7 +246,7 @@ export function WebsitesListWithSearch({
           </div>
 
           {/* Load More Pattern - Following UX Pattern */}
-          {!searchQuery.trim() && !showFavoritesOnly && (
+          {!searchQuery.trim() && !showFavoritesOnly && !isSearching && (
             <div className="mt-8 text-center" aria-live="polite">
               {hasMoreWebsites ? (
                 <button
