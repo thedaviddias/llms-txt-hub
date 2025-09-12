@@ -49,54 +49,15 @@ export function WebsitesListWithSearch({
    * Loads 24 websites at a time for optimal performance
    */
   const loadMoreWebsites = useCallback(async () => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('loadMoreWebsites called:', {
-        isLoadingMore,
-        hasMoreWebsites,
-        totalCount,
-        currentLength: allWebsites.length
-      })
-    }
-    
-    if (isLoadingMore || !hasMoreWebsites || !totalCount) {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Early return from loadMoreWebsites')
-      }
-      return
-    }
+    if (isLoadingMore || !hasMoreWebsites || !totalCount) return
     
     setIsLoadingMore(true)
     try {
-      const url = `/api/websites/paginated?offset=${allWebsites.length}&limit=24`
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Fetching from URL:', url)
-      }
-      
-      const response = await fetch(url)
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Response status:', response.status)
-      }
-      
+      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
       if (response.ok) {
         const data = await response.json()
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Received data:', {
-            websitesCount: data.websites.length,
-            hasMore: data.hasMore,
-            totalCount: data.totalCount
-          })
-        }
-        
-        setAllWebsites(prev => {
-          const newWebsites = [...prev, ...data.websites]
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Updated websites count:', newWebsites.length)
-          }
-          return newWebsites
-        })
+        setAllWebsites(prev => [...prev, ...data.websites])
         setHasMoreWebsites(data.hasMore && data.websites.length > 0)
-      } else {
-        console.error('Response not ok:', response.status, response.statusText)
       }
     } catch (error) {
       console.error('Failed to load more websites:', error)
@@ -137,20 +98,7 @@ export function WebsitesListWithSearch({
     const observer = new IntersectionObserver(
       entries => {
         const target = entries[0]
-        // Temporary debugging - remove after testing
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Intersection observer triggered:', {
-            isIntersecting: target.isIntersecting,
-            hasMoreWebsites,
-            isLoadingMore,
-            allWebsitesLength: allWebsites.length
-          })
-        }
-        
         if (target.isIntersecting && hasMoreWebsites && !isLoadingMore) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Loading more websites...')
-          }
           loadMoreWebsites()
         }
       },
@@ -163,13 +111,6 @@ export function WebsitesListWithSearch({
     const sentinel = sentinelRef.current
     if (sentinel) {
       observer.observe(sentinel)
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Sentinel element observed:', sentinel)
-      }
-    } else {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Sentinel element not found!')
-      }
     }
 
     return () => {
@@ -177,7 +118,7 @@ export function WebsitesListWithSearch({
         observer.unobserve(sentinel)
       }
     }
-  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites, allWebsites.length])
+  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
 
   // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
@@ -271,6 +212,20 @@ export function WebsitesListWithSearch({
           {/* Infinite Scroll Sentinel and Loading Indicator */}
           {!searchQuery.trim() && !showFavoritesOnly && (
             <>
+              {/* Temporary test button - remove after testing */}
+              <div className="mt-8 text-center">
+                <button
+                  onClick={loadMoreWebsites}
+                  disabled={isLoadingMore || !hasMoreWebsites}
+                  className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+                >
+                  {isLoadingMore ? 'Loading...' : 'Load More (Test)'}
+                </button>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Current: {allWebsites.length} / {totalCount} | Has More: {hasMoreWebsites ? 'Yes' : 'No'}
+                </p>
+              </div>
+
               {/* Scroll Sentinel for infinite scroll */}
               <div ref={sentinelRef} className="h-4" />
 
