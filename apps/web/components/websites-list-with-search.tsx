@@ -41,6 +41,7 @@ export function WebsitesListWithSearch({
   )
   const sentinelId = useId()
   const sentinelRef = useRef<HTMLDivElement>(null)
+  const isLoadingRef = useRef(false)
   const { trackSearch, trackSortChange } = useAnalyticsEvents()
   const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
 
@@ -49,8 +50,9 @@ export function WebsitesListWithSearch({
    * Loads 24 websites at a time for optimal performance
    */
   const loadMoreWebsites = useCallback(async () => {
-    if (isLoadingMore || !hasMoreWebsites || !totalCount) return
+    if (isLoadingRef.current || isLoadingMore || !hasMoreWebsites || !totalCount) return
 
+    isLoadingRef.current = true
     setIsLoadingMore(true)
     try {
       const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
@@ -62,7 +64,7 @@ export function WebsitesListWithSearch({
           totalCount: data.totalCount,
           currentLength: allWebsites.length
         })
-
+        
         setAllWebsites(prev => {
           const newWebsites = [...prev, ...data.websites]
           console.log('State Update:', {
@@ -78,6 +80,7 @@ export function WebsitesListWithSearch({
       console.error('Failed to load more websites:', error)
     } finally {
       setIsLoadingMore(false)
+      isLoadingRef.current = false
     }
   }, [allWebsites.length, hasMoreWebsites, totalCount, isLoadingMore])
 
@@ -132,6 +135,40 @@ export function WebsitesListWithSearch({
       if (sentinel) {
         observer.unobserve(sentinel)
       }
+    }
+  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
+
+  // Backup scroll event listener for fast scrolling
+  useEffect(() => {
+    if (!isClient || searchQuery.trim() || showFavoritesOnly || !hasMoreWebsites) return
+
+    const handleScroll = () => {
+      if (isLoadingRef.current || isLoadingMore || !hasMoreWebsites) return
+
+      const sentinel = sentinelRef.current
+      if (!sentinel) return
+
+      const rect = sentinel.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      
+      // If sentinel is within 500px of viewport, load more
+      if (rect.top <= windowHeight + 500) {
+        loadMoreWebsites()
+      }
+    }
+
+    // Throttle scroll events
+    let timeoutId: NodeJS.Timeout
+    const throttledHandleScroll = () => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(handleScroll, 100)
+    }
+
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('scroll', throttledHandleScroll)
+      clearTimeout(timeoutId)
     }
   }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
 
@@ -243,7 +280,7 @@ export function WebsitesListWithSearch({
               </div>
 
               {/* Scroll Sentinel for infinite scroll */}
-              <div ref={sentinelRef} className="h-4" />
+              <div ref={sentinelRef} className="h-8" />
 
               {/* Loading indicator */}
               {isLoadingMore && (
