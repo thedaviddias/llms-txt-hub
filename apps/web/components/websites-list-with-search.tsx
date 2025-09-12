@@ -40,6 +40,7 @@ export function WebsitesListWithSearch({
     totalCount ? initialWebsites.length < totalCount : false
   )
   const [isSearching, setIsSearching] = useState(false)
+  const [isSearchPending, setIsSearchPending] = useState(false)
   const [searchResults, setSearchResults] = useState<WebsiteMetadata[]>([])
   const [searchTotalCount, setSearchTotalCount] = useState(0)
   const isLoadingRef = useRef(false)
@@ -54,9 +55,11 @@ export function WebsitesListWithSearch({
     if (!query.trim()) {
       setSearchResults([])
       setSearchTotalCount(0)
+      setIsSearchPending(false)
       return
     }
 
+    setIsSearchPending(true)
     setIsSearching(true)
     try {
       const response = await fetch(
@@ -73,6 +76,7 @@ export function WebsitesListWithSearch({
       setSearchTotalCount(0)
     } finally {
       setIsSearching(false)
+      setIsSearchPending(false)
     }
   }, [])
 
@@ -128,12 +132,17 @@ export function WebsitesListWithSearch({
 
   // Debounced search effect
   useEffect(() => {
+    if (searchQuery.trim()) {
+      setIsSearchPending(true)
+    } else {
+      setIsSearchPending(false)
+      setSearchResults([])
+      setSearchTotalCount(0)
+    }
+
     const timeoutId = setTimeout(() => {
       if (searchQuery.trim()) {
         searchAllWebsites(searchQuery)
-      } else {
-        setSearchResults([])
-        setSearchTotalCount(0)
       }
     }, 300) // 300ms debounce
 
@@ -214,14 +223,17 @@ export function WebsitesListWithSearch({
 
       {/* Results Grid */}
       {filteredAndSortedWebsites.length === 0 ? (
-        searchQuery.trim() && isSearching ? (
+        searchQuery.trim() && (isSearchPending || isSearching) ? (
           <div className="flex flex-col items-center justify-center py-12">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mb-4" />
             <p className="text-sm text-muted-foreground">
-              Searching all {totalCount} websites for "{searchQuery}"...
+              {isSearching 
+                ? `Searching all ${totalCount} websites for "${searchQuery}"...`
+                : `Preparing search for "${searchQuery}"...`
+              }
             </p>
           </div>
-        ) : searchQuery.trim() && !isSearching ? (
+        ) : searchQuery.trim() && !isSearchPending && !isSearching ? (
           <EmptyState
             title="No results found"
             description={`No websites found matching "${searchQuery}". Try a different search term.`}
@@ -229,17 +241,15 @@ export function WebsitesListWithSearch({
             onAction={() => setSearchQuery('')}
           />
         ) : (
-          <EmptyState
-            title={emptyTitle}
-            description={emptyDescription}
-          />
+          <EmptyState title={emptyTitle} description={emptyDescription} />
         )
       ) : (
         <div>
           <h2 className="text-2xl font-semibold mb-6 sr-only">Websites</h2>
           {searchQuery && !isSearching && (
             <p className="text-sm text-muted-foreground mb-4">
-              Showing {filteredAndSortedWebsites.length} of {searchTotalCount} result{searchTotalCount !== 1 ? 's' : ''} for "{searchQuery}"
+              Showing {filteredAndSortedWebsites.length} of {searchTotalCount} result
+              {searchTotalCount !== 1 ? 's' : ''} for "{searchQuery}"
             </p>
           )}
 
