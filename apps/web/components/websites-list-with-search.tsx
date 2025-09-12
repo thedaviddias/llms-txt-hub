@@ -59,7 +59,9 @@ export function WebsitesListWithSearch({
 
     setIsSearching(true)
     try {
-      const response = await fetch(`/api/websites/search?q=${encodeURIComponent(query.trim())}&limit=100`)
+      const response = await fetch(
+        `/api/websites/search?q=${encodeURIComponent(query.trim())}&limit=100`
+      )
       if (response.ok) {
         const data = await response.json()
         setSearchResults(data.websites)
@@ -145,7 +147,7 @@ export function WebsitesListWithSearch({
     // If searching, use search results
     if (searchQuery.trim()) {
       let websites = [...searchResults]
-      
+
       // Apply favorites filter to search results
       if (showFavoritesOnly) {
         const favoriteSlugs = new Set(favoriteWebsites.map(w => w.slug))
@@ -212,24 +214,34 @@ export function WebsitesListWithSearch({
 
       {/* Results Grid */}
       {filteredAndSortedWebsites.length === 0 ? (
-        <EmptyState
-          title="No results found"
-          description={`No websites match "${searchQuery}". Try a different search or clear the filter.`}
-          actionLabel="Clear Filter"
-          onAction={() => setSearchQuery('')}
-        />
+        searchQuery.trim() && isSearching ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent mb-4" />
+            <p className="text-sm text-muted-foreground">
+              Searching all {totalCount} websites for "{searchQuery}"...
+            </p>
+          </div>
+        ) : searchQuery.trim() && !isSearching ? (
+          <EmptyState
+            title="No results found"
+            description={`No websites found matching "${searchQuery}". Try a different search term.`}
+            actionLabel="Clear Search"
+            onAction={() => setSearchQuery('')}
+          />
+        ) : (
+          <EmptyState
+            title={emptyTitle}
+            description={emptyDescription}
+          />
+        )
       ) : (
         <div>
           <h2 className="text-2xl font-semibold mb-6 sr-only">Websites</h2>
-                 <p className="text-sm text-muted-foreground mb-4">
-                   {searchQuery && (
-                     isSearching ? (
-                       `Searching all ${totalCount} websites for "${searchQuery}"...`
-                     ) : (
-                       `Showing ${filteredAndSortedWebsites.length} of ${searchTotalCount} result${searchTotalCount !== 1 ? 's' : ''} for "${searchQuery}"`
-                     )
-                   )}
-                 </p>
+          {searchQuery && !isSearching && (
+            <p className="text-sm text-muted-foreground mb-4">
+              Showing {filteredAndSortedWebsites.length} of {searchTotalCount} result{searchTotalCount !== 1 ? 's' : ''} for "{searchQuery}"
+            </p>
+          )}
 
           {/* Grid with Animation */}
           <div className="relative">
