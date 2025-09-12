@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useId, useMemo, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { EmptyState } from '@/components/empty-state'
 import { LLMGrid } from '@/components/llm/llm-grid'
@@ -40,60 +40,24 @@ export function WebsitesListWithSearch({
     totalCount ? initialWebsites.length < totalCount : false
   )
   const sentinelId = useId()
+  const sentinelRef = useRef<HTMLDivElement>(null)
   const { trackSearch, trackSortChange } = useAnalyticsEvents()
   const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
-  
-  // Debug initial state
-  useEffect(() => {
-    console.log('Component initialized:', {
-      initialWebsitesLength: initialWebsites.length,
-      totalCount,
-      hasMoreWebsites,
-      sentinelId
-    })
-  }, [])
 
   /**
    * Load more websites from the API when user scrolls to bottom
    * Loads 24 websites at a time for optimal performance
    */
   const loadMoreWebsites = useCallback(async () => {
-    console.log('loadMoreWebsites called:', {
-      isLoadingMore,
-      hasMoreWebsites,
-      totalCount,
-      currentLength: allWebsites.length
-    })
-
-    if (isLoadingMore || !hasMoreWebsites || !totalCount) {
-      console.log('Early return from loadMoreWebsites')
-      return
-    }
-
+    if (isLoadingMore || !hasMoreWebsites || !totalCount) return
+    
     setIsLoadingMore(true)
     try {
-      const url = `/api/websites/paginated?offset=${allWebsites.length}&limit=24`
-      console.log('Fetching from URL:', url)
-
-      const response = await fetch(url)
-      console.log('Response status:', response.status)
-
+      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
       if (response.ok) {
         const data = await response.json()
-        console.log('Received data:', {
-          websitesCount: data.websites.length,
-          hasMore: data.hasMore,
-          totalCount: data.totalCount
-        })
-
-        setAllWebsites(prev => {
-          const newWebsites = [...prev, ...data.websites]
-          console.log('Updated websites count:', newWebsites.length)
-          return newWebsites
-        })
+        setAllWebsites(prev => [...prev, ...data.websites])
         setHasMoreWebsites(data.hasMore && data.websites.length > 0)
-      } else {
-        console.error('Response not ok:', response.status, response.statusText)
       }
     } catch (error) {
       console.error('Failed to load more websites:', error)
@@ -129,34 +93,22 @@ export function WebsitesListWithSearch({
 
   // Intersection Observer for infinite scroll
   useEffect(() => {
-    if (!isClient || searchQuery.trim() || showFavoritesOnly) return
+    if (!isClient || searchQuery.trim() || showFavoritesOnly || !hasMoreWebsites) return
 
     const observer = new IntersectionObserver(
       entries => {
         const target = entries[0]
-        console.log('Intersection observer triggered:', {
-          isIntersecting: target.isIntersecting,
-          hasMoreWebsites,
-          isLoadingMore,
-          allWebsitesLength: allWebsites.length,
-          totalCount
-        })
-
         if (target.isIntersecting && hasMoreWebsites && !isLoadingMore) {
-          console.log('Loading more websites...')
           loadMoreWebsites()
         }
       },
       {
         threshold: 0.1,
-        rootMargin: '100px'
+        rootMargin: '200px'
       }
     )
 
-    // Create a sentinel element at the bottom of the list
-    const sentinel = document.getElementById(sentinelId)
-    console.log('Sentinel element:', sentinel, 'ID:', sentinelId)
-
+    const sentinel = sentinelRef.current
     if (sentinel) {
       observer.observe(sentinel)
     }
@@ -166,17 +118,7 @@ export function WebsitesListWithSearch({
         observer.unobserve(sentinel)
       }
     }
-  }, [
-    isClient,
-    searchQuery,
-    showFavoritesOnly,
-    hasMoreWebsites,
-    isLoadingMore,
-    loadMoreWebsites,
-    sentinelId,
-    allWebsites.length,
-    totalCount
-  ])
+  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
 
   // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
@@ -271,7 +213,7 @@ export function WebsitesListWithSearch({
           {!searchQuery.trim() && !showFavoritesOnly && (
             <>
               {/* Scroll Sentinel for infinite scroll */}
-              <div id={sentinelId} className="h-4" />
+              <div ref={sentinelRef} className="h-4" />
 
               {/* Loading indicator */}
               {isLoadingMore && (
