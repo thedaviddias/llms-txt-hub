@@ -31,10 +31,10 @@ export async function GET(request: Request) {
     )
 
     if (!query) {
-      return NextResponse.json({ 
-        websites: [], 
-        totalCount: 0, 
-        query: '' 
+      return NextResponse.json({
+        websites: [],
+        totalCount: 0,
+        query: ''
       } as SearchWebsitesResponse)
     }
 
@@ -54,10 +54,10 @@ export async function GET(request: Request) {
     const sortedWebsites = matchingWebsites.sort((a, b) => {
       const aNameMatch = a.name.toLowerCase().includes(searchQuery)
       const bNameMatch = b.name.toLowerCase().includes(searchQuery)
-      
+
       if (aNameMatch && !bNameMatch) return -1
       if (!aNameMatch && bNameMatch) return 1
-      
+
       // If both or neither match by name, sort by published date (newest first)
       return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
     })
