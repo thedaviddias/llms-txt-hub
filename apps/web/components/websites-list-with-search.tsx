@@ -1,7 +1,5 @@
 'use client'
-import { Button } from '@thedaviddias/design-system/button'
-import { ChevronDown } from 'lucide-react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useId, useMemo, useState } from 'react'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { EmptyState } from '@/components/empty-state'
 import { LLMGrid } from '@/components/llm/llm-grid'
@@ -33,57 +31,46 @@ export function WebsitesListWithSearch({
 }: WebsitesListWithSearchProps) {
   const [sortBy, setSortBy] = useState<'name' | 'latest'>('latest')
   const [searchQuery, setSearchQuery] = useState('')
-  const [showAll, setShowAll] = useState(false)
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(initialShowFavoritesOnly)
   const [isClient, setIsClient] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [allWebsites, setAllWebsites] = useState<WebsiteMetadata[]>(initialWebsites)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
-  const { trackSearch, trackSortChange, trackShowAll, trackShowLess } = useAnalyticsEvents()
+  const [hasMoreWebsites, setHasMoreWebsites] = useState(
+    totalCount ? initialWebsites.length < totalCount : false
+  )
+  const { trackSearch, trackSortChange } = useAnalyticsEvents()
   const { favoriteWebsites, hasFavorites } = useFavoritesFilter(allWebsites)
+  const sentinelId = useId()
 
   /**
-   * Load more websites from the API when user clicks "Show all"
-   * Continues loading until all websites are fetched
+   * Load more websites from the API when user scrolls to bottom
+   * Loads 24 websites at a time for optimal performance
    */
   const loadMoreWebsites = useCallback(async () => {
-    if (isLoadingMore || !totalCount || allWebsites.length >= totalCount) return
+    if (isLoadingMore || !hasMoreWebsites || !totalCount) return
 
     setIsLoadingMore(true)
     try {
-      let currentOffset = allWebsites.length
-      let hasMore = true
-
-      // Load in batches of 50 until we have all websites
-      while (hasMore && currentOffset < totalCount) {
-        const response = await fetch(`/api/websites/paginated?offset=${currentOffset}&limit=50`)
-        if (response.ok) {
-          const data = await response.json()
-          setAllWebsites(prev => [...prev, ...data.websites])
-
-          currentOffset += data.websites.length
-          hasMore = data.hasMore && data.websites.length > 0
-        } else {
-          hasMore = false
-        }
+      const response = await fetch(`/api/websites/paginated?offset=${allWebsites.length}&limit=24`)
+      if (response.ok) {
+        const data = await response.json()
+        setAllWebsites(prev => [...prev, ...data.websites])
+        setHasMoreWebsites(data.hasMore && data.websites.length > 0)
       }
     } catch (error) {
       console.error('Failed to load more websites:', error)
     } finally {
       setIsLoadingMore(false)
     }
-  }, [allWebsites.length, totalCount, isLoadingMore])
+  }, [allWebsites.length, hasMoreWebsites, totalCount, isLoadingMore])
 
   // Load state from localStorage on mount
   useEffect(() => {
     // Use requestAnimationFrame to load immediately after render
     requestAnimationFrame(() => {
-      const savedShowAll = localStorage.getItem('websites-show-all')
       const savedSortBy = localStorage.getItem('websites-sort-by')
 
-      if (savedShowAll !== null) {
-        setShowAll(JSON.parse(savedShowAll))
-      }
       if (savedSortBy !== null) {
         const parsedSortBy = JSON.parse(savedSortBy)
         if (parsedSortBy === 'name' || parsedSortBy === 'latest') {
@@ -96,19 +83,42 @@ export function WebsitesListWithSearch({
     })
   }, [])
 
-  // Save showAll state to localStorage when it changes
-  useEffect(() => {
-    if (isClient) {
-      localStorage.setItem('websites-show-all', JSON.stringify(showAll))
-    }
-  }, [showAll, isClient])
-
   // Save sortBy state to localStorage when it changes
   useEffect(() => {
     if (isClient) {
       localStorage.setItem('websites-sort-by', JSON.stringify(sortBy))
     }
   }, [sortBy, isClient])
+
+  // Intersection Observer for infinite scroll
+  useEffect(() => {
+    if (!isClient || searchQuery.trim() || showFavoritesOnly) return
+
+    const observer = new IntersectionObserver(
+      entries => {
+        const target = entries[0]
+        if (target.isIntersecting && hasMoreWebsites && !isLoadingMore) {
+          loadMoreWebsites()
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '100px'
+      }
+    )
+
+    // Create a sentinel element at the bottom of the list
+    const sentinel = document.getElementById(sentinelId)
+    if (sentinel) {
+      observer.observe(sentinel)
+    }
+
+    return () => {
+      if (sentinel) {
+        observer.unobserve(sentinel)
+      }
+    }
+  }, [isClient, searchQuery, showFavoritesOnly, hasMoreWebsites, isLoadingMore, loadMoreWebsites])
 
   // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
@@ -138,12 +148,9 @@ export function WebsitesListWithSearch({
     }
   }, [allWebsites, favoriteWebsites, showFavoritesOnly, sortBy, searchQuery])
 
-  // Calculate initial visible items and show more logic
+  // Calculate initial visible items for search results
   const itemsPerRow = 6 // Maximum columns on largest screens
   const initialVisibleItems = initialRows * itemsPerRow
-  const hasMoreToShow =
-    filteredAndSortedWebsites.length > initialVisibleItems && !searchQuery.trim()
-  const hasMoreWebsitesToLoad = totalCount ? allWebsites.length < totalCount : false
 
   if (initialWebsites.length === 0) {
     return (
@@ -195,57 +202,38 @@ export function WebsitesListWithSearch({
             >
               <LLMGrid
                 items={filteredAndSortedWebsites}
-                maxItems={searchQuery.trim() || showAll ? undefined : initialVisibleItems}
+                maxItems={searchQuery.trim() ? undefined : initialVisibleItems}
                 animateIn={!searchQuery.trim() && !isLoading}
-                className={`transition-all duration-500 ease-in-out ${
-                  !searchQuery.trim() && !showAll ? 'max-h-[800px] overflow-hidden' : ''
-                }`}
+                className="transition-all duration-500 ease-in-out"
               />
             </div>
-
-            {/* Gradient overlay when collapsed */}
-            {!showAll && !searchQuery.trim() && hasMoreToShow && (
-              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/80 to-transparent pointer-events-none transition-opacity duration-500" />
-            )}
           </div>
 
-          {/* Load All Button */}
-          {hasMoreToShow && (
-            <div
-              className={`mt-8 text-center transition-opacity duration-300 ${isLoading ? 'opacity-50' : 'opacity-100'}`}
-            >
-              <Button
-                onClick={async () => {
-                  if (!showAll) {
-                    // Track show all event
-                    trackShowAll('websites', filteredAndSortedWebsites.length, 'homepage-show-all')
+          {/* Infinite Scroll Sentinel and Loading Indicator */}
+          {!searchQuery.trim() && !showFavoritesOnly && (
+            <>
+              {/* Scroll Sentinel for infinite scroll */}
+              <div id={sentinelId} className="h-4" />
 
-                    // Load more websites if we don't have all of them yet
-                    if (hasMoreWebsitesToLoad) {
-                      await loadMoreWebsites()
-                    }
-                  } else {
-                    // Track show less event
-                    trackShowLess('homepage-show-less')
-                  }
-                  setShowAll(!showAll)
-                }}
-                variant="outline"
-                className="min-w-[200px] transition-all duration-300 hover:scale-105"
-                disabled={isLoading || isLoadingMore}
-              >
-                <ChevronDown
-                  className={`mr-2 h-4 w-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
-                />
-                {isLoadingMore
-                  ? 'Loading all websites...'
-                  : showAll
-                    ? 'Show less'
-                    : hasMoreWebsitesToLoad
-                      ? `Load all ${totalCount} websites`
-                      : 'Show all websites'}
-              </Button>
-            </div>
+              {/* Loading indicator */}
+              {isLoadingMore && (
+                <div className="mt-8 text-center">
+                  <div className="inline-flex items-center gap-2 text-muted-foreground">
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
+                    <span>Loading more websites...</span>
+                  </div>
+                </div>
+              )}
+
+              {/* End of results indicator */}
+              {!hasMoreWebsites && allWebsites.length > 0 && (
+                <div className="mt-8 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    You've reached the end! Showing all {allWebsites.length} websites.
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
