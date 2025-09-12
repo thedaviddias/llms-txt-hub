@@ -42,20 +42,6 @@ export function MembersList({
 
   const totalPages = Math.ceil(totalCount / 24)
 
-  // Update state when search params change
-  useEffect(() => {
-    const newSearchQuery = searchParams.get('search') || ''
-    const newPage = Number.parseInt(searchParams.get('page') || '1', 10)
-
-    if (newSearchQuery !== searchQuery || newPage !== currentPage) {
-      setSearchQuery(newSearchQuery)
-      setCurrentPage(newPage)
-
-      // Fetch new data
-      fetchMembers(newPage, newSearchQuery)
-    }
-  }, [searchParams, searchQuery, currentPage])
-
   /**
    * Fetch members from the API with pagination and search
    */
@@ -83,6 +69,21 @@ export function MembersList({
       setIsLoading(false)
     }
   }, [])
+
+  // Update state when search params change
+  useEffect(() => {
+    const newSearchQuery = searchParams.get('search') || ''
+    const newPage = Number.parseInt(searchParams.get('page') || '1', 10)
+
+    // Only update if the URL params are different from current state
+    if (newSearchQuery !== searchQuery || newPage !== currentPage) {
+      setSearchQuery(newSearchQuery)
+      setCurrentPage(newPage)
+
+      // Fetch new data
+      fetchMembers(newPage, newSearchQuery)
+    }
+  }, [searchParams, fetchMembers])
 
   /**
    * Navigate to a specific page
