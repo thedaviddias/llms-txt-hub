@@ -1,12 +1,13 @@
 'use client'
 
-import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@thedaviddias/auth'
+import { logger } from '@thedaviddias/logging'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { SubmitFormGuidelines } from './submit-form-guidelines'
 import { type Step1Data, type Step2Data, step1Schema, step2Schema } from './submit-form-schemas'
 import { SubmitFormStep1 } from './submit-form-step1'
@@ -97,12 +98,14 @@ export function SubmitForm() {
 
     try {
       // Get CSRF token from meta tag for API call
-      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]')
       const headers: Record<string, string> = {
         'Content-Type': 'application/json'
       }
-      if (csrfMetaTag?.content) {
+      if (csrfMetaTag instanceof HTMLMetaElement && csrfMetaTag.content) {
         headers['x-csrf-token'] = csrfMetaTag.content
+      } else {
+        logger.warn('CSRF token not found in meta tag')
       }
 
       const response = await fetch('/api/fetch-metadata', {
@@ -112,7 +115,8 @@ export function SubmitForm() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to fetch metadata')
+        const errorData = await response.json().catch(() => ({ error: 'Failed to fetch metadata' }))
+        throw new Error(errorData.error || `Failed to fetch metadata: ${response.status}`)
       }
 
       const result = await response.json()
@@ -172,8 +176,8 @@ export function SubmitForm() {
       const currentDate = new Date().toISOString().split('T')[0]
 
       // Get CSRF token from meta tag
-      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
-      if (csrfMetaTag?.content) {
+      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]')
+      if (csrfMetaTag instanceof HTMLMetaElement && csrfMetaTag.content) {
         formData.append('_csrf', csrfMetaTag.content)
       }
 
