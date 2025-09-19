@@ -836,6 +836,16 @@
     "publishedAt": "2025-06-10"
   },
   {
+    "name": "Farcaster MiniApps",
+    "domain": "https://miniapps.farcaster.xyz",
+    "description": "Learn to build and distribute apps to Farcaster users",
+    "llmsTxtUrl": "https://miniapps.farcaster.xyz/llms.txt",
+    "llmsFullTxtUrl": "https://miniapps.farcaster.xyz/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=miniapps.farcaster.xyz&sz=128",
+    "publishedAt": "2025-09-19"
+  },
+  {
     "name": "FastHTML",
     "domain": "https://fastht.ml",
     "description": "High-performance HTML templating engine",

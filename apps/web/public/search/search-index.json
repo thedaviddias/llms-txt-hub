@@ -3443,6 +3443,17 @@
     "llmsFullUrl": "https://www.vinfotech.com/llms-full.txt"
   },
   {
+    "name": "Farcaster MiniApps",
+    "description": "Learn to build and distribute apps to Farcaster users",
+    "url": "/farcaster-miniapps-llms-txt",
+    "content": "## Farcaster Mini Apps Development\n\nIntegrate your web applications to Farcaster, Farcaster is a sufficiently decentralize social network with native Web3 wallets on Ethereum and Solana.\n\n## About llms.txt Implementation\n\nOur llms.txt file provides comprehensive documentation about our platform's AI-ready content structure, making it easy for language models to understand and work with our system.",
+    "category": "developer-tools",
+    "slug": "farcaster-miniapps-llms-txt",
+    "website": "https://miniapps.farcaster.xyz",
+    "llmsUrl": "https://miniapps.farcaster.xyz/llms.txt",
+    "llmsFullUrl": "https://miniapps.farcaster.xyz/llms-full.txt"
+  },
+  {
     "name": "Fatos Militares",
     "description": "Fatos Militares seu site de Curiosidades Militares, Notícias Militares e conhecimento em geral sobre o Mundo Militar.",
     "url": "/fatos-militares-llms-txt",
