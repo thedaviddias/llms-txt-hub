@@ -4,10 +4,10 @@
  * Tests metadata extraction, URL validation, duplicate detection, and sanitization.
  */
 
-import { GET, POST } from '@/app/api/fetch-metadata/route'
-import { getWebsites } from '@/lib/content-loader'
 import * as cheerio from 'cheerio'
 import DOMPurify from 'isomorphic-dompurify'
+import { GET, POST } from '@/app/api/fetch-metadata/route'
+import { getWebsites } from '@/lib/content-loader'
 
 // Mock dependencies
 jest.mock('@/lib/content-loader')
@@ -238,13 +238,14 @@ describe('Fetch Metadata API Route', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
+      expect(data.error).toBe('Unable to reach website: Network error')
     })
 
     it('handles non-200 responses', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: false,
-        status: 404
+        status: 404,
+        statusText: 'Not Found'
       } as Response)
 
       const request = new Request('http://localhost/api/fetch-metadata', {
@@ -257,7 +258,7 @@ describe('Fetch Metadata API Route', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
+      expect(data.error).toBe('Website returned error: 404 Not Found')
     })
 
     it('sanitizes HTML content', async () => {
@@ -374,7 +375,7 @@ describe('Fetch Metadata API Route', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
+      expect(data.error).toBe('Cheerio load error')
     })
 
     it('handles DOMPurify errors', async () => {
@@ -398,7 +399,7 @@ describe('Fetch Metadata API Route', () => {
       const data = await response.json()
 
       expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
+      expect(data.error).toBe('DOMPurify error')
     })
   })
 })
