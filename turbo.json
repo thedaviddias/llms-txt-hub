@@ -51,6 +51,11 @@
       "cache": false,
       "dependsOn": ["^build"]
     },
+    "test:e2e:ci": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "env": ["CI", "NODE_ENV"]
+    },
     "test:e2e:smoke": {
       "cache": false
     },
