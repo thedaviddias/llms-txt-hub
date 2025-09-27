@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/thedaviddias-llms-txt-hub-badge.png)](https://mseep.ai/app/thedaviddias-llms-txt-hub)
+
 <div align="center">
 
 # llmx.txt hub
