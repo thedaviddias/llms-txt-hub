@@ -1,10 +1,10 @@
-import { type WebsiteMetadata, getWebsites } from '@/lib/content-loader'
 import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import DOMPurify from 'isomorphic-dompurify'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
 import validator from 'validator'
+import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 
 /**
  * Clean and sanitize a page title by removing common suffixes and special characters
@@ -39,13 +39,13 @@ async function fetchMetadata(url: string) {
     // Check for duplicate websites
     const existingWebsites = await getWebsites()
 
-    const normalizedNewUrl = normalizeUrl(url, {
-      stripProtocol: true,
-      stripWWW: true,
-      removeTrailingSlash: true,
-      removeQueryParameters: true
-    })
+    // Normalized URL not needed since we use toKey function below
 
+    /**
+     * Convert URL to a comparable key format
+     * @param u - The URL to convert
+     * @returns Object with hostname and path, or null if invalid
+     */
     const toKey = (u: string) => {
       try {
         const { hostname, pathname } = new URL(
@@ -77,9 +77,43 @@ async function fetchMetadata(url: string) {
     if (duplicateWebsite) {
       return { isDuplicate: true, existingWebsite: duplicateWebsite }
     }
-    // Fetch the main page
-    const response = await fetch(url)
-    const html = await response.text()
+    // Fetch the main page with proper error handling
+    let response: Response
+    try {
+      response = await fetch(url, {
+        headers: {
+          'User-Agent': 'llmstxthub/1.0 (https://llmstxthub.com)'
+        }
+      })
+    } catch (error) {
+      logger.error('Failed to fetch website', {
+        data: { url, error: error instanceof Error ? error.message : 'Unknown error' },
+        tags: { type: 'api', error_type: 'network_error' }
+      })
+      throw new Error(
+        `Unable to reach website: ${error instanceof Error ? error.message : 'Network error'}`
+      )
+    }
+
+    if (!response.ok) {
+      logger.error('Website returned error status', {
+        data: { url, status: response.status },
+        tags: { type: 'api', error_type: 'http_error' }
+      })
+      throw new Error(`Website returned error: ${response.status} ${response.statusText}`)
+    }
+
+    let html: string
+    try {
+      html = await response.text()
+    } catch (error) {
+      logger.error('Failed to read response body', {
+        data: { url, error: error instanceof Error ? error.message : 'Unknown error' },
+        tags: { type: 'api', error_type: 'parse_error' }
+      })
+      throw new Error('Failed to read website content')
+    }
+
     const $ = cheerio.load(html)
 
     // Extract and sanitize metadata
@@ -108,15 +142,39 @@ async function fetchMetadata(url: string) {
       .trim()
       .substring(0, 500) // Limit length
 
-    // Check for llms.txt
+    // Check for llms.txt - but don't let it crash the whole function
+    let llmsExists = false
     const llmsUrl = `${url}/llms.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsResponse = await fetch(llmsUrl)
-    const llmsExists = llmsResponse.ok
+    try {
+      const llmsResponse = await fetch(llmsUrl, {
+        headers: {
+          'User-Agent': 'llmstxthub/1.0 (https://llmstxthub.com)'
+        }
+      })
+      llmsExists = llmsResponse.ok
+    } catch (error) {
+      // It's ok if llms.txt doesn't exist or can't be fetched
+      logger.debug('Could not check llms.txt', {
+        data: { llmsUrl, error: error instanceof Error ? error.message : 'Unknown' }
+      })
+    }
 
-    // Check for llms-full.txt
+    // Check for llms-full.txt - but don't let it crash the whole function
+    let llmsFullExists = false
     const llmsFullUrl = `${url}/llms-full.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsFullResponse = await fetch(llmsFullUrl)
-    const llmsFullExists = llmsFullResponse.ok
+    try {
+      const llmsFullResponse = await fetch(llmsFullUrl, {
+        headers: {
+          'User-Agent': 'llmstxthub/1.0 (https://llmstxthub.com)'
+        }
+      })
+      llmsFullExists = llmsFullResponse.ok
+    } catch (error) {
+      // It's ok if llms-full.txt doesn't exist or can't be fetched
+      logger.debug('Could not check llms-full.txt', {
+        data: { llmsFullUrl, error: error instanceof Error ? error.message : 'Unknown' }
+      })
+    }
 
     return {
       isDuplicate: false,
@@ -129,8 +187,13 @@ async function fetchMetadata(url: string) {
       }
     }
   } catch (error) {
-    logger.error('Error fetching metadata:', { data: error, tags: { type: 'api' } })
-    throw new Error('Failed to fetch metadata')
+    // Re-throw with the actual error message for better debugging
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch metadata'
+    logger.error('Error in fetchMetadata:', {
+      data: { url, error: errorMessage },
+      tags: { type: 'api', error_type: 'fetch_metadata_error' }
+    })
+    throw error instanceof Error ? error : new Error(errorMessage)
   }
 }
 
@@ -173,8 +236,13 @@ export async function GET(request: Request) {
   try {
     const metadata = await fetchMetadata(domain)
     return NextResponse.json(metadata)
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch metadata'
+    logger.error('GET /api/fetch-metadata error', {
+      data: { domain, error: errorMessage },
+      tags: { type: 'api', method: 'GET' }
+    })
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
 
@@ -217,7 +285,12 @@ export async function POST(request: Request) {
 
     const metadata = await fetchMetadata(website)
     return NextResponse.json(metadata)
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch metadata'
+    logger.error('POST /api/fetch-metadata error', {
+      data: { error: errorMessage },
+      tags: { type: 'api', method: 'POST' }
+    })
+    return NextResponse.json({ error: errorMessage }, { status: 500 })
   }
 }
