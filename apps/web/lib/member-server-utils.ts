@@ -7,9 +7,22 @@ import { logger } from '@thedaviddias/logging'
 import { unstable_cache } from 'next/cache'
 import { hashSensitiveData } from '@/lib/server-crypto'
 
-const clerk = createClerkClient({
-  secretKey: process.env.CLERK_SECRET_KEY!
-})
+// Create Clerk client only if secret key is available
+let clerk: ReturnType<typeof createClerkClient> | null = null
+
+if (process.env.CLERK_SECRET_KEY) {
+  try {
+    clerk = createClerkClient({
+      secretKey: process.env.CLERK_SECRET_KEY
+    })
+  } catch (error) {
+    logger.warn('Failed to initialize Clerk client in member-server-utils:', { 
+      data: error, 
+      tags: { type: 'library' } 
+    })
+    clerk = null
+  }
+}
 
 export interface Member {
   id: string
@@ -177,9 +190,9 @@ export function generateDemoData(count: number): Member[] {
 export const getCachedMembers = unstable_cache(
   async (): Promise<Member[]> => {
     try {
-      // Check if Clerk is properly configured
-      if (!process.env.CLERK_SECRET_KEY) {
-        logger.warn('CLERK_SECRET_KEY not configured, using demo data')
+      // Check if Clerk client is available
+      if (!clerk) {
+        logger.warn('Clerk client not available, using demo data')
         return generateDemoData(200)
       }
 
