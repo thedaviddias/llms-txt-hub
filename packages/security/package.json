@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "isomorphic-dompurify": "^2.26.0",
-    "validator": "^13.15.15"
+    "validator": "^13.15.20"
   },
   "devDependencies": {
     "@types/validator": "^13.15.2",
