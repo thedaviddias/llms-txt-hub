@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@next/third-parties": "^15.5.2",
-    "next": "15.5.2",
+    "next": "15.5.7",
     "next-plausible": "*",
     "react": "^19.1.0",
     "server-only": "^0.0.1"
