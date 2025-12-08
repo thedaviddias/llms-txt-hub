@@ -58,7 +58,7 @@
     "gray-matter": "^4.0.3",
     "isomorphic-dompurify": "^2.26.0",
     "lucide-react": "^0.486.0",
-    "next": "15.5.2",
+    "next": "15.5.7",
     "next-mdx-remote": "^5.0.0",
     "next-themes": "^0.4.6",
     "normalize-url": "^8.0.1",
