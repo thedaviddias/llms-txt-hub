@@ -1,10 +1,9 @@
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import { BookOpen } from 'lucide-react'
 import type { Metadata } from 'next'
+import { EmptyState } from '@/components/empty-state'
 import { JsonLd } from '@/components/json-ld'
 import { GuideCard } from '@/components/sections/guide-card'
-import { Card } from '@/components/ui/card'
 import { type GuideMetadata, getGuides } from '@/lib/content-loader'
 import { generateGuideSchema } from '@/lib/schema'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
@@ -24,27 +23,6 @@ export const metadata: Metadata = generateBaseMetadata({
     'llms.txt best practices'
   ]
 })
-
-/**
- * Empty state component for when no guides are available
- */
-function EmptyState() {
-  return (
-    <Card className="p-12">
-      <div className="flex flex-col items-center justify-center text-center space-y-4">
-        <div className="size-16 rounded-full bg-muted flex items-center justify-center">
-          <BookOpen className="size-8 text-muted-foreground" />
-        </div>
-        <div className="space-y-2">
-          <h3 className="font-semibold text-lg">No guides yet</h3>
-          <p className="text-muted-foreground max-w-sm">
-            We're working on comprehensive guides to help you implement llms.txt. Check back soon!
-          </p>
-        </div>
-      </div>
-    </Card>
-  )
-}
 
 export default async function GuidesPage() {
   const guides = await getGuides()
@@ -83,7 +61,10 @@ export default async function GuidesPage() {
             </div>
           </section>
         ) : (
-          <EmptyState />
+          <EmptyState
+            title="No guides yet"
+            description="We're working on comprehensive guides to help you implement llms.txt. Check back soon!"
+          />
         )}
       </div>
     </div>

@@ -4,8 +4,24 @@ import { cn } from '../../lib/utils'
 
 /**
  * Card container component with hover effects
- * @param props - Component props extending div element
- * @returns Card container element
+ *
+ * @param props - Component props
+ * @param props.className - Optional CSS class names to apply
+ * @param props.rest - Additional props passed to the underlying div element (React.ComponentProps<'div'>)
+ *
+ * @returns JSX element rendering a styled card container with hover lift effect
+ *
+ * @example
+ * ```tsx
+ * <Card className="p-4">
+ *   <CardHeader>
+ *     <CardTitle>Card Title</CardTitle>
+ *   </CardHeader>
+ *   <CardContent>
+ *     <p>Card content goes here.</p>
+ *   </CardContent>
+ * </Card>
+ * ```
  */
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
   return (

@@ -102,7 +102,7 @@ function FeaturedNewsCard({ item }: { item: NewsItem }) {
   const domain = extractDomain(item.link)
 
   return (
-    <Card className="transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden animate-fade-in-up">
+    <Card className="group transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden animate-fade-in-up">
       <CardContent className="p-6 sm:p-8">
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between">
