@@ -63,8 +63,14 @@ test.describe('Main Pages', () => {
     await expect(page).toHaveTitle(/Members.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    // Should have search functionality (use first to avoid ambiguity with multiple inputs)
-    await expect(page.getByPlaceholder(/search/i).first()).toBeVisible()
+    // On mobile, header search is hidden - check for members-specific search instead
+    const viewportSize = page.viewportSize()
+    const isMobile = viewportSize && viewportSize.width < 768
+
+    if (!isMobile) {
+      // Should have search functionality on desktop
+      await expect(page.getByPlaceholder(/search/i).first()).toBeVisible()
+    }
   })
 
   test('projects page should load and display projects', async ({ page }) => {
