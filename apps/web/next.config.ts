@@ -1,4 +1,3 @@
-import { env } from '@/env'
 import { withContentCollections } from '@content-collections/next'
 import withMDX from '@next/mdx'
 import {
@@ -9,6 +8,7 @@ import {
 } from '@thedaviddias/config-next'
 import { withSentry } from '@thedaviddias/observability/next-config'
 import type { NextConfig } from 'next'
+import { env } from '@/env'
 
 export const INTERNAL_PACKAGES = [
   '@thedaviddias/design-system',
@@ -50,6 +50,11 @@ let nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
         pathname: '/u/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'icon.horse',
+        pathname: '/icon/**'
       }
     ]
   },

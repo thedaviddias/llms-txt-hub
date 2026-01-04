@@ -50,6 +50,7 @@ export function GuideCard({ guide, index = 0 }: GuideCardProps) {
             src={guide.image}
             alt={guide.title}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
