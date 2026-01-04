@@ -1,3 +1,7 @@
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import { Users } from 'lucide-react'
+import { Card } from '@/components/ui/card'
 import { getCachedMembers } from '@/lib/member-server-utils'
 import { MembersList } from './members-list'
 import { MembersSearch } from './members-search'
@@ -23,6 +27,29 @@ export async function generateMetadata() {
         'Join our growing community of developers and creators sharing their LLMs.txt files'
     }
   }
+}
+
+/**
+ * Empty state component for when no members are found
+ */
+function EmptyState({ searchQuery }: { searchQuery: string }) {
+  return (
+    <Card className="p-12">
+      <div className="flex flex-col items-center justify-center text-center space-y-4">
+        <div className="size-16 rounded-full bg-muted flex items-center justify-center">
+          <Users className="size-8 text-muted-foreground" />
+        </div>
+        <div className="space-y-2">
+          <h3 className="font-semibold text-lg">No members found</h3>
+          <p className="text-muted-foreground max-w-sm">
+            {searchQuery
+              ? `No members found matching "${searchQuery}". Try a different search term.`
+              : 'Be the first to join the community!'}
+          </p>
+        </div>
+      </div>
+    </Card>
+  )
 }
 
 export default async function MembersPage({
@@ -65,34 +92,41 @@ export default async function MembersPage({
   const initialMembers = filteredMembers.slice(startIndex, endIndex)
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Community Members</h1>
-        <p className="text-muted-foreground">
-          {searchQuery
-            ? `${initialMembers.length} of ${totalCount} members`
-            : `${totalCount} members and growing`}
-        </p>
-      </div>
+    <div className="container mx-auto py-8">
+      <div className="space-y-12">
+        <Breadcrumb items={[{ name: 'Members', href: '/members' }]} baseUrl={getBaseUrl()} />
 
-      {/* Client-side search */}
-      <MembersSearch />
+        {/* Header */}
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold tracking-tight flex items-center gap-3">
+            <span className="size-2 bg-primary rounded-full" />
+            Community Members
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            {searchQuery
+              ? `${initialMembers.length} of ${totalCount} members`
+              : `${totalCount} members and growing`}
+          </p>
+        </div>
 
-      {/* Members list with pagination */}
-      <div className="mt-8">
+        {/* Client-side search */}
+        <MembersSearch />
+
+        {/* Members list with pagination */}
         {initialMembers.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              {searchQuery ? `No members found matching "${searchQuery}"` : 'No members found'}
-            </p>
-          </div>
+          <EmptyState searchQuery={searchQuery} />
         ) : (
-          <MembersList
-            initialMembers={initialMembers}
-            initialTotalCount={totalCount}
-            initialPage={page}
-            initialSearchQuery={searchQuery}
-          />
+          <section className="space-y-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+              {searchQuery ? `Search Results (${totalCount})` : `All Members (${totalCount})`}
+            </h2>
+            <MembersList
+              initialMembers={initialMembers}
+              initialTotalCount={totalCount}
+              initialPage={page}
+              initialSearchQuery={searchQuery}
+            />
+          </section>
         )}
       </div>
     </div>

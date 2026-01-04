@@ -1,13 +1,14 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { getRoute } from '@/lib/routes'
-import type { Guide } from '@/types/types'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Book, GraduationCap } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Card, CardContent } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
+import type { Guide } from '@/types/types'
 
 interface GuideCardProps {
   guide: Guide
+  index?: number
 }
 
 /**
@@ -34,17 +35,26 @@ function getDifficultyColor(difficulty: Guide['difficulty']) {
  *
  * @param props - Component props
  * @param props.guide - The guide to display
+ * @param props.index - Optional index for staggered animations
  * @returns React component
  */
-export function GuideCard({ guide }: GuideCardProps) {
+export function GuideCard({ guide, index = 0 }: GuideCardProps) {
   return (
-    <Card className="transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden">
+    <Card
+      className="p-0 gap-0 transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden animate-fade-in-up group"
+      style={{ animationDelay: `${(index + 1) * 50}ms` }}
+    >
       {guide.image && (
-        <div className="relative aspect-video w-full">
-          <Image src={guide.image} alt={guide.title} fill className="object-cover" />
+        <div className="relative aspect-video w-full overflow-hidden">
+          <Image
+            src={guide.image}
+            alt={guide.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
         </div>
       )}
-      <CardContent className="space-y-1.5">
+      <CardContent className="p-4 space-y-2">
         <div className="flex items-center gap-1.5">
           <Badge variant="secondary" className={getDifficultyColor(guide.difficulty)}>
             {guide.difficulty}
@@ -54,7 +64,7 @@ export function GuideCard({ guide }: GuideCardProps) {
           <h3 className="font-semibold text-sm sm:text-base line-clamp-2">
             <Link
               href={getRoute('guides.guide', { slug: guide.slug })}
-              className="block after:absolute after:inset-0 after:content-[''] z-10"
+              className="block after:absolute after:inset-0 after:content-[''] z-10 hover:text-primary transition-colors"
             >
               {guide.title}
             </Link>
@@ -63,7 +73,7 @@ export function GuideCard({ guide }: GuideCardProps) {
             {guide.description}
           </p>
         </div>
-        <div className="flex items-center gap-1.5 pt-1">
+        <div className="flex items-center gap-1.5">
           {guide.category === 'getting-started' && (
             <Book className="size-4 text-muted-foreground" />
           )}
