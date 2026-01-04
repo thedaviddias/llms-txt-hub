@@ -182,14 +182,15 @@ export function generateDynamicMetadata(options: {
     image
   })
 
-  // Add article metadata for guides and news
-  if ((type === 'guide' || type === 'news') && publishedAt) {
+  // Add article metadata for guides, news, and websites
+  if ((type === 'guide' || type === 'news' || type === 'website') && publishedAt) {
     metadata.openGraph = {
       ...metadata.openGraph,
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: updatedAt || publishedAt,
-      authors: ['David Dias']
+      authors: type === 'website' ? ['llms.txt Hub'] : ['David Dias'],
+      section: type === 'website' ? 'AI Documentation' : undefined
     }
   }
 
