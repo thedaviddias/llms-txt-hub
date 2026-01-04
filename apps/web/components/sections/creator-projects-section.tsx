@@ -1,11 +1,11 @@
 'use client'
 
-import { Section } from '@/components/layout/section'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { ExternalLink, Github, Star } from 'lucide-react'
+import { Section } from '@/components/layout/section'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 
 interface Project {
   name: string
@@ -17,14 +17,14 @@ interface Project {
   featured?: boolean
 }
 
-// TODO: Update star counts quarterly - last updated: January 2025
+// TODO: Update star counts quarterly - last updated: January 2026
 const projects: Project[] = [
   {
     name: 'Front-End Checklist',
     description: 'The perfect Front-End Checklist for modern websites and meticulous developers.',
     url: 'https://frontendchecklist.io',
     githubUrl: 'https://github.com/thedaviddias/Front-End-Checklist',
-    stars: 71100,
+    stars: 71954,
     tags: ['Frontend', 'Checklist', 'Best Practices']
   },
   {
@@ -33,7 +33,7 @@ const projects: Project[] = [
       'Collection of UX patterns for everyone but specially towards developers who want to understand how to build effective UI components accessible and usable.',
     url: 'https://github.com/thedaviddias/ux-patterns-for-developers',
     githubUrl: 'https://github.com/thedaviddias/ux-patterns-for-developers',
-    stars: 111,
+    stars: 155,
     tags: ['UX', 'Design Patterns', 'Accessibility']
   },
   {
@@ -42,11 +42,16 @@ const projects: Project[] = [
       'A curated list of tools and resources for indie hackers, solo founders, and bootstrapped startups.',
     url: 'https://github.com/thedaviddias/indie-dev-toolkit',
     githubUrl: 'https://github.com/thedaviddias/indie-dev-toolkit',
-    stars: 180,
+    stars: 222,
     tags: ['Toolkit', 'Indie Hacking', 'Resources']
   }
 ]
 
+/**
+ * Section showcasing other open-source projects by the creator
+ *
+ * @returns Section component with project cards and GitHub follow CTA
+ */
 export function CreatorProjectsSection() {
   return (
     <Section

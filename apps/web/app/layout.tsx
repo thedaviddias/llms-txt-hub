@@ -44,7 +44,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <Footer />
                 </div>
                 <BackToTop />
-                <VercelToolbar />
+                {process.env.NODE_ENV === 'production' && <VercelToolbar />}
               </FavoritesProvider>
             </SentryUserProvider>
           </DesignSystemProvider>
