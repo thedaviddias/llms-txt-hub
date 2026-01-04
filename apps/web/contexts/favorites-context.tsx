@@ -189,10 +189,20 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
   return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>
 }
 
-export function useFavorites() {
+export function useFavorites(): FavoritesContextValue {
   const context = useContext(FavoritesContext)
+
+  // Return default values during SSR or if provider is not available
   if (!context) {
-    throw new Error('useFavorites must be used within a FavoritesProvider')
+    return {
+      favorites: [],
+      isFavorite: () => false,
+      addFavorite: () => {},
+      removeFavorite: () => {},
+      toggleFavorite: () => {},
+      isLoading: true
+    }
   }
+
   return context
 }

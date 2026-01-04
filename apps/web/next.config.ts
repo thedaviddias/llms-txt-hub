@@ -29,6 +29,13 @@ let nextConfig: NextConfig = {
 
   pageExtensions: ['mdx', 'ts', 'tsx'],
 
+  // Configure logging behavior
+  logging: {
+    fetches: {
+      fullUrl: env.NODE_ENV === 'development'
+    }
+  },
+
   // Configure Turbopack to support MDX and other extensions
   turbopack: {
     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json']
