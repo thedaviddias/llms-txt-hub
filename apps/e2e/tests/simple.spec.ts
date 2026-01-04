@@ -80,23 +80,29 @@ test.describe('Navigation Tests', () => {
     // Start at homepage
     await page.goto('/', { waitUntil: 'domcontentloaded' })
 
-    // Try to find and click a navigation link within nav element
-    const navLink = page
-      .locator('nav')
-      .locator('a[href*="/about"], a[href*="/guides"], a[href*="/websites"]')
-      .first()
+    // Check viewport to determine if we're on mobile
+    const viewportSize = page.viewportSize()
+    const isMobile = viewportSize && viewportSize.width < 768
 
-    if (await navLink.isVisible()) {
-      await navLink.click()
-      await page.waitForLoadState('domcontentloaded')
-
-      // Check we navigated away from homepage
-      const currentUrl = page.url()
-      expect(currentUrl).not.toBe('http://localhost:3000/')
-    } else {
-      // On mobile, navigation might be hidden - just verify page loaded
+    if (isMobile) {
+      // On mobile, navigation is hidden - just verify page loaded
       const bodyText = await page.textContent('body')
       expect(bodyText?.length).toBeGreaterThan(100)
+    } else {
+      // Click a visible navigation link in the header
+      const guidesLink = page.locator('header nav').getByRole('link', { name: 'Guides' })
+
+      if (await guidesLink.isVisible()) {
+        await guidesLink.click()
+        await page.waitForURL(/\/guides/)
+
+        // Check we navigated to guides page
+        expect(page.url()).toContain('/guides')
+      } else {
+        // Navigation link not visible, just verify page content
+        const bodyText = await page.textContent('body')
+        expect(bodyText?.length).toBeGreaterThan(100)
+      }
     }
   })
 })
