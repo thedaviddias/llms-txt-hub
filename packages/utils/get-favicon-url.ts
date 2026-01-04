@@ -1,10 +1,11 @@
 /**
- * Gets the favicon URL for a given website using Google's favicon service
+ * Gets the favicon URL for a given website using icon.horse service
+ * icon.horse returns generated letter icons for missing favicons (no 404s)
  * @param website - The website URL to get the favicon for
- * @param size - The size of the favicon (default: 32, max: 256)
- * @returns The favicon URL or placeholder if not found
+ * @param _size - The size parameter (unused - icon.horse auto-sizes)
+ * @returns The favicon URL or placeholder if invalid input
  */
-export function getFaviconUrl(website: string, size: number = 32) {
+export function getFaviconUrl(website: string, _size: number = 32) {
   try {
     if (!website || typeof website !== 'string') {
       console.warn('Invalid website URL provided to getFaviconUrl:', website)
@@ -14,10 +15,12 @@ export function getFaviconUrl(website: string, size: number = 32) {
     // Handle URLs that don't start with http:// or https://
     const normalizedUrl = website.startsWith('http') ? website : `https://${website}`
 
-    // Use the newer Google favicon API endpoint that works better
-    // Size can be 16, 32, 64, 128, or 256
-    const validSize = Math.min(Math.max(size, 16), 256)
-    return `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(normalizedUrl)}&size=${validSize}`
+    // Extract domain from URL
+    const domain = new URL(normalizedUrl).hostname
+
+    // Use icon.horse - returns generated letter icons for missing favicons
+    // This service doesn't rate limit and never returns 404s
+    return `https://icon.horse/icon/${domain}`
   } catch (error) {
     console.error(`Error getting favicon for ${website}:`, error)
     return '/placeholder.svg'
