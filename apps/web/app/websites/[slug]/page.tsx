@@ -3,15 +3,7 @@ import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
-import {
-  AlertTriangle,
-  Calendar,
-  ExternalLink,
-  FileText,
-  Globe,
-  Hash,
-  Info
-} from 'lucide-react'
+import { AlertTriangle, Calendar, ExternalLink, FileText, Globe, Hash, Info } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -28,6 +20,7 @@ import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/conte
 import { getRoute } from '@/lib/routes'
 import { generateWebsiteDetailSchema } from '@/lib/schema'
 import { generateAltText, generateDynamicMetadata, SITE_URL } from '@/lib/seo/seo-config'
+import { stripHtmlTags } from '@/lib/utils'
 
 interface ProjectPageProps {
   params: { slug: string }
@@ -241,7 +234,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         className="inline-flex items-center gap-1.5 py-1.5 px-3 text-muted-foreground"
                       >
                         <Calendar className="size-3.5" />
-                        Added {new Date(project.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        Added{' '}
+                        {new Date(project.publishedAt).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
                       </Badge>
                     )}
                   </div>
@@ -263,7 +261,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   </div>
                   <div>
                     <h2 className="text-xl font-bold">AI Documentation Files</h2>
-                    <p className="text-sm text-muted-foreground">Access the llms.txt files for this website</p>
+                    <p className="text-sm text-muted-foreground">
+                      Access the llms.txt files for this website
+                    </p>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-4">
@@ -293,33 +293,45 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <h2 className="text-xl font-bold">About {project.name}</h2>
                   </div>
                   <p className="text-muted-foreground leading-relaxed">
-                    {project.description} This platform provides AI-ready documentation through the
-                    llms.txt standard, making it easy for AI assistants to understand and interact
-                    with their services.
+                    {stripHtmlTags(project.description)} This platform provides AI-ready
+                    documentation through the llms.txt standard, making it easy for AI assistants to
+                    understand and interact with their services.
                   </p>
                 </div>
 
                 {/* Key Information Grid */}
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Category</span>
+                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Category
+                    </span>
                     <p className="text-base font-semibold capitalize">
                       {project.category ? project.category.replace(/-/g, ' ') : 'General'}
                     </p>
                   </div>
                   <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Type</span>
+                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Type
+                    </span>
                     <p className="text-base font-semibold">Website</p>
                   </div>
                   <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Documentation</span>
+                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Documentation
+                    </span>
                     <p className="text-base font-semibold">llms.txt compatible</p>
                   </div>
                   <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Added</span>
+                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                      Added
+                    </span>
                     <p className="text-base font-semibold">
                       {project.publishedAt
-                        ? new Date(project.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                        ? new Date(project.publishedAt).toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric'
+                          })
                         : 'Recently'}
                     </p>
                   </div>

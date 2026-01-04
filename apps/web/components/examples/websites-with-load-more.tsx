@@ -1,13 +1,14 @@
 'use client'
 
+import { Badge } from '@thedaviddias/design-system/badge'
+import Link from 'next/link'
 import { EmptyState } from '@/components/empty-state'
 import { Card } from '@/components/ui/card'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { WebsitesPaginatedGrid } from '@/components/ui/paginated-content'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { Badge } from '@thedaviddias/design-system/badge'
-import Link from 'next/link'
+import { stripHtmlTags } from '@/lib/utils'
 
 interface WebsitesWithLoadMoreProps {
   websites: WebsiteMetadata[]
@@ -60,7 +61,9 @@ export function WebsitesWithLoadMore({
                 </Badge>
               )}
             </div>
-            <p className="text-sm text-muted-foreground line-clamp-2">{website.description}</p>
+            <p className="text-sm text-muted-foreground line-clamp-2">
+              {stripHtmlTags(website.description)}
+            </p>
           </div>
         </div>
       </Card>
