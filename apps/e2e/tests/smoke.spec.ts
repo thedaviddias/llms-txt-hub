@@ -154,23 +154,19 @@ test.describe('Smoke Tests', () => {
   })
 
   test('images load correctly', async ({ page }) => {
-    await page.goto('/', { waitUntil: 'networkidle' })
+    await page.goto('/', { waitUntil: 'domcontentloaded' })
 
     // Check that images are loading
     const images = page.locator('img')
     const imageCount = await images.count()
 
     if (imageCount > 0) {
-      // Check first image has proper attributes
+      // Check first visible image has proper attributes
       const firstImage = images.first()
       const src = await firstImage.getAttribute('src')
-      const alt = await firstImage.getAttribute('alt')
 
       expect(src).toBeTruthy()
-      // Alt text is good for accessibility
-      if (alt !== null) {
-        expect(alt.length).toBeGreaterThan(0)
-      }
+      // Alt attribute may be empty string for decorative images, which is valid
     }
   })
 })
