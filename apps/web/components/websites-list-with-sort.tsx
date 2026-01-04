@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
+import { stripHtmlTags } from '@/lib/utils'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { ToggleGroup, ToggleGroupItem } from '@thedaviddias/design-system/toggle-group'
 import { Clock, SortAsc } from 'lucide-react'
@@ -93,7 +94,9 @@ export function WebsitesListWithSort({
               </Badge>
             )}
           </div>
-          <p className="text-sm text-muted-foreground line-clamp-2">{website.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {stripHtmlTags(website.description)}
+          </p>
         </div>
       </div>
     </Card>
@@ -157,7 +160,7 @@ export function WebsitesListWithSort({
       {sortedWebsites.length === 0 ? (
         emptyState
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 4xl:grid-cols-8 gap-4">
           {sortedWebsites.map(website => renderWebsite(website))}
         </div>
       )}

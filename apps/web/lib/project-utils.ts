@@ -1,14 +1,15 @@
 import type { WebsiteMetadata } from './content-loader'
 
 /**
- * Filters and returns featured projects, limited to 6 items
+ * Filters and returns featured projects, limited to 8 items
+ * Shows 6 on smaller screens, 8 on 4xl+ screens (handled via CSS)
  * @param projects - Array of website metadata objects
- * @returns Array of featured projects (max 6)
+ * @returns Array of featured projects (max 8)
  */
 export function getFeaturedProjects(projects: WebsiteMetadata[]): WebsiteMetadata[] {
-  // Get explicitly featured projects only, max 6
+  // Get explicitly featured projects only, max 8
   const featuredProjects = projects.filter(project => project.featured === true)
-  return featuredProjects.slice(0, 6)
+  return featuredProjects.slice(0, 8)
 }
 
 /**

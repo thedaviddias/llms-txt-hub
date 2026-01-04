@@ -8,7 +8,8 @@ interface FeaturedProjectsSectionProps {
 }
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
-  // Projects are already filtered and limited to 6 featured items
+  // Projects are already filtered and limited to 8 featured items
+  // Shows 6 on smaller screens, 8 on 4xl+ (handled via CSS in LLMGrid)
   return (
     <Section
       title="Featured Tools & Platforms"
@@ -16,7 +17,6 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
       viewAllHref={getRoute('category.page', { category: 'featured' })}
       viewAllText="All featured"
     >
-      {/* Show featured projects (max 6) */}
       {projects.length > 0 && <LLMGrid items={projects} />}
     </Section>
   )
