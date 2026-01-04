@@ -40,8 +40,14 @@ test.describe('Main Pages', () => {
     await expect(page).toHaveTitle(/Guides.*llms\.txt/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    // Verify main content area is visible
-    await expect(page.getByRole('main')).toBeVisible()
+    // Verify guides grid renders with cards
+    const guideCards = page.locator('article, [class*="Card"]')
+    await expect(guideCards.first()).toBeVisible({ timeout: 5000 })
+
+    // Verify at least one guide card has expected content
+    const firstCard = guideCards.first()
+    await expect(firstCard.getByRole('heading')).toBeVisible()
+    await expect(firstCard.getByRole('link')).toBeVisible()
   })
 
   test('websites page should load and display website list', async ({ page }) => {
