@@ -16,8 +16,12 @@ import { BackToTop } from '@/components/ui/back-to-top'
 import { FavoritesProvider } from '@/contexts/favorites-context'
 
 export const metadata: Metadata = {
-  title: 'llms.txt hub',
-  description: 'A curated hub for AI-ready documentation implementing the llms.txt standard',
+  title: {
+    default: 'llms.txt Hub - Directory of AI-Ready Documentation',
+    template: '%s | llms.txt Hub'
+  },
+  description:
+    'The largest directory of websites implementing the llms.txt standard. Find AI-ready documentation, browse llms.txt examples, and learn how to create your own llms.txt file.',
   metadataBase: new URL(getBaseUrl())
 }
 
@@ -44,7 +48,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <Footer />
                 </div>
                 <BackToTop />
-                <VercelToolbar />
+                {process.env.NODE_ENV === 'production' && <VercelToolbar />}
               </FavoritesProvider>
             </SentryUserProvider>
           </DesignSystemProvider>

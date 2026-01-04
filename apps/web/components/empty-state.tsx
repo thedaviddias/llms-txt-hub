@@ -5,11 +5,21 @@ import Link from 'next/link'
 interface EmptyStateProps {
   title: string
   description: string
-  actionLabel: string
+  actionLabel?: string
   actionHref?: string
   onAction?: () => void
 }
 
+/**
+ * Display an empty state with optional action button
+ * @param props - Component props
+ * @param props.title - The title to display
+ * @param props.description - The description text
+ * @param props.actionLabel - Optional label for the action button
+ * @param props.actionHref - Optional href for link-based action
+ * @param props.onAction - Optional click handler for button action
+ * @returns React component
+ */
 export function EmptyState({
   title,
   description,
@@ -22,9 +32,9 @@ export function EmptyState({
       <FolderOpen className="h-16 w-16 text-muted-foreground mb-4" />
       <h2 className="text-2xl font-bold mb-2">{title}</h2>
       <p className="text-muted-foreground mb-4 max-w-md">{description}</p>
-      {onAction ? (
+      {onAction && actionLabel ? (
         <Button onClick={onAction}>{actionLabel}</Button>
-      ) : actionHref ? (
+      ) : actionHref && actionLabel ? (
         <Button asChild>
           <Link href={actionHref}>{actionLabel}</Link>
         </Button>

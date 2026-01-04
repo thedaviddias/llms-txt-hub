@@ -1,3 +1,6 @@
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { Heart } from 'lucide-react'
+import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { JsonLd } from '@/components/json-ld'
 import { AppSidebar } from '@/components/layout/app-sidebar'
@@ -6,9 +9,6 @@ import { NewsletterSection } from '@/components/sections/newsletter-section'
 import { WebsitesListWithSearch } from '@/components/websites-list-with-search'
 import { getGuides } from '@/lib/content-loader'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { Heart } from 'lucide-react'
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Your Favorite Websites - llms.txt hub',
@@ -19,7 +19,7 @@ export const metadata: Metadata = generateBaseMetadata({
 })
 
 export default async function FavoritesPage() {
-  const { allProjects, featuredProjects } = await getHomePageData()
+  const { allProjects, featuredProjects, totalCount } = await getHomePageData()
   const featuredGuides = await getGuides()
 
   return (
@@ -58,7 +58,11 @@ export default async function FavoritesPage() {
             </div>
 
             {/* Favorites List with Search and Filters */}
-            <WebsitesListWithSearch initialWebsites={allProjects} initialShowFavoritesOnly={true} />
+            <WebsitesListWithSearch
+              initialWebsites={allProjects}
+              initialShowFavoritesOnly={true}
+              totalCount={totalCount}
+            />
 
             {/* Additional Sections */}
             <div className="mt-12 space-y-8">

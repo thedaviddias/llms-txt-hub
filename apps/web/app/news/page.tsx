@@ -1,7 +1,3 @@
-import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
-import { Card } from '@/components/ui/card'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { formatDate } from '@/lib/utils'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { logger } from '@thedaviddias/logging'
@@ -10,6 +6,10 @@ import { XMLParser } from 'fast-xml-parser'
 import { ExternalLink, Rss } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
+import { Card } from '@/components/ui/card'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import { formatDate } from '@/lib/utils'
 
 /**
  * Strips HTML tags from a string to create safe plain text
@@ -23,11 +23,18 @@ function stripHtmlTags(html: string): string {
 }
 
 export const metadata: Metadata = generateBaseMetadata({
-  title: 'Latest News',
+  title: 'llms.txt News & Updates - AI Documentation Standard Announcements',
   description:
-    'Stay updated with the latest news, updates, and announcements from the llms.txt community.',
+    'Stay updated with the latest llms.txt news, specification updates, and community announcements. Follow the evolution of the llms.txt standard for AI-ready documentation.',
   path: '/news',
-  keywords: ['news', 'updates', 'announcements', 'llms.txt community', 'latest']
+  keywords: [
+    'llms.txt news',
+    'llms.txt updates',
+    'llms.txt announcements',
+    'AI documentation news',
+    'llms.txt standard updates',
+    'llms.txt community'
+  ]
 })
 
 interface NewsItem {
@@ -37,6 +44,10 @@ interface NewsItem {
   description: string
 }
 
+/**
+ * Fetch news items from the RSS feed
+ * @returns Promise containing an array of news items
+ */
 async function getNewsItems(): Promise<{ items: NewsItem[] }> {
   try {
     // Always fetch directly from RSS feed on server

@@ -1,22 +1,24 @@
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
 import { JsonLd } from '@/components/json-ld'
 import { GuideCard } from '@/components/sections/guide-card'
 import { type GuideMetadata, getGuides } from '@/lib/content-loader'
 import { generateGuideSchema } from '@/lib/schema'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
 export const metadata: Metadata = generateBaseMetadata({
-  title: 'Developer Guides',
+  title: 'llms.txt Guides - How to Create & Implement llms.txt Files',
   description:
-    'Learn how to implement and use llms.txt effectively with our comprehensive developer guides and tutorials.',
+    'Step-by-step guides on how to create llms.txt files, implement the llms.txt standard, and optimize your documentation for AI. Tutorials for developers and content creators.',
   path: '/guides',
   keywords: [
+    'how to create llms.txt',
+    'llms.txt tutorial',
+    'llms.txt implementation guide',
+    'create llms.txt file',
     'llms.txt guides',
     'AI documentation tutorial',
-    'LLM implementation',
-    'developer guides',
-    'technical tutorials'
+    'llms.txt best practices'
   ]
 })
 
