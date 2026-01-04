@@ -21,7 +21,11 @@ export function formatDate(dateString: string): string {
 }
 
 /**
- * Format a date string to relative time (e.g., "2 days ago")
+ * Formats a date string to human-readable relative time using formatDistanceToNow.
+ * Returns 'Invalid date' for invalid input, preserving the current behavior.
+ *
+ * @param dateString - String representation of a date
+ * @returns string - Human-readable relative time (e.g., "2 days ago") or 'Invalid date' for invalid input
  */
 export function formatRelativeDate(dateString: string): string {
   const date = new Date(dateString)
@@ -32,7 +36,11 @@ export function formatRelativeDate(dateString: string): string {
 }
 
 /**
- * Extract domain from a URL
+ * Extracts the hostname from a URL string, removing the 'www.' prefix if present.
+ * Returns an empty string for invalid URLs or parse failures.
+ *
+ * @param url - The input URL or string to parse
+ * @returns string - The extracted domain (without 'www.') or empty string on parse failure
  */
 export function extractDomain(url: string): string {
   try {
