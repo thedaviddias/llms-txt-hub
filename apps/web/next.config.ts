@@ -41,6 +41,29 @@ let nextConfig: NextConfig = {
     resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json']
   },
 
+  // Webpack configuration to handle Node.js built-ins
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Don't resolve Node.js built-in modules on the client
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        crypto: false,
+        stream: false,
+        buffer: false,
+        util: false,
+        fs: false,
+        path: false,
+        'node:crypto': false,
+        'node:stream': false,
+        'node:buffer': false,
+        'node:util': false,
+        'node:fs': false,
+        'node:path': false
+      }
+    }
+    return config
+  },
+
   images: {
     remotePatterns: [
       {

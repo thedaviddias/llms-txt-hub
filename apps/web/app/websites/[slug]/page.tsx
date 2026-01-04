@@ -113,7 +113,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     }
 
     const breadcrumbItems = [
-      { name: 'Websites', href: getRoute('home') },
+      { name: 'Websites', href: getRoute('website.list') },
       { name: project.name, href: getRoute('website.detail', { slug: project.slug }) }
     ]
 
@@ -152,8 +152,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 <Section
                   title="Related Projects"
                   description="Discover similar websites implementing llms.txt"
-                  viewAllHref={getRoute('home')}
-                  viewAllText="Browse all"
+                  viewAllHref={getRoute('website.list')}
+                  viewAllText="Browse all websites"
                 >
                   <LLMGrid
                     items={project.relatedWebsites.slice(0, 3)}
