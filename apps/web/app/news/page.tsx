@@ -6,6 +6,7 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import { XMLParser } from 'fast-xml-parser'
 import { ArrowRight, ExternalLink, Newspaper, Rss } from 'lucide-react'
+import { EmptyState } from '@/components/empty-state'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -138,7 +139,6 @@ function FeaturedNewsCard({ item }: { item: NewsItem }) {
                     width={16}
                     height={16}
                     className="rounded-sm"
-                    unoptimized
                   />
                   <span className="text-sm text-muted-foreground">{domain}</span>
                 </>
@@ -201,32 +201,12 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
                 width={14}
                 height={14}
                 className="rounded-sm opacity-70"
-                unoptimized
               />
               <span className="text-xs text-muted-foreground">{domain}</span>
             </div>
           )}
         </div>
       </CardContent>
-    </Card>
-  )
-}
-
-/** Empty state component when no news items are available */
-function EmptyState() {
-  return (
-    <Card className="p-12">
-      <div className="flex flex-col items-center justify-center text-center space-y-4">
-        <div className="size-16 rounded-full bg-muted flex items-center justify-center">
-          <Newspaper className="size-8 text-muted-foreground" />
-        </div>
-        <div className="space-y-2">
-          <h3 className="font-semibold text-lg">No news yet</h3>
-          <p className="text-muted-foreground max-w-sm">
-            There are no news items available at the moment. Check back later for updates.
-          </p>
-        </div>
-      </div>
     </Card>
   )
 }
@@ -271,7 +251,18 @@ export default async function NewsPage() {
 
         {/* Content */}
         {items.length === 0 ? (
-          <EmptyState />
+          <Card className="p-12">
+            <EmptyState
+              title="No news yet"
+              description="There are no news items available at the moment. Check back later for updates."
+              icon={Newspaper}
+              className="h-auto"
+              iconContainerClassName="size-16 rounded-full bg-muted flex items-center justify-center mb-4"
+              iconClassName="size-8 mb-0"
+              titleClassName="text-lg font-semibold mb-0"
+              descriptionClassName="max-w-sm mb-0"
+            />
+          </Card>
         ) : (
           <div className="space-y-8">
             {/* Featured Article */}

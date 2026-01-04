@@ -1,6 +1,5 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { useSignIn, useSignUp, useUser } from '@clerk/nextjs'
 import { Button } from '@thedaviddias/design-system/button'
 import { Input } from '@thedaviddias/design-system/input'
@@ -10,6 +9,7 @@ import { CheckCircle, Github, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { Card } from '@/components/ui/card'
 
 /**
  * Sanitizes and validates a redirect URL to prevent open redirect vulnerabilities
@@ -257,12 +257,12 @@ export default function LoginPage() {
   if (user || isRedirecting) {
     return (
       <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12">
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 animate-pulse">
-            <CheckCircle className="h-8 w-8 text-primary" />
+        <div className="text-center space-y-4 animate-fade-in-up">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary text-primary-foreground">
+            <CheckCircle className="h-8 w-8" />
           </div>
-          <h2 className="text-xl font-semibold">Welcome to llms.txt hub!</h2>
-          <p className="text-sm text-muted-foreground">Redirecting you to the homepage...</p>
+          <h2 className="text-2xl font-bold tracking-tight">Welcome to llms.txt hub!</h2>
+          <p className="text-muted-foreground">Redirecting you to the homepage...</p>
         </div>
       </div>
     )
@@ -272,14 +272,14 @@ export default function LoginPage() {
   if (pendingVerification) {
     return (
       <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12">
-        <div className="w-full max-w-sm space-y-6">
-          <div className="text-center space-y-2">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/10 mb-4">
-              <CheckCircle className="h-6 w-6 text-green-500" />
+        <div className="w-full max-w-sm space-y-8 animate-fade-in-up">
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-green-500 text-white mb-2">
+              <Mail className="h-7 w-7" />
             </div>
-            <h2 className="text-2xl font-semibold">Check your email</h2>
-            <p className="text-sm text-muted-foreground">We sent a verification code to</p>
-            <p className="text-sm font-medium">{email}</p>
+            <h2 className="text-2xl font-bold tracking-tight">Check your email</h2>
+            <p className="text-muted-foreground">We sent a verification code to</p>
+            <p className="font-bold text-foreground">{email}</p>
           </div>
 
           <form onSubmit={handleVerifyCode} className="space-y-4">
@@ -289,7 +289,7 @@ export default function LoginPage() {
                 placeholder="000000"
                 value={verificationCode}
                 onChange={e => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                className="text-center text-2xl tracking-[0.75em] font-mono h-14"
+                className="text-center text-2xl tracking-[0.5em] font-mono h-14 rounded-none border-2 focus:border-foreground"
                 maxLength={6}
                 required
                 autoFocus
@@ -301,10 +301,10 @@ export default function LoginPage() {
 
             <Button
               type="submit"
-              className="w-full h-11"
+              className="w-full h-11 rounded-none font-bold"
               disabled={isLoading || verificationCode.length !== 6}
             >
-              {isLoading ? 'Verifying...' : 'Verify'}
+              {isLoading ? 'Verifying...' : 'Verify Code'}
             </Button>
 
             <button
@@ -315,9 +315,9 @@ export default function LoginPage() {
                 setError('')
                 setAuthMode(null)
               }}
-              className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors font-medium"
             >
-              Use Different Email
+              ← Use Different Email
             </button>
           </form>
         </div>
@@ -325,31 +325,41 @@ export default function LoginPage() {
     )
   }
 
-  // Main sign in/up form - Minimalist design
+  // Main sign in/up form - Minimal bold design
   return (
-    <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md space-y-6">
+    <div className="flex min-h-full flex-1 items-center justify-center px-4 py-12 relative">
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 -z-10">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
+            backgroundSize: '60px 60px'
+          }}
+        />
+      </div>
+
+      <div className="w-full max-w-md space-y-8 animate-fade-in-up">
         {/* Header */}
-        <div className="text-center space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight">Welcome to llms.txt hub</h1>
-          <p className="text-sm text-muted-foreground">
-            Join our community of developers building AI-ready documentation
-          </p>
+        <div className="text-center space-y-3">
+          <h1 className="text-3xl font-bold tracking-tight">Sign in to llms.txt hub</h1>
+          <p className="text-muted-foreground">Manage your submissions, favorites, and profile</p>
         </div>
 
         {/* Auth Tabs */}
         <Tabs defaultValue="github" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 h-12 p-1 bg-muted/30">
+          <TabsList className="grid w-full grid-cols-2 h-11 p-0 bg-transparent gap-2">
             <TabsTrigger
               value="github"
-              className="text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:text-muted-foreground transition-all"
+              className="rounded-none text-sm font-bold border border-border data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:border-foreground data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground transition-all h-full"
             >
               <Github className="mr-2 h-4 w-4" />
               GitHub
             </TabsTrigger>
             <TabsTrigger
               value="email"
-              className="text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm data-[state=inactive]:text-muted-foreground transition-all"
+              className="rounded-none text-sm font-bold border border-border data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=active]:border-foreground data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground transition-all h-full"
             >
               <Mail className="mr-2 h-4 w-4" />
               Email
@@ -358,136 +368,65 @@ export default function LoginPage() {
 
           {/* GitHub Tab */}
           <TabsContent value="github" className="mt-6 space-y-4">
-            <Card className="p-6 space-y-4 border-2">
-              <div className="space-y-2 text-sm">
-                <h3 className="font-semibold text-base">GitHub Authentication</h3>
-                <ul className="text-muted-foreground space-y-1">
-                  <li className="flex items-center gap-2">
-                    <svg
-                      className="w-3.5 h-3.5 text-green-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                      role="img"
-                      aria-label="Checkmark"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
+            <Card className="p-6 space-y-5 border-2 border-foreground/10">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Github className="h-5 w-5" />
+                  <h3 className="font-bold">GitHub Authentication</h3>
+                  <span className="ml-auto text-xs font-bold px-2 py-0.5 bg-primary/10 text-primary">
+                    Recommended
+                  </span>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                     Automated PR submissions
                   </li>
-                  <li className="flex items-center gap-2">
-                    <svg
-                      className="w-3.5 h-3.5 text-green-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                      role="img"
-                      aria-label="Checkmark"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                     Verified contributor badge
                   </li>
-                  <li className="flex items-center gap-2">
-                    <svg
-                      className="w-3.5 h-3.5 text-green-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                      role="img"
-                      aria-label="Checkmark"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                     Direct repository integration
                   </li>
                 </ul>
               </div>
 
-              <Button onClick={handleGitHubSignIn} className="w-full h-11" disabled={!signInLoaded}>
+              <Button
+                onClick={handleGitHubSignIn}
+                className="w-full h-11 rounded-none font-bold"
+                disabled={!signInLoaded}
+              >
                 <Github className="mr-2 h-4 w-4" />
-                Sign up with GitHub
+                Continue with GitHub
               </Button>
 
               <p className="text-xs text-center text-muted-foreground">
-                Connect your GitHub for enhanced features
+                Connect your GitHub for the full experience
               </p>
             </Card>
           </TabsContent>
 
           {/* Email Tab */}
           <TabsContent value="email" className="mt-6 space-y-4">
-            <Card className="p-6 space-y-4 border-2">
-              <div className="space-y-2 text-sm">
-                <h3 className="font-semibold text-base">Email Authentication</h3>
-                <ul className="text-muted-foreground space-y-1">
-                  <li className="flex items-center gap-2">
-                    <svg
-                      className="w-3.5 h-3.5 text-green-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                      role="img"
-                      aria-label="Checkmark"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
+            <Card className="p-6 space-y-5 border-2 border-foreground/10">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Mail className="h-5 w-5" />
+                  <h3 className="font-bold">Email Authentication</h3>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                     No password required
                   </li>
-                  <li className="flex items-center gap-2">
-                    <svg
-                      className="w-3.5 h-3.5 text-green-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                      role="img"
-                      aria-label="Checkmark"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                     Submit projects via form
                   </li>
-                  <li className="flex items-center gap-2">
-                    <svg
-                      className="w-3.5 h-3.5 text-green-500"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                      role="img"
-                      aria-label="Checkmark"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
                     Sync favorites across devices
                   </li>
                 </ul>
@@ -497,16 +436,16 @@ export default function LoginPage() {
                 <div className="space-y-2">
                   <Input
                     type="email"
-                    placeholder="Enter your email address"
+                    placeholder="you@example.com"
                     value={email}
                     onChange={e => {
                       setEmail(e.target.value)
-                      setError('') // Clear error on change
+                      setError('')
                     }}
                     required
                     disabled={isLoading}
                     autoFocus
-                    className="h-11"
+                    className="h-11 rounded-none border-2 focus:border-foreground"
                     aria-invalid={!!error}
                   />
                   {error && <p className="text-sm text-destructive">{error}</p>}
@@ -514,11 +453,11 @@ export default function LoginPage() {
 
                 <Button
                   type="submit"
-                  className="w-full h-11"
+                  className="w-full h-11 rounded-none font-bold"
                   disabled={isLoading || !signInLoaded || !signUpLoaded}
                 >
                   <Mail className="mr-2 h-4 w-4" />
-                  {isLoading ? 'Sending code...' : 'Sign up with Email'}
+                  {isLoading ? 'Sending code...' : 'Continue with Email'}
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
@@ -532,26 +471,31 @@ export default function LoginPage() {
         {/* Divider */}
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
+            <span className="w-full border-t border-border" />
           </div>
-          <div className="relative flex justify-center text-xs">
-            <span className="bg-background px-2 text-muted-foreground">OR</span>
+          <div className="relative flex justify-center">
+            <span className="bg-background px-3 text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              or
+            </span>
           </div>
         </div>
 
         {/* Alternative Actions */}
-        <div className="flex items-center justify-center gap-2 text-sm">
+        <div className="flex items-center justify-center gap-4 text-sm">
           <Link
             href="https://github.com/thedaviddias/llms-txt-hub"
-            className="text-muted-foreground hover:text-primary transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors font-medium"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Submit via GitHub
+            Submit via GitHub →
           </Link>
-          <span className="text-muted-foreground">•</span>
-          <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
-            Continue browsing
+          <span className="text-border">|</span>
+          <Link
+            href="/"
+            className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+          >
+            Continue browsing →
           </Link>
         </div>
       </div>

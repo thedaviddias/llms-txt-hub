@@ -34,7 +34,7 @@ export async function HeroSection() {
         <h1 className="animate-fade-in-up opacity-0 stagger-2 text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.1]">
           Welcome to{' '}
           <span className="whitespace-nowrap relative">
-            <span className="bg-gradient-to-r from-foreground via-foreground/80 to-foreground bg-clip-text">
+            <span className="bg-gradient-to-r from-foreground via-foreground/80 to-foreground bg-clip-text text-transparent">
               llms.txt hub
             </span>
           </span>
