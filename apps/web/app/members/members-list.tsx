@@ -166,19 +166,16 @@ export function MembersList({
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <nav
-          className="flex items-center justify-center space-x-1"
-          aria-label="Pagination Navigation"
-        >
+        <nav className="flex items-center justify-center gap-1" aria-label="Pagination Navigation">
           {/* Previous Button */}
           <button
             type="button"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 1 || isLoading}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500"
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors disabled:pointer-events-none disabled:opacity-50"
             aria-label="Go to previous page"
           >
-            <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Previous page</title>
               <path
                 strokeLinecap="round"
@@ -187,45 +184,47 @@ export function MembersList({
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Previous
+            <span className="hidden sm:inline">Previous</span>
           </button>
 
           {/* Page Numbers */}
-          {getPageNumbers().map((page, index) => (
-            <div key={index}>
-              {page === '...' ? (
-                <span className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border-t border-b border-gray-300">
-                  ...
-                </span>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => goToPage(page as number)}
-                  disabled={isLoading}
-                  className={`inline-flex items-center px-3 py-2 text-sm font-medium border-t border-b ${
-                    currentPage === page
-                      ? 'text-white bg-primary border-primary'
-                      : 'text-gray-500 bg-white border-gray-300 hover:bg-gray-50 hover:text-gray-700'
-                  } disabled:opacity-50 disabled:cursor-not-allowed`}
-                  aria-label={`Go to page ${page}`}
-                  aria-current={currentPage === page ? 'page' : undefined}
-                >
-                  {page}
-                </button>
-              )}
-            </div>
-          ))}
+          <div className="flex items-center gap-1">
+            {getPageNumbers().map((page, index) => (
+              <div key={index}>
+                {page === '...' ? (
+                  <span className="inline-flex size-9 items-center justify-center text-sm text-muted-foreground">
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => goToPage(page as number)}
+                    disabled={isLoading}
+                    className={`inline-flex size-9 items-center justify-center rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 ${
+                      currentPage === page
+                        ? 'bg-primary text-primary-foreground shadow-sm'
+                        : 'border border-input bg-background hover:bg-accent hover:text-accent-foreground'
+                    }`}
+                    aria-label={`Go to page ${page}`}
+                    aria-current={currentPage === page ? 'page' : undefined}
+                  >
+                    {page}
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
 
           {/* Next Button */}
           <button
             type="button"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages || isLoading}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-50 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-500"
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors disabled:pointer-events-none disabled:opacity-50"
             aria-label="Go to next page"
           >
-            Next
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span className="hidden sm:inline">Next</span>
+            <svg className="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <title>Next page</title>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
