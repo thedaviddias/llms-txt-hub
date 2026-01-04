@@ -6,25 +6,14 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import { XMLParser } from 'fast-xml-parser'
 import { ArrowRight, ExternalLink, Newspaper, Rss } from 'lucide-react'
-import { EmptyState } from '@/components/empty-state'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
+import { EmptyState } from '@/components/empty-state'
 import { Card, CardContent } from '@/components/ui/card'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { extractDomain, formatDate, formatRelativeDate } from '@/lib/utils'
-
-/**
- * Strips HTML tags from a string to create safe plain text
- *
- * @param html - The HTML string to sanitize
- * @returns Plain text with HTML tags removed
- */
-function stripHtmlTags(html: string): string {
-  if (!html) return ''
-  return html.replace(/<[^>]*>/g, '').trim()
-}
+import { extractDomain, formatDate, formatRelativeDate, stripHtmlTags } from '@/lib/utils'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'llms.txt News & Updates - AI Documentation Standard Announcements',

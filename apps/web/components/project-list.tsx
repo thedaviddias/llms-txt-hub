@@ -1,8 +1,9 @@
+import { Badge } from '@thedaviddias/design-system/badge'
+import Link from 'next/link'
 import { LLMButton } from '@/components/buttons/llm-button'
 import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { getRoute } from '@/lib/routes'
-import { Badge } from '@thedaviddias/design-system/badge'
-import Link from 'next/link'
+import { stripHtmlTags } from '@/lib/utils'
 
 interface ProjectListProps {
   items: Array<{
@@ -64,7 +65,9 @@ export function ProjectList({ items = [] }: ProjectListProps) {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {stripHtmlTags(item.description)}
+                    </p>
                   </div>
                 </div>
                 <div className="mt-2 flex items-center gap-2">
