@@ -5,6 +5,13 @@ import { useEffect, useRef } from 'react'
 /**
  * Animated background component with geometric grid pattern and floating particles
  * Features: CSS grid overlay, subtle particle animation, gradient orbs
+ *
+ * @returns JSX element containing layered background with grid, particles, and gradient orbs
+ *
+ * @example
+ * ```tsx
+ * <AnimatedBackground />
+ * ```
  */
 export function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -23,6 +30,23 @@ export function AnimatedBackground() {
     }
     setCanvasSize()
     window.addEventListener('resize', setCanvasSize)
+
+    /** Cached dark mode state to avoid DOM queries every frame */
+    let isDark = document.documentElement.classList.contains('dark')
+
+    /** Update cached dark mode state when theme changes */
+    const themeObserver = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        if (mutation.attributeName === 'class') {
+          isDark = document.documentElement.classList.contains('dark')
+        }
+      }
+    })
+
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
 
     /** Particle class for subtle floating dots animation */
     class Particle {
@@ -55,7 +79,6 @@ export function AnimatedBackground() {
 
       draw() {
         if (!ctx) return
-        const isDark = document.documentElement.classList.contains('dark')
         const rgb = isDark ? '255, 255, 255' : '0, 0, 0'
         ctx.fillStyle = `rgba(${rgb}, ${this.opacity})`
         ctx.beginPath()
@@ -90,6 +113,7 @@ export function AnimatedBackground() {
 
     return () => {
       window.removeEventListener('resize', setCanvasSize)
+      themeObserver.disconnect()
       cancelAnimationFrame(animationId)
     }
   }, [])
