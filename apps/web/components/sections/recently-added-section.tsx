@@ -7,7 +7,7 @@ interface RecentlyAddedSectionProps {
   maxItems?: number
 }
 
-export function RecentlyAddedSection({ websites, maxItems = 6 }: RecentlyAddedSectionProps) {
+export function RecentlyAddedSection({ websites, maxItems = 8 }: RecentlyAddedSectionProps) {
   if (!websites || websites.length === 0) {
     return null
   }
