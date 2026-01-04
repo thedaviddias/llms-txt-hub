@@ -8,6 +8,7 @@ import { FaviconWithFallback } from '@/components/ui/favicon-with-fallback'
 import { FavoriteButton } from '@/components/ui/favorite-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
+import { stripHtmlTags } from '@/lib/utils'
 
 interface LLMGridProps {
   items: WebsiteMetadata[]
@@ -85,7 +86,9 @@ export function LLMGrid({
                     </Badge>
                   )}
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground">{item.description}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  {stripHtmlTags(item.description)}
+                </p>
               </div>
               <div className="flex-shrink-0 ml-2">
                 <FavoriteButton slug={item.slug} size="sm" variant="ghost" />
@@ -103,7 +106,7 @@ export function LLMGrid({
         overrideGrid
           ? className
           : cn(
-              'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4',
+              'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 4xl:grid-cols-8 gap-4',
               className
             )
       }
@@ -112,6 +115,8 @@ export function LLMGrid({
         if (!item?.slug) return null
 
         const isVisible = !maxItems || index < maxItems
+        // Hide items 7 and 8 (index 6, 7) on screens smaller than 4xl
+        const isExtraItem = index >= 6
 
         return (
           <div
@@ -120,7 +125,8 @@ export function LLMGrid({
               'transition-all duration-300 ease-out',
               isVisible ? 'scale-100' : 'scale-95 absolute pointer-events-none',
               animateIn && isVisible && 'animate-fade-in-up opacity-0',
-              animateIn && isVisible && getStaggerClass(index)
+              animateIn && isVisible && getStaggerClass(index),
+              isExtraItem && 'hidden 4xl:block'
             )}
           >
             <Card className="p-4 relative h-full group">
@@ -153,7 +159,7 @@ export function LLMGrid({
                     )}
                   </div>
                   <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
-                    {item.description}
+                    {stripHtmlTags(item.description)}
                   </p>
                 </div>
               </div>
