@@ -126,7 +126,7 @@ export function LLMGrid({
               isVisible ? 'scale-100' : 'scale-95 absolute pointer-events-none',
               animateIn && isVisible && 'animate-fade-in-up opacity-0',
               animateIn && isVisible && getStaggerClass(index),
-              isExtraItem && 'hidden 4xl:block'
+              isExtraItem && isVisible && 'hidden 4xl:block'
             )}
           >
             <Card className="p-4 relative h-full group">
