@@ -1,12 +1,12 @@
 'use client'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { GithubStars } from '@/components/stats/github-stars'
-import { useSearch } from '@/hooks/use-search'
-import { getRoute } from '@/lib/routes'
 import { useAuth } from '@thedaviddias/auth'
 import { Menu, Search, UserPlus } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { GithubStars } from '@/components/stats/github-stars'
+import { useSearch } from '@/hooks/use-search'
+import { getRoute } from '@/lib/routes'
 import { NavLink } from './header-nav-link'
 import { DesktopSearchForm, MobileSearchOverlay } from './header-search'
 import { UserDropdownMenu } from './header-user-menu'
@@ -131,7 +131,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-background border-b">
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
         <div className="w-full px-4 sm:px-6 h-16 flex 2xl:grid 2xl:grid-cols-3 items-center justify-between 2xl:justify-center gap-3 sm:gap-4">
           {/* Logo + Menu - Left */}
           <div className="flex items-center gap-2">
@@ -146,10 +146,12 @@ export function Header() {
             </button>
             <Link
               href={getRoute('home')}
-              className="text-lg font-semibold whitespace-nowrap plausible-event-name=External+Link+Click"
+              className="group text-lg font-bold whitespace-nowrap tracking-tight plausible-event-name=External+Link+Click"
             >
-              <span className="inline">llms.txt</span>
-              <span className="inline ml-1">hub</span>
+              <span className="inline transition-colors">llms.txt</span>
+              <span className="inline ml-1 text-muted-foreground group-hover:text-foreground transition-colors">
+                hub
+              </span>
             </Link>
           </div>
 
@@ -202,7 +204,7 @@ export function Header() {
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-lg text-sm font-medium py-1.5 px-3 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors plausible-event-name=Login"
+                className="inline-flex items-center justify-center rounded-none text-sm font-bold h-9 px-4 bg-foreground text-background hover:bg-foreground/90 transition-all duration-200 press-effect plausible-event-name=Login"
                 aria-label="Sign up"
                 title="Sign up"
               >

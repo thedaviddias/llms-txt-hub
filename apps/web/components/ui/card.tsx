@@ -1,16 +1,28 @@
-import { cn } from '@/lib/utils'
 import * as DesignSystemCard from '@thedaviddias/design-system/card'
+import { cn } from '@/lib/utils'
 
 // Custom Card components with consistent styling
 
 /**
  * Custom Card component with consistent styling
+ * Features: Square corners, subtle lift on hover, smooth transitions
  *
  * @param props - Card component props
  * @returns Card component
  */
 export function Card({ className, ...props }: React.ComponentProps<typeof DesignSystemCard.Card>) {
-  return <DesignSystemCard.Card className={cn('rounded-none', className)} {...props} />
+  return (
+    <DesignSystemCard.Card
+      className={cn(
+        'rounded-none border-border/50',
+        'transition-all duration-300 ease-out',
+        'hover:shadow-xl hover:-translate-y-1 hover:border-foreground/15',
+        'dark:hover:shadow-foreground/5',
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
 /**

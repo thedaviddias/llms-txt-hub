@@ -21,13 +21,14 @@ interface LLMGridProps {
 
 /**
  * Grid component for displaying LLM/website items with favorites functionality
+ * Features: Staggered fade-in animations, hover lift effects, responsive grid
  */
 export function LLMGrid({
   items = [],
   variant = 'default',
   className,
   maxItems,
-  animateIn = false,
+  animateIn = true,
   analyticsSource,
   overrideGrid = false
 }: LLMGridProps) {
@@ -35,14 +36,29 @@ export function LLMGrid({
     return null
   }
 
+  /**
+   * Get stagger animation class based on index (capped at 8)
+   * @param index - The item index
+   * @returns The stagger class name
+   */
+  const getStaggerClass = (index: number) => {
+    const staggerIndex = Math.min(index, 7) + 1
+    return `stagger-${staggerIndex}`
+  }
+
   if (variant === 'compact') {
     return (
       <div className={cn('space-y-4', className)}>
-        {items.map(item => {
+        {items.map((item, index) => {
           if (!item?.slug) return null
           return (
             <div
-              className="flex items-center gap-3 p-2 sm:p-2.5 rounded-lg hover:bg-muted/50 transition-colors relative"
+              className={cn(
+                'flex items-center gap-3 p-2 sm:p-2.5 rounded-lg transition-all duration-200 relative',
+                'hover:bg-muted/50 hover:translate-x-1',
+                animateIn && 'animate-fade-in-up opacity-0',
+                animateIn && getStaggerClass(index)
+              )}
               key={item.slug}
             >
               <FaviconWithFallback website={item.website} name={item.name} size={32} />
@@ -101,16 +117,13 @@ export function LLMGrid({
           <div
             key={item.slug}
             className={cn(
-              'transition-all duration-500 ease-in-out transform',
-              isVisible
-                ? 'opacity-100 scale-100'
-                : 'opacity-0 scale-95 absolute pointer-events-none'
+              'transition-all duration-300 ease-out',
+              isVisible ? 'scale-100' : 'scale-95 absolute pointer-events-none',
+              animateIn && isVisible && 'animate-fade-in-up opacity-0',
+              animateIn && isVisible && getStaggerClass(index)
             )}
-            style={{
-              transitionDelay: animateIn && isVisible ? `${Math.min(index * 30, 600)}ms` : '0ms'
-            }}
           >
-            <Card className="p-4 transition-all hover:border-primary hover:bg-muted/50 relative h-full">
+            <Card className="p-4 relative h-full group">
               <div className="space-y-1.5">
                 <div className="space-y-1.5 sm:space-y-2">
                   <div className="flex items-start justify-between">
@@ -118,7 +131,7 @@ export function LLMGrid({
                     <FavoriteButton slug={item.slug} size="sm" variant="default" />
                   </div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold text-xs sm:text-sm md:text-base truncate">
+                    <h3 className="font-bold text-xs sm:text-sm md:text-base truncate">
                       <Link
                         href={getRoute('website.detail', { slug: item.slug })}
                         className="block after:absolute after:inset-0 after:content-[''] z-10"

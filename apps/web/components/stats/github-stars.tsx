@@ -6,11 +6,18 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 type StarsProps = {
-  variant?: 'default' | 'small'
   mobileCompact?: boolean
 }
 
-export const GithubStars = ({ variant = 'default', mobileCompact = false }: StarsProps) => {
+/**
+ * GitHub stars badge component with minimal bold styling
+ * Features: Square corners, bold typography, hover effects
+ *
+ * @param props - Component props
+ * @param props.mobileCompact - Whether to show compact version on mobile
+ * @returns GitHub stars badge link component
+ */
+export const GithubStars = ({ mobileCompact = false }: StarsProps) => {
   const [stars, setStars] = useState<number | null>(null)
 
   useEffect(() => {
@@ -19,64 +26,59 @@ export const GithubStars = ({ variant = 'default', mobileCompact = false }: Star
       .then(data => setStars(data.stargazers_count))
   }, [])
 
+  // Loading state
   if (stars === null) {
     if (mobileCompact) {
       return (
-        <div className="inline-flex items-center gap-1 py-1.5 px-2 text-sm font-medium text-muted-foreground sm:gap-1.5 sm:px-3 sm:py-1.5 sm:bg-white dark:sm:bg-neutral-900 sm:text-neutral-900 dark:sm:text-neutral-100 sm:rounded-lg sm:border sm:border-neutral-400 dark:sm:border-neutral-700 opacity-70">
-          <SiGithub className="w-4 h-4 hidden sm:block" aria-hidden="true" />
-          <span className="sm:inline-flex sm:items-center sm:px-1.5 sm:py-0.5 sm:rounded sm:bg-neutral-100 dark:sm:bg-neutral-700 sm:text-neutral-900 dark:sm:text-neutral-100 inline-flex items-center gap-0.5">
-            <StarIcon className="w-4 h-4" aria-hidden="true" />
-            <span className="w-6 h-4 bg-neutral-300 dark:bg-neutral-600 rounded animate-pulse" />
-          </span>
+        <div className="inline-flex items-center gap-2 h-9 px-3 text-sm font-bold text-muted-foreground sm:bg-secondary sm:text-foreground sm:rounded-none sm:border sm:border-border opacity-70">
+          <SiGithub className="size-4" aria-hidden="true" />
+          <StarIcon className="size-3.5" aria-hidden="true" />
+          <span className="w-6 h-4 bg-muted-foreground/20 animate-pulse" />
         </div>
       )
     }
 
     return (
-      <div className="flex items-center justify-center gap-2">
-        <div className="inline-flex items-center gap-2 px-2 py-1 bg-white dark:bg-neutral-900 text-sm font-medium text-neutral-900 dark:text-neutral-100 rounded-lg border border-neutral-400 dark:border-neutral-700 opacity-70">
-          <SiGithub className="w-4 h-4" aria-hidden="true" />
-          <span className="inline-flex items-center px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
-            <StarIcon className="w-4 h-4 mr-1" aria-hidden="true" />
-            <span className="w-8 h-4 bg-neutral-300 dark:bg-neutral-600 rounded animate-pulse" />
-          </span>
+      <div className="flex items-center justify-center">
+        <div className="inline-flex items-center gap-2 h-9 px-3 bg-secondary text-sm font-bold text-foreground rounded-none border border-border opacity-70">
+          <SiGithub className="size-4" aria-hidden="true" />
+          <StarIcon className="size-3.5" aria-hidden="true" />
+          <span className="w-8 h-4 bg-muted-foreground/20 animate-pulse tabular-nums" />
         </div>
       </div>
     )
   }
 
+  // Mobile compact variant
   if (mobileCompact) {
     return (
       <Link
         href="https://github.com/thedaviddias/llms-txt-hub"
         target="_blank"
         rel="noopener noreferrer"
-        className="!no-underline plausible-event-name=Star+GitHub inline-flex items-center gap-1 py-1.5 px-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors sm:gap-1.5 sm:px-3 sm:py-1.5 sm:bg-white dark:sm:bg-neutral-900 sm:hover:bg-neutral-100 dark:sm:hover:bg-neutral-800 sm:text-neutral-900 dark:sm:text-neutral-100 sm:rounded-lg sm:border sm:border-neutral-400 dark:sm:border-neutral-700 sm:focus:outline-none sm:focus:ring-2 sm:focus:ring-offset-2 sm:focus:ring-neutral-200 dark:sm:focus:ring-neutral-700"
+        className="!no-underline plausible-event-name=Star+GitHub inline-flex items-center gap-2 h-9 px-3 text-sm font-bold text-muted-foreground hover:text-foreground sm:bg-secondary hover:sm:bg-accent sm:text-foreground sm:rounded-none sm:border sm:border-border hover:sm:border-foreground/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         aria-label="Star on GitHub"
       >
-        <SiGithub className="w-4 h-4 hidden sm:block" aria-hidden="true" />
-        <span className="sm:inline-flex sm:items-center sm:px-1.5 sm:py-0.5 sm:rounded sm:bg-neutral-100 dark:sm:bg-neutral-700 sm:text-neutral-900 dark:sm:text-neutral-100 inline-flex items-center gap-0.5">
-          <StarIcon className="w-4 h-4" aria-hidden="true" />
-          <span className="text-xs sm:text-sm">{stars}</span>
-        </span>
+        <SiGithub className="size-4" aria-hidden="true" />
+        <StarIcon className="size-3.5" aria-hidden="true" />
+        <span className="tabular-nums">{stars}</span>
       </Link>
     )
   }
 
+  // Default variant
   return (
-    <div className="flex items-center justify-center gap-2">
+    <div className="flex items-center justify-center">
       <Link
         href="https://github.com/thedaviddias/llms-txt-hub"
         target="_blank"
         rel="noopener noreferrer"
-        className="!no-underline plausible-event-name=Star+GitHub inline-flex items-center gap-2 px-2 py-1 bg-white dark:bg-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-sm font-medium text-neutral-900 dark:text-neutral-100 rounded-lg border border-neutral-400 dark:border-neutral-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-200 dark:focus:ring-neutral-700"
+        className="!no-underline plausible-event-name=Star+GitHub inline-flex items-center gap-2 h-9 px-3 bg-secondary hover:bg-accent text-sm font-bold text-foreground rounded-none border border-border hover:border-foreground/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         aria-label="Star on GitHub"
       >
-        <SiGithub className="w-4 h-4" aria-hidden="true" />
-        <span className="inline-flex items-center px-2 py-0.5 rounded bg-neutral-100 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100">
-          <StarIcon className="w-4 h-4 mr-1" aria-hidden="true" />
-          {stars}
-        </span>
+        <SiGithub className="size-4" aria-hidden="true" />
+        <StarIcon className="size-3.5" aria-hidden="true" />
+        <span className="tabular-nums">{stars}</span>
       </Link>
     </div>
   )

@@ -1,10 +1,10 @@
 'use client'
 
-import { useFavorites } from '@/contexts/favorites-context'
 import { useAuth } from '@thedaviddias/auth'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { Heart } from 'lucide-react'
 import { useState } from 'react'
+import { useFavorites } from '@/contexts/favorites-context'
 
 interface FavoriteButtonProps {
   slug: string
@@ -13,6 +13,15 @@ interface FavoriteButtonProps {
   variant?: 'default' | 'ghost'
 }
 
+/**
+ * Favorite button component with heart icon and animation
+ * @param props - Component props
+ * @param props.slug - Unique identifier for the item to favorite
+ * @param props.className - Additional CSS classes
+ * @param props.size - Button size variant
+ * @param props.variant - Visual style variant
+ * @returns A button to toggle favorite status
+ */
 export function FavoriteButton({
   slug,
   className,
@@ -25,6 +34,7 @@ export function FavoriteButton({
 
   const favorited = isFavorite(slug)
 
+  /** Handle click to toggle favorite status with animation */
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
@@ -51,7 +61,7 @@ export function FavoriteButton({
   }
 
   const baseClasses = cn(
-    'relative flex items-center justify-center rounded-full transition-all duration-200 z-20 cursor-pointer group',
+    'relative flex items-center justify-center rounded-full transition-all duration-200 z-20 cursor-pointer group/favorite',
     'hover:scale-110 will-change-transform transform-gpu',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     sizeClasses[size],
@@ -86,7 +96,7 @@ export function FavoriteButton({
           iconSizeClasses[size],
           favorited
             ? 'fill-red-500 text-red-500 dark:fill-red-400 dark:text-red-400'
-            : 'text-muted-foreground group-hover:text-red-400 dark:group-hover:text-red-500',
+            : 'text-muted-foreground group-hover/favorite:text-red-400 dark:group-hover/favorite:text-red-500',
           isAnimating && 'scale-125'
         )}
         style={{

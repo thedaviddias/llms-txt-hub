@@ -1,19 +1,20 @@
-import { ModeToggle } from '@/components/mode-toggle'
-import { getRoute } from '@/lib/routes'
 import { SiGithub, SiReddit, SiX } from '@icons-pack/react-simple-icons'
 import Link from 'next/link'
+import { ModeToggle } from '@/components/mode-toggle'
+import { getRoute } from '@/lib/routes'
 
 /**
  * Footer component with site navigation and external links
+ * Features: Bold typography, refined spacing, clean layout
  */
 export function Footer() {
   return (
-    <footer className="border-t py-8 md:py-12">
+    <footer className="border-t border-border/50 py-12 md:py-16 bg-muted/30">
       <h2 className="sr-only">Footer</h2>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
-          <div className="space-y-3 md:col-span-2">
-            <h3 className="font-semibold">llms.txt hub</h3>
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-8 md:gap-12">
+          <div className="space-y-4 md:col-span-2">
+            <h3 className="font-bold text-lg tracking-tight">llms.txt hub</h3>
             <p className="text-sm text-muted-foreground">
               Discover AI-ready documentation and explore websites implementing the proposed{' '}
               <a
@@ -25,37 +26,35 @@ export function Footer() {
                 llms.txt standard.
               </a>
             </p>
-            <div className="flex space-x-4 my-6">
+            <div className="flex items-center gap-1 my-6">
               <ModeToggle />
-              <div className="flex space-x-4">
-                <Link
-                  href="https://github.com/thedaviddias/llms-txt-hub"
-                  className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=GitHub plausible-event-source=Footer"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiGithub className="h-5 w-5" />
-                  <span className="sr-only">GitHub</span>
-                </Link>
-                <Link
-                  href="https://www.reddit.com/r/llmstxt/"
-                  className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=Reddit plausible-event-source=Footer"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiReddit className="h-5 w-5" />
-                  <span className="sr-only">Reddit</span>
-                </Link>
-                <Link
-                  href="https://x.com/llmstxthub"
-                  className="hover:text-foreground plausible-event-name=Social+Link+Click plausible-event-platform=Twitter plausible-event-source=Footer"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiX className="h-5 w-5" />
-                  <span className="sr-only">X (Twitter)</span>
-                </Link>
-              </div>
+              <Link
+                href="https://github.com/thedaviddias/llms-txt-hub"
+                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors plausible-event-name=Social+Link+Click plausible-event-platform=GitHub plausible-event-source=Footer"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SiGithub className="size-5" />
+                <span className="sr-only">GitHub</span>
+              </Link>
+              <Link
+                href="https://www.reddit.com/r/llmstxt/"
+                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors plausible-event-name=Social+Link+Click plausible-event-platform=Reddit plausible-event-source=Footer"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SiReddit className="size-5" />
+                <span className="sr-only">Reddit</span>
+              </Link>
+              <Link
+                href="https://x.com/llmstxthub"
+                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors plausible-event-name=Social+Link+Click plausible-event-platform=Twitter plausible-event-source=Footer"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SiX className="size-5" />
+                <span className="sr-only">X (Twitter)</span>
+              </Link>
             </div>
             <a
               title="Install llms-txt Raycast Extension"
@@ -74,7 +73,9 @@ export function Footer() {
           </div>
           <div className="md:col-span-4 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h4 className="font-medium mb-3">Directory</h4>
+              <h4 className="font-bold text-sm uppercase tracking-wider text-muted-foreground mb-4">
+                Directory
+              </h4>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
@@ -119,7 +120,9 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-3">Features</h4>
+              <h4 className="font-bold text-sm uppercase tracking-wider text-muted-foreground mb-4">
+                Features
+              </h4>
               <ul className="space-y-2 text-sm">
                 {/* <li>
                   <Link href={getRoute('llmsTxt')} className="hover:text-foreground">
@@ -137,7 +140,9 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-3">Resources</h4>
+              <h4 className="font-bold text-sm uppercase tracking-wider text-muted-foreground mb-4">
+                Resources
+              </h4>
               <ul className="space-y-2 text-sm">
                 <li>
                   <Link
@@ -175,13 +180,15 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-8 pt-6 border-t flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <div>© {new Date().getFullYear()} llms.txt hub. All rights reserved.</div>
+        <div className="mt-12 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
+          <div className="font-medium">
+            © {new Date().getFullYear()} llms.txt hub. All rights reserved.
+          </div>
           <div className="mt-4 md:mt-0">
             Made with ❤️ by{' '}
             <a
               href="https://thedaviddias.com"
-              className="font-bold underline dark:text-gray-300 plausible-event-name=External+Link+Click"
+              className="font-bold text-foreground hover:underline transition-colors plausible-event-name=External+Link+Click"
               target="_blank"
               rel="noopener noreferrer"
             >

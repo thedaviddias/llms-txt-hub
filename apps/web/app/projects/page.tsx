@@ -1,14 +1,15 @@
-import { GitHubProjectCard } from '@/components/github/github-project-card'
-import { Card } from '@/components/ui/card'
-import { type GitHubProject, fetchGitHubProjects } from '@/lib/github'
-import { getRoute } from '@/lib/routes'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
+import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import { Code, ExternalLink, Star } from 'lucide-react'
+import { ArrowRight, ExternalLink, Github, Plus, Star } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { GitHubProjectCard } from '@/components/github/github-project-card'
+import { Card, CardContent } from '@/components/ui/card'
+import { fetchGitHubProjects, type GitHubProject } from '@/lib/github'
+import { getRoute } from '@/lib/routes'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Open Source Projects',
@@ -42,21 +43,25 @@ export default async function ProjectsPage() {
 
   // Featured project is the one with most stars
   const featuredProject = sortedProjects[0]
+  const remainingProjects = sortedProjects.slice(1)
 
   return (
     <div className="container mx-auto py-8">
       <div className="space-y-12">
         <Breadcrumb items={[{ name: 'Projects', href: '/projects' }]} baseUrl={getBaseUrl()} />
 
-        <div className="space-y-4">
-          <h1 className="text-4xl font-bold">Open Source Projects</h1>
-          <p className="text-lg text-muted-foreground">
+        {/* Header */}
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold tracking-tight flex items-center gap-3">
+            <span className="size-2 bg-primary rounded-full" />
+            Open Source Projects
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-3xl">
             Discover open-source projects, tools, and libraries implementing the llms.txt standard.
-            <br />
-            To list your project here, add either the{' '}
+            Add the{' '}
             <Link
               href="https://github.com/topics/llms-txt"
-              className="underline hover:text-primary"
+              className="font-medium text-foreground underline underline-offset-4 hover:text-primary transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -65,100 +70,104 @@ export default async function ProjectsPage() {
             or{' '}
             <Link
               href="https://github.com/topics/llmstxt"
-              className="underline hover:text-primary"
+              className="font-medium text-foreground underline underline-offset-4 hover:text-primary transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >
               llmstxt
             </Link>{' '}
-            topic to your GitHub repository.
+            topic to your GitHub repository to be listed.
           </p>
         </div>
 
         {/* Featured Project */}
         {featuredProject && (
-          <section className="space-y-4">
-            <h2 className="text-2xl font-semibold">Featured Project</h2>
-            <Card className="p-6">
-              <article className="space-y-6">
+          <Card className="transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden animate-fade-in-up">
+            <CardContent className="p-6 sm:p-8">
+              <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
+                  <Badge variant="secondary" className="bg-primary/10 text-primary">
+                    Most Starred
+                  </Badge>
+                  <div className="flex items-center gap-1.5 text-sm font-medium">
+                    <Star className="size-4 fill-yellow-500 text-yellow-500" />
+                    <span className="tabular-nums">{featuredProject.stars.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <Code className="size-6" />
-                    <h3 className="text-2xl font-bold">
+                    <Github className="size-6" />
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
                       <Link
                         href={featuredProject.url}
-                        className="hover:underline"
+                        className="hover:text-primary transition-colors block after:absolute after:inset-0 after:content-[''] z-10"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         {featuredProject.fullName}
-                        <ExternalLink className="inline-block ml-2 h-5 w-5" />
                       </Link>
-                    </h3>
+                    </h2>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="size-4" />
-                    <span>{featuredProject.stars}</span>
-                  </div>
+                  <p className="text-muted-foreground">{featuredProject.description}</p>
                 </div>
-                <p className="text-lg text-muted-foreground">{featuredProject.description}</p>
-                <div className="flex items-center gap-2">
-                  <Button asChild>
-                    <Link href={featuredProject.url} target="_blank" rel="noopener noreferrer">
-                      View Project
-                      <ExternalLink className="ml-2 size-4" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link
-                      href="https://github.com/topics/llms-txt"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Browse All Projects
-                      <ExternalLink className="ml-2 size-4" />
-                    </Link>
-                  </Button>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <span className="text-sm font-medium text-primary flex items-center gap-1">
+                    View project
+                    <ArrowRight className="size-4" />
+                  </span>
                 </div>
-              </article>
-            </Card>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* All Projects Grid */}
+        {remainingProjects.length > 0 && (
+          <section className="space-y-6">
+            <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+              All Projects ({remainingProjects.length})
+            </h2>
+            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {remainingProjects.map((project, index) => (
+                <GitHubProjectCard key={project.fullName} project={project} index={index} />
+              ))}
+            </div>
           </section>
         )}
 
-        {/* All Projects */}
-        <section className="space-y-6">
-          <h2 className="text-2xl font-semibold">All Projects</h2>
-          <div className="grid gap-6">
-            {sortedProjects.slice(1).map(project => (
-              <GitHubProjectCard key={project.fullName} project={project} />
-            ))}
-          </div>
-        </section>
-
         {/* Submit Project CTA */}
-        <section className="rounded-lg bg-muted p-8 text-center">
-          <div className="mx-auto max-w-2xl space-y-4">
-            <h2 className="text-2xl font-bold">Have a Project to Share?</h2>
-            <p className="text-muted-foreground">
-              Add the 'llms-txt' topic to your GitHub repository to have it listed here.
-            </p>
-            <div className="flex justify-center gap-4">
-              <Button asChild>
-                <Link
-                  href="https://github.com/topics/llms-txt"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Browse GitHub Topic
-                  <ExternalLink className="ml-2 size-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href={getRoute('submit')}>Submit Project</Link>
-              </Button>
+        <Card className="border-dashed">
+          <CardContent className="p-8 text-center">
+            <div className="mx-auto max-w-2xl space-y-4">
+              <div className="size-12 rounded-full bg-muted flex items-center justify-center mx-auto">
+                <Plus className="size-6 text-muted-foreground" />
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight">Have a Project to Share?</h2>
+              <p className="text-muted-foreground">
+                Add the{' '}
+                <code className="px-1.5 py-0.5 bg-muted rounded text-sm font-mono">llms-txt</code>{' '}
+                topic to your GitHub repository to have it listed here automatically.
+              </p>
+              <div className="flex justify-center gap-3 pt-2">
+                <Button asChild className="rounded-none h-9 font-bold">
+                  <Link
+                    href="https://github.com/topics/llms-txt"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Browse GitHub Topic
+                    <ExternalLink className="ml-2 size-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild className="rounded-none h-9 font-bold">
+                  <Link href={getRoute('submit')}>Submit Website</Link>
+                </Button>
+              </div>
             </div>
-          </div>
-        </section>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

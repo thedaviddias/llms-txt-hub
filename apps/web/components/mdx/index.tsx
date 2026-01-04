@@ -68,7 +68,7 @@ export const components: MDXComponents = {
     alt,
     ...props
   }: { className?: string; alt: string } & React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // biome-ignore lint/a11y/useAltText: <explanation>
+    // biome-ignore lint/performance/noImgElement: MDX images need standard img for dynamic src
     <img className={cn('rounded-md', className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,
@@ -100,17 +100,28 @@ export const components: MDXComponents = {
   ),
   pre: ({ className, ...props }) => (
     <pre
-      className={cn('mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4', className)}
-      {...props}
-    />
-  ),
-  code: ({ className, ...props }) => (
-    <code
       className={cn(
-        'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm',
+        'mb-4 mt-6 overflow-x-auto rounded-none border border-border/50 bg-[#0a0a0a] p-4 text-sm',
+        '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-[#e5e5e5]',
+        '[&_span]:!bg-transparent', // Remove inline span backgrounds for cleaner look
         className
       )}
       {...props}
     />
-  )
+  ),
+  code: ({ className, ...props }) => {
+    // Check if this is inline code (not inside a pre block)
+    const isInline = !className?.includes('language-')
+
+    return (
+      <code
+        className={cn(
+          'font-mono text-sm',
+          isInline && 'relative rounded-sm bg-muted/80 px-1.5 py-0.5 text-foreground',
+          className
+        )}
+        {...props}
+      />
+    )
+  }
 }
