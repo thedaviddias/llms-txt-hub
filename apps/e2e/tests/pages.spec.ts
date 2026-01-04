@@ -116,9 +116,8 @@ test.describe('Main Pages', () => {
       const faviconImages = page.locator('img[src*="icon.horse"], img[alt=""]').first()
       await expect(faviconImages).toBeVisible()
 
-      // Verify article timestamps render as relative dates
+      // Verify article timestamps render with content
       const timestampText = await page.locator('time').first().textContent()
-      const relativeTimePattern = /(ago|hour|minute|day|yesterday|second|week|month|year|just now)/i
 
       // Check if it's a relative time or an absolute date (both are valid)
       expect(timestampText).toBeTruthy()
