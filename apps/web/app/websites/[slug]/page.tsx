@@ -1,26 +1,18 @@
-import { Alert, AlertDescription, AlertTitle } from '@thedaviddias/design-system/alert'
-import { Badge } from '@thedaviddias/design-system/badge'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
-import { AlertTriangle, Calendar, ExternalLink, FileText, Globe, Hash, Info } from 'lucide-react'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import { LLMButton } from '@/components/buttons/llm-button'
 import { JsonLd } from '@/components/json-ld'
 import { Section } from '@/components/layout/section'
 import { LLMGrid } from '@/components/llm/llm-grid'
-import { components } from '@/components/mdx'
 import { ProjectNavigation } from '@/components/project-navigation'
 import { ToolsSection } from '@/components/sections/tools-section'
-import { FavoriteButton } from '@/components/ui/favorite-button'
+import { WebsiteContentSection } from '@/components/website/website-content-section'
+import { WebsiteError } from '@/components/website/website-error'
+import { WebsiteHero } from '@/components/website/website-hero'
+import { WebsiteLLMsSection } from '@/components/website/website-llms-section'
 import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { generateWebsiteDetailSchema } from '@/lib/schema'
-import { generateAltText, generateDynamicMetadata, SITE_URL } from '@/lib/seo/seo-config'
-import { stripHtmlTags } from '@/lib/utils'
+import { generateDynamicMetadata, SITE_URL } from '@/lib/seo/seo-config'
 
 interface ProjectPageProps {
   params: { slug: string }
@@ -68,8 +60,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       description: seoDescription.length > 160 ? project.description : seoDescription,
       slug: project.slug,
       additionalKeywords: keywords,
-      publishedAt: project.publishedAt,
-      updatedAt: project.updatedAt
+      publishedAt: project.publishedAt
     })
   } catch (_error) {
     return {
@@ -131,213 +122,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <JsonLd data={generateWebsiteDetailSchema(project, SITE_URL)} />
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-border/50 bg-gradient-to-b from-muted/30 via-background to-background">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:32px_32px]" />
-            <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 blur-[100px]" />
-          </div>
-
-          <div className="container mx-auto px-6 py-8 md:py-12">
-            {/* Breadcrumb - stagger 1 */}
-            <div className="animate-fade-in-up opacity-0 stagger-1 mb-8 max-w-4xl mx-auto">
-              <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
-            </div>
-
-            {/* Main Hero Content */}
-            <div className="animate-fade-in-up opacity-0 stagger-2 max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
-                {/* Favicon/Logo */}
-                <div className="flex-shrink-0">
-                  <Link
-                    href={project.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative block"
-                  >
-                    <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100" />
-                    <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-card p-3 shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                      {/* biome-ignore lint/performance/noImgElement: favicon from external URL */}
-                      <img
-                        src={getFaviconUrl(project.website, 128) || '/placeholder.svg'}
-                        alt={generateAltText('favicon', project.name)}
-                        width={72}
-                        height={72}
-                        className="rounded-xl"
-                      />
-                    </div>
-                  </Link>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 space-y-4">
-                  <div className="flex flex-wrap items-start justify-between gap-4">
-                    <div className="space-y-3">
-                      {/* Title and Badges */}
-                      <div className="flex flex-wrap items-center gap-3">
-                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-                          {project.name}
-                        </h1>
-                        {project.isUnofficial && (
-                          <Badge
-                            variant="outline"
-                            className="text-xs border-amber-500/30 bg-amber-500/10 text-amber-700 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-300"
-                          >
-                            Unofficial
-                          </Badge>
-                        )}
-                      </div>
-
-                      {/* Website URL */}
-                      <Link
-                        href={project.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 text-base text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        <Globe className="size-4" />
-                        <span className="border-b border-dashed border-muted-foreground/50 group-hover:border-foreground/50 transition-colors">
-                          {project.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
-                        </span>
-                        <ExternalLink className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </Link>
-                    </div>
-
-                    {/* Favorite Button */}
-                    <FavoriteButton slug={project.slug} size="lg" variant="outline" />
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                    {project.description}
-                  </p>
-
-                  {/* Meta Info Row */}
-                  <div className="flex flex-wrap items-center gap-3 pt-1">
-                    {project.category && (
-                      <Link
-                        href={getRoute('category.page', { category: project.category })}
-                        className="group"
-                      >
-                        <Badge
-                          variant="secondary"
-                          className="inline-flex items-center gap-1.5 py-1.5 px-3 hover:bg-secondary/80 cursor-pointer transition-colors"
-                        >
-                          <Hash className="size-3.5" />
-                          <span className="capitalize">{project.category.replace(/-/g, ' ')}</span>
-                        </Badge>
-                      </Link>
-                    )}
-                    {project.publishedAt && (
-                      <Badge
-                        variant="outline"
-                        className="inline-flex items-center gap-1.5 py-1.5 px-3 text-muted-foreground"
-                      >
-                        <Calendar className="size-3.5" />
-                        Added{' '}
-                        {new Date(project.publishedAt).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <WebsiteHero website={project} breadcrumbItems={breadcrumbItems} />
 
         {/* Main Content Area */}
         <div className="container mx-auto px-6 py-8 md:py-12">
           <div className="max-w-4xl mx-auto space-y-12">
             {/* LLMs.txt Files Section */}
-            <section className="animate-fade-in-up opacity-0 stagger-3">
-              <div className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10">
-                    <FileText className="size-5 text-primary" />
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-bold">AI Documentation Files</h2>
-                    <p className="text-sm text-muted-foreground">
-                      Access the llms.txt files for this website
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap gap-4">
-                  <LLMButton href={project.llmsUrl} type="llms" size="lg" />
-                  {project.llmsFullUrl && (
-                    <LLMButton href={project.llmsFullUrl} type="llms-full" size="lg" />
-                  )}
-                </div>
-              </div>
-            </section>
+            <WebsiteLLMsSection website={project} />
 
-            {/* Content Section with SEO Fallback */}
-            {project.content ? (
-              <section className="animate-fade-in-up opacity-0 stagger-4">
-                <div className="prose dark:prose-invert max-w-none prose-headings:scroll-mt-20">
-                  <MDXRemote source={project.content} components={components} />
-                </div>
-              </section>
-            ) : (
-              <section className="animate-fade-in-up opacity-0 stagger-4 space-y-8">
-                {/* About Section */}
-                <div className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 md:p-8">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex items-center justify-center size-10 rounded-xl bg-blue-500/10">
-                      <Info className="size-5 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <h2 className="text-xl font-bold">About {project.name}</h2>
-                  </div>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {stripHtmlTags(project.description)} This platform provides AI-ready
-                    documentation through the llms.txt standard, making it easy for AI assistants to
-                    understand and interact with their services.
-                  </p>
-                </div>
-
-                {/* Key Information Grid */}
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                      Category
-                    </span>
-                    <p className="text-base font-semibold capitalize">
-                      {project.category ? project.category.replace(/-/g, ' ') : 'General'}
-                    </p>
-                  </div>
-                  <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                      Type
-                    </span>
-                    <p className="text-base font-semibold">Website</p>
-                  </div>
-                  <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                      Documentation
-                    </span>
-                    <p className="text-base font-semibold">llms.txt compatible</p>
-                  </div>
-                  <div className="rounded-xl border border-border/50 bg-card/30 p-5 space-y-1">
-                    <span className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                      Added
-                    </span>
-                    <p className="text-base font-semibold">
-                      {project.publishedAt
-                        ? new Date(project.publishedAt).toLocaleDateString('en-US', {
-                            month: 'long',
-                            day: 'numeric',
-                            year: 'numeric'
-                          })
-                        : 'Recently'}
-                    </p>
-                  </div>
-                </div>
-              </section>
-            )}
+            {/* Content Section */}
+            <WebsiteContentSection website={project} />
 
             {/* Tools Section */}
             <section className="animate-fade-in-up opacity-0 stagger-5">
@@ -376,20 +170,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </div>
     )
   } catch (_error) {
-    return (
-      <div className="container mx-auto px-6 py-8">
-        <Alert variant="destructive" className="mb-6">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>Error loading website</AlertTitle>
-          <AlertDescription>
-            There was a problem loading this website. Please try again later or{' '}
-            <Link href={getRoute('website.list')} className="underline font-medium">
-              return to the websites list
-            </Link>
-            .
-          </AlertDescription>
-        </Alert>
-      </div>
-    )
+    return <WebsiteError />
   }
 }
