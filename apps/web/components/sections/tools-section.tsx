@@ -1,11 +1,11 @@
-import { Section } from '@/components/layout/section'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { getRoute } from '@/lib/routes'
 import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Section } from '@/components/layout/section'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
 
-interface Tool {
+interface ToolCardData {
   title: string
   description: string
   href: string
@@ -13,7 +13,7 @@ interface Tool {
   imageAlt: string
 }
 
-const TOOLS: Tool[] = [
+const TOOLS: ToolCardData[] = [
   {
     title: 'LLMs.txt Checker Chrome Extension',
     description: 'Check if websites implement llms.txt and llms-full.txt files',
@@ -62,7 +62,7 @@ export function ToolsSection({ layout = 'default', showImages = true }: ToolsSec
     >
       <div className="@container">
         <div className="grid gap-4 @[500px]:grid-cols-2 @[800px]:grid-cols-4">
-          {TOOLS.map((tool) => (
+          {TOOLS.map(tool => (
             <Link
               key={tool.href}
               href={tool.href}

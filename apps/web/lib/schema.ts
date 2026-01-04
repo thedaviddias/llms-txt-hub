@@ -1,4 +1,6 @@
+import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import type { GuideMetadata, WebsiteMetadata } from './content-loader'
+import { getRoute } from './routes'
 
 export interface SchemaOrg {
   '@context': 'https://schema.org'
@@ -134,7 +136,7 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
         },
         primaryImageOfPage: {
           '@type': 'ImageObject',
-          url: `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(website.website)}&size=128`
+          url: getFaviconUrl(website.website, 128)
         },
         datePublished: website.publishedAt,
         dateModified: website.publishedAt,
@@ -157,7 +159,7 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
             '@type': 'ListItem',
             position: 2,
             name: 'Websites',
-            item: `${baseUrl}/`
+            item: `${baseUrl}${getRoute('website.list')}`
           },
           {
             '@type': 'ListItem',

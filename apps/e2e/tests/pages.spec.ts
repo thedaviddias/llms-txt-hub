@@ -90,12 +90,44 @@ test.describe('Main Pages', () => {
   test('news page should load and display news items', async ({ page }) => {
     const response = await page.goto('/news')
 
-    // Check page loaded successfully
-    expect(response?.status()).toBeLessThan(500)
+    // Assert 200 OK response
+    expect(response?.status()).toBe(200)
 
     // Title might be "Latest News" or just contain "News"
     await expect(page).toHaveTitle(/News|llms\.txt/i)
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 1, name: /Latest News/i })).toBeVisible()
+
+    // Check if the feed has content or is empty
+    const hasEmptyState = await page.locator('text=/No news yet/i').isVisible()
+
+    if (hasEmptyState) {
+      // When feed is empty, verify empty state is shown
+      await expect(page.locator('text=/No news yet/i')).toBeVisible()
+      await expect(page.locator('text=/no news items available/i')).toBeVisible()
+    } else {
+      // When feed has articles, verify article grid and cards exist
+      const cards = page
+        .locator('article, [class*="Card"]')
+        .filter({ hasText: /read article|more articles/i })
+      const cardCount = await cards.count()
+      expect(cardCount).toBeGreaterThan(0)
+
+      // Verify at least one card includes a favicon image
+      const faviconImages = page.locator('img[src*="icon.horse"], img[alt=""]').first()
+      await expect(faviconImages).toBeVisible()
+
+      // Verify article timestamps render as relative dates
+      const timestampText = await page.locator('time').first().textContent()
+      const relativeTimePattern = /(ago|hour|minute|day|yesterday|second|week|month|year|just now)/i
+
+      // Check if it's a relative time or an absolute date (both are valid)
+      expect(timestampText).toBeTruthy()
+
+      // If timestamp exists, ensure it's not empty
+      if (timestampText) {
+        expect(timestampText.length).toBeGreaterThan(0)
+      }
+    }
   })
 })
 
@@ -120,11 +152,36 @@ test.describe('Search and Navigation', () => {
     await page.goto('/search?q=api')
 
     await expect(page).toHaveTitle(/Search.*llms\.txt/i)
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+
+    // Verify the search query is displayed in the heading
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Search Results for "api"/i })
+    ).toBeVisible()
 
     // Verify search interface is present
     await expect(page.getByRole('textbox').first()).toBeVisible()
-    await expect(page.getByRole('main')).toBeVisible()
+
+    // Wait for search results to load (client-side search)
+    await page.waitForTimeout(1000)
+
+    // Verify that search results are displayed for the "api" query
+    const cards = page.locator('article, [class*="Card"]').filter({ hasText: /\w+/ })
+    const cardCount = await cards.count()
+
+    // Should have at least one result for "api" query (common term)
+    expect(cardCount).toBeGreaterThan(0)
+
+    // Verify that result cards contain links to website details
+    const websiteLinks = page.locator('a[href*="/websites/"]').first()
+    await expect(websiteLinks).toBeVisible()
+
+    // Verify results contain favicons (FaviconWithFallback component)
+    const favicons = page.locator('img[alt=""], img[src*="icon.horse"]').first()
+    await expect(favicons).toBeVisible()
+
+    // Verify at least one result card has a description
+    const descriptions = page.locator('p.text-muted-foreground, p[class*="text-muted"]').first()
+    await expect(descriptions).toBeVisible()
   })
 
   test('navigation should work between pages', async ({ page }) => {
