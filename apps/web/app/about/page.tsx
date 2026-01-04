@@ -1,17 +1,24 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { getRoute } from '@/lib/routes'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { Button } from '@thedaviddias/design-system/button'
 import { Code, FileText, Zap } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { getRoute } from '@/lib/routes'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
-  title: 'About',
+  title: 'About llms.txt Hub - The AI Documentation Standard Directory',
   description:
-    'Learn about the llms.txt hub, its mission, and how it helps AI models better understand documentation.',
+    'Learn about llms.txt hub, the largest directory of websites implementing the llms.txt standard. Discover how llms.txt helps AI models understand your documentation.',
   path: '/about',
-  keywords: ['about llms.txt', 'mission', 'AI documentation standard', 'what is llms.txt']
+  keywords: [
+    'about llms.txt',
+    'what is llms.txt',
+    'llms.txt standard',
+    'AI documentation standard',
+    'llms.txt mission',
+    'llms.txt directory'
+  ]
 })
 
 export default function AboutPage() {
