@@ -32,7 +32,7 @@ let nextConfig: NextConfig = {
   // Configure logging behavior
   logging: {
     fetches: {
-      fullUrl: env.NODE_ENV === 'development'
+      fullUrl: process.env.NODE_ENV === 'development'
     }
   },
 

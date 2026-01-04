@@ -10,19 +10,18 @@ test.describe('Main Pages', () => {
     // Check main navigation exists
     await expect(page.getByRole('navigation').first()).toBeVisible()
 
-    // Check hero section exists (h1 or h2)
-    const heading = page
-      .getByRole('heading', { level: 1 })
-      .or(page.getByRole('heading', { level: 2 }))
-      .first()
-    await expect(heading).toBeVisible()
+    // Verify hero section with heading is visible
+    const heroHeading = page.getByRole('heading', { level: 1, name: /welcome to llms\.txt hub/i })
+    await expect(heroHeading).toBeVisible()
 
-    // Check at least some key content is present (hub, llms.txt, directory, or websites)
-    const hasContent = await page
-      .locator('text=/hub|llms.txt|directory|websites/i')
-      .first()
-      .isVisible()
-    expect(hasContent).toBeTruthy()
+    // Verify hero section description is visible
+    await expect(page.getByText(/largest directory for.*AI-ready documentation/i)).toBeVisible()
+
+    // Verify primary CTA button is present
+    await expect(page.getByRole('link', { name: /add your llms\.txt/i })).toBeVisible()
+
+    // Verify secondary CTA button is present
+    await expect(page.getByRole('link', { name: /learn more/i })).toBeVisible()
   })
 
   test('about page should load and display content', async ({ page }) => {
@@ -30,9 +29,9 @@ test.describe('Main Pages', () => {
 
     await expect(page).toHaveTitle(/About.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    // Page should have about content
-    const hasAboutHeading = await page.getByRole('heading', { name: /about/i }).isVisible()
-    expect(hasAboutHeading).toBeTruthy()
+
+    // Verify about page has meaningful content sections
+    await expect(page.getByRole('main')).toBeVisible()
   })
 
   test('guides page should load and display guides', async ({ page }) => {
@@ -41,10 +40,8 @@ test.describe('Main Pages', () => {
     await expect(page).toHaveTitle(/Guides.*llms\.txt/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    // Check if guides section is present - page has content
-    const bodyText = await page.textContent('body')
-    expect(bodyText).toBeTruthy()
-    expect(bodyText?.length).toBeGreaterThan(100)
+    // Verify main content area is visible
+    await expect(page.getByRole('main')).toBeVisible()
   })
 
   test('websites page should load and display website list', async ({ page }) => {
@@ -85,9 +82,9 @@ test.describe('Main Pages', () => {
 
     await expect(page).toHaveTitle(/FAQ.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    // Check FAQ content
-    const hasFAQContent = await page.locator('h1').isVisible()
-    expect(hasFAQContent).toBeTruthy()
+
+    // Verify FAQ content area is visible
+    await expect(page.getByRole('main')).toBeVisible()
   })
 
   test('news page should load and display news items', async ({ page }) => {
@@ -125,10 +122,9 @@ test.describe('Search and Navigation', () => {
     await expect(page).toHaveTitle(/Search.*llms\.txt/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 
-    // Should show search results or search interface - page has content
-    const bodyText = await page.textContent('body')
-    expect(bodyText).toBeTruthy()
-    expect(bodyText?.length).toBeGreaterThan(100)
+    // Verify search interface is present
+    await expect(page.getByRole('textbox').first()).toBeVisible()
+    await expect(page.getByRole('main')).toBeVisible()
   })
 
   test('navigation should work between pages', async ({ page }) => {
@@ -152,9 +148,9 @@ test.describe('Legal Pages', () => {
 
     await expect(page).toHaveTitle(/Privacy.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    // Privacy page loaded
-    const hasPrivacyContent = await page.locator('h1').isVisible()
-    expect(hasPrivacyContent).toBeTruthy()
+
+    // Verify privacy policy content is visible
+    await expect(page.getByRole('main')).toBeVisible()
   })
 
   test('terms of service should load', async ({ page }) => {
@@ -162,9 +158,9 @@ test.describe('Legal Pages', () => {
 
     await expect(page).toHaveTitle(/Terms.*llms\.txt hub/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    // Terms page loaded
-    const hasTermsContent = await page.locator('h1').isVisible()
-    expect(hasTermsContent).toBeTruthy()
+
+    // Verify terms of service content is visible
+    await expect(page.getByRole('main')).toBeVisible()
   })
 
   test('cookies policy should load', async ({ page }) => {
@@ -172,9 +168,9 @@ test.describe('Legal Pages', () => {
 
     await expect(page).toHaveTitle(/Cookie.*llms\.txt/i)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
-    // Cookies page loaded
-    const hasCookiesContent = await page.locator('h1').isVisible()
-    expect(hasCookiesContent).toBeTruthy()
+
+    // Verify cookies policy content is visible
+    await expect(page.getByRole('main')).toBeVisible()
   })
 })
 
