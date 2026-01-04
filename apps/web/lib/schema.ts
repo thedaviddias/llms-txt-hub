@@ -137,7 +137,7 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
           url: `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(website.website)}&size=128`
         },
         datePublished: website.publishedAt,
-        dateModified: website.updatedAt || website.publishedAt,
+        dateModified: website.publishedAt,
         breadcrumb: {
           '@id': `${pageUrl}#breadcrumb`
         }
@@ -198,7 +198,7 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
         headline: `${website.name} llms.txt Implementation Guide`,
         description: `${website.description} Learn how ${website.name} implements the llms.txt standard for AI-ready documentation.`,
         datePublished: website.publishedAt,
-        dateModified: website.updatedAt || website.publishedAt,
+        dateModified: website.publishedAt,
         author: {
           '@type': 'Organization',
           name: 'llms.txt Hub',
