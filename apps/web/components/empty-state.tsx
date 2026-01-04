@@ -1,5 +1,6 @@
 import { Button } from '@thedaviddias/design-system/button'
-import { FolderOpen } from 'lucide-react'
+import { cn } from '@thedaviddias/design-system/lib/utils'
+import { FolderOpen, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 
 interface EmptyStateProps {
@@ -8,6 +9,12 @@ interface EmptyStateProps {
   actionLabel?: string
   actionHref?: string
   onAction?: () => void
+  icon?: LucideIcon
+  iconClassName?: string
+  iconContainerClassName?: string
+  className?: string
+  titleClassName?: string
+  descriptionClassName?: string
 }
 
 /**
@@ -18,6 +25,12 @@ interface EmptyStateProps {
  * @param props.actionLabel - Optional label for the action button
  * @param props.actionHref - Optional href for link-based action
  * @param props.onAction - Optional click handler for button action
+ * @param props.icon - Optional custom icon component
+ * @param props.iconClassName - Optional className for the icon
+ * @param props.iconContainerClassName - Optional className for the icon container
+ * @param props.className - Optional className for the container
+ * @param props.titleClassName - Optional className for the title
+ * @param props.descriptionClassName - Optional className for the description
  * @returns React component
  */
 export function EmptyState({
@@ -25,13 +38,28 @@ export function EmptyState({
   description,
   actionLabel,
   actionHref,
-  onAction
+  onAction,
+  icon: Icon = FolderOpen,
+  iconClassName,
+  iconContainerClassName,
+  className,
+  titleClassName,
+  descriptionClassName
 }: EmptyStateProps) {
   return (
-    <div className="flex flex-col items-center justify-center h-[50vh] text-center">
-      <FolderOpen className="h-16 w-16 text-muted-foreground mb-4" />
-      <h2 className="text-2xl font-bold mb-2">{title}</h2>
-      <p className="text-muted-foreground mb-4 max-w-md">{description}</p>
+    <div
+      className={cn(
+        'flex flex-col items-center justify-center h-[50vh] text-center',
+        className
+      )}
+    >
+      <div className={iconContainerClassName}>
+        <Icon className={cn('h-16 w-16 text-muted-foreground mb-4', iconClassName)} />
+      </div>
+      <h2 className={cn('text-2xl font-bold mb-2', titleClassName)}>{title}</h2>
+      <p className={cn('text-muted-foreground mb-4 max-w-md', descriptionClassName)}>
+        {description}
+      </p>
       {onAction && actionLabel ? (
         <Button onClick={onAction}>{actionLabel}</Button>
       ) : actionHref && actionLabel ? (
