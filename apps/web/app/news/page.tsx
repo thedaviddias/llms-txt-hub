@@ -1,15 +1,18 @@
+import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { Button } from '@thedaviddias/design-system/button'
 import { logger } from '@thedaviddias/logging'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
 import { XMLParser } from 'fast-xml-parser'
-import { ExternalLink, Rss } from 'lucide-react'
+import { ArrowRight, ExternalLink, Newspaper, Rss } from 'lucide-react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { RSS_FEED_URL } from '@/app/api/rss-feed/route'
-import { Card } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { formatDate } from '@/lib/utils'
+import { extractDomain, formatDate, formatRelativeDate } from '@/lib/utils'
 
 /**
  * Strips HTML tags from a string to create safe plain text
@@ -46,16 +49,16 @@ interface NewsItem {
 
 /**
  * Fetch news items from the RSS feed
+ *
  * @returns Promise containing an array of news items
  */
 async function getNewsItems(): Promise<{ items: NewsItem[] }> {
   try {
-    // Always fetch directly from RSS feed on server
     const response = await fetch(RSS_FEED_URL, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; RSS-Reader/1.0)'
       },
-      next: { revalidate: 172800 } // Cache for 48 hours
+      next: { revalidate: 172800 }
     })
 
     if (!response.ok) {
@@ -92,6 +95,142 @@ async function getNewsItems(): Promise<{ items: NewsItem[] }> {
   }
 }
 
+/**
+ * Featured news card component for the latest article
+ */
+function FeaturedNewsCard({ item }: { item: NewsItem }) {
+  const domain = extractDomain(item.link)
+
+  return (
+    <Card className="transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden animate-fade-in-up">
+      <CardContent className="p-6 sm:p-8">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <Badge variant="secondary" className="bg-primary/10 text-primary">
+              Latest
+            </Badge>
+            <time className="text-sm text-muted-foreground" dateTime={item.pubDate}>
+              {formatRelativeDate(item.pubDate)}
+            </time>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight">
+              <Link
+                href={item.link}
+                className="hover:text-primary transition-colors block after:absolute after:inset-0 after:content-[''] z-10"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {item.title}
+              </Link>
+            </h2>
+            <p className="text-muted-foreground line-clamp-3">{item.description}</p>
+          </div>
+
+          <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center gap-2">
+              {domain && (
+                <>
+                  <Image
+                    src={getFaviconUrl(item.link)}
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="rounded-sm"
+                    unoptimized
+                  />
+                  <span className="text-sm text-muted-foreground">{domain}</span>
+                </>
+              )}
+            </div>
+            <span className="text-sm font-medium text-primary flex items-center gap-1 group-hover:gap-2 transition-all">
+              Read article
+              <ArrowRight className="size-4" />
+            </span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+/**
+ * Standard news card component
+ */
+function NewsCard({ item, index }: { item: NewsItem; index: number }) {
+  const domain = extractDomain(item.link)
+
+  return (
+    <Card
+      className="transition-all hover:border-primary hover:bg-muted/50 relative overflow-hidden animate-fade-in-up group"
+      style={{ animationDelay: `${(index + 1) * 50}ms` }}
+    >
+      <CardContent className="p-4 sm:p-5">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-muted-foreground/50 tabular-nums">
+              {String(index + 2).padStart(2, '0')}
+            </span>
+            <time className="text-xs text-muted-foreground" dateTime={item.pubDate}>
+              {formatDate(item.pubDate)}
+            </time>
+          </div>
+
+          <h3 className="font-semibold text-sm sm:text-base line-clamp-2">
+            <Link
+              href={item.link}
+              className="hover:text-primary transition-colors block after:absolute after:inset-0 after:content-[''] z-10"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item.title}
+              <ExternalLink className="inline-block ml-1.5 size-3.5 opacity-50" />
+            </Link>
+          </h3>
+
+          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
+            {item.description}
+          </p>
+
+          {domain && (
+            <div className="flex items-center gap-1.5 pt-1">
+              <Image
+                src={getFaviconUrl(item.link)}
+                alt=""
+                width={14}
+                height={14}
+                className="rounded-sm opacity-70"
+                unoptimized
+              />
+              <span className="text-xs text-muted-foreground">{domain}</span>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+/** Empty state component when no news items are available */
+function EmptyState() {
+  return (
+    <Card className="p-12">
+      <div className="flex flex-col items-center justify-center text-center space-y-4">
+        <div className="size-16 rounded-full bg-muted flex items-center justify-center">
+          <Newspaper className="size-8 text-muted-foreground" />
+        </div>
+        <div className="space-y-2">
+          <h3 className="font-semibold text-lg">No news yet</h3>
+          <p className="text-muted-foreground max-w-sm">
+            There are no news items available at the moment. Check back later for updates.
+          </p>
+        </div>
+      </div>
+    </Card>
+  )
+}
+
 export default async function NewsPage() {
   let items: NewsItem[] = []
 
@@ -100,65 +239,57 @@ export default async function NewsPage() {
     items = result.items
   } catch (error) {
     logger.error('Error loading news page:', { data: error, tags: { type: 'page' } })
-    // Continue with empty items array
   }
+
+  const featuredItem = items[0]
+  const remainingItems = items.slice(1)
 
   return (
     <div className="container mx-auto py-8">
-      <Breadcrumb items={[{ name: 'News', href: '/news' }]} baseUrl={getBaseUrl()} />
-      <div className="mx-auto space-y-8">
-        <div className="flex justify-between items-center">
-          <div className="space-y-4">
-            <h1 className="text-4xl font-bold">Latest News</h1>
+      <div className="space-y-12">
+        <Breadcrumb items={[{ name: 'News', href: '/news' }]} baseUrl={getBaseUrl()} />
+
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold tracking-tight flex items-center gap-3">
+              <span className="size-2 bg-primary rounded-full" />
+              Latest News
+            </h1>
             <p className="text-lg text-muted-foreground">
               Stay updated with the latest news and updates from the llms.txt community.
             </p>
           </div>
 
-          <Link href={RSS_FEED_URL} className="inline-flex">
-            <Button variant="outline">
+          <Link href={RSS_FEED_URL} target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" className="rounded-none h-9 font-bold">
               <Rss className="mr-2 size-4" />
               RSS Feed
             </Button>
           </Link>
         </div>
+
+        {/* Content */}
         {items.length === 0 ? (
-          <Card className="p-6">
-            <p className="text-center text-muted-foreground">
-              No news items available at the moment.
-            </p>
-          </Card>
+          <EmptyState />
         ) : (
-          <div className="grid gap-6">
-            {items.map((item: NewsItem) => (
-              <Card key={`${item.link}-${item.pubDate}`} className="p-6">
-                <article className="space-y-4">
-                  <h2 className="text-xl font-semibold">
-                    <Link
-                      href={item.link}
-                      className="hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.title}
-                      <ExternalLink className="inline-block ml-2 size-4" />
-                    </Link>
-                  </h2>
-                  <p className="text-muted-foreground">{item.description}</p>
-                  <div className="flex justify-between items-center text-sm text-muted-foreground">
-                    <time dateTime={item.pubDate}>{formatDate(item.pubDate)}</time>
-                    <Link
-                      href={item.link}
-                      className="hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Read more
-                    </Link>
-                  </div>
-                </article>
-              </Card>
-            ))}
+          <div className="space-y-8">
+            {/* Featured Article */}
+            {featuredItem && <FeaturedNewsCard item={featuredItem} />}
+
+            {/* Remaining Articles Grid */}
+            {remainingItems.length > 0 && (
+              <section className="space-y-6">
+                <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                  More Articles
+                </h2>
+                <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {remainingItems.map((item, index) => (
+                    <NewsCard key={`${item.link}-${item.pubDate}`} item={item} index={index} />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         )}
       </div>
