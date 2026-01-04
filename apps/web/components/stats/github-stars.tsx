@@ -21,7 +21,11 @@ export function GithubStars({ mobileCompact = false }: StarsProps) {
   const [stars, setStars] = useState<number | null>(null)
 
   useEffect(() => {
-    fetch('https://api.github.com/repos/thedaviddias/llms-txt-hub')
+    const controller = new AbortController()
+
+    fetch('https://api.github.com/repos/thedaviddias/llms-txt-hub', {
+      signal: controller.signal
+    })
       .then(res => {
         if (!res.ok) {
           // Rate limited or other error - fail silently
@@ -34,9 +38,17 @@ export function GithubStars({ mobileCompact = false }: StarsProps) {
           setStars(data.stargazers_count)
         }
       })
-      .catch(() => {
-        // Silently fail - component will just show without count
+      .catch(error => {
+        // Ignore abort errors - component was unmounted
+        if (error.name === 'AbortError') {
+          return
+        }
+        // Silently fail for other errors - component will just show without count
       })
+
+    return () => {
+      controller.abort()
+    }
   }, [])
 
   // Mobile compact variant
