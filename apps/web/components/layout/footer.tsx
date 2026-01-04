@@ -68,6 +68,8 @@ export function Footer() {
                 height={64}
                 alt="Install llms-txt Raycast Extension"
                 style={{ height: '64px' }}
+                loading="lazy"
+                decoding="async"
               />
             </a>
           </div>
