@@ -43,5 +43,17 @@ export function extractDomain(url: string): string {
   }
 }
 
+/**
+ * Strips HTML tags from a string to create safe plain text
+ * Useful for sanitizing descriptions that may contain raw HTML
+ *
+ * @param html - The HTML string to sanitize
+ * @returns Plain text with HTML tags removed
+ */
+export function stripHtmlTags(html: string | null | undefined): string {
+  if (!html) return ''
+  return html.replace(/<[^>]*>/g, '').trim()
+}
+
 // Server-only utilities have been moved to lib/server-utils.ts
 // This file should only contain isomorphic utilities that work on both client and server
