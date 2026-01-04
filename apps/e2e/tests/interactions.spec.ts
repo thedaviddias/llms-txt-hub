@@ -206,16 +206,20 @@ test.describe('Mobile Interactions', () => {
       const navLink = page.getByRole('link', { name: /about|guides/i }).first()
       if (await navLink.isVisible()) {
         await navLink.click()
-        await page.waitForLoadState('networkidle')
+        await page.waitForLoadState('domcontentloaded')
       }
+    } else {
+      // Mobile menu not found - verify page loaded at least
+      const bodyText = await page.textContent('body')
+      expect(bodyText?.length).toBeGreaterThan(100)
     }
   })
 
   test('mobile search should work', async ({ page }) => {
     await page.goto('/')
 
-    // Look for mobile search trigger
-    const searchTrigger = page.getByRole('button', { name: /search/i })
+    // Look for mobile search trigger (specifically the toggle button, not submit)
+    const searchTrigger = page.getByRole('button', { name: 'Toggle search' })
 
     if (await searchTrigger.isVisible()) {
       await searchTrigger.click()
