@@ -12,7 +12,6 @@ interface WebsitesListWithSearchProps {
   initialWebsites: WebsiteMetadata[]
   emptyTitle?: string
   emptyDescription?: string
-  initialRows?: number
   initialShowFavoritesOnly?: boolean
   totalCount?: number
 }
@@ -25,7 +24,6 @@ export function WebsitesListWithSearch({
   initialWebsites,
   emptyTitle = 'No websites found',
   emptyDescription = 'There are no websites available. Try checking back later or submit a new website.',
-  initialRows = 3,
   initialShowFavoritesOnly = false,
   totalCount
 }: WebsitesListWithSearchProps) {
@@ -190,10 +188,6 @@ export function WebsitesListWithSearch({
     }
   }, [allWebsites, favoriteWebsites, showFavoritesOnly, sortBy, searchQuery, searchResults])
 
-  // Calculate initial visible items for search results
-  const itemsPerRow = 6 // Maximum columns on largest screens
-  const initialVisibleItems = initialRows * itemsPerRow
-
   if (initialWebsites.length === 0) {
     return (
       <EmptyState
@@ -267,7 +261,7 @@ export function WebsitesListWithSearch({
           </div>
 
           {/* Load More Pattern - Following UX Pattern */}
-          {!searchQuery.trim() && !showFavoritesOnly && !isSearching && (
+          {!searchQuery.trim() && !isSearching && (
             <div className="mt-8 text-center" aria-live="polite">
               {hasMoreWebsites ? (
                 <button

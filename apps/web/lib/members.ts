@@ -45,13 +45,22 @@ function hasSharedInfo(user: any): boolean {
   return hasName || hasUsername
 }
 
+export interface GetLatestMembersInput {
+  limit?: number
+  includeContributions?: boolean
+}
+
 /**
  * Get the latest members for homepage display
- * @param limit - Number of members to fetch (default: 6)
- * @param includeContributions - Whether to fetch GitHub contributions (default: false)
+ * @param input - Configuration for fetching members
+ * @param input.limit - Number of members to fetch (default: 6)
+ * @param input.includeContributions - Whether to fetch GitHub contributions (default: false)
  * @returns Promise<Member[]>
  */
-export async function getLatestMembers(limit = 6, includeContributions = false): Promise<Member[]> {
+export async function getLatestMembers({
+  limit = 6,
+  includeContributions = false
+}: GetLatestMembersInput = {}): Promise<Member[]> {
   try {
     const clerk = getClerk()
 

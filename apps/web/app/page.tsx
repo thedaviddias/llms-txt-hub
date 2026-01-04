@@ -17,10 +17,18 @@ import { getLatestMembers } from '@/lib/members'
 import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
-  title: 'Discover AI-Ready Documentation - llms.txt hub',
+  title: 'llms.txt Hub - Directory of AI-Ready Documentation & llms.txt Examples',
   description:
-    'Explore 500+ AI-friendly websites and tools implementing the llms.txt standard. Find APIs, platforms, and documentation optimized for LLM integration.',
-  keywords: [...KEYWORDS.homepage, ...KEYWORDS.global],
+    'Discover 500+ websites implementing the llms.txt standard. Browse real llms.txt examples, learn the specification, and find AI-ready documentation for APIs, platforms, and developer tools.',
+  keywords: [
+    ...KEYWORDS.homepage,
+    ...KEYWORDS.global,
+    'llms.txt directory',
+    'llms.txt examples',
+    'llms.txt standard',
+    'llms.txt file',
+    'llms.txt specification'
+  ],
   path: '/'
 })
 
@@ -28,7 +36,7 @@ export default async function Home() {
   const { allProjects, featuredProjects, recentlyUpdatedProjects, totalCount } =
     await getHomePageData()
   const featuredGuides = await getGuides()
-  const latestMembers = await getLatestMembers(6, false) // Skip contributions to avoid GitHub API rate limits
+  const latestMembers = await getLatestMembers({ limit: 6, includeContributions: false }) // Skip contributions to avoid GitHub API rate limits
 
   // Sort projects alphabetically by name server-side
   const sortedProjects = [...allProjects].sort((a, b) => a.name.localeCompare(b.name))
