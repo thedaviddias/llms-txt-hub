@@ -140,6 +140,27 @@ test.describe('Search and Navigation', () => {
     await expect(page).toHaveURL(/\/about/)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   })
+
+  test('navigation links should work correctly', async ({ page }) => {
+    // Start at homepage
+    await page.goto('/')
+
+    // Find and click the guides link
+    const guidesLink = page.getByRole('link', { name: /guides/i })
+    await guidesLink.click()
+
+    // Verify navigation to guides page
+    await expect(page).toHaveURL(/\/guides/)
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+
+    // Find and click the about link
+    const aboutLink = page.getByRole('link', { name: /about/i })
+    await aboutLink.click()
+
+    // Verify navigation to about page
+    await expect(page).toHaveURL(/\/about/)
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+  })
 })
 
 test.describe('Legal Pages', () => {
