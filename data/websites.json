@@ -185,6 +185,15 @@
     "publishedAt": "2025-07-30"
   },
   {
+    "name": "atari-style",
+    "domain": "https://github.com/jcaldwell-labs/atari-style",
+    "description": "Terminal-based interactive games, creative tools, and visual demos inspired by classic Atari aesthetics with joystick support.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/jcaldwell-labs/atari-style/master/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2025-01-04"
+  },
+  {
     "name": "Aureus ERP",
     "domain": "https://aureuserp.com/",
     "description": "An Open-Source Laravel Enterprise Resource Planning (ERP) platform designed for Small and Medium Enterprises (SMEs) as well as large-scale enterprises.",
@@ -295,6 +304,15 @@
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=blacknet.ninja&sz=128",
     "publishedAt": "2025-03-29"
+  },
+  {
+    "name": "boxes-live",
+    "domain": "https://github.com/jcaldwell-labs/boxes-live",
+    "description": "Terminal-based infinite 2D canvas for AI agent workflows. 13x smaller than Miro API responses.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/jcaldwell-labs/boxes-live/main/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2025-01-04"
   },
   {
     "name": "Bucket",
@@ -900,6 +918,15 @@
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=tryfinch.com&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "fintrack",
+    "domain": "https://github.com/jcaldwell-labs/fintrack",
+    "description": "Terminal-based personal finance tracking CLI with PostgreSQL storage and JSON output for scripting.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/jcaldwell-labs/fintrack/main/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2025-01-04"
   },
   {
     "name": "Fireworks AI",
@@ -1697,6 +1724,24 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=multisynq.io&sz=128",
     "publishedAt": "2025-08-06"
+  },
+  {
+    "name": "my-context",
+    "domain": "https://github.com/jcaldwell-labs/my-context",
+    "description": "Cross-platform CLI tool for managing developer work contexts with notes, file associations, and timestamps.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/jcaldwell-labs/my-context/main/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2025-01-04"
+  },
+  {
+    "name": "my-grid",
+    "domain": "https://github.com/jcaldwell-labs/my-grid",
+    "description": "Spatial ASCII canvas editor for terminals with vim-style navigation, zones, and PTY support.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/jcaldwell-labs/my-grid/master/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2025-01-04"
   },
   {
     "name": "Mystery-o-matic",
@@ -2533,6 +2578,15 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=www.television.ai&sz=128",
     "publishedAt": "2025-06-17"
+  },
+  {
+    "name": "terminal-stars",
+    "domain": "https://github.com/jcaldwell-labs/terminal-stars",
+    "description": "Educational 3D starfield visualizer demonstrating terminal graphics programming with six visual effects.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/jcaldwell-labs/terminal-stars/master/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2025-01-04"
   },
   {
     "name": "The Data Driven Marketer",
