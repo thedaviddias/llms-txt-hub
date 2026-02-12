@@ -1,0 +1,56 @@
+export interface RegistryEntry {
+  slug: string
+  name: string
+  domain: string
+  description: string
+  llmsTxtUrl: string
+  llmsFullTxtUrl?: string
+  category: string
+}
+
+export interface LockfileEntry {
+  slug: string
+  format: 'llms.txt' | 'llms-full.txt'
+  sourceUrl: string
+  etag: string | null
+  lastModified: string | null
+  fetchedAt: string
+  checksum: string
+  size: number
+  name: string
+}
+
+export interface Lockfile {
+  version: 1
+  updatedAt: string
+  entries: Record<string, LockfileEntry>
+}
+
+export interface FetchResult {
+  content: string
+  etag: string | null
+  lastModified: string | null
+  notModified: boolean
+}
+
+export interface DetectedMatch {
+  slug: string
+  matchedPackages: string[]
+  registryEntry: RegistryEntry
+}
+
+export interface PackageMappings {
+  version: number
+  npm: Record<string, string>
+}
+
+export const PRIMARY_CATEGORIES = [
+  'ai-ml',
+  'developer-tools',
+  'data-analytics',
+  'integration-automation',
+  'infrastructure-cloud',
+  'security-identity'
+] as const
+
+export type PrimaryCategory = (typeof PRIMARY_CATEGORIES)[number]
