@@ -1,16 +1,17 @@
 'use client'
 
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { ProgressiveAuthBanner } from '@/components/auth/progressive-auth-banner'
-import { Card } from '@/components/ui/card'
-import { useFavorites } from '@/contexts/favorites-context'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { Progress } from '@thedaviddias/design-system/progress'
-import { Award, Calendar, Github, Heart, Mail, Star, TrendingUp, Users, Zap } from 'lucide-react'
+import { Award, Calendar, Github, Star, TrendingUp, Users, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { ProgressiveAuthBanner } from '@/components/auth/progressive-auth-banner'
+import { Card } from '@/components/ui/card'
+import { useFavorites } from '@/contexts/favorites-context'
+import { CommunityAnonymousPanel } from './community-anonymous-panel'
 
 interface CommunityStats {
   totalProjects: number
@@ -26,6 +27,9 @@ interface UserStats {
   profileViews?: number
 }
 
+/**
+ * Renders the community dashboard with stats, engagement, and auth prompts
+ */
 export function CommunityDashboard() {
   const { user } = useAuth()
   const { favorites } = useFavorites()
@@ -60,6 +64,9 @@ export function CommunityDashboard() {
     user && (user.user_metadata?.github_username || user.user_metadata?.user_name)
 
   // Calculate engagement level
+  /**
+   * Calculates the user's engagement level score as a percentage
+   */
   const getEngagementLevel = () => {
     if (!userStats) return 0
 
@@ -226,70 +233,10 @@ export function CommunityDashboard() {
               <AuthTierIndicator showUpgrade={true} />
             </>
           ) : (
-            <>
-              {/* Anonymous user encouragement */}
-              <Card className="p-6 text-center space-y-4">
-                <div>
-                  <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
-                    <Heart className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold">Your Local Favorites</h3>
-                  <p className="text-sm text-muted-foreground">Saved on this device</p>
-                </div>
-
-                <div>
-                  <p className="text-3xl font-bold">{favorites.length}</p>
-                  <p className="text-sm text-muted-foreground">Projects favorited</p>
-                </div>
-
-                <div className="pt-4 space-y-2">
-                  <Button asChild size="sm" className="w-full">
-                    <Link href="/login">
-                      <Mail className="h-4 w-4 mr-2" />
-                      Sign In to Save
-                    </Link>
-                  </Button>
-                  <p className="text-xs text-muted-foreground">
-                    Create account to sync your favorites
-                  </p>
-                </div>
-              </Card>
-
-              {/* Community invitation */}
-              <Card className="p-6 text-center space-y-4 bg-gradient-to-br from-primary/5 to-blue-500/5">
-                <div>
-                  <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-3">
-                    <Users className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold">Join Our Community</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Connect with {communityStats?.totalMembers || '2,000+'} developers building
-                    AI-ready documentation
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <Button asChild size="sm" className="w-full">
-                    <Link href="/login">
-                      <Github className="h-4 w-4 mr-2" />
-                      Join with GitHub
-                    </Link>
-                  </Button>
-                  <Button asChild variant="outline" size="sm" className="w-full">
-                    <Link
-                      href="#"
-                      onClick={e => {
-                        e.preventDefault()
-                        window.open('https://substack.com', '_blank')
-                      }}
-                    >
-                      <Mail className="h-4 w-4 mr-2" />
-                      Newsletter
-                    </Link>
-                  </Button>
-                </div>
-              </Card>
-            </>
+            <CommunityAnonymousPanel
+              favoritesCount={favorites.length}
+              totalMembers={communityStats?.totalMembers}
+            />
           )}
 
           {/* Quick actions */}

@@ -1,10 +1,10 @@
 'use client'
 
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { AlertCircle, Loader2, X } from 'lucide-react'
 import { useEffect, useId, useState } from 'react'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { AboutFields } from './edit-profile-about-fields'
 import { BasicInfoFields } from './edit-profile-basic-fields'
 import { LinksFields } from './edit-profile-links-fields'

@@ -1,6 +1,9 @@
-import { FileText } from 'lucide-react'
+import { FileText, Terminal } from 'lucide-react'
 import { LLMButton } from '@/components/buttons/llm-button'
+import { CopyButton } from '@/components/ui/copy-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
+
+const SUPPORTED_AGENTS = ['Cursor', 'Claude Code', 'Windsurf', 'Cline', 'Codex'] as const
 
 interface WebsiteLLMsSectionProps {
   website: WebsiteMetadata
@@ -19,11 +22,13 @@ export function WebsiteLLMsSection({ website }: WebsiteLLMsSectionProps) {
       <div className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 md:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex items-center justify-center size-10 rounded-xl bg-primary/10">
-            <FileText className="size-5 text-primary" />
+            <FileText className="size-5 text-primary" aria-hidden />
           </div>
           <div>
-            <h2 className="text-xl font-bold">AI Documentation Files</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-xl font-bold text-pretty scroll-mt-20" id="documentation">
+              AI Documentation Files
+            </h2>
+            <p className="text-sm text-muted-foreground mt-0.5">
               Access the llms.txt files for this website
             </p>
           </div>
@@ -33,6 +38,48 @@ export function WebsiteLLMsSection({ website }: WebsiteLLMsSectionProps) {
           {website.llmsFullUrl && (
             <LLMButton href={website.llmsFullUrl} type="llms-full" size="lg" />
           )}
+        </div>
+
+        {/* CLI Install Section */}
+        <div className="mt-6 pt-6 border-t border-border/50 space-y-4">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center size-8 rounded-lg bg-emerald-500/10">
+              <Terminal className="size-4 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-pretty">
+                Install into your AI coding agent
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Add this documentation directly to your development environment
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 rounded-xl bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 px-4 py-3">
+            <span
+              className="select-none text-emerald-600 dark:text-emerald-500/70 font-mono text-sm"
+              aria-hidden="true"
+            >
+              $
+            </span>
+            <code className="flex-1 text-zinc-800 dark:text-zinc-100 font-mono text-sm truncate">
+              npx llmstxt-cli install {website.slug}
+            </code>
+            <CopyButton text={`npx llmstxt-cli install ${website.slug}`} variant="terminal" />
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-xs text-muted-foreground">Works with:</span>
+            {SUPPORTED_AGENTS.map(agent => (
+              <span
+                key={agent}
+                className="text-xs rounded-full px-2.5 py-0.5 bg-muted/80 text-muted-foreground border border-border/50"
+              >
+                {agent}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

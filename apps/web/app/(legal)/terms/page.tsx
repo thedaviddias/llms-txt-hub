@@ -1,11 +1,11 @@
-import { components } from '@/components/mdx'
-import { getLegalContent } from '@/lib/content-loader'
-import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
+import { components } from '@/components/mdx'
+import { getLegalContent } from '@/lib/content-loader'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Terms of Service',

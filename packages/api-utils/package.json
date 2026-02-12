@@ -14,11 +14,11 @@
   "dependencies": {
     "@thedaviddias/logging": "workspace:*"
   },
-  "peerDependencies": {
-    "next": "^15.0.0"
-  },
   "devDependencies": {
-    "next": "15.5.7",
-    "typescript": "^5.8.2"
+    "next": "16.1.6",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "next": "^16.0.0"
   }
 }

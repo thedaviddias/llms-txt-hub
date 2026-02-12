@@ -1,7 +1,7 @@
 'use client'
 
-import { analytics } from '@/lib/analytics'
 import { useEffect } from 'react'
+import { analytics } from '@/lib/analytics'
 
 /**
  * Client-side analytics tracker that listens for clicks on elements with data-analytics attributes
@@ -9,10 +9,14 @@ import { useEffect } from 'react'
  */
 export function AnalyticsTracker() {
   useEffect(() => {
+    /**
+     * Handles click events on elements with data-analytics attributes
+     */
     const handleClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement
-      const link = target.closest('[data-analytics]') as HTMLElement
+      const target = event.target
+      if (!(target instanceof HTMLElement)) return
 
+      const link = target.closest<HTMLElement>('[data-analytics]')
       if (!link) return
 
       const analyticsType = link.getAttribute('data-analytics')

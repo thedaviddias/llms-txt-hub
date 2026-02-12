@@ -18,18 +18,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Link Checker
         id: lychee
-        uses: lycheeverse/lychee-action@v2.2.0
+        uses: lycheeverse/lychee-action@v2.7.0
         with:
           args: --config ./lychee.toml --verbose --no-progress .
           fail: true
 
       - name: Create Issue From File
         if: env.exit_code != 0
-        uses: peter-evans/create-issue-from-file@v5
+        uses: peter-evans/create-issue-from-file@v6
         with:
           title: Link Checker Report
           content-filepath: ./lychee-out.md

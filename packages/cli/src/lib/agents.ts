@@ -8,22 +8,54 @@ import {
   unlinkSync
 } from 'node:fs'
 import { homedir } from 'node:os'
-import { dirname, join, relative } from 'node:path'
+import { dirname, join, relative, resolve } from 'node:path'
 
 export interface AgentConfig {
   name: string
   displayName: string
-  /** Relative path from project root for project-scope skills */
+  /**
+   * Relative path from project root for project-scope skills
+   */
   skillsDir: string
-  /** Whether this agent uses the canonical .agents/skills/ location directly */
+  /**
+   * Whether this agent uses the canonical .agents/skills/ location directly
+   */
   isUniversal: boolean
-  /** Check if the agent is installed on this machine */
+  /**
+   * Check if the agent is installed on this machine
+   */
   detectInstalled: () => boolean
 }
 
 const home = homedir()
 
 export const CANONICAL_DIR = '.agents/skills'
+
+/**
+ * Validate and sanitize a slug before using it in filesystem paths.
+ * Rejects path traversal attempts and non-alphanumeric characters.
+ */
+export function sanitizeSlug(slug: string): string {
+  if (!slug || typeof slug !== 'string') {
+    throw new Error('Invalid slug: empty or non-string')
+  }
+  // Only allow lowercase alphanumeric, hyphens, dots, and underscores
+  if (!/^[a-z0-9][a-z0-9._-]*$/i.test(slug) || slug.includes('..')) {
+    throw new Error(`Invalid slug: "${slug}" contains disallowed characters`)
+  }
+  return slug
+}
+
+/**
+ * Verify a resolved path stays within the expected parent directory.
+ */
+export function assertPathContainment(fullPath: string, parentDir: string): void {
+  const resolved = resolve(fullPath)
+  const expectedParent = resolve(parentDir)
+  if (!resolved.startsWith(`${expectedParent}/`)) {
+    throw new Error(`Path traversal detected: "${fullPath}" escapes "${parentDir}"`)
+  }
+}
 
 export const agents: AgentConfig[] = [
   {
@@ -87,8 +119,11 @@ export function createAgentSymlink(projectDir: string, slug: string, agent: Agen
     return false
   }
 
+  sanitizeSlug(slug)
   const canonicalPath = join(projectDir, CANONICAL_DIR, slug)
   const agentSkillPath = join(projectDir, agent.skillsDir, slug)
+  assertPathContainment(canonicalPath, join(projectDir, CANONICAL_DIR))
+  assertPathContainment(agentSkillPath, join(projectDir, agent.skillsDir))
 
   // Don't create symlink if canonical doesn't exist
   if (!existsSync(canonicalPath)) return false
@@ -124,7 +159,9 @@ export function createAgentSymlink(projectDir: string, slug: string, agent: Agen
  * Remove an agent's symlink or skill directory for a given slug.
  */
 export function removeAgentSkill(projectDir: string, slug: string, agent: AgentConfig): void {
+  sanitizeSlug(slug)
   const skillPath = join(projectDir, agent.skillsDir, slug)
+  assertPathContainment(skillPath, join(projectDir, agent.skillsDir))
   // Use lstatSync to detect entries including dangling symlinks
   try {
     const stat = lstatSync(skillPath)

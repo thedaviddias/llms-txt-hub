@@ -48,10 +48,7 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
-      className={cn(
-        'flex flex-col items-center justify-center h-[50vh] text-center',
-        className
-      )}
+      className={cn('flex flex-col items-center justify-center h-[50vh] text-center', className)}
     >
       <div className={iconContainerClassName}>
         <Icon className={cn('h-16 w-16 text-muted-foreground mb-4', iconClassName)} />

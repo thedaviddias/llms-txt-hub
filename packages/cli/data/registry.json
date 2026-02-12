@@ -6914,7 +6914,7 @@
     "category": "developer-tools"
   },
   {
-    "slug": "vercels-ai-sdk",
+    "slug": "vercel-ai-sdk",
     "name": "Vercel's AI SDK",
     "domain": "https://sdk.vercel.ai",
     "description": "From the creators of Next.js, the AI SDK is a free open-source library that gives you the tools you need to build AI-powered products.",

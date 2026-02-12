@@ -2,7 +2,7 @@
 
 import { useAuth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
-import { type ReactNode, createContext, useCallback, useContext, useEffect, useState } from 'react'
+import { createContext, type ReactNode, useCallback, useContext, useEffect, useState } from 'react'
 
 export interface FavoritesContextValue {
   favorites: string[]
@@ -21,6 +21,9 @@ interface FavoritesProviderProps {
   children: ReactNode
 }
 
+/**
+ * Provides favorites state management with localStorage and server sync
+ */
 export function FavoritesProvider({ children }: FavoritesProviderProps) {
   const [favorites, setFavorites] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -52,6 +55,10 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
   useEffect(() => {
     if (!isSignedIn || !user) return
 
+    /**
+     * Syncs local favorites with the user's server-side favorites
+
+     */
     const syncUserFavorites = async () => {
       try {
         const response = await fetch('/api/user/favorites')
@@ -189,6 +196,9 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
   return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>
 }
 
+/**
+ * Hook that provides access to the favorites context with safe defaults
+ */
 export function useFavorites(): FavoritesContextValue {
   const context = useContext(FavoritesContext)
 

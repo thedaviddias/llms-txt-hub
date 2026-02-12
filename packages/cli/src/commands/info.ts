@@ -37,10 +37,7 @@ export async function info(name: string): Promise<void> {
   p.log.message(pc.dim(entry.slug))
   p.log.message(entry.description)
   p.log.message(
-    `${pc.dim('Category:')}    ${entry.category}\n` +
-      `${pc.dim('Domain:')}      ${entry.domain}\n` +
-      `${pc.dim('llms.txt:')}    ${entry.llmsTxtUrl}` +
-      (entry.llmsFullTxtUrl ? `\n${pc.dim('Full:')}        ${entry.llmsFullTxtUrl}` : '')
+    `${pc.dim('Category:')}    ${entry.category}\n${pc.dim('Domain:')}      ${entry.domain}\n${pc.dim('llms.txt:')}    ${entry.llmsTxtUrl}${entry.llmsFullTxtUrl ? `\n${pc.dim('Full:')}        ${entry.llmsFullTxtUrl}` : ''}`
   )
 
   if (installed && lockEntry) {
@@ -49,9 +46,7 @@ export async function info(name: string): Promise<void> {
     )
     p.log.success('Installed')
     p.log.message(
-      `  Format:   ${lockEntry.format}\n` +
-        `  Size:     ${(lockEntry.size / 1024).toFixed(1)} KB\n` +
-        `  Fetched:  ${ageDays === 0 ? 'today' : `${ageDays} day(s) ago`}`
+      `  Format:   ${lockEntry.format}\n  Size:     ${(lockEntry.size / 1024).toFixed(1)} KB\n  Fetched:  ${ageDays === 0 ? 'today' : `${ageDays} day(s) ago`}`
     )
   } else {
     p.log.message(`${pc.dim('○ Not installed')}`)

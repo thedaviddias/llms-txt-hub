@@ -7,11 +7,11 @@
 
 import React, { useId } from 'react'
 import {
-  type FormData,
-  type FormErrors,
   createInputChangeHandler,
   createSelectChangeHandler,
   createUrlBlurHandler,
+  type FormData,
+  type FormErrors,
   validateCurrentForm
 } from './form-handlers'
 
@@ -214,72 +214,30 @@ export const TestSubmitProjectForm = () => {
       <div>
         <fieldset>
           <legend>Tags *</legend>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={formData.tags.includes('ai')}
-                onChange={e => {
-                  const newTags = e.target.checked
-                    ? [...formData.tags, 'ai']
-                    : formData.tags.filter(tag => tag !== 'ai')
-                  setFormData({ ...formData, tags: newTags })
-                  if (newTags.length > 0) {
-                    setErrors(prev => {
-                      const { tags, ...newErrors } = prev
-                      return newErrors
-                    })
-                  }
-                }}
-                data-testid="tag-ai"
-              />
-              AI
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={formData.tags.includes('development')}
-                onChange={e => {
-                  const newTags = e.target.checked
-                    ? [...formData.tags, 'development']
-                    : formData.tags.filter(tag => tag !== 'development')
-                  setFormData({ ...formData, tags: newTags })
-                  if (newTags.length > 0) {
-                    setErrors(prev => {
-                      const { tags, ...newErrors } = prev
-                      return newErrors
-                    })
-                  }
-                }}
-                data-testid="tag-development"
-              />
-              Development
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="checkbox"
-                checked={formData.tags.includes('productivity')}
-                onChange={e => {
-                  const newTags = e.target.checked
-                    ? [...formData.tags, 'productivity']
-                    : formData.tags.filter(tag => tag !== 'productivity')
-                  setFormData({ ...formData, tags: newTags })
-                  if (newTags.length > 0) {
-                    setErrors(prev => {
-                      const { tags, ...newErrors } = prev
-                      return newErrors
-                    })
-                  }
-                }}
-                data-testid="tag-productivity"
-              />
-              Productivity
-            </label>
-          </div>
+          {(['ai', 'development', 'productivity'] as const).map(tagName => (
+            <div key={tagName}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={formData.tags.includes(tagName)}
+                  onChange={e => {
+                    const newTags = e.target.checked
+                      ? [...formData.tags, tagName]
+                      : formData.tags.filter(tag => tag !== tagName)
+                    setFormData({ ...formData, tags: newTags })
+                    if (newTags.length > 0) {
+                      setErrors(prev => {
+                        const { tags: _tags, ...newErrors } = prev
+                        return newErrors
+                      })
+                    }
+                  }}
+                  data-testid={`tag-${tagName}`}
+                />
+                {tagName.charAt(0).toUpperCase() + tagName.slice(1)}
+              </label>
+            </div>
+          ))}
         </fieldset>
         {errors.tags && (
           <span id={tagsErrorId} data-testid="tags-error" role="alert">

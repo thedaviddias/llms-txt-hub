@@ -1,5 +1,5 @@
-import { useContributions } from '@/hooks/use-contributions'
 import { act, renderHook, waitFor } from '@testing-library/react'
+import { useContributions } from '@/hooks/use-contributions'
 
 // Mock fetch
 global.fetch = jest.fn()
@@ -92,7 +92,7 @@ describe('useContributions', () => {
   })
 
   it('should filter out invalid usernames', async () => {
-    const { result } = renderHook(() =>
+    const { result: _result } = renderHook(() =>
       useContributions({
         usernames: ['user1', '', '   ', null as any, undefined as any, 123 as any, 'user2'],
         enabled: true
@@ -313,7 +313,7 @@ describe('useContributions', () => {
   })
 
   it('should debounce rapid username changes', async () => {
-    const { result, rerender } = renderHook(
+    const { rerender } = renderHook(
       props =>
         useContributions({
           usernames: props.usernames,
@@ -425,7 +425,7 @@ describe('useContributions', () => {
   it('should handle usernames with special characters', async () => {
     const specialUsernames = ['user-1', 'user_2', 'user.3']
 
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useContributions({
         usernames: specialUsernames,
         enabled: true
@@ -472,7 +472,7 @@ describe('useContributions', () => {
   })
 
   it('should default enabled to true when not specified', async () => {
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useContributions({
         usernames: ['user1']
         // enabled not specified, should default to true
@@ -485,7 +485,7 @@ describe('useContributions', () => {
   })
 
   it('should handle undefined and null usernames in array', async () => {
-    const { result } = renderHook(() =>
+    renderHook(() =>
       useContributions({
         usernames: ['user1', undefined as any, null as any, 'user2'],
         enabled: true

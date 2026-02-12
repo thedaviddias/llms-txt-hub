@@ -21,7 +21,7 @@ export async function install(names: string[], options: InstallOptions): Promise
   if (names.length === 0) {
     logger.error('Please specify one or more names to install')
     p.log.message(pc.dim('Usage: llmstxt install <name...>'))
-    p.log.message(pc.dim('Example: llmstxt install astro clerk'))
+    p.log.message(pc.dim('Example: llmstxt install astro vercel-ai-sdk'))
     process.exitCode = 1
     return
   }

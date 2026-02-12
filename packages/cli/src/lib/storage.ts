@@ -3,10 +3,12 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileS
 import { join } from 'node:path'
 import type { RegistryEntry } from '../types/index.js'
 import {
+  assertPathContainment,
   CANONICAL_DIR,
   createAgentSymlink,
   detectInstalledAgents,
-  removeAgentSkill
+  removeAgentSkill,
+  sanitizeSlug
 } from './agents.js'
 
 const LLMS_DIR = '.llms'
@@ -90,7 +92,9 @@ export function installToAgents(
   const installedAgents: string[] = []
 
   // 1. Write canonical copy to .agents/skills/<slug>/
+  sanitizeSlug(slug)
   const canonicalDir = join(projectDir, CANONICAL_DIR, slug)
+  assertPathContainment(canonicalDir, join(projectDir, CANONICAL_DIR))
   mkdirSync(canonicalDir, { recursive: true })
 
   const { skillMd, referenceMd } = generateSkillMd(entry, content, format)
@@ -129,8 +133,10 @@ export function installToAgents(
  * Remove a skill from the canonical directory and all agent directories.
  */
 export function removeFromAgents(projectDir: string, slug: string): void {
+  sanitizeSlug(slug)
   // Remove canonical
   const canonicalDir = join(projectDir, CANONICAL_DIR, slug)
+  assertPathContainment(canonicalDir, join(projectDir, CANONICAL_DIR))
   if (existsSync(canonicalDir)) {
     rmSync(canonicalDir, { recursive: true, force: true })
   }
@@ -147,6 +153,7 @@ export function removeFromAgents(projectDir: string, slug: string): void {
  * Check whether a skill is installed in the canonical location.
  */
 export function isInstalled(projectDir: string, slug: string): boolean {
+  sanitizeSlug(slug)
   return existsSync(join(projectDir, CANONICAL_DIR, slug, 'SKILL.md'))
 }
 
@@ -156,24 +163,31 @@ export function isInstalled(projectDir: string, slug: string): boolean {
  * Append llms.txt entries to .gitignore if not already present.
  */
 export function addToGitignore(projectDir: string): boolean {
-  const gitignorePath = join(projectDir, '.gitignore')
-  const entries = [
-    '.llms/',
-    '.agents/skills/',
-    '.claude/skills/',
-    '.cursor/skills/',
-    '.windsurf/skills/',
-    '.cline/skills/'
-  ]
+  try {
+    const gitignorePath = join(projectDir, '.gitignore')
+    const gitignoreEntries = [
+      '.llms/',
+      '.agents/skills/',
+      '.claude/skills/',
+      '.cursor/skills/',
+      '.windsurf/skills/',
+      '.cline/skills/'
+    ]
 
-  if (existsSync(gitignorePath)) {
-    const content = readFileSync(gitignorePath, 'utf-8')
-    const missing = entries.filter(e => !content.includes(e))
-    if (missing.length === 0) return false
+    if (existsSync(gitignorePath)) {
+      const content = readFileSync(gitignorePath, 'utf-8')
+      const missing = gitignoreEntries.filter(e => !content.includes(e))
+      if (missing.length === 0) return false
 
-    appendFileSync(gitignorePath, `\n# llms.txt documentation\n${missing.join('\n')}\n`)
-  } else {
-    writeFileSync(gitignorePath, `# llms.txt documentation\n${entries.join('\n')}\n`)
+      appendFileSync(gitignorePath, `\n# llms.txt documentation\n${missing.join('\n')}\n`)
+    } else {
+      writeFileSync(gitignorePath, `# llms.txt documentation\n${gitignoreEntries.join('\n')}\n`)
+    }
+    return true
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    // Import dynamically to avoid circular — or just use console since this is non-critical
+    console.warn(`Could not update .gitignore: ${msg}`)
+    return false
   }
-  return true
 }

@@ -119,7 +119,7 @@ test.describe('Main Pages', () => {
       expect(cardCount).toBeGreaterThan(0)
 
       // Verify at least one card includes a favicon image
-      const faviconImages = page.locator('img[src*="icon.horse"], img[alt=""]').first()
+      const faviconImages = page.locator('img[src*="google.com/s2/favicons"], img[alt=""]').first()
       await expect(faviconImages).toBeVisible()
 
       // Verify article timestamps render with content
@@ -181,7 +181,7 @@ test.describe('Search and Navigation', () => {
     await expect(websiteLinks).toBeVisible()
 
     // Verify results contain favicons (FaviconWithFallback component)
-    const favicons = page.locator('img[alt=""], img[src*="icon.horse"]').first()
+    const favicons = page.locator('img[alt=""], img[src*="google.com/s2/favicons"]').first()
     await expect(favicons).toBeVisible()
 
     // Verify at least one result card has a description

@@ -32,7 +32,7 @@ const PREFERRED_ALIASES = {
 }
 
 // Files to exclude from relative import checking
-const EXCLUDE_PATTERNS = [
+const _EXCLUDE_PATTERNS = [
   /node_modules/,
   /\.test\./,
   /\.spec\./,
@@ -48,13 +48,17 @@ const EXCLUDE_PATTERNS = [
 
 const fs = require('node:fs')
 
-// Helper function to count relative import depth
+/**
+ * Counts the depth of a relative import by counting '..' segments
+ */
 function getRelativeDepth(importPath) {
   const parts = importPath.split('/')
   return parts.filter(part => part === '..').length
 }
 
-// Helper function to suggest preferred alias based on import path
+/**
+ * Suggests a preferred path alias for a relative import based on configured aliases
+ */
 function getSuggestedAlias(importPath) {
   for (const [key, alias] of Object.entries(PREFERRED_ALIASES)) {
     if (importPath.includes(key)) {
@@ -64,6 +68,9 @@ function getSuggestedAlias(importPath) {
   return null
 }
 
+/**
+ * Checks a file for relative import violations and returns an array of issues
+ */
 function checkFile(filePath) {
   const content = fs.readFileSync(filePath, 'utf-8')
   const lines = content.split('\n')
@@ -107,6 +114,9 @@ function checkFile(filePath) {
   return violations
 }
 
+/**
+ * Entry point that validates relative imports in files passed as CLI arguments
+ */
 function main() {
   const files = process.argv.slice(2)
 

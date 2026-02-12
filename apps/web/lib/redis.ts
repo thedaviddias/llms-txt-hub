@@ -48,7 +48,7 @@ function getRedisClient(): Redis | null {
         automaticDeserialization: true
         // Note: Request timeout handled per-operation via AbortController if needed
       })
-    } catch (error) {
+    } catch (_error) {
       // Silently fail - Redis is optional
       redis = null
     }
@@ -96,8 +96,8 @@ export async function get<T = string>(key: string): Promise<T | null> {
   }
 
   try {
-    const result = await client.get(key)
-    return result as T | null
+    const result: T | null = await client.get<T>(key)
+    return result
   } catch (error) {
     logger.error('Redis GET operation failed', {
       data: {

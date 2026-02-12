@@ -28,12 +28,12 @@ jest.mock('@clerk/backend', () => {
   }
 })
 
+import { auth } from '@thedaviddias/auth'
+import DOMPurify from 'isomorphic-dompurify'
 import { MALICIOUS_INPUTS } from '@/app/api/__tests__/test-helpers'
 // Import route AFTER mocks are set up
 import { POST } from '@/app/api/user/check-username/route'
 import { clearRateLimiting } from '@/lib/security-utils'
-import { auth } from '@thedaviddias/auth'
-import DOMPurify from 'isomorphic-dompurify'
 
 // Mock environment variable for Clerk
 process.env.CLERK_SECRET_KEY = 'test_secret_key'
@@ -43,7 +43,7 @@ process.env.CLERK_SECRET_KEY = 'test_secret_key'
  *
  * @returns void
  */
-const clearRouteRateLimit = () => {
+const _clearRouteRateLimit = () => {
   // Access the rate limit map from the module
   jest.resetModules()
 }
@@ -312,7 +312,7 @@ describe('Check Username API Route', () => {
       })
 
       const response = await POST(request)
-      const data = await response.json()
+      const _data = await response.json()
 
       expect(response.status).toBe(200)
       // Should check lowercase version

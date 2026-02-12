@@ -1,7 +1,7 @@
-import { Section } from '@/components/layout/section'
-import { Card } from '@/components/ui/card'
 import { SiReddit, SiX } from '@icons-pack/react-simple-icons'
 import { Linkedin } from 'lucide-react'
+import { Section } from '@/components/layout/section'
+import { Card } from '@/components/ui/card'
 
 const communities = [
   {
@@ -26,6 +26,9 @@ const communities = [
   }
 ]
 
+/**
+ * Renders the communities section with links to Reddit, X, and LinkedIn
+ */
 export function CommunitiesSection() {
   return (
     <Section

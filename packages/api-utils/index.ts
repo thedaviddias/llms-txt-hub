@@ -179,19 +179,19 @@ export function validateRequiredFields(
     if (!(field in body)) {
       return true
     }
-    
+
     const value = body[field]
-    
+
     // null or undefined
     if (value == null) {
       return true
     }
-    
+
     // For strings, trim and check if empty
     if (typeof value === 'string' && value.trim() === '') {
       return true
     }
-    
+
     // All other values (including false, 0) are valid
     return false
   })

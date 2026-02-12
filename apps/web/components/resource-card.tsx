@@ -1,8 +1,8 @@
-import { Card } from '@/components/ui/card'
-import { formatDate } from '@/lib/utils'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { Card } from '@/components/ui/card'
+import { formatDate } from '@/lib/utils'
 
 interface ResourceCardProps {
   resource: {
@@ -17,6 +17,9 @@ interface ResourceCardProps {
   }
 }
 
+/**
+ * Renders a card displaying a resource with title, description, and metadata
+ */
 export function ResourceCard({ resource }: ResourceCardProps) {
   return (
     <Card className="p-6 transition-all hover:border-primary hover:bg-muted/50">

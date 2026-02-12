@@ -1,5 +1,8 @@
 // Mock for @t3-oss/env-nextjs to avoid ESM issues in Jest
 
+/**
+ * Creates a mock environment configuration for testing
+ */
 export function createEnv(config: any) {
   // Return a mock object with the expected environment variables
   return {

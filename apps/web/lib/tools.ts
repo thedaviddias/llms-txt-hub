@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
-import { Chrome, Code2, Command, GitBranch } from 'lucide-react'
+import { Chrome, Code2, Command, GitBranch, Terminal } from 'lucide-react'
 
 export interface Tool {
   name: string
@@ -37,5 +37,12 @@ export const tools: Tool[] = [
     icon: Command,
     url: 'https://www.raycast.com/thedaviddias/llms-txt',
     description: 'Search llms.txt hub from Raycast'
+  },
+  {
+    name: 'CLI',
+    slug: 'cli',
+    icon: Terminal,
+    url: 'https://www.npmjs.com/package/llmstxt-cli',
+    description: 'Install llms.txt docs into your AI agents'
   }
 ]

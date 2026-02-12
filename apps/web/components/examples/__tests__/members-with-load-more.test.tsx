@@ -1,10 +1,10 @@
+import { fireEvent, render, screen } from '@testing-library/react'
+import { useRouter } from 'next/navigation'
 import { MembersWithLoadMore } from '@/components/examples/members-with-load-more'
 import { useContributions } from '@/hooks/use-contributions'
 import { useApiLoadMore } from '@/hooks/use-load-more'
 import { useMembersList } from '@/hooks/use-members-list'
 import { analytics } from '@/lib/analytics'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { useRouter } from 'next/navigation'
 
 // Mock dependencies
 jest.mock('next/navigation', () => ({

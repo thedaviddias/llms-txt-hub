@@ -1,11 +1,11 @@
 'use client'
 
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { fetchWithCSRF } from '@/lib/csrf-client'
 import { useAuth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { fetchWithCSRF } from '@/lib/csrf-client'
 
 interface FormData {
   firstName: string

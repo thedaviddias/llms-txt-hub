@@ -27,26 +27,26 @@
     "build": "pnpm build:registry && tsup",
     "build:registry": "tsx scripts/build-registry.ts",
     "dev": "tsup --watch",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@clack/prompts": "^1.0.0",
+    "@clack/prompts": "^1.0.1",
     "commander": "^13.1.0",
     "fuse.js": "^7.1.0",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^22.13.17",
+    "@types/node": "^22.19.11",
     "gray-matter": "^4.0.3",
-    "tsup": "^8.4.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "vitest": "^3.0.0"
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "publishConfig": {
     "access": "public"

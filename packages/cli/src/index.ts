@@ -13,10 +13,10 @@ const program = new Command()
 program
   .name('llmstxt')
   .description('Install llms.txt files from the llms-txt-hub registry into your AI coding tools')
-  .version('0.1.0')
+  .version(__CLI_VERSION__)
   .action(() => {
     // Bare `llmstxt` with no command: show banner + help
-    printBanner('0.1.0')
+    printBanner(__CLI_VERSION__)
     program.outputHelp()
   })
 
@@ -68,4 +68,8 @@ program
   .argument('<name>', 'Name or slug to look up')
   .action(info)
 
-program.parse()
+program.parseAsync().catch((err: unknown) => {
+  const msg = err instanceof Error ? err.message : String(err)
+  console.error(`\nError: ${msg}`)
+  process.exitCode = 1
+})

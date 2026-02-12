@@ -43,10 +43,7 @@ export async function search(query: string, options: SearchOptions): Promise<voi
 
   for (const entry of results) {
     p.log.message(
-      `  ${pc.cyan(pc.bold(entry.name))} ${pc.dim(`(${entry.slug})`)}\n` +
-        `    ${entry.description}\n` +
-        `    ${pc.dim(entry.category)} · ${pc.dim(entry.llmsTxtUrl)}` +
-        (entry.llmsFullTxtUrl ? `\n    ${pc.dim('full:')} ${pc.dim(entry.llmsFullTxtUrl)}` : '')
+      `  ${pc.cyan(pc.bold(entry.name))} ${pc.dim(`(${entry.slug})`)}\n    ${entry.description}\n    ${pc.dim(entry.category)} · ${pc.dim(entry.llmsTxtUrl)}${entry.llmsFullTxtUrl ? `\n    ${pc.dim('full:')} ${pc.dim(entry.llmsFullTxtUrl)}` : ''}`
     )
   }
 

@@ -49,7 +49,7 @@ function buildRegistry(): void {
       const category = (data.category || 'other').replace(/'/g, '')
 
       return {
-        slug: toSlug(data.name),
+        slug: data.slug || toSlug(data.name),
         name: data.name,
         domain: data.website || '',
         description: data.description || '',

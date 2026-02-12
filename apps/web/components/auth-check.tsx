@@ -1,13 +1,13 @@
 'use client'
 
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { Card } from '@/components/ui/card'
-import { UserMessageBanner } from '@/components/ui/user-message-banner'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Github, Mail } from 'lucide-react'
 import Link from 'next/link'
 import type React from 'react'
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { Card } from '@/components/ui/card'
+import { UserMessageBanner } from '@/components/ui/user-message-banner'
 
 interface AuthCheckProps {
   children: React.ReactNode
@@ -15,6 +15,9 @@ interface AuthCheckProps {
   fallbackContent?: React.ReactNode
 }
 
+/**
+ * Renders children only when auth requirements are met, showing sign-in prompts otherwise
+ */
 export function AuthCheck({ children, requireGitHub = false, fallbackContent }: AuthCheckProps) {
   const { user, signIn } = useAuth()
 

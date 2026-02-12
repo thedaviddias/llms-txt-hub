@@ -1,5 +1,5 @@
-import { render, screen } from '@/__tests__/utils/test-utils.helper'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import { render, screen } from '@/__tests__/utils/test-utils.helper'
 
 // Mock getBaseUrl first so it's available when the component mock is created
 jest.mock('@thedaviddias/utils/get-base-url', () => ({

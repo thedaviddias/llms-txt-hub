@@ -103,6 +103,10 @@ export async function update(name: string | undefined, options: UpdateOptions): 
   if (failed > 0) lines.push(`${pc.red('✗')} Failed: ${failed}`)
   p.note(lines.join('\n'), 'Summary')
 
+  if (failed > 0) {
+    process.exitCode = 1
+  }
+
   track({
     event: 'update',
     skills: updatedSlugs.join(',')

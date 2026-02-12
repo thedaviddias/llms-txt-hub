@@ -12,6 +12,38 @@ let fuseIndex: Fuse<RegistryEntry> | null = null
 let entries: RegistryEntry[] = []
 
 /**
+ * Validate that an object looks like a valid RegistryEntry.
+ */
+function isValidEntry(entry: unknown): entry is RegistryEntry {
+  if (typeof entry !== 'object' || entry === null) return false
+
+  if (
+    !('slug' in entry) ||
+    !('name' in entry) ||
+    !('llmsTxtUrl' in entry) ||
+    !('category' in entry) ||
+    !('description' in entry) ||
+    !('domain' in entry)
+  ) {
+    return false
+  }
+
+  const { slug, name, llmsTxtUrl, category, description, domain } = entry
+
+  return (
+    typeof slug === 'string' &&
+    slug.length > 0 &&
+    typeof name === 'string' &&
+    name.length > 0 &&
+    typeof llmsTxtUrl === 'string' &&
+    llmsTxtUrl.length > 0 &&
+    typeof category === 'string' &&
+    typeof description === 'string' &&
+    typeof domain === 'string'
+  )
+}
+
+/**
  * Build a Fuse.js search index from registry entries.
  */
 function buildFuseIndex(data: RegistryEntry[]): Fuse<RegistryEntry> {
@@ -49,9 +81,11 @@ export async function loadRegistry(): Promise<RegistryEntry[]> {
     clearTimeout(timeout)
 
     if (response.ok) {
-      const data: RegistryEntry[] = await response.json()
-      if (Array.isArray(data) && data.length > 0) {
-        entries = data
+      const raw: unknown = await response.json()
+      if (Array.isArray(raw) && raw.length > 0) {
+        const validated = raw.filter(isValidEntry)
+        if (validated.length === 0) throw new Error('No valid entries in remote registry')
+        entries = validated
         setCachedRegistry(entries)
         fuseIndex = buildFuseIndex(entries)
         return entries

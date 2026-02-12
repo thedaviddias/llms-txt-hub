@@ -3,10 +3,10 @@
  * Tests are optimized for speed and run only related tests on pre-commit
  */
 
-import { render } from '@/__tests__/utils/test-utils.helper'
-import { FavoritesProvider } from '@/contexts/favorites-context'
 import { jest } from '@jest/globals'
-import NotFound from '../app/not-found'
+import { render } from '@/__tests__/utils/test-utils.helper'
+import NotFound from '@/app/not-found'
+import { FavoritesProvider } from '@/contexts/favorites-context'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({

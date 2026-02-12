@@ -12,16 +12,16 @@
     "@thedaviddias/auth": "workspace:*",
     "@thedaviddias/design-system": "workspace:*",
     "@vercel/flags": "^3.1.1",
-    "@vercel/toolbar": "^0.1.36",
-    "react": "^19.1.0",
-    "zod": "^3.24.2"
+    "@vercel/toolbar": "^0.1.41",
+    "react": "^19.2.4",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "@types/node": "^22.13.17",
-    "@types/react": "19.0.12",
-    "@types/react-dom": "^19.0.4",
-    "next": "15.5.7",
-    "typescript": "^5.8.2"
+    "@types/node": "^22.19.11",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "next": "16.1.6",
+    "typescript": "^5.9.3"
   }
 }

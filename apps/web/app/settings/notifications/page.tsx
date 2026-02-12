@@ -1,18 +1,18 @@
 'use client'
 
-import { NewsletterModal } from '@/components/newsletter-modal'
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Mail } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { NewsletterModal } from '@/components/newsletter-modal'
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 
 export default function NotificationsSettingsPage() {
   const { user } = useAuth()
   const [showNewsletterModal, setShowNewsletterModal] = useState(false)
-  const [settings, setSettings] = useState({
+  const [_settings, setSettings] = useState({
     emailNewsletter: false,
     emailUpdates: true,
     emailSubmissions: true,
@@ -22,19 +22,25 @@ export default function NotificationsSettingsPage() {
     communityUpdates: false
   })
 
-  const hasGitHubAuth =
+  const _hasGitHubAuth =
     user && (user.user_metadata?.github_username || user.user_metadata?.user_name)
 
   useEffect(() => {
     analytics.settingsPageView('notifications', 'settings')
   }, [])
 
-  const handleSettingChange = (key: string, value: boolean) => {
+  /**
+   * Updates a notification setting preference
+   */
+  const _handleSettingChange = (key: string, value: boolean) => {
     setSettings(prev => ({ ...prev, [key]: value }))
     analytics.settingsToggleChange(key, value, 'notifications')
     toast.success('Notification preference updated')
   }
 
+  /**
+   * Opens the newsletter subscription modal
+   */
   const handleNewsletterSubscribe = () => {
     analytics.newsletterSignup('settings-notifications')
     setShowNewsletterModal(true)

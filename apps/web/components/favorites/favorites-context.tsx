@@ -1,13 +1,13 @@
 'use client'
 
+import { useAuth } from '@thedaviddias/auth'
+import { logger } from '@thedaviddias/logging'
+import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import {
   getFavoritesFromStorage,
   saveFavoritesToStorage,
   toggleFavorite as toggleFavoriteLogic
 } from '@/lib/favorites'
-import { useAuth } from '@thedaviddias/auth'
-import { logger } from '@thedaviddias/logging'
-import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 interface FavoritesContextType {
   favorites: Set<string>
@@ -19,6 +19,9 @@ interface FavoritesContextType {
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined)
 
+/**
+ * Provides favorites state and actions to child components
+ */
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [isLoading, setIsLoading] = useState(true)
@@ -35,6 +38,10 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!user) return
 
+    /**
+     * Syncs local favorites with the user's server-side profile
+
+     */
     const syncWithProfile = async () => {
       try {
         // TODO: Implement user profile sync
@@ -90,6 +97,9 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * Hook that provides access to the favorites context
+ */
 export function useFavorites() {
   const context = useContext(FavoritesContext)
   if (context === undefined) {

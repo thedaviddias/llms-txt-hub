@@ -126,7 +126,7 @@ export function createUrlBlurHandler(
     // Clear URL error when field has content
     if (formData.url.trim() && errors.url) {
       setErrors(prev => {
-        const { url, ...newErrors } = prev
+        const { url: _url, ...newErrors } = prev
         return newErrors
       })
     }

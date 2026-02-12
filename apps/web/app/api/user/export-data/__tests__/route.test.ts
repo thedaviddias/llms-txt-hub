@@ -1,5 +1,5 @@
-import { GET } from '@/app/api/user/export-data/route'
 import { logger } from '@thedaviddias/logging'
+import { GET } from '@/app/api/user/export-data/route'
 
 // Mock dependencies
 jest.mock('@thedaviddias/auth', () => ({

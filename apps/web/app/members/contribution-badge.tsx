@@ -1,14 +1,17 @@
 'use client'
 
-import { getUserContributions } from '@/lib/github-contributions'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Star } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
+import { getUserContributions } from '@/lib/github-contributions'
 
 interface ContributionBadgeProps {
   username: string
 }
 
+/**
+ * Displays a contributor badge for users with GitHub contributions
+ */
 export function ContributionBadge({ username }: ContributionBadgeProps) {
   const [isContributor, setIsContributor] = useState<boolean | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -52,12 +55,16 @@ export function ContributionBadge({ username }: ContributionBadgeProps) {
   useEffect(() => {
     if (!isVisible || isLoading || isContributor !== null) return
 
+    /**
+     * Fetches contribution data for the given username
+
+     */
     const fetchContributions = async () => {
       setIsLoading(true)
       try {
         const contributions = await getUserContributions(username)
         setIsContributor(contributions.total > 0)
-      } catch (error) {
+      } catch (_error) {
         // On error, assume not a contributor
         setIsContributor(false)
       } finally {

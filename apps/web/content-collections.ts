@@ -11,6 +11,7 @@ const websites = defineCollection({
   directory: websitesPath,
   include: '**/*.mdx',
   schema: z => ({
+    slug: z.string().optional(),
     name: z.string(),
     description: z.string(),
     website: z.string().url(),

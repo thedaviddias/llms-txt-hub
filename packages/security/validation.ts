@@ -1,5 +1,5 @@
 import validator from 'validator'
-import { MALICIOUS_PROTOCOLS, RESERVED_USERNAMES } from './constants'
+import { RESERVED_USERNAMES } from './constants'
 import { sanitizeText } from './sanitization'
 import type { URLValidationOptions, ValidationResult } from './types'
 

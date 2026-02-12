@@ -25,8 +25,11 @@ export function getCachedRegistry(): RegistryEntry[] | null {
     if (age > CACHE_TTL_MS) return null
 
     const raw = readFileSync(CACHE_FILE, 'utf-8')
-    const parsed: RegistryEntry[] = JSON.parse(raw)
-    return parsed
+    const parsed: unknown = JSON.parse(raw)
+    if (!Array.isArray(parsed)) return null
+    // Each element is validated by the caller (validateRegistryData in registry.ts)
+    const entries: RegistryEntry[] = parsed
+    return entries
   } catch {
     return null
   }

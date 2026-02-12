@@ -4,6 +4,56 @@ const TIMEOUT_MS = 30_000
 const MAX_SIZE = 10 * 1024 * 1024 // 10MB
 const MAX_CONCURRENT = 5
 
+const PRIVATE_IP_PREFIXES = [
+  '127.',
+  '10.',
+  '192.168.',
+  '0.0.0.0',
+  '0.',
+  '169.254.',
+  '172.16.',
+  '172.17.',
+  '172.18.',
+  '172.19.',
+  '172.20.',
+  '172.21.',
+  '172.22.',
+  '172.23.',
+  '172.24.',
+  '172.25.',
+  '172.26.',
+  '172.27.',
+  '172.28.',
+  '172.29.',
+  '172.30.',
+  '172.31.'
+]
+
+/**
+ * Validate a URL before fetching: must be http(s) and not target private networks.
+ */
+function validateUrl(url: string): void {
+  let parsed: URL
+  try {
+    parsed = new URL(url)
+  } catch {
+    throw new Error(`Invalid URL: ${url}`)
+  }
+
+  if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') {
+    throw new Error(`Unsupported protocol "${parsed.protocol}" in URL: ${url}`)
+  }
+
+  const hostname = parsed.hostname
+  if (
+    hostname === 'localhost' ||
+    hostname === '[::1]' ||
+    PRIVATE_IP_PREFIXES.some(prefix => hostname.startsWith(prefix))
+  ) {
+    throw new Error(`URL targets a private/reserved address: ${url}`)
+  }
+}
+
 let activeRequests = 0
 const queue: Array<() => void> = []
 
@@ -39,6 +89,7 @@ export async function fetchLlmsTxt(
   url: string,
   existingEtag?: string | null
 ): Promise<FetchResult> {
+  validateUrl(url)
   await acquireSlot()
   try {
     const controller = new AbortController()
@@ -49,10 +100,19 @@ export async function fetchLlmsTxt(
       headers['If-None-Match'] = existingEtag
     }
 
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers
-    })
+    let response: Response
+    try {
+      response = await fetch(url, {
+        signal: controller.signal,
+        headers
+      })
+    } catch (err) {
+      clearTimeout(timeout)
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        throw new Error(`Request timed out after ${TIMEOUT_MS / 1000}s: ${url}`)
+      }
+      throw new Error(`Failed to fetch ${url}: ${err instanceof Error ? err.message : String(err)}`)
+    }
     clearTimeout(timeout)
 
     if (response.status === 304) {

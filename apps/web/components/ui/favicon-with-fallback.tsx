@@ -37,7 +37,7 @@ export function FaviconWithFallback({
 
   return (
     <img
-      src={getFaviconUrl(website) || '/placeholder.svg'}
+      src={getFaviconUrl(website, 256) || '/placeholder.svg'}
       alt={`${name} favicon`}
       width={size}
       height={size}

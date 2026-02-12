@@ -2,8 +2,8 @@
  * Tests for settings pages to ensure they load without errors
  */
 
-import { render, screen } from '@/__tests__/utils/test-utils.helper'
 import { jest } from '@jest/globals'
+import { render, screen } from '@/__tests__/utils/test-utils.helper'
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({

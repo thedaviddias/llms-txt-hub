@@ -27,7 +27,7 @@ export async function init(options: InitOptions): Promise<void> {
   const projectDir = process.cwd()
   const isInteractive = process.stdin.isTTY && !options.yes
 
-  printBanner('0.1.0')
+  printBanner(__CLI_VERSION__)
   p.intro('Install llms.txt documentation for your project')
 
   const spin = logger.spinner('Loading registry...')

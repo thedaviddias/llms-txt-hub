@@ -1,7 +1,10 @@
+import { Code2, FileText, Zap } from 'lucide-react'
 import { Section } from '@/components/layout/section'
 import { Card, CardContent } from '@/components/ui/card'
-import { Code2, FileText, Zap } from 'lucide-react'
 
+/**
+ * Renders the "How llms.txt Works" explainer section
+ */
 export function HowItWorksSection() {
   return (
     <Section
