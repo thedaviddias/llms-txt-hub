@@ -27,6 +27,17 @@
     "wrangler": "cloudflare",
     "@upstash/redis": "upstash",
     "@upstash/ratelimit": "upstash",
-    "convex": "convex"
+    "convex": "convex",
+    "ai": "vercel-ai-sdk",
+    "@ai-sdk/openai": "vercel-ai-sdk",
+    "@ai-sdk/anthropic": "vercel-ai-sdk",
+    "@ai-sdk/google": "vercel-ai-sdk",
+    "hono": "hono",
+    "effect": "effect",
+    "daisyui": "daisyui",
+    "prettier": "prettier",
+    "meilisearch": "meilisearch",
+    "better-auth": "better-auth",
+    "@better-auth/core": "better-auth"
   }
 }

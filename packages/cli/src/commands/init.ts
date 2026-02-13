@@ -81,7 +81,7 @@ export async function init(options: InitOptions): Promise<void> {
   if (options.dryRun) {
     // Show what would be installed
     for (const match of matches) {
-      const already = isInstalled(projectDir, match.slug)
+      const already = isInstalled({ projectDir, slug: match.slug })
       const status = already ? pc.dim(' (already installed)') : ''
       p.log.message(`  ${pc.cyan(match.registryEntry.name)}${status}`)
     }
@@ -105,7 +105,7 @@ export async function init(options: InitOptions): Promise<void> {
     const options_list: { value: string; label: string; hint?: string }[] = []
     for (const [category, group] of byCategory) {
       for (const match of group) {
-        const already = isInstalled(projectDir, match.slug)
+        const already = isInstalled({ projectDir, slug: match.slug })
         options_list.push({
           value: match.slug,
           label: match.registryEntry.name,
@@ -119,7 +119,9 @@ export async function init(options: InitOptions): Promise<void> {
     const selected = await p.multiselect({
       message: 'Select skills to install:',
       options: options_list,
-      initialValues: matches.filter(m => !isInstalled(projectDir, m.slug)).map(m => m.slug),
+      initialValues: matches
+        .filter(m => !isInstalled({ projectDir, slug: m.slug }))
+        .map(m => m.slug),
       required: false
     })
 
@@ -147,7 +149,9 @@ export async function init(options: InitOptions): Promise<void> {
     }
   } else {
     // Non-interactive: install all non-installed matches
-    selectedSlugs = new Set(matches.filter(m => !isInstalled(projectDir, m.slug)).map(m => m.slug))
+    selectedSlugs = new Set(
+      matches.filter(m => !isInstalled({ projectDir, slug: m.slug })).map(m => m.slug)
+    )
     if (!process.stdin.isTTY) {
       p.log.message(pc.dim('Non-interactive mode. Use -y to skip prompts.'))
     }
@@ -167,10 +171,11 @@ export async function init(options: InitOptions): Promise<void> {
     }
 
     const entry = match.registryEntry
-    const url =
-      format === 'llms-full.txt' && entry.llmsFullTxtUrl ? entry.llmsFullTxtUrl : entry.llmsTxtUrl
+    const actualFormat: 'llms.txt' | 'llms-full.txt' =
+      format === 'llms-full.txt' && entry.llmsFullTxtUrl ? 'llms-full.txt' : 'llms.txt'
+    const url = actualFormat === 'llms-full.txt' ? entry.llmsFullTxtUrl! : entry.llmsTxtUrl
 
-    if (isInstalled(projectDir, match.slug)) {
+    if (isInstalled({ projectDir, slug: match.slug })) {
       skipped++
       continue
     }
@@ -179,24 +184,31 @@ export async function init(options: InitOptions): Promise<void> {
     spin3.start()
 
     try {
-      const result = await fetchLlmsTxt(url)
-      const actualFormat =
-        format === 'llms-full.txt' && entry.llmsFullTxtUrl ? 'llms-full.txt' : 'llms.txt'
+      const result = await fetchLlmsTxt({ url })
       const {
         checksum,
         size,
         agents: installedTo
-      } = installToAgents(projectDir, match.slug, entry, result.content, actualFormat)
-      addEntry(projectDir, {
+      } = installToAgents({
+        projectDir,
         slug: match.slug,
-        format: actualFormat,
-        sourceUrl: url,
-        etag: result.etag,
-        lastModified: result.lastModified,
-        fetchedAt: new Date().toISOString(),
-        checksum,
-        size,
-        name: entry.name
+        entry,
+        content: result.content,
+        format: actualFormat
+      })
+      addEntry({
+        projectDir,
+        entry: {
+          slug: match.slug,
+          format: actualFormat,
+          sourceUrl: url,
+          etag: result.etag,
+          lastModified: result.lastModified,
+          fetchedAt: new Date().toISOString(),
+          checksum,
+          size,
+          name: entry.name
+        }
       })
       spin3.succeed(`${entry.name} ${pc.dim(`→ ${installedTo.join(', ')}`)}`)
       installed++

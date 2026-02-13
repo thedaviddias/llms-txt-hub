@@ -82,13 +82,15 @@ function acquireSlot(): Promise<void> {
   })
 }
 
+export interface FetchLlmsTxtInput {
+  url: string
+  existingEtag?: string | null
+}
+
 /**
  * Fetch an llms.txt file with concurrency control and ETag support.
  */
-export async function fetchLlmsTxt(
-  url: string,
-  existingEtag?: string | null
-): Promise<FetchResult> {
+export async function fetchLlmsTxt({ url, existingEtag }: FetchLlmsTxtInput): Promise<FetchResult> {
   validateUrl(url)
   await acquireSlot()
   try {
@@ -107,13 +109,13 @@ export async function fetchLlmsTxt(
         headers
       })
     } catch (err) {
-      clearTimeout(timeout)
       if (err instanceof DOMException && err.name === 'AbortError') {
         throw new Error(`Request timed out after ${TIMEOUT_MS / 1000}s: ${url}`)
       }
       throw new Error(`Failed to fetch ${url}: ${err instanceof Error ? err.message : String(err)}`)
+    } finally {
+      clearTimeout(timeout)
     }
-    clearTimeout(timeout)
 
     if (response.status === 304) {
       return {

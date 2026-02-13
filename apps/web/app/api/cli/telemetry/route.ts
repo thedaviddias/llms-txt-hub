@@ -7,8 +7,14 @@ const DAY_SECONDS = 86_400
 const TTL_DAYS = 90
 const TTL_SECONDS = TTL_DAYS * DAY_SECONDS
 
-// In-memory rate limiting (same pattern as check-url/route.ts)
-const requestCounts = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT_MAX = 60
+const RATE_LIMIT_WINDOW_SECONDS = 60
+
+// Module-scoped Redis client (reused across requests)
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN
+const redis: Redis | null =
+  redisUrl && redisToken ? new Redis({ url: redisUrl, token: redisToken }) : null
 
 /**
  * Extract client IP from request headers for rate limiting.
@@ -17,40 +23,35 @@ function getRateLimitKey(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for')
   const realIP = request.headers.get('x-real-ip')
   const ip = forwarded ? forwarded.split(',')[0].trim() : realIP || 'unknown'
-  return `cli-telemetry:${ip}`
+  return ip
 }
 
 /**
- * Check if a request is within the rate limit window (60 req/min).
+ * Check rate limit using Redis INCR + EXPIRE for serverless-safe windowed limiting.
+ * Returns null (allowed) or the number of seconds until the window resets.
  */
-function checkRateLimit(identifier: string): { allowed: boolean; resetTime?: number } {
-  const maxRequests = 60
-  const windowMs = 60_000
-  const now = Date.now()
-
-  const record = requestCounts.get(identifier)
-
-  if (!record || now > record.resetTime) {
-    requestCounts.set(identifier, { count: 1, resetTime: now + windowMs })
+async function checkRateLimit(
+  clientIp: string
+): Promise<{ allowed: boolean; retryAfterSeconds?: number }> {
+  if (!redis) {
+    // No Redis — allow all requests (best-effort, no durable rate limit)
     return { allowed: true }
   }
 
-  if (record.count >= maxRequests) {
-    return { allowed: false, resetTime: record.resetTime }
+  const key = `telemetry:rate:${clientIp}`
+  const count = await redis.incr(key)
+
+  // Set TTL on the first request in a new window
+  if (count === 1) {
+    await redis.expire(key, RATE_LIMIT_WINDOW_SECONDS)
   }
 
-  record.count++
-  return { allowed: true }
-}
+  if (count > RATE_LIMIT_MAX) {
+    const ttl = await redis.ttl(key)
+    return { allowed: false, retryAfterSeconds: ttl > 0 ? ttl : RATE_LIMIT_WINDOW_SECONDS }
+  }
 
-/**
- * Create a Redis client from environment variables, or null if not configured.
- */
-function getRedis(): Redis | null {
-  const url = process.env.UPSTASH_REDIS_REST_URL
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN
-  if (!url || !token) return null
-  return new Redis({ url, token })
+  return { allowed: true }
 }
 
 /**
@@ -73,18 +74,17 @@ function isValidEvent(value: unknown): value is (typeof ALLOWED_EVENTS)[number] 
  */
 export async function POST(request: NextRequest) {
   try {
-    const rateLimitKey = getRateLimitKey(request)
-    const rateLimit = checkRateLimit(rateLimitKey)
+    const clientIp = getRateLimitKey(request)
+    const rateLimit = await checkRateLimit(clientIp)
 
     if (!rateLimit.allowed) {
-      const retryAfter = rateLimit.resetTime
-        ? Math.ceil((rateLimit.resetTime - Date.now()) / 1000)
-        : 60
       return NextResponse.json(
         { ok: false, error: 'Rate limit exceeded' },
         {
           status: 429,
-          headers: { 'Retry-After': retryAfter.toString() }
+          headers: {
+            'Retry-After': (rateLimit.retryAfterSeconds ?? RATE_LIMIT_WINDOW_SECONDS).toString()
+          }
         }
       )
     }
@@ -97,7 +97,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ ok: false, error: 'Invalid event type' }, { status: 400 })
     }
 
-    const redis = getRedis()
     if (!redis) {
       // Redis not configured — accept silently
       return NextResponse.json({ ok: true })

@@ -9,15 +9,20 @@ import { loadRegistry, resolveSlug, searchRegistry } from '../lib/registry.js'
 import { addToGitignore, installToAgents, isInstalled } from '../lib/storage.js'
 import { track } from '../lib/telemetry.js'
 
-interface InstallOptions {
+export interface InstallOptions {
   full?: boolean
   force?: boolean
+}
+
+export interface InstallInput {
+  names: string[]
+  options: InstallOptions
 }
 
 /**
  * Install llms.txt skills by name or slug.
  */
-export async function install(names: string[], options: InstallOptions): Promise<void> {
+export async function install({ names, options }: InstallInput): Promise<void> {
   if (names.length === 0) {
     logger.error('Please specify one or more names to install')
     p.log.message(pc.dim('Usage: llmstxt install <name...>'))
@@ -79,7 +84,7 @@ export async function install(names: string[], options: InstallOptions): Promise
       }
     }
 
-    if (!options.force && isInstalled(projectDir, entry.slug)) {
+    if (!options.force && isInstalled({ projectDir, slug: entry.slug })) {
       p.log.info(`${entry.name} already installed (use --force to re-download)`)
       continue
     }
@@ -97,22 +102,25 @@ export async function install(names: string[], options: InstallOptions): Promise
     spin2.start()
 
     try {
-      const result = await fetchLlmsTxt(url)
+      const result = await fetchLlmsTxt({ url })
       const {
         checksum,
         size,
         agents: installedTo
-      } = installToAgents(projectDir, entry.slug, entry, result.content, format)
-      addEntry(projectDir, {
-        slug: entry.slug,
-        format,
-        sourceUrl: url,
-        etag: result.etag,
-        lastModified: result.lastModified,
-        fetchedAt: new Date().toISOString(),
-        checksum,
-        size,
-        name: entry.name
+      } = installToAgents({ projectDir, slug: entry.slug, entry, content: result.content, format })
+      addEntry({
+        projectDir,
+        entry: {
+          slug: entry.slug,
+          format,
+          sourceUrl: url,
+          etag: result.etag,
+          lastModified: result.lastModified,
+          fetchedAt: new Date().toISOString(),
+          checksum,
+          size,
+          name: entry.name
+        }
       })
       const agentList = installedTo.join(', ')
       spin2.succeed(`${entry.name} ${pc.dim(`→ ${agentList}`)}`)

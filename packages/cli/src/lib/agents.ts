@@ -110,11 +110,17 @@ export function detectInstalledAgents(): AgentConfig[] {
   return agents.filter(a => a.detectInstalled())
 }
 
+export interface CreateAgentSymlinkInput {
+  projectDir: string
+  slug: string
+  agent: AgentConfig
+}
+
 /**
  * Create a relative symlink from an agent's skills dir to the canonical location.
  * E.g., .claude/skills/<slug>/ → ../../.agents/skills/<slug>/
  */
-export function createAgentSymlink(projectDir: string, slug: string, agent: AgentConfig): boolean {
+export function createAgentSymlink({ projectDir, slug, agent }: CreateAgentSymlinkInput): boolean {
   if (agent.isUniversal) {
     return false
   }
@@ -131,18 +137,19 @@ export function createAgentSymlink(projectDir: string, slug: string, agent: Agen
   // Create parent directory
   mkdirSync(dirname(agentSkillPath), { recursive: true })
 
-  // Remove existing symlink/directory if present
-  if (existsSync(agentSkillPath)) {
-    try {
+  // Remove existing symlink/directory if present (use lstat to detect dangling symlinks)
+  try {
+    const stat = lstatSync(agentSkillPath)
+    if (stat.isSymbolicLink()) {
       const target = readlinkSync(agentSkillPath)
-      // Already a symlink — check if it points to the right place
       const expectedTarget = relative(dirname(agentSkillPath), canonicalPath)
       if (target === expectedTarget) return true
       unlinkSync(agentSkillPath)
-    } catch {
-      // Not a symlink — remove the directory
+    } else {
       rmSync(agentSkillPath, { recursive: true, force: true })
     }
+  } catch {
+    // Path doesn't exist — proceed to create symlink
   }
 
   const relTarget = relative(dirname(agentSkillPath), canonicalPath)
@@ -155,10 +162,16 @@ export function createAgentSymlink(projectDir: string, slug: string, agent: Agen
   }
 }
 
+export interface RemoveAgentSkillInput {
+  projectDir: string
+  slug: string
+  agent: AgentConfig
+}
+
 /**
  * Remove an agent's symlink or skill directory for a given slug.
  */
-export function removeAgentSkill(projectDir: string, slug: string, agent: AgentConfig): void {
+export function removeAgentSkill({ projectDir, slug, agent }: RemoveAgentSkillInput): void {
   sanitizeSlug(slug)
   const skillPath = join(projectDir, agent.skillsDir, slug)
   assertPathContainment(skillPath, join(projectDir, agent.skillsDir))

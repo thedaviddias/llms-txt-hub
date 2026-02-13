@@ -58,10 +58,15 @@ export function readLockfile(projectDir: string): Lockfile {
   }
 }
 
+export interface WriteLockfileInput {
+  projectDir: string
+  lockfile: Lockfile
+}
+
 /**
  * Write the lockfile to disk atomically via a temp file.
  */
-export function writeLockfile(projectDir: string, lockfile: Lockfile): void {
+export function writeLockfile({ projectDir, lockfile }: WriteLockfileInput): void {
   const lockfilePath = getLockfilePath(projectDir)
   const dir = dirname(lockfilePath)
   mkdirSync(dir, { recursive: true })
@@ -73,28 +78,43 @@ export function writeLockfile(projectDir: string, lockfile: Lockfile): void {
   renameSync(tmpPath, lockfilePath)
 }
 
+export interface AddEntryInput {
+  projectDir: string
+  entry: LockfileEntry
+}
+
 /**
  * Add or update a single entry in the lockfile.
  */
-export function addEntry(projectDir: string, entry: LockfileEntry): void {
+export function addEntry({ projectDir, entry }: AddEntryInput): void {
   const lockfile = readLockfile(projectDir)
   lockfile.entries[entry.slug] = entry
-  writeLockfile(projectDir, lockfile)
+  writeLockfile({ projectDir, lockfile })
+}
+
+export interface RemoveEntryInput {
+  projectDir: string
+  slug: string
 }
 
 /**
  * Remove an entry from the lockfile by slug.
  */
-export function removeEntry(projectDir: string, slug: string): void {
+export function removeEntry({ projectDir, slug }: RemoveEntryInput): void {
   const lockfile = readLockfile(projectDir)
   delete lockfile.entries[slug]
-  writeLockfile(projectDir, lockfile)
+  writeLockfile({ projectDir, lockfile })
+}
+
+export interface GetEntryInput {
+  projectDir: string
+  slug: string
 }
 
 /**
  * Look up a single lockfile entry by slug.
  */
-export function getEntry(projectDir: string, slug: string): LockfileEntry | undefined {
+export function getEntry({ projectDir, slug }: GetEntryInput): LockfileEntry | undefined {
   const lockfile = readLockfile(projectDir)
   return lockfile.entries[slug]
 }

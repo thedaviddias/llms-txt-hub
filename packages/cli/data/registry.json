@@ -3227,7 +3227,7 @@
     "category": "automation-workflow"
   },
   {
-    "slug": "home",
+    "slug": "home-llms-txt",
     "name": "HOME",
     "domain": "https://naturelliving.com/",
     "description": "At Naturel, we want you to embrace the good life and discover how our three lifestyle pillars can enhance your everyday. Start your Naturel Living today.",
@@ -7547,7 +7547,7 @@
     "category": "automation-workflow"
   },
   {
-    "slug": "",
+    "slug": "флорен-студія-фітодизайну-llms-txt",
     "name": "Флорен – Студія фітодизайну",
     "domain": "https://floren.com.ua",
     "description": "Флорен — студія фітодизайну в Києві, що спеціалізується на кімнатних рослинах' та професійному озелененні офісів та приміщень.",
@@ -7571,7 +7571,7 @@
     "category": "international"
   },
   {
-    "slug": "",
+    "slug": "在线工具集-llms-txt",
     "name": "在线工具集",
     "domain": "https://www.tooljson.com",
     "description": "免费在线工具宝库！提供JSON格式化/验证/转换、数据加密解密、IP地址/天气查询、健康计算器、单位转换、UUID生成、编码转换及数独游戏等实用工具。所有操作本地完成，确保数据安全隐私，无需注册即点即用.",
@@ -7579,7 +7579,7 @@
     "category": "international"
   },
   {
-    "slug": "",
+    "slug": "短剧演员集中营微信公众号-llms-txt",
     "name": "短剧演员集中营微信公众号",
     "domain": "https://dj.110visa.com",
     "description": "通过演员照片智能查找短剧作品的AI搜索工具，支持无演员姓名查询、所有男演员、所有女演员、持续更新的演员库.",

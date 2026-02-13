@@ -1,4 +1,5 @@
 import * as p from '@clack/prompts'
+import pc from 'picocolors'
 import { syncClaudeMd } from '../lib/context.js'
 import { readLockfile, removeEntry } from '../lib/lockfile.js'
 import * as logger from '../lib/logger.js'
@@ -43,9 +44,15 @@ export async function remove(name: string): Promise<void> {
     }
   }
 
-  removeFromAgents(projectDir, entry.slug)
-  removeEntry(projectDir, entry.slug)
-  syncClaudeMd(projectDir)
+  try {
+    removeFromAgents({ projectDir, slug: entry.slug })
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    logger.warn(`Failed to remove agent files for ${entry.name}: ${pc.dim(msg)}`)
+  } finally {
+    removeEntry({ projectDir, slug: entry.slug })
+    syncClaudeMd(projectDir)
+  }
 
   p.log.success(`Removed ${entry.name} from all agent directories`)
 

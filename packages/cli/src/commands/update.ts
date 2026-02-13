@@ -50,7 +50,7 @@ export async function update(name: string | undefined, options: UpdateOptions): 
 
     try {
       const existingEtag = options.force ? null : entry.etag
-      const result = await fetchLlmsTxt(entry.sourceUrl, existingEtag)
+      const result = await fetchLlmsTxt({ url: entry.sourceUrl, existingEtag })
 
       if (result.notModified) {
         spin2.info(`${entry.name} — unchanged`)
@@ -60,13 +60,13 @@ export async function update(name: string | undefined, options: UpdateOptions): 
 
       const registryEntry = getRegistryEntry(entry.slug)
       if (registryEntry) {
-        const { checksum, size } = installToAgents(
+        const { checksum, size } = installToAgents({
           projectDir,
-          entry.slug,
-          registryEntry,
-          result.content,
-          entry.format
-        )
+          slug: entry.slug,
+          entry: registryEntry,
+          content: result.content,
+          format: entry.format
+        })
 
         if (checksum === entry.checksum && !options.force) {
           spin2.info(`${entry.name} — unchanged (same content)`)
@@ -77,13 +77,16 @@ export async function update(name: string | undefined, options: UpdateOptions): 
           updatedSlugs.push(entry.slug)
         }
 
-        addEntry(projectDir, {
-          ...entry,
-          etag: result.etag,
-          lastModified: result.lastModified,
-          fetchedAt: new Date().toISOString(),
-          checksum,
-          size
+        addEntry({
+          projectDir,
+          entry: {
+            ...entry,
+            etag: result.etag,
+            lastModified: result.lastModified,
+            fetchedAt: new Date().toISOString(),
+            checksum,
+            size
+          }
         })
       } else {
         spin2.warn(`${entry.name} — not in registry, skipping agent install`)

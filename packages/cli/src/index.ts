@@ -36,7 +36,9 @@ program
   .argument('<names...>', 'Names or slugs to install')
   .option('--full', 'Prefer llms-full.txt when available')
   .option('--force', 'Re-download even if already installed')
-  .action(install)
+  .action((names: string[], options: { full?: boolean; force?: boolean }) =>
+    install({ names, options })
+  )
 
 program
   .command('search')

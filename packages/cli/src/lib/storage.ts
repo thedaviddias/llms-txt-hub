@@ -36,6 +36,9 @@ function generateSkillMd(
     '---'
   ].join('\n')
 
+  const sourceUrl =
+    format === 'llms-full.txt' ? (entry.llmsFullTxtUrl ?? entry.llmsTxtUrl) : entry.llmsTxtUrl
+
   if (isLarge) {
     const skillMd = [
       frontmatter,
@@ -44,7 +47,7 @@ function generateSkillMd(
       '',
       `${entry.description}`,
       '',
-      `Source: ${format === 'llms-full.txt' ? entry.llmsFullTxtUrl : entry.llmsTxtUrl}`,
+      `Source: ${sourceUrl}`,
       '',
       'For complete documentation, see [reference.md](reference.md).'
     ].join('\n')
@@ -59,7 +62,7 @@ function generateSkillMd(
     '',
     `${entry.description}`,
     '',
-    `Source: ${format === 'llms-full.txt' ? entry.llmsFullTxtUrl : entry.llmsTxtUrl}`,
+    `Source: ${sourceUrl}`,
     '',
     '---',
     '',
@@ -77,16 +80,24 @@ export interface InstallResult {
   agents: string[]
 }
 
+export interface InstallToAgentsInput {
+  projectDir: string
+  slug: string
+  entry: RegistryEntry
+  content: string
+  format: 'llms.txt' | 'llms-full.txt'
+}
+
 /**
  * Install a skill to the canonical directory and all detected agents.
  */
-export function installToAgents(
-  projectDir: string,
-  slug: string,
-  entry: RegistryEntry,
-  content: string,
-  format: 'llms.txt' | 'llms-full.txt'
-): InstallResult {
+export function installToAgents({
+  projectDir,
+  slug,
+  entry,
+  content,
+  format
+}: InstallToAgentsInput): InstallResult {
   const checksum = createHash('sha256').update(content).digest('hex')
   const size = Buffer.byteLength(content, 'utf-8')
   const installedAgents: string[] = []
@@ -115,7 +126,7 @@ export function installToAgents(
       continue
     }
 
-    const linked = createAgentSymlink(projectDir, slug, agent)
+    const linked = createAgentSymlink({ projectDir, slug, agent })
     if (linked) {
       installedAgents.push(agent.name)
     }
@@ -129,10 +140,15 @@ export function installToAgents(
 
 // ── Multi-target remove ─────────────────────────────────────────
 
+export interface RemoveFromAgentsInput {
+  projectDir: string
+  slug: string
+}
+
 /**
  * Remove a skill from the canonical directory and all agent directories.
  */
-export function removeFromAgents(projectDir: string, slug: string): void {
+export function removeFromAgents({ projectDir, slug }: RemoveFromAgentsInput): void {
   sanitizeSlug(slug)
   // Remove canonical
   const canonicalDir = join(projectDir, CANONICAL_DIR, slug)
@@ -143,16 +159,21 @@ export function removeFromAgents(projectDir: string, slug: string): void {
 
   // Remove from all agents
   for (const agent of detectInstalledAgents()) {
-    removeAgentSkill(projectDir, slug, agent)
+    removeAgentSkill({ projectDir, slug, agent })
   }
 }
 
 // ── Status checks ───────────────────────────────────────────────
 
+export interface IsInstalledInput {
+  projectDir: string
+  slug: string
+}
+
 /**
  * Check whether a skill is installed in the canonical location.
  */
-export function isInstalled(projectDir: string, slug: string): boolean {
+export function isInstalled({ projectDir, slug }: IsInstalledInput): boolean {
   sanitizeSlug(slug)
   return existsSync(join(projectDir, CANONICAL_DIR, slug, 'SKILL.md'))
 }

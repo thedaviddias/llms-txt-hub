@@ -30,8 +30,8 @@ export async function info(name: string): Promise<void> {
   }
 
   const projectDir = process.cwd()
-  const installed = isInstalled(projectDir, entry.slug)
-  const lockEntry = getLockfileEntry(projectDir, entry.slug)
+  const installed = isInstalled({ projectDir, slug: entry.slug })
+  const lockEntry = getLockfileEntry({ projectDir, slug: entry.slug })
 
   p.log.step(pc.bold(pc.cyan(entry.name)))
   p.log.message(pc.dim(entry.slug))
