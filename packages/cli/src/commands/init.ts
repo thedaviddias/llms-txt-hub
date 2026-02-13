@@ -1,6 +1,6 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { detectInstalledAgents } from '../lib/agents.js'
+import { type AgentConfig, detectInstalledAgents } from '../lib/agents.js'
 import { printBanner } from '../lib/banner.js'
 import { syncClaudeMd } from '../lib/context.js'
 import { detectFromPackageJson, filterMatchesByCategories } from '../lib/detector.js'
@@ -10,7 +10,7 @@ import * as logger from '../lib/logger.js'
 import { getAllEntries, loadRegistry, searchRegistry } from '../lib/registry.js'
 import { addToGitignore, installToAgents, isInstalled } from '../lib/storage.js'
 import { track } from '../lib/telemetry.js'
-import type { RegistryEntry } from '../types/index.js'
+import type { DetectedMatch, RegistryEntry } from '../types/index.js'
 import { PRIMARY_CATEGORIES } from '../types/index.js'
 
 interface InitOptions {
@@ -36,21 +36,7 @@ export async function init(options: InitOptions): Promise<void> {
   await loadRegistry()
   spin.succeed('Registry loaded')
 
-  // Show detected agents
   const agents = detectInstalledAgents()
-  if (agents.length > 0) {
-    const names = agents.map(a => a.displayName)
-    const display =
-      names.length <= 5
-        ? names.map(n => pc.cyan(n)).join(', ')
-        : `${names
-            .slice(0, 4)
-            .map(n => pc.cyan(n))
-            .join(', ')} ${pc.dim(`+ ${names.length - 4} more`)}`
-    p.log.info(`Detected agents: ${display}`)
-  } else {
-    p.log.warn('No AI coding tools detected — files will be installed to .agents/skills/ only')
-  }
 
   // Determine active categories
   let activeCategories: string[]
@@ -76,21 +62,51 @@ export async function init(options: InitOptions): Promise<void> {
   }
 
   if (!isInteractive) {
-    // Non-interactive: install dep matches only
+    // Non-interactive: install dep matches to all detected agents
     return installEntries({
       projectDir,
       entries: depMatches.map(m => m.registryEntry),
       options,
-      agents
+      agents,
+      targetAgents: agents
     })
   }
 
   // Interactive: let user choose how to find entries
+  const selectedEntries = await browseAndSelect({ projectDir, depMatches, depSlugs })
+
+  if (selectedEntries.length === 0) {
+    p.outro('No skills selected.')
+    return
+  }
+
+  // Let user choose which agents to install to
+  const targetAgents = await pickAgents(agents)
+  if (!targetAgents) {
+    p.cancel('Installation cancelled.')
+    return
+  }
+
+  return installEntries({ projectDir, entries: selectedEntries, options, agents, targetAgents })
+}
+
+interface BrowseContext {
+  projectDir: string
+  depMatches: DetectedMatch[]
+  depSlugs: Set<string>
+}
+
+/**
+ * Interactive loop: browse, search, pick entries. Returns selected entries or null if cancelled.
+ */
+async function browseAndSelect({
+  projectDir,
+  depMatches,
+  depSlugs
+}: BrowseContext): Promise<RegistryEntry[]> {
   const selectedEntries: RegistryEntry[] = []
 
-  // Main selection loop
-  let keepBrowsing = true
-  while (keepBrowsing) {
+  while (true) {
     const action = await p.select({
       message:
         selectedEntries.length === 0
@@ -100,108 +116,100 @@ export async function init(options: InitOptions): Promise<void> {
         ...(depMatches.length > 0 && selectedEntries.length === 0
           ? [
               {
-                value: 'suggestions',
+                value: 'suggestions' as const,
                 label: `Suggested from dependencies (${depMatches.length} found)`,
                 hint: depMatches.map(m => m.registryEntry.name).join(', ')
               }
             ]
           : []),
-        { value: 'browse', label: 'Browse by category' },
-        { value: 'search', label: 'Search by name' },
+        { value: 'browse' as const, label: 'Browse by category' },
+        { value: 'search' as const, label: 'Search by name' },
         ...(selectedEntries.length > 0
-          ? [{ value: 'install', label: `Install ${selectedEntries.length} selected` }]
+          ? [{ value: 'install' as const, label: `Install ${selectedEntries.length} selected` }]
           : []),
-        { value: 'done', label: selectedEntries.length > 0 ? 'Cancel' : 'Exit' }
+        { value: 'done' as const, label: selectedEntries.length > 0 ? 'Cancel' : 'Exit' }
       ]
     })
 
     if (p.isCancel(action) || action === 'done') {
-      if (selectedEntries.length > 0) {
-        p.cancel('Installation cancelled.')
-      } else {
-        p.outro('No skills selected.')
-      }
-      return
+      if (selectedEntries.length > 0) p.cancel('Installation cancelled.')
+      else p.outro('No skills selected.')
+      return []
     }
 
-    if (action === 'install') {
-      break
-    }
+    if (action === 'install') break
 
+    let picked: RegistryEntry[] = []
     if (action === 'suggestions') {
-      const picked = await pickFromList(
+      picked = await pickFromList(
         depMatches.map(m => m.registryEntry),
         projectDir,
         depSlugs
       )
-      for (const entry of picked) {
-        if (!selectedEntries.some(e => e.slug === entry.slug)) {
-          selectedEntries.push(entry)
-        }
-      }
-      continue
+    } else if (action === 'browse') {
+      picked = await browseByCategory(projectDir, depSlugs)
+    } else if (action === 'search') {
+      picked = await searchByName(projectDir, depSlugs)
     }
 
-    if (action === 'browse') {
-      // Pick a category first
-      const allEntries = getAllEntries()
-      const categoryMap = new Map<string, number>()
-      for (const entry of allEntries) {
-        categoryMap.set(entry.category, (categoryMap.get(entry.category) || 0) + 1)
-      }
-
-      const categoryChoice = await p.select({
-        message: 'Select a category:',
-        options: [...categoryMap.entries()]
-          .sort((a, b) => b[1] - a[1])
-          .map(([cat, count]) => ({
-            value: cat,
-            label: cat,
-            hint: `${count} entries`
-          }))
-      })
-
-      if (p.isCancel(categoryChoice)) continue
-
-      const categoryEntries = allEntries.filter(e => e.category === categoryChoice)
-      const picked = await pickFromList(categoryEntries, projectDir, depSlugs)
-      for (const entry of picked) {
-        if (!selectedEntries.some(e => e.slug === entry.slug)) {
-          selectedEntries.push(entry)
-        }
-      }
-      continue
-    }
-
-    if (action === 'search') {
-      const query = await p.text({
-        message: 'Search for:',
-        placeholder: 'e.g. react, stripe, prisma...'
-      })
-
-      if (p.isCancel(query) || !query) continue
-
-      const results = searchRegistry(query).slice(0, 20)
-      if (results.length === 0) {
-        p.log.warn(`No results for "${query}"`)
-        continue
-      }
-
-      const picked = await pickFromList(results, projectDir, depSlugs)
-      for (const entry of picked) {
-        if (!selectedEntries.some(e => e.slug === entry.slug)) {
-          selectedEntries.push(entry)
-        }
+    for (const entry of picked) {
+      if (!selectedEntries.some(e => e.slug === entry.slug)) {
+        selectedEntries.push(entry)
       }
     }
   }
 
-  if (selectedEntries.length === 0) {
-    p.outro('No skills selected.')
-    return
+  return selectedEntries
+}
+
+/**
+ * Browse entries by category and pick from the list.
+ */
+async function browseByCategory(
+  projectDir: string,
+  depSlugs: Set<string>
+): Promise<RegistryEntry[]> {
+  const allEntries = getAllEntries()
+  const categoryMap = new Map<string, number>()
+  for (const entry of allEntries) {
+    categoryMap.set(entry.category, (categoryMap.get(entry.category) || 0) + 1)
   }
 
-  return installEntries({ projectDir, entries: selectedEntries, options, agents })
+  const categoryChoice = await p.select({
+    message: 'Select a category:',
+    options: [...categoryMap.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([cat, count]) => ({
+        value: cat,
+        label: cat,
+        hint: `${count} entries`
+      }))
+  })
+
+  if (p.isCancel(categoryChoice)) return []
+
+  const categoryEntries = allEntries.filter(e => e.category === categoryChoice)
+  return pickFromList(categoryEntries, projectDir, depSlugs)
+}
+
+/**
+ * Search entries by name and pick from the results.
+ */
+async function searchByName(projectDir: string, depSlugs: Set<string>): Promise<RegistryEntry[]> {
+  const query = await p.text({
+    message: 'Search for:',
+    placeholder: 'e.g. react, stripe, prisma...'
+  })
+
+  if (p.isCancel(query) || !query) return []
+
+  const results = searchRegistry(query).slice(0, 20)
+  if (results.length === 0) {
+    p.log.warn(`No results for "${query}"`)
+    return []
+  }
+
+  return pickFromList(results, projectDir, depSlugs)
 }
 
 /**
@@ -239,11 +247,43 @@ async function pickFromList(
   return entries.filter(e => slugSet.has(e.slug))
 }
 
+/**
+ * Show a multiselect for choosing which agents to install to.
+ * Returns the selected agents, or null if cancelled.
+ */
+async function pickAgents(agents: AgentConfig[]): Promise<AgentConfig[] | null> {
+  if (agents.length === 0) {
+    p.log.info('No agents detected — files will be written to .agents/skills/ only')
+    return []
+  }
+
+  if (agents.length === 1) {
+    p.log.info(`Installing to ${pc.cyan(agents[0].displayName)}`)
+    return agents
+  }
+
+  const selected = await p.multiselect({
+    message: 'Which agents should receive the skills?',
+    options: agents.map(a => ({
+      value: a.name,
+      label: a.displayName,
+      hint: a.isUniversal ? 'universal (.agents/skills/)' : a.skillsDir
+    })),
+    required: false
+  })
+
+  if (p.isCancel(selected)) return null
+
+  const nameSet = new Set(selected)
+  return agents.filter(a => nameSet.has(a.name))
+}
+
 interface InstallEntriesInput {
   projectDir: string
   entries: RegistryEntry[]
   options: InitOptions
   agents: ReturnType<typeof detectInstalledAgents>
+  targetAgents: AgentConfig[]
 }
 
 /**
@@ -253,7 +293,8 @@ async function installEntries({
   projectDir,
   entries,
   options,
-  agents
+  agents,
+  targetAgents
 }: InstallEntriesInput): Promise<void> {
   if (options.dryRun) {
     for (const entry of entries) {
@@ -295,7 +336,8 @@ async function installEntries({
         slug: entry.slug,
         entry,
         content: result.content,
-        format: actualFormat
+        format: actualFormat,
+        targetAgents
       })
       addEntry({
         projectDir,

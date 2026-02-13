@@ -3,6 +3,7 @@ import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileS
 import { join } from 'node:path'
 import type { RegistryEntry } from '../types/index.js'
 import {
+  type AgentConfig,
   assertPathContainment,
   CANONICAL_DIR,
   createAgentSymlink,
@@ -87,17 +88,21 @@ export interface InstallToAgentsInput {
   entry: RegistryEntry
   content: string
   format: 'llms.txt' | 'llms-full.txt'
+  targetAgents?: AgentConfig[]
 }
 
 /**
- * Install a skill to the canonical directory and all detected agents.
+ * Install a skill to the canonical directory and selected agents.
+ * If targetAgents is provided, only those agents get symlinks.
+ * Otherwise falls back to all detected agents.
  */
 export function installToAgents({
   projectDir,
   slug,
   entry,
   content,
-  format
+  format,
+  targetAgents
 }: InstallToAgentsInput): InstallResult {
   const checksum = createHash('sha256').update(content).digest('hex')
   const size = Buffer.byteLength(content, 'utf-8')
@@ -116,10 +121,10 @@ export function installToAgents({
   }
   installedAgents.push('universal')
 
-  // 2. For each detected agent, create symlink to canonical
-  const detectedAgents = detectInstalledAgents()
+  // 2. For each target agent, create symlink to canonical
+  const agentsToLink = targetAgents ?? detectInstalledAgents()
 
-  for (const agent of detectedAgents) {
+  for (const agent of agentsToLink) {
     if (agent.isUniversal) {
       if (!installedAgents.includes(agent.name)) {
         installedAgents.push(agent.name)

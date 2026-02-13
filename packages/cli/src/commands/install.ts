@@ -1,6 +1,6 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { detectInstalledAgents } from '../lib/agents.js'
+import { type AgentConfig, detectInstalledAgents } from '../lib/agents.js'
 import { syncClaudeMd } from '../lib/context.js'
 import { fetchLlmsTxt } from '../lib/fetcher.js'
 import { addEntry } from '../lib/lockfile.js'
@@ -37,15 +37,34 @@ export async function install({ names, options }: InstallInput): Promise<void> {
   await loadRegistry()
   spin.succeed('Registry loaded')
 
-  // Show detected agents
+  // Let user choose agents
   const agents = detectInstalledAgents()
-  if (agents.length > 0) {
-    const names = agents.map(a => a.displayName)
-    const display =
-      names.length <= 5
-        ? names.join(', ')
-        : `${names.slice(0, 4).join(', ')} + ${names.length - 4} more`
-    p.log.message(pc.dim(`Detected: ${display}`))
+  let targetAgents: AgentConfig[]
+
+  if (agents.length <= 1 || !process.stdin.isTTY) {
+    targetAgents = agents
+    if (agents.length > 0) {
+      const display = agents.map(a => a.displayName).join(', ')
+      p.log.message(pc.dim(`Installing to: ${display}`))
+    }
+  } else {
+    const selected = await p.multiselect({
+      message: 'Which agents should receive the skills?',
+      options: agents.map(a => ({
+        value: a.name,
+        label: a.displayName,
+        hint: a.isUniversal ? 'universal (.agents/skills/)' : a.skillsDir
+      })),
+      required: false
+    })
+
+    if (p.isCancel(selected)) {
+      p.cancel('Installation cancelled.')
+      return
+    }
+
+    const nameSet = new Set(selected)
+    targetAgents = agents.filter(a => nameSet.has(a.name))
   }
 
   let installed = 0
@@ -112,7 +131,14 @@ export async function install({ names, options }: InstallInput): Promise<void> {
         checksum,
         size,
         agents: installedTo
-      } = installToAgents({ projectDir, slug: entry.slug, entry, content: result.content, format })
+      } = installToAgents({
+        projectDir,
+        slug: entry.slug,
+        entry,
+        content: result.content,
+        format,
+        targetAgents
+      })
       addEntry({
         projectDir,
         entry: {
