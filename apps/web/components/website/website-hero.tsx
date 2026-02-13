@@ -2,11 +2,10 @@ import { Badge } from '@thedaviddias/design-system/badge'
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
-import { Calendar, ExternalLink, Globe, Hash } from 'lucide-react'
+import { ExternalLink, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { FavoriteButton } from '@/components/ui/favorite-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
-import { getRoute } from '@/lib/routes'
 import { generateAltText } from '@/lib/seo/seo-config'
 
 interface WebsiteHeroProps {
@@ -33,12 +32,12 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
 
       <div className="container mx-auto px-6 py-8 md:py-12">
         {/* Breadcrumb - stagger 1 */}
-        <div className="animate-fade-in-up opacity-0 stagger-1 mb-8 max-w-4xl mx-auto">
+        <div className="animate-fade-in-up opacity-0 stagger-1 mb-8 max-w-6xl mx-auto">
           <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
         </div>
 
         {/* Main Hero Content */}
-        <div className="animate-fade-in-up opacity-0 stagger-2 max-w-4xl mx-auto">
+        <div className="animate-fade-in-up opacity-0 stagger-2 max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-8">
             {/* Favicon/Logo */}
             <div className="flex-shrink-0">
@@ -103,38 +102,6 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
               <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl text-pretty">
                 {website.description}
               </p>
-
-              {/* Meta Info Row */}
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                {website.category && (
-                  <Link
-                    href={getRoute('category.page', { category: website.category })}
-                    className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-md"
-                  >
-                    <Badge
-                      variant="secondary"
-                      className="inline-flex items-center gap-1.5 py-1.5 px-3 hover:bg-secondary/80 cursor-pointer transition-colors"
-                    >
-                      <Hash className="size-3.5" />
-                      <span className="capitalize">{website.category.replace(/-/g, ' ')}</span>
-                    </Badge>
-                  </Link>
-                )}
-                {website.publishedAt && (
-                  <Badge
-                    variant="outline"
-                    className="inline-flex items-center gap-1.5 py-1.5 px-3 text-muted-foreground"
-                  >
-                    <Calendar className="size-3.5" />
-                    Added{' '}
-                    {new Date(website.publishedAt).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </Badge>
-                )}
-              </div>
             </div>
           </div>
         </div>

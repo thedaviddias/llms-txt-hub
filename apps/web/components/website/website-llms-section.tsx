@@ -2,7 +2,6 @@ import registryData from '@cli-data/registry.json'
 import { FileText, Terminal } from 'lucide-react'
 import { LLMButton } from '@/components/buttons/llm-button'
 import { CopyButton } from '@/components/ui/copy-button'
-import { CliInstallCount } from '@/components/website/cli-install-count'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 
 // Build lookup: webSlug -> CLI slug (runs once at module load / build time)
@@ -12,8 +11,6 @@ for (const entry of registryData as { slug: string; webSlug?: string }[]) {
     webSlugToCliSlug.set(entry.webSlug, entry.slug)
   }
 }
-
-const SUPPORTED_AGENTS = ['Cursor', 'Claude Code', 'Windsurf', 'Cline', 'Codex'] as const
 
 interface WebsiteLLMsSectionProps {
   website: WebsiteMetadata
@@ -59,12 +56,9 @@ export function WebsiteLLMsSection({ website }: WebsiteLLMsSectionProps) {
                 <Terminal className="size-4 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-pretty">
-                    Install into your AI coding agent
-                  </h3>
-                  <CliInstallCount cliSlug={cliSlug} />
-                </div>
+                <h3 className="text-sm font-semibold text-pretty">
+                  Install into your AI coding agent
+                </h3>
                 <p className="text-xs text-muted-foreground">
                   Add this documentation directly to your development environment
                 </p>
@@ -82,18 +76,6 @@ export function WebsiteLLMsSection({ website }: WebsiteLLMsSectionProps) {
                 npx llmstxt-cli install {cliSlug}
               </code>
               <CopyButton text={`npx llmstxt-cli install ${cliSlug}`} variant="terminal" />
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs text-muted-foreground">Works with:</span>
-              {SUPPORTED_AGENTS.map(agent => (
-                <span
-                  key={agent}
-                  className="text-xs rounded-full px-2.5 py-0.5 bg-muted/80 text-muted-foreground border border-border/50"
-                >
-                  {agent}
-                </span>
-              ))}
             </div>
           </div>
         )}

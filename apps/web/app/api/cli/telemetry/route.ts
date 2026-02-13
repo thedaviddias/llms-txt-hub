@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { event, skills } = body
+    const { event, skills, agents } = body
 
     if (!isValidEvent(event)) {
       return NextResponse.json({ ok: false, error: 'Invalid event type' }, { status: 400 })
@@ -101,14 +101,28 @@ export async function POST(request: NextRequest) {
     pipeline.hincrby(`telemetry:events:${date}`, event, 1)
 
     // Per-skill counters
-    if (skills && typeof skills === 'string') {
-      const slugs = skills
+    const slugs =
+      skills && typeof skills === 'string'
+        ? skills
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean)
+        : []
+    for (const slug of slugs) {
+      pipeline.hincrby(`telemetry:daily:${date}`, slug, 1)
+      pipeline.hincrby('telemetry:skills:total', slug, 1)
+    }
+
+    // Per-agent-per-skill counters (e.g. telemetry:skills:agents:stripe → { cursor: 5, claude-code: 3 })
+    if (event === 'install' && slugs.length > 0 && agents && typeof agents === 'string') {
+      const agentNames = agents
         .split(',')
-        .map(s => s.trim())
+        .map(a => a.trim())
         .filter(Boolean)
       for (const slug of slugs) {
-        pipeline.hincrby(`telemetry:daily:${date}`, slug, 1)
-        pipeline.hincrby('telemetry:skills:total', slug, 1)
+        for (const agent of agentNames) {
+          pipeline.hincrby(`telemetry:skills:agents:${slug}`, agent, 1)
+        }
       }
     }
 

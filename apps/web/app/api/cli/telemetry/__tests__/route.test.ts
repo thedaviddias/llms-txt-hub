@@ -99,6 +99,35 @@ describe('/api/cli/telemetry', () => {
       }
     })
 
+    it('stores per-agent-per-skill counters for install events', async () => {
+      const request = createMockRequest('/api/cli/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { event: 'install', skills: 'stripe', agents: 'cursor,claude-code' }
+      })
+
+      await POST(request)
+
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:skills:agents:stripe', 'cursor', 1)
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:skills:agents:stripe', 'claude-code', 1)
+    })
+
+    it('does not store per-agent counters for non-install events', async () => {
+      const request = createMockRequest('/api/cli/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { event: 'search', skills: 'stripe', agents: 'cursor' }
+      })
+
+      await POST(request)
+
+      expect(mockHincrby).not.toHaveBeenCalledWith(
+        expect.stringMatching(/^telemetry:skills:agents:/),
+        expect.anything(),
+        expect.anything()
+      )
+    })
+
     it('handles events without skills field', async () => {
       const request = createMockRequest('/api/cli/telemetry', {
         method: 'POST',
