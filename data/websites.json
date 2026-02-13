@@ -3126,5 +3126,15 @@
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=zoomry-ind.com&sz=128",
     "publishedAt": "2025-06-19"
+  },
+  {
+    "name": "Trip Concierge",
+    "domain": "https://www.tripconcierge.co",
+    "description": "Bespoke luxury travel advisory, expedition planning, and high-end tour curation",
+    "llmsTxtUrl": "https://www.tripconcierge.co/llms.txt",
+    "llmsFullTxtUrl": "https://www.tripconcierge.co/llms.txt",
+    "category": "travel-luxury",
+    "favicon": "https://www.google.com/s2/favicons?domain=tripconcierge.co&sz=128",
+    "publishedAt": "2026-02-11"
   }
 ]
