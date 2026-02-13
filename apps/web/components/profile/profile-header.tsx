@@ -7,7 +7,7 @@ import { Briefcase, Calendar, Edit, Eye, EyeOff, FileText, Github, Globe } from 
 import Link from 'next/link'
 import { useState } from 'react'
 import { getMemberBadgeSync } from '@/lib/member-client-utils'
-import { escapeHtml } from '@/lib/security-utils'
+import { escapeHtml } from '@/lib/security-utils-helpers'
 import { EditProfileModal } from './edit-profile-modal'
 
 interface ProfileHeaderProps {

@@ -6,7 +6,12 @@ import validator from 'validator'
 import { sanitizeErrorMessage } from './security-utils-helpers'
 
 // Re-export helpers for backward compatibility
-export { checkRateLimit, clearRateLimiting, getRateLimitKey } from './security-utils-helpers'
+export {
+  checkRateLimit,
+  clearRateLimiting,
+  escapeHtml,
+  getRateLimitKey
+} from './security-utils-helpers'
 
 /**
  * Sanitize text input to prevent XSS attacks
@@ -163,29 +168,6 @@ export function createSafeErrorMessage(
   }
 
   return fallbackMessage
-}
-
-/**
- * Escape HTML entities to prevent XSS
- */
-export function escapeHtml(text: string | number | null | undefined): string {
-  // Handle non-string inputs
-  if (text === null || text === undefined) return ''
-  if (typeof text === 'number') return String(text)
-  if (typeof text !== 'string') return ''
-
-  // First escape basic HTML entities
-  let escaped = text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-
-  // Only escape forward slashes in closing script tags for XSS prevention
-  escaped = escaped.replace(/&lt;\/script/gi, '&lt;&#x2F;script')
-
-  return escaped
 }
 
 /**

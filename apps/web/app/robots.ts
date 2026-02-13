@@ -11,6 +11,7 @@ export default function robots(): MetadataRoute.Robots {
         '/submit',
         '/login',
         '/api/*',
+        '/u/*',
         '/sort=*',
         '/search=*',
         '/category=*',
