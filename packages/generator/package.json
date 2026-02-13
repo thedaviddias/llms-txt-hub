@@ -1,6 +1,7 @@
 {
   "name": "generator",
   "version": "1.0.0",
+  "private": true,
   "description": "NPX package to generate unofficial LLMs.txt and LLMs-full.txt files using Firecrawl API",
   "type": "module",
   "scripts": {
