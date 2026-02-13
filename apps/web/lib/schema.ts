@@ -1,4 +1,5 @@
 import { getFaviconUrl } from '@thedaviddias/utils/get-favicon-url'
+import { SITE_URL } from '@/lib/seo/seo-config'
 import type { GuideMetadata, WebsiteMetadata } from './content-loader'
 import { getRoute } from './routes'
 
@@ -112,11 +113,10 @@ export function generateArticleSchema(website: WebsiteMetadata): ArticleSchema {
  * This creates a rich @graph with multiple schema types for better SEO
  *
  * @param website - Website metadata
- * @param baseUrl - Base URL of the site
  * @returns Schema.org structured data graph
  */
-export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: string) {
-  const pageUrl = `${baseUrl}/websites/${website.slug}`
+export function generateWebsiteDetailSchema(website: WebsiteMetadata) {
+  const pageUrl = `${SITE_URL}/websites/${website.slug}`
   const categoryFormatted = website.category
     ? website.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
     : 'Developer Tools'
@@ -132,7 +132,7 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
         name: `${website.name} - llms.txt Documentation`,
         description: website.description,
         isPartOf: {
-          '@id': `${baseUrl}/#website`
+          '@id': `${SITE_URL}/#website`
         },
         primaryImageOfPage: {
           '@type': 'ImageObject',
@@ -153,13 +153,13 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
             '@type': 'ListItem',
             position: 1,
             name: 'Home',
-            item: baseUrl
+            item: SITE_URL
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: 'Websites',
-            item: `${baseUrl}${getRoute('website.list')}`
+            item: `${SITE_URL}${getRoute('website.list')}`
           },
           {
             '@type': 'ListItem',
@@ -204,15 +204,15 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
         author: {
           '@type': 'Organization',
           name: 'llms.txt Hub',
-          url: baseUrl
+          url: SITE_URL
         },
         publisher: {
           '@type': 'Organization',
           name: 'llms.txt Hub',
-          url: baseUrl,
+          url: SITE_URL,
           logo: {
             '@type': 'ImageObject',
-            url: `${baseUrl}/logo.png`
+            url: `${SITE_URL}/logo.png`
           }
         },
         mainEntityOfPage: {
