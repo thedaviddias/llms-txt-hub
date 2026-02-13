@@ -1,4 +1,4 @@
-const TELEMETRY_ENDPOINT = 'https://llmstxt.directory/api/cli/telemetry'
+const TELEMETRY_ENDPOINT = 'https://llmstxthub.com/api/cli/telemetry'
 const CLI_VERSION = __CLI_VERSION__
 
 const CI_ENV_VARS = ['CI', 'GITHUB_ACTIONS', 'GITLAB_CI', 'CIRCLECI', 'TRAVIS']

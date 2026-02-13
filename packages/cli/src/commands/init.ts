@@ -221,7 +221,7 @@ async function browseByCategory(
 async function searchByName(projectDir: string, depSlugs: Set<string>): Promise<RegistryEntry[]> {
   const query = await p.text({
     message: 'Search for:',
-    placeholder: 'e.g. react, stripe, prisma...'
+    placeholder: 'e.g. astro, stripe, prisma...'
   })
 
   if (p.isCancel(query) || !query) return []

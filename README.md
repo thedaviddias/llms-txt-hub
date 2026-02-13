@@ -34,6 +34,7 @@ We organize projects into primary categories (🤖 **AI & ML**, 💻 **Developer
 | 🧠 **MCP Explorer**       | Explore and analyze llms.txt files using Model Context Protocol | [GitHub](https://github.com/thedaviddias/mcp-llms-txt-explorer)                                               |
 | ⚡ **Raycast Extension**  | Search and explore llms.txt files directly in Raycast           | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
 | ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI            | [LLMs.txt Generator](https://llmstxtgenerator.co/)                                                            |
+| 🛠 **llmstxt-cli**        | Install llms.txt docs as skills into 35+ AI coding agents       | [npm](https://www.npmjs.com/package/llmstxt-cli) · [README](packages/cli/README.md)                           |
 
 <!-- LLMS-LIST:START - Do not remove or modify this section -->
 ## LLM Tools and Resources
