@@ -1,6 +1,10 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { type AgentConfig, detectInstalledAgents } from '../lib/agents.js'
+import {
+  type AgentConfig,
+  agents as allAgentConfigs,
+  detectInstalledAgents
+} from '../lib/agents.js'
 import { printBanner } from '../lib/banner.js'
 import { syncClaudeMd } from '../lib/context.js'
 import { detectFromPackageJson, filterMatchesByCategories } from '../lib/detector.js'
@@ -249,33 +253,31 @@ async function pickFromList(
 
 /**
  * Show a multiselect for choosing which agents to install to.
+ * Shows ALL known agents, pre-selects detected ones.
  * Returns the selected agents, or null if cancelled.
  */
-async function pickAgents(agents: AgentConfig[]): Promise<AgentConfig[] | null> {
-  if (agents.length === 0) {
-    p.log.info('No agents detected — files will be written to .agents/skills/ only')
-    return []
-  }
-
-  if (agents.length === 1) {
-    p.log.info(`Installing to ${pc.cyan(agents[0].displayName)}`)
-    return agents
-  }
+async function pickAgents(detectedAgents: AgentConfig[]): Promise<AgentConfig[] | null> {
+  const detectedNames = new Set(detectedAgents.map(a => a.name))
 
   const selected = await p.multiselect({
     message: 'Which agents should receive the skills?',
-    options: agents.map(a => ({
+    options: allAgentConfigs.map(a => ({
       value: a.name,
       label: a.displayName,
-      hint: a.isUniversal ? 'universal (.agents/skills/)' : a.skillsDir
+      hint: detectedNames.has(a.name)
+        ? `${pc.green('detected')} · ${a.isUniversal ? '.agents/skills/' : a.skillsDir}`
+        : a.isUniversal
+          ? '.agents/skills/'
+          : a.skillsDir
     })),
+    initialValues: detectedAgents.map(a => a.name),
     required: false
   })
 
   if (p.isCancel(selected)) return null
 
   const nameSet = new Set(selected)
-  return agents.filter(a => nameSet.has(a.name))
+  return allAgentConfigs.filter(a => nameSet.has(a.name))
 }
 
 interface InstallEntriesInput {

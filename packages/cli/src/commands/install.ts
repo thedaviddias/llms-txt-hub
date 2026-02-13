@@ -1,6 +1,10 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
-import { type AgentConfig, detectInstalledAgents } from '../lib/agents.js'
+import {
+  type AgentConfig,
+  agents as allAgentConfigs,
+  detectInstalledAgents
+} from '../lib/agents.js'
 import { syncClaudeMd } from '../lib/context.js'
 import { fetchLlmsTxt } from '../lib/fetcher.js'
 import { addEntry } from '../lib/lockfile.js'
@@ -39,9 +43,10 @@ export async function install({ names, options }: InstallInput): Promise<void> {
 
   // Let user choose agents
   const agents = detectInstalledAgents()
+  const detectedNames = new Set(agents.map(a => a.name))
   let targetAgents: AgentConfig[]
 
-  if (agents.length <= 1 || !process.stdin.isTTY) {
+  if (!process.stdin.isTTY) {
     targetAgents = agents
     if (agents.length > 0) {
       const display = agents.map(a => a.displayName).join(', ')
@@ -50,11 +55,16 @@ export async function install({ names, options }: InstallInput): Promise<void> {
   } else {
     const selected = await p.multiselect({
       message: 'Which agents should receive the skills?',
-      options: agents.map(a => ({
+      options: allAgentConfigs.map(a => ({
         value: a.name,
         label: a.displayName,
-        hint: a.isUniversal ? 'universal (.agents/skills/)' : a.skillsDir
+        hint: detectedNames.has(a.name)
+          ? `${pc.green('detected')} · ${a.isUniversal ? '.agents/skills/' : a.skillsDir}`
+          : a.isUniversal
+            ? '.agents/skills/'
+            : a.skillsDir
       })),
+      initialValues: agents.map(a => a.name),
       required: false
     })
 
@@ -64,7 +74,7 @@ export async function install({ names, options }: InstallInput): Promise<void> {
     }
 
     const nameSet = new Set(selected)
-    targetAgents = agents.filter(a => nameSet.has(a.name))
+    targetAgents = allAgentConfigs.filter(a => nameSet.has(a.name))
   }
 
   let installed = 0
