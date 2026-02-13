@@ -1,5 +1,12 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const fallbackClerkPublishableKey = 'pk_test_Y2xlcmsuZXhhbXBsZS5jb20k'
+const fallbackClerkSecretKey = 'sk_test_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+
+const clerkPublishableKey =
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.trim() || fallbackClerkPublishableKey
+const clerkSecretKey = process.env.CLERK_SECRET_KEY?.trim() || fallbackClerkSecretKey
+
 /**
  * Optimized Playwright configuration for CI environments
  * Uses production build for faster execution
@@ -79,8 +86,9 @@ export default defineConfig({
       NEXT_PUBLIC_SENTRY_DSN: '',
       SENTRY_AUTH_TOKEN: '',
       LOG_LEVEL: 'error',
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? '',
-      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? ''
+      // Prefer real CI secrets when available; fall back for fork/untrusted PR runs.
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: clerkPublishableKey,
+      CLERK_SECRET_KEY: clerkSecretKey
     }
   }
 })
