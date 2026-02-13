@@ -46,13 +46,12 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
                 href={website.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative block"
+                className="group relative block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
               >
                 <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 blur-xl transition-all duration-500 group-hover:opacity-100" />
                 <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-card p-3 shadow-lg transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
-                  {/* biome-ignore lint/performance/noImgElement: favicon from external URL */}
                   <img
-                    src={getFaviconUrl(website.website, 128) || '/placeholder.svg'}
+                    src={getFaviconUrl(website.website, 256) || '/placeholder.svg'}
                     alt={generateAltText('favicon', website.name)}
                     width={72}
                     height={72}
@@ -68,7 +67,7 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
                 <div className="space-y-3">
                   {/* Title and Badges */}
                   <div className="flex flex-wrap items-center gap-3">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-pretty">
                       {website.name}
                     </h1>
                     {website.isUnofficial && (
@@ -86,7 +85,7 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
                     href={website.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-base text-muted-foreground hover:text-foreground transition-colors"
+                    className="group inline-flex items-center gap-2 text-base text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded"
                   >
                     <Globe className="size-4" />
                     <span className="border-b border-dashed border-muted-foreground/50 group-hover:border-foreground/50 transition-colors">
@@ -101,7 +100,7 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
               </div>
 
               {/* Description */}
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl text-pretty">
                 {website.description}
               </p>
 
@@ -110,7 +109,7 @@ export function WebsiteHero({ website, breadcrumbItems }: WebsiteHeroProps) {
                 {website.category && (
                   <Link
                     href={getRoute('category.page', { category: website.category })}
-                    className="group"
+                    className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-md"
                   >
                     <Badge
                       variant="secondary"

@@ -1,7 +1,5 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
-import { analytics } from '@/lib/analytics'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -9,6 +7,8 @@ import { AlertTriangle, CheckCircle, ExternalLink, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { Card } from '@/components/ui/card'
+import { analytics } from '@/lib/analytics'
 
 export default function IntegrationsSettingsPage() {
   const { user } = useAuth()
@@ -22,6 +22,9 @@ export default function IntegrationsSettingsPage() {
     user && (user.user_metadata?.github_username || user.user_metadata?.user_name)
   const githubUsername = user?.user_metadata?.user_name || user?.user_metadata?.github_username
 
+  /**
+   * Handles disconnecting the user's GitHub account
+   */
   const handleDisconnectGitHub = async () => {
     analytics.disconnectService('github', 'settings-integrations')
     if (
@@ -38,7 +41,7 @@ export default function IntegrationsSettingsPage() {
     try {
       // Implementation would handle GitHub disconnection
       toast.info('GitHub disconnection not yet implemented')
-    } catch (error) {
+    } catch (_error) {
       toast.error('Failed to disconnect GitHub account')
     } finally {
       setIsDisconnecting(false)

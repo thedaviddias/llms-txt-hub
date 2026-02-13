@@ -1,9 +1,9 @@
 'use client'
 
-import { CharacterCounter } from '@/components/ui/character-counter'
 import { Textarea } from '@thedaviddias/design-system/textarea'
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import { CharacterCounter } from '@/components/ui/character-counter'
 
 interface MDXTextareaProps {
   value: string

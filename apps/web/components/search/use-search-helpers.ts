@@ -2,13 +2,13 @@
  * Helper functions for the search hook to reduce complexity
  */
 
+import { logger } from '@thedaviddias/logging'
 import type { SearchIndexEntry, WebsiteMetadata } from '@/components/search/search-utils'
 import {
   canTransformToWebsiteMetadata,
   matchesSearchQuery,
   transformToWebsiteMetadata
 } from '@/components/search/search-utils'
-import { logger } from '@thedaviddias/logging'
 
 /**
  * Filter and sort entries by relevance to query

@@ -87,7 +87,7 @@ export function checkRateLimit(input: CheckRateLimitInput): CheckRateLimitResult
   const windowMs = Number(input.windowMs)
   const validWindowMs = Number.isInteger(windowMs) && windowMs > 0 ? windowMs : 60000
 
-  // Coerce and validate maxRequests with default 10  
+  // Coerce and validate maxRequests with default 10
   const maxRequests = Number(input.maxRequests)
   const validMaxRequests = Number.isInteger(maxRequests) && maxRequests > 0 ? maxRequests : 10
 

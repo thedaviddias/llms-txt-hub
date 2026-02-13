@@ -1,6 +1,5 @@
 'use client'
 
-import { categories } from '@/lib/categories'
 import { Button } from '@thedaviddias/design-system/button'
 import { Checkbox } from '@thedaviddias/design-system/checkbox'
 import {
@@ -10,6 +9,7 @@ import {
 } from '@thedaviddias/design-system/dropdown-menu'
 import { Filter, X } from 'lucide-react'
 import { useState } from 'react'
+import { categories } from '@/lib/categories'
 
 interface SearchFiltersProps {
   selectedCategories: string[]
@@ -18,6 +18,9 @@ interface SearchFiltersProps {
   resultCount?: number
 }
 
+/**
+ * Renders a category filter dropdown for search results
+ */
 export function SearchFilters({
   selectedCategories,
   onCategoryChange,
@@ -31,6 +34,10 @@ export function SearchFilters({
       availableCategories.includes(category.slug) || selectedCategories.includes(category.slug)
   )
 
+  /**
+   * Toggles a category filter on or off
+
+   */
   const handleCategoryToggle = (categorySlug: string, checked: boolean) => {
     if (checked) {
       onCategoryChange([...selectedCategories, categorySlug])
@@ -39,6 +46,10 @@ export function SearchFilters({
     }
   }
 
+  /**
+   * Clears all active category filters
+
+   */
   const clearAllFilters = () => {
     onCategoryChange([])
   }

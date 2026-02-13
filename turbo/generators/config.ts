@@ -1,26 +1,5 @@
 import type { PlopTypes } from '@turbo/gen'
 
-/**
- * Input type for the website MDX generator
- */
-interface WebsiteMdxInput {
-  /** Name of the website/tool */
-  name: string
-  /** Brief description of the website/tool */
-  description: string
-  /** Website URL */
-  website: string
-  /** URL to the llms.txt file */
-  llmsUrl: string
-  /** URL to the full llms.txt file */
-  llmsFullUrl: string
-  /** Category of the website/tool */
-  category: WebsiteCategory
-}
-
-/**
- * Available categories for websites
- */
 const CATEGORIES = [
   'integration-automation',
   'developer-tools',
@@ -30,8 +9,6 @@ const CATEGORIES = [
   'infrastructure-cloud',
   'personal-sites'
 ] as const
-
-type WebsiteCategory = (typeof CATEGORIES)[number]
 
 /**
  * Generator for creating new website MDX files

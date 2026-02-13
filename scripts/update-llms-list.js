@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 
 const LLMS_DIR = path.join(path.dirname(__dirname), 'packages/content/data/websites')
 const README_PATH = path.join(path.dirname(__dirname), 'README.md')
-const PROD_URL = 'https://llmstxthub.com'
+const _PROD_URL = 'https://llmstxthub.com'
 
 // Markers for the llms list section in README
 const START_MARKER = '<!-- LLMS-LIST:START - Do not remove or modify this section -->'
@@ -25,7 +25,9 @@ const CATEGORY_EMOJIS = {
   other: '🔍' // Keep this as fallback
 }
 
-// Format category name
+/**
+ * Formats a category slug into a display name with emoji prefix
+ */
 function formatCategory(category) {
   // Convert category to match our slug format
   const slug = category
@@ -46,7 +48,9 @@ function formatCategory(category) {
   return `${emoji} ${displayName}`
 }
 
-// Helper to get LLM metadata
+/**
+ * Extracts LLM metadata (name, description, URLs, category) from an MDX frontmatter file
+ */
 function getLLMMetadata(filePath) {
   try {
     const content = fs.readFileSync(filePath, 'utf8')
@@ -73,8 +77,10 @@ function getLLMMetadata(filePath) {
   }
 }
 
-// Convert filename to title case (remove .mdx and convert to title case)
-function toTitleCase(str) {
+/**
+ * Converts a kebab-case filename to Title Case by removing .mdx extension
+ */
+function _toTitleCase(str) {
   return str
     .replace('.mdx', '')
     .split('-')
@@ -82,7 +88,9 @@ function toTitleCase(str) {
     .join(' ')
 }
 
-// Group LLMs by category
+/**
+ * Groups LLM files by their frontmatter category, sorted alphabetically
+ */
 function groupLLMsByCategory(llmFiles) {
   const categories = {}
 
@@ -114,7 +122,9 @@ function groupLLMsByCategory(llmFiles) {
   return sortedCategories
 }
 
-// Get favicon URL for a website
+/**
+ * Returns a Google favicon service URL for the given website URL
+ */
 function getFaviconUrl(url) {
   try {
     const domain = new URL(url).hostname
@@ -125,6 +135,9 @@ function getFaviconUrl(url) {
   }
 }
 
+/**
+ * Generates the markdown content for the LLMs list section of the README
+ */
 function generateLLMsList() {
   // Get all LLM files
   const llmFiles = fs
@@ -172,6 +185,9 @@ function generateLLMsList() {
   return llmsContent
 }
 
+/**
+ * Updates the README.md by replacing the LLMs list section between markers
+ */
 function updateLLMsList() {
   try {
     // Read current README

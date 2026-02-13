@@ -1,6 +1,4 @@
 'use client'
-import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
-import { getRoute } from '@/lib/routes'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
 import {
@@ -12,6 +10,8 @@ import {
 } from '@thedaviddias/design-system/dropdown-menu'
 import { Eye, EyeOff, LogOut, Plus, Settings, User } from 'lucide-react'
 import Link from 'next/link'
+import { AuthTierIndicator } from '@/components/auth/auth-tier-indicator'
+import { getRoute } from '@/lib/routes'
 
 interface UserDropdownMenuProps {
   user: any

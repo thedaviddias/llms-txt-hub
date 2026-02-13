@@ -8,6 +8,9 @@ import type {
 
 const API_BASE = 'https://connect.mailerlite.com/api'
 
+/**
+ * MailerLite newsletter provider for managing email subscriptions
+ */
 export class MailerLiteProvider implements NewsletterProviderInterface {
   private config: MailerLiteConfig
 
@@ -65,7 +68,7 @@ export class MailerLiteProvider implements NewsletterProviderInterface {
                 error: 'EMAIL_UNSUBSCRIBED'
               }
             }
-          } catch (parseError) {
+          } catch (_parseError) {
             // If we can't parse the error, fall back to generic message
           }
         }

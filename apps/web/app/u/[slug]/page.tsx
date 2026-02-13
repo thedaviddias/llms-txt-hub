@@ -1,3 +1,8 @@
+import { auth } from '@thedaviddias/auth'
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { logger } from '@thedaviddias/logging'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { ProfileContributions } from '@/components/profile/profile-contributions'
 import { ProfileHeader } from '@/components/profile/profile-header'
 import { UserMessageBanner } from '@/components/ui/user-message-banner'
@@ -5,11 +10,6 @@ import { generateDisplayName, getUsernameFromMetadata, hasSharedInfo } from '@/l
 import { generateDynamicMetadata } from '@/lib/seo/seo-config'
 import { hashSensitiveData } from '@/lib/server-crypto'
 import { findUserBySlug } from '@/lib/user-search'
-import { auth } from '@thedaviddias/auth'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { logger } from '@thedaviddias/logging'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
 // Force dynamic rendering to ensure fresh data
 export const dynamic = 'force-dynamic'

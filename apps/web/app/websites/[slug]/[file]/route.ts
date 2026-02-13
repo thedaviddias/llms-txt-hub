@@ -6,6 +6,9 @@ import { createRateLimiter, slidingWindow } from '@thedaviddias/rate-limiting'
 import { NextResponse } from 'next/server'
 
 // Inline server-only function to avoid import issues
+/**
+ * Resolves file paths relative to the project root directory
+ */
 function resolveFromRoot(...paths: string[]): string {
   return path.resolve(process.cwd(), ...paths)
 }
@@ -24,6 +27,9 @@ const getFileCache = (): UpstashCache => {
   return fileCache
 }
 
+/**
+ * Returns or creates a rate limiter for llms.txt requests
+ */
 const getLlmsRateLimiter = () => {
   if (!llmsRateLimiter) {
     llmsRateLimiter = createRateLimiter({
@@ -34,6 +40,9 @@ const getLlmsRateLimiter = () => {
   return llmsRateLimiter
 }
 
+/**
+ * Returns or creates a rate limiter for llms-full.txt requests
+ */
 const getLlmsFullRateLimiter = () => {
   if (!llmsFullRateLimiter) {
     llmsFullRateLimiter = createRateLimiter({
@@ -44,9 +53,12 @@ const getLlmsFullRateLimiter = () => {
   return llmsFullRateLimiter
 }
 
+/**
+ * Handles GET requests to serve llms.txt or llms-full.txt file content
+ */
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string; file: string } }
+  { params }: { params: Promise<{ slug: string; file: string }> }
 ) {
   const { slug, file } = await params
   const ip = request.headers.get('x-forwarded-for') || 'anonymous'

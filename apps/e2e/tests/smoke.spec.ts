@@ -101,7 +101,7 @@ test.describe('Smoke Tests', () => {
       })
       .or(page.locator('button[aria-label*="menu" i]'))
 
-    const hasMobileMenu = (await mobileMenuButtons.count()) > 0
+    const _hasMobileMenu = (await mobileMenuButtons.count()) > 0
     // Mobile menu is optional, just note the result
     // Mobile menu present: ${hasMobileMenu}
   })

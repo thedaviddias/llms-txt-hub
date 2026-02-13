@@ -74,7 +74,6 @@ export const components: MDXComponents = {
     alt,
     ...props
   }: { className?: string; alt: string } & React.ImgHTMLAttributes<HTMLImageElement>) => (
-    // biome-ignore lint/performance/noImgElement: MDX images need standard img for dynamic src
     <img className={cn('rounded-md', className)} alt={alt} {...props} />
   ),
   hr: ({ ...props }) => <hr className="my-4 md:my-8" {...props} />,

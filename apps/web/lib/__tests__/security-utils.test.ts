@@ -11,7 +11,7 @@ import {
 // Mock the helpers module
 jest.mock('../security-utils-helpers', () => {
   const mockRateLimitMap = new Map()
-  
+
   return {
     rateLimitMap: mockRateLimitMap,
     sanitizeErrorMessage: jest.fn(msg => msg),

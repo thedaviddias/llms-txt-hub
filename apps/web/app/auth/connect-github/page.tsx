@@ -1,6 +1,5 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { ArrowLeft, CheckCircle, Github } from 'lucide-react'
@@ -8,6 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { Card } from '@/components/ui/card'
 
 export default function ConnectGitHubPage() {
   const { user } = useAuth()
@@ -32,6 +32,9 @@ export default function ConnectGitHubPage() {
     }
   }, [user, hasGitHubAuth, router])
 
+  /**
+   * Initiates the GitHub account connection flow
+   */
   const handleConnectGitHub = async () => {
     setIsConnecting(true)
 

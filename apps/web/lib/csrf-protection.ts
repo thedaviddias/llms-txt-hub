@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
-import { hashSensitiveData } from '@/lib/server-crypto'
 import { logger } from '@thedaviddias/logging'
 import { cookies } from 'next/headers'
+import { hashSensitiveData } from '@/lib/server-crypto'
 
 const CSRF_TOKEN_NAME = 'csrf_token'
 const CSRF_HEADER_NAME = 'x-csrf-token'

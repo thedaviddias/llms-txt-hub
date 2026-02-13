@@ -1,8 +1,11 @@
+import Link from 'next/link'
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { categories } from '@/lib/categories'
 import { getRoute } from '@/lib/routes'
-import Link from 'next/link'
 
+/**
+ * Renders a grid of category cards linking to their respective pages
+ */
 export function CategoryList() {
   return (
     <>

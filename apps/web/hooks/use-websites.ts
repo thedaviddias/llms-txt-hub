@@ -1,15 +1,21 @@
 'use client'
 
-import type { WebsiteMetadata } from '@/lib/content-loader'
 import { logger } from '@thedaviddias/logging'
 import { useEffect, useState } from 'react'
+import type { WebsiteMetadata } from '@/lib/content-loader'
 
+/**
+ * Hook that fetches and manages the list of websites from the API
+ */
 export function useWebsites() {
   const [websites, setWebsites] = useState<WebsiteMetadata[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    /**
+     * Fetches the list of websites from the API
+     */
     async function fetchWebsites() {
       try {
         setIsLoading(true)

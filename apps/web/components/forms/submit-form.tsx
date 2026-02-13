@@ -1,12 +1,12 @@
 'use client'
 
-import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuth } from '@thedaviddias/auth'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { SubmitFormGuidelines } from './submit-form-guidelines'
 import { type Step1Data, type Step2Data, step1Schema, step2Schema } from './submit-form-schemas'
 import { SubmitFormStep1 } from './submit-form-step1'
@@ -41,12 +41,8 @@ export function SubmitForm() {
     checking: boolean
     accessible: boolean | null
     error?: string
-  }>({
-    checking: false,
-    accessible: null
-  })
+  }>({ checking: false, accessible: null })
   const { user } = useAuth()
-
   const {
     trackFormStepStart,
     trackFormStepComplete,
@@ -97,7 +93,7 @@ export function SubmitForm() {
 
     try {
       // Get CSRF token from meta tag for API call
-      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+      const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
       const headers: Record<string, string> = {
         'Content-Type': 'application/json'
       }
@@ -172,7 +168,7 @@ export function SubmitForm() {
       const currentDate = new Date().toISOString().split('T')[0]
 
       // Get CSRF token from meta tag
-      const csrfMetaTag = document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement
+      const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
       if (csrfMetaTag?.content) {
         formData.append('_csrf', csrfMetaTag.content)
       }
@@ -198,7 +194,7 @@ export function SubmitForm() {
         // Track successful submission
         trackSubmitSuccess(values.website, values.category, 'submit-page')
         toast.success('Your PR has been created successfully!')
-        setPrUrl(result.prUrl as string)
+        setPrUrl(String(result.prUrl))
         setStep(3)
         // Track step 3 start (success page)
         trackFormStepStart(3, 'submit-form', 'submit-page')
@@ -225,16 +221,6 @@ export function SubmitForm() {
   function handleReset() {
     step2Form.reset()
     step1Form.reset()
-    setStep(1)
-  }
-
-  /**
-   * Resets form for another submission
-   */
-  function _handleSubmitAnother() {
-    setPrUrl('')
-    step1Form.reset()
-    step2Form.reset()
     setStep(1)
   }
 

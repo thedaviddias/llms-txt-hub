@@ -1,6 +1,6 @@
+import { logger } from '@thedaviddias/logging'
 import { GitHubAPIClient } from '@/lib/github-security-utils'
 import { hashSensitiveData } from '@/lib/server-crypto'
-import { logger } from '@thedaviddias/logging'
 
 export interface GitHubContribution {
   type: 'pull_request' | 'issue' | 'commit'

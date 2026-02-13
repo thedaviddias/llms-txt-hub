@@ -1,14 +1,21 @@
 'use client'
 
-import { useSearch } from '@/hooks/use-search'
 import { logger } from '@thedaviddias/logging'
 import { Loader2, Search } from 'lucide-react'
 import { useState } from 'react'
+import { useSearch } from '@/hooks/use-search'
 
+/**
+ * Renders the hero search form on the homepage
+ */
 export function HeroSearch() {
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()
   const [isLoading, setIsLoading] = useState(false)
 
+  /**
+   * Handles search form submission
+
+   */
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (searchQuery.trim()) {

@@ -1,11 +1,11 @@
 'use client'
 
+import { useAuth } from '@thedaviddias/auth'
+import { useEffect } from 'react'
 import { AccountInfo } from '@/components/settings/account-info'
 import { DangerZone } from '@/components/settings/danger-zone'
 import { SecuritySection } from '@/components/settings/security-section'
 import { analytics } from '@/lib/analytics'
-import { useAuth } from '@thedaviddias/auth'
-import { useEffect } from 'react'
 
 export default function AccountSettingsPage() {
   const { user } = useAuth()

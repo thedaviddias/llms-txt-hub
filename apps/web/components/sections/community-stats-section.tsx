@@ -1,8 +1,8 @@
+import { FileCheck, FileText } from 'lucide-react'
 import { Section } from '@/components/layout/section'
 import { GitHubStarsCard } from '@/components/stats/github-stars-card'
 import { StatCard } from '@/components/stats/stat-card'
 import type { WebsiteMetadata } from '@/lib/content-loader'
-import { FileCheck, FileText } from 'lucide-react'
 
 interface CommunityStatsSectionProps {
   allProjects: WebsiteMetadata[]

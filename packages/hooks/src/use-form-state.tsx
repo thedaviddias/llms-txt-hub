@@ -149,7 +149,7 @@ export function useFormState<T = unknown>(
         console.error(error)
         throw new Error(error)
       }
-      
+
       return {
         ...prev,
         [field]: value

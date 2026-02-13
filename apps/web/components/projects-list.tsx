@@ -1,16 +1,16 @@
 'use client'
 
+import { Button } from '@thedaviddias/design-system/button'
+import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
+import { ToggleGroup, ToggleGroupItem } from '@thedaviddias/design-system/toggle-group'
+import { Clock, Grid, List, SortAsc } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { EmptyState } from '@/components/empty-state'
 import { LLMGrid } from '@/components/llm/llm-grid'
 import { useWebsiteFilters } from '@/hooks/use-website-filters'
 import { categories } from '@/lib/categories'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { Button } from '@thedaviddias/design-system/button'
-import { ErrorBoundaryCustom } from '@thedaviddias/design-system/error-boundary'
-import { ToggleGroup, ToggleGroupItem } from '@thedaviddias/design-system/toggle-group'
-import { Clock, Grid, List, SortAsc } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 interface ClientProjectsListProps {
   initialWebsites: WebsiteMetadata[]

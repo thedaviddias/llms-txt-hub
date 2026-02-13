@@ -1,4 +1,3 @@
-import { validateCSRFToken } from '@/lib/csrf-protection'
 import * as Sentry from '@sentry/nextjs'
 import { logger } from '@thedaviddias/logging'
 import {
@@ -8,6 +7,7 @@ import {
 } from '@thedaviddias/newsletter'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { validateCSRFToken } from '@/lib/csrf-protection'
 
 // Get provider configuration from environment
 const providerConfig = getProviderFromEnv()
@@ -19,6 +19,9 @@ if (providerConfig) {
 
 const provider = providerConfig ? createNewsletterProvider(providerConfig) : null
 
+/**
+ * Handles POST requests to subscribe a user to the newsletter
+ */
 export async function POST(request: NextRequest) {
   try {
     // Debug logging
@@ -143,6 +146,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Handles GET requests returning newsletter endpoint info
+ */
 export async function GET() {
   return NextResponse.json({
     message: 'Newsletter subscription endpoint',

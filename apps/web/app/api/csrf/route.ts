@@ -1,5 +1,5 @@
-import { createCSRFToken } from '@/lib/csrf-protection'
 import { NextResponse } from 'next/server'
+import { createCSRFToken } from '@/lib/csrf-protection'
 
 /**
  * GET handler for CSRF token generation

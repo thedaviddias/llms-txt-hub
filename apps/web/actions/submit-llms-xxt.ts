@@ -198,7 +198,7 @@ ${description}
         ref: `heads/${defaultBranch}`
       })
 
-      let branchOwner: string
+      let _branchOwner: string
       let headRef: string
 
       if (useUserToken && githubUsername) {
@@ -246,7 +246,7 @@ ${description}
           branch: branchName
         })
 
-        branchOwner = githubUsername
+        _branchOwner = githubUsername
         headRef = `${githubUsername}:${branchName}`
       } else {
         // Use admin token - create branch directly in main repo
@@ -270,7 +270,7 @@ ${description}
           branch: branchName
         })
 
-        branchOwner = owner
+        _branchOwner = owner
         headRef = branchName
       }
 

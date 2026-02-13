@@ -36,32 +36,23 @@ let nextConfig: NextConfig = {
     }
   },
 
-  // Configure Turbopack to support MDX and other extensions
+  // Configure Turbopack (default bundler in Next.js 16)
   turbopack: {
-    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json']
-  },
-
-  // Webpack configuration to handle Node.js built-ins
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      // Don't resolve Node.js built-in modules on the client
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        crypto: false,
-        stream: false,
-        buffer: false,
-        util: false,
-        fs: false,
-        path: false,
-        'node:crypto': false,
-        'node:stream': false,
-        'node:buffer': false,
-        'node:util': false,
-        'node:fs': false,
-        'node:path': false
-      }
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.mjs', '.json'],
+    resolveAlias: {
+      crypto: { browser: './turbopack-empty.ts' },
+      stream: { browser: './turbopack-empty.ts' },
+      buffer: { browser: './turbopack-empty.ts' },
+      util: { browser: './turbopack-empty.ts' },
+      fs: { browser: './turbopack-empty.ts' },
+      path: { browser: './turbopack-empty.ts' },
+      'node:crypto': { browser: './turbopack-empty.ts' },
+      'node:stream': { browser: './turbopack-empty.ts' },
+      'node:buffer': { browser: './turbopack-empty.ts' },
+      'node:util': { browser: './turbopack-empty.ts' },
+      'node:fs': { browser: './turbopack-empty.ts' },
+      'node:path': { browser: './turbopack-empty.ts' }
     }
-    return config
   },
 
   images: {

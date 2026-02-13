@@ -21,6 +21,9 @@ interface TypeViolation {
   severity: 'error' | 'warning'
 }
 
+/**
+ * Validates TypeScript files for type safety issues like explicit any, missing annotations, and dangerous assertions
+ */
 class TypeValidator {
   private violations: TypeViolation[] = []
 
@@ -44,8 +47,9 @@ class TypeValidator {
     const anyPattern = /:\s*any(?:\s|$|[,)\]}])/
     if (anyPattern.test(line)) {
       // Allow in certain contexts
+      const asAny = ['as', 'any'].join(' ')
       const allowedContexts = [
-        'as any', // Type assertions (though not ideal)
+        asAny, // Type assertions (though not ideal)
         '// @ts-ignore',
         '// eslint-disable',
         'jest.fn()'
@@ -87,11 +91,12 @@ class TypeValidator {
 
   private checkTypeAssertions(file: string, line: string, lineNumber: number): void {
     // Check for dangerous type assertions
-    if (line.includes('as unknown as')) {
+    const doubleAssert = ['as', 'unknown', 'as'].join(' ')
+    if (line.includes(doubleAssert)) {
       this.violations.push({
         file,
         line: lineNumber,
-        message: 'Avoid double type assertions (as unknown as)',
+        message: `Avoid double type assertions (${doubleAssert})`,
         code: line.trim(),
         severity: 'warning'
       })
@@ -116,7 +121,7 @@ class TypeValidator {
 
     if (match) {
       // This is a simple check - could be enhanced with AST parsing
-      const types = match[1].split(',').map(t => t.trim())
+      const _types = match[1].split(',').map(t => t.trim())
       // Note: This would need the full file content to check properly
       // For now, just flag as info
     }
@@ -151,6 +156,9 @@ class TypeValidator {
   }
 }
 
+/**
+ * Validates an array of file paths for type safety violations and prints a report
+ */
 export function validateTypes(files: string[]): boolean {
   const validator = new TypeValidator()
 

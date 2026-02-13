@@ -2,11 +2,11 @@
  * Test provider components and utilities
  */
 
-import { FavoritesProvider } from '@/contexts/favorites-context'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { RenderOptions } from '@testing-library/react'
 import { ThemeProvider } from 'next-themes'
 import type { ReactNode } from 'react'
+import { FavoritesProvider } from '@/contexts/favorites-context'
 
 export interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
   user?: any

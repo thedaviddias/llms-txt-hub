@@ -1,5 +1,5 @@
-import { CommunityDashboard } from '@/components/community/community-dashboard'
 import type { Metadata } from 'next'
+import { CommunityDashboard } from '@/components/community/community-dashboard'
 
 export const metadata: Metadata = {
   title: 'Community - llms.txt hub',

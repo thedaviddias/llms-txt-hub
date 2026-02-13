@@ -1,5 +1,8 @@
 // Mock for @thedaviddias/rate-limiting to avoid Upstash Redis dependency in tests
 
+/**
+ * Mock rate limiter that bypasses rate limiting in tests
+ */
 export const withRateLimit = async (request: any, rateLimitType: string, handler: any) => {
   // In tests, just call the handler directly without rate limiting
   return await handler()

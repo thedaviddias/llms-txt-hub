@@ -1,8 +1,8 @@
 'use client'
 
-import { analytics } from '@/lib/analytics'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+import { analytics } from '@/lib/analytics'
 
 interface AnalyticsLinkProps {
   href: string
@@ -29,6 +29,9 @@ export function AnalyticsLink({
   onClick,
   ...props
 }: AnalyticsLinkProps) {
+  /**
+   * Tracks click analytics for the link
+   */
   const handleClick = () => {
     // Custom onClick handler
     if (onClick) {
@@ -63,6 +66,9 @@ export function AnalyticsLink({
 }
 
 // Convenience components for common link types
+/**
+ * Renders an external link that opens in a new tab with analytics tracking
+ */
 export function ExternalAnalyticsLink({
   children,
   href,
@@ -89,6 +95,9 @@ export function ExternalAnalyticsLink({
   )
 }
 
+/**
+ * Renders a GitHub profile link with analytics tracking
+ */
 export function GitHubAnalyticsLink({
   username,
   children,

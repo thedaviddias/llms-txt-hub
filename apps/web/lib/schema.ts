@@ -136,7 +136,7 @@ export function generateWebsiteDetailSchema(website: WebsiteMetadata, baseUrl: s
         },
         primaryImageOfPage: {
           '@type': 'ImageObject',
-          url: getFaviconUrl(website.website, 128)
+          url: getFaviconUrl(website.website, 256)
         },
         datePublished: website.publishedAt,
         dateModified: website.publishedAt,

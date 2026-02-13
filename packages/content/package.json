@@ -10,13 +10,8 @@
   "license": "MIT",
   "author": "David Dias",
   "main": "index.js",
-  "scripts": {
-    "build": "echo 'No build needed for content package'",
-    "dev": "echo 'No dev needed for content package'",
-    "lint": "echo 'No lint needed for content package'",
-    "test": "echo 'No tests needed for content package'"
-  },
+  "scripts": {},
   "devDependencies": {
-    "@types/node": "^22.13.17"
+    "@types/node": "^22.19.11"
   }
 }

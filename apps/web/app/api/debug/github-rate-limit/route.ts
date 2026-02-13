@@ -1,6 +1,6 @@
-import { GitHubAPIClient } from '@/lib/github-security-utils'
 import { logger } from '@thedaviddias/logging'
 import { NextResponse } from 'next/server'
+import { GitHubAPIClient } from '@/lib/github-security-utils'
 
 /**
  * GET handler for GitHub rate limit debugging

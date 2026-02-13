@@ -7,10 +7,10 @@
 import './security-utils-setup'
 import { createSafeErrorMessage, validateOrigin, validateUsername } from '@/lib/security-utils'
 import {
+  createMockRequest,
   INVALID_USERNAMES,
   VALID_USERNAMES,
-  XSS_ATTACK_VECTORS,
-  createMockRequest
+  XSS_ATTACK_VECTORS
 } from './security-utils-setup'
 
 describe('Input Validation', () => {

@@ -30,15 +30,12 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const page = Math.max(1, Number.parseInt(searchParams.get('page') || '1', 10))
-    const limit = Math.min(
-      50,
-      Math.max(10, Number.parseInt(searchParams.get('limit') || '24', 10))
-    )
+    const limit = Math.min(50, Math.max(10, Number.parseInt(searchParams.get('limit') || '24', 10)))
     const search = searchParams.get('search') || ''
 
     // Get all members from cache
     const allMembers = await getCachedMembers()
-    const totalCount = allMembers.length
+    const _totalCount = allMembers.length
 
     // Apply search filter if provided
     let filteredMembers = allMembers

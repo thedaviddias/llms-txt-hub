@@ -1,13 +1,13 @@
 'use client'
 
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { categories } from '@/lib/categories'
-import { getRoute } from '@/lib/routes'
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import { logger } from '@thedaviddias/logging'
 import { ArrowRight, Clock, Search, TrendingUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { categories } from '@/lib/categories'
+import { getRoute } from '@/lib/routes'
 import { Favicon } from './favicon'
 
 interface SearchSuggestion {
@@ -28,6 +28,9 @@ interface SearchAutocompleteProps {
   anchorRef?: React.RefObject<HTMLInputElement | null>
 }
 
+/**
+ * Renders a search autocomplete dropdown with suggestions, recent searches, and categories
+ */
 export function SearchAutocomplete({
   searchQuery,
   onSelect,
@@ -42,14 +45,12 @@ export function SearchAutocomplete({
   const dropdownRef = useRef<HTMLDivElement>(null)
   const { trackSearch, trackSearchAutocomplete } = useAnalyticsEvents()
 
-  // Get recent searches from localStorage
   const getRecentSearches = useCallback((): string[] => {
     if (typeof window === 'undefined') return []
     const recent = localStorage.getItem('recentSearches')
     return recent ? JSON.parse(recent).slice(0, 3) : []
   }, [])
 
-  // Save search to recent searches
   const saveRecentSearch = useCallback(
     (query: string) => {
       if (typeof window === 'undefined') return
@@ -60,18 +61,15 @@ export function SearchAutocomplete({
     [getRecentSearches]
   )
 
-  // Fetch suggestions based on query
   useEffect(() => {
+    /** Fetches and filters search suggestions based on the current query */
     const fetchSuggestions = async () => {
       if (!searchQuery.trim()) {
-        // Show recent searches and trending when no query
         const recentSearches = getRecentSearches().map(search => ({
           type: 'recent' as const,
           title: search,
           icon: Clock
         }))
-
-        // Show category suggestions
         const categoryMatches = categories.slice(0, 3).map(cat => ({
           type: 'category' as const,
           title: `Browse ${cat.name}`,
@@ -84,17 +82,13 @@ export function SearchAutocomplete({
         setSelectedIndex(-1)
         return
       }
-
       setLoading(true)
       try {
-        // Fetch search index
         const response = await fetch('/search/search-index.json')
         if (!response.ok) throw new Error('Failed to fetch search index')
 
         const searchIndex = await response.json()
         const query = searchQuery.toLowerCase()
-
-        // Filter and rank results
         const websiteMatches = searchIndex
           .filter((item: any) => {
             const searchableText = `${item.name} ${item.description} ${item.category}`.toLowerCase()
@@ -109,8 +103,6 @@ export function SearchAutocomplete({
             category: item.category,
             website: item.website
           }))
-
-        // Check for category matches
         const categoryMatches = categories
           .filter(cat => cat.name.toLowerCase().includes(query) || cat.slug.includes(query))
           .slice(0, 2)
@@ -136,10 +128,9 @@ export function SearchAutocomplete({
     return () => clearTimeout(debounceTimer)
   }, [searchQuery, getRecentSearches])
 
-  // Handle keyboard navigation
   useEffect(() => {
     if (!isOpen) return
-
+    /** Handles keyboard navigation within the autocomplete dropdown */
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key) {
         case 'ArrowDown':
@@ -155,7 +146,6 @@ export function SearchAutocomplete({
           if (selectedIndex >= 0 && suggestions[selectedIndex]) {
             handleSuggestionClick(suggestions[selectedIndex])
           } else if (searchQuery.trim()) {
-            // Perform regular search via keyboard
             trackSearch(searchQuery, 0, 'autocomplete-keyboard-enter')
             saveRecentSearch(searchQuery)
             router.push(`${getRoute('search')}?q=${encodeURIComponent(searchQuery)}`)
@@ -173,16 +163,18 @@ export function SearchAutocomplete({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isOpen, selectedIndex, suggestions, searchQuery, router, onClose, saveRecentSearch])
 
-  // Handle clicking outside
   useEffect(() => {
     if (!isOpen) return
-
+    /** Closes the dropdown when clicking outside */
     const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target
+      if (!(target instanceof Node)) return
+
       if (
         dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node) &&
+        !dropdownRef.current.contains(target) &&
         anchorRef?.current &&
-        !anchorRef.current.contains(e.target as Node)
+        !anchorRef.current.contains(target)
       ) {
         onClose()
       }
@@ -192,22 +184,18 @@ export function SearchAutocomplete({
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [isOpen, onClose, anchorRef])
 
+  /** Navigates to the selected suggestion and tracks the interaction */
   const handleSuggestionClick = (suggestion: SearchSuggestion) => {
-    // Track autocomplete selection
     trackSearchAutocomplete(searchQuery, suggestion.title, `autocomplete-${suggestion.type}`)
-
     if (suggestion.type === 'recent') {
       saveRecentSearch(suggestion.title)
-      // Track search from recent
       trackSearch(suggestion.title, 0, 'autocomplete-recent')
       router.push(`${getRoute('search')}?q=${encodeURIComponent(suggestion.title)}`)
     } else if (suggestion.url) {
       router.push(suggestion.url)
     }
 
-    if (onSelect) {
-      onSelect(suggestion)
-    }
+    onSelect?.(suggestion)
     onClose()
   }
 
@@ -216,10 +204,7 @@ export function SearchAutocomplete({
   return (
     <div
       ref={dropdownRef}
-      className={cn(
-        'absolute top-full mt-2 w-full bg-background border rounded-lg shadow-lg z-[100]',
-        'max-h-[400px] overflow-y-auto'
-      )}
+      className="absolute top-full mt-2 w-full bg-background border rounded-lg shadow-lg z-[100] max-h-[400px] overflow-y-auto"
     >
       {loading ? (
         <div className="p-4 text-center text-muted-foreground">
@@ -234,7 +219,6 @@ export function SearchAutocomplete({
           {suggestions.map((suggestion, index) => {
             const Icon = suggestion.icon || Search
             const isSelected = index === selectedIndex
-
             return (
               <button
                 key={`${suggestion.type}-${suggestion.title}-${index}`}
@@ -290,13 +274,11 @@ export function SearchAutocomplete({
           })}
         </div>
       )}
-
       {searchQuery && (
         <div className="border-t px-4 py-2">
           <button
             type="button"
             onClick={() => {
-              // Track search for button click
               trackSearch(searchQuery, 0, 'autocomplete-search-button')
               saveRecentSearch(searchQuery)
               router.push(`${getRoute('search')}?q=${encodeURIComponent(searchQuery)}`)

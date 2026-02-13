@@ -1,0 +1,54 @@
+{
+  "name": "llmstxt-cli",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Install llms.txt files from the llms-txt-hub registry into your project",
+  "keywords": [
+    "llms",
+    "llms.txt",
+    "ai",
+    "documentation",
+    "cli"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thedaviddias/llms-txt-hub",
+    "directory": "packages/cli"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "llmstxt": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm build:registry && tsup",
+    "build:registry": "tsx scripts/build-registry.ts",
+    "dev": "tsup --watch",
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@clack/prompts": "^1.0.1",
+    "commander": "^13.1.0",
+    "fuse.js": "^7.1.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.11",
+    "gray-matter": "^4.0.3",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -5,8 +5,8 @@
  * All API endpoints should be mocked here for consistency.
  */
 
-import { http, HttpResponse, delay } from 'msw'
-import { MOCK_DATA, createApiError, createApiResponse } from './data.mock'
+import { delay, HttpResponse, http } from 'msw'
+import { createApiError, createApiResponse, MOCK_DATA } from './data.mock'
 
 // Base API URL - adjust based on your environment
 const _API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'

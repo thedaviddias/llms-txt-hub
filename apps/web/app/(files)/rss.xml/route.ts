@@ -1,7 +1,10 @@
-import { type WebsiteMetadata, getWebsites } from '@/lib/content-loader'
+import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://llmstxthub.com'
 
+/**
+ * Handles GET requests to generate the RSS feed as JSON
+ */
 export async function GET() {
   const websitesData = await getWebsites()
 

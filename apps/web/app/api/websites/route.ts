@@ -1,7 +1,10 @@
-import { getWebsites } from '@/lib/content-loader'
 import { logger } from '@thedaviddias/logging'
 import { NextResponse } from 'next/server'
+import { getWebsites } from '@/lib/content-loader'
 
+/**
+ * Handles GET requests to fetch all websites
+ */
 export async function GET() {
   try {
     const websites = await getWebsites()

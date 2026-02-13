@@ -9,7 +9,7 @@ type ErrorProps = {
   reset: () => void
 }
 
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+// biome-ignore lint/suspicious/noShadowRestrictedNames: Next.js requires this component to be named Error
 export default function Error({ error, reset }: ErrorProps) {
   useEffect(() => {
     logger.error(error)

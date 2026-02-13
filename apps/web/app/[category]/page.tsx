@@ -1,3 +1,7 @@
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { CategoryWebsitesList } from '@/components/category-websites-list'
 import { JsonLd } from '@/components/json-ld'
@@ -9,15 +13,14 @@ import { categories, getCategoryBySlug } from '@/lib/categories'
 import { getGuides } from '@/lib/content-loader'
 import { getCategorySEO } from '@/lib/seo/category-seo'
 import { generateDynamicMetadata, optimizeMetaDescription } from '@/lib/seo/seo-config'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>
 }
 
+/**
+ * Generates static params for all category pages
+ */
 export async function generateStaticParams() {
   // Generate static params for all categories
   return categories.map(category => ({
@@ -25,6 +28,9 @@ export async function generateStaticParams() {
   }))
 }
 
+/**
+ * Generates metadata for category pages with SEO-optimized descriptions
+ */
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const resolvedParams = await params
   const category = getCategoryBySlug(resolvedParams.category)
@@ -45,7 +51,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const seoContent = getCategorySEO(category.slug, category)
 
   // Enhanced title with count for better CTR
-  const title =
+  const _title =
     categoryProjectsCount > 0
       ? `${categoryProjectsCount}+ ${seoContent.metaTitle}`
       : seoContent.metaTitle
@@ -57,7 +63,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       : seoContent.metaDescription
 
   const baseUrl = getBaseUrl()
-  const canonicalUrl = `${baseUrl}/${category.slug}`
+  const _canonicalUrl = `${baseUrl}/${category.slug}`
 
   return generateDynamicMetadata({
     type: 'category',

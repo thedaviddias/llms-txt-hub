@@ -15,7 +15,7 @@ import { generateWebsiteDetailSchema } from '@/lib/schema'
 import { generateDynamicMetadata, SITE_URL } from '@/lib/seo/seo-config'
 
 interface ProjectPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 /**
@@ -125,8 +125,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <WebsiteHero website={project} breadcrumbItems={breadcrumbItems} />
 
         {/* Main Content Area */}
-        <div className="container mx-auto px-6 py-8 md:py-12">
-          <div className="max-w-4xl mx-auto space-y-12">
+        <div className="container mx-auto px-6 py-10 md:py-14">
+          <div className="max-w-4xl mx-auto space-y-14 md:space-y-16">
             {/* LLMs.txt Files Section */}
             <WebsiteLLMsSection website={project} />
 
@@ -139,11 +139,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </section>
 
             {/* Navigation */}
-            <section className="animate-fade-in-up opacity-0 stagger-6">
-              <ProjectNavigation
-                previousWebsite={project.previousWebsite}
-                nextWebsite={project.nextWebsite}
-              />
+            <section
+              className="animate-fade-in-up opacity-0 stagger-6"
+              aria-labelledby="browse-more-heading"
+            >
+              <div className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 md:p-8">
+                <h2
+                  id="browse-more-heading"
+                  className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-4"
+                >
+                  Browse more
+                </h2>
+                <ProjectNavigation
+                  previousWebsite={project.previousWebsite}
+                  nextWebsite={project.nextWebsite}
+                />
+              </div>
             </section>
 
             {/* Related Projects */}
@@ -154,6 +165,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   description="Discover similar websites implementing llms.txt"
                   viewAllHref={getRoute('website.list')}
                   viewAllText="Browse all websites"
+                  titleId="related-projects"
                 >
                   <LLMGrid
                     items={project.relatedWebsites.slice(0, 3)}

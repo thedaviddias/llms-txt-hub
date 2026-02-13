@@ -1,11 +1,11 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
 import { Github, Heart, Mail, Users, X, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { Card } from '@/components/ui/card'
 
 interface ProgressiveAuthBannerProps {
   context?: 'favorites' | 'community' | 'submit' | 'general'
@@ -13,6 +13,9 @@ interface ProgressiveAuthBannerProps {
   className?: string
 }
 
+/**
+ * Displays a dismissable banner prompting unauthenticated users to sign up
+ */
 export function ProgressiveAuthBanner({
   context = 'general',
   onDismiss,
@@ -32,6 +35,10 @@ export function ProgressiveAuthBanner({
     setIsVisible(shouldShow)
   }, [user, context])
 
+  /**
+   * Dismisses the banner and persists the dismissal to localStorage
+
+   */
   const handleDismiss = () => {
     const newDismissed = [...dismissedBanners, context]
     setDismissedBanners(newDismissed)

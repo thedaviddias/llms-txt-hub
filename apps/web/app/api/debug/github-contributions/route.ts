@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto'
-import { getUserContributions } from '@/lib/github-contributions'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { getUserContributions } from '@/lib/github-contributions'
 
 /**
  * Creates a SHA-256 hash of the username for logging purposes

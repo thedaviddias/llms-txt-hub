@@ -14,10 +14,10 @@
   "devDependencies": {
     "@thedaviddias/config-next": "workspace:*",
     "@thedaviddias/config-typescript": "workspace:*",
-    "@types/node": "^22.13.17",
-    "typescript": "^5.8.2"
+    "@types/node": "^22.19.11",
+    "typescript": "^5.9.3"
   },
   "optionalDependencies": {
-    "@sentry/nextjs": "^10.7.0"
+    "@sentry/nextjs": "^10.38.0"
   }
 }

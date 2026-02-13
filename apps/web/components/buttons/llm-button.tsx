@@ -11,6 +11,9 @@ interface LLMButtonProps {
   className?: string
 }
 
+/**
+ * Renders a styled button linking to an llms.txt or llms-full.txt file
+ */
 export function LLMButton({ href, type, size = 'md', className }: LLMButtonProps) {
   const sizeClasses = {
     sm: 'text-xs px-3 py-1.5 min-w-[120px]',
@@ -54,6 +57,7 @@ export function LLMButton({ href, type, size = 'md', className }: LLMButtonProps
       rel="noopener noreferrer"
       className={cn(
         'group inline-flex items-center justify-between rounded-xl bg-gradient-to-br transition-all duration-200 hover:scale-[1.02] hover:shadow-lg relative overflow-hidden',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         config.gradient,
         config.border,
         'border backdrop-blur-sm',

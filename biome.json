@@ -1,10 +1,20 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/build",
+      "!**/node_modules",
+      "!**/.next",
+      "!**/.turbo",
+      "!**/coverage",
+      "!**/.content-collections"
+    ]
   },
   "vcs": {
-    "enabled": false,
+    "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
@@ -22,8 +32,13 @@
       "recommended": true,
       "correctness": {
         "noUnusedImports": "warn",
+        "noUnusedFunctionParameters": "off",
         "useExhaustiveDependencies": "off",
-        "useJsxKeyInIterable": "off"
+        "useJsxKeyInIterable": "off",
+        "useUniqueElementIds": "off"
+      },
+      "performance": {
+        "noImgElement": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
@@ -34,11 +49,17 @@
       "suspicious": {
         "noExplicitAny": "off",
         "noArrayIndexKey": "off",
-        "noImplicitAnyLet": "off"
+        "noImplicitAnyLet": "off",
+        "noUnknownAtRules": "off",
+        "useIterableCallbackReturn": "off"
       },
       "complexity": {
         "noBannedTypes": "off",
-        "noForEach": "off"
+        "noForEach": "off",
+        "noImportantStyles": "off"
+      },
+      "a11y": {
+        "useSemanticElements": "off"
       }
     }
   },

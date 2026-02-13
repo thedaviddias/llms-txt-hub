@@ -1,3 +1,6 @@
+import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
+import { Trophy } from 'lucide-react'
+import type { Metadata } from 'next'
 import { getHomePageData } from '@/actions/get-home-page-data'
 import { CategoryWebsitesList } from '@/components/category-websites-list'
 import { JsonLd } from '@/components/json-ld'
@@ -7,9 +10,6 @@ import { NewsletterSection } from '@/components/sections/newsletter-section'
 import { ToolsSection } from '@/components/sections/tools-section'
 import { getGuides } from '@/lib/content-loader'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
-import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { Trophy } from 'lucide-react'
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Featured AI-Ready Websites - llms.txt hub',
