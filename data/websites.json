@@ -1309,6 +1309,15 @@
     "publishedAt": "2025-02-24"
   },
   {
+  "name": "Jatkokoulutus.com",
+  "domain": "https://jatkokoulutus.com",
+  "description": "Continuing education provider offering online and live courses, including Traficom-approved certification/card trainings (FI/EN/SV).",
+  "llmsTxtUrl": "https://jatkokoulutus.com/llms.txt",
+  "category": "business-operations",
+  "favicon": "https://www.google.com/s2/favicons?domain=jatkokoulutus.com&sz=128",
+  "publishedAt": "2025-12-15"
+},
+  {
     "name": "Juno",
     "domain": "https://juno.build/",
     "description": "Juno is an open-source, next-gen serverless platform to build and run self-contained web apps.",
