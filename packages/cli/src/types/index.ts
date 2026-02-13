@@ -1,5 +1,6 @@
 export interface RegistryEntry {
   slug: string
+  webSlug: string
   name: string
   domain: string
   description: string
@@ -48,7 +49,7 @@ export const PRIMARY_CATEGORIES = [
   'ai-ml',
   'developer-tools',
   'data-analytics',
-  'integration-automation',
+  'automation-workflow',
   'infrastructure-cloud',
   'security-identity'
 ] as const

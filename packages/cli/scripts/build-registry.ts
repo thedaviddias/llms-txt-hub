@@ -4,6 +4,7 @@ import matter from 'gray-matter'
 
 interface RegistryEntry {
   slug: string
+  webSlug: string
   name: string
   domain: string
   description: string
@@ -62,8 +63,11 @@ function buildRegistry(): void {
         process.stderr.write(`Warning: empty slug for "${data.name}", using filename: ${slug}\n`)
       }
 
+      const webSlug = slugFromFilename(file)
+
       return {
         slug,
+        webSlug,
         name: data.name,
         domain: data.website || '',
         description: data.description || '',
@@ -101,12 +105,36 @@ function buildRegistry(): void {
     }
   }
 
+  // Only include entries from primary categories in the CLI registry
+  const PRIMARY_CATEGORIES = [
+    'ai-ml',
+    'developer-tools',
+    'data-analytics',
+    'automation-workflow',
+    'infrastructure-cloud',
+    'security-identity'
+  ]
+  const filtered = entries.filter(entry => PRIMARY_CATEGORIES.includes(entry.category))
+
   // Sort by name
-  entries.sort((a, b) => a.name.localeCompare(b.name))
+  filtered.sort((a, b) => a.name.localeCompare(b.name))
 
-  writeFileSync(outputFile, `${JSON.stringify(entries, null, 2)}\n`, 'utf-8')
+  writeFileSync(outputFile, `${JSON.stringify(filtered, null, 2)}\n`, 'utf-8')
 
-  process.stdout.write(`Built registry with ${entries.length} entries -> ${outputFile}\n`)
+  process.stdout.write(
+    `Built registry with ${filtered.length} entries (from ${entries.length} total) -> ${outputFile}\n`
+  )
+
+  // Auto-generate package-mappings.json from registry slugs
+  const npmMap: Record<string, string> = {}
+  for (const entry of filtered) {
+    npmMap[entry.slug] = entry.slug
+  }
+  const mappingsFile = join(outputDir, 'package-mappings.json')
+  writeFileSync(mappingsFile, `${JSON.stringify({ version: 1, npm: npmMap }, null, 2)}\n`, 'utf-8')
+  process.stdout.write(
+    `Built package-mappings with ${Object.keys(npmMap).length} entries -> ${mappingsFile}\n`
+  )
 }
 
 buildRegistry()
