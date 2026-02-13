@@ -1,6 +1,6 @@
 {
   "name": "llmstxt-cli",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": false,
   "description": "Install llms.txt files from the llms-txt-hub registry into your project",
   "keywords": [

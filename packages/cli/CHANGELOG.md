@@ -1,5 +1,11 @@
 # llmstxt-cli
 
+## 0.4.1
+
+### Patch Changes
+
+- [`ac73aed`](https://github.com/thedaviddias/llms-txt-hub/commit/ac73aedbd9bb10ca3184ea3e7d51374edfe4866b) Thanks [@thedaviddias](https://github.com/thedaviddias)! - Add CLI documentation pages (/docs) with getting-started, commands, and agents guides. Document telemetry opt-out (DO_NOT_TRACK, LLMSTXT_TELEMETRY_DISABLED).
+
 ## 0.4.0
 
 ### Minor Changes
