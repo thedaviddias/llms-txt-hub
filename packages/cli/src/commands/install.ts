@@ -43,7 +43,6 @@ export async function install({ names, options }: InstallInput): Promise<void> {
 
   // Let user choose agents
   const agents = detectInstalledAgents()
-  const detectedNames = new Set(agents.map(a => a.name))
   let targetAgents: AgentConfig[]
 
   if (!process.stdin.isTTY) {
@@ -58,14 +57,9 @@ export async function install({ names, options }: InstallInput): Promise<void> {
       options: allAgentConfigs.map(a => ({
         value: a.name,
         label: a.displayName,
-        hint: detectedNames.has(a.name)
-          ? `${pc.green('detected')} · ${a.isUniversal ? '.agents/skills/' : a.skillsDir}`
-          : a.isUniversal
-            ? '.agents/skills/'
-            : a.skillsDir
+        hint: a.isUniversal ? '.agents/skills/' : a.skillsDir
       })),
-      initialValues: agents.map(a => a.name),
-      required: false
+      required: true
     })
 
     if (p.isCancel(selected)) {
