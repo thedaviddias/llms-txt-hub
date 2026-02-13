@@ -40,11 +40,6 @@ export interface DetectedMatch {
   registryEntry: RegistryEntry
 }
 
-export interface PackageMappings {
-  version: number
-  npm: Record<string, string>
-}
-
 export const PRIMARY_CATEGORIES = [
   'ai-ml',
   'developer-tools',

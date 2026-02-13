@@ -1,12 +1,74 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
-// Bundled package mappings (inlined by tsup at build time)
-import packageMappings from '../../data/package-mappings.json' with { type: 'json' }
-import type { DetectedMatch, PackageMappings } from '../types/index.js'
-import { getEntry } from './registry.js'
+import type { DetectedMatch, RegistryEntry } from '../types/index.js'
+import { getAllEntries } from './registry.js'
+
+/**
+ * Normalize a string for matching: lowercase, strip common suffixes.
+ */
+function normalize(name: string): string {
+  return name.toLowerCase().replace(/[-_./]/g, '')
+}
+
+/**
+ * Extract candidate tokens from an npm package name for fuzzy matching.
+ * E.g. "@stripe/stripe-js" → ["stripe/stripe-js", "stripe-js", "stripe"]
+ * E.g. "drizzle-orm" → ["drizzle-orm", "drizzle"]
+ * E.g. "@anthropic-ai/sdk" → ["anthropic-ai/sdk", "sdk", "anthropic-ai", "anthropic"]
+ */
+function extractTokens(dep: string): string[] {
+  const tokens: string[] = []
+
+  // Strip scope prefix
+  const unscoped = dep.startsWith('@') ? dep.slice(1) : dep
+  tokens.push(unscoped)
+
+  // If scoped, add both parts
+  if (dep.startsWith('@') && unscoped.includes('/')) {
+    const [scope, pkg] = unscoped.split('/')
+    tokens.push(pkg)
+    tokens.push(scope)
+    // Strip common scope suffixes: @astrojs → astro
+    const cleanScope = scope.replace(/js$/, '').replace(/-ai$/, '')
+    if (cleanScope !== scope) tokens.push(cleanScope)
+  }
+
+  // Strip common package suffixes
+  for (const suffix of ['-js', '-sdk', '-client', '-core', '-cli', '-types']) {
+    if (dep.endsWith(suffix)) {
+      tokens.push(dep.slice(0, -suffix.length))
+    }
+  }
+
+  return tokens
+}
+
+/**
+ * Check if a dependency name matches a registry entry.
+ */
+function matchesEntry(dep: string, entry: RegistryEntry): boolean {
+  const tokens = extractTokens(dep)
+  const entrySlug = entry.slug.toLowerCase()
+  const entryName = normalize(entry.name)
+
+  for (const token of tokens) {
+    const norm = normalize(token)
+    // Exact slug match
+    if (norm === entrySlug) return true
+    // Exact normalized name match
+    if (norm === entryName) return true
+    // Slug contains the token (e.g. dep "stripe" matches slug "stripe")
+    if (entrySlug === norm) return true
+    // Entry name starts with token (e.g. dep "prisma" matches name "Prisma ORM")
+    if (entryName.startsWith(norm) && norm.length >= 3) return true
+  }
+
+  return false
+}
 
 /**
  * Detect llms.txt matches from package.json dependencies.
+ * Matches dependency names against registry entry slugs and names.
  */
 export function detectFromPackageJson(projectDir: string): DetectedMatch[] {
   const pkgPath = join(projectDir, 'package.json')
@@ -19,32 +81,35 @@ export function detectFromPackageJson(projectDir: string): DetectedMatch[] {
     return []
   }
 
-  const allDeps = {
+  const depNames = Object.keys({
     ...pkg.dependencies,
     ...pkg.devDependencies
-  }
+  })
 
-  const mappings: PackageMappings = packageMappings
-  const matchesBySlug = new Map<string, string[]>()
+  if (depNames.length === 0) return []
 
-  for (const depName of Object.keys(allDeps)) {
-    const slug = mappings.npm[depName]
-    if (!slug) continue
+  const entries = getAllEntries()
+  const matchesBySlug = new Map<string, { deps: string[]; entry: RegistryEntry }>()
 
-    const existing = matchesBySlug.get(slug) || []
-    existing.push(depName)
-    matchesBySlug.set(slug, existing)
-  }
-
-  const results: DetectedMatch[] = []
-  for (const [slug, matchedPackages] of matchesBySlug) {
-    const registryEntry = getEntry(slug)
-    if (registryEntry) {
-      results.push({ slug, matchedPackages, registryEntry })
+  for (const dep of depNames) {
+    for (const entry of entries) {
+      if (matchesEntry(dep, entry)) {
+        const existing = matchesBySlug.get(entry.slug)
+        if (existing) {
+          existing.deps.push(dep)
+        } else {
+          matchesBySlug.set(entry.slug, { deps: [dep], entry })
+        }
+        break // One dep matches one entry at most
+      }
     }
   }
 
-  return results
+  return [...matchesBySlug.values()].map(({ deps, entry }) => ({
+    slug: entry.slug,
+    matchedPackages: deps,
+    registryEntry: entry
+  }))
 }
 
 /**
