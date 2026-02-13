@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import type { RegistryEntry } from '../types/index.js'
 import {
@@ -8,7 +8,6 @@ import {
   CANONICAL_DIR,
   createAgentSymlink,
   detectInstalledAgents,
-  getGitignoreEntries,
   removeAgentSkill,
   sanitizeSlug
 } from './agents.js'
@@ -182,32 +181,4 @@ export interface IsInstalledInput {
 export function isInstalled({ projectDir, slug }: IsInstalledInput): boolean {
   sanitizeSlug(slug)
   return existsSync(join(projectDir, CANONICAL_DIR, slug, 'SKILL.md'))
-}
-
-// ── Gitignore ───────────────────────────────────────────────────
-
-/**
- * Append llms.txt entries to .gitignore if not already present.
- */
-export function addToGitignore(projectDir: string): boolean {
-  try {
-    const gitignorePath = join(projectDir, '.gitignore')
-    const gitignoreEntries = ['.llms/', ...getGitignoreEntries()]
-
-    if (existsSync(gitignorePath)) {
-      const content = readFileSync(gitignorePath, 'utf-8')
-      const missing = gitignoreEntries.filter(e => !content.includes(e))
-      if (missing.length === 0) return false
-
-      appendFileSync(gitignorePath, `\n# llms.txt documentation\n${missing.join('\n')}\n`)
-    } else {
-      writeFileSync(gitignorePath, `# llms.txt documentation\n${gitignoreEntries.join('\n')}\n`)
-    }
-    return true
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err)
-    // Import dynamically to avoid circular — or just use console since this is non-critical
-    console.warn(`Could not update .gitignore: ${msg}`)
-    return false
-  }
 }

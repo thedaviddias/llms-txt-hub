@@ -416,17 +416,3 @@ export function removeAgentSkill({ projectDir, slug, agent }: RemoveAgentSkillIn
     // Path doesn't exist at all — nothing to remove
   }
 }
-
-/**
- * Derive unique gitignore entries from all agent skillsDirs.
- * Includes the canonical `.agents/skills/` plus each unique non-universal agent path.
- */
-export function getGitignoreEntries(): string[] {
-  const dirs = new Set<string>([`${CANONICAL_DIR}/`])
-  for (const agent of agents) {
-    if (!agent.isUniversal) {
-      dirs.add(`${agent.skillsDir}/`)
-    }
-  }
-  return [...dirs].sort()
-}
