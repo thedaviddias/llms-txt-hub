@@ -36,8 +36,7 @@ export default defineConfig({
     launchOptions: {
       args: [
         '--disable-dev-shm-usage',
-        '--disable-web-security',
-        '--disable-features=IsolateOrigins,site-per-process',
+        '--disable-features=IsolateOrigins,site-per-process,TranslateUI',
         '--no-sandbox',
         '--disable-setuid-sandbox',
         '--disable-gpu',
@@ -45,7 +44,6 @@ export default defineConfig({
         '--disable-background-timer-throttling',
         '--disable-backgrounding-occluded-windows',
         '--disable-renderer-backgrounding',
-        '--disable-features=TranslateUI',
         '--disable-ipc-flooding-protection'
       ]
     }
@@ -81,10 +79,8 @@ export default defineConfig({
       NEXT_PUBLIC_SENTRY_DSN: '',
       SENTRY_AUTH_TOKEN: '',
       LOG_LEVEL: 'error',
-      // Dummy Clerk keys for e2e testing (not real keys, just to pass validation)
-      // The pk_test_ key needs to be base64 encoded with proper format
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'pk_test_Y2xlcmsuZXhhbXBsZS5jb20k',
-      CLERK_SECRET_KEY: 'sk_test_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ?? '',
+      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY ?? ''
     }
   }
 })
