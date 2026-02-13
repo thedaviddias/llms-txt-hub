@@ -1,12 +1,6 @@
-'use client'
-
 import { cn } from '@thedaviddias/design-system/lib/utils'
 import type { MDXComponents } from 'mdx/types'
 import Link from 'next/link'
-import { createContext, useContext } from 'react'
-
-// Context to track if code is inside a pre block
-const CodeBlockContext = createContext(false)
 
 export const components: MDXComponents = {
   h1: () => {
@@ -104,35 +98,24 @@ export const components: MDXComponents = {
     />
   ),
   pre: ({ className, ...props }) => (
-    <CodeBlockContext.Provider value={true}>
-      <pre
-        className={cn(
-          'mb-4 mt-6 overflow-x-auto rounded-none border border-border/50 p-4 text-sm',
-          'bg-neutral-100 dark:bg-neutral-900',
-          '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-neutral-800 [&_code]:dark:text-neutral-200',
-          '[&_code_span]:bg-transparent', // Remove inline span backgrounds for cleaner look (increased specificity)
-          className
-        )}
-        {...props}
-      />
-    </CodeBlockContext.Provider>
+    <pre
+      className={cn(
+        'mb-4 mt-6 overflow-x-auto rounded-none border border-border/50 p-4 text-sm',
+        'bg-neutral-100 dark:bg-neutral-900',
+        '[&_code]:bg-transparent [&_code]:p-0 [&_code]:text-neutral-800 [&_code]:dark:text-neutral-200',
+        '[&_code_span]:bg-transparent',
+        className
+      )}
+      {...props}
+    />
   ),
-  code: ({ className, ...props }) => {
-    // Check if this code is inside a pre block using context
-    const isInsidePreBlock = useContext(CodeBlockContext)
-
-    // Only apply inline styles if NOT inside a pre block
-    const isInline = !isInsidePreBlock
-
-    return (
-      <code
-        className={cn(
-          'font-mono text-sm',
-          isInline && 'relative rounded-sm bg-muted/80 px-1.5 py-0.5 text-foreground',
-          className
-        )}
-        {...props}
-      />
-    )
-  }
+  code: ({ className, ...props }) => (
+    <code
+      className={cn(
+        'font-mono text-sm relative rounded-sm bg-muted/80 px-1.5 py-0.5 text-foreground',
+        className
+      )}
+      {...props}
+    />
+  )
 }

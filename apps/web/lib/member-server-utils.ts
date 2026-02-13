@@ -4,7 +4,8 @@
 
 import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
-import { unstable_cache } from 'next/cache'
+import { revalidateTag, unstable_cache } from 'next/cache'
+import SafeRedis, { CACHE_KEYS } from '@/lib/redis'
 import { hashSensitiveData } from '@/lib/server-crypto'
 
 const clerk = createClerkClient({
@@ -111,128 +112,143 @@ export async function processUser(user: any): Promise<Member> {
   }
 }
 
+const REDIS_MEMBERS_KEY = `${CACHE_KEYS.MEMBER_DATA}all-v5`
+const REDIS_MEMBERS_TTL = 86400 // 24 hours in Redis (persistent across restarts)
+
 /**
- * Generate demo data for development/fallback
- * Uses deterministic values based on index for consistent E2E testing
- *
- * @param count - Number of demo users to generate
- * @returns Array of demo member objects
+ * Invalidate both tiers of the members cache.
+ * Call this from Clerk webhooks when users are created/updated/deleted.
  */
-export function generateDemoData(count: number): Member[] {
-  return Array.from({ length: count }, (_, i) => {
-    // Deterministic date: start from fixed date (2024-01-01) and add days based on index
-    // This ensures consistent dates across all test runs
-    const baseDate = new Date(Date.UTC(2024, 0, 1)) // January 1, 2024 UTC
-    const createdAt = new Date(baseDate.getTime() + i * 86_400_000).toISOString() // Add i days
-
-    // Deterministic github_username: even indices get github username
-    const github_username = i % 2 === 0 ? `github-demo${i + 1}` : null
-
-    // Deterministic hasContributions: 70% have contributions (i % 10 < 7)
-    const hasContributions = i % 10 < 7
-
-    return {
-      id: `demo-user-${i + 1}`,
-      firstName: 'Demo',
-      lastName: `User ${i + 1}`,
-      username: `demo_user_${i + 1}`,
-      imageUrl: `https://api.dicebear.com/7.x/avataaars/svg?seed=demo-${i + 1}`,
-      createdAt,
-      publicMetadata: {
-        github_username,
-        migrated_from: null
-      },
-      hasContributions
-    }
+export async function invalidateMembersCache(): Promise<void> {
+  await SafeRedis.del(REDIS_MEMBERS_KEY)
+  revalidateTag('members', { expire: 0 })
+  logger.info('Members cache invalidated (Redis + unstable_cache)', {
+    tags: { type: 'page' }
   })
 }
 
-// Cache the members data with Next.js 15's unstable_cache
-export const getCachedMembers = unstable_cache(
-  async (): Promise<Member[]> => {
+/**
+ * Fetch all members from Clerk API with batched pagination.
+ * Returns the processed member array or throws on failure.
+ */
+async function fetchMembersFromClerk(): Promise<Member[]> {
+  if (!process.env.CLERK_SECRET_KEY) {
+    throw new Error('CLERK_SECRET_KEY not configured')
+  }
+
+  const allUsers: Member[] = []
+  let offset = 0
+  const limit = 500
+  let fetchError = false
+
+  while (true) {
     try {
-      // Check if Clerk is properly configured
-      if (!process.env.CLERK_SECRET_KEY) {
-        logger.warn('CLERK_SECRET_KEY not configured, using demo data')
-        return generateDemoData(200)
+      const response = await clerk.users.getUserList({
+        limit,
+        offset,
+        orderBy: '-created_at'
+      })
+
+      if (!response.data || response.data.length === 0) break
+
+      const validUsers = await Promise.all(response.data.filter(hasSharedInfo).map(processUser))
+
+      allUsers.push(...validUsers)
+
+      if (response.data.length < limit) break
+
+      offset += limit
+    } catch (error) {
+      const errorInfo: Record<string, unknown> = { offset }
+
+      if (error instanceof Error) {
+        errorInfo.message = error.message || '(empty message)'
+        errorInfo.name = error.name
       }
-
-      // Fetch ALL users from Clerk (with batching for large datasets)
-      const allUsers: Member[] = []
-      let offset = 0
-      const limit = 500
-
-      while (true) {
-        try {
-          const response = await clerk.users.getUserList({
-            limit,
-            offset,
-            orderBy: '-created_at'
-          })
-
-          if (!response.data || response.data.length === 0) break
-
-          const validUsers = await Promise.all(response.data.filter(hasSharedInfo).map(processUser))
-
-          allUsers.push(...validUsers)
-
-          // If we got less than the limit, we've reached the end
-          if (response.data.length < limit) break
-
-          offset += limit
-        } catch (error) {
-          // Clerk SDK errors store details in `.errors` array and `.status`,
-          // not just `.message` (which can be empty)
-          const errorInfo: Record<string, unknown> = { offset }
-
-          if (error instanceof Error) {
-            errorInfo.message = error.message || '(empty message)'
-            errorInfo.name = error.name
+      if (error && typeof error === 'object') {
+        if ('status' in error) {
+          errorInfo.status = (error as { status: unknown }).status
+        }
+        if ('errors' in error) {
+          const errWithErrors = error as { errors: unknown }
+          if (Array.isArray(errWithErrors.errors)) {
+            errorInfo.clerkErrors = errWithErrors.errors.map(
+              (e: { code?: string; message?: string; longMessage?: string }) => ({
+                code: e.code,
+                message: e.message,
+                longMessage: e.longMessage
+              })
+            )
           }
-          if (error && typeof error === 'object') {
-            if ('status' in error) {
-              const errWithStatus: { status: unknown } = error as { status: unknown }
-              errorInfo.status = errWithStatus.status
-            }
-            if ('errors' in error) {
-              const errWithErrors: { errors: unknown } = error as { errors: unknown }
-              if (Array.isArray(errWithErrors.errors)) {
-                errorInfo.clerkErrors = errWithErrors.errors.map(
-                  (e: { code?: string; message?: string; longMessage?: string }) => ({
-                    code: e.code,
-                    message: e.message,
-                    longMessage: e.longMessage
-                  })
-                )
-              }
-            }
-          }
-
-          logger.error('Error fetching batch from Clerk', {
-            data: errorInfo,
-            tags: { type: 'page', security: 'error' }
-          })
-          break
         }
       }
 
-      logger.info('Fetched all members for static generation', {
-        data: { totalCount: allUsers.length },
+      logger.error('Error fetching batch from Clerk', {
+        data: errorInfo,
+        tags: { type: 'page', security: 'error' }
+      })
+      fetchError = true
+      break
+    }
+  }
+
+  if (allUsers.length === 0 && fetchError) {
+    throw new Error('Clerk API failed before fetching any members')
+  }
+
+  return allUsers
+}
+
+/**
+ * Two-tier cached member fetching:
+ *   Tier 1: unstable_cache (in-process, 5 min) — avoids Redis round-trip
+ *   Tier 2: Upstash Redis (persistent, 1 hour) — avoids Clerk API calls
+ *   Source: Clerk API (paginated) — only called on full cache miss
+ *
+ * On Clerk failure, falls back to stale Redis data if available.
+ */
+export const getCachedMembers = unstable_cache(
+  async (): Promise<Member[]> => {
+    // Tier 2: Check Redis for cached members
+    const cached = await SafeRedis.get<Member[]>(REDIS_MEMBERS_KEY)
+    if (cached && Array.isArray(cached) && cached.length > 0) {
+      logger.info('Members loaded from Redis cache', {
+        data: { count: cached.length },
+        tags: { type: 'page' }
+      })
+      return cached
+    }
+
+    // Source: Fetch from Clerk API
+    try {
+      const members = await fetchMembersFromClerk()
+
+      logger.info('Fetched all members from Clerk', {
+        data: { totalCount: members.length },
         tags: { type: 'page', security: 'audit' }
       })
 
-      return allUsers
+      // Write-through to Redis for next time
+      await SafeRedis.set(REDIS_MEMBERS_KEY, members, REDIS_MEMBERS_TTL)
+
+      return members
     } catch (error) {
-      // Log sanitized error information without raw Error object
+      // Clerk failed — try stale Redis data one more time (key may have been
+      // evicted between the check above and now, but worth a retry)
+      const stale = await SafeRedis.get<Member[]>(REDIS_MEMBERS_KEY)
+      if (stale && Array.isArray(stale) && stale.length > 0) {
+        logger.warn('Clerk API failed, serving stale Redis data', {
+          data: { count: stale.length },
+          tags: { type: 'page', security: 'error' }
+        })
+        return stale
+      }
+
       const errorInfo: Record<string, unknown> =
         error instanceof Error
-          ? {
-              message: error.message,
-              name: error.name
-            }
+          ? { message: error.message, name: error.name }
           : { message: 'Unknown error occurred' }
 
-      // Add optional error properties if they exist
       if (error && typeof error === 'object') {
         if ('status' in error && error.status) {
           errorInfo.status = error.status
@@ -242,16 +258,16 @@ export const getCachedMembers = unstable_cache(
         }
       }
 
-      logger.error('Error fetching members', {
+      logger.error('Error fetching members — no cache available', {
         data: errorInfo,
         tags: { type: 'page', security: 'error' }
       })
-      return generateDemoData(50)
+      throw error
     }
   },
-  ['all-members-v4-migrated'], // Changed cache key to support migrated users
+  ['all-members-v5'],
   {
-    revalidate: 1800, // Cache for 30 minutes
+    revalidate: 300, // In-process cache: 5 minutes (Redis handles the longer TTL)
     tags: ['members']
   }
 )

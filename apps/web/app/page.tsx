@@ -12,8 +12,6 @@ import { NewsletterSection } from '@/components/sections/newsletter-section'
 import { RecentlyAddedSection } from '@/components/sections/recently-added-section'
 import { ToolsSection } from '@/components/sections/tools-section'
 import { StaticWebsitesList } from '@/components/static-websites-list'
-import { getGuides } from '@/lib/content-loader'
-import { getLatestMembers } from '@/lib/members'
 import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
@@ -33,10 +31,14 @@ export const metadata: Metadata = generateBaseMetadata({
 })
 
 export default async function Home() {
-  const { allProjects, featuredProjects, recentlyUpdatedProjects, totalCount } =
-    await getHomePageData()
-  const featuredGuides = await getGuides()
-  const latestMembers = await getLatestMembers({ limit: 6, includeContributions: false }) // Skip contributions to avoid GitHub API rate limits
+  const {
+    allProjects,
+    featuredProjects,
+    recentlyUpdatedProjects,
+    totalCount,
+    featuredGuides,
+    latestMembers
+  } = await getHomePageData()
 
   // Sort projects alphabetically by name server-side
   const sortedProjects = [...allProjects].sort((a, b) => a.name.localeCompare(b.name))

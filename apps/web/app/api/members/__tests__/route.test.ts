@@ -1,14 +1,28 @@
-import { logger } from '@thedaviddias/logging'
 import { createMockRequest } from '@/app/api/__tests__/test-helpers'
 import { GET } from '@/app/api/members/route'
 
-// Mock dependencies
-jest.mock('@clerk/backend', () => ({
-  createClerkClient: jest.fn()
-}))
+// Generate a deterministic set of mock members for testing
+function createMockMembers(count: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    id: `user-${i + 1}`,
+    firstName: `First${i + 1}`,
+    lastName: `Last${i + 1}`,
+    username: `user_${i + 1}`,
+    imageUrl: `https://example.com/avatar-${i + 1}.png`,
+    createdAt: new Date(Date.UTC(2024, 0, 1 + i)).toISOString(),
+    publicMetadata: {
+      github_username: i % 2 === 0 ? `github-user${i + 1}` : null,
+      migrated_from: null,
+      isProfilePrivate: false
+    },
+    hasContributions: i % 3 === 0
+  }))
+}
 
-jest.mock('@/lib/clerk', () => ({
-  getClerk: jest.fn(() => null) // Return null to trigger mock data fallback
+const MOCK_MEMBERS = createMockMembers(150)
+
+jest.mock('@/lib/member-server-utils', () => ({
+  getCachedMembers: jest.fn(() => Promise.resolve(MOCK_MEMBERS))
 }))
 
 jest.mock('@thedaviddias/logging', () => ({
@@ -20,18 +34,9 @@ jest.mock('@thedaviddias/logging', () => ({
   }
 }))
 
-const { createClerkClient } = require('@clerk/backend')
-const mockCreateClerkClient = createClerkClient as jest.MockedFunction<any>
-const mockLogger = logger as jest.Mocked<typeof logger>
-
 describe('/api/members', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    // Mock environment to not have CLERK_SECRET_KEY so it uses fallback mock data
-    delete process.env.CLERK_SECRET_KEY
-
-    // Don't mock createClerkClient in beforeEach - let individual tests set it up
-    mockCreateClerkClient.mockReset()
   })
 
   describe('GET /api/members', () => {
@@ -44,12 +49,12 @@ describe('/api/members', () => {
       expect(data).toHaveProperty('members')
       expect(data).toHaveProperty('pagination')
       expect(Array.isArray(data.members)).toBe(true)
-      expect(data.members).toHaveLength(20) // Default limit
+      expect(data.members).toHaveLength(20)
       expect(data.pagination).toMatchObject({
         page: 1,
         limit: 20,
-        total: 150, // Demo total showing pagination works
-        totalPages: 8, // Math.ceil(150 / 20) = 8
+        total: 150,
+        totalPages: 8,
         hasMore: true
       })
     })
@@ -64,18 +69,20 @@ describe('/api/members', () => {
       expect(response.status).toBe(200)
       expect(data.pagination.page).toBe(2)
       expect(data.pagination.hasMore).toBe(true)
+      // Second page should have different members than first
+      expect(data.members[0].id).toBe('user-21')
     })
 
     it('should handle custom limit parameter', async () => {
       const request = createMockRequest('/api/members', {
-        searchParams: { limit: '20' }
+        searchParams: { limit: '10' }
       })
       const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
-      expect(data.members).toHaveLength(20)
-      expect(data.pagination.limit).toBe(20)
+      expect(data.members).toHaveLength(10)
+      expect(data.pagination.limit).toBe(10)
     })
 
     it('should limit maximum items per page to 50', async () => {
@@ -114,39 +121,21 @@ describe('/api/members', () => {
 
     it('should handle search parameter', async () => {
       const request = createMockRequest('/api/members', {
-        searchParams: { search: 'user1' }
+        searchParams: { search: 'First1' }
       })
       const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
-      expect(data).toHaveProperty('members')
-      expect(data).toHaveProperty('pagination')
-      // Search filtering is applied to mock data
-    })
-
-    it('should handle filter parameter for contributors', async () => {
-      const request = createMockRequest('/api/members', {
-        searchParams: { filter: 'contributors' }
-      })
-      const response = await GET(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data).toHaveProperty('members')
-      expect(data).toHaveProperty('pagination')
-    })
-
-    it('should handle filter parameter for community', async () => {
-      const request = createMockRequest('/api/members', {
-        searchParams: { filter: 'community' }
-      })
-      const response = await GET(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data).toHaveProperty('members')
-      expect(data).toHaveProperty('pagination')
+      expect(data.members.length).toBeGreaterThan(0)
+      // All results should match the search
+      for (const member of data.members) {
+        const matches =
+          `${member.firstName} ${member.lastName}`.toLowerCase().includes('first1') ||
+          (member.username || '').toLowerCase().includes('first1') ||
+          (member.publicMetadata?.github_username || '').toLowerCase().includes('first1')
+        expect(matches).toBe(true)
+      }
     })
 
     it('should handle invalid page parameter gracefully', async () => {
@@ -157,7 +146,7 @@ describe('/api/members', () => {
       const data = await response.json()
 
       expect(response.status).toBe(200)
-      expect(data.pagination.page).toBe(1) // Defaults to 1
+      expect(data.pagination.page).toBe(1)
     })
 
     it('should handle invalid limit parameter gracefully', async () => {
@@ -168,7 +157,7 @@ describe('/api/members', () => {
       const data = await response.json()
 
       expect(response.status).toBe(200)
-      expect(data.pagination.limit).toBe(20) // Falls back to default 20
+      expect(data.pagination.limit).toBe(20)
     })
 
     it('should return correct member structure', async () => {
@@ -177,8 +166,6 @@ describe('/api/members', () => {
       const data = await response.json()
 
       expect(response.status).toBe(200)
-      expect(data.members).toHaveLength(20)
-
       const member = data.members[0]
       expect(member).toHaveProperty('id')
       expect(member).toHaveProperty('firstName')
@@ -193,19 +180,19 @@ describe('/api/members', () => {
 
     it('should handle empty search results', async () => {
       const request = createMockRequest('/api/members', {
-        searchParams: { search: 'nonexistentuser' }
+        searchParams: { search: 'zzz_nonexistent_zzz' }
       })
       const response = await GET(request)
       const data = await response.json()
 
       expect(response.status).toBe(200)
       expect(data.members).toHaveLength(0)
-      expect(data.pagination.total).toBe(150) // Total remains the same
+      expect(data.pagination.total).toBe(0)
     })
 
     it('should handle last page correctly', async () => {
       const request = createMockRequest('/api/members', {
-        searchParams: { page: '8' } // Last page with default limit
+        searchParams: { page: '8' }
       })
       const response = await GET(request)
       const data = await response.json()
@@ -213,11 +200,12 @@ describe('/api/members', () => {
       expect(response.status).toBe(200)
       expect(data.pagination.page).toBe(8)
       expect(data.pagination.hasMore).toBe(false)
+      expect(data.members).toHaveLength(10) // 150 - 7*20 = 10
     })
 
     it('should handle page beyond total pages', async () => {
       const request = createMockRequest('/api/members', {
-        searchParams: { page: '100' } // Beyond total pages
+        searchParams: { page: '100' }
       })
       const response = await GET(request)
       const data = await response.json()
@@ -225,47 +213,7 @@ describe('/api/members', () => {
       expect(response.status).toBe(200)
       expect(data.pagination.page).toBe(100)
       expect(data.pagination.hasMore).toBe(false)
-      // Mock implementation still returns data since it doesn't check against total pages
-      expect(data.members).toHaveLength(20) // Mock still returns data
-    })
-
-    it('should combine search and filter parameters', async () => {
-      const request = createMockRequest('/api/members', {
-        searchParams: {
-          search: 'user1',
-          filter: 'contributors',
-          page: '2',
-          limit: '20'
-        }
-      })
-      const response = await GET(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.pagination.page).toBe(2)
-      expect(data.pagination.limit).toBe(20)
-    })
-
-    it('should trim whitespace from search parameter', async () => {
-      const request = createMockRequest('/api/members', {
-        searchParams: { search: '  user1  ' }
-      })
-      const response = await GET(request)
-      const _data = await response.json()
-
-      expect(response.status).toBe(200)
-      // Search should work with trimmed value
-    })
-
-    it('should handle empty search parameter', async () => {
-      const request = createMockRequest('/api/members', {
-        searchParams: { search: '' }
-      })
-      const response = await GET(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(200)
-      expect(data.members).toHaveLength(20) // Should return all members
+      expect(data.members).toHaveLength(0) // No members on page 100
     })
 
     it('should handle whitespace-only search parameter', async () => {
@@ -276,10 +224,10 @@ describe('/api/members', () => {
       const data = await response.json()
 
       expect(response.status).toBe(200)
-      expect(data.members).toHaveLength(20) // Should return all members
+      expect(data.members).toHaveLength(20) // No filter applied
     })
 
-    it('should generate consistent mock data for same page', async () => {
+    it('should return consistent results for same parameters', async () => {
       const request1 = createMockRequest('/api/members', {
         searchParams: { page: '1' }
       })
@@ -296,7 +244,7 @@ describe('/api/members', () => {
       expect(data1.members[0].id).toBe(data2.members[0].id)
     })
 
-    it('should generate different mock data for different pages', async () => {
+    it('should return different results for different pages', async () => {
       const request1 = createMockRequest('/api/members', {
         searchParams: { page: '1' }
       })
@@ -312,43 +260,16 @@ describe('/api/members', () => {
       expect(data1.members[0].id).not.toBe(data2.members[0].id)
     })
 
-    it('should handle internal server error gracefully', async () => {
-      // Set up a valid CLERK_SECRET_KEY but mock the client to throw an error
-      process.env.CLERK_SECRET_KEY = 'test-key'
-      const mockClient = {
-        users: {
-          getUserList: jest.fn().mockRejectedValue(new Error('Network error'))
-        }
-      }
-      mockCreateClerkClient.mockReturnValue(mockClient)
-
-      // Mock getClerk to return the mock client for this test
-      const { getClerk } = require('@/lib/clerk')
-      getClerk.mockReturnValue(mockClient)
+    it('should handle getCachedMembers failure gracefully', async () => {
+      const { getCachedMembers } = require('@/lib/member-server-utils')
+      getCachedMembers.mockRejectedValueOnce(new Error('Redis unavailable'))
 
       const request = createMockRequest('/api/members')
       const response = await GET(request)
+      const data = await response.json()
 
-      expect(response.status).toBe(200) // Should still return 200 with fallback data
-      expect(mockLogger.error).toHaveBeenCalledWith('Error fetching from Clerk:', {
-        data: { error: 'Network error', page: 1, limit: 20, offset: 0 },
-        tags: { type: 'api' }
-      })
-    })
-
-    it('should use fallback data when Clerk is not configured', async () => {
-      // Test the case where CLERK_SECRET_KEY is not set - should use fallback without errors
-      process.env.CLERK_SECRET_KEY = ''
-
-      // Reset the mock to not interfere with the "not configured" check
-      mockCreateClerkClient.mockReset()
-
-      const request = createMockRequest('/api/members')
-      const response = await GET(request)
-
-      expect(response.status).toBe(200)
-      // The warning log might not be called due to test environment setup
-      // but the API should still work with fallback data
+      expect(response.status).toBe(500)
+      expect(data).toEqual({ error: 'Internal Server Error' })
     })
   })
 })

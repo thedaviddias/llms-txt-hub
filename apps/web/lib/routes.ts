@@ -18,6 +18,10 @@ export const routes = {
   },
   about: '/about',
   favorites: '/favorites',
+  docs: {
+    list: '/docs',
+    doc: '/docs/[slug]'
+  },
   guides: {
     list: '/guides',
     guide: '/guides/[slug]'
@@ -48,6 +52,7 @@ type StaticRoutes =
   | 'website.featured'
   | 'website.latest'
   | 'about'
+  | 'docs.list'
   | 'favorites'
   | 'guides.list'
   | 'faq'
@@ -65,6 +70,7 @@ type StaticRoutes =
 type DynamicRoutes =
   | 'website.detail'
   | 'website.withCategory'
+  | 'docs.doc'
   | 'guides.guide'
   | 'category.page'
   | 'profile.detail'
@@ -75,6 +81,7 @@ type Routes = StaticRoutes | DynamicRoutes
 type DynamicRouteParams = {
   'website.detail': { slug: string }
   'website.withCategory': { category: string }
+  'docs.doc': { slug: string }
   'guides.guide': { slug: string }
   'category.page': { category: string }
   'profile.detail': { slug: string }

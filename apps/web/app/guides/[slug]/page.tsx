@@ -67,9 +67,9 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <JsonLd data={generateGuideSchema(guide)} />
       <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
       <GuideHeader {...guide} />
-      <article>
+      <div className="prose dark:prose-invert max-w-none">
         <MDXRemote source={guide.content || ''} components={components} />
-      </article>
+      </div>
     </article>
   )
 }

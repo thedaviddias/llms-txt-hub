@@ -103,14 +103,14 @@ export function Footer() {
                     Members
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href={getRoute('news')}
                     className="hover:text-foreground plausible-event-name=External+Link+Click"
                   >
                     News
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     href={getRoute('faq')}

@@ -1,0 +1,88 @@
+---
+title: 'Supported AI Agents'
+description: 'All 39 AI coding agents supported by llmstxt-cli and how agent detection works'
+order: 3
+published: true
+---
+
+# Supported AI Agents
+
+<p className="mt-2 text-xl text-muted-foreground">llmstxt-cli supports 39 AI coding agents. Skills are installed once and shared across all detected agents.</p>
+
+## How it works
+
+When you run `llmstxt init` or `llmstxt install`, the CLI:
+
+1. **Detects** which AI agents are installed on your machine by checking for their config directories in your home folder
+2. **Installs** skill files into the canonical `.agents/skills/` directory
+3. **Creates symlinks** for non-universal agents so they can find the files in their own expected directory
+
+This means you install each skill once, and every agent on your machine can access it.
+
+## Universal agents
+
+These agents read directly from `.agents/skills/` -- no symlinks needed:
+
+| Agent | Skills directory |
+|-------|-----------------|
+| Amp | `.agents/skills/` |
+| Codex | `.agents/skills/` |
+| Gemini CLI | `.agents/skills/` |
+| GitHub Copilot | `.agents/skills/` |
+| Kimi Code CLI | `.agents/skills/` |
+| OpenCode | `.agents/skills/` |
+
+## Project-scoped agents
+
+These agents have their own skills directory. The CLI creates symlinks from their directory back to `.agents/skills/`:
+
+| Agent | Skills directory |
+|-------|-----------------|
+| AdaL | `.adal/skills/` |
+| Antigravity | `.agent/skills/` |
+| Augment | `.augment/skills/` |
+| Claude Code | `.claude/skills/` |
+| Cline | `.cline/skills/` |
+| CodeBuddy | `.codebuddy/skills/` |
+| Command Code | `.commandcode/skills/` |
+| Continue | `.continue/skills/` |
+| Crush | `.crush/skills/` |
+| Cursor | `.cursor/skills/` |
+| Droid | `.factory/skills/` |
+| Goose | `.goose/skills/` |
+| iFlow CLI | `.iflow/skills/` |
+| Junie | `.junie/skills/` |
+| Kilo Code | `.kilocode/skills/` |
+| Kiro CLI | `.kiro/skills/` |
+| Kode | `.kode/skills/` |
+| MCPJam | `.mcpjam/skills/` |
+| Mistral Vibe | `.vibe/skills/` |
+| Mux | `.mux/skills/` |
+| Neovate | `.neovate/skills/` |
+| OpenClaw | `skills/` |
+| OpenHands | `.openhands/skills/` |
+| Pi | `.pi/skills/` |
+| Pochi | `.pochi/skills/` |
+| Qoder | `.qoder/skills/` |
+| Qwen Code | `.qwen/skills/` |
+| Roo Code | `.roo/skills/` |
+| Trae | `.trae/skills/` |
+| Trae CN | `.trae/skills/` |
+| Windsurf | `.windsurf/skills/` |
+| Zencoder | `.zencoder/skills/` |
+
+## How detection works
+
+The CLI checks for agent-specific directories in your home folder to determine which agents are installed. It never scans the current working directory -- this avoids false positives from project config files that happen to match agent directory names.
+
+Detection locations vary by agent:
+
+- Most agents: `~/.agentname/` (e.g., `~/.cursor/`, `~/.claude/`)
+- XDG-based agents: `~/.config/agentname/` (e.g., Amp, Crush, Goose, OpenCode)
+- Special cases: Codex checks `~/.codex/` and `/etc/codex`; Windsurf checks `~/.codeium/windsurf/`
+
+You can see which agents the CLI detects on your machine by running `init` and observing the agent selection step.
+
+## Adding agent support
+
+The agent list is maintained in the CLI source code. If your favorite AI coding agent isn't supported yet, open an issue or pull request on [GitHub](https://github.com/thedaviddias/llms-txt-hub).

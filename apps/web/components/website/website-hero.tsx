@@ -6,7 +6,7 @@ import { ExternalLink, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { FavoriteButton } from '@/components/ui/favorite-button'
 import type { WebsiteMetadata } from '@/lib/content-loader'
-import { generateAltText } from '@/lib/seo/seo-config'
+import { generateAltText } from '@/lib/seo/seo-helpers'
 
 interface WebsiteHeroProps {
   website: WebsiteMetadata

@@ -1,0 +1,105 @@
+---
+title: 'Getting Started'
+description: 'Install llmstxt-cli and set up AI agent skills in your project'
+order: 1
+published: true
+---
+
+# Getting Started
+
+<p className="mt-2 text-xl text-muted-foreground">Install llmstxt-cli and set up AI agent skills in your project in under a minute.</p>
+
+## What is llmstxt-cli?
+
+`llmstxt-cli` is a command-line tool that installs llms.txt documentation files from the [llms-txt-hub registry](/websites) directly into your project. These files give AI coding agents (Claude Code, GitHub Copilot, Cursor, etc.) up-to-date knowledge about the libraries and frameworks you use.
+
+Instead of relying on training data that may be months old, your AI agent reads the latest docs as local skill files and produces more accurate, idiomatic code.
+
+## Installation
+
+You can run the CLI without installing it globally:
+
+```bash
+npx llmstxt-cli init
+```
+
+Or install it globally for repeated use:
+
+```bash
+npm install -g llmstxt-cli
+```
+
+## Quick start with `init`
+
+The `init` command is the fastest way to get started. It scans your project's `package.json` (and other config files), finds matching llms.txt entries in the registry, and installs them:
+
+```bash
+cd your-project
+npx llmstxt-cli init
+```
+
+The interactive wizard will:
+
+1. **Detect your dependencies** - scans `package.json` for known libraries
+2. **Show matches** - lists registry entries that match your stack
+3. **Let you pick** - select which skills to install (all are selected by default)
+4. **Detect AI agents** - finds which agents are installed on your machine
+5. **Install files** - downloads llms.txt content into `.agents/skills/`
+
+### Non-interactive mode
+
+For CI or scripting, skip the prompts with `--yes`:
+
+```bash
+npx llmstxt-cli init --yes
+```
+
+## What gets created
+
+After running `init`, your project will have:
+
+```
+your-project/
+  .agents/
+    skills/
+      react/
+        SKILL.md          # llms.txt content for React
+      next-js/
+        SKILL.md          # llms.txt content for Next.js
+      ...
+  .claude/
+    skills/
+      react -> ../../.agents/skills/react    # symlink for Claude Code
+      ...
+  CLAUDE.md               # updated with skill references
+```
+
+- **`.agents/skills/`** is the canonical location shared by universal agents (Codex, Gemini CLI, GitHub Copilot, Amp, Kimi Code CLI, OpenCode)
+- **Agent-specific directories** (e.g., `.claude/skills/`, `.cursor/skills/`) get symlinks pointing back to `.agents/skills/`
+- **`CLAUDE.md`** (and similar config files) are updated with references so your agent knows the skills exist
+
+## Installing a single skill
+
+If you already know which skill you want, use `install` directly:
+
+```bash
+npx llmstxt-cli install stripe
+```
+
+Install multiple at once:
+
+```bash
+npx llmstxt-cli install react next-js tailwindcss
+```
+
+Use `--full` to prefer the extended `llms-full.txt` version when available:
+
+```bash
+npx llmstxt-cli install vercel-ai-sdk --full
+```
+
+## Next steps
+
+- See all available [commands](/docs/commands) and their options
+- Learn about [supported AI agents](/docs/agents) and how detection works
+- Browse the [registry](/websites) to discover available skills

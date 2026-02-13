@@ -80,7 +80,7 @@ export const CACHE_TTL = {
   GITHUB_USER: 600, // 10 minutes
   GITHUB_CONTRIBUTIONS: 3600, // 1 hour
   WEBSITE_METADATA: 1800, // 30 minutes
-  MEMBER_DATA: 900, // 15 minutes
+  MEMBER_DATA: 86400, // 24 hours
   RATE_LIMIT: 3600, // 1 hour
   SESSION: 86400, // 24 hours
   CSRF: 3600 // 1 hour

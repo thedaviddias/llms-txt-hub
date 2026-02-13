@@ -88,6 +88,11 @@ let nextConfig: NextConfig = {
   redirects: async () => {
     return [
       {
+        source: '/news',
+        destination: '/',
+        permanent: false
+      },
+      {
         source: '/website/:path*',
         destination: '/websites/:path*',
         permanent: true
