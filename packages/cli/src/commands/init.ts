@@ -38,7 +38,15 @@ export async function init(options: InitOptions): Promise<void> {
   // Show detected agents
   const agents = detectInstalledAgents()
   if (agents.length > 0) {
-    p.log.info(`Detected agents: ${agents.map(a => pc.cyan(a.displayName)).join(', ')}`)
+    const names = agents.map(a => a.displayName)
+    const display =
+      names.length <= 5
+        ? names.map(n => pc.cyan(n)).join(', ')
+        : `${names
+            .slice(0, 4)
+            .map(n => pc.cyan(n))
+            .join(', ')} ${pc.dim(`+ ${names.length - 4} more`)}`
+    p.log.info(`Detected agents: ${display}`)
   } else {
     p.log.warn('No AI coding tools detected — files will be installed to .agents/skills/ only')
   }
@@ -119,9 +127,6 @@ export async function init(options: InitOptions): Promise<void> {
     const selected = await p.multiselect({
       message: 'Select skills to install:',
       options: options_list,
-      initialValues: matches
-        .filter(m => !isInstalled({ projectDir, slug: m.slug }))
-        .map(m => m.slug),
       required: false
     })
 
