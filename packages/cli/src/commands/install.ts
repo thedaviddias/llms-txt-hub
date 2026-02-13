@@ -40,7 +40,12 @@ export async function install({ names, options }: InstallInput): Promise<void> {
   // Show detected agents
   const agents = detectInstalledAgents()
   if (agents.length > 0) {
-    p.log.message(pc.dim(`Detected: ${agents.map(a => a.displayName).join(', ')}`))
+    const names = agents.map(a => a.displayName)
+    const display =
+      names.length <= 5
+        ? names.join(', ')
+        : `${names.slice(0, 4).join(', ')} + ${names.length - 4} more`
+    p.log.message(pc.dim(`Detected: ${display}`))
   }
 
   let installed = 0

@@ -80,8 +80,7 @@ export const agents: AgentConfig[] = [
     displayName: 'Antigravity',
     skillsDir: '.agent/skills',
     isUniversal: false,
-    detectInstalled: () =>
-      existsSync(join(process.cwd(), '.agent')) || existsSync(join(home, '.gemini/antigravity'))
+    detectInstalled: () => existsSync(join(home, '.gemini/antigravity'))
   },
   {
     name: 'augment',
@@ -109,8 +108,7 @@ export const agents: AgentConfig[] = [
     displayName: 'CodeBuddy',
     skillsDir: '.codebuddy/skills',
     isUniversal: false,
-    detectInstalled: () =>
-      existsSync(join(process.cwd(), '.codebuddy')) || existsSync(join(home, '.codebuddy'))
+    detectInstalled: () => existsSync(join(home, '.codebuddy'))
   },
   {
     name: 'codex',
@@ -131,8 +129,7 @@ export const agents: AgentConfig[] = [
     displayName: 'Continue',
     skillsDir: '.continue/skills',
     isUniversal: false,
-    detectInstalled: () =>
-      existsSync(join(process.cwd(), '.continue')) || existsSync(join(home, '.continue'))
+    detectInstalled: () => existsSync(join(home, '.continue'))
   },
   {
     name: 'crush',
@@ -167,8 +164,7 @@ export const agents: AgentConfig[] = [
     displayName: 'GitHub Copilot',
     skillsDir: '.agents/skills',
     isUniversal: true,
-    detectInstalled: () =>
-      existsSync(join(process.cwd(), '.github')) || existsSync(join(home, '.copilot'))
+    detectInstalled: () => existsSync(join(home, '.copilot'))
   },
   {
     name: 'goose',
@@ -262,8 +258,7 @@ export const agents: AgentConfig[] = [
     displayName: 'OpenCode',
     skillsDir: '.agents/skills',
     isUniversal: true,
-    detectInstalled: () =>
-      existsSync(join(configHome, 'opencode')) || existsSync(join(claudeHome, 'skills'))
+    detectInstalled: () => existsSync(join(configHome, 'opencode'))
   },
   {
     name: 'openhands',
