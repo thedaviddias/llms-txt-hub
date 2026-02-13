@@ -8,8 +8,8 @@ import type { Redis } from '@upstash/redis'
 
 // Validate required environment variables
 const requiredEnvVars = {
-  STORAGE_KV_REST_API_URL: process.env.STORAGE_KV_REST_API_URL,
-  STORAGE_KV_REST_API_TOKEN: process.env.STORAGE_KV_REST_API_TOKEN
+  KV_REST_API_URL: process.env.KV_REST_API_URL,
+  KV_REST_API_TOKEN: process.env.KV_REST_API_TOKEN
 }
 
 // Check for missing environment variables
@@ -38,12 +38,12 @@ function getRedisClient(): Redis | null {
   redisInitialized = true
 
   // Only initialize Redis if environment variables are present
-  if (requiredEnvVars.STORAGE_KV_REST_API_URL && requiredEnvVars.STORAGE_KV_REST_API_TOKEN) {
+  if (requiredEnvVars.KV_REST_API_URL && requiredEnvVars.KV_REST_API_TOKEN) {
     try {
       const { Redis } = require('@upstash/redis')
       redis = new Redis({
-        url: requiredEnvVars.STORAGE_KV_REST_API_URL,
-        token: requiredEnvVars.STORAGE_KV_REST_API_TOKEN,
+        url: requiredEnvVars.KV_REST_API_URL,
+        token: requiredEnvVars.KV_REST_API_TOKEN,
         // Keep automatic serialization for convenience
         automaticDeserialization: true
         // Note: Request timeout handled per-operation via AbortController if needed

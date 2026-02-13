@@ -2,6 +2,9 @@ import { Redis } from '@upstash/redis'
 import type { CacheInterface, CacheOptions } from './interfaces'
 import { keys } from './keys'
 
+/**
+ * Upstash Redis cache implementation with namespace support
+ */
 export class UpstashCache implements CacheInterface {
   private client: Redis | null = null
   private defaultNamespace?: string
@@ -13,15 +16,15 @@ export class UpstashCache implements CacheInterface {
   private getClient(): Redis {
     if (!this.client) {
       const config = keys()
-      if (!config.UPSTASH_REDIS_REST_URL || !config.UPSTASH_REDIS_REST_TOKEN) {
+      if (!config.KV_REST_API_URL || !config.KV_REST_API_TOKEN) {
         throw new Error(
-          'Upstash Redis configuration is missing. Please set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN environment variables.'
+          'Upstash Redis configuration is missing. Please set KV_REST_API_URL and KV_REST_API_TOKEN environment variables.'
         )
       }
 
       this.client = new Redis({
-        url: config.UPSTASH_REDIS_REST_URL,
-        token: config.UPSTASH_REDIS_REST_TOKEN
+        url: config.KV_REST_API_URL,
+        token: config.KV_REST_API_TOKEN
       })
     }
     return this.client

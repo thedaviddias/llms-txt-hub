@@ -181,11 +181,35 @@ export const getCachedMembers = unstable_cache(
 
           offset += limit
         } catch (error) {
+          // Clerk SDK errors store details in `.errors` array and `.status`,
+          // not just `.message` (which can be empty)
+          const errorInfo: Record<string, unknown> = { offset }
+
+          if (error instanceof Error) {
+            errorInfo.message = error.message || '(empty message)'
+            errorInfo.name = error.name
+          }
+          if (error && typeof error === 'object') {
+            if ('status' in error) {
+              const errWithStatus: { status: unknown } = error as { status: unknown }
+              errorInfo.status = errWithStatus.status
+            }
+            if ('errors' in error) {
+              const errWithErrors: { errors: unknown } = error as { errors: unknown }
+              if (Array.isArray(errWithErrors.errors)) {
+                errorInfo.clerkErrors = errWithErrors.errors.map(
+                  (e: { code?: string; message?: string; longMessage?: string }) => ({
+                    code: e.code,
+                    message: e.message,
+                    longMessage: e.longMessage
+                  })
+                )
+              }
+            }
+          }
+
           logger.error('Error fetching batch from Clerk', {
-            data: {
-              error: error instanceof Error ? error.message : 'Unknown error',
-              offset
-            },
+            data: errorInfo,
             tags: { type: 'page', security: 'error' }
           })
           break

@@ -25,8 +25,8 @@ import { UpstashCache } from "@thedaviddias/caching/upstash";
 import { env } from "@thedaviddias/config-environment";
 
 const cache = new UpstashCache({
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
+  url: env.KV_REST_API_URL,
+  token: env.KV_REST_API_TOKEN,
 }, "my-namespace"); // Optional namespace
 
 // Basic operations
@@ -58,8 +58,8 @@ You can use different namespaces to isolate cache keys:
 import { env } from "@thedaviddias/config-environment";
 
 const config = {
-  url: env.UPSTASH_REDIS_REST_URL,
-  token: env.UPSTASH_REDIS_REST_TOKEN,
+  url: env.KV_REST_API_URL,
+  token: env.KV_REST_API_TOKEN,
 };
 
 const userCache = new UpstashCache(config, "users");
@@ -74,8 +74,8 @@ await postCache.set("456", { title: "Hello" }); // Stored as "posts:456"
 Required environment variables for Upstash Redis:
 
 ```bash
-UPSTASH_REDIS_REST_URL=your-redis-url
-UPSTASH_REDIS_REST_TOKEN=your-redis-token
+KV_REST_API_URL=your-redis-url
+KV_REST_API_TOKEN=your-redis-token
 ```
 
 ## API Reference

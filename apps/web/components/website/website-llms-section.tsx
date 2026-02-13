@@ -2,6 +2,7 @@ import registryData from '@cli-data/registry.json'
 import { FileText, Terminal } from 'lucide-react'
 import { LLMButton } from '@/components/buttons/llm-button'
 import { CopyButton } from '@/components/ui/copy-button'
+import { CliInstallCount } from '@/components/website/cli-install-count'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 
 // Build lookup: webSlug -> CLI slug (runs once at module load / build time)
@@ -57,10 +58,13 @@ export function WebsiteLLMsSection({ website }: WebsiteLLMsSectionProps) {
               <div className="flex items-center justify-center size-8 rounded-lg bg-emerald-500/10">
                 <Terminal className="size-4 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <div>
-                <h3 className="text-sm font-semibold text-pretty">
-                  Install into your AI coding agent
-                </h3>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-semibold text-pretty">
+                    Install into your AI coding agent
+                  </h3>
+                  <CliInstallCount cliSlug={cliSlug} />
+                </div>
                 <p className="text-xs text-muted-foreground">
                   Add this documentation directly to your development environment
                 </p>
