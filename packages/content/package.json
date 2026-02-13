@@ -1,6 +1,7 @@
 {
   "name": "@thedaviddias/content",
   "version": "1.0.0",
+  "private": true,
   "description": "Content for the llms.txt hub",
   "keywords": [
     "content",

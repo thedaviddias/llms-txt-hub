@@ -23,6 +23,9 @@ jobs:
       - name: Build CLI
         run: pnpm --filter llmstxt-cli build
 
+      - name: Configure npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Create Release PR or Publish
         uses: changesets/action@v1
         with:
