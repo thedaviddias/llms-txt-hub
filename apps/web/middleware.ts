@@ -2,6 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { logger } from '@thedaviddias/logging'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import { validateCSRFToken } from '@/lib/middleware-csrf'
 
 // Edge Runtime compatible implementations
 
@@ -156,100 +157,6 @@ async function checkRateLimit(
 }
 
 /**
- * Edge Runtime compatible CSRF token validation
- * @param request - The incoming request
- * @returns Whether the CSRF token is valid
- */
-async function validateCSRFToken(request: NextRequest): Promise<boolean> {
-  // Skip validation for safe methods
-  if (['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
-    return true
-  }
-
-  // Skip for API routes with Bearer token auth
-  const authHeader = request.headers.get('authorization')
-  if (authHeader?.startsWith('Bearer ')) {
-    return true
-  }
-
-  // Skip validation for Server Actions (Next.js internal endpoints)
-  // These will be handled by the Server Action itself
-  if (request.nextUrl.pathname.startsWith('/_next/static/chunks/')) {
-    return true
-  }
-
-  let csrfToken: string | null = null
-
-  // 1. Try to get from headers (for AJAX requests)
-  csrfToken = request.headers.get('x-csrf-token')
-
-  // 2. Try to get from query params (not recommended but sometimes used)
-  if (!csrfToken) {
-    csrfToken = request.nextUrl.searchParams.get('_csrf')
-  }
-
-  // 3. Try to extract from FormData (for form submissions)
-  const contentType = request.headers.get('content-type') || ''
-  if (
-    !csrfToken &&
-    (contentType.includes('multipart/form-data') ||
-      contentType.includes('application/x-www-form-urlencoded'))
-  ) {
-    try {
-      // Clone the request to avoid consuming the original body
-      const clonedRequest = request.clone()
-
-      if (contentType.includes('multipart/form-data')) {
-        const formData = await clonedRequest.formData()
-        csrfToken = formData.get('_csrf') as string | null
-      } else if (contentType.includes('application/x-www-form-urlencoded')) {
-        const body = await clonedRequest.text()
-        const params = new URLSearchParams(body)
-        csrfToken = params.get('_csrf')
-      }
-    } catch (_error) {
-      // Form parsing failed, continue without token
-    }
-  }
-
-  // Double-submit cookie validation
-  // Get token from cookie (it's stored as JSON with token and expiresAt)
-  const cookieValue = request.cookies.get('csrf_token')?.value || null
-  if (!cookieValue) return false
-
-  let cookieToken: string | null = null
-  try {
-    const tokenData = JSON.parse(cookieValue)
-    // Check if token is expired
-    if (tokenData.expiresAt < Date.now()) {
-      return false
-    }
-    cookieToken = tokenData.token
-  } catch {
-    // If it's not JSON, treat it as a raw token (for backwards compatibility)
-    cookieToken = cookieValue
-  }
-
-  if (!csrfToken || !cookieToken) return false
-
-  // Basic same-origin check
-  const origin = request.headers.get('origin')
-  if (origin) {
-    try {
-      const { host, protocol } = new URL(origin)
-      const reqHost = request.headers.get('host')
-      const reqProto = request.headers.get('x-forwarded-proto') || 'https'
-      if (host !== reqHost || (protocol && protocol.replace(':', '') !== reqProto)) return false
-    } catch {
-      return false
-    }
-  }
-
-  // Compare tokens (timing-safe comparison would be ideal but acceptable here)
-  return csrfToken === cookieToken
-}
-
-/**
  * Generate a nonce for CSP (Edge Runtime compatible)
  */
 function generateNonce(): string {
@@ -321,20 +228,85 @@ function addSecurityHeaders(response: NextResponse, nonce?: string): NextRespons
 }
 
 /**
+ * Timestamp of the last rate limit cache cleanup sweep
+ */
+let lastCacheCleanup = Date.now()
+const CACHE_CLEANUP_INTERVAL = 5 * 60 * 1000 // 5 minutes
+
+/**
+ * Sweep expired entries from the rate limit cache to prevent unbounded growth
+ */
+function cleanupRateLimitCache(): void {
+  const now = Date.now()
+  if (now - lastCacheCleanup < CACHE_CLEANUP_INTERVAL) return
+  lastCacheCleanup = now
+
+  for (const [key, entry] of rateLimitCache) {
+    if (entry.resetTime <= now) {
+      rateLimitCache.delete(key)
+    }
+  }
+}
+
+/**
  * Apply rate limiting based on route type (Edge Runtime compatible)
  */
 async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   const clientIp = getClientIp(req)
   const pathname = req.nextUrl.pathname
 
-  // Skip rate limiting for static assets and regular page loads
+  // Periodic cleanup of expired rate limit entries
+  cleanupRateLimitCache()
+
+  // Skip rate limiting entirely for true static assets
   if (
-    // Static assets
     pathname.startsWith('/_next/') ||
+    pathname.includes('.') // Files with extensions (CSS, JS, images, etc.)
+  ) {
+    return null
+  }
+
+  // Global per-IP rate limit: 120 requests/minute across all routes
+  const globalResult = await checkRateLimit({
+    identifier: clientIp,
+    resource: 'global',
+    maxRequests: 120,
+    windowMs: 60 * 1000
+  })
+
+  if (!globalResult.allowed) {
+    logger.warn('Global rate limit exceeded', {
+      data: {
+        ipHash: await hashSensitiveData(clientIp),
+        pathname,
+        retryAfter: globalResult.retryAfter
+      },
+      tags: { type: 'security', component: 'rate-limit', action: 'global-blocked' }
+    })
+
+    return new Response(
+      JSON.stringify({
+        error: 'Too many requests',
+        retryAfter: globalResult.retryAfter
+      }),
+      {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(globalResult.retryAfter || 60),
+          'X-RateLimit-Limit': '120',
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': globalResult.resetTime.toISOString()
+        }
+      }
+    )
+  }
+
+  // Skip per-route rate limiting for non-API page loads and analytics proxy
+  if (
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap') ||
-    pathname.includes('.') || // Files with extensions (CSS, JS, images, etc.)
     // Plausible Analytics proxy endpoints
     pathname === '/api/event' ||
     pathname.startsWith('/js/script') ||
@@ -398,6 +370,21 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
 }
 
 export default clerkMiddleware(async (auth, req) => {
+  const pathname = req.nextUrl.pathname
+
+  // Block non-safe HTTP methods on page routes (not API, not _next)
+  // Legitimate mutations go through Server Actions (/_next/) or API routes (/api/)
+  if (
+    !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
+    !pathname.startsWith('/api/') &&
+    !pathname.startsWith('/_next/')
+  ) {
+    return new Response(null, {
+      status: 405,
+      headers: { Allow: 'GET, HEAD, OPTIONS' }
+    })
+  }
+
   // Apply rate limiting (Edge Runtime compatible)
   const rateLimitResponse = await applyRateLimit(req)
   if (rateLimitResponse) {

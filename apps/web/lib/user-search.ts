@@ -7,11 +7,47 @@ const clerk = createClerkClient({
 })
 
 /**
- * Find a user by their slug (username, GitHub username, or user ID)
+ * Short-TTL in-memory cache for findUserBySlug results.
+ * Prevents duplicate Clerk API calls when generateMetadata() and the page
+ * component both call findUserBySlug() for the same slug on a single request.
+ * Also reduces Clerk API pressure under heavy traffic.
+ */
+const slugCache = new Map<string, { user: any; expiresAt: number }>()
+const SLUG_CACHE_TTL = 2 * 60 * 1000 // 2 minutes
+const SLUG_CACHE_MAX_SIZE = 500
+
+/**
+ * Find a user by their slug with short-TTL caching.
  * @param slug - The slug to search for
  * @returns User object if found, null otherwise
  */
 export async function findUserBySlug(slug: string) {
+  const now = Date.now()
+  const cached = slugCache.get(slug)
+  if (cached && cached.expiresAt > now) {
+    logger.info('findUserBySlug: Cache hit', { data: { slug }, tags: { type: 'page' } })
+    return cached.user
+  }
+
+  const user = await _findUserBySlugUncached(slug)
+
+  // Evict expired entries if cache is getting large
+  if (slugCache.size >= SLUG_CACHE_MAX_SIZE) {
+    for (const [key, entry] of slugCache) {
+      if (entry.expiresAt <= now) slugCache.delete(key)
+    }
+  }
+
+  slugCache.set(slug, { user, expiresAt: now + SLUG_CACHE_TTL })
+  return user
+}
+
+/**
+ * Uncached implementation: find a user by their slug (username, GitHub username, or user ID)
+ * @param slug - The slug to search for
+ * @returns User object if found, null otherwise
+ */
+async function _findUserBySlugUncached(slug: string) {
   logger.info('findUserBySlug: Starting search', { data: { slug }, tags: { type: 'page' } })
 
   try {

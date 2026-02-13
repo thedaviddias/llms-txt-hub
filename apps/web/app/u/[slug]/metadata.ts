@@ -6,6 +6,12 @@ interface GenerateMetadataProps {
   }
 }
 
+/**
+ * Generate metadata for a user profile page
+ *
+ * @param props - Route parameters containing the user slug
+ * @returns Metadata object with noindex directive for profile pages
+ */
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
   // Extract name from slug (before the last dash and ID)
   const namePart = params.slug.replace(/-[a-zA-Z0-9]{5}$/, '').replace(/-/g, ' ')
@@ -23,7 +29,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
       type: 'profile'
     },
     robots: {
-      index: true,
+      index: false,
       follow: true
     }
   }
