@@ -16,7 +16,7 @@ import { fetchLlmsTxt } from '../lib/fetcher.js'
 import { addEntry } from '../lib/lockfile.js'
 import * as logger from '../lib/logger.js'
 import { loadRegistry, resolveSlug, searchRegistry } from '../lib/registry.js'
-import { addToGitignore, installToAgents, isInstalled } from '../lib/storage.js'
+import { installToAgents, isInstalled } from '../lib/storage.js'
 import { track } from '../lib/telemetry.js'
 
 export interface InstallOptions {
@@ -190,7 +190,6 @@ export async function install({ names, options }: InstallInput): Promise<void> {
   }
 
   if (installed > 0) {
-    addToGitignore(projectDir)
     syncClaudeMd(projectDir)
   }
   if (failed > 0) {

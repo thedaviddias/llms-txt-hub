@@ -18,7 +18,7 @@ import { fetchLlmsTxt } from '../lib/fetcher.js'
 import { addEntry } from '../lib/lockfile.js'
 import * as logger from '../lib/logger.js'
 import { getAllEntries, loadRegistry, searchRegistry } from '../lib/registry.js'
-import { addToGitignore, installToAgents, isInstalled } from '../lib/storage.js'
+import { installToAgents, isInstalled } from '../lib/storage.js'
 import { track } from '../lib/telemetry.js'
 import type { DetectedMatch, RegistryEntry } from '../types/index.js'
 import { PRIMARY_CATEGORIES } from '../types/index.js'
@@ -431,10 +431,6 @@ async function installEntries({
 
   if (summaryLines.length > 0) {
     p.note(summaryLines.join('\n'), 'Summary')
-  }
-
-  if (addToGitignore(projectDir)) {
-    p.log.success('Added skill directories to .gitignore')
   }
 
   if (installed > 0) {
