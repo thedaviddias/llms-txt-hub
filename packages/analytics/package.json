@@ -10,16 +10,16 @@
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@next/third-parties": "^15.5.2",
-    "next": "15.5.7",
-    "next-plausible": "*",
-    "react": "^19.1.0",
+    "@next/third-parties": "^16.1.6",
+    "next": "16.1.6",
+    "next-plausible": "^3.12.5",
+    "react": "^19.2.4",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "@types/node": "^22.13.17",
-    "@types/react": "19.0.12",
-    "@types/react-dom": "^19.0.4"
+    "@types/node": "^22.19.11",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3"
   }
 }

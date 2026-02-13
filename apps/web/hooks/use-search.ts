@@ -1,11 +1,14 @@
 'use client'
 
-import { getRoute } from '@/lib/routes'
 import { useDebounce } from '@thedaviddias/hooks/use-debounce'
 import { useRouter } from 'next/navigation'
 import type React from 'react'
 import { useCallback, useState } from 'react'
+import { getRoute } from '@/lib/routes'
 
+/**
+ * Hook that manages search query state and navigation to search results
+ */
 export function useSearch() {
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery, 300)

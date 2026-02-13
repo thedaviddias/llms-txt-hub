@@ -30,6 +30,9 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null)
 
+/**
+ * Hook to access the carousel context from child components
+ */
 function useCarousel() {
   const context = React.useContext(CarouselContext)
 
@@ -40,6 +43,9 @@ function useCarousel() {
   return context
 }
 
+/**
+ * Carousel container that manages navigation state and keyboard controls
+ */
 function Carousel({
   orientation = 'horizontal',
   opts,
@@ -118,7 +124,6 @@ function Carousel({
       <div
         onKeyDownCapture={handleKeyDown}
         className={cn('relative', className)}
-        // biome-ignore lint/a11y/useSemanticElements: Carousel needs role="region" for accessibility
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
@@ -130,6 +135,9 @@ function Carousel({
   )
 }
 
+/**
+ * Scrollable content container for carousel items
+ */
 function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   const { carouselRef, orientation } = useCarousel()
 
@@ -143,6 +151,9 @@ function CarouselContent({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+/**
+ * Individual slide item within the carousel
+ */
 function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   const { orientation } = useCarousel()
 
@@ -161,6 +172,9 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   )
 }
 
+/**
+ * Button to navigate to the previous carousel slide
+ */
 function CarouselPrevious({
   className,
   variant = 'outline',
@@ -191,6 +205,9 @@ function CarouselPrevious({
   )
 }
 
+/**
+ * Button to navigate to the next carousel slide
+ */
 function CarouselNext({
   className,
   variant = 'outline',

@@ -1,8 +1,8 @@
 import { readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { categories } from '@/lib/categories'
 import { logger } from '@thedaviddias/logging'
 import type { MetadataRoute } from 'next'
+import { categories } from '@/lib/categories'
 
 /**
  * Map of content paths that should be overridden to different URLs

@@ -55,3 +55,13 @@ lychee-out.md
 
 CLAUDE.local.md
 sessions/
+
+# llms.txt files
+.llms/
+
+# llms.txt documentation
+.agents/skills/
+.claude/skills/
+.cursor/skills/
+.windsurf/skills/
+.cline/skills/

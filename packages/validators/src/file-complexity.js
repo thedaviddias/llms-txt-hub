@@ -4,7 +4,7 @@
  */
 
 const fs = require('node:fs')
-const path = require('node:path')
+const _path = require('node:path')
 
 // Default complexity limits
 const DEFAULT_LIMITS = {

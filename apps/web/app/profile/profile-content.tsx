@@ -1,8 +1,5 @@
 'use client'
 
-import { EditProfileModal } from '@/components/profile/edit-profile-modal'
-import { Card } from '@/components/ui/card'
-import { UserMessageBanner } from '@/components/ui/user-message-banner'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
@@ -22,6 +19,9 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { EditProfileModal } from '@/components/profile/edit-profile-modal'
+import { Card } from '@/components/ui/card'
+import { UserMessageBanner } from '@/components/ui/user-message-banner'
 
 export default function ProfileContent() {
   const { user, signOut, isLoaded } = useAuth()
@@ -58,6 +58,9 @@ export default function ProfileContent() {
     }
   }, [isLoaded, user, router])
 
+  /**
+   * Handles account deletion with confirmation prompt
+   */
   const handleDeleteAccount = async () => {
     if (!confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
       return

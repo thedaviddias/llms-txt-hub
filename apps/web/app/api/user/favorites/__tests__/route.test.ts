@@ -1,6 +1,6 @@
-import { GET, POST } from '@/app/api/user/favorites/route'
 import { logger } from '@thedaviddias/logging'
 import { NextRequest } from 'next/server'
+import { GET, POST } from '@/app/api/user/favorites/route'
 
 // Mock dependencies
 jest.mock('@clerk/nextjs/server', () => ({

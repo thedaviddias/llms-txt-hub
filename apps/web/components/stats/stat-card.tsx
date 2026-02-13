@@ -1,6 +1,6 @@
-import { Card } from '@/components/ui/card'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@thedaviddias/design-system/tooltip'
 import type { LucideIcon } from 'lucide-react'
+import { Card } from '@/components/ui/card'
 
 interface StatCardProps {
   title: string
@@ -9,6 +9,9 @@ interface StatCardProps {
   description?: string
 }
 
+/**
+ * Renders a statistics card with icon, title, value, and optional tooltip
+ */
 export function StatCard({ title, value, icon: Icon, description }: StatCardProps) {
   return (
     <Tooltip>

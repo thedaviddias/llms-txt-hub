@@ -1,11 +1,11 @@
 'use client'
 
-import { getRoute } from '@/lib/routes'
 import { Button } from '@thedaviddias/design-system/button'
 import { logger } from '@thedaviddias/logging'
 import { X } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { getRoute } from '@/lib/routes'
 
 const COOKIE_CONSENT_KEY = 'cookie-consent'
 const COOKIE_CONSENT_VERSION = '1.0'
@@ -50,6 +50,10 @@ export function CookieConsentBanner() {
     setIsLoading(false)
   }, [])
 
+  /**
+   * Saves cookie consent preferences to localStorage and dispatches update event
+
+   */
   const saveConsent = (analyticsConsent: boolean, functionalConsent: boolean) => {
     const consent: CookieConsent = {
       version: COOKIE_CONSENT_VERSION,
@@ -69,19 +73,6 @@ export function CookieConsentBanner() {
     )
 
     setIsVisible(false)
-  }
-
-  const acceptAll = () => {
-    saveConsent(true, true)
-  }
-
-  const acceptEssentialOnly = () => {
-    saveConsent(false, false)
-  }
-
-  const dismiss = () => {
-    // Same as accepting essential only
-    acceptEssentialOnly()
   }
 
   if (isLoading || !isVisible) {
@@ -129,18 +120,22 @@ export function CookieConsentBanner() {
             <Button
               variant="outline"
               size="sm"
-              onClick={acceptEssentialOnly}
+              onClick={() => saveConsent(false, false)}
               className="text-xs sm:text-sm"
             >
               Required Cookies Only
             </Button>
-            <Button size="sm" onClick={acceptAll} className="text-xs sm:text-sm">
+            <Button
+              size="sm"
+              onClick={() => saveConsent(true, true)}
+              className="text-xs sm:text-sm"
+            >
               Accept All Cookies
             </Button>
             <Button
               variant="ghost"
               size="sm"
-              onClick={dismiss}
+              onClick={() => saveConsent(false, false)}
               className="p-2"
               aria-label="Dismiss cookie banner"
             >
@@ -160,6 +155,9 @@ export function useCookieConsent() {
   const [consent, setConsent] = useState<CookieConsent | null>(null)
 
   useEffect(() => {
+    /**
+     * Retrieves the stored cookie consent from localStorage
+     */
     const getConsent = () => {
       const savedConsent = localStorage.getItem(COOKIE_CONSENT_KEY)
       if (savedConsent) {
@@ -174,14 +172,21 @@ export function useCookieConsent() {
 
     setConsent(getConsent())
 
-    const handleConsentUpdate = (event: CustomEvent<CookieConsent>) => {
-      setConsent(event.detail)
+    /**
+     * Handles consent update events dispatched by the banner
+
+     */
+    const handleConsentUpdate = (event: Event) => {
+      const customEvent = event instanceof CustomEvent ? event : null
+      if (customEvent) {
+        setConsent(customEvent.detail)
+      }
     }
 
-    window.addEventListener('cookieConsentUpdated', handleConsentUpdate as EventListener)
+    window.addEventListener('cookieConsentUpdated', handleConsentUpdate)
 
     return () => {
-      window.removeEventListener('cookieConsentUpdated', handleConsentUpdate as EventListener)
+      window.removeEventListener('cookieConsentUpdated', handleConsentUpdate)
     }
   }, [])
 

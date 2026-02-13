@@ -181,14 +181,30 @@
   }
 
   /* Staggered animation delays */
-  .stagger-1 { animation-delay: 50ms; }
-  .stagger-2 { animation-delay: 100ms; }
-  .stagger-3 { animation-delay: 150ms; }
-  .stagger-4 { animation-delay: 200ms; }
-  .stagger-5 { animation-delay: 250ms; }
-  .stagger-6 { animation-delay: 300ms; }
-  .stagger-7 { animation-delay: 350ms; }
-  .stagger-8 { animation-delay: 400ms; }
+  .stagger-1 {
+    animation-delay: 50ms;
+  }
+  .stagger-2 {
+    animation-delay: 100ms;
+  }
+  .stagger-3 {
+    animation-delay: 150ms;
+  }
+  .stagger-4 {
+    animation-delay: 200ms;
+  }
+  .stagger-5 {
+    animation-delay: 250ms;
+  }
+  .stagger-6 {
+    animation-delay: 300ms;
+  }
+  .stagger-7 {
+    animation-delay: 350ms;
+  }
+  .stagger-8 {
+    animation-delay: 400ms;
+  }
 }
 
 /* For users who prefer reduced motion, ensure content is visible */
@@ -216,7 +232,9 @@
 
 /* Hover lift effect */
 .hover-lift {
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  transition:
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
 }
 
 .hover-lift:hover {
@@ -238,7 +256,12 @@
 
 /* Bold gradient text for hero */
 .gradient-text-hero {
-  background: linear-gradient(135deg, hsl(var(--foreground)) 0%, hsl(var(--foreground) / 0.7) 50%, hsl(var(--foreground)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--foreground)) 0%,
+    hsl(var(--foreground) / 0.7) 50%,
+    hsl(var(--foreground)) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

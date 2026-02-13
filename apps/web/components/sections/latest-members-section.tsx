@@ -1,11 +1,11 @@
-import { Section } from '@/components/layout/section'
-import { Card, CardContent } from '@/components/ui/card'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
-import { getRoute } from '@/lib/routes'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Calendar } from 'lucide-react'
 import Link from 'next/link'
+import { Section } from '@/components/layout/section'
+import { Card, CardContent } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
+import { getRoute } from '@/lib/routes'
 
 interface Member {
   id: string
@@ -25,6 +25,9 @@ interface LatestMembersSectionProps {
   members: Member[]
 }
 
+/**
+ * Generates a URL slug from a member's username or ID
+ */
 function generateSlugFromUser(user: Member): string {
   if (!user) return ''
   const username = user.username || user.publicMetadata?.github_username
@@ -33,6 +36,9 @@ function generateSlugFromUser(user: Member): string {
   return username
 }
 
+/**
+ * Renders a section showcasing the most recently joined community members
+ */
 export function LatestMembersSection({ members }: LatestMembersSectionProps) {
   if (!members || members.length === 0) {
     return null

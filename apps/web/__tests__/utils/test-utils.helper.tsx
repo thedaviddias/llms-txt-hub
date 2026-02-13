@@ -4,7 +4,7 @@
 
 import { type RenderResult, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { type CustomRenderOptions, TestProviders, createTestQueryClient } from './test-providers'
+import { type CustomRenderOptions, createTestQueryClient, TestProviders } from './test-providers'
 
 // Re-export mock factories
 export {

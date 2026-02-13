@@ -51,7 +51,7 @@ const EXCLUDE_PATTERNS = [
 ]
 
 // Minimum function size to require JSDoc (lines of code)
-const MIN_FUNCTION_SIZE_FOR_JSDOC = 3
+const _MIN_FUNCTION_SIZE_FOR_JSDOC = 3
 
 // TypeScript integration settings
 const TYPESCRIPT_SETTINGS = {
@@ -66,16 +66,23 @@ const TYPESCRIPT_SETTINGS = {
 const fs = require('node:fs')
 const path = require('node:path')
 
-// Helper function to check if file should be excluded
+/**
+ * Checks if a file path matches any exclusion pattern
+ */
 function shouldExcludeFile(filePath) {
   return EXCLUDE_PATTERNS.some(pattern => pattern.test(filePath))
 }
 
-// Helper function to check if directory should be excluded
+/**
+ * Checks if a directory path matches any exclusion pattern
+ */
 function shouldExcludeDirectory(dirPath) {
   return EXCLUDE_PATTERNS.some(pattern => pattern.test(dirPath))
 }
 
+/**
+ * Validates JSDoc documentation coverage for functions, components, and classes in source files
+ */
 class JSDocValidator {
   constructor() {
     this.violations = []

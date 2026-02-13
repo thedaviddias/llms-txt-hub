@@ -1,6 +1,6 @@
+import { logger } from '@thedaviddias/logging'
 import { createMockRequest } from '@/app/api/__tests__/test-helpers'
 import { GET } from '@/app/api/members/route'
-import { logger } from '@thedaviddias/logging'
 
 // Mock dependencies
 jest.mock('@clerk/backend', () => ({
@@ -321,7 +321,7 @@ describe('/api/members', () => {
         }
       }
       mockCreateClerkClient.mockReturnValue(mockClient)
-      
+
       // Mock getClerk to return the mock client for this test
       const { getClerk } = require('@/lib/clerk')
       getClerk.mockReturnValue(mockClient)

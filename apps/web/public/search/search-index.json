@@ -231,6 +231,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "ads.txt Guru",
+    "description": "Manage your ads.txt files online, automatically validate your ads.txt files, and collaborate between publisher and ad network to automate ads.txt updates.",
+    "url": "/ads-txt-guru-llms-txt",
+    "content": "# ads.txt Guru\n\nManage your ads.txt files online, automatically validate your ads.txt files, and collaborate between publisher and ad network to automate ads.txt updates.",
+    "category": "marketing-sales",
+    "slug": "ads-txt-guru-llms-txt",
+    "website": "https://adstxt.guru",
+    "llmsUrl": "https://adstxt.guru/llms.txt",
+    "llmsFullUrl": "https://adstxt.guru/llms-full.txt"
+  },
+  {
     "name": "AdsBravo",
     "description": "# Advertising Platform - AdsBravo",
     "url": "/adsbravo-llms-txt",
@@ -481,6 +492,17 @@
     "slug": "alexopdev-llms-txt",
     "website": "https://alexop.dev",
     "llmsUrl": "https://alexop.dev/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "All-in",
+    "description": "Brandefense platform is a proactive digital risk protection solution for organizations. Our AI-driven technology constantly scans the dark, deep, and surface.",
+    "url": "/all-in-llms-txt",
+    "content": "# All-in\n\nBrandefense platform is a proactive digital risk protection solution for organizations. Our AI-driven technology constantly scans the dark, deep, and surface.",
+    "category": "security-identity",
+    "slug": "all-in-llms-txt",
+    "website": "https://brandefense.io",
+    "llmsUrl": "https://brandefense.io/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -792,6 +814,17 @@
     "llmsFullUrl": "https://docs.asapp.com/llms-full.txt"
   },
   {
+    "name": "Aspose.Words Product Family",
+    "description": "Aspose.Words is a class library that can be used by developers for various platforms for a variety of document processing tasks.",
+    "url": "/aspose-words-product-family-llms-txt",
+    "content": "# Aspose.Words Product Family\n\nAspose.Words is a class library that can be used by developers for various platforms for a variety of document processing tasks.",
+    "category": "developer-tools",
+    "slug": "aspose-words-product-family-llms-txt",
+    "website": "https://docs.aspose.com/words/",
+    "llmsUrl": "https://docs.aspose.com/words/llms.txt",
+    "llmsFullUrl": "https://docs.aspose.com/words/llms-full.txt"
+  },
+  {
     "name": "Assurance en Direct",
     "description": "Assurance auto, habitation, scooter, moto et voiture sans permis. Assurance en ligne et souscription et édition attestation et carte verte.",
     "url": "/assurance-en-direct-llms-txt",
@@ -836,6 +869,17 @@
     "llmsFullUrl": "https://docs.astro.build/llms-full.txt"
   },
   {
+    "name": "Astroline - astrology app",
+    "description": "The Best Astrology App readings Online: Palm Reading, Birth Chart, Love Compatibility, Daily Horoscope, Astrocartography and more in Astroline app.",
+    "url": "/astroline-astrology-app-llms-txt",
+    "content": "# Astroline - astrology app\n\nThe Best Astrology App readings Online: Palm Reading, Birth Chart, Love Compatibility, Daily Horoscope, Astrocartography and more in Astroline app.",
+    "category": "personal",
+    "slug": "astroline-astrology-app-llms-txt",
+    "website": "https://astroline.today/en",
+    "llmsUrl": "https://astroline.today/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Augenlasern in Zürich",
     "description": "Muss Augenlasern in Zürich teuer sein? Nein! Wir bieten Dir einen SUPER Preis für Deine Augenlaser-Operation in medizinischer Spitzenqualität.",
     "url": "/augenlasern-in-zürich-llms-txt",
@@ -877,6 +921,17 @@
     "slug": "autentique-llms-txt",
     "website": "https://autentique.com.br",
     "llmsUrl": "https://docs.autentique.com.br/api/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Auto Scrap Yard - Canada Wide",
+    "description": "Canada's trusted automotive scrapyard specializing in cash for junk cars, scrap vehicle removal, catalytic converter buying, and eco-friendly auto recycling.",
+    "url": "/auto-scrap-yard-canada-wide-llms-txt",
+    "content": "# Auto Scrap Yard - Canada Wide\n\nCanada's trusted automotive scrapyard specializing in cash for junk cars, scrap vehicle removal, catalytic converter buying, and eco-friendly auto recycling.",
+    "category": "business-operations",
+    "slug": "auto-scrap-yard-canada-wide-llms-txt",
+    "website": "https://ca.auto-scrap-yard.com",
+    "llmsUrl": "https://ca.auto-scrap-yard.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1208,6 +1263,17 @@
     "website": "https://bika.ai",
     "llmsUrl": "https://bika.ai/llms.txt",
     "llmsFullUrl": "https://bika.ai/llms-full.txt"
+  },
+  {
+    "name": "Bildungsurlaub-in-deutschland",
+    "description": "Über 575 Bildungsurlaub Kurse | Wir helfen Dir mit Rechten, Anträgen & Tipps | Finde den passenden Kurs in der großen Auswahl anerkannter Bildungsurlaube.",
+    "url": "/bildungsurlaub-in-deutschland-llms-txt",
+    "content": "# Bildungsurlaub-in-deutschland\n\nÜber 575 Bildungsurlaub Kurse | Wir helfen Dir mit Rechten, Anträgen & Tipps | Finde den passenden Kurs in der großen Auswahl anerkannter Bildungsurlaube.",
+    "category": "international",
+    "slug": "bildungsurlaub-in-deutschland-llms-txt",
+    "website": "https://meinbildungsurlaub.de",
+    "llmsUrl": "https://meinbildungsurlaub.de/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Birdie",
@@ -2068,6 +2134,17 @@
     "llmsFullUrl": "https://developers.cloudflare.com/llms-full.txt"
   },
   {
+    "name": "Clouve",
+    "description": "Clouve connects businesses with enterprise-ready applications while empowering developers to monetize their solutions through our secure platform.",
+    "url": "/clouve-llms-txt",
+    "content": "# Clouve\n\nClouve connects businesses with enterprise-ready applications while empowering developers to monetize their solutions through our secure platform.",
+    "category": "infrastructure-cloud",
+    "slug": "clouve-llms-txt",
+    "website": "https://www.clouve.com",
+    "llmsUrl": "https://www.clouve.com/llms.txt",
+    "llmsFullUrl": "https://www.clouve.com/llms-full.txt"
+  },
+  {
     "name": "Clover.Space",
     "description": "The Next Gen Social Space",
     "url": "/cloverspace-llms-txt",
@@ -2341,6 +2418,17 @@
     "website": "https://docs.conductor.is",
     "llmsUrl": "https://docs.conductor.is/llms.txt",
     "llmsFullUrl": "https://docs.conductor.is/llms-full.txt"
+  },
+  {
+    "name": "ConfigCat",
+    "description": "ConfigCat is a feature flag and remote configuration service that lets teams release safely, control rollouts, and easily manage application functionality without redeploying.",
+    "url": "/configcat-llms-txt",
+    "content": "# ConfigCat\n\nConfigCat is a feature flag and remote configuration service that lets teams release safely, control rollouts, and easily manage application functionality without redeploying.",
+    "category": "developer-tools",
+    "slug": "configcat-llms-txt",
+    "website": "https://configcat.com/",
+    "llmsUrl": "https://configcat.com/docs/llms.txt",
+    "llmsFullUrl": "https://configcat.com/docs/llms-full.txt"
   },
   {
     "name": "Consentik",
@@ -2937,6 +3025,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Digital Inning",
+    "description": "Discover top-tier digital marketing services in India with Digital Inning, the leading agency based in Rajkot. Elevate your online presence today.",
+    "url": "/digital-inning-llms-txt",
+    "content": "# Digital Inning\n\nDiscover top-tier digital marketing services in India with Digital Inning, the leading agency based in Rajkot. Elevate your online presence today.",
+    "category": "agency-services",
+    "slug": "digital-inning-llms-txt",
+    "website": "https://digitalinning.com/",
+    "llmsUrl": "https://digitalinning.com/llms.txt",
+    "llmsFullUrl": "https://digitalinning.com/llms-full.txt"
+  },
+  {
     "name": "Digital Middle Ground",
     "description": "Marketing & Design Partner — Real solutions for your business''s challenges and goals.",
     "url": "/digital-middle-ground-llms-txt",
@@ -3223,6 +3322,17 @@
     "llmsFullUrl": "https://elevenlabs.io/docs/llms-full.txt"
   },
   {
+    "name": "Elysia",
+    "description": "Elysia - Ergonomic Framework for Humans",
+    "url": "/elysiajs",
+    "content": "# Elysia\n\nElysia - Ergonomic Framework for Humans",
+    "category": "developer-tools",
+    "slug": "elysiajs",
+    "website": "https://elysiajs.com",
+    "llmsUrl": "https://elysiajs.com/llms.txt",
+    "llmsFullUrl": "https://elysiajs.com/llms-full.txt"
+  },
+  {
     "name": "Emailgic",
     "description": "Email automation and management platform",
     "url": "/emailgic-llms-txt",
@@ -3446,7 +3556,7 @@
     "name": "Farcaster MiniApps",
     "description": "Learn to build and distribute apps to Farcaster users",
     "url": "/farcaster-miniapps-llms-txt",
-    "content": "## Farcaster Mini Apps Development\n\nIntegrate your web applications to Farcaster, Farcaster is a sufficiently decentralize social network with native Web3 wallets on Ethereum and Solana.\n\n## About llms.txt Implementation\n\nOur llms.txt file provides comprehensive documentation about our platform's AI-ready content structure, making it easy for language models to understand and work with our system.",
+    "content": "## Farcaster Mini Apps Development\n\nIntegrate your web applications to Farcaster, Farcaster is a sufficiently decentralize social network with native Web3 wallets on Ethereum and Solana.\n\n## About llms.txt Implementation\nOur llms.txt file provides comprehensive documentation about our platform's AI-ready content structure, making it easy for language models to understand and work with our system.",
     "category": "developer-tools",
     "slug": "farcaster-miniapps-llms-txt",
     "website": "https://miniapps.farcaster.xyz",
@@ -3682,6 +3792,17 @@
     "slug": "fraction-ai-llms-txt",
     "website": "https://fractionai.xyz",
     "llmsUrl": "https://docs.fractionai.xyz/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "FragBin",
+    "description": "Share code or text instantly with optional expiry, password protection, and Markdown support from a simple paste - an alternative to Pastebin.",
+    "url": "/fragbin-llms-txt",
+    "content": "# FragBin\n\nShare code or text instantly with optional expiry, password protection, and Markdown support from a simple paste - an alternative to Pastebin.",
+    "category": "developer-tools",
+    "slug": "fragbin-llms-txt",
+    "website": "https://www.fragbin.com/",
+    "llmsUrl": "https://www.fragbin.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -4048,6 +4169,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "helloskin.hu",
+    "description": "Ha szép bőrre vágysz: Magyar és Koreai kozmetikumok a legjobb márkák termékeivel. Arcápolás, ingyenes bőrápolási tanácsadás és szupergyors szállítás.",
+    "url": "/helloskin-hu-llms-txt",
+    "content": "# helloskin.hu\n\nHa szép bőrre vágysz: Magyar és Koreai kozmetikumok a legjobb márkák termékeivel. Arcápolás, ingyenes bőrápolási tanácsadás és szupergyors szállítás.",
+    "category": "ecommerce-retail",
+    "slug": "helloskin-hu-llms-txt",
+    "website": "https://helloskin.hu/",
+    "llmsUrl": "https://helloskin.hu/llms.txt",
+    "llmsFullUrl": "https://helloskin.hu/llms-full.txt"
+  },
+  {
     "name": "Help for Erectile Dysfunction",
     "description": "The ED Treatment Information Center provides resources and support for Erectile Dysfunction sufferers and their partners.",
     "url": "/help-for-erectile-dysfunction-llms-txt",
@@ -4111,6 +4243,17 @@
     "slug": "himalayas-llms-txt",
     "website": "https://himalayas.app",
     "llmsUrl": "https://himalayas.app/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Hinto AI",
+    "description": "Create answers users find, Google ranks, and LLMs understand. Turn recorded demos into knowledge base content in minutes.",
+    "url": "/hinto-ai-llms-txt",
+    "content": "# Hinto AI\n\nCreate answers users find, Google ranks, and LLMs understand. Turn recorded demos into knowledge base content in minutes.",
+    "category": "business-operations",
+    "slug": "hinto-ai-llms-txt",
+    "website": "https://hintoai.com",
+    "llmsUrl": "https://hintoai.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -4419,6 +4562,17 @@
     "slug": "idriss-llms-txt",
     "website": "https://idriss.xyz",
     "llmsUrl": "https://docs.idriss.xyz/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "IG Exporter",
+    "description": "IG exporter - export Instagram followers and following to CSV using browser extension. Built for Google Chrome and Microsoft Edge.",
+    "url": "/ig-exporter-llms-txt",
+    "content": "# IG Exporter\n\nIG exporter - export Instagram followers and following to CSV using browser extension. Built for Google Chrome and Microsoft Edge.",
+    "category": "data-analytics",
+    "slug": "ig-exporter-llms-txt",
+    "website": "https://igexporter.com",
+    "llmsUrl": "https://igexporter.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -4774,6 +4928,17 @@
     "llmsFullUrl": "https://jazz.tools/llms-full.txt"
   },
   {
+    "name": "Jedox",
+    "description": "Jedox provides enterprise performance management (EPM) and financial planning & analysis (FP&A) software for planning, budgeting and AI-powered forecasting.",
+    "url": "/jedox-llms-txt",
+    "content": "# Jedox\n\nJedox provides enterprise performance management (EPM) and financial planning & analysis (FP&A) software for planning, budgeting and AI-powered forecasting.",
+    "category": "finance-fintech",
+    "slug": "jedox-llms-txt",
+    "website": "https://www.jedox.com/",
+    "llmsUrl": "https://www.jedox.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "JourneyApps",
     "description": "JourneyApps is a provider of tools for software developers enabling them to build impactful high-quality software, including PowerSync and JourneyApps Platform.",
     "url": "/journeyapps-llms-txt",
@@ -4950,6 +5115,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Kernel-Error",
+    "description": "German technical blog about IT security, FreeBSD, mail infrastructure, DNS, and self-hosting by Sebastian van de Meer",
+    "url": "/kernel-error-llms-txt",
+    "content": "# Kernel-Error\n\nKernel-Error is a German technical blog by IT security expert Sebastian van de Meer, running since 2003 with over 600 articles.\n\n## Key Topics\n\n- IT Security: Penetration testing, system hardening, security research\n- Mail Infrastructure: Postfix, Dovecot, SPF, DKIM, DMARC, DANE\n- DNS & DNSSEC: BIND configuration, DoT/DoH\n- Unix/BSD/Linux: FreeBSD administration (main focus)\n- Self-Hosting: ZFS, Jails, high availability\n- IoT & Embedded Systems: Smart device security, microcontrollers\n\n## About llms.txt Implementation\n\nThe site implements modern security standards including post-quantum cryptography, DNSSEC, DANE/TLSA, and strict email authentication policies. The llms.txt provides comprehensive documentation about the blog's technical content and focus areas.",
+    "category": "personal",
+    "slug": "kernel-error-llms-txt",
+    "website": "https://www.kernel-error.de",
+    "llmsUrl": "https://www.kernel-error.de/llms.txt",
+    "llmsFullUrl": "https://www.kernel-error.de/llms-full.txt"
+  },
+  {
     "name": "Ketch",
     "description": "Ketch''s privacy management software, with its Data Permissioning privacy platform, helps leverage data responsibly for deeper customer engagement and growth.",
     "url": "/ketch-llms-txt",
@@ -4981,6 +5157,17 @@
     "website": "https://kick.com",
     "llmsUrl": "https://docs.kick.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Kigurumi Wiki",
+    "description": "Kig.Wiki - The open source Kigurumi Mask (着ぐるみ) wiki.",
+    "url": "/kigurumi-wiki-llms-txt",
+    "content": "# Kigurumi Wiki\n\nKig.Wiki - The open source Kigurumi Mask (着ぐるみ) wiki.",
+    "category": "other",
+    "slug": "kigurumi-wiki-llms-txt",
+    "website": "https://kig.wiki",
+    "llmsUrl": "https://kig.wiki/llms.txt",
+    "llmsFullUrl": "https://kig.wiki/llms-full.txt"
   },
   {
     "name": "KiloEx",
@@ -5641,6 +5828,17 @@
     "website": "https://www.mailmodo.com/",
     "llmsUrl": "https://www.mailmodo.com/llms.txt",
     "llmsFullUrl": "https://www.mailmodo.com/llms-full.txt"
+  },
+  {
+    "name": "Maison Fervenza | Wedding",
+    "description": "Authentic luxury weddings in France with exclusive access to hidden châteaux, private museums & Michelin chefs. No templates, just your truth.",
+    "url": "/maison-fervenza-wedding-llms-txt",
+    "content": "# Maison Fervenza | Wedding\n\nAuthentic luxury weddings in France with exclusive access to hidden châteaux, private museums & Michelin chefs. No templates, just your truth.",
+    "category": "agency-services",
+    "slug": "maison-fervenza-wedding-llms-txt",
+    "website": "https://www.fervenza.fr/",
+    "llmsUrl": "https://www.fervenza.fr/llms.txt",
+    "llmsFullUrl": "https://www.fervenza.fr/llms-full.txt"
   },
   {
     "name": "Mako",
@@ -6600,6 +6798,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "PayPerFax",
+    "description": "Pay-per-fax service. Exactly what it says: $2 per fax, zero subscription fees. No signup required. The original pay-per-fax service. Send fax instantly.",
+    "url": "/payperfax-llms-txt",
+    "content": "# PayPerFax\n\nPay-per-fax service. Exactly what it says: $2 per fax, zero subscription fees. No signup required. The original pay-per-fax service. Send fax instantly.",
+    "category": "infrastructure-cloud",
+    "slug": "payperfax-llms-txt",
+    "website": "https://payperfax.com/",
+    "llmsUrl": "https://payperfax.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "PayrollRabbit",
     "description": "Generate Compliant Payslips in 60 seconds.\\r\\nInstantly compliant. Highly accurate. Fully automated.",
     "url": "/payrollrabbit-llms-txt",
@@ -6765,6 +6974,17 @@
     "llmsFullUrl": "https://planharmony.com/llms-full.txt"
   },
   {
+    "name": "Plataforma DocCF",
+    "description": "Descubre DocCF, una Plataforma para gestión de Centros Educativos (Colegios, Jardines Infantiles y Academias) innovadora, flexible y con Licencia vitalicia.",
+    "url": "/plataforma-doccf-llms-txt",
+    "content": "# Plataforma DocCF\n\nDescubre DocCF, una Plataforma para gestión de Centros Educativos (Colegios, Jardines Infantiles y Academias) innovadora, flexible y con Licencia vitalicia.",
+    "category": "international",
+    "slug": "plataforma-doccf-llms-txt",
+    "website": "https://www.grupocfdeveloper.com",
+    "llmsUrl": "https://www.grupocfdeveloper.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Platform.sh",
     "description": "Our platform as a service (PaaS) gives development teams control and peace of mind while accelerating the time to build and deploy applications.",
     "url": "/platformsh-llms-txt",
@@ -6785,6 +7005,17 @@
     "website": "https://play.ai/",
     "llmsUrl": "https://docs.play.ai/llms.txt",
     "llmsFullUrl": "https://docs.play.ai/llms-full.txt"
+  },
+  {
+    "name": "Plombier sur Lyon",
+    "description": "Vous avez une urgence ? Besoin d'un dépannage ? Votre plombier sur Lyon disponible pour devis gratuit avec intervention au plus rapide après votre appel.",
+    "url": "/plombier-sur-lyon-llms-txt",
+    "content": "# Plombier sur Lyon\n\nVous avez une urgence ? Besoin d'un dépannage ? Votre plombier sur Lyon disponible pour devis gratuit avec intervention au plus rapide après votre appel.",
+    "category": "other",
+    "slug": "plombier-sur-lyon-llms-txt",
+    "website": "https://chapuisplomberie.fr/",
+    "llmsUrl": "https://chapuisplomberie.fr/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Plumbing Spain",
@@ -7016,6 +7247,17 @@
     "website": "https://quillsql.com",
     "llmsUrl": "https://docs.quillsql.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Quodat",
+    "description": "Toutes les prochaines sorties culturelles et évènementielles sur un seul site : mangas, animes, films, séries, concerts et jeux vidéos.",
+    "url": "/quodat-llms-txt",
+    "content": "# Quodat\n\nToutes les prochaines sorties culturelles et évènementielles sur un seul site : mangas, animes, films, séries, concerts et jeux vidéos.",
+    "category": "content-media",
+    "slug": "quodat-llms-txt",
+    "website": "https://quodat.com",
+    "llmsUrl": "https://quodat.com/llms.txt",
+    "llmsFullUrl": "https://quodat.com/llms-full.txt"
   },
   {
     "name": "Quotidiano Motori",
@@ -7546,6 +7788,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "SellerSprite",
+    "description": "Turn market signals into measurable profit with SellerSprite. Find winnable niches, map keyword demand, analyze competitors, and optimize listings.",
+    "url": "/sellersprite-llms-txt",
+    "content": "# SellerSprite\n\nTurn market signals into measurable profit with SellerSprite. Find winnable niches, map keyword demand, analyze competitors, and optimize listings.",
+    "category": "data-analytics",
+    "slug": "sellersprite-llms-txt",
+    "website": "https://sellersprite.ai",
+    "llmsUrl": "https://sellersprite.ai/llms.txt",
+    "llmsFullUrl": "https://sellersprite.ai/llms-full.txt"
+  },
+  {
     "name": "Sellm",
     "description": "Monitor how often your brand is mentioned on ChatGPT, Perplexity & more. Get insights for Generative Engine Optimization (GEO) and improve your AI visibility.",
     "url": "/sellm-llms-txt",
@@ -7687,6 +7940,17 @@
     "website": "https://shoppositioner.com/",
     "llmsUrl": "https://shoppositioner.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Shows Watched",
+    "description": "Track all the shows watched and movies you love with ShowsWatched.com. Keep a personal diary of shows watched, discover trending content, and connect with fans.",
+    "url": "/shows-watched-llms-txt",
+    "content": "# Shows Watched\n\nTrack all the shows watched and movies you love with ShowsWatched.com. Keep a personal diary of shows watched, discover trending content, and connect with fans.",
+    "category": "content-media",
+    "slug": "shows-watched-llms-txt",
+    "website": "https://showswatched.com",
+    "llmsUrl": "https://showswatched.com/llms.txt",
+    "llmsFullUrl": "https://showswatched.com/llms-full.txt"
   },
   {
     "name": "Side Space",
@@ -8624,6 +8888,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Unquoting Insurance Company",
+    "description": "Sells insurance to protect you and your assets in all 50 states.\r\nLicensed insurance school offering pre-licensing education in the state of Ohio.",
+    "url": "/unquoting-insurance-company-llms-txt",
+    "content": "# Unquoting Insurance Company\n\nSells insurance to protect you and your assets in all 50 states.\r\nLicensed insurance school offering pre-licensing education in the state of Ohio.",
+    "category": "finance-fintech",
+    "slug": "unquoting-insurance-company-llms-txt",
+    "website": "https://unquoting.com",
+    "llmsUrl": "https://unquoting.com/llms.txt",
+    "llmsFullUrl": "https://unquoting.com/llms-full.txt"
+  },
+  {
     "name": "Unstructured",
     "description": "Document processing and data extraction platform",
     "url": "/unstructured-llms-txt",
@@ -8633,6 +8908,17 @@
     "website": "https://unstructured.io",
     "llmsUrl": "https://docs.unstructured.io/llms.txt",
     "llmsFullUrl": "https://docs.unstructured.io/llms-full.txt"
+  },
+  {
+    "name": "Upstaff",
+    "description": "Upstaff is a technology partner with expertise in AI, ML, Web3, Software, and Data Engineering. Hire faster, develop smarter with Upstaff.",
+    "url": "/upstaff-llms-txt",
+    "content": "# Upstaff\n\nUpstaff is a technology partner with expertise in AI, ML, Web3, Software, and Data Engineering. Hire faster, develop smarter with Upstaff.",
+    "category": "agency-services",
+    "slug": "upstaff-llms-txt",
+    "website": "https://upstaff.com",
+    "llmsUrl": "https://upstaff.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Upstash",
@@ -9402,6 +9688,17 @@
     "slug": "xion-llms-txt",
     "website": "https://xion.burnt.com",
     "llmsUrl": "https://docs.burnt.com/xion/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "xmcp",
+    "description": "The framework for building & shipping MCP servers.",
+    "url": "/xmcp-llms-txt",
+    "content": "# xmcp\n\nThe framework for building & shipping MCP servers.",
+    "category": "developer-tools",
+    "slug": "xmcp-llms-txt",
+    "website": "https://xmcp.dev",
+    "llmsUrl": "https://xmcp.dev/llms.txt",
     "llmsFullUrl": ""
   },
   {

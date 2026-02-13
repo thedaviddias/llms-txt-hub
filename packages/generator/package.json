@@ -7,18 +7,17 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
-    "@mendable/firecrawl-js": "^1.21.0",
-    "chalk": "^5.4.1",
+    "@mendable/firecrawl-js": "^1.29.3",
+    "chalk": "^5.6.2",
     "commander": "^13.1.0",
-    "dotenv": "^16.4.7",
-    "firecrawl": "^1.21.0",
-    "inquirer": "^12.5.0",
-    "tsx": "^4.19.3"
+    "dotenv": "^16.6.1",
+    "firecrawl": "^1.29.3",
+    "inquirer": "^12.11.1",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
-    "@types/dotenv": "^8.2.3",
-    "@types/inquirer": "^9.0.7",
-    "@types/node": "^22.13.17",
-    "typescript": "^5.8.2"
+    "@types/inquirer": "^9.0.9",
+    "@types/node": "^22.19.11",
+    "typescript": "^5.9.3"
   }
 }

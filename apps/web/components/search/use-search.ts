@@ -2,6 +2,8 @@
  * Custom hook for search functionality
  */
 
+import { logger } from '@thedaviddias/logging'
+import { useEffect, useState } from 'react'
 import type { SearchIndexEntry, WebsiteMetadata } from '@/components/search/search-utils'
 import {
   filterAndSortEntries,
@@ -9,8 +11,6 @@ import {
   tryLenientProcessing,
   validateEntries
 } from '@/components/search/use-search-helpers'
-import { logger } from '@thedaviddias/logging'
-import { useEffect, useState } from 'react'
 
 /**
  * Custom hook to manage search functionality

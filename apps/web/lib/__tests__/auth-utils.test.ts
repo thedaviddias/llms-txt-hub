@@ -1,5 +1,5 @@
-import { canUserSubmitViaGitHub, getUserAuthInfo, isEmailOnlyUser } from '@/lib/auth-utils'
 import type { User } from '@clerk/nextjs/server'
+import { canUserSubmitViaGitHub, getUserAuthInfo, isEmailOnlyUser } from '@/lib/auth-utils'
 
 // Create mock types that include all required properties
 type MockEmailAddress = {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useClerk, useUser } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 import { Button } from '@thedaviddias/design-system/button'
 import { useRouter, useSearchParams } from 'next/navigation'
 import type { PropsWithChildren } from 'react'
@@ -33,7 +33,6 @@ interface SignInProps extends PropsWithChildren {
  */
 export function SignIn({ redirectUrl = '/', onSignIn, children }: SignInProps) {
   const { user } = useUser()
-  const { redirectToSignIn } = useClerk()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -45,6 +44,10 @@ export function SignIn({ redirectUrl = '/', onSignIn, children }: SignInProps) {
     }
   }, [user, router, searchParams, redirectUrl])
 
+  /**
+   * Triggers the sign-in flow via callback or navigation
+
+   */
   const handleSignIn = async () => {
     if (onSignIn) {
       await onSignIn()

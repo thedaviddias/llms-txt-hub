@@ -1,12 +1,12 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
-import { getMemberBadgeSync } from '@/lib/member-client-utils'
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { Check, Eye, Github, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
+import { Card } from '@/components/ui/card'
+import { getMemberBadgeSync } from '@/lib/member-client-utils'
 
 export type AuthTier = 'anonymous' | 'email' | 'github'
 
@@ -49,6 +49,9 @@ const FEATURES: Feature[] = [
   }
 ]
 
+/**
+ * Returns display info (name, icon, color) for an auth tier
+ */
 function getTierInfo(tier: AuthTier) {
   switch (tier) {
     case 'anonymous':
@@ -75,6 +78,9 @@ function getTierInfo(tier: AuthTier) {
   }
 }
 
+/**
+ * Determines the current user's auth tier based on their metadata
+ */
 function getCurrentUserTier(user: any): AuthTier {
   if (!user) return 'anonymous'
 
@@ -91,6 +97,9 @@ function getCurrentUserTier(user: any): AuthTier {
   return 'anonymous'
 }
 
+/**
+ * Checks whether the user has GitHub contributions
+ */
 function getUserContributions(user: any): boolean {
   // This would need to be determined based on actual contribution data
   // For now, we'll assume GitHub users might be contributors
@@ -103,6 +112,9 @@ interface AuthTierIndicatorProps {
   compact?: boolean
 }
 
+/**
+ * Displays the user's current auth tier with feature comparison and upgrade options
+ */
 export function AuthTierIndicator({ showUpgrade = true, compact = false }: AuthTierIndicatorProps) {
   const { user } = useAuth()
   const currentTier = getCurrentUserTier(user)

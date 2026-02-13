@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { CSRFProvider } from '@/components/csrf-provider'
 import { render, waitFor } from '@testing-library/react'
+import { CSRFProvider } from '@/components/csrf-provider'
 
 // Mock fetch
 global.fetch = jest.fn()

@@ -1,13 +1,16 @@
+import { ArrowRight, Rss } from 'lucide-react'
+import Link from 'next/link'
 import { LLMGrid } from '@/components/llm/llm-grid'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
-import { ArrowRight, Rss } from 'lucide-react'
-import Link from 'next/link'
 
 interface LatestUpdatesSectionProps {
   projects: WebsiteMetadata[]
 }
 
+/**
+ * Renders the latest project updates section with an RSS feed link
+ */
 export function LatestUpdatesSection({ projects }: LatestUpdatesSectionProps) {
   return (
     <section className="space-y-6">

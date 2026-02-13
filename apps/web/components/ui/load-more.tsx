@@ -1,9 +1,9 @@
 'use client'
 
-import { analytics } from '@/lib/analytics'
 import { Button } from '@thedaviddias/design-system/button'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { analytics } from '@/lib/analytics'
 
 interface LoadMoreProps {
   onLoadMore: () => Promise<void> | void
@@ -20,6 +20,9 @@ interface LoadMoreProps {
   analyticsContentType?: 'websites' | 'members'
 }
 
+/**
+ * Renders a load-more control supporting button, auto-load, and infinite scroll variants
+ */
 export function LoadMore({
   onLoadMore,
   hasMore,
@@ -44,6 +47,10 @@ export function LoadMore({
   useEffect(() => {
     if (!isClient || variant !== 'scroll' || !hasMore || isLoading) return
 
+    /**
+     * Triggers loading when user scrolls near the bottom of the page
+
+     */
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight
       const scrollTop = document.documentElement.scrollTop

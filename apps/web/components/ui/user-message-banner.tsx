@@ -1,9 +1,9 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { Button } from '@thedaviddias/design-system/button'
 import { AlertCircle, AlertTriangle, CheckCircle, Github, Info, Mail, User, X } from 'lucide-react'
 import Link from 'next/link'
+import { Card } from '@/components/ui/card'
 
 type IconName =
   | 'user'
@@ -55,6 +55,9 @@ const iconStyles = {
   neutral: 'bg-primary/10 text-primary'
 }
 
+/**
+ * Renders a styled banner with icon, message, and optional action buttons
+ */
 export function UserMessageBanner({
   icon,
   title,

@@ -1,10 +1,10 @@
-import { type WebsiteMetadata, getWebsites } from '@/lib/content-loader'
 import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import DOMPurify from 'isomorphic-dompurify'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
 import validator from 'validator'
+import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 
 /**
  * Clean and sanitize a page title by removing common suffixes and special characters
@@ -39,13 +39,17 @@ async function fetchMetadata(url: string) {
     // Check for duplicate websites
     const existingWebsites = await getWebsites()
 
-    const normalizedNewUrl = normalizeUrl(url, {
+    const _normalizedNewUrl = normalizeUrl(url, {
       stripProtocol: true,
       stripWWW: true,
       removeTrailingSlash: true,
       removeQueryParameters: true
     })
 
+    /**
+     * Normalizes a URL into hostname and path for duplicate detection
+
+     */
     const toKey = (u: string) => {
       try {
         const { hostname, pathname } = new URL(

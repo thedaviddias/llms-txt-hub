@@ -1,5 +1,5 @@
-import { DELETE } from '@/app/api/user/delete-account/route'
 import { logger } from '@thedaviddias/logging'
+import { DELETE } from '@/app/api/user/delete-account/route'
 
 // Mock dependencies
 jest.mock('@clerk/backend', () => {

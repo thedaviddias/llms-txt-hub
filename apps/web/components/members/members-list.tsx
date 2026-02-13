@@ -1,12 +1,12 @@
 'use client'
 
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
-import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback, AvatarImage } from '@thedaviddias/design-system/avatar'
 import { Button } from '@thedaviddias/design-system/button'
 import { Calendar, Github, Search } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { Card, CardContent } from '@/components/ui/card'
 
 interface Member {
   id: string
@@ -30,6 +30,9 @@ interface MembersListProps {
   hasPrevPage: boolean
 }
 
+/**
+ * Generates a URL slug from a member's username or ID
+ */
 function generateSlugFromUser(user: Member): string {
   if (!user) return ''
   const username = user.username || user.publicMetadata?.github_username
@@ -37,6 +40,9 @@ function generateSlugFromUser(user: Member): string {
   return username
 }
 
+/**
+ * Renders a paginated and searchable list of community members
+ */
 export function MembersList({
   members,
   currentPage,

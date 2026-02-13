@@ -206,7 +206,7 @@ async function validateCSRFToken(request: NextRequest): Promise<boolean> {
         const params = new URLSearchParams(body)
         csrfToken = params.get('_csrf')
       }
-    } catch (error) {
+    } catch (_error) {
       // Form parsing failed, continue without token
     }
   }

@@ -8,12 +8,12 @@
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.12.0",
-    "@upstash/ratelimit": "^2.0.5",
-    "@upstash/redis": "^1.34.6",
-    "zod": "^3.24.2"
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.36.2",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "typescript": "^5.8.2"
+    "typescript": "^5.9.3"
   }
 }
