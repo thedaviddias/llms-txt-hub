@@ -1,5 +1,5 @@
-import { Redis } from '@upstash/redis'
 import { type NextRequest, NextResponse } from 'next/server'
+import { getRawClient } from '@/lib/redis'
 
 const ALLOWED_EVENTS = ['install', 'remove', 'init', 'update', 'search'] as const
 
@@ -9,12 +9,6 @@ const TTL_SECONDS = TTL_DAYS * DAY_SECONDS
 
 const RATE_LIMIT_MAX = 60
 const RATE_LIMIT_WINDOW_SECONDS = 60
-
-// Module-scoped Redis client (reused across requests)
-const redisUrl = process.env.UPSTASH_REDIS_REST_URL
-const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN
-const redis: Redis | null =
-  redisUrl && redisToken ? new Redis({ url: redisUrl, token: redisToken }) : null
 
 /**
  * Extract client IP from request headers for rate limiting.
@@ -33,15 +27,14 @@ function getRateLimitKey(request: NextRequest): string {
 async function checkRateLimit(
   clientIp: string
 ): Promise<{ allowed: boolean; retryAfterSeconds?: number }> {
+  const redis = getRawClient()
   if (!redis) {
-    // No Redis — allow all requests (best-effort, no durable rate limit)
     return { allowed: true }
   }
 
   const key = `telemetry:rate:${clientIp}`
   const count = await redis.incr(key)
 
-  // Set TTL on the first request in a new window
   if (count === 1) {
     await redis.expire(key, RATE_LIMIT_WINDOW_SECONDS)
   }
@@ -92,13 +85,12 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { event, skills } = body
 
-    // Validate event type
     if (!isValidEvent(event)) {
       return NextResponse.json({ ok: false, error: 'Invalid event type' }, { status: 400 })
     }
 
+    const redis = getRawClient()
     if (!redis) {
-      // Redis not configured — accept silently
       return NextResponse.json({ ok: true })
     }
 
@@ -120,7 +112,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Set TTL on daily keys (idempotent — resets TTL each time, which is fine)
+    // Set TTL on daily keys
     pipeline.expire(`telemetry:events:${date}`, TTL_SECONDS)
     pipeline.expire(`telemetry:daily:${date}`, TTL_SECONDS)
 

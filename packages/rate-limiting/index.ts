@@ -8,15 +8,15 @@ let redisClient: Redis | null = null
 const getRedisClient = (): Redis => {
   if (!redisClient) {
     const config = keys()
-    if (!config.STORAGE_REDIS_URL || !config.STORAGE_KV_REST_API_TOKEN) {
+    if (!config.KV_REST_API_URL || !config.KV_REST_API_TOKEN) {
       throw new Error(
-        'Vercel Redis configuration is missing. Please set STORAGE_REDIS_URL and STORAGE_KV_REST_API_TOKEN environment variables.'
+        'Upstash Redis configuration is missing. Please set KV_REST_API_URL and KV_REST_API_TOKEN environment variables.'
       )
     }
 
     redisClient = new Redis({
-      url: config.STORAGE_REDIS_URL,
-      token: config.STORAGE_KV_REST_API_TOKEN
+      url: config.KV_REST_API_URL,
+      token: config.KV_REST_API_TOKEN
     })
   }
   return redisClient

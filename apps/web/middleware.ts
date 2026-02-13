@@ -10,6 +10,7 @@ const isPublicRoute = createRouteMatcher([
   '/',
   '/login(.*)',
   '/api/csrf(.*)', // CSRF token endpoint must be public
+  '/api/cli/(.*)', // CLI endpoints called by external tool (no browser auth)
   '/api/webhooks(.*)',
   '/api/websites(.*)',
   '/api/rss-feed(.*)',
@@ -410,6 +411,7 @@ export default clerkMiddleware(async (auth, req) => {
       !req.nextUrl.pathname.startsWith('/api/webhooks') &&
       !req.nextUrl.pathname.startsWith('/api/members') &&
       !req.nextUrl.pathname.startsWith('/api/auth') &&
+      !req.nextUrl.pathname.startsWith('/api/cli/') &&
       !['GET', 'HEAD', 'OPTIONS'].includes(req.method)
     ) {
       const isValidCSRF = await validateCSRFToken(req)
