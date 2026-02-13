@@ -1,6 +1,12 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import {
+  ensureUniversalAgents,
+  getInitialAgents,
+  loadSavedAgentPrefs,
+  saveAgentPrefs
+} from '../lib/agent-selection.js'
+import {
   type AgentConfig,
   agents as allAgentConfigs,
   detectInstalledAgents
@@ -52,13 +58,17 @@ export async function install({ names, options }: InstallInput): Promise<void> {
       p.log.message(pc.dim(`Installing to: ${display}`))
     }
   } else {
+    const savedPrefs = loadSavedAgentPrefs(projectDir)
+    const initialValues = getInitialAgents({ allAgents: allAgentConfigs, savedPrefs, projectDir })
+
     const selected = await p.multiselect({
       message: 'Which agents should receive the skills?',
       options: allAgentConfigs.map(a => ({
         value: a.name,
         label: a.displayName,
-        hint: a.isUniversal ? '.agents/skills/' : a.skillsDir
+        hint: a.isUniversal ? 'always included' : a.skillsDir
       })),
+      initialValues,
       required: true
     })
 
@@ -67,7 +77,10 @@ export async function install({ names, options }: InstallInput): Promise<void> {
       return
     }
 
-    const nameSet = new Set(selected)
+    const finalNames = ensureUniversalAgents({ selected, allAgents: allAgentConfigs })
+    saveAgentPrefs(projectDir, selected)
+
+    const nameSet = new Set(finalNames)
     targetAgents = allAgentConfigs.filter(a => nameSet.has(a.name))
   }
 
