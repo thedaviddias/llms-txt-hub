@@ -1,5 +1,17 @@
 # llmstxt-cli
 
+## 0.4.0
+
+### Minor Changes
+
+- [`8295ad4`](https://github.com/thedaviddias/llms-txt-hub/commit/8295ad4a5ed3a6e3f3eb75e21b5ca70fc81b8285) Thanks [@thedaviddias](https://github.com/thedaviddias)! - Add smart agent pre-selection, format choice, and remove auto-gitignore
+
+  - Agent multiselect now pre-selects based on: saved preferences > project directory detection (.cursor/, .claude/) > sensible defaults
+  - Universal agents (Amp, Codex, Gemini CLI, etc.) are always included
+  - Selection is persisted to `.llms/agent-prefs.json` for next run
+  - Init wizard now prompts for llms.txt vs llms-full.txt when available
+  - Removed automatic .gitignore modification (matching vercel-labs/skills behavior)
+
 ## 0.3.0
 
 ### Minor Changes
