@@ -83,7 +83,7 @@ export async function invalidateMembersCache(): Promise<void> {
 
 /**
  * Fetch all members from Clerk API with batched pagination.
- * Returns the processed member array or throws on failure.
+ * Returns processed members and gracefully degrades to an empty list on Clerk failures.
  */
 async function fetchMembersFromClerk(): Promise<Member[]> {
   const clerk = getClerk()
@@ -101,6 +101,7 @@ async function fetchMembersFromClerk(): Promise<Member[]> {
   let offset = 0
   const limit = 500
   let fetchError = false
+  let fetchFailureReason: 'unknown' | 'unauthorized' = 'unknown'
 
   while (true) {
     try {
@@ -129,6 +130,9 @@ async function fetchMembersFromClerk(): Promise<Member[]> {
       if (error && typeof error === 'object') {
         if ('status' in error) {
           errorInfo.status = (error as { status: unknown }).status
+          if ((error as { status: unknown }).status === 401) {
+            fetchFailureReason = 'unauthorized'
+          }
         }
         if ('errors' in error) {
           const errWithErrors = error as { errors: unknown }
@@ -154,7 +158,11 @@ async function fetchMembersFromClerk(): Promise<Member[]> {
   }
 
   if (allUsers.length === 0 && fetchError) {
-    throw new Error('Clerk API failed before fetching any members')
+    logger.warn('Clerk API unavailable, serving empty members list fallback', {
+      data: { reason: fetchFailureReason },
+      tags: { type: 'page', security: 'error' }
+    })
+    return []
   }
 
   return allUsers

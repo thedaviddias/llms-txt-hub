@@ -1,11 +1,10 @@
 import { defineConfig, devices } from '@playwright/test'
 
 const fallbackClerkPublishableKey = 'pk_test_Y2xlcmsuZXhhbXBsZS5jb20k'
-const fallbackClerkSecretKey = 'sk_test_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
 
 const clerkPublishableKey =
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.trim() || fallbackClerkPublishableKey
-const clerkSecretKey = process.env.CLERK_SECRET_KEY?.trim() || fallbackClerkSecretKey
+const clerkSecretKey = process.env.CLERK_SECRET_KEY?.trim() || ''
 
 /**
  * Optimized Playwright configuration for CI environments
@@ -86,8 +85,10 @@ export default defineConfig({
       NEXT_PUBLIC_SENTRY_DSN: '',
       SENTRY_AUTH_TOKEN: '',
       LOG_LEVEL: 'error',
-      // Prefer real CI secrets when available; fall back for fork/untrusted PR runs.
+      // Publishable key is required by Clerk React at build/render time, even in CI.
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: clerkPublishableKey,
+      // Keep secret key empty when unavailable to trigger server-side fallbacks
+      // instead of repeatedly hitting Clerk with an intentionally invalid key.
       CLERK_SECRET_KEY: clerkSecretKey
     }
   }
