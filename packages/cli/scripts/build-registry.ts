@@ -124,17 +124,6 @@ function buildRegistry(): void {
   process.stdout.write(
     `Built registry with ${filtered.length} entries (from ${entries.length} total) -> ${outputFile}\n`
   )
-
-  // Auto-generate package-mappings.json from registry slugs
-  const npmMap: Record<string, string> = {}
-  for (const entry of filtered) {
-    npmMap[entry.slug] = entry.slug
-  }
-  const mappingsFile = join(outputDir, 'package-mappings.json')
-  writeFileSync(mappingsFile, `${JSON.stringify({ version: 1, npm: npmMap }, null, 2)}\n`, 'utf-8')
-  process.stdout.write(
-    `Built package-mappings with ${Object.keys(npmMap).length} entries -> ${mappingsFile}\n`
-  )
 }
 
 buildRegistry()
