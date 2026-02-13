@@ -116,6 +116,12 @@ export function MobileDrawer({ isOpen, onClose, featuredCount }: MobileDrawerPro
                 Projects
               </Link>
               <Link
+                href={getRoute('docs.list')}
+                className="flex items-center gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
+              >
+                Docs
+              </Link>
+              <Link
                 href={getRoute('guides.list')}
                 className="flex items-center gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
               >
@@ -127,12 +133,12 @@ export function MobileDrawer({ isOpen, onClose, featuredCount }: MobileDrawerPro
               >
                 Members
               </Link>
-              <Link
+              {/* <Link
                 href={getRoute('news')}
                 className="flex items-center gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors"
               >
                 News
-              </Link>
+              </Link> */}
             </nav>
           </div>
 

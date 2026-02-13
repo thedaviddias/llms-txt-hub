@@ -1,6 +1,7 @@
 'use server'
 
-import { getWebsites } from '@/lib/content-loader'
+import { getGuides, getWebsites } from '@/lib/content-loader'
+import { getLatestMembers } from '@/lib/members'
 import { getFeaturedProjects, getRecentlyUpdatedProjects } from '@/lib/project-utils'
 
 /**
@@ -18,10 +19,15 @@ export async function getHomePageData() {
   // This reduces initial bundle size and data transfer from ~900 to 48 websites
   const initialProjects = allProjects.slice(0, 48)
 
+  const featuredGuides = await getGuides()
+  const latestMembers = await getLatestMembers({ limit: 6 })
+
   return {
     allProjects: initialProjects,
     featuredProjects,
     recentlyUpdatedProjects,
-    totalCount: allProjects.length // For pagination info
+    totalCount: allProjects.length,
+    featuredGuides,
+    latestMembers
   }
 }

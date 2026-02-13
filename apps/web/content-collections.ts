@@ -5,6 +5,7 @@ const websitesPath = '../../packages/content/data/websites'
 const guidesPath = '../../packages/content/data/guides'
 const resourcesPath = '../../packages/content/data/resources'
 const legalPath = '../../packages/content/data/legal'
+const docsPath = '../../packages/content/data/docs'
 
 const websites = defineCollection({
   name: 'Website',
@@ -102,6 +103,22 @@ const legal = defineCollection({
   })
 })
 
+const docs = defineCollection({
+  name: 'Doc',
+  directory: docsPath,
+  include: '**/*.mdx',
+  schema: z => ({
+    title: z.string(),
+    description: z.string(),
+    order: z.number(),
+    published: z.boolean().default(true)
+  }),
+  transform: document => ({
+    ...document,
+    slug: document._meta.path || document._meta.fileName.replace(/\.mdx$/, '')
+  })
+})
+
 export default defineConfig({
-  collections: [websites, guides, resources, legal]
+  collections: [websites, guides, resources, legal, docs]
 })

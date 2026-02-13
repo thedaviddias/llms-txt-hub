@@ -1,121 +1,30 @@
 import { logger } from '@thedaviddias/logging'
-import { getClerk, safeSerializeError } from './clerk'
-import { getUserContributions } from './github-contributions'
+import { getCachedMembers, type Member } from './member-server-utils'
 
-export interface Member {
-  id: string
-  firstName?: string | null
-  lastName?: string | null
-  username?: string | null
-  imageUrl?: string | null
-  createdAt: string
-  publicMetadata?: {
-    github_username?: string | null
-    migrated_from?: string | null
-  }
-  hasContributions?: boolean
-}
-
-/**
- * Check if user has shared information for public member visibility
- * @param user - User object to check
- * @returns True if user should be visible in member listings
- */
-function hasSharedInfo(user: any): boolean {
-  // Exclude users who explicitly set their profile to private
-  if (user.publicMetadata?.isProfilePrivate === true) {
-    return false
-  }
-
-  // Exclude users with "null" string values
-  if (user.firstName === 'null' || user.lastName === 'null') {
-    return false
-  }
-
-  // A user must have either a name OR a username to be visible
-  const hasName = !!(user.firstName && user.firstName !== '')
-  const hasUsername = !!(
-    user.username ||
-    user.user_metadata?.user_name ||
-    user.publicMetadata?.github_username ||
-    user.publicMetadata?.githubUsername
-  )
-
-  // Users need at least a name or username to appear in public listings
-  return hasName || hasUsername
-}
+// Re-export the Member type for consumers that import from here
+export type { Member }
 
 export interface GetLatestMembersInput {
   limit?: number
-  includeContributions?: boolean
 }
 
 /**
- * Get the latest members for homepage display
- * @param input - Configuration for fetching members
- * @param input.limit - Number of members to fetch (default: 6)
- * @param input.includeContributions - Whether to fetch GitHub contributions (default: false)
- * @returns Promise<Member[]>
+ * Get the latest members for homepage display.
+ * Reads from the two-tier cache (unstable_cache + Redis) instead of Clerk directly.
+ *
+ * @param input.limit - Number of members to return (default: 6)
  */
 export async function getLatestMembers({
-  limit = 6,
-  includeContributions = false
+  limit = 6
 }: GetLatestMembersInput = {}): Promise<Member[]> {
   try {
-    const clerk = getClerk()
+    const allMembers = await getCachedMembers()
 
-    // Return empty array if Clerk is not configured
-    if (!clerk) {
-      logger.warn('Clerk client not available, returning empty members list')
-      return []
-    }
-
-    // Fetch a reasonable number of recent users to filter from
-    const response = await clerk.users.getUserList({
-      limit: Math.min(limit * 3, 100), // Fetch more than needed to account for private profiles
-      offset: 0,
-      orderBy: '-created_at'
-    })
-
-    const validUsers = response.data.filter(hasSharedInfo)
-
-    // Take only the requested number of valid users and check contributions
-    const selectedUsers = validUsers.slice(0, limit)
-
-    const latestMembers = await Promise.all(
-      selectedUsers.map(async user => {
-        const username = user.username || user.publicMetadata?.github_username
-        let hasContributions = false
-
-        if (includeContributions && username && typeof username === 'string') {
-          try {
-            const contributions = await getUserContributions(username)
-            hasContributions = contributions.total > 0
-          } catch {
-            hasContributions = false
-          }
-        }
-
-        return {
-          id: user.id,
-          firstName: user.firstName || null,
-          lastName: user.lastName || null,
-          username: user.username || null,
-          imageUrl: user.imageUrl || null,
-          createdAt: user.createdAt.toString(),
-          publicMetadata: {
-            github_username: (user.publicMetadata?.github_username as string) || null,
-            migrated_from: (user.publicMetadata?.migrated_from as string) || null
-          },
-          hasContributions
-        }
-      })
-    )
-
-    return latestMembers
+    // Members are already sorted by -created_at from Clerk, so the first N are the latest
+    return allMembers.slice(0, limit)
   } catch (error) {
     logger.error('Error fetching latest members:', {
-      data: safeSerializeError(error),
+      data: error instanceof Error ? { message: error.message, name: error.name } : {},
       tags: { type: 'library' }
     })
     return []

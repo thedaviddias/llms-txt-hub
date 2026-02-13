@@ -3,6 +3,7 @@ let allGuides: any[] = []
 let allLegals: any[] = []
 let allResources: any[] = []
 let allWebsites: any[] = []
+let allDocs: any[] = []
 
 try {
   const collections = require('@/.content-collections/generated')
@@ -10,6 +11,7 @@ try {
   allLegals = collections.allLegals || []
   allResources = collections.allResources || []
   allWebsites = collections.allWebsites || []
+  allDocs = collections.allDocs || []
 } catch {
   // Fallback for CI/build environments where content-collections hasn't been generated yet
   // Only warn if not in test environment
@@ -22,6 +24,7 @@ const collectionGuides = allGuides
 const collectionLegals = allLegals
 const collectionResources = allResources
 const collectionWebsites = allWebsites
+const collectionDocs = allDocs
 
 // Define types compatible with content-collections schema
 interface Website {
@@ -68,6 +71,16 @@ interface Resource {
   category: string
   icon?: string
   featured?: boolean
+  content?: string
+  _meta?: ContentMeta
+}
+
+interface Doc {
+  slug: string
+  title: string
+  description: string
+  order: number
+  published: boolean
   content?: string
   _meta?: ContentMeta
 }
@@ -132,6 +145,15 @@ export interface GuideMetadata {
   _meta?: ContentMeta
 }
 
+export interface DocMetadata {
+  slug: string
+  title: string
+  description: string
+  order: number
+  published: boolean
+  content?: string
+}
+
 /**
  * Get all websites
  *
@@ -149,27 +171,18 @@ export function getWebsites(): WebsiteMetadata[] {
       return website
     }
 
-    // Otherwise, derive slug from _meta.path or _meta.fileName
-    let slug = ''
-    if (website._meta?.path) {
-      slug = website._meta.path
-    } else if (website._meta?.fileName) {
-      slug = website._meta.fileName.replace(/\.mdx$/, '')
-    }
+    // Derive slug from _meta.path, _meta.fileName, or name (in priority order)
+    const slug =
+      website._meta?.path ||
+      website._meta?.fileName?.replace(/\.mdx$/, '') ||
+      website.name
+        ?.toLowerCase()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/--+/g, '-') ||
+      ''
 
-    // If we still don't have a valid slug, create one from the name
-    if (!slug && website.name) {
-      slug = website.name
-        .toLowerCase()
-        .replace(/[^\w\s-]/g, '') // Remove non-word chars
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .replace(/--+/g, '-') // Replace multiple hyphens with single hyphen
-    }
-
-    return {
-      ...website,
-      slug
-    }
+    return { ...website, slug }
   })
 
   return websitesWithSlugs.sort((a: Website, b: Website) => {
@@ -201,8 +214,8 @@ export async function getWebsiteBySlug(slug: string) {
   const currentIndex = websites.findIndex((site: Website) => site.slug === slug)
 
   // Get previous and next websites
-  const previousWebsite = currentIndex > 0 ? websites[currentIndex - 1] : null
-  const nextWebsite = currentIndex < websites.length - 1 ? websites[currentIndex + 1] : null
+  const previousWebsite = websites[currentIndex - 1] || null
+  const nextWebsite = websites[currentIndex + 1] || null
 
   // Get related websites (same category, excluding current)
   const relatedWebsites = websites
@@ -333,6 +346,53 @@ export async function getResourceBySlug(slug: string) {
 
   return {
     ...resource,
+    content
+  }
+}
+
+/**
+ * Get all docs
+ *
+ * @returns Array of doc metadata sorted by order
+ */
+export function getDocs(): DocMetadata[] {
+  if (!collectionDocs || collectionDocs.length === 0) {
+    return []
+  }
+
+  return collectionDocs
+    .filter((doc: Doc) => doc.published)
+    .map((doc: Doc) => ({
+      slug: doc.slug || '',
+      title: doc.title || '',
+      description: doc.description || '',
+      order: doc.order ?? 0,
+      published: doc.published !== false
+    }))
+    .sort((a: DocMetadata, b: DocMetadata) => a.order - b.order)
+}
+
+/**
+ * Get a doc by slug
+ *
+ * @param slug - The doc slug
+ * @returns Doc with content, or null if not found
+ */
+export async function getDocBySlug(slug: string): Promise<DocMetadata | null> {
+  const doc = collectionDocs.find((doc: Doc) => doc.slug === slug && doc.published)
+
+  if (!doc) {
+    return null
+  }
+
+  const content = doc.content || doc._meta?.content || ''
+
+  return {
+    slug: doc.slug || slug,
+    title: doc.title || 'Untitled',
+    description: doc.description || '',
+    order: doc.order ?? 0,
+    published: doc.published !== false,
     content
   }
 }
