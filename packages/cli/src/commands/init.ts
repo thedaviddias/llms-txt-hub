@@ -85,7 +85,7 @@ export async function init(options: InitOptions): Promise<void> {
   }
 
   // Let user choose which agents to install to
-  const targetAgents = await pickAgents(agents)
+  const targetAgents = await pickAgents()
   if (!targetAgents) {
     p.cancel('Installation cancelled.')
     return
@@ -253,25 +253,18 @@ async function pickFromList(
 
 /**
  * Show a multiselect for choosing which agents to install to.
- * Shows ALL known agents, pre-selects detected ones.
+ * Shows ALL known agents with no pre-selection (detection is unreliable).
  * Returns the selected agents, or null if cancelled.
  */
-async function pickAgents(detectedAgents: AgentConfig[]): Promise<AgentConfig[] | null> {
-  const detectedNames = new Set(detectedAgents.map(a => a.name))
-
+async function pickAgents(): Promise<AgentConfig[] | null> {
   const selected = await p.multiselect({
     message: 'Which agents should receive the skills?',
     options: allAgentConfigs.map(a => ({
       value: a.name,
       label: a.displayName,
-      hint: detectedNames.has(a.name)
-        ? `${pc.green('detected')} · ${a.isUniversal ? '.agents/skills/' : a.skillsDir}`
-        : a.isUniversal
-          ? '.agents/skills/'
-          : a.skillsDir
+      hint: a.isUniversal ? '.agents/skills/' : a.skillsDir
     })),
-    initialValues: detectedAgents.map(a => a.name),
-    required: false
+    required: true
   })
 
   if (p.isCancel(selected)) return null
