@@ -2,32 +2,31 @@
 
 Install llms.txt documentation into your AI coding agents.
 
-> 900+ entries from the [llms-txt-hub](https://github.com/thedaviddias/llms-txt-hub) registry, delivered as agent skills for Claude Code, Cursor, Windsurf, Cline, OpenCode, Codex & more.
+> 650+ entries from the [llms-txt-hub](https://github.com/thedaviddias/llms-txt-hub) registry, delivered as agent skills for Claude Code, Cursor, Windsurf, Cline, Codex, Gemini CLI & 30+ more.
 
 ## Quick Start
 
 ```bash
-# Auto-detect your project's dependencies and install matching docs
+# Interactive wizard — browse, search, and install
 npx llmstxt-cli init
 
 # Install a specific skill
-npx llmstxt-cli install react
+npx llmstxt-cli install astro stripe
 ```
 
 ## How It Works
 
-1. Fetches `llms.txt` / `llms-full.txt` from the registry
+1. Fetches `llms.txt` or `llms-full.txt` from the registry
 2. Stores canonically in `.agents/skills/<slug>/SKILL.md`
-3. Creates symlinks for each detected agent (`.claude/skills/`, `.cursor/skills/`, etc.)
+3. Creates symlinks for each selected agent (`.claude/skills/`, `.cursor/skills/`, etc.)
 4. Updates `CLAUDE.md` with a managed reference section
-5. Adds `.gitignore` entries (installs are per-developer)
 
 ## Commands
 
 | Command | Description |
 |---|---|
-| `init` | Auto-detect dependencies and install matching docs |
-| `install <names...>` | Install by name (supports multiple) |
+| `init` | Interactive wizard to browse, search, and install skills |
+| `install <names...>` | Install by name (supports multiple, fuzzy matching) |
 | `search <query>` | Search the registry |
 | `list` (alias: `ls`) | Show installed entries |
 | `update [name]` | Re-fetch installed entries (or a specific one) |
@@ -39,36 +38,42 @@ npx llmstxt-cli install react
 ```bash
 # Prefer llms-full.txt when available
 npx llmstxt-cli init --full
-npx llmstxt-cli install react --full
+npx llmstxt-cli install astro --full
 
 # Preview without installing
 npx llmstxt-cli init --dry-run
 
 # Force re-download
-npx llmstxt-cli install react --force
+npx llmstxt-cli install astro --force
 npx llmstxt-cli update --force
 
 # Filter by category
-npx llmstxt-cli init --category frameworks,libraries
-npx llmstxt-cli search react --category frameworks
+npx llmstxt-cli init --category ai-ml,developer-tools
 ```
 
 ## Supported Agents
+
+Supports 35+ AI coding agents including:
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
 - [Cursor](https://cursor.sh)
 - [Windsurf](https://codeium.com/windsurf)
 - [Cline](https://github.com/cline/cline)
-- [OpenCode](https://opencode.ai)
 - [Codex](https://github.com/openai/codex)
+- [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+- [GitHub Copilot](https://github.com/features/copilot)
+- [Roo Code](https://github.com/RooVetGit/Roo-Code)
+- And many more (Amp, OpenCode, Kilo Code, Goose, Trae, etc.)
+
+The wizard remembers your agent selection for next time. Universal agents (Codex, Gemini CLI, GitHub Copilot, etc.) are always included automatically.
 
 ## Requirements
 
-- Node.js >= 22
+- Node.js >= 24
 
 ## Links
 
-- Website: [llmstxt.directory](https://llmstxt.directory)
+- Website: [llmstxthub.com](https://llmstxthub.com)
 - Registry: [github.com/thedaviddias/llms-txt-hub](https://github.com/thedaviddias/llms-txt-hub)
 - Issues: [github.com/thedaviddias/llms-txt-hub/issues](https://github.com/thedaviddias/llms-txt-hub/issues)
 
