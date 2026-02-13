@@ -23,9 +23,6 @@ jobs:
       - name: Build CLI
         run: pnpm --filter llmstxt-cli build
 
-      - name: Configure npm auth
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
       - name: Create Release PR or Publish
         uses: changesets/action@v1
         with:
@@ -34,4 +31,4 @@ jobs:
           commit: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"

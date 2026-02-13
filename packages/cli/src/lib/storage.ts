@@ -7,6 +7,7 @@ import {
   CANONICAL_DIR,
   createAgentSymlink,
   detectInstalledAgents,
+  getGitignoreEntries,
   removeAgentSkill,
   sanitizeSlug
 } from './agents.js'
@@ -186,14 +187,7 @@ export function isInstalled({ projectDir, slug }: IsInstalledInput): boolean {
 export function addToGitignore(projectDir: string): boolean {
   try {
     const gitignorePath = join(projectDir, '.gitignore')
-    const gitignoreEntries = [
-      '.llms/',
-      '.agents/skills/',
-      '.claude/skills/',
-      '.cursor/skills/',
-      '.windsurf/skills/',
-      '.cline/skills/'
-    ]
+    const gitignoreEntries = ['.llms/', ...getGitignoreEntries()]
 
     if (existsSync(gitignorePath)) {
       const content = readFileSync(gitignorePath, 'utf-8')

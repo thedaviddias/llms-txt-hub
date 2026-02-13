@@ -28,6 +28,9 @@ export interface AgentConfig {
 }
 
 const home = homedir()
+const configHome = process.env.XDG_CONFIG_HOME?.trim() || join(home, '.config')
+const codexHome = process.env.CODEX_HOME?.trim() || join(home, '.codex')
+const claudeHome = process.env.CLAUDE_CONFIG_DIR?.trim() || join(home, '.claude')
 
 export const CANONICAL_DIR = '.agents/skills'
 
@@ -59,11 +62,84 @@ export function assertPathContainment(fullPath: string, parentDir: string): void
 
 export const agents: AgentConfig[] = [
   {
+    name: 'adal',
+    displayName: 'AdaL',
+    skillsDir: '.adal/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.adal'))
+  },
+  {
+    name: 'amp',
+    displayName: 'Amp',
+    skillsDir: '.agents/skills',
+    isUniversal: true,
+    detectInstalled: () => existsSync(join(configHome, 'amp'))
+  },
+  {
+    name: 'antigravity',
+    displayName: 'Antigravity',
+    skillsDir: '.agent/skills',
+    isUniversal: false,
+    detectInstalled: () =>
+      existsSync(join(process.cwd(), '.agent')) || existsSync(join(home, '.gemini/antigravity'))
+  },
+  {
+    name: 'augment',
+    displayName: 'Augment',
+    skillsDir: '.augment/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.augment'))
+  },
+  {
     name: 'claude-code',
     displayName: 'Claude Code',
     skillsDir: '.claude/skills',
     isUniversal: false,
-    detectInstalled: () => existsSync(join(home, '.claude'))
+    detectInstalled: () => existsSync(claudeHome)
+  },
+  {
+    name: 'cline',
+    displayName: 'Cline',
+    skillsDir: '.cline/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.cline'))
+  },
+  {
+    name: 'codebuddy',
+    displayName: 'CodeBuddy',
+    skillsDir: '.codebuddy/skills',
+    isUniversal: false,
+    detectInstalled: () =>
+      existsSync(join(process.cwd(), '.codebuddy')) || existsSync(join(home, '.codebuddy'))
+  },
+  {
+    name: 'codex',
+    displayName: 'Codex',
+    skillsDir: '.agents/skills',
+    isUniversal: true,
+    detectInstalled: () => existsSync(codexHome) || existsSync('/etc/codex')
+  },
+  {
+    name: 'command-code',
+    displayName: 'Command Code',
+    skillsDir: '.commandcode/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.commandcode'))
+  },
+  {
+    name: 'continue',
+    displayName: 'Continue',
+    skillsDir: '.continue/skills',
+    isUniversal: false,
+    detectInstalled: () =>
+      existsSync(join(process.cwd(), '.continue')) || existsSync(join(home, '.continue'))
+  },
+  {
+    name: 'crush',
+    displayName: 'Crush',
+    skillsDir: '.crush/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(configHome, 'crush'))
   },
   {
     name: 'cursor',
@@ -73,33 +149,191 @@ export const agents: AgentConfig[] = [
     detectInstalled: () => existsSync(join(home, '.cursor'))
   },
   {
+    name: 'droid',
+    displayName: 'Droid',
+    skillsDir: '.factory/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.factory'))
+  },
+  {
+    name: 'gemini-cli',
+    displayName: 'Gemini CLI',
+    skillsDir: '.agents/skills',
+    isUniversal: true,
+    detectInstalled: () => existsSync(join(home, '.gemini'))
+  },
+  {
+    name: 'github-copilot',
+    displayName: 'GitHub Copilot',
+    skillsDir: '.agents/skills',
+    isUniversal: true,
+    detectInstalled: () =>
+      existsSync(join(process.cwd(), '.github')) || existsSync(join(home, '.copilot'))
+  },
+  {
+    name: 'goose',
+    displayName: 'Goose',
+    skillsDir: '.goose/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(configHome, 'goose'))
+  },
+  {
+    name: 'iflow-cli',
+    displayName: 'iFlow CLI',
+    skillsDir: '.iflow/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.iflow'))
+  },
+  {
+    name: 'junie',
+    displayName: 'Junie',
+    skillsDir: '.junie/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.junie'))
+  },
+  {
+    name: 'kilo',
+    displayName: 'Kilo Code',
+    skillsDir: '.kilocode/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.kilocode'))
+  },
+  {
+    name: 'kimi-cli',
+    displayName: 'Kimi Code CLI',
+    skillsDir: '.agents/skills',
+    isUniversal: true,
+    detectInstalled: () => existsSync(join(home, '.kimi'))
+  },
+  {
+    name: 'kiro-cli',
+    displayName: 'Kiro CLI',
+    skillsDir: '.kiro/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.kiro'))
+  },
+  {
+    name: 'kode',
+    displayName: 'Kode',
+    skillsDir: '.kode/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.kode'))
+  },
+  {
+    name: 'mcpjam',
+    displayName: 'MCPJam',
+    skillsDir: '.mcpjam/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.mcpjam'))
+  },
+  {
+    name: 'mistral-vibe',
+    displayName: 'Mistral Vibe',
+    skillsDir: '.vibe/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.vibe'))
+  },
+  {
+    name: 'mux',
+    displayName: 'Mux',
+    skillsDir: '.mux/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.mux'))
+  },
+  {
+    name: 'neovate',
+    displayName: 'Neovate',
+    skillsDir: '.neovate/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.neovate'))
+  },
+  {
+    name: 'openclaw',
+    displayName: 'OpenClaw',
+    skillsDir: 'skills',
+    isUniversal: false,
+    detectInstalled: () =>
+      existsSync(join(home, '.openclaw')) ||
+      existsSync(join(home, '.clawdbot')) ||
+      existsSync(join(home, '.moltbot'))
+  },
+  {
     name: 'opencode',
     displayName: 'OpenCode',
     skillsDir: '.agents/skills',
     isUniversal: true,
     detectInstalled: () =>
-      existsSync(join(home, '.config', 'opencode')) || existsSync(join(home, '.agents'))
+      existsSync(join(configHome, 'opencode')) || existsSync(join(claudeHome, 'skills'))
   },
   {
-    name: 'codex',
-    displayName: 'Codex',
-    skillsDir: '.agents/skills',
-    isUniversal: true,
-    detectInstalled: () => existsSync(join(home, '.codex'))
+    name: 'openhands',
+    displayName: 'OpenHands',
+    skillsDir: '.openhands/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.openhands'))
+  },
+  {
+    name: 'pi',
+    displayName: 'Pi',
+    skillsDir: '.pi/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.pi/agent'))
+  },
+  {
+    name: 'pochi',
+    displayName: 'Pochi',
+    skillsDir: '.pochi/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.pochi'))
+  },
+  {
+    name: 'qoder',
+    displayName: 'Qoder',
+    skillsDir: '.qoder/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.qoder'))
+  },
+  {
+    name: 'qwen-code',
+    displayName: 'Qwen Code',
+    skillsDir: '.qwen/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.qwen'))
+  },
+  {
+    name: 'roo',
+    displayName: 'Roo Code',
+    skillsDir: '.roo/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.roo'))
+  },
+  {
+    name: 'trae',
+    displayName: 'Trae',
+    skillsDir: '.trae/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.trae'))
+  },
+  {
+    name: 'trae-cn',
+    displayName: 'Trae CN',
+    skillsDir: '.trae/skills',
+    isUniversal: false,
+    detectInstalled: () => existsSync(join(home, '.trae-cn'))
   },
   {
     name: 'windsurf',
     displayName: 'Windsurf',
     skillsDir: '.windsurf/skills',
     isUniversal: false,
-    detectInstalled: () => existsSync(join(home, '.codeium', 'windsurf'))
+    detectInstalled: () => existsSync(join(home, '.codeium/windsurf'))
   },
   {
-    name: 'cline',
-    displayName: 'Cline',
-    skillsDir: '.cline/skills',
+    name: 'zencoder',
+    displayName: 'Zencoder',
+    skillsDir: '.zencoder/skills',
     isUniversal: false,
-    detectInstalled: () => existsSync(join(home, '.cline'))
+    detectInstalled: () => existsSync(join(home, '.zencoder'))
   }
 ]
 
@@ -186,4 +420,18 @@ export function removeAgentSkill({ projectDir, slug, agent }: RemoveAgentSkillIn
   } catch {
     // Path doesn't exist at all — nothing to remove
   }
+}
+
+/**
+ * Derive unique gitignore entries from all agent skillsDirs.
+ * Includes the canonical `.agents/skills/` plus each unique non-universal agent path.
+ */
+export function getGitignoreEntries(): string[] {
+  const dirs = new Set<string>([`${CANONICAL_DIR}/`])
+  for (const agent of agents) {
+    if (!agent.isUniversal) {
+      dirs.add(`${agent.skillsDir}/`)
+    }
+  }
+  return [...dirs].sort()
 }
