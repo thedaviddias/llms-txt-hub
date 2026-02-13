@@ -5,9 +5,9 @@ import { ProjectNavigation } from '@/components/project-navigation'
 import { ToolsSection } from '@/components/sections/tools-section'
 import { WebsiteContentSection } from '@/components/website/website-content-section'
 import { WebsiteDetailSidebar } from '@/components/website/website-detail-sidebar'
+import { WebsiteDocsSection } from '@/components/website/website-docs-section'
 import { WebsiteError } from '@/components/website/website-error'
 import { WebsiteHero } from '@/components/website/website-hero'
-import { WebsiteLLMsSection } from '@/components/website/website-llms-section'
 import { WebsiteRelatedProjects } from '@/components/website/website-related-projects'
 import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
@@ -131,8 +131,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
               {/* Main content column */}
               <div className="lg:col-span-8 space-y-14 md:space-y-16">
-                {/* LLMs.txt Files Section */}
-                <WebsiteLLMsSection website={project} />
+                {/* CLI Install + LLMs.txt Files */}
+                <WebsiteDocsSection website={project} />
 
                 {/* Content Section */}
                 <WebsiteContentSection website={project} />
