@@ -1,5 +1,15 @@
 [
   {
+    "name": "Absurdity Index",
+    "domain": "https://absurdityindex.org",
+    "description": "Satirical civic tech site that scores real congressional legislation on a 1-10 absurdity scale, tracking bills through Congress with humor and transparency.",
+    "llmsTxtUrl": "https://absurdityindex.org/llms.txt",
+    "llmsFullTxtUrl": "https://absurdityindex.org/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=absurdityindex.org&sz=128",
+    "publishedAt": "2025-04-18"
+  },
+  {
     "name": "AceEssay.ai",
     "domain": "https://aceessay.ai/",
     "description": "Ace Essay Humanize technology ensures AI-generated text remains undetectable by top detectors like Originality 3.0 and Turnitin.",
