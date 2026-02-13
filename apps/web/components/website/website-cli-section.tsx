@@ -52,9 +52,9 @@ export function WebsiteCliSection({ website }: WebsiteCliSectionProps) {
           >
             $
           </span>
-          <code className="flex-1 bg-transparent text-zinc-800 dark:text-zinc-100 font-mono text-sm truncate p-0 rounded-none">
+          <span className="flex-1 text-zinc-800 dark:text-zinc-100 font-mono text-sm truncate">
             npx llmstxt-cli install {cliSlug}
-          </code>
+          </span>
           <CopyButton text={`npx llmstxt-cli install ${cliSlug}`} variant="terminal" />
         </div>
       </div>
