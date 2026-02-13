@@ -7,9 +7,10 @@ import { detectFromPackageJson, filterMatchesByCategories } from '../lib/detecto
 import { fetchLlmsTxt } from '../lib/fetcher.js'
 import { addEntry } from '../lib/lockfile.js'
 import * as logger from '../lib/logger.js'
-import { loadRegistry } from '../lib/registry.js'
+import { getAllEntries, loadRegistry, searchRegistry } from '../lib/registry.js'
 import { addToGitignore, installToAgents, isInstalled } from '../lib/storage.js'
 import { track } from '../lib/telemetry.js'
+import type { RegistryEntry } from '../types/index.js'
 import { PRIMARY_CATEGORIES } from '../types/index.js'
 
 interface InitOptions {
@@ -21,7 +22,7 @@ interface InitOptions {
 }
 
 /**
- * Auto-detect project dependencies and install matching llms.txt skills.
+ * Interactive wizard to browse, search, and install llms.txt skills.
  */
 export async function init(options: InitOptions): Promise<void> {
   const projectDir = process.cwd()
@@ -51,19 +52,7 @@ export async function init(options: InitOptions): Promise<void> {
     p.log.warn('No AI coding tools detected — files will be installed to .agents/skills/ only')
   }
 
-  // Detect dependencies
-  const spin2 = logger.spinner('Detecting project dependencies...')
-  spin2.start()
-  let matches = detectFromPackageJson(projectDir)
-
-  if (matches.length === 0) {
-    spin2.info('No matching llms.txt entries found for your dependencies')
-    p.log.message(pc.dim('Try `llmstxt search <query>` to find entries manually'))
-    p.outro('No skills to install.')
-    return
-  }
-
-  // Apply category filter
+  // Determine active categories
   let activeCategories: string[]
   if (options.allCategories) {
     activeCategories = []
@@ -73,120 +62,227 @@ export async function init(options: InitOptions): Promise<void> {
     activeCategories = [...PRIMARY_CATEGORIES]
   }
 
+  // Detect dependency matches for pre-suggestions
+  let depMatches = detectFromPackageJson(projectDir)
   if (activeCategories.length > 0) {
-    matches = filterMatchesByCategories(matches, activeCategories)
+    depMatches = filterMatchesByCategories(depMatches, activeCategories)
+  }
+  const depSlugs = new Set(depMatches.map(m => m.slug))
+
+  if (depMatches.length > 0) {
+    p.log.info(
+      `Found ${depMatches.length} matching your dependencies: ${depMatches.map(m => pc.cyan(m.registryEntry.name)).join(', ')}`
+    )
   }
 
-  if (matches.length === 0) {
-    spin2.info('No matching entries in selected categories')
-    p.log.message(pc.dim('Try `llmstxt init --all-categories` to include all categories'))
-    p.outro('No skills to install.')
+  if (!isInteractive) {
+    // Non-interactive: install dep matches only
+    return installEntries({
+      projectDir,
+      entries: depMatches.map(m => m.registryEntry),
+      options,
+      agents
+    })
+  }
+
+  // Interactive: let user choose how to find entries
+  const selectedEntries: RegistryEntry[] = []
+
+  // Main selection loop
+  let keepBrowsing = true
+  while (keepBrowsing) {
+    const action = await p.select({
+      message:
+        selectedEntries.length === 0
+          ? 'How would you like to find llms.txt documentation?'
+          : `${selectedEntries.length} selected. Add more or install?`,
+      options: [
+        ...(depMatches.length > 0 && selectedEntries.length === 0
+          ? [
+              {
+                value: 'suggestions',
+                label: `Suggested from dependencies (${depMatches.length} found)`,
+                hint: depMatches.map(m => m.registryEntry.name).join(', ')
+              }
+            ]
+          : []),
+        { value: 'browse', label: 'Browse by category' },
+        { value: 'search', label: 'Search by name' },
+        ...(selectedEntries.length > 0
+          ? [{ value: 'install', label: `Install ${selectedEntries.length} selected` }]
+          : []),
+        { value: 'done', label: selectedEntries.length > 0 ? 'Cancel' : 'Exit' }
+      ]
+    })
+
+    if (p.isCancel(action) || action === 'done') {
+      if (selectedEntries.length > 0) {
+        p.cancel('Installation cancelled.')
+      } else {
+        p.outro('No skills selected.')
+      }
+      return
+    }
+
+    if (action === 'install') {
+      break
+    }
+
+    if (action === 'suggestions') {
+      const picked = await pickFromList(
+        depMatches.map(m => m.registryEntry),
+        projectDir,
+        depSlugs
+      )
+      for (const entry of picked) {
+        if (!selectedEntries.some(e => e.slug === entry.slug)) {
+          selectedEntries.push(entry)
+        }
+      }
+      continue
+    }
+
+    if (action === 'browse') {
+      // Pick a category first
+      const allEntries = getAllEntries()
+      const categoryMap = new Map<string, number>()
+      for (const entry of allEntries) {
+        categoryMap.set(entry.category, (categoryMap.get(entry.category) || 0) + 1)
+      }
+
+      const categoryChoice = await p.select({
+        message: 'Select a category:',
+        options: [...categoryMap.entries()]
+          .sort((a, b) => b[1] - a[1])
+          .map(([cat, count]) => ({
+            value: cat,
+            label: cat,
+            hint: `${count} entries`
+          }))
+      })
+
+      if (p.isCancel(categoryChoice)) continue
+
+      const categoryEntries = allEntries.filter(e => e.category === categoryChoice)
+      const picked = await pickFromList(categoryEntries, projectDir, depSlugs)
+      for (const entry of picked) {
+        if (!selectedEntries.some(e => e.slug === entry.slug)) {
+          selectedEntries.push(entry)
+        }
+      }
+      continue
+    }
+
+    if (action === 'search') {
+      const query = await p.text({
+        message: 'Search for:',
+        placeholder: 'e.g. react, stripe, prisma...'
+      })
+
+      if (p.isCancel(query) || !query) continue
+
+      const results = searchRegistry(query).slice(0, 20)
+      if (results.length === 0) {
+        p.log.warn(`No results for "${query}"`)
+        continue
+      }
+
+      const picked = await pickFromList(results, projectDir, depSlugs)
+      for (const entry of picked) {
+        if (!selectedEntries.some(e => e.slug === entry.slug)) {
+          selectedEntries.push(entry)
+        }
+      }
+    }
+  }
+
+  if (selectedEntries.length === 0) {
+    p.outro('No skills selected.')
     return
   }
 
-  spin2.succeed(`Found ${matches.length} matching entries`)
+  return installEntries({ projectDir, entries: selectedEntries, options, agents })
+}
 
+/**
+ * Show a multiselect list and return chosen entries.
+ */
+async function pickFromList(
+  entries: RegistryEntry[],
+  projectDir: string,
+  depSlugs: Set<string>
+): Promise<RegistryEntry[]> {
+  const optionsList = entries.map(entry => {
+    const already = isInstalled({ projectDir, slug: entry.slug })
+    const isDep = depSlugs.has(entry.slug)
+    const hints: string[] = []
+    if (already) hints.push('installed')
+    if (isDep) hints.push('in your deps')
+    hints.push(entry.category)
+
+    return {
+      value: entry.slug,
+      label: entry.name,
+      hint: hints.join(' · ')
+    }
+  })
+
+  const selected = await p.multiselect({
+    message: `Select entries (${entries.length} available):`,
+    options: optionsList,
+    required: false
+  })
+
+  if (p.isCancel(selected)) return []
+
+  const slugSet = new Set(selected)
+  return entries.filter(e => slugSet.has(e.slug))
+}
+
+interface InstallEntriesInput {
+  projectDir: string
+  entries: RegistryEntry[]
+  options: InitOptions
+  agents: ReturnType<typeof detectInstalledAgents>
+}
+
+/**
+ * Install the selected entries.
+ */
+async function installEntries({
+  projectDir,
+  entries,
+  options,
+  agents
+}: InstallEntriesInput): Promise<void> {
   if (options.dryRun) {
-    // Show what would be installed
-    for (const match of matches) {
-      const already = isInstalled({ projectDir, slug: match.slug })
+    for (const entry of entries) {
+      const already = isInstalled({ projectDir, slug: entry.slug })
       const status = already ? pc.dim(' (already installed)') : ''
-      p.log.message(`  ${pc.cyan(match.registryEntry.name)}${status}`)
+      p.log.message(`  ${pc.cyan(entry.name)}${status}`)
     }
     p.outro('Dry run — no files were written')
     return
   }
 
-  // Interactive skill selection
-  let selectedSlugs: Set<string>
-
-  if (isInteractive) {
-    // Group by category for display
-    const byCategory = new Map<string, typeof matches>()
-    for (const match of matches) {
-      const cat = match.registryEntry.category
-      const group = byCategory.get(cat) || []
-      group.push(match)
-      byCategory.set(cat, group)
-    }
-
-    const options_list: { value: string; label: string; hint?: string }[] = []
-    for (const [category, group] of byCategory) {
-      for (const match of group) {
-        const already = isInstalled({ projectDir, slug: match.slug })
-        options_list.push({
-          value: match.slug,
-          label: match.registryEntry.name,
-          hint: already
-            ? 'already installed'
-            : `${category} · matched: ${match.matchedPackages.join(', ')}`
-        })
-      }
-    }
-
-    const selected = await p.multiselect({
-      message: 'Select skills to install:',
-      options: options_list,
-      required: false
-    })
-
-    if (p.isCancel(selected)) {
-      p.cancel('Installation cancelled.')
-      process.exitCode = 0
-      return
-    }
-
-    selectedSlugs = new Set(selected as string[])
-
-    if (selectedSlugs.size === 0) {
-      p.outro('No skills selected.')
-      return
-    }
-
-    const shouldContinue = await p.confirm({
-      message: `Install ${selectedSlugs.size} skill(s)?`
-    })
-
-    if (p.isCancel(shouldContinue) || !shouldContinue) {
-      p.cancel('Installation cancelled.')
-      process.exitCode = 0
-      return
-    }
-  } else {
-    // Non-interactive: install all non-installed matches
-    selectedSlugs = new Set(
-      matches.filter(m => !isInstalled({ projectDir, slug: m.slug })).map(m => m.slug)
-    )
-    if (!process.stdin.isTTY) {
-      p.log.message(pc.dim('Non-interactive mode. Use -y to skip prompts.'))
-    }
-  }
-
-  // Install selected skills
   const format = options.full ? 'llms-full.txt' : ('llms.txt' as const)
-
   let installed = 0
   let skipped = 0
   let failed = 0
   const installedSlugs: string[] = []
 
-  for (const match of matches) {
-    if (!selectedSlugs.has(match.slug)) {
-      continue
-    }
-
-    const entry = match.registryEntry
+  for (const entry of entries) {
     const actualFormat: 'llms.txt' | 'llms-full.txt' =
       format === 'llms-full.txt' && entry.llmsFullTxtUrl ? 'llms-full.txt' : 'llms.txt'
     const url = actualFormat === 'llms-full.txt' ? entry.llmsFullTxtUrl! : entry.llmsTxtUrl
 
-    if (isInstalled({ projectDir, slug: match.slug })) {
+    if (isInstalled({ projectDir, slug: entry.slug })) {
       skipped++
       continue
     }
 
-    const spin3 = logger.spinner(`Fetching ${entry.name}...`)
-    spin3.start()
+    const spin = logger.spinner(`Fetching ${entry.name}...`)
+    spin.start()
 
     try {
       const result = await fetchLlmsTxt({ url })
@@ -196,7 +292,7 @@ export async function init(options: InitOptions): Promise<void> {
         agents: installedTo
       } = installToAgents({
         projectDir,
-        slug: match.slug,
+        slug: entry.slug,
         entry,
         content: result.content,
         format: actualFormat
@@ -204,7 +300,7 @@ export async function init(options: InitOptions): Promise<void> {
       addEntry({
         projectDir,
         entry: {
-          slug: match.slug,
+          slug: entry.slug,
           format: actualFormat,
           sourceUrl: url,
           etag: result.etag,
@@ -215,12 +311,12 @@ export async function init(options: InitOptions): Promise<void> {
           name: entry.name
         }
       })
-      spin3.succeed(`${entry.name} ${pc.dim(`→ ${installedTo.join(', ')}`)}`)
+      spin.succeed(`${entry.name} ${pc.dim(`→ ${installedTo.join(', ')}`)}`)
       installed++
-      installedSlugs.push(match.slug)
+      installedSlugs.push(entry.slug)
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err)
-      spin3.fail(`${entry.name}: ${msg}`)
+      spin.fail(`${entry.name}: ${msg}`)
       failed++
     }
   }
@@ -236,7 +332,7 @@ export async function init(options: InitOptions): Promise<void> {
   }
 
   if (addToGitignore(projectDir)) {
-    p.log.success('Added .llms/ and .agents/skills/ to .gitignore')
+    p.log.success('Added skill directories to .gitignore')
   }
 
   if (installed > 0) {
