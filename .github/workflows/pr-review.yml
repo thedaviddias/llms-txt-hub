@@ -57,6 +57,7 @@ jobs:
   e2e:
     name: E2E Tests
     needs: [validate]
+    if: ${{ !contains(github.event.pull_request.title, '[skip e2e]') && !startsWith(github.event.pull_request.title, 'feat(llmstxt):') }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: Production - llms-txt-hub

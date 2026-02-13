@@ -18,6 +18,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/fetch-metadata(.*)',
   '/api/debug/content-paths(.*)',
   '/api/members(.*)',
+  '/proxy/api/event(.*)', // Plausible proxy endpoint
   '/search(.*)',
   '/websites(.*)',
   '/projects(.*)',
@@ -310,6 +311,7 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     pathname.startsWith('/sitemap') ||
     // Plausible Analytics proxy endpoints
     pathname === '/api/event' ||
+    pathname.startsWith('/proxy/api/event') ||
     pathname.startsWith('/js/script') ||
     // Regular page loads (non-API routes) - exclude search route
     (!pathname.startsWith('/api/') && req.method === 'GET' && pathname !== '/search')
@@ -378,6 +380,7 @@ export default clerkMiddleware(async (auth, req) => {
   if (
     !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
     !pathname.startsWith('/api/') &&
+    !pathname.startsWith('/proxy/api/') &&
     !pathname.startsWith('/_next/')
   ) {
     return new Response(null, {

@@ -55,7 +55,7 @@ export function validateEnvironmentVariables(): void {
   // In CI/test environments, allow missing Clerk credentials with a warning
   const isCI = process.env.CI === 'true' || process.env.NODE_ENV === 'test'
   const isProductionBuild = process.env.NODE_ENV === 'production' && process.env.CI === 'true'
-  
+
   if (missing.length > 0) {
     if (isCI || isProductionBuild) {
       console.warn(

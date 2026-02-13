@@ -69,9 +69,9 @@ test.describe('Basic Page Load Tests', () => {
       waitUntil: 'domcontentloaded'
     })
 
-    // In dev mode, Next.js might return 200 with 404 page content
+    // In dev mode/middleware, this can render 404 UI, return 200, or redirect to login.
     const status = response?.status()
-    expect(status === 404 || status === 200).toBeTruthy()
+    expect([200, 301, 302, 307, 308, 404]).toContain(status)
 
     // When status is 200, verify the 404 UI is actually shown
     if (status === 200) {
@@ -79,9 +79,15 @@ test.describe('Basic Page Load Tests', () => {
       const has404Text = await page.locator('text=/404/').first().isVisible()
       const hasNotFoundHeading = await page.locator('h1:has-text("Page Not Found")').isVisible()
       const hasNotFoundClass = await page.locator('.not-found').isVisible()
+      const isLoginPage = /\/login/.test(page.url())
+      const hasSignInHeading = await page
+        .locator('h1:has-text("Sign in to llms.txt hub")')
+        .isVisible()
 
-      // At least one of these 404 indicators must be present
-      expect(has404Text || hasNotFoundHeading || hasNotFoundClass).toBeTruthy()
+      // At least one expected fallback state must be present
+      expect(
+        has404Text || hasNotFoundHeading || hasNotFoundClass || isLoginPage || hasSignInHeading
+      ).toBeTruthy()
     }
   })
 })

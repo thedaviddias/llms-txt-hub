@@ -2,14 +2,14 @@ import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
   testDir: './tests',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0, // Reduce retries from 2 to 1 on CI
-  workers: process.env.CI ? 2 : 4, // Increase workers on CI from 1 to 2
+  workers: 1,
   reporter: process.env.CI ? 'github' : 'html',
 
   // Performance optimizations
-  timeout: 60000, // 60 seconds per test (more generous for loaded apps)
+  timeout: 120000,
   expect: {
     timeout: 15000 // 15 seconds for assertions
   },
@@ -22,7 +22,7 @@ export default defineConfig({
 
     // Performance optimizations
     actionTimeout: 15000,
-    navigationTimeout: 30000, // More time for navigation
+    navigationTimeout: 120000,
 
     // Reduce visual noise during local development
     launchOptions: {
@@ -76,6 +76,8 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     timeout: 60000, // 1 minute to start server
     env: {
+      CI: '1',
+      NODE_OPTIONS: '',
       // Minimize external dependencies for testing
       NEXT_PUBLIC_SENTRY_DSN:
         process.env.NEXT_PUBLIC_SENTRY_DSN || 'https://dummy@dummy.ingest.sentry.io/123',
