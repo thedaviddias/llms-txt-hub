@@ -1,6 +1,12 @@
 import * as p from '@clack/prompts'
 import pc from 'picocolors'
 import {
+  ensureUniversalAgents,
+  getInitialAgents,
+  loadSavedAgentPrefs,
+  saveAgentPrefs
+} from '../lib/agent-selection.js'
+import {
   type AgentConfig,
   agents as allAgentConfigs,
   detectInstalledAgents
@@ -85,13 +91,26 @@ export async function init(options: InitOptions): Promise<void> {
   }
 
   // Let user choose which agents to install to
-  const targetAgents = await pickAgents()
+  const targetAgents = await pickAgents(projectDir)
   if (!targetAgents) {
     p.cancel('Installation cancelled.')
     return
   }
 
-  return installEntries({ projectDir, entries: selectedEntries, options, agents, targetAgents })
+  // Let user choose format if any entries have llms-full.txt
+  const format = await pickFormat(selectedEntries, options)
+  if (!format) {
+    p.cancel('Installation cancelled.')
+    return
+  }
+
+  return installEntries({
+    projectDir,
+    entries: selectedEntries,
+    options: { ...options, full: format === 'llms-full.txt' },
+    agents,
+    targetAgents
+  })
 }
 
 interface BrowseContext {
@@ -252,24 +271,70 @@ async function pickFromList(
 }
 
 /**
- * Show a multiselect for choosing which agents to install to.
- * Shows ALL known agents with no pre-selection (detection is unreliable).
- * Returns the selected agents, or null if cancelled.
+ * Ask user which format to install.
+ * Only shows the prompt if at least one selected entry has llms-full.txt available.
+ * If --full was already passed via CLI, skips the prompt.
+ * Returns the chosen format, or null if cancelled.
  */
-async function pickAgents(): Promise<AgentConfig[] | null> {
+async function pickFormat(
+  entries: RegistryEntry[],
+  options: InitOptions
+): Promise<'llms.txt' | 'llms-full.txt' | null> {
+  // If --full flag was explicitly passed, honor it
+  if (options.full) return 'llms-full.txt'
+
+  const hasFullAvailable = entries.some(e => e.llmsFullTxtUrl)
+  if (!hasFullAvailable) return 'llms.txt'
+
+  const fullCount = entries.filter(e => e.llmsFullTxtUrl).length
+
+  const choice = await p.select({
+    message: 'Which documentation format?',
+    options: [
+      {
+        value: 'llms.txt' as const,
+        label: 'llms.txt',
+        hint: 'concise — smaller, faster to load'
+      },
+      {
+        value: 'llms-full.txt' as const,
+        label: 'llms-full.txt',
+        hint: `comprehensive — ${fullCount}/${entries.length} selected have full version`
+      }
+    ]
+  })
+
+  if (p.isCancel(choice)) return null
+  return choice
+}
+
+/**
+ * Show a multiselect for choosing which agents to install to.
+ * Pre-selects from saved preferences (or sensible defaults).
+ * Universal agents are always included in the final result.
+ * Saves selection for next run.
+ */
+async function pickAgents(projectDir: string): Promise<AgentConfig[] | null> {
+  const savedPrefs = loadSavedAgentPrefs(projectDir)
+  const initialValues = getInitialAgents({ allAgents: allAgentConfigs, savedPrefs, projectDir })
+
   const selected = await p.multiselect({
     message: 'Which agents should receive the skills?',
     options: allAgentConfigs.map(a => ({
       value: a.name,
       label: a.displayName,
-      hint: a.isUniversal ? '.agents/skills/' : a.skillsDir
+      hint: a.isUniversal ? 'always included' : a.skillsDir
     })),
+    initialValues,
     required: true
   })
 
   if (p.isCancel(selected)) return null
 
-  const nameSet = new Set(selected)
+  const finalNames = ensureUniversalAgents({ selected, allAgents: allAgentConfigs })
+  saveAgentPrefs(projectDir, selected)
+
+  const nameSet = new Set(finalNames)
   return allAgentConfigs.filter(a => nameSet.has(a.name))
 }
 
