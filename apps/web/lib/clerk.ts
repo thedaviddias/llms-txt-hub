@@ -4,6 +4,11 @@ import { createClerkClient } from '@clerk/backend'
 let clerkClient: ClerkClient | null = null
 let isInitialized = false
 
+// Playwright CI fallback secret from apps/e2e/playwright.config.ci.ts.
+// Treat it as "no real Clerk secret configured" to avoid external API calls in CI.
+const PLAYWRIGHT_CI_FALLBACK_SECRET_KEY =
+  'sk_test_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+
 /**
  * Get a shared, lazily-initialized Clerk client instance
  * @returns The cached Clerk client or null if CLERK_SECRET_KEY is not configured
@@ -20,7 +25,7 @@ export function getClerk(): ClerkClient | null {
   // Check if the secret key is available
   const secretKey = process.env.CLERK_SECRET_KEY
 
-  if (!secretKey) {
+  if (!secretKey || secretKey === PLAYWRIGHT_CI_FALLBACK_SECRET_KEY) {
     // Return null if no secret key is configured (e.g., in development without auth)
     return null
   }
