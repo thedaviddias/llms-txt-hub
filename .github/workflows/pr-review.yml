@@ -12,12 +12,19 @@ jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Debug - Print cache info
+        run: |
+          echo "pnpm store path: $(pnpm store path)"
+          echo "pnpm store status:"
+          pnpm store status || true
 
       - name: Check Frontmatter
         run: pnpm check:frontmatter
@@ -50,7 +57,10 @@ jobs:
   e2e:
     name: E2E Tests
     needs: [validate]
+    if: ${{ !contains(github.event.pull_request.title, '[skip e2e]') && !startsWith(github.event.pull_request.title, 'feat(llmstxt):') }}
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: Production - llms-txt-hub
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -62,7 +72,10 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: pnpm test:e2e
+        run: pnpm test:e2e:ci
+        env:
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
 
       - name: Upload test results
         if: always()
@@ -71,3 +84,13 @@ jobs:
           name: playwright-report
           path: apps/e2e/playwright-report/
           retention-days: 30
+
+      - name: Upload Playwright traces (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v6
+        with:
+          name: playwright-traces
+          path: |
+            apps/e2e/test-results/**/*.zip
+            apps/e2e/test-results/**/*.webm
+          retention-days: 7
