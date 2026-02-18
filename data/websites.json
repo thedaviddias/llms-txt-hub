@@ -2395,6 +2395,16 @@
     "publishedAt": "2025-05-19"
   },
   {
+    "name": "Stagetimer",
+    "domain": "https://stagetimer.io",
+    "description": "Cloud-based, remote-controlled countdown timer for live events, presentations, broadcasts, and video productions. Control timers from one device while presenters see a fullscreen countdown on another.",
+    "llmsTxtUrl": "https://stagetimer.io/llms.txt",
+    "llmsFullTxtUrl": "https://stagetimer.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=stagetimer.io&sz=128",
+    "publishedAt": "2026-02-18"
+  },
+  {
     "name": "Statusfield",
     "domain": "https://statusfield.com",
     "description": "Real-time alerts for outages in the cloud services you rely on.",
