@@ -1,0 +1,7 @@
+Site: https://didireply.app
+Description: Did I Reply? is a Gmail Chrome extension that helps users track follow-ups, set reminders, and save reusable email templates. It works inside Gmail to improve workflow and ensure timely responses.
+Owner: Did I Reply
+Contact: hh2347667@gmail.com
+
+User-agent: *
+Allow: /
