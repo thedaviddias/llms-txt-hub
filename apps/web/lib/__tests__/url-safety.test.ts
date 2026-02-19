@@ -58,4 +58,32 @@ describe('validatePublicHttpUrl', () => {
       }
     }
   })
+
+  it('rejects hex-form IPv4-mapped IPv6 loopback addresses', () => {
+    const blocked = [
+      'http://[::ffff:7f00:1]', // 127.0.0.1
+      'http://[::ffff:a00:1]', // 10.0.0.1
+      'http://[::ffff:c0a8:1]', // 192.168.0.1
+      'http://[::ffff:ac10:fe01]' // 172.16.254.1
+    ]
+
+    for (const candidate of blocked) {
+      const result = validatePublicHttpUrl(candidate)
+      expect(result.ok).toBe(false)
+      if (!result.ok) {
+        expect(result.error).toBe('URL points to a restricted network address')
+      }
+    }
+  })
+
+  it('accepts hex-form IPv4-mapped IPv6 public addresses', () => {
+    const allowed = [
+      'http://[::ffff:0808:0808]' // 8.8.8.8
+    ]
+
+    for (const candidate of allowed) {
+      const result = validatePublicHttpUrl(candidate)
+      expect(result.ok).toBe(true)
+    }
+  })
 })

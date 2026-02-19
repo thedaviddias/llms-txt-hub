@@ -55,6 +55,7 @@ function isPrivateIPv4(ip: string): boolean {
 
 /**
  * Identify private/local IPv6 ranges and IPv4-mapped private addresses.
+ * Handles both dotted-decimal (::ffff:127.0.0.1) and hex (::ffff:7f00:1) forms.
  */
 function isPrivateIPv6(ip: string): boolean {
   const value = ip.toLowerCase()
@@ -63,10 +64,28 @@ function isPrivateIPv6(ip: string): boolean {
   if (value.startsWith('fc') || value.startsWith('fd')) return true
   if (/^fe[89ab]/.test(value)) return true
 
-  // Handle IPv4-mapped addresses (e.g. ::ffff:127.0.0.1)
+  // Handle IPv4-mapped addresses (e.g. ::ffff:127.0.0.1 or ::ffff:7f00:1)
   if (value.startsWith('::ffff:')) {
     const mapped = value.slice('::ffff:'.length)
-    return isPrivateIPv4(mapped)
+
+    // Dotted-decimal form: ::ffff:127.0.0.1
+    if (mapped.includes('.')) {
+      return isPrivateIPv4(mapped)
+    }
+
+    // Hex form: ::ffff:7f00:1 → two 16-bit groups encoding the IPv4 address
+    const hexParts = mapped.split(':')
+    if (hexParts.length === 2) {
+      const hi = Number.parseInt(hexParts[0], 16)
+      const lo = Number.parseInt(hexParts[1], 16)
+      if (!Number.isNaN(hi) && !Number.isNaN(lo) && hi <= 0xffff && lo <= 0xffff) {
+        const a = (hi >> 8) & 0xff
+        const b = hi & 0xff
+        const c = (lo >> 8) & 0xff
+        const d = lo & 0xff
+        return isPrivateIPv4(`${a}.${b}.${c}.${d}`)
+      }
+    }
   }
 
   return false
