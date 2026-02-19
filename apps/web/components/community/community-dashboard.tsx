@@ -40,35 +40,39 @@ export function CommunityDashboard() {
 
   // Fetch community stats
   useEffect(() => {
-    fetch('/api/stats/community')
+    const controller = new AbortController()
+    fetch('/api/stats/community', { signal: controller.signal })
       .then(res => res.json())
       .then(setCommunityStats)
       .catch(err => {
+        if (err instanceof DOMException && err.name === 'AbortError') return
         logger.error(err instanceof Error ? err : new Error(String(err)), {
           data: err,
           tags: { type: 'component', component: 'community-dashboard' }
         })
       })
+    return () => controller.abort()
   }, [])
 
-  // Fetch user stats if authenticated
+  // Derive user stats: fetch from API if authenticated, otherwise compute from favorites
   useEffect(() => {
-    if (user) {
-      fetch('/api/user/stats')
-        .then(res => res.json())
-        .then(setUserStats)
-        .catch(err => {
-          logger.error(err instanceof Error ? err : new Error(String(err)), {
-            data: err,
-            tags: { type: 'component', component: 'community-dashboard' }
-          })
-        })
-    } else {
-      // Mock stats for anonymous users
-      setUserStats({
-        favoritesCount: favorites.length
-      })
+    if (!user) {
+      setUserStats({ favoritesCount: favorites.length })
+      return
     }
+
+    const controller = new AbortController()
+    fetch('/api/user/stats', { signal: controller.signal })
+      .then(res => res.json())
+      .then(setUserStats)
+      .catch(err => {
+        if (err instanceof DOMException && err.name === 'AbortError') return
+        logger.error(err instanceof Error ? err : new Error(String(err)), {
+          data: err,
+          tags: { type: 'component', component: 'community-dashboard' }
+        })
+      })
+    return () => controller.abort()
   }, [user, favorites.length])
 
   const hasGitHubAuth =

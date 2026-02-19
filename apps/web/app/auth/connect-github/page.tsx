@@ -10,8 +10,11 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { Card } from '@/components/ui/card'
 
+/**
+ * Page for connecting a GitHub account to the user's profile
+ */
 export default function ConnectGitHubPage() {
-  const { user } = useAuth()
+  const { user, isLoaded } = useAuth()
   const router = useRouter()
   const [isConnecting, setIsConnecting] = useState(false)
 
@@ -19,6 +22,8 @@ export default function ConnectGitHubPage() {
   const hasGitHubAuth = user?.externalAccounts?.some(account => account.provider === 'oauth_github')
 
   useEffect(() => {
+    if (!isLoaded) return
+
     // If user doesn't exist, redirect to login
     if (!user) {
       router.push('/login?redirect=/auth/connect-github')
@@ -30,7 +35,7 @@ export default function ConnectGitHubPage() {
       router.push('/profile?message=GitHub account already connected')
       return
     }
-  }, [user, hasGitHubAuth, router])
+  }, [isLoaded, user, hasGitHubAuth, router])
 
   /**
    * Initiates the GitHub account connection flow

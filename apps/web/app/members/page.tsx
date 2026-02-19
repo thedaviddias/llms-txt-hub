@@ -1,6 +1,7 @@
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Users } from 'lucide-react'
+import { Suspense } from 'react'
 import { Card } from '@/components/ui/card'
 import { getCachedMembers } from '@/lib/member-server-utils'
 import { generateBaseMetadata } from '@/lib/seo/seo-config'
@@ -123,12 +124,20 @@ export default async function MembersPage({
             <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
               {searchQuery ? `Search Results (${totalCount})` : `All Members (${totalCount})`}
             </h2>
-            <MembersList
-              initialMembers={initialMembers}
-              initialTotalCount={totalCount}
-              initialPage={page}
-              initialSearchQuery={searchQuery}
-            />
+            <Suspense
+              fallback={
+                <div className="flex justify-center py-8">
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                </div>
+              }
+            >
+              <MembersList
+                initialMembers={initialMembers}
+                initialTotalCount={totalCount}
+                initialPage={page}
+                initialSearchQuery={searchQuery}
+              />
+            </Suspense>
           </section>
         )}
       </div>

@@ -194,7 +194,7 @@ export function MembersList({
           {/* Page Numbers */}
           <div className="flex items-center gap-1">
             {getPageNumbers().map((page, index) => (
-              <div key={index}>
+              <div key={typeof page === 'number' ? `page-${page}` : `ellipsis-${index}`}>
                 {page === '...' ? (
                   <span className="inline-flex size-9 items-center justify-center text-sm text-muted-foreground">
                     ...
