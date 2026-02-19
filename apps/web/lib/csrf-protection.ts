@@ -165,11 +165,11 @@ export async function validateCSRFToken(request: Request): Promise<boolean> {
       return false
     }
 
-    // Compare tokens using timing-safe comparison
-    const isValid = crypto.timingSafeEqual(
-      Buffer.from(storedToken.token),
-      Buffer.from(requestToken)
-    )
+    // Compare tokens using timing-safe comparison (length check required to avoid RangeError)
+    const storedBuf = Buffer.from(storedToken.token)
+    const requestBuf = Buffer.from(requestToken)
+    const isValid =
+      storedBuf.length === requestBuf.length && crypto.timingSafeEqual(storedBuf, requestBuf)
 
     if (!isValid) {
       logger.warn('CSRF token validation failed', {

@@ -2,6 +2,7 @@
 
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
+import { logger } from '@thedaviddias/logging'
 import { ArrowLeft, CheckCircle, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -14,9 +15,8 @@ export default function ConnectGitHubPage() {
   const router = useRouter()
   const [isConnecting, setIsConnecting] = useState(false)
 
-  // Check if user already has GitHub connected
-  const hasGitHubAuth =
-    user && (user.user_metadata?.github_username || user.user_metadata?.user_name)
+  // Check if user already has GitHub connected via OAuth
+  const hasGitHubAuth = user?.externalAccounts?.some(account => account.provider === 'oauth_github')
 
   useEffect(() => {
     // If user doesn't exist, redirect to login
@@ -43,7 +43,10 @@ export default function ConnectGitHubPage() {
       window.location.href =
         '/login?provider=github&redirect=/profile?message=GitHub account connected successfully'
     } catch (error) {
-      console.error('Error connecting GitHub:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'page', page: 'connect-github' }
+      })
       toast.error('Failed to connect GitHub account. Please try again.')
       setIsConnecting(false)
     }

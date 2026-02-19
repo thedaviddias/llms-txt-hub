@@ -1,5 +1,6 @@
 'use client'
 
+import { logger } from '@thedaviddias/logging'
 import { useCallback, useEffect, useState } from 'react'
 
 interface UserContributionStatus {
@@ -24,6 +25,9 @@ interface UseContributionsReturn {
   refetch: () => Promise<void>
 }
 
+/**
+ * Fetch and cache GitHub contribution counts for the given usernames
+ */
 export function useContributions({
   usernames,
   enabled = true
@@ -82,7 +86,10 @@ export function useContributions({
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to fetch contributions'
       setError(errorMessage)
-      console.error('Error fetching contributions:', err)
+      logger.error(err instanceof Error ? err : new Error(String(err)), {
+        data: err,
+        tags: { type: 'hook', hook: 'use-contributions' }
+      })
     } finally {
       setIsLoading(false)
     }

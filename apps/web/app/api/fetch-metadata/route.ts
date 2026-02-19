@@ -1,10 +1,10 @@
 import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
-import DOMPurify from 'isomorphic-dompurify'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
 import validator from 'validator'
 import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
+import { stripHtml } from '@/lib/security-utils-helpers'
 
 /**
  * Clean and sanitize a page title by removing common suffixes and special characters
@@ -13,12 +13,7 @@ import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
  * @returns The cleaned and sanitized title string
  */
 function cleanTitle(title: string): string {
-  // Sanitize title first
-  const sanitized = DOMPurify.sanitize(title, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-    KEEP_CONTENT: true
-  })
+  const sanitized = stripHtml(title)
 
   // Remove common suffixes and clean up the title
   return sanitized
@@ -26,6 +21,26 @@ function cleanTitle(title: string): string {
     .replace(/\s*[-–—]\s*([^-–—]*)$/, '') // Remove everything after - – —
     .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '') // Remove zero-width characters
     .trim()
+}
+
+const FETCH_TIMEOUT_MS = 10_000
+
+/**
+ * Fetch with timeout to avoid hanging on slow or unresponsive URLs
+ */
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit & { timeoutMs?: number } = {}
+): Promise<Response> {
+  const { timeoutMs = FETCH_TIMEOUT_MS, ...init } = options
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
+  try {
+    const response = await fetch(url, { ...init, signal: controller.signal })
+    return response
+  } finally {
+    clearTimeout(timeoutId)
+  }
 }
 
 /**
@@ -82,7 +97,7 @@ async function fetchMetadata(url: string) {
       return { isDuplicate: true, existingWebsite: duplicateWebsite }
     }
     // Fetch the main page
-    const response = await fetch(url)
+    const response = await fetchWithTimeout(url)
     const html = await response.text()
     const $ = cheerio.load(html)
 
@@ -96,30 +111,18 @@ async function fetchMetadata(url: string) {
       ''
 
     // Sanitize extracted data
-    const name = DOMPurify.sanitize(rawName, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
-      KEEP_CONTENT: true
-    })
-      .trim()
-      .substring(0, 200) // Limit length
+    const name = stripHtml(rawName).trim().substring(0, 200) // Limit length
 
-    const description = DOMPurify.sanitize(rawDescription, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
-      KEEP_CONTENT: true
-    })
-      .trim()
-      .substring(0, 500) // Limit length
+    const description = stripHtml(rawDescription).trim().substring(0, 500) // Limit length
 
     // Check for llms.txt
     const llmsUrl = `${url}/llms.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsResponse = await fetch(llmsUrl)
+    const llmsResponse = await fetchWithTimeout(llmsUrl)
     const llmsExists = llmsResponse.ok
 
     // Check for llms-full.txt
     const llmsFullUrl = `${url}/llms-full.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsFullResponse = await fetch(llmsFullUrl)
+    const llmsFullResponse = await fetchWithTimeout(llmsFullUrl)
     const llmsFullExists = llmsFullResponse.ok
 
     return {
@@ -190,7 +193,12 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    let body: { website?: unknown }
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+    }
     const { website } = body
 
     if (!website || typeof website !== 'string') {

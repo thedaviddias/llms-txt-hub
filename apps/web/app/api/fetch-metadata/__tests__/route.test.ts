@@ -5,7 +5,6 @@
  */
 
 import * as cheerio from 'cheerio'
-import DOMPurify from 'isomorphic-dompurify'
 import { GET, POST } from '@/app/api/fetch-metadata/route'
 import { getWebsites } from '@/lib/content-loader'
 
@@ -20,7 +19,6 @@ jest.mock('cheerio', () => ({
     return $
   })
 }))
-jest.mock('isomorphic-dompurify')
 jest.mock('@thedaviddias/logging', () => ({
   logger: {
     error: jest.fn()
@@ -34,14 +32,12 @@ describe('Fetch Metadata API Route', () => {
   const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>
   const mockGetWebsites = getWebsites as jest.MockedFunction<typeof getWebsites>
   const mockCheerioLoad = cheerio.load as jest.MockedFunction<typeof cheerio.load>
-  const mockDOMPurify = DOMPurify.sanitize as jest.MockedFunction<typeof DOMPurify.sanitize>
 
   beforeEach(() => {
     jest.clearAllMocks()
 
     // Default mock implementations
     mockGetWebsites.mockReturnValue([])
-    mockDOMPurify.mockImplementation((text: string | Node) => text as string)
 
     // Mock cheerio
     const mockCheerioInstance = {
@@ -274,9 +270,15 @@ describe('Fetch Metadata API Route', () => {
         body: JSON.stringify({ website: 'https://example.com' })
       })
 
-      await POST(request)
+      const response = await POST(request)
+      const data = await response.json()
 
-      expect(mockDOMPurify).toHaveBeenCalled()
+      expect(response.status).toBe(200)
+      // Script content should have been stripped by stripHtml
+      if (data.metadata?.name) {
+        expect(data.metadata.name).not.toContain('<script')
+        expect(data.metadata.name).not.toContain('alert')
+      }
     })
 
     it('extracts metadata from HTML', async () => {
@@ -362,30 +364,6 @@ describe('Fetch Metadata API Route', () => {
 
       mockCheerioLoad.mockImplementationOnce(() => {
         throw new Error('Cheerio load error')
-      })
-
-      const request = new Request('http://localhost/api/fetch-metadata', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ website: 'https://example.com' })
-      })
-
-      const response = await POST(request)
-      const data = await response.json()
-
-      expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
-    })
-
-    it('handles DOMPurify errors', async () => {
-      mockFetch.mockResolvedValueOnce({
-        ok: true,
-        status: 200,
-        text: () => Promise.resolve('<html><title>Test</title></html>')
-      } as Response)
-
-      mockDOMPurify.mockImplementationOnce(() => {
-        throw new Error('DOMPurify error')
       })
 
       const request = new Request('http://localhost/api/fetch-metadata', {

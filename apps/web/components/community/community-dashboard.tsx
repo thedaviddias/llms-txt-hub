@@ -4,6 +4,7 @@ import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
 import { Progress } from '@thedaviddias/design-system/progress'
+import { logger } from '@thedaviddias/logging'
 import { Award, Calendar, Github, Star, TrendingUp, Users, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -42,7 +43,12 @@ export function CommunityDashboard() {
     fetch('/api/stats/community')
       .then(res => res.json())
       .then(setCommunityStats)
-      .catch(console.error)
+      .catch(err => {
+        logger.error(err instanceof Error ? err : new Error(String(err)), {
+          data: err,
+          tags: { type: 'component', component: 'community-dashboard' }
+        })
+      })
   }, [])
 
   // Fetch user stats if authenticated
@@ -51,7 +57,12 @@ export function CommunityDashboard() {
       fetch('/api/user/stats')
         .then(res => res.json())
         .then(setUserStats)
-        .catch(console.error)
+        .catch(err => {
+          logger.error(err instanceof Error ? err : new Error(String(err)), {
+            data: err,
+            tags: { type: 'component', component: 'community-dashboard' }
+          })
+        })
     } else {
       // Mock stats for anonymous users
       setUserStats({

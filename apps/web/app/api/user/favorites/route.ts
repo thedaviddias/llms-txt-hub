@@ -1,8 +1,11 @@
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { logger } from '@thedaviddias/logging'
-import DOMPurify from 'isomorphic-dompurify'
 import { type NextRequest, NextResponse } from 'next/server'
+import { stripHtml } from '@/lib/security-utils-helpers'
 
+/**
+ * Handle GET request to retrieve the current user's favorites
+ */
 export async function GET() {
   try {
     const { userId } = await auth()
@@ -22,6 +25,9 @@ export async function GET() {
   }
 }
 
+/**
+ * Handle POST request to update the current user's favorites
+ */
 export async function POST(request: NextRequest) {
   try {
     const { userId } = await auth()
@@ -30,7 +36,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const body = await request.json()
+    let body: { favorites?: unknown }
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+    }
     const { favorites } = body
 
     // Enhanced input validation
@@ -45,11 +56,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Sanitize the favorite string
-      const sanitized = DOMPurify.sanitize(favorite, {
-        ALLOWED_TAGS: [],
-        ALLOWED_ATTR: [],
-        KEEP_CONTENT: true
-      })
+      const sanitized = stripHtml(favorite)
 
       // Additional validation - ensure it's a reasonable favorite ID
       if (sanitized.length > 100 || sanitized.length < 1) {

@@ -1,5 +1,6 @@
 'use client'
 
+import { logger } from '@thedaviddias/logging'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import type { Member } from '@/lib/member-server-utils'
@@ -64,7 +65,10 @@ export function MembersList({
         setTotalCount(data.totalCount)
       }
     } catch (error) {
-      console.error('Failed to fetch members:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'component', component: 'members-list' }
+      })
     } finally {
       setIsLoading(false)
     }

@@ -1,8 +1,12 @@
+import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
 
 // Simple in-memory rate limiting (for production, use Redis or database)
 const requestCounts = new Map<string, { count: number; resetTime: number }>()
 
+/**
+ * Extract a rate-limit key from the request IP address
+ */
 function getRateLimitKey(request: NextRequest): string {
   // Use IP address for rate limiting
   const forwarded = request.headers.get('x-forwarded-for')
@@ -17,6 +21,9 @@ interface CheckRateLimitInput {
   windowMs?: number
 }
 
+/**
+ * Check whether the given identifier has exceeded its rate limit
+ */
 function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTime?: number } {
   const { identifier, maxRequests = 10, windowMs = 60 * 1000 } = input
   const now = Date.now()
@@ -37,6 +44,9 @@ function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTi
   return { allowed: true }
 }
 
+/**
+ * Handle POST request to check whether a URL is accessible
+ */
 export async function POST(request: NextRequest) {
   try {
     // Check rate limiting
@@ -140,7 +150,10 @@ export async function POST(request: NextRequest) {
       })
     }
   } catch (error) {
-    console.error('URL check error:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), {
+      data: error,
+      tags: { type: 'api', route: 'check-url' }
+    })
     return NextResponse.json({ accessible: false, error: 'Internal server error' }, { status: 500 })
   }
 }
