@@ -236,9 +236,8 @@ describe('/api/user/favorites', () => {
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(500)
-      expect(data).toEqual({ error: 'Internal Server Error' })
-      expect(mockLogger.error).toHaveBeenCalled()
+      expect(response.status).toBe(400)
+      expect(data).toEqual({ error: 'Invalid request body' })
     })
 
     it('should handle Clerk API errors during update', async () => {

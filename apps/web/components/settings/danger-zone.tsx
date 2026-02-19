@@ -3,12 +3,14 @@
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
+import { logger } from '@thedaviddias/logging'
 import { AlertCircle, AlertTriangle, Loader2, Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useId, useState } from 'react'
 import { toast } from 'sonner'
 import { Card } from '@/components/ui/card'
 import { analytics } from '@/lib/analytics'
+import { fetchWithCSRF } from '@/lib/csrf-client'
 
 interface User {
   id: string
@@ -50,7 +52,7 @@ export function DangerZone({ user }: DangerZoneProps) {
     setError('')
 
     try {
-      const response = await fetch('/api/user/delete-account', {
+      const response = await fetchWithCSRF('/api/user/delete-account', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -67,8 +69,13 @@ export function DangerZone({ user }: DangerZoneProps) {
       await signOut()
       router.push('/')
     } catch (error) {
-      console.error('Error deleting account:', error)
-      setError('Failed to delete account. Please try again.')
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'component', component: 'danger-zone' }
+      })
+      const message =
+        error instanceof Error ? error.message : 'Failed to delete account. Please try again.'
+      setError(message)
       setIsDeleting(false)
     }
   }

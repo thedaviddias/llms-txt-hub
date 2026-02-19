@@ -4,6 +4,9 @@ import 'server-only'
 import { auth as clerkAuth, currentUser as clerkCurrentUser } from '@clerk/nextjs/server'
 import type { AuthUser } from '../core/types'
 
+/**
+ * Return the current authenticated session or null
+ */
 export async function auth() {
   const { userId } = await clerkAuth()
 
@@ -27,12 +30,13 @@ export async function auth() {
         full_name: user.fullName || null,
         avatar_url: user.imageUrl || null
       }
-    },
-    // For compatibility with existing code that expects provider_token
-    provider_token: process.env.GITHUB_TOKEN
+    }
   }
 }
 
+/**
+ * Return the current authenticated user or null
+ */
 export async function currentUser(): Promise<AuthUser | null> {
   const user = await clerkCurrentUser()
 
@@ -48,6 +52,11 @@ export async function currentUser(): Promise<AuthUser | null> {
       user_name: user.username || null,
       full_name: user.fullName || null,
       avatar_url: user.imageUrl || null
-    }
+    },
+    externalAccounts: (user.externalAccounts || []).map((account: any) => ({
+      id: account.id,
+      provider: account.provider,
+      username: account.username || null
+    }))
   }
 }

@@ -3,13 +3,21 @@
  */
 
 import { render, waitFor } from '@testing-library/react'
+import { logger } from '@thedaviddias/logging'
 import { CSRFProvider } from '@/components/csrf-provider'
 
 // Mock fetch
 global.fetch = jest.fn()
 
+jest.mock('@thedaviddias/logging', () => ({
+  logger: {
+    error: jest.fn()
+  }
+}))
+
 describe('CSRFProvider', () => {
   const mockFetch = global.fetch as jest.MockedFunction<typeof fetch>
+  const mockLogger = logger as jest.Mocked<typeof logger>
 
   beforeEach(() => {
     // Clear any existing meta tags
@@ -18,8 +26,6 @@ describe('CSRFProvider', () => {
     })
     // Reset fetch mock
     jest.clearAllMocks()
-    // Clear console errors
-    jest.spyOn(console, 'error').mockImplementation(() => {})
   })
 
   afterEach(() => {
@@ -89,8 +95,6 @@ describe('CSRFProvider', () => {
   })
 
   it('should handle failed fetch response gracefully', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
     // Mock failed fetch response
     mockFetch.mockResolvedValueOnce(new Response('Internal Server Error', { status: 500 }))
 
@@ -107,13 +111,11 @@ describe('CSRFProvider', () => {
       expect(metaTag).toBeFalsy()
     })
 
-    // Should not throw an error (handled gracefully)
-    expect(consoleSpy).not.toHaveBeenCalled()
+    // Should not log an error when response is simply non-200
+    expect(mockLogger.error).not.toHaveBeenCalled()
   })
 
   it('should handle network errors gracefully', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
     // Mock network error
     mockFetch.mockRejectedValueOnce(new Error('Network error'))
 
@@ -126,7 +128,8 @@ describe('CSRFProvider', () => {
 
     // Should log the error
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to initialize CSRF token:', expect.any(Error))
+      expect(mockLogger.error).toHaveBeenCalled()
+      expect(mockLogger.error).toHaveBeenCalledWith(expect.any(Error), expect.any(Object))
     })
 
     // Should not create a meta tag
@@ -158,8 +161,6 @@ describe('CSRFProvider', () => {
   })
 
   it('should handle invalid JSON response gracefully', async () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
-
     // Mock response with invalid JSON
     mockFetch.mockResolvedValueOnce(
       new Response('invalid json', {
@@ -177,7 +178,8 @@ describe('CSRFProvider', () => {
 
     // Should log the error
     await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith('Failed to initialize CSRF token:', expect.any(Error))
+      expect(mockLogger.error).toHaveBeenCalled()
+      expect(mockLogger.error).toHaveBeenCalledWith(expect.any(Error), expect.any(Object))
     })
 
     // Should not create a meta tag

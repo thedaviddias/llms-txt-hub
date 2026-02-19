@@ -3,6 +3,7 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { GuideHeader } from '@/components/guide-header'
 import { JsonLd } from '@/components/json-ld'
 import { components } from '@/components/mdx'
@@ -68,7 +69,15 @@ export default async function GuidePage({ params }: GuidePageProps) {
       <Breadcrumb items={breadcrumbItems} baseUrl={getBaseUrl()} />
       <GuideHeader {...guide} />
       <div className="prose dark:prose-invert max-w-none">
-        <MDXRemote source={guide.content || ''} components={components} />
+        <MDXRemote
+          source={guide.content || ''}
+          components={components}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm]
+            }
+          }}
+        />
       </div>
     </article>
   )

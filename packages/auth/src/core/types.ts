@@ -1,3 +1,9 @@
+export interface AuthExternalAccount {
+  id: string
+  provider: string
+  username?: string | null
+}
+
 export interface AuthUser {
   id: string
   email?: string | null
@@ -13,6 +19,7 @@ export interface AuthUser {
     github_username?: string | null
   } | null
   publicMetadata?: any
+  externalAccounts?: AuthExternalAccount[]
 }
 
 export interface AuthSession {

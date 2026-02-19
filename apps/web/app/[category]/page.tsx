@@ -1,5 +1,4 @@
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
-import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getHomePageData } from '@/actions/get-home-page-data'
@@ -51,7 +50,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const seoContent = getCategorySEO(category.slug, category)
 
   // Enhanced title with count for better CTR
-  const _title =
+  const title =
     categoryProjectsCount > 0
       ? `${categoryProjectsCount}+ ${seoContent.metaTitle}`
       : seoContent.metaTitle
@@ -62,12 +61,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       ? `${categoryProjectsCount}+ websites. ${seoContent.metaDescription}`
       : seoContent.metaDescription
 
-  const baseUrl = getBaseUrl()
-  const _canonicalUrl = `${baseUrl}/${category.slug}`
-
   return generateDynamicMetadata({
     type: 'category',
-    name: category.name,
+    name: title,
     description: optimizeMetaDescription(description),
     slug: category.slug,
     additionalKeywords: seoContent.keywords

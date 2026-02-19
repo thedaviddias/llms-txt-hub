@@ -12,7 +12,7 @@ export async function GET() {
     version: 'https://jsonfeed.org/version/1',
     title: 'llms.txt Hub',
     home_page_url: baseUrl,
-    feed_url: `${baseUrl}/feed.json`,
+    feed_url: `${baseUrl}/rss.xml`,
     description: 'Latest updates from llms.txt Hub',
     icon: `${baseUrl}/apple-touch-icon.png`,
     favicon: `${baseUrl}/favicon.ico`,

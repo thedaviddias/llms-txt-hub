@@ -42,7 +42,12 @@ export function useAuth(): AuthProvider {
           full_name: user.fullName || null,
           avatar_url: user.imageUrl || null
         },
-        publicMetadata: user.publicMetadata
+        publicMetadata: user.publicMetadata,
+        externalAccounts: (user.externalAccounts || []).map((account: any) => ({
+          id: account.id,
+          provider: account.provider,
+          username: account.username || null
+        }))
       }
     : null
 

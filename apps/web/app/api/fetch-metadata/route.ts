@@ -1,10 +1,10 @@
 import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
-import DOMPurify from 'isomorphic-dompurify'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
-import validator from 'validator'
 import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
+import { stripHtml } from '@/lib/security-utils-helpers'
+import { validatePublicHttpUrl } from '@/lib/url-safety'
 
 /**
  * Clean and sanitize a page title by removing common suffixes and special characters
@@ -13,12 +13,7 @@ import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
  * @returns The cleaned and sanitized title string
  */
 function cleanTitle(title: string): string {
-  // Sanitize title first
-  const sanitized = DOMPurify.sanitize(title, {
-    ALLOWED_TAGS: [],
-    ALLOWED_ATTR: [],
-    KEEP_CONTENT: true
-  })
+  const sanitized = stripHtml(title)
 
   // Remove common suffixes and clean up the title
   return sanitized
@@ -26,6 +21,65 @@ function cleanTitle(title: string): string {
     .replace(/\s*[-–—]\s*([^-–—]*)$/, '') // Remove everything after - – —
     .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '') // Remove zero-width characters
     .trim()
+}
+
+const FETCH_TIMEOUT_MS = 10_000
+
+/**
+ * Error used to signal user-facing URL safety failures (e.g. restricted redirects).
+ */
+class UrlSafetyError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'UrlSafetyError'
+  }
+}
+
+/**
+ * Fetch with timeout to avoid hanging on slow or unresponsive URLs
+ */
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit & { timeoutMs?: number; maxRedirects?: number } = {}
+): Promise<Response> {
+  const { timeoutMs = FETCH_TIMEOUT_MS, maxRedirects = 3, ...init } = options
+  let currentUrl = url
+
+  for (let redirects = 0; redirects <= maxRedirects; redirects++) {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
+
+    try {
+      const response = await fetch(currentUrl, {
+        ...init,
+        redirect: 'manual',
+        signal: controller.signal
+      })
+
+      const isRedirect = response.status >= 300 && response.status < 400
+      if (!isRedirect) {
+        return response
+      }
+
+      const location = response.headers.get('location')
+      if (!location) return response
+      if (redirects === maxRedirects) {
+        throw new Error('Too many redirects')
+      }
+
+      const nextUrl = new URL(location, currentUrl).toString()
+      const redirectValidation = validatePublicHttpUrl(nextUrl)
+      if (!redirectValidation.ok) {
+        throw new UrlSafetyError(redirectValidation.error)
+      }
+
+      currentUrl = redirectValidation.url.toString()
+    } finally {
+      clearTimeout(timeoutId)
+    }
+  }
+
+  throw new Error('Too many redirects')
 }
 
 /**
@@ -82,7 +136,7 @@ async function fetchMetadata(url: string) {
       return { isDuplicate: true, existingWebsite: duplicateWebsite }
     }
     // Fetch the main page
-    const response = await fetch(url)
+    const response = await fetchWithTimeout(url)
     const html = await response.text()
     const $ = cheerio.load(html)
 
@@ -96,30 +150,18 @@ async function fetchMetadata(url: string) {
       ''
 
     // Sanitize extracted data
-    const name = DOMPurify.sanitize(rawName, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
-      KEEP_CONTENT: true
-    })
-      .trim()
-      .substring(0, 200) // Limit length
+    const name = stripHtml(rawName).trim().substring(0, 200) // Limit length
 
-    const description = DOMPurify.sanitize(rawDescription, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
-      KEEP_CONTENT: true
-    })
-      .trim()
-      .substring(0, 500) // Limit length
+    const description = stripHtml(rawDescription).trim().substring(0, 500) // Limit length
 
     // Check for llms.txt
     const llmsUrl = `${url}/llms.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsResponse = await fetch(llmsUrl)
+    const llmsResponse = await fetchWithTimeout(llmsUrl)
     const llmsExists = llmsResponse.ok
 
     // Check for llms-full.txt
     const llmsFullUrl = `${url}/llms-full.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsFullResponse = await fetch(llmsFullUrl)
+    const llmsFullResponse = await fetchWithTimeout(llmsFullUrl)
     const llmsFullExists = llmsFullResponse.ok
 
     return {
@@ -133,6 +175,10 @@ async function fetchMetadata(url: string) {
       }
     }
   } catch (error) {
+    if (error instanceof UrlSafetyError) {
+      throw error
+    }
+
     logger.error('Error fetching metadata:', { data: error, tags: { type: 'api' } })
     throw new Error('Failed to fetch metadata')
   }
@@ -152,32 +198,19 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Domain is required' }, { status: 400 })
   }
 
-  // Check for malicious URLs first
-  const lowerDomain = domain.toLowerCase()
-  if (
-    lowerDomain.includes('javascript:') ||
-    lowerDomain.includes('data:') ||
-    lowerDomain.includes('vbscript:') ||
-    lowerDomain.includes('file:')
-  ) {
-    return NextResponse.json({ error: 'Invalid URL protocol' }, { status: 400 })
-  }
-
-  // Enhanced URL validation
-  if (
-    !validator.isURL(domain, {
-      protocols: ['http', 'https'],
-      require_protocol: true,
-      require_valid_protocol: true
-    })
-  ) {
-    return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 })
+  const validation = validatePublicHttpUrl(domain)
+  if (!validation.ok) {
+    return NextResponse.json({ error: validation.error }, { status: 400 })
   }
 
   try {
-    const metadata = await fetchMetadata(domain)
+    const metadata = await fetchMetadata(validation.url.toString())
     return NextResponse.json(metadata)
-  } catch {
+  } catch (error) {
+    if (error instanceof UrlSafetyError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
     return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
   }
 }
@@ -190,38 +223,30 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    const body = await request.json()
+    let body: { website?: unknown }
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+    }
     const { website } = body
 
     if (!website || typeof website !== 'string') {
       return NextResponse.json({ error: 'Website URL is required' }, { status: 400 })
     }
 
-    // Check for malicious URLs first
-    const lowerWebsite = website.toLowerCase()
-    if (
-      lowerWebsite.includes('javascript:') ||
-      lowerWebsite.includes('data:') ||
-      lowerWebsite.includes('vbscript:') ||
-      lowerWebsite.includes('file:')
-    ) {
-      return NextResponse.json({ error: 'Invalid URL protocol' }, { status: 400 })
+    const validation = validatePublicHttpUrl(website)
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
     }
 
-    // Enhanced URL validation
-    if (
-      !validator.isURL(website, {
-        protocols: ['http', 'https'],
-        require_protocol: true,
-        require_valid_protocol: true
-      })
-    ) {
-      return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 })
-    }
-
-    const metadata = await fetchMetadata(website)
+    const metadata = await fetchMetadata(validation.url.toString())
     return NextResponse.json(metadata)
-  } catch {
+  } catch (error) {
+    if (error instanceof UrlSafetyError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
     return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
   }
 }

@@ -1,8 +1,16 @@
+import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { validatePublicHttpUrl } from '@/lib/url-safety'
 
 // Simple in-memory rate limiting (for production, use Redis or database)
 const requestCounts = new Map<string, { count: number; resetTime: number }>()
+const MAX_REQUESTS_PER_WINDOW = 10
+const RATE_LIMIT_WINDOW_MS = 60 * 1000
+const URL_CHECK_TIMEOUT_MS = 5000
 
+/**
+ * Extract a rate-limit key from the request IP address
+ */
 function getRateLimitKey(request: NextRequest): string {
   // Use IP address for rate limiting
   const forwarded = request.headers.get('x-forwarded-for')
@@ -17,9 +25,24 @@ interface CheckRateLimitInput {
   windowMs?: number
 }
 
+/**
+ * Check whether the given identifier has exceeded its rate limit
+ */
 function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTime?: number } {
-  const { identifier, maxRequests = 10, windowMs = 60 * 1000 } = input
+  const {
+    identifier,
+    maxRequests = MAX_REQUESTS_PER_WINDOW,
+    windowMs = RATE_LIMIT_WINDOW_MS
+  } = input
   const now = Date.now()
+
+  if (requestCounts.size > 1000) {
+    for (const [key, value] of requestCounts.entries()) {
+      if (now > value.resetTime) {
+        requestCounts.delete(key)
+      }
+    }
+  }
 
   const record = requestCounts.get(identifier)
 
@@ -37,6 +60,27 @@ function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTi
   return { allowed: true }
 }
 
+/**
+ * Execute a fetch request with AbortController timeout handling.
+ */
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit,
+  timeoutMs: number
+): Promise<Response> {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
+
+  try {
+    return await fetch(url, { ...init, signal: controller.signal })
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
+/**
+ * Handle POST request to check whether a URL is accessible
+ */
 export async function POST(request: NextRequest) {
   try {
     // Check rate limiting
@@ -68,50 +112,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ accessible: false, error: 'URL is required' }, { status: 400 })
     }
 
-    // Additional security check for malicious URLs
-    const lowerUrl = url.toLowerCase()
-    if (
-      lowerUrl.includes('javascript:') ||
-      lowerUrl.includes('data:') ||
-      lowerUrl.includes('vbscript:') ||
-      lowerUrl.includes('file:')
-    ) {
-      return NextResponse.json(
-        { accessible: false, error: 'Invalid URL protocol detected' },
-        { status: 400 }
-      )
-    }
-
-    // Validate URL format
-    let parsedUrl: URL
-    try {
-      parsedUrl = new URL(url)
-    } catch {
-      return NextResponse.json({ accessible: false, error: 'Invalid URL format' }, { status: 400 })
-    }
-
-    // Only allow HTTP and HTTPS protocols
-    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
-      return NextResponse.json(
-        { accessible: false, error: 'Only HTTP and HTTPS URLs are allowed' },
-        { status: 400 }
-      )
+    const validation = validatePublicHttpUrl(url)
+    if (!validation.ok) {
+      return NextResponse.json({ accessible: false, error: validation.error }, { status: 400 })
     }
 
     // Check URL accessibility with additional security headers
     try {
-      const response = await fetch(url, {
-        method: 'HEAD', // Use HEAD to avoid downloading content
-        headers: {
-          'User-Agent': 'LLMs.txt Hub URL Checker/1.0',
-          Accept: 'text/html,application/xhtml+xml',
-          'Cache-Control': 'no-cache'
+      const response = await fetchWithTimeout(
+        validation.url.toString(),
+        {
+          method: 'HEAD', // Use HEAD to avoid downloading content
+          headers: {
+            'User-Agent': 'LLMs.txt Hub URL Checker/1.0',
+            Accept: 'text/html,application/xhtml+xml',
+            'Cache-Control': 'no-cache'
+          },
+          // Security: Prevent following too many redirects
+          redirect: 'manual'
         },
-        // Security: Prevent following too many redirects
-        redirect: 'manual',
-        // Short timeout to avoid hanging
-        signal: AbortSignal.timeout(5000) // Reduced to 5 seconds
-      })
+        URL_CHECK_TIMEOUT_MS
+      )
 
       const accessible = response.ok // 2xx status codes
 
@@ -140,7 +161,10 @@ export async function POST(request: NextRequest) {
       })
     }
   } catch (error) {
-    console.error('URL check error:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), {
+      data: error,
+      tags: { type: 'api', route: 'check-url' }
+    })
     return NextResponse.json({ accessible: false, error: 'Internal server error' }, { status: 500 })
   }
 }

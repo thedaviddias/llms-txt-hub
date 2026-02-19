@@ -11,6 +11,12 @@ type GlobalErrorProperties = {
   readonly reset: () => void
 }
 
+/**
+ * Global error boundary component that captures exceptions and provides a reset action
+ *
+ * @param props - Error properties containing the error and reset function
+ * @returns Error page with retry button
+ */
 const GlobalError = ({ error, reset }: GlobalErrorProperties) => {
   useEffect(() => {
     captureException(error)
@@ -19,7 +25,7 @@ const GlobalError = ({ error, reset }: GlobalErrorProperties) => {
   return (
     <html lang="en" className={fonts}>
       <body>
-        <h1>Oops, something went wrong</h1>
+        <h1 className="text-3xl font-bold text-center mt-8">Oops, something went wrong</h1>
         <Button onClick={() => reset()}>Try again</Button>
       </body>
     </html>

@@ -1,5 +1,6 @@
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { ensureDebugAccess } from '@/app/api/debug/_utils'
 import { CACHE_KEYS, get } from '@/lib/redis'
 
 /**
@@ -9,6 +10,11 @@ import { CACHE_KEYS, get } from '@/lib/redis'
  * @returns Promise resolving to NextResponse with cache status or error
  */
 export async function GET(request: NextRequest) {
+  const access = await ensureDebugAccess(request)
+  if (!access.ok) {
+    return access.response
+  }
+
   const { searchParams } = new URL(request.url)
   const username = searchParams.get('username')
 

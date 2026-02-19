@@ -1,5 +1,6 @@
 'use client'
 
+import { logger } from '@thedaviddias/logging'
 import { useEffect } from 'react'
 
 /**
@@ -33,7 +34,10 @@ export function CSRFProvider() {
           }
         }
       } catch (error) {
-        console.error('Failed to initialize CSRF token:', error)
+        logger.error(error instanceof Error ? error : new Error(String(error)), {
+          data: error,
+          tags: { type: 'component', component: 'csrf-provider' }
+        })
       }
     }
 

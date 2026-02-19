@@ -1,5 +1,6 @@
 'use client'
 
+import { logger } from '@thedaviddias/logging'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 // Traditional client-side pagination for static data
@@ -44,6 +45,9 @@ interface UseApiLoadMoreReturn<T> {
   refetch: () => Promise<void>
 }
 
+/**
+ * Client-side pagination hook that slices a static array of items
+ */
 export function useLoadMore<T>({
   items,
   initialItemsPerPage = 12,
@@ -94,7 +98,9 @@ export function useLoadMore<T>({
   }
 }
 
-// New API-based hook for progressive loading
+/**
+ * API-based pagination hook for progressive data loading
+ */
 export function useApiLoadMore<T>({
   apiEndpoint,
   initialPage = 1,
@@ -172,7 +178,10 @@ export function useApiLoadMore<T>({
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'An error occurred'
         setError(errorMessage)
-        console.error('Error fetching data:', err)
+        logger.error(err instanceof Error ? err : new Error(String(err)), {
+          data: err,
+          tags: { type: 'hook', hook: 'use-load-more' }
+        })
       } finally {
         setIsLoading(false)
         setIsLoadingMore(false)

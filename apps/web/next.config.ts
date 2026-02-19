@@ -25,11 +25,6 @@ export const INTERNAL_PACKAGES = [
 let nextConfig: NextConfig = {
   ...baseConfig,
 
-  // Resolve native-binding packages at runtime instead of bundling them.
-  // isomorphic-dompurify uses JSDOM which has native C++ bindings that
-  // fail to bundle in Vercel serverless functions.
-  serverExternalPackages: ['isomorphic-dompurify'],
-
   transpilePackages: INTERNAL_PACKAGES,
 
   pageExtensions: ['mdx', 'ts', 'tsx'],

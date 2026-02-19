@@ -7,7 +7,6 @@ import {
 } from '@thedaviddias/newsletter'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { validateCSRFToken } from '@/lib/csrf-protection'
 
 // Get provider configuration from environment
 const providerConfig = getProviderFromEnv()
@@ -30,19 +29,7 @@ export async function POST(request: NextRequest) {
       tags: { type: 'newsletter' }
     })
 
-    // Validate CSRF token using the existing protection system
-    const isValidCSRF = await validateCSRFToken(request)
-
-    if (!isValidCSRF) {
-      return NextResponse.json(
-        {
-          error: 'Invalid or missing CSRF token',
-          code: 'CSRF_VALIDATION_FAILED'
-        },
-        { status: 403 }
-      )
-    }
-
+    // CSRF is enforced by middleware for all non-GET API routes
     if (!provider) {
       logger.error('Newsletter provider is not configured. Check your environment variables.')
       Sentry.captureMessage('Newsletter provider not configured', 'warning')

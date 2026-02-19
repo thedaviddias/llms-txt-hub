@@ -6,7 +6,6 @@
 
 // Mock dependencies BEFORE imports
 jest.mock('@thedaviddias/auth')
-jest.mock('isomorphic-dompurify')
 jest.mock('@thedaviddias/logging', () => ({
   logger: {
     error: jest.fn()
@@ -29,7 +28,6 @@ jest.mock('@clerk/backend', () => {
 })
 
 import { auth } from '@thedaviddias/auth'
-import DOMPurify from 'isomorphic-dompurify'
 import { MALICIOUS_INPUTS } from '@/app/api/__tests__/test-helpers'
 // Import route AFTER mocks are set up
 import { POST } from '@/app/api/user/check-username/route'
@@ -50,7 +48,6 @@ const _clearRouteRateLimit = () => {
 
 describe('Check Username API Route', () => {
   const mockAuth = auth as jest.MockedFunction<typeof auth>
-  const mockDOMPurify = DOMPurify.sanitize as jest.MockedFunction<typeof DOMPurify.sanitize>
 
   // Get the mock users from the mocked module
   const mockClerkModule = jest.requireMock('@clerk/backend')
@@ -82,11 +79,8 @@ describe('Check Username API Route', () => {
           full_name: null,
           avatar_url: null
         }
-      },
-      provider_token: undefined
+      }
     })
-
-    mockDOMPurify.mockImplementation((text: string | Node) => text as string)
   })
 
   describe('Authentication', () => {
@@ -116,8 +110,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request = new Request('http://localhost/api/user/check-username', {
@@ -325,8 +318,6 @@ describe('Check Username API Route', () => {
 
   describe('Security', () => {
     it('sanitizes username input to prevent XSS', async () => {
-      mockDOMPurify.mockImplementationOnce(() => 'sanitized')
-
       const request = new Request('http://localhost/api/user/check-username', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -338,7 +329,6 @@ describe('Check Username API Route', () => {
 
       expect(response.status).toBe(400)
       expect(data.error).toBe('Invalid characters in username')
-      expect(mockDOMPurify).toHaveBeenCalled()
     })
 
     it('rejects malicious input patterns', async () => {
@@ -369,8 +359,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       // Make 20 requests (the limit)
@@ -413,8 +402,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request1 = new Request('http://localhost/api/user/check-username', {
@@ -436,8 +424,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request2 = new Request('http://localhost/api/user/check-username', {
@@ -463,8 +450,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       mockClerkUsers.getUserList.mockRejectedValueOnce(new Error('Clerk API error'))
@@ -494,8 +480,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request = new Request('http://localhost/api/user/check-username', {
@@ -507,8 +492,8 @@ describe('Check Username API Route', () => {
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to check username')
+      expect(response.status).toBe(400)
+      expect(data.error).toBe('Invalid request body')
     })
 
     it('handles unexpected errors', async () => {

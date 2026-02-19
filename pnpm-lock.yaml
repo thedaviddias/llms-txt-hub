@@ -103,7 +103,7 @@ importers:
     dependencies:
       '@clerk/nextjs':
         specifier: ^6.37.3
-        version: 6.37.3(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 6.37.3(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@content-collections/core':
         specifier: ^0.8.2
         version: 0.8.2(typescript@5.9.3)
@@ -181,7 +181,7 @@ importers:
         version: 1.36.2
       '@vercel/toolbar':
         specifier: ^0.1.41
-        version: 0.1.41(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
+        version: 0.1.41(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
       cheerio:
         specifier: ^1.2.0
         version: 1.2.0
@@ -203,9 +203,6 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
-      isomorphic-dompurify:
-        specifier: ^2.36.0
-        version: 2.36.0
       lucide-react:
         specifier: ^0.486.0
         version: 0.486.0(react@19.2.4)
@@ -415,7 +412,7 @@ importers:
     dependencies:
       '@clerk/nextjs':
         specifier: ^6.37.3
-        version: 6.37.3(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 6.37.3(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       next:
         specifier: 16.1.6
         version: 16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -601,7 +598,7 @@ importers:
         version: link:../observability
       '@vercel/toolbar':
         specifier: ^0.1.41
-        version: 0.1.41(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
+        version: 0.1.41(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -710,7 +707,7 @@ importers:
         version: 3.1.1(@opentelemetry/api@1.9.0)(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@vercel/toolbar':
         specifier: ^0.1.41
-        version: 0.1.41(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
+        version: 0.1.41(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -807,13 +804,13 @@ importers:
     optionalDependencies:
       '@sentry/nextjs':
         specifier: ^10.38.0
-        version: 10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0))
+        version: 10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))
 
   packages/newsletter:
     dependencies:
       '@sentry/nextjs':
         specifier: ^10.38.0
-        version: 10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0))
+        version: 10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.9.3)(zod@3.25.76)
@@ -838,7 +835,7 @@ importers:
     dependencies:
       '@sentry/nextjs':
         specifier: ^10.38.0
-        version: 10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0))
+        version: 10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.9.3)(zod@3.25.76)
@@ -9925,7 +9922,7 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       tslib: 2.8.1
 
-  '@clerk/nextjs@6.37.3(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@clerk/nextjs@6.37.3(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@clerk/backend': 2.30.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@clerk/clerk-react': 5.60.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -12474,7 +12471,7 @@ snapshots:
 
   '@sentry/core@10.38.0': {}
 
-  '@sentry/nextjs@10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0))':
+  '@sentry/nextjs@10.38.0(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))':
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/semantic-conventions': 1.39.0
@@ -12486,7 +12483,7 @@ snapshots:
       '@sentry/opentelemetry': 10.38.0(@opentelemetry/api@1.9.0)(@opentelemetry/context-async-hooks@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/core@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@2.5.1(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.39.0)
       '@sentry/react': 10.38.0(react@19.2.4)
       '@sentry/vercel-edge': 10.38.0
-      '@sentry/webpack-plugin': 4.9.1(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0))
+      '@sentry/webpack-plugin': 4.9.1(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))
       next: 16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rollup: 4.57.1
       stacktrace-parser: 0.1.11
@@ -12576,12 +12573,12 @@ snapshots:
       '@opentelemetry/resources': 2.5.1(@opentelemetry/api@1.9.0)
       '@sentry/core': 10.38.0
 
-  '@sentry/webpack-plugin@4.9.1(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0))':
+  '@sentry/webpack-plugin@4.9.1(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))':
     dependencies:
       '@sentry/bundler-plugin-core': 4.9.1
       unplugin: 1.0.1
       uuid: 9.0.1
-      webpack: 5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0)
+      webpack: 5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -13140,7 +13137,7 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  '@vercel/microfrontends@1.3.0(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))':
+  '@vercel/microfrontends@1.3.0(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))':
     dependencies:
       '@next/env': 15.1.6
       ajv: 8.17.1
@@ -13159,10 +13156,10 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@vercel/toolbar@0.1.41(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))':
+  '@vercel/toolbar@0.1.41(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))':
     dependencies:
       '@tinyhttp/app': 1.3.0
-      '@vercel/microfrontends': 1.3.0(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
+      '@vercel/microfrontends': 1.3.0(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.21.0)(yaml@2.7.0))
       chokidar: 3.6.0
       execa: 5.1.1
       fast-glob: 3.3.3
@@ -18199,6 +18196,18 @@ snapshots:
     optionalDependencies:
       '@swc/core': 1.11.5(@swc/helpers@0.5.15)
       esbuild: 0.25.0
+    optional: true
+
+  terser-webpack-plugin@5.3.14(@swc/core@1.11.5(@swc/helpers@0.5.15))(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.30
+      jest-worker: 27.5.1
+      schema-utils: 4.3.2
+      serialize-javascript: 6.0.2
+      terser: 5.43.1
+      webpack: 5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))
+    optionalDependencies:
+      '@swc/core': 1.11.5(@swc/helpers@0.5.15)
 
   terser@5.43.1:
     dependencies:
@@ -18796,6 +18805,36 @@ snapshots:
 
   webpack-virtual-modules@0.5.0: {}
 
+  webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)):
+    dependencies:
+      '@types/eslint-scope': 3.7.7
+      '@types/estree': 1.0.8
+      '@webassemblyjs/ast': 1.14.1
+      '@webassemblyjs/wasm-edit': 1.14.1
+      '@webassemblyjs/wasm-parser': 1.14.1
+      acorn: 8.15.0
+      browserslist: 4.28.1
+      chrome-trace-event: 1.0.4
+      enhanced-resolve: 5.18.3
+      es-module-lexer: 1.7.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.0
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 4.3.2
+      tapable: 2.2.3
+      terser-webpack-plugin: 5.3.14(@swc/core@1.11.5(@swc/helpers@0.5.15))(webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15)))
+      watchpack: 2.4.4
+      webpack-sources: 3.3.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
+
   webpack@5.98.0(@swc/core@1.11.5(@swc/helpers@0.5.15))(esbuild@0.25.0):
     dependencies:
       '@types/eslint-scope': 3.7.7
@@ -18825,6 +18864,7 @@ snapshots:
       - '@swc/core'
       - esbuild
       - uglify-js
+    optional: true
 
   whatwg-encoding@2.0.0:
     dependencies:

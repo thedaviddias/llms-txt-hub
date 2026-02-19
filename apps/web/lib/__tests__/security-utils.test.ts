@@ -17,6 +17,7 @@ jest.mock('../security-utils-helpers', () => {
     rateLimitMap: mockRateLimitMap,
     sanitizeErrorMessage: jest.fn(msg => msg),
     escapeHtml: actual.escapeHtml,
+    stripHtml: actual.stripHtml,
     clearRateLimiting: jest.fn(() => mockRateLimitMap.clear()),
     getRateLimitKey: jest.fn((ip, action) => `${ip}:${action}`),
     checkRateLimit: jest.fn(({ identifier, windowMs = 60000, maxRequests = 10 }) => {
@@ -138,10 +139,10 @@ describe('security-utils', () => {
       expect(sanitizeText('Hello World')).toBe('Hello World')
     })
 
-    it('should allow safe HTML tags', () => {
-      expect(sanitizeText('Hello <strong>world</strong>')).toContain('<strong>world</strong>')
-      expect(sanitizeText('Text with <em>emphasis</em>')).toContain('<em>emphasis</em>')
-      expect(sanitizeText('Paragraph<br>break')).toContain('<br>')
+    it('should strip all HTML tags but preserve text content', () => {
+      expect(sanitizeText('Hello <strong>world</strong>')).toBe('Hello world')
+      expect(sanitizeText('Text with <em>emphasis</em>')).toBe('Text with emphasis')
+      expect(sanitizeText('Paragraph<br>break')).toBe('Paragraphbreak')
     })
 
     it('should remove dangerous HTML tags', () => {

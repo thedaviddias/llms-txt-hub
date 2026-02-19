@@ -6,8 +6,9 @@ import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import yaml from 'js-yaml'
 import { revalidatePath } from 'next/cache'
-import { categories } from '@/lib/categories'
+import { submitActionSchema } from '@/components/forms/submit-form-schemas'
 import { getStoredCSRFToken } from '@/lib/csrf-protection'
+import { stripHtml } from '@/lib/security-utils-helpers'
 
 const owner = 'thedaviddias'
 const repo = 'llms-txt-hub'
@@ -73,11 +74,11 @@ export async function submitLlmsTxt(formData: FormData) {
       throw new Error('Security validation failed')
     }
 
-    // Validate CSRF token using timing-safe comparison
-    const isValidCSRF = crypto.timingSafeEqual(
-      Buffer.from(storedToken.token),
-      Buffer.from(submittedCSRFToken)
-    )
+    // Validate CSRF token using timing-safe comparison (length check required to avoid RangeError)
+    const storedBuf = Buffer.from(storedToken.token)
+    const submittedBuf = Buffer.from(submittedCSRFToken)
+    const isValidCSRF =
+      storedBuf.length === submittedBuf.length && crypto.timingSafeEqual(storedBuf, submittedBuf)
 
     if (!isValidCSRF) {
       logger.error('Server Action CSRF validation failed - token mismatch', {
@@ -91,58 +92,58 @@ export async function submitLlmsTxt(formData: FormData) {
       throw new Error('Security validation failed')
     }
 
-    // Validate form data
-    const name = formData.get('name') as string
-    const description = formData.get('description') as string
-    const website = formData.get('website') as string
-    const llmsUrl = formData.get('llmsUrl') as string
-    const llmsFullUrl = formData.get('llmsFullUrl') as string
-    const categorySlug = formData.get('category') as string
-    const publishedAt = formData.get('publishedAt') as string
+    // Parse and validate form data with Zod
+    const raw = {
+      name: formData.get('name'),
+      description: formData.get('description'),
+      website: formData.get('website'),
+      llmsUrl: formData.get('llmsUrl'),
+      llmsFullUrl: formData.get('llmsFullUrl') ?? '',
+      category: formData.get('category'),
+      publishedAt: formData.get('publishedAt')
+    }
+    const parsed = submitActionSchema.safeParse(raw)
+    if (!parsed.success) {
+      const firstError = parsed.error.errors[0]
+      const message = firstError?.message ?? 'Invalid form data'
+      throw new Error(message)
+    }
+
+    const { website, llmsUrl, llmsFullUrl, category: categorySlug, publishedAt } = parsed.data
+
+    // Sanitize text fields for XSS (no HTML, normalize whitespace)
+    const sanitizeText = (input: string): string =>
+      stripHtml(input)
+        .replace(/\u200B|\u200C|\u200D|\uFEFF/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+    const name = sanitizeText(parsed.data.name)
+    const description = sanitizeText(parsed.data.description)
+
+    if (!name || !description) {
+      throw new Error('Name and description are required after sanitization')
+    }
 
     // Get user info for attribution
     const githubUsername = session.user.user_metadata?.user_name
     const userEmail = session.user.email
     const displayName = githubUsername || userEmail?.split('@')[0] || 'Anonymous'
 
-    // Try to get user's GitHub token first, fall back to admin token
-    let access_token: string | null = null
-    let useUserToken = false
-
-    // Check if user has GitHub auth with token
-    if (session.provider_token && githubUsername) {
-      const provider_token = session.provider_token
-
-      if (typeof provider_token === 'string') {
-        access_token = provider_token
-        useUserToken = true
-      } else if (typeof provider_token === 'object' && provider_token !== null) {
-        const tokenObj = provider_token as { access_token?: string; token?: string }
-        access_token = tokenObj.access_token || tokenObj.token || null
-        useUserToken = !!access_token
-      }
+    const accessToken = process.env.GITHUB_TOKEN || null
+    if (!accessToken) {
+      throw new Error('GitHub token not configured')
     }
 
-    // Fall back to admin token if user doesn't have one
-    if (!access_token) {
-      access_token = process.env.GITHUB_TOKEN || null
-      useUserToken = false
+    // The server action uses a single server-side admin token.
+    // User OAuth tokens are intentionally not accepted through this flow.
+    const useUserToken = false
 
-      if (!access_token) {
-        throw new Error('GitHub token not configured')
-      }
-    }
-
-    const octokit = new Octokit({ auth: access_token })
-
-    if (!name || !description || !website || !llmsUrl || !categorySlug || !publishedAt) {
-      throw new Error('Missing required form fields')
-    }
-
-    // Validate category
-    if (!categories.some(category => category.slug === categorySlug)) {
-      throw new Error('Invalid category selected')
-    }
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 90_000)
+    const octokit = new Octokit({
+      auth: accessToken,
+      request: { signal: controller.signal }
+    })
 
     // Create the content for the new MDX file
     const frontmatterData = {
@@ -309,6 +310,8 @@ Please review and merge if appropriate.`
       throw new Error(
         `GitHub API Error: ${error instanceof Error ? error.message : 'Unknown error'}`
       )
+    } finally {
+      clearTimeout(timeoutId)
     }
   } catch (error) {
     logger.error('Error in submitLlmsTxt:', { data: error, tags: { type: 'action' } })

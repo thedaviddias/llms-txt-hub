@@ -1,6 +1,10 @@
 import { auth, clerkClient } from '@clerk/nextjs/server'
+import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
 
+/**
+ * Handle POST request to sync user metadata from auth provider
+ */
 export async function POST(request: NextRequest) {
   try {
     const { userId } = await auth()
@@ -25,7 +29,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Error updating user metadata:', error)
+    logger.error(error instanceof Error ? error : new Error(String(error)), {
+      data: error,
+      tags: { type: 'api', route: 'auth/metadata' }
+    })
     return NextResponse.json({ error: 'Failed to update metadata' }, { status: 500 })
   }
 }

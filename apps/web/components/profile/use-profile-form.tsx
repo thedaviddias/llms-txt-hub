@@ -147,9 +147,10 @@ export function useProfileForm({
       }
     } catch (err) {
       logger.error('Error updating profile:', { data: err, tags: { type: 'component' } })
-      const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to update profile. Please try again.'
       trackProfileUpdateError(errorMessage, 'profile-edit-modal')
-      setError('Failed to update profile. Please try again.')
+      setError(errorMessage)
     } finally {
       setIsLoading(false)
     }

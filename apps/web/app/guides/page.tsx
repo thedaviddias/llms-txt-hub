@@ -42,7 +42,7 @@ export default async function GuidesPage() {
         <div className="space-y-2">
           <h1 className="text-4xl font-bold tracking-tight flex items-center gap-3">
             <span className="size-2 bg-primary rounded-full" />
-            Guides
+            llms.txt Guides
           </h1>
           <p className="text-lg text-muted-foreground">
             Learn how to implement and use llms.txt effectively with our comprehensive guides.
