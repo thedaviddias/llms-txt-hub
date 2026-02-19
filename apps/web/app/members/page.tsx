@@ -3,6 +3,7 @@ import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Users } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { getCachedMembers } from '@/lib/member-server-utils'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { MembersList } from './members-list'
 import { MembersSearch } from './members-search'
 
@@ -18,15 +19,17 @@ export async function generateMetadata() {
   const allMembers = await getCachedMembers()
   const totalCount = allMembers.length
 
-  return {
-    title: `Members (${totalCount}) | LLMs.txt Hub`,
-    description: `Browse ${totalCount} members of the LLMs.txt Hub community. Connect with developers, creators, and contributors.`,
-    openGraph: {
-      title: `${totalCount} Members | LLMs.txt Hub`,
-      description:
-        'Join our growing community of developers and creators sharing their LLMs.txt files'
-    }
-  }
+  return generateBaseMetadata({
+    title: `Members (${totalCount})`,
+    description: `Browse ${totalCount} members of the llms.txt Hub community. Connect with developers, creators, and contributors building AI-ready documentation.`,
+    path: '/members',
+    keywords: [
+      'llms.txt community',
+      'AI documentation contributors',
+      'developer community',
+      'llms.txt members'
+    ]
+  })
 }
 
 /**
