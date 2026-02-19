@@ -644,6 +644,15 @@
     "publishedAt": "2025-08-23"
   },
   {
+    "name": "Dealerium",
+    "domain": "https://www.dealerium.com",
+    "description": "Real-time deal aggregator and price error tracker for Amazon and French e-commerce.",
+    "llmsTxtUrl": "https://www.dealerium.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.dealerium.com&sz=128",
+    "publishedAt": "2026-02-19"
+  },
+  {
     "name": "Demo Time",
     "domain": "https://demotime.elio.dev",
     "description": "Script your coding demos to perfection with this VS Code extension - no typos, no missteps, just flawless, stress-free presentations every time.",
