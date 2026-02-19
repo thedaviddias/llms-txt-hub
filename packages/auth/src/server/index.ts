@@ -30,9 +30,7 @@ export async function auth() {
         full_name: user.fullName || null,
         avatar_url: user.imageUrl || null
       }
-    },
-    // For compatibility with existing code that expects provider_token
-    provider_token: process.env.GITHUB_TOKEN
+    }
   }
 }
 

@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { ensureDebugAccess } from '@/app/api/debug/_utils'
 import { getUserContributions } from '@/lib/github-contributions'
 
 /**
@@ -21,6 +22,11 @@ function hashUsername(username: string | null | undefined): string {
  * @returns Promise resolving to NextResponse with contributions data or error
  */
 export async function GET(request: NextRequest) {
+  const access = await ensureDebugAccess(request)
+  if (!access.ok) {
+    return access.response
+  }
+
   const { searchParams } = new URL(request.url)
   const username = searchParams.get('username')
 

@@ -101,6 +101,21 @@ describe('Fetch Metadata API Route', () => {
       }
     })
 
+    it('blocks localhost and private-network targets', async () => {
+      const blockedUrls = ['http://localhost:3000', 'http://127.0.0.1', 'http://192.168.1.10']
+
+      for (const url of blockedUrls) {
+        const request = new Request(
+          `http://localhost/api/fetch-metadata?domain=${encodeURIComponent(url)}`
+        )
+        const response = await GET(request)
+        const data = await response.json()
+
+        expect(response.status).toBe(400)
+        expect(data.error).toBe('URL points to a restricted network address')
+      }
+    })
+
     it('successfully fetches metadata for valid URL', async () => {
       const request = new Request('http://localhost/api/fetch-metadata?domain=https://example.com')
       const response = await GET(request)
@@ -109,7 +124,25 @@ describe('Fetch Metadata API Route', () => {
       expect(response.status).toBe(200)
       expect(data.metadata).toBeDefined()
       expect(data.metadata.name).toBeDefined()
-      expect(data.metadata.website).toBe('https://example.com')
+      expect(data.metadata.website).toBe('https://example.com/')
+    })
+
+    it('blocks redirects to restricted network targets', async () => {
+      mockFetch.mockResolvedValueOnce(
+        new Response(null, {
+          status: 302,
+          headers: {
+            location: 'http://127.0.0.1/private'
+          }
+        })
+      )
+
+      const request = new Request('http://localhost/api/fetch-metadata?domain=https://example.com')
+      const response = await GET(request)
+      const data = await response.json()
+
+      expect(response.status).toBe(400)
+      expect(data.error).toBe('URL points to a restricted network address')
     })
   })
 
@@ -178,6 +211,24 @@ describe('Fetch Metadata API Route', () => {
       }
     })
 
+    it('blocks localhost and private-network targets', async () => {
+      const blockedUrls = ['http://localhost:3000', 'http://127.0.0.1', 'http://192.168.1.10']
+
+      for (const website of blockedUrls) {
+        const request = new Request('http://localhost/api/fetch-metadata', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ website })
+        })
+
+        const response = await POST(request)
+        const data = await response.json()
+
+        expect(response.status).toBe(400)
+        expect(data.error).toBe('URL points to a restricted network address')
+      }
+    })
+
     it('successfully fetches metadata for valid URL', async () => {
       const request = new Request('http://localhost/api/fetch-metadata', {
         method: 'POST',
@@ -191,7 +242,30 @@ describe('Fetch Metadata API Route', () => {
       expect(response.status).toBe(200)
       expect(data.metadata).toBeDefined()
       expect(data.metadata.name).toBeDefined()
-      expect(data.metadata.website).toBe('https://example.com')
+      expect(data.metadata.website).toBe('https://example.com/')
+    })
+
+    it('blocks redirects to restricted network targets', async () => {
+      mockFetch.mockResolvedValueOnce(
+        new Response(null, {
+          status: 302,
+          headers: {
+            location: 'http://localhost:8080/internal'
+          }
+        })
+      )
+
+      const request = new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+
+      const response = await POST(request)
+      const data = await response.json()
+
+      expect(response.status).toBe(400)
+      expect(data.error).toBe('URL points to a restricted network address')
     })
 
     it('handles duplicate website detection', async () => {
@@ -328,7 +402,7 @@ describe('Fetch Metadata API Route', () => {
       expect(response.status).toBe(200)
       expect(data.metadata.name).toBe('Test Website')
       expect(data.metadata.description).toBe('Test description')
-      expect(data.metadata.website).toBe('https://example.com')
+      expect(data.metadata.website).toBe('https://example.com/')
     })
 
     it('handles missing metadata gracefully', async () => {
@@ -352,7 +426,7 @@ describe('Fetch Metadata API Route', () => {
       expect(response.status).toBe(200)
       expect(data.metadata.name).toBeDefined()
       expect(data.metadata.description).toBeDefined()
-      expect(data.metadata.website).toBe('https://example.com')
+      expect(data.metadata.website).toBe('https://example.com/')
     })
 
     it('handles cheerio load errors', async () => {

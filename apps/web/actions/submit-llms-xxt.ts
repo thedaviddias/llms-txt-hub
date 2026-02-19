@@ -129,38 +129,19 @@ export async function submitLlmsTxt(formData: FormData) {
     const userEmail = session.user.email
     const displayName = githubUsername || userEmail?.split('@')[0] || 'Anonymous'
 
-    // Try to get user's GitHub token first, fall back to admin token
-    let access_token: string | null = null
-    let useUserToken = false
-
-    // Check if user has GitHub auth with token
-    if (session.provider_token && githubUsername) {
-      const provider_token = session.provider_token
-
-      if (typeof provider_token === 'string') {
-        access_token = provider_token
-        useUserToken = true
-      } else if (typeof provider_token === 'object' && provider_token !== null) {
-        const tokenObj = provider_token as { access_token?: string; token?: string }
-        access_token = tokenObj.access_token || tokenObj.token || null
-        useUserToken = !!access_token
-      }
+    const accessToken = process.env.GITHUB_TOKEN || null
+    if (!accessToken) {
+      throw new Error('GitHub token not configured')
     }
 
-    // Fall back to admin token if user doesn't have one
-    if (!access_token) {
-      access_token = process.env.GITHUB_TOKEN || null
-      useUserToken = false
-
-      if (!access_token) {
-        throw new Error('GitHub token not configured')
-      }
-    }
+    // The server action uses a single server-side admin token.
+    // User OAuth tokens are intentionally not accepted through this flow.
+    const useUserToken = false
 
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 90_000)
     const octokit = new Octokit({
-      auth: access_token,
+      auth: accessToken,
       request: { signal: controller.signal }
     })
 

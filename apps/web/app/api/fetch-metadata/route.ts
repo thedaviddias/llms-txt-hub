@@ -2,9 +2,9 @@ import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
-import validator from 'validator'
 import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 import { stripHtml } from '@/lib/security-utils-helpers'
+import { validatePublicHttpUrl } from '@/lib/url-safety'
 
 /**
  * Clean and sanitize a page title by removing common suffixes and special characters
@@ -26,21 +26,60 @@ function cleanTitle(title: string): string {
 const FETCH_TIMEOUT_MS = 10_000
 
 /**
+ * Error used to signal user-facing URL safety failures (e.g. restricted redirects).
+ */
+class UrlSafetyError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'UrlSafetyError'
+  }
+}
+
+/**
  * Fetch with timeout to avoid hanging on slow or unresponsive URLs
  */
 async function fetchWithTimeout(
   url: string,
-  options: RequestInit & { timeoutMs?: number } = {}
+  options: RequestInit & { timeoutMs?: number; maxRedirects?: number } = {}
 ): Promise<Response> {
-  const { timeoutMs = FETCH_TIMEOUT_MS, ...init } = options
-  const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
-  try {
-    const response = await fetch(url, { ...init, signal: controller.signal })
-    return response
-  } finally {
-    clearTimeout(timeoutId)
+  const { timeoutMs = FETCH_TIMEOUT_MS, maxRedirects = 3, ...init } = options
+  let currentUrl = url
+
+  for (let redirects = 0; redirects <= maxRedirects; redirects++) {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
+
+    try {
+      const response = await fetch(currentUrl, {
+        ...init,
+        redirect: 'manual',
+        signal: controller.signal
+      })
+
+      const isRedirect = response.status >= 300 && response.status < 400
+      if (!isRedirect) {
+        return response
+      }
+
+      const location = response.headers.get('location')
+      if (!location) return response
+      if (redirects === maxRedirects) {
+        throw new Error('Too many redirects')
+      }
+
+      const nextUrl = new URL(location, currentUrl).toString()
+      const redirectValidation = validatePublicHttpUrl(nextUrl)
+      if (!redirectValidation.ok) {
+        throw new UrlSafetyError(redirectValidation.error)
+      }
+
+      currentUrl = redirectValidation.url.toString()
+    } finally {
+      clearTimeout(timeoutId)
+    }
   }
+
+  throw new Error('Too many redirects')
 }
 
 /**
@@ -136,6 +175,10 @@ async function fetchMetadata(url: string) {
       }
     }
   } catch (error) {
+    if (error instanceof UrlSafetyError) {
+      throw error
+    }
+
     logger.error('Error fetching metadata:', { data: error, tags: { type: 'api' } })
     throw new Error('Failed to fetch metadata')
   }
@@ -155,32 +198,19 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Domain is required' }, { status: 400 })
   }
 
-  // Check for malicious URLs first
-  const lowerDomain = domain.toLowerCase()
-  if (
-    lowerDomain.includes('javascript:') ||
-    lowerDomain.includes('data:') ||
-    lowerDomain.includes('vbscript:') ||
-    lowerDomain.includes('file:')
-  ) {
-    return NextResponse.json({ error: 'Invalid URL protocol' }, { status: 400 })
-  }
-
-  // Enhanced URL validation
-  if (
-    !validator.isURL(domain, {
-      protocols: ['http', 'https'],
-      require_protocol: true,
-      require_valid_protocol: true
-    })
-  ) {
-    return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 })
+  const validation = validatePublicHttpUrl(domain)
+  if (!validation.ok) {
+    return NextResponse.json({ error: validation.error }, { status: 400 })
   }
 
   try {
-    const metadata = await fetchMetadata(domain)
+    const metadata = await fetchMetadata(validation.url.toString())
     return NextResponse.json(metadata)
-  } catch {
+  } catch (error) {
+    if (error instanceof UrlSafetyError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
     return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
   }
 }
@@ -205,31 +235,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Website URL is required' }, { status: 400 })
     }
 
-    // Check for malicious URLs first
-    const lowerWebsite = website.toLowerCase()
-    if (
-      lowerWebsite.includes('javascript:') ||
-      lowerWebsite.includes('data:') ||
-      lowerWebsite.includes('vbscript:') ||
-      lowerWebsite.includes('file:')
-    ) {
-      return NextResponse.json({ error: 'Invalid URL protocol' }, { status: 400 })
+    const validation = validatePublicHttpUrl(website)
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 })
     }
 
-    // Enhanced URL validation
-    if (
-      !validator.isURL(website, {
-        protocols: ['http', 'https'],
-        require_protocol: true,
-        require_valid_protocol: true
-      })
-    ) {
-      return NextResponse.json({ error: 'Invalid URL format' }, { status: 400 })
-    }
-
-    const metadata = await fetchMetadata(website)
+    const metadata = await fetchMetadata(validation.url.toString())
     return NextResponse.json(metadata)
-  } catch {
+  } catch (error) {
+    if (error instanceof UrlSafetyError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
     return NextResponse.json({ error: 'Failed to fetch metadata' }, { status: 500 })
   }
 }

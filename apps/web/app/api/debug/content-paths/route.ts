@@ -1,11 +1,17 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { type NextRequest, NextResponse } from 'next/server'
+import { ensureDebugAccess } from '@/app/api/debug/_utils'
 
 /**
  * Endpoint to check content paths and debug content-collections issues
  */
 export async function GET(_request: NextRequest) {
+  const access = await ensureDebugAccess(_request)
+  if (!access.ok) {
+    return access.response
+  }
+
   const paths = {
     cwd: process.cwd(),
     relPath: path.resolve(process.cwd(), '../../packages/content/data'),

@@ -79,8 +79,7 @@ describe('Check Username API Route', () => {
           full_name: null,
           avatar_url: null
         }
-      },
-      provider_token: undefined
+      }
     })
   })
 
@@ -111,8 +110,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request = new Request('http://localhost/api/user/check-username', {
@@ -361,8 +359,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       // Make 20 requests (the limit)
@@ -405,8 +402,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request1 = new Request('http://localhost/api/user/check-username', {
@@ -428,8 +424,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request2 = new Request('http://localhost/api/user/check-username', {
@@ -455,8 +450,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       mockClerkUsers.getUserList.mockRejectedValueOnce(new Error('Clerk API error'))
@@ -486,8 +480,7 @@ describe('Check Username API Route', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: undefined
+        }
       })
 
       const request = new Request('http://localhost/api/user/check-username', {
