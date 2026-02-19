@@ -19,7 +19,11 @@ export async function GET() {
     const favorites = (user.privateMetadata?.favorites as string[]) || []
 
     return NextResponse.json({ favorites })
-  } catch (error) {
+  } catch (error: unknown) {
+    // Handle deleted user (stale session token still valid after account deletion)
+    if (error && typeof error === 'object' && 'status' in error && error.status === 404) {
+      return NextResponse.json({ favorites: [] })
+    }
     logger.error('Failed to get user favorites', { data: error, tags: { api: 'favorites' } })
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
