@@ -374,9 +374,12 @@ export default clerkMiddleware(async (auth, req) => {
   const pathname = req.nextUrl.pathname
 
   // Block non-safe HTTP methods on page routes (not API, not _next)
-  // Legitimate mutations go through Server Actions (/_next/) or API routes (/api/)
+  // Next.js Server Actions are POST requests to page URLs with a `Next-Action` header
+  // (e.g., Clerk's invalidateCacheAction during sign-out)
+  const isServerAction = req.method === 'POST' && req.headers.has('next-action')
   if (
     !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
+    !isServerAction &&
     !pathname.startsWith('/api/') &&
     !pathname.startsWith('/_next/')
   ) {

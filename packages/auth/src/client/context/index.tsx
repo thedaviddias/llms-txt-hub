@@ -54,7 +54,7 @@ export function useAuth(): AuthProvider {
       router.push('/login')
     },
     signOut: async () => {
-      await clerkSignOut()
+      await clerkSignOut({ redirectUrl: '/' })
     },
     getSession: async () => {
       return { user: authUser, isSignedIn: !!isSignedIn }
