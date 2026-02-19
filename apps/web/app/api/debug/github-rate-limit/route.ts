@@ -1,5 +1,6 @@
 import { logger } from '@thedaviddias/logging'
 import { NextResponse } from 'next/server'
+import { ensureDebugAccess } from '@/app/api/debug/_utils'
 import { GitHubAPIClient } from '@/lib/github-security-utils'
 
 /**
@@ -7,7 +8,12 @@ import { GitHubAPIClient } from '@/lib/github-security-utils'
  *
  * @returns Promise resolving to NextResponse with rate limit info or error
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const access = await ensureDebugAccess(request)
+  if (!access.ok) {
+    return access.response
+  }
+
   try {
     const _githubClient = GitHubAPIClient.getInstance()
 

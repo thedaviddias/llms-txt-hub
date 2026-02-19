@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { logger } from '@thedaviddias/logging'
 import type { MetadataRoute } from 'next'
 import { categories } from '@/lib/categories'
+import { getWebsites } from '@/lib/content-loader'
 
 /**
  * Map of content paths that should be overridden to different URLs
@@ -15,17 +16,14 @@ const URL_OVERRIDES: Record<string, string> = {
 
 /**
  * Static routes that should be included in the sitemap
+ * Excludes: 'news' (redirects to /), 'submit' (noindex)
  */
-const STATIC_ROUTES = [
-  'faq',
-  'projects',
-  'websites',
-  'news',
-  'guides',
-  'about',
-  'members',
-  'submit'
-]
+const STATIC_ROUTES = ['faq', 'projects', 'websites', 'guides', 'about', 'members']
+
+/**
+ * Stable build date used for static route lastModified instead of calling new Date() per entry
+ */
+const BUILD_DATE = new Date()
 
 /**
  * Recursively get all MDX pages from a directory
@@ -45,8 +43,8 @@ function getContentPages(dir: string, baseDir = ''): string[] {
       const stat = statSync(fullPath)
 
       if (stat.isDirectory()) {
-        // Skip hidden directories and _meta files
-        if (!item.startsWith('_') && !item.startsWith('.')) {
+        // Skip hidden directories, _meta files, and websites/ (handled separately via getWebsites)
+        if (!item.startsWith('_') && !item.startsWith('.') && item !== 'websites') {
           pages.push(...getContentPages(fullPath, join(baseDir, item)))
         }
       } else if (item.endsWith('.mdx') && !item.startsWith('_')) {
@@ -85,7 +83,6 @@ function getPriority(path: string): number {
 
   if (path.startsWith('guides/')) return 0.8
   if (path.startsWith('resources/')) return 0.7
-  if (path.startsWith('u/')) return 0.3 // User profiles get lower priority
   if (STATIC_ROUTES.includes(path)) return 0.9 // High priority for main static routes
   return 0.5 // Other pages
 }
@@ -99,7 +96,7 @@ function getPriority(path: string): number {
 function getStaticRoutes(baseUrl: string): MetadataRoute.Sitemap {
   return STATIC_ROUTES.map(route => ({
     url: `${baseUrl}/${route}`,
-    lastModified: new Date(),
+    lastModified: BUILD_DATE,
     changeFrequency: 'weekly',
     priority: getPriority(route)
   }))
@@ -114,7 +111,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Add the root URL first
     routes.push({
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: BUILD_DATE,
       changeFrequency: 'daily',
       priority: 1
     })
@@ -123,7 +120,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     categories.forEach(category => {
       routes.push({
         url: `${baseUrl}/${category.slug}`,
-        lastModified: new Date(),
+        lastModified: BUILD_DATE,
         changeFrequency: category.priority === 'high' ? 'daily' : 'weekly',
         priority: getPriority(category.slug)
       })
@@ -132,16 +129,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Add static routes
     routes.push(...getStaticRoutes(baseUrl))
 
-    // Add content pages
+    // Add all website detail pages (the core content)
+    const websites = getWebsites()
+    for (const website of websites) {
+      routes.push({
+        url: `${baseUrl}/websites/${website.slug}`,
+        lastModified: new Date(website.publishedAt),
+        changeFrequency: 'monthly',
+        priority: 0.8
+      })
+    }
+
+    // Add content pages (guides, resources, legal, etc.)
     const pages = getContentPages(contentDir)
-    pages.forEach(page => {
+    for (const page of pages) {
+      // Skip u/ paths (user profiles are disallowed in robots.txt)
+      if (page.startsWith('u/')) continue
+
       routes.push({
         url: `${baseUrl}/${page}`,
-        lastModified: new Date(),
+        lastModified: BUILD_DATE,
         changeFrequency: 'weekly',
         priority: getPriority(page)
       })
-    })
+    }
   } catch (error) {
     logger.error('Error generating sitemap:', { data: error, tags: { type: 'page' } })
   }

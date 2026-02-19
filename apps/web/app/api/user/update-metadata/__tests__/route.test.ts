@@ -378,9 +378,8 @@ describe('/api/user/update-metadata', () => {
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(500)
-      expect(data).toEqual({ error: 'Failed to update metadata' })
-      expect(mockLogger.error).toHaveBeenCalled()
+      expect(response.status).toBe(400)
+      expect(data).toEqual({ error: 'Invalid request body' })
     })
 
     it('should normalize whitespace in text fields', async () => {

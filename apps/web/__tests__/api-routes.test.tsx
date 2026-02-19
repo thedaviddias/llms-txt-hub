@@ -44,8 +44,7 @@ describe('API Routes', () => {
             full_name: null,
             avatar_url: null
           }
-        },
-        provider_token: 'test-token'
+        }
       })
 
       const { GET } = await import('../app/api/user/export-data/route')

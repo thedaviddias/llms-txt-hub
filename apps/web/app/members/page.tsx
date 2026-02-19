@@ -1,8 +1,10 @@
 import { Breadcrumb } from '@thedaviddias/design-system/breadcrumb'
 import { getBaseUrl } from '@thedaviddias/utils/get-base-url'
 import { Users } from 'lucide-react'
+import { Suspense } from 'react'
 import { Card } from '@/components/ui/card'
 import { getCachedMembers } from '@/lib/member-server-utils'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 import { MembersList } from './members-list'
 import { MembersSearch } from './members-search'
 
@@ -18,15 +20,17 @@ export async function generateMetadata() {
   const allMembers = await getCachedMembers()
   const totalCount = allMembers.length
 
-  return {
-    title: `Members (${totalCount}) | LLMs.txt Hub`,
-    description: `Browse ${totalCount} members of the LLMs.txt Hub community. Connect with developers, creators, and contributors.`,
-    openGraph: {
-      title: `${totalCount} Members | LLMs.txt Hub`,
-      description:
-        'Join our growing community of developers and creators sharing their LLMs.txt files'
-    }
-  }
+  return generateBaseMetadata({
+    title: `Members (${totalCount})`,
+    description: `Browse ${totalCount} members of the llms.txt Hub community. Connect with developers, creators, and contributors building AI-ready documentation.`,
+    path: '/members',
+    keywords: [
+      'llms.txt community',
+      'AI documentation contributors',
+      'developer community',
+      'llms.txt members'
+    ]
+  })
 }
 
 /**
@@ -120,12 +124,20 @@ export default async function MembersPage({
             <h2 className="text-sm font-bold uppercase tracking-wider text-muted-foreground">
               {searchQuery ? `Search Results (${totalCount})` : `All Members (${totalCount})`}
             </h2>
-            <MembersList
-              initialMembers={initialMembers}
-              initialTotalCount={totalCount}
-              initialPage={page}
-              initialSearchQuery={searchQuery}
-            />
+            <Suspense
+              fallback={
+                <div className="flex justify-center py-8">
+                  <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                </div>
+              }
+            >
+              <MembersList
+                initialMembers={initialMembers}
+                initialTotalCount={totalCount}
+                initialPage={page}
+                initialSearchQuery={searchQuery}
+              />
+            </Suspense>
           </section>
         )}
       </div>

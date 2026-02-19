@@ -35,6 +35,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <html lang="en" suppressHydrationWarning>
         <head>
           <AnalyticsHead domain="llmstxthub.com" />
+          <link
+            rel="alternate"
+            type="application/feed+json"
+            title="llms.txt Hub - New Websites"
+            href="/rss.xml"
+          />
         </head>
         <body className={fonts}>
           <DesignSystemProvider>

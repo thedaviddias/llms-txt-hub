@@ -15,7 +15,7 @@ import { StaticWebsitesList } from '@/components/static-websites-list'
 import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo/seo-config'
 
 export const metadata: Metadata = generateBaseMetadata({
-  title: 'llms.txt Hub - Directory of AI-Ready Documentation & llms.txt Examples',
+  title: 'Directory of AI-Ready Documentation & llms.txt Examples',
   description:
     'Discover 500+ websites implementing the llms.txt standard. Browse real llms.txt examples, learn the specification, and find AI-ready documentation for APIs, platforms, and developer tools.',
   keywords: [
