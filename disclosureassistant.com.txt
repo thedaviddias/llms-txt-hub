@@ -1,0 +1,4 @@
+Site: https://disclosureassistant.com
+Description: Disclosure Assistant is a SaaS tool for family law and estate attorneys to organize and review financial statements using deterministic, court-safe rules and neutral summaries.
+Owner: Disclosure Assistant
+Contact: hello@disclosureassistant.com
