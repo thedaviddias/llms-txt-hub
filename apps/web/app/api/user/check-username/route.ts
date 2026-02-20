@@ -1,8 +1,8 @@
 import { createClerkClient } from '@clerk/backend'
 import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
-import DOMPurify from 'isomorphic-dompurify'
 import { NextResponse } from 'next/server'
+import { stripHtml } from '@/lib/security-utils-helpers'
 
 const clerk = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!
@@ -17,6 +17,9 @@ interface CheckRateLimitInput {
   windowMs?: number
 }
 
+/**
+ * Check whether the given identifier has exceeded its rate limit
+ */
 function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTime?: number } {
   const { identifier, maxRequests = 20, windowMs = 60 * 1000 } = input
   const now = Date.now()
@@ -37,6 +40,9 @@ function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTi
   return { allowed: true }
 }
 
+/**
+ * Handle POST request to check username availability
+ */
 export async function POST(request: Request) {
   try {
     // Get the current user session
@@ -55,8 +61,12 @@ export async function POST(request: Request) {
       )
     }
 
-    // Parse and validate request body
-    const body = await request.json()
+    let body: { username?: unknown }
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+    }
     const { username } = body
 
     if (!username || typeof username !== 'string') {
@@ -64,11 +74,7 @@ export async function POST(request: Request) {
     }
 
     // Sanitize username input
-    const sanitizedUsername = DOMPurify.sanitize(username, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
-      KEEP_CONTENT: true
-    })
+    const sanitizedUsername = stripHtml(username)
 
     const trimmedUsername = sanitizedUsername.trim().toLowerCase()
 

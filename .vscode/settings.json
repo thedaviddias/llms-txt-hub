@@ -30,6 +30,26 @@
     "packages/design-system/components/shadcn": true
   },
 
+  // -- Files Exclude ----------
+
+  "files.exclude": {
+    "**/.turbo": true,
+    "**/.claude": true,
+    "**/.codex": true,
+    "**/.cursor": true,
+    "**/.agents": true,
+    "**/.git": true,
+    "**/.github": true,
+    "**/.history": true,
+    "**/.next": true,
+    "**/node_modules": true,
+    "node_modules": true,
+    "test-results": true,
+    "coverage": true,
+    "dist": true,
+    ".lefthook": true
+  },
+
   // -- Spell Check ----------
 
   "spellright.language": ["en_US"],

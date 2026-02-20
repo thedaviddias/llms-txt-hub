@@ -72,6 +72,20 @@ export function clearRateLimiting() {
 }
 
 /**
+ * Strip all HTML tags from input, removing script/style content entirely.
+ * Use this instead of DOMPurify when ALLOWED_TAGS is empty (strip-all mode).
+ *
+ * @param input - The HTML string to strip
+ * @returns Plain text with all HTML removed
+ */
+export function stripHtml(input: string): string {
+  return input
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/<[^>]*>/g, '')
+}
+
+/**
  * Escape HTML entities to prevent XSS
  *
  * @param text - The text to escape

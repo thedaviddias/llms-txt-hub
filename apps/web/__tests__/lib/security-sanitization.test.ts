@@ -101,19 +101,21 @@ describe('Input Sanitization', () => {
       expect(result).not.toContain('evil.com')
     })
 
-    it('allows safe HTML tags', () => {
+    it('strips all HTML tags but preserves text content', () => {
       const input = 'Text with <strong>bold</strong> and <em>italic</em>'
       const result = sanitizeText(input)
-      expect(result).toContain('<strong>bold</strong>')
-      expect(result).toContain('<em>italic</em>')
+      expect(result).not.toContain('<strong>')
+      expect(result).not.toContain('<em>')
+      expect(result).toContain('bold')
+      expect(result).toContain('italic')
     })
 
     it('removes dangerous event handlers', () => {
       const input = '<p onclick="alert(1)">Click me</p>'
       const result = sanitizeText(input)
       expect(result).not.toContain('onclick')
-      expect(result).toContain('<p>Click me</p>')
-      // Event handler content should be removed for security
+      expect(result).not.toContain('<p>')
+      expect(result).toContain('Click me')
       expect(result).not.toContain('alert(1)')
     })
 

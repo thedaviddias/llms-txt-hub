@@ -1,42 +1,27 @@
-/**
- * Tests for profile-related pages to ensure they load without errors
- */
+import { useAuth } from '@thedaviddias/auth'
+import { render, screen, waitFor } from '@/__tests__/utils/test-utils.helper'
 
-import { jest } from '@jest/globals'
-import * as Auth from '@thedaviddias/auth'
-import { render, screen } from '@/__tests__/utils/test-utils.helper'
+const mockPush = jest.fn()
+const mockReplace = jest.fn()
 
-// Mock next/navigation
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: jest.fn(),
+  useRouter: jest.fn(() => ({
+    push: mockPush,
+    replace: mockReplace,
     back: jest.fn(),
     forward: jest.fn(),
     refresh: jest.fn(),
     prefetch: jest.fn()
-  }),
-  usePathname: () => '/profile',
-  useSearchParams: () => new URLSearchParams(),
-  useParams: () => ({})
+  })),
+  usePathname: jest.fn(() => '/profile'),
+  useSearchParams: jest.fn(() => new URLSearchParams()),
+  useParams: jest.fn(() => ({}))
 }))
 
-// Mock auth
 jest.mock('@thedaviddias/auth', () => ({
-  useAuth: () => ({
-    user: {
-      id: 'test-user-id',
-      email: 'test@example.com',
-      user_metadata: {
-        github_username: 'testuser',
-        user_name: 'testuser'
-      }
-    },
-    signOut: jest.fn()
-  })
+  useAuth: jest.fn()
 }))
 
-// Mock sonner
 jest.mock('sonner', () => ({
   toast: {
     success: jest.fn(),
@@ -45,59 +30,92 @@ jest.mock('sonner', () => ({
   }
 }))
 
-describe.skip('Profile Pages', () => {
-  describe('Profile Page', () => {
-    it('should render profile page without crashing', async () => {
-      const ProfilePage = (await import('../app/profile/page')).default
-      render(<ProfilePage />)
+jest.mock('@/components/profile/edit-profile-modal', () => ({
+  EditProfileModal: () => null
+}))
 
-      // Check for key elements
-      expect(screen.getByText('Profile Settings')).toBeTruthy()
-      expect(screen.getByText('Account Overview')).toBeTruthy()
+type AuthState = {
+  user: any
+  signOut: jest.Mock
+  isLoaded: boolean
+}
+
+const mockUseAuth = useAuth as jest.MockedFunction<typeof useAuth>
+
+function setAuthState(partial?: Partial<AuthState>) {
+  mockUseAuth.mockReturnValue({
+    user: {
+      id: 'user_test',
+      email: 'test@example.com',
+      publicMetadata: {
+        user_name: 'testuser'
+      },
+      user_metadata: {
+        user_name: 'testuser'
+      },
+      externalAccounts: [{ provider: 'oauth_github' }]
+    },
+    signOut: jest.fn(),
+    isLoaded: true,
+    ...partial
+  } as any)
+}
+
+describe('Profile pages', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    setAuthState()
+  })
+
+  it('renders profile settings for a loaded authenticated user', async () => {
+    const ProfilePage = (await import('../app/profile/page')).default
+    render(<ProfilePage />)
+
+    expect(await screen.findByText('Profile Settings')).toBeTruthy()
+    expect(screen.getByText('Manage your account settings and preferences')).toBeTruthy()
+    expect(screen.getByText('GitHub Integration')).toBeTruthy()
+    expect(screen.getByText('Connected')).toBeTruthy()
+  })
+
+  it('renders connect GitHub CTA when user has no GitHub external account', async () => {
+    setAuthState({
+      user: {
+        id: 'user_test',
+        email: 'test@example.com',
+        publicMetadata: {},
+        user_metadata: {},
+        externalAccounts: []
+      }
     })
 
-    it('should show GitHub connected status when user has GitHub auth', async () => {
-      const ProfilePage = (await import('../app/profile/page')).default
-      render(<ProfilePage />)
+    const ConnectGitHubPage = (await import('../app/auth/connect-github/page')).default
+    render(<ConnectGitHubPage />)
 
-      // Check for GitHub integration section
-      expect(screen.getByText('GitHub Integration')).toBeTruthy()
-      expect(screen.getByText('Connected')).toBeTruthy()
+    expect(screen.getByText('Connect Your GitHub Account')).toBeTruthy()
+    expect(screen.getByText(/Benefits of connecting GitHub/i)).toBeTruthy()
+  })
+
+  it('renders connected state when GitHub is already linked', async () => {
+    const ConnectGitHubPage = (await import('../app/auth/connect-github/page')).default
+    render(<ConnectGitHubPage />)
+
+    expect(screen.getByText('GitHub Connected!')).toBeTruthy()
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/profile?message=GitHub account already connected')
     })
   })
 
-  describe('Connect GitHub Page', () => {
-    it('should render connect GitHub page without crashing', async () => {
-      // Mock auth without GitHub for this test
-      jest.spyOn(Auth, 'useAuth').mockReturnValueOnce({
-        user: {
-          id: 'test-user-id',
-          email: 'test@example.com',
-          user_metadata: {}
-        },
-        signOut: jest.fn() as () => Promise<void>,
-        isLoaded: true,
-        isSignedIn: true,
-        signIn: jest.fn(),
-        getSession: jest.fn(),
-        getToken: jest.fn(),
-        openSignIn: jest.fn()
-      } as any)
+  it('shows loading state and redirects when auth user is missing', async () => {
+    setAuthState({ user: null })
 
-      const ConnectGitHubPage = (await import('../app/auth/connect-github/page')).default
-      render(<ConnectGitHubPage />)
+    const ConnectGitHubPage = (await import('../app/auth/connect-github/page')).default
+    render(<ConnectGitHubPage />)
 
-      // Check for key elements
-      expect(screen.getByText('Connect Your GitHub Account')).toBeTruthy()
-      expect(screen.getByText(/Benefits of connecting GitHub/)).toBeTruthy()
-    })
+    expect(screen.getByText('Loading...')).toBeTruthy()
 
-    it('should show already connected message when user has GitHub', async () => {
-      const ConnectGitHubPage = (await import('../app/auth/connect-github/page')).default
-      render(<ConnectGitHubPage />)
-
-      // Should show connected status
-      expect(screen.getByText('GitHub Connected!')).toBeTruthy()
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/login?redirect=/auth/connect-github')
     })
   })
 })

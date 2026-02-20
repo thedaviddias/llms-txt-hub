@@ -18,6 +18,10 @@ describe('useContributions', () => {
     } as any)
   })
 
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
   it('should initialize with correct default values', () => {
     const { result } = renderHook(() =>
       useContributions({
@@ -139,7 +143,9 @@ describe('useContributions', () => {
     expect(mockFetch).toHaveBeenCalledTimes(initialCallCount)
   })
 
-  it.skip('should only fetch missing contributions when usernames change', async () => {
+  it('should only fetch missing contributions when usernames change', async () => {
+    jest.useFakeTimers()
+
     const { result, rerender } = renderHook(
       props =>
         useContributions({
@@ -148,6 +154,10 @@ describe('useContributions', () => {
         }),
       { initialProps: { usernames: ['user1'] } }
     )
+
+    await act(async () => {
+      jest.advanceTimersByTime(200)
+    })
 
     // Wait for initial fetch
     await waitFor(() => {
@@ -166,6 +176,9 @@ describe('useContributions', () => {
 
     // Add new user to existing list
     rerender({ usernames: ['user1', 'user4'] })
+    await act(async () => {
+      jest.advanceTimersByTime(200)
+    })
 
     await waitFor(() => {
       expect(result.current.contributions.user4).toBeDefined()
@@ -242,7 +255,9 @@ describe('useContributions', () => {
     })
   })
 
-  it.skip('should show loading state during fetch', async () => {
+  it('should show loading state during fetch', async () => {
+    jest.useFakeTimers()
+
     let resolveResponse: any
     const pendingPromise = new Promise(resolve => {
       resolveResponse = resolve
@@ -260,20 +275,35 @@ describe('useContributions', () => {
       })
     )
 
-    // Should be loading initially
+    await act(async () => {
+      jest.advanceTimersByTime(200)
+    })
+
+    // Should be loading while response is still pending
     expect(result.current.isLoading).toBe(true)
 
     // Resolve the response
-    act(() => {
+    await act(async () => {
       resolveResponse(mockContributionsResponse)
+      await Promise.resolve()
     })
 
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false)
-    })
+    expect(result.current.isLoading).toBe(false)
   })
 
-  it.skip('should refetch all contributions when refetch is called', async () => {
+  it('should refetch all contributions when refetch is called', async () => {
+    const initialResponse = {
+      contributions: [
+        { username: 'user1', hasContributions: true },
+        { username: 'user2', hasContributions: false }
+      ]
+    }
+
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: jest.fn().mockResolvedValue(initialResponse)
+    } as any)
+
     const { result } = renderHook(() =>
       useContributions({
         usernames: ['user1', 'user2'],
@@ -310,6 +340,15 @@ describe('useContributions', () => {
     })
 
     expect(mockFetch).toHaveBeenCalledTimes(initialCallCount + 1)
+    expect(mockFetch).toHaveBeenLastCalledWith('/api/members/contributions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        usernames: ['user1', 'user2']
+      })
+    })
   })
 
   it('should debounce rapid username changes', async () => {
@@ -384,7 +423,7 @@ describe('useContributions', () => {
     expect(result.current.contributions).toEqual({})
   })
 
-  it.skip('should preserve existing contributions when adding new ones', async () => {
+  it('should preserve existing contributions when adding new ones', async () => {
     const { result, rerender } = renderHook(
       props =>
         useContributions({

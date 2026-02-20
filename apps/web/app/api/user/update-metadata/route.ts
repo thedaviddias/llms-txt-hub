@@ -1,9 +1,9 @@
 import { createClerkClient } from '@clerk/backend'
 import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
-import DOMPurify from 'isomorphic-dompurify'
 import { NextResponse } from 'next/server'
 import validator from 'validator'
+import { stripHtml } from '@/lib/security-utils-helpers'
 
 const clerk = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY!
@@ -28,12 +28,7 @@ const LIMITS = {
 function sanitizeText(input: string | null | undefined): string | null {
   if (!input) return null
 
-  // Use DOMPurify to remove all HTML and potentially dangerous content
-  const cleaned = DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: [], // No HTML tags allowed
-    ALLOWED_ATTR: [],
-    KEEP_CONTENT: true // Keep text content
-  })
+  const cleaned = stripHtml(input)
 
   // Additional sanitization: remove zero-width characters and normalize whitespace
   return cleaned
@@ -74,6 +69,17 @@ function sanitizeUrl(url: string | null | undefined): string | null {
   return trimmed
 }
 
+interface UpdateMetadataBody {
+  isProfilePrivate?: boolean
+  bio?: string | null
+  work?: string | null
+  website?: string | null
+  linkedin?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  username?: string | null
+}
+
 /**
  * Handle POST request to update user metadata
  * @param request - The HTTP request object
@@ -88,8 +94,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Parse the request body
-    const body = await request.json()
+    let body: UpdateMetadataBody
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+    }
     const { isProfilePrivate, bio, work, website, linkedin, firstName, lastName, username } = body
 
     // Validate boolean if provided

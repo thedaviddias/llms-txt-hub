@@ -1,5 +1,6 @@
 import { Info } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { components } from '@/components/mdx'
 import type { WebsiteMetadata } from '@/lib/content-loader'
 import { stripHtmlTags } from '@/lib/utils'
@@ -21,7 +22,15 @@ export function WebsiteContentSection({ website }: WebsiteContentSectionProps) {
     return (
       <section className="animate-fade-in-up opacity-0 stagger-4">
         <div className="prose dark:prose-invert max-w-none prose-headings:scroll-mt-20">
-          <MDXRemote source={website.content} components={components} />
+          <MDXRemote
+            source={website.content}
+            components={components}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm]
+              }
+            }}
+          />
         </div>
       </section>
     )
