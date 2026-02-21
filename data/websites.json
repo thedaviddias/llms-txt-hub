@@ -2187,15 +2187,6 @@
     "publishedAt": "2025-05-11"
   },
   {
-    "name": "SailOnChain",
-    "domain": "https://sailonchain.com",
-    "description": "Crypto, Web3, and blockchain job board with 1,400+ active positions from 100+ companies worldwide",
-    "llmsTxtUrl": "https://sailonchain.com/llms.txt",
-    "category": "other",
-    "favicon": "https://www.google.com/s2/favicons?domain=sailonchain.com&sz=128",
-    "publishedAt": "2025-06-01"
-  },
-  {
     "name": "Salesbricks",
     "domain": "https://salesbricks.com",
     "description": "Sales automation and management platform",
