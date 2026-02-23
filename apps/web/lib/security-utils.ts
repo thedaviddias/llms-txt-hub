@@ -1,16 +1,16 @@
 /**
  * Security utilities for input validation and sanitization
  */
-import DOMPurify from 'isomorphic-dompurify'
 import validator from 'validator'
-import { sanitizeErrorMessage } from './security-utils-helpers'
+import { sanitizeErrorMessage, stripHtml } from './security-utils-helpers'
 
 // Re-export helpers for backward compatibility
 export {
   checkRateLimit,
   clearRateLimiting,
   escapeHtml,
-  getRateLimitKey
+  getRateLimitKey,
+  stripHtml
 } from './security-utils-helpers'
 
 /**
@@ -20,12 +20,7 @@ export function sanitizeText(input: string | null | undefined): string | null {
   if (input === null || input === undefined) return null
   if (input === '') return ''
 
-  // Use DOMPurify to sanitize HTML while allowing safe tags
-  const cleaned = DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: ['strong', 'em', 'p', 'br'], // Allow safe formatting tags
-    ALLOWED_ATTR: [], // No attributes allowed to prevent event handlers
-    KEEP_CONTENT: true // Keep text content
-  })
+  const cleaned = stripHtml(input)
 
   // Additional sanitization: remove zero-width characters but preserve line breaks
   return cleaned

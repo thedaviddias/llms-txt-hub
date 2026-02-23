@@ -1,4 +1,6 @@
 'use client'
+
+import { logger } from '@thedaviddias/logging'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
 import { EmptyState } from '@/components/empty-state'
@@ -69,7 +71,10 @@ export function WebsitesListWithSearch({
         setSearchTotalCount(data.totalCount)
       }
     } catch (error) {
-      console.error('Failed to search websites:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'component', component: 'websites-list-with-search' }
+      })
       setSearchResults([])
       setSearchTotalCount(0)
     } finally {
@@ -96,16 +101,17 @@ export function WebsitesListWithSearch({
         setHasMoreWebsites(data.hasMore && data.websites.length > 0)
       }
     } catch (error) {
-      console.error('Failed to load more websites:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'component', component: 'websites-list-with-search' }
+      })
     } finally {
       setIsLoadingMore(false)
       isLoadingRef.current = false
     }
   }, [allWebsites.length, hasMoreWebsites, totalCount, isLoadingMore])
 
-  // Load state from localStorage on mount
   useEffect(() => {
-    // Use requestAnimationFrame to load immediately after render
     requestAnimationFrame(() => {
       const savedSortBy = localStorage.getItem('websites-sort-by')
 
@@ -121,14 +127,12 @@ export function WebsitesListWithSearch({
     })
   }, [])
 
-  // Save sortBy state to localStorage when it changes
   useEffect(() => {
     if (isClient) {
       localStorage.setItem('websites-sort-by', JSON.stringify(sortBy))
     }
   }, [sortBy, isClient])
 
-  // Debounced search effect
   useEffect(() => {
     if (searchQuery.trim()) {
       setIsSearchPending(true)
@@ -147,21 +151,14 @@ export function WebsitesListWithSearch({
     return () => clearTimeout(timeoutId)
   }, [searchQuery, searchAllWebsites])
 
-  // Load More Pattern - No automatic loading, user controls when to load more
-
-  // Filter and sort websites
   const filteredAndSortedWebsites = useMemo(() => {
-    // If searching, use search results
     if (searchQuery.trim()) {
       let websites = [...searchResults]
-
-      // Apply favorites filter to search results
       if (showFavoritesOnly) {
         const favoriteSlugs = new Set(favoriteWebsites.map(w => w.slug))
         websites = websites.filter(website => favoriteSlugs.has(website.slug))
       }
 
-      // Sort search results
       if (sortBy === 'latest') {
         return websites.sort((a, b) => {
           const dateA = new Date(a.publishedAt).getTime()
@@ -173,10 +170,7 @@ export function WebsitesListWithSearch({
       }
     }
 
-    // If not searching, use loaded websites
     let websites = showFavoritesOnly ? [...favoriteWebsites] : [...allWebsites]
-
-    // Sort
     if (sortBy === 'latest') {
       return websites.sort((a, b) => {
         const dateA = new Date(a.publishedAt).getTime()
@@ -215,7 +209,6 @@ export function WebsitesListWithSearch({
         trackSortChange={trackSortChange}
       />
 
-      {/* Results Grid */}
       {filteredAndSortedWebsites.length === 0 ? (
         searchQuery.trim() && (isSearchPending || isSearching) ? (
           <div className="flex flex-col items-center justify-center py-12">
@@ -246,7 +239,6 @@ export function WebsitesListWithSearch({
             </p>
           )}
 
-          {/* Grid with Animation */}
           <div className="relative">
             <div
               className={`transition-opacity duration-300 ${isLoading ? 'opacity-80' : 'opacity-100'}`}
@@ -260,7 +252,6 @@ export function WebsitesListWithSearch({
             </div>
           </div>
 
-          {/* Load More Pattern - Following UX Pattern */}
           {!searchQuery.trim() && !isSearching && (
             <div className="mt-8 text-center" aria-live="polite">
               {hasMoreWebsites ? (

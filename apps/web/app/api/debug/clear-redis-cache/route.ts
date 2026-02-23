@@ -1,5 +1,6 @@
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
+import { ensureDebugAccess } from '@/app/api/debug/_utils'
 import { CACHE_KEYS, del } from '@/lib/redis'
 
 /**
@@ -9,6 +10,11 @@ import { CACHE_KEYS, del } from '@/lib/redis'
  * @returns Promise resolving to NextResponse with cache clear result or error
  */
 export async function POST(request: NextRequest) {
+  const access = await ensureDebugAccess(request)
+  if (!access.ok) {
+    return access.response
+  }
+
   try {
     const body = await request.json()
     const { username } = body

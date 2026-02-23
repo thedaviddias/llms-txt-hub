@@ -2,6 +2,7 @@
 
 import { useAuth } from '@thedaviddias/auth'
 import { Button } from '@thedaviddias/design-system/button'
+import { logger } from '@thedaviddias/logging'
 import { Download, Eye, Lock } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -150,7 +151,10 @@ export default function PrivacySettingsPage() {
 
       toast.success('Data export downloaded successfully')
     } catch (error) {
-      console.error('Error exporting data:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'page', page: 'privacy-settings' }
+      })
       toast.error('Failed to export data. Please try again.')
     }
   }

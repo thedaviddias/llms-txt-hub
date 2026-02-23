@@ -1,5 +1,6 @@
 import { logger } from '@thedaviddias/logging'
 import { NextResponse } from 'next/server'
+import { ensureDebugAccess } from '@/app/api/debug/_utils'
 import { GitHubAPIClient } from '@/lib/github-security-utils'
 
 /**
@@ -7,7 +8,12 @@ import { GitHubAPIClient } from '@/lib/github-security-utils'
  *
  * @returns Promise resolving to NextResponse with success or error message
  */
-export async function POST() {
+export async function POST(request: Request) {
+  const access = await ensureDebugAccess(request)
+  if (!access.ok) {
+    return access.response
+  }
+
   try {
     const githubClient = GitHubAPIClient.getInstance()
     githubClient.clearRateLimitCache()

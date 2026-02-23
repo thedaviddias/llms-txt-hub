@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
 import { CommunityDashboard } from '@/components/community/community-dashboard'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
-export const metadata: Metadata = {
-  title: 'Community - llms.txt hub',
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Community Hub',
   description:
-    'Join our growing community of developers building AI-ready documentation. Connect, contribute, and discover the latest in llms.txt projects.'
-}
+    'Join our growing community of developers building AI-ready documentation. Connect, contribute, and discover the latest in llms.txt projects.',
+  path: '/community',
+  keywords: [
+    'llms.txt community',
+    'AI documentation community',
+    'developer community',
+    'open source contributors'
+  ]
+})
 
 export default function CommunityPage() {
   return (

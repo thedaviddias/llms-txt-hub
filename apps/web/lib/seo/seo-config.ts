@@ -9,7 +9,7 @@ import type { Metadata } from 'next'
  */
 
 // Site-wide constants
-export const SITE_NAME = 'llms.txt hub'
+export const SITE_NAME = 'llms.txt Hub'
 export const SITE_TAGLINE = 'Discover AI-Ready Documentation'
 export const SITE_DESCRIPTION =
   'The largest directory of AI-ready websites and tools implementing the llms.txt standard. Find APIs, platforms, and documentation optimized for LLM integration.'
@@ -74,10 +74,9 @@ export function generateBaseMetadata(options: {
   } = options
 
   const url = `${SITE_URL}${path}`
-  const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`
 
   return {
-    title: fullTitle,
+    title,
     description,
     keywords: keywords.join(', '),
     authors: [{ name: 'David Dias', url: 'https://thedaviddias.com' }],
@@ -88,7 +87,7 @@ export function generateBaseMetadata(options: {
       canonical: url
     },
     openGraph: {
-      title: fullTitle,
+      title,
       description,
       url,
       siteName: SITE_NAME,
@@ -98,7 +97,7 @@ export function generateBaseMetadata(options: {
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
+      title,
       description,
       site: TWITTER_HANDLE,
       creator: TWITTER_CREATOR,

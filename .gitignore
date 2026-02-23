@@ -60,8 +60,6 @@ sessions/
 .llms/
 
 # llms.txt documentation
-.agents/skills/
-.claude/skills/
-.cursor/skills/
-.windsurf/skills/
-.cline/skills/
+.agents/
+.claude/
+.cursor/

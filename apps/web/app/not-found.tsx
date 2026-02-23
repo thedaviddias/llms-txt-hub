@@ -1,6 +1,16 @@
 import { Button } from '@thedaviddias/design-system/button'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getRoute } from '@/lib/routes'
+import { generateBaseMetadata } from '@/lib/seo/seo-config'
+
+export const metadata: Metadata = generateBaseMetadata({
+  title: 'Page Not Found',
+  description:
+    'The page you are looking for does not exist. Browse the llms.txt Hub directory to find AI-ready documentation.',
+  path: '/404',
+  noindex: true
+})
 
 export default async function NotFound() {
   return (

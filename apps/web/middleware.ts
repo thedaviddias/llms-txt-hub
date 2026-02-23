@@ -16,7 +16,6 @@ const isPublicRoute = createRouteMatcher([
   '/api/websites(.*)',
   '/api/rss-feed(.*)',
   '/api/fetch-metadata(.*)',
-  '/api/debug/content-paths(.*)',
   '/api/members(.*)',
   '/search(.*)',
   '/websites(.*)',
@@ -181,12 +180,14 @@ function generateNonce(): string {
  * @returns NextResponse with security headers added
  */
 function addSecurityHeaders(response: NextResponse, nonce?: string): NextResponse {
+  const scriptNonceDirective = nonce ? `'nonce-${nonce}'` : ''
+
   // Stronger Content Security Policy
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' ${nonce ? `'nonce-${nonce}'` : "'unsafe-inline'"} https://plausible.io https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' ${scriptNonceDirective} https://plausible.io https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
-    `style-src 'self' ${nonce ? `'nonce-${nonce}'` : "'unsafe-inline'"}`,
+    "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
     "font-src 'self' data:",
     "connect-src 'self' https: wss: blob: https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com https://*.clerk.accounts.dev https://*.clerk.com",
@@ -373,10 +374,18 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
 export default clerkMiddleware(async (auth, req) => {
   const pathname = req.nextUrl.pathname
 
+  // Debug endpoints must never be reachable in production.
+  if (pathname.startsWith('/api/debug/') && process.env.NODE_ENV === 'production') {
+    return new Response(null, { status: 404 })
+  }
+
   // Block non-safe HTTP methods on page routes (not API, not _next)
-  // Legitimate mutations go through Server Actions (/_next/) or API routes (/api/)
+  // Next.js Server Actions are POST requests to page URLs with a `Next-Action` header
+  // (e.g., Clerk's invalidateCacheAction during sign-out)
+  const isServerAction = req.method === 'POST' && req.headers.has('next-action')
   if (
     !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
+    !isServerAction &&
     !pathname.startsWith('/api/') &&
     !pathname.startsWith('/_next/')
   ) {
@@ -450,11 +459,15 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // Generate nonce for CSP if needed
-  const nonce = req.nextUrl.pathname.includes('.html') ? generateNonce() : undefined
+  // Generate a nonce for CSP on every request and make it available downstream.
+  const nonce = generateNonce()
+  const requestHeaders = new Headers(req.headers)
+  requestHeaders.set('x-nonce', nonce)
 
   // Add security headers to all responses
-  const response = NextResponse.next()
+  const response = NextResponse.next({
+    request: { headers: requestHeaders }
+  })
   return addSecurityHeaders(response, nonce)
 })
 

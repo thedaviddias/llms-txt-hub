@@ -3,6 +3,7 @@
 import { useAuth } from '@thedaviddias/auth'
 import { Badge } from '@thedaviddias/design-system/badge'
 import { Button } from '@thedaviddias/design-system/button'
+import { logger } from '@thedaviddias/logging'
 import {
   AlertCircle,
   CheckCircle,
@@ -22,6 +23,7 @@ import { toast } from 'sonner'
 import { EditProfileModal } from '@/components/profile/edit-profile-modal'
 import { Card } from '@/components/ui/card'
 import { UserMessageBanner } from '@/components/ui/user-message-banner'
+import { fetchWithCSRF } from '@/lib/csrf-client'
 
 export default function ProfileContent() {
   const { user, signOut, isLoaded } = useAuth()
@@ -69,7 +71,7 @@ export default function ProfileContent() {
     setIsDeleting(true)
 
     try {
-      const response = await fetch('/api/user/delete-account', {
+      const response = await fetchWithCSRF('/api/user/delete-account', {
         method: 'DELETE'
       })
 
@@ -81,7 +83,10 @@ export default function ProfileContent() {
       await signOut()
       router.push('/')
     } catch (error) {
-      console.error('Error deleting account:', error)
+      logger.error(error instanceof Error ? error : new Error(String(error)), {
+        data: error,
+        tags: { type: 'component', component: 'profile-content' }
+      })
       toast.error('Failed to delete account. Please try again.')
     } finally {
       setIsDeleting(false)
@@ -101,7 +106,9 @@ export default function ProfileContent() {
     )
   }
 
-  const hasGitHubAuth = Boolean(user.publicMetadata?.github_username)
+  const hasGitHubAuth = Boolean(
+    user.externalAccounts?.some(account => account.provider === 'oauth_github')
+  )
   const displayName = user.publicMetadata?.user_name || user.email?.split('@')[0] || 'User'
   const accountType = hasGitHubAuth ? 'GitHub' : 'Email'
   const isProfilePrivate = user.publicMetadata?.isProfilePrivate === true
