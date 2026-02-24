@@ -126,6 +126,16 @@
     "publishedAt": "2025-05-08"
   },
   {
+    "name": "Aptabase",
+    "domain": "https://aptabase.com",
+    "description": "Open-source, privacy-first analytics for mobile, desktop, and web apps. GDPR-compliant with SDKs for Swift, Kotlin, Flutter, React Native, Electron, Tauri, .NET MAUI, and more.",
+    "llmsTxtUrl": "https://aptabase.com/llms.txt",
+    "llmsFullTxtUrl": "https://aptabase.com/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=aptabase.com&sz=128",
+    "publishedAt": "2026-02-22"
+  },
+  {
     "name": "Aptible",
     "domain": "https://aptible.com",
     "description": "Security and compliance platform for cloud infrastructure",
