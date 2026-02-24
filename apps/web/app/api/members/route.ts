@@ -2,6 +2,7 @@ import { logger } from '@thedaviddias/logging'
 import { withRateLimit } from '@thedaviddias/rate-limiting'
 import { type NextRequest, NextResponse } from 'next/server'
 import { getCachedMembers, type Member } from '@/lib/member-server-utils'
+import { hasSharedInfo } from '@/lib/member-shared'
 
 interface MembersResponse {
   members: Member[]
@@ -29,7 +30,7 @@ export async function GET(
       const limit = Math.min(50, Math.max(1, Number.isNaN(parsedLimit) ? 20 : parsedLimit))
       const search = searchParams.get('search')?.trim()
 
-      const allMembers = await getCachedMembers()
+      const allMembers = (await getCachedMembers()).filter(hasSharedInfo)
 
       // Apply search filter if provided
       let filteredMembers = allMembers

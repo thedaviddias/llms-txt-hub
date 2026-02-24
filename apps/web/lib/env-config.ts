@@ -30,10 +30,10 @@ export const serverEnv = {
 
 /**
  * Validate that required environment variables are present
+ * In CI/test environments, we allow missing Clerk credentials as we have fallbacks
  */
 export function validateEnvironmentVariables(): void {
   const requiredServerEnv = ['CLERK_SECRET_KEY'] as const
-
   const requiredPublicEnv = ['NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY'] as const
 
   const missing: string[] = []
@@ -52,10 +52,20 @@ export function validateEnvironmentVariables(): void {
     }
   }
 
+  // In CI/test environments, allow missing Clerk credentials with a warning
+  const isCI = process.env.CI === 'true' || process.env.NODE_ENV === 'test'
+  const isProductionBuild = process.env.NODE_ENV === 'production' && process.env.CI === 'true'
+
   if (missing.length > 0) {
-    throw new Error(
-      `Missing required environment variables: ${missing.join(', ')}. Please check your .env.local file and ensure all required variables are set.`
-    )
+    if (isCI || isProductionBuild) {
+      console.warn(
+        `Warning: Missing optional environment variables in CI/test environment: ${missing.join(', ')}. Using fallback implementations.`
+      )
+    } else {
+      throw new Error(
+        `Missing required environment variables: ${missing.join(', ')}. Please check your .env.local file and ensure all required variables are set.`
+      )
+    }
   }
 }
 

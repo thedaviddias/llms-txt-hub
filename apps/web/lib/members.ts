@@ -1,8 +1,10 @@
 import { logger } from '@thedaviddias/logging'
-import { getCachedMembers, type Member } from './member-server-utils'
+import { getCachedMembers } from './member-server-utils'
+import { hasSharedInfo, type Member } from './member-shared'
 
 // Re-export the Member type for consumers that import from here
 export type { Member }
+export { hasSharedInfo }
 
 export interface GetLatestMembersInput {
   limit?: number

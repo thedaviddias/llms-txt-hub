@@ -286,7 +286,7 @@ ${description}
       const pr = await octokit.pulls.create({
         owner,
         repo,
-        title: `feat: add ${name} to llms.txt hub`,
+        title: `feat(llmstxt): add ${name} to llms.txt hub`,
         head: headRef,
         base: defaultBranch,
         body: `This PR adds ${name} to the llms.txt hub.

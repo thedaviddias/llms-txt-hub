@@ -2,60 +2,14 @@
  * Server-side member processing utilities
  */
 
-import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
 import { revalidateTag, unstable_cache } from 'next/cache'
+import { getClerk } from '@/lib/clerk'
+import { hasSharedInfo, type Member } from '@/lib/member-shared'
 import SafeRedis, { CACHE_KEYS } from '@/lib/redis'
 import { hashSensitiveData } from '@/lib/server-crypto'
 
-const clerk = createClerkClient({
-  secretKey: process.env.CLERK_SECRET_KEY!
-})
-
-export interface Member {
-  id: string
-  firstName?: string | null
-  lastName?: string | null
-  username?: string | null
-  imageUrl?: string | null
-  createdAt: string
-  publicMetadata?: {
-    github_username?: string | null
-    migrated_from?: string | null
-    isProfilePrivate?: boolean
-  }
-  hasContributions?: boolean
-}
-
-/**
- * Check if user has shared enough information to be displayed publicly
- *
- * @param user - User object from Clerk
- * @returns True if user should be visible in public listings
- */
-export function hasSharedInfo(user: any): boolean {
-  // Exclude users who explicitly set their profile to private
-  if (user.publicMetadata?.isProfilePrivate === true) {
-    return false
-  }
-
-  // Exclude users with "null" string values
-  if (user.firstName === 'null' || user.lastName === 'null') {
-    return false
-  }
-
-  // A user should be visible if they have:
-  // - A first name OR
-  // - A username (Clerk or GitHub)
-  const hasName = !!(user.firstName && user.firstName !== '')
-  const hasUsername = !!(
-    user.username ||
-    user.publicMetadata?.github_username ||
-    user.publicMetadata?.githubUsername
-  )
-
-  return hasName || hasUsername
-}
+export type { Member } from '@/lib/member-shared'
 
 /**
  * Process a single user and check their contributions
@@ -129,17 +83,25 @@ export async function invalidateMembersCache(): Promise<void> {
 
 /**
  * Fetch all members from Clerk API with batched pagination.
- * Returns the processed member array or throws on failure.
+ * Returns processed members and gracefully degrades to an empty list on Clerk failures.
  */
 async function fetchMembersFromClerk(): Promise<Member[]> {
-  if (!process.env.CLERK_SECRET_KEY) {
-    throw new Error('CLERK_SECRET_KEY not configured')
+  const clerk = getClerk()
+  if (!clerk) {
+    logger.warn('Clerk client not available, using fallback member data', {
+      tags: { type: 'library' },
+      data: {
+        reason: process.env.CLERK_SECRET_KEY ? 'init_failed' : 'missing_secret'
+      }
+    })
+    return []
   }
 
   const allUsers: Member[] = []
   let offset = 0
   const limit = 500
   let fetchError = false
+  let fetchFailureReason: 'unknown' | 'unauthorized' = 'unknown'
 
   while (true) {
     try {
@@ -168,6 +130,9 @@ async function fetchMembersFromClerk(): Promise<Member[]> {
       if (error && typeof error === 'object') {
         if ('status' in error) {
           errorInfo.status = (error as { status: unknown }).status
+          if ((error as { status: unknown }).status === 401) {
+            fetchFailureReason = 'unauthorized'
+          }
         }
         if ('errors' in error) {
           const errWithErrors = error as { errors: unknown }
@@ -193,7 +158,11 @@ async function fetchMembersFromClerk(): Promise<Member[]> {
   }
 
   if (allUsers.length === 0 && fetchError) {
-    throw new Error('Clerk API failed before fetching any members')
+    logger.warn('Clerk API unavailable, serving empty members list fallback', {
+      data: { reason: fetchFailureReason },
+      tags: { type: 'page', security: 'error' }
+    })
+    return []
   }
 
   return allUsers
@@ -229,7 +198,9 @@ export const getCachedMembers = unstable_cache(
       })
 
       // Write-through to Redis for next time
-      await SafeRedis.set(REDIS_MEMBERS_KEY, members, REDIS_MEMBERS_TTL)
+      if (members.length > 0) {
+        await SafeRedis.set(REDIS_MEMBERS_KEY, members, REDIS_MEMBERS_TTL)
+      }
 
       return members
     } catch (error) {

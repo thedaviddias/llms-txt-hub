@@ -16,9 +16,9 @@ export const keys = () =>
       NEXT_PUBLIC_SENTRY_DSN: z.string().trim().url().optional()
     },
     runtimeEnv: {
-      SENTRY_ORG: process.env.SENTRY_ORG,
-      SENTRY_PROJECT: process.env.SENTRY_PROJECT,
-      NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
-      SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN
+      SENTRY_ORG: process.env.SENTRY_ORG || undefined,
+      SENTRY_PROJECT: process.env.SENTRY_PROJECT || undefined,
+      NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN || undefined,
+      SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN || undefined
     }
   })
