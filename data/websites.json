@@ -22,7 +22,7 @@
   {
     "name": "Affordable NVMe SSD Web Hosting Pakistan",
     "domain": "http://www.webhostingpk.com",
-    "description": "Host your site with 10x faster NVMe SSD, free SSL, cPanel & 24/7 support. Try WebHostingPk today – plans from Rs 199/month with a 1-day free trial.",
+    "description": "Host your site with 10x faster NVMe SSD, free SSL, cPanel & 24/7 support. Try WebHostingPk today \u2013 plans from Rs 199/month with a 1-day free trial.",
     "llmsTxtUrl": "http://www.webhostingpk.com/llms.txt",
     "llmsFullTxtUrl": "http://www.webhostingpk.com/llms-full.txt",
     "category": "infrastructure-cloud",
@@ -116,7 +116,7 @@
     "publishedAt": "2025-02-24"
   },
   {
-    "name": "APS SDK’s OpenAPI Specification | aps",
+    "name": "APS SDK\u2019s OpenAPI Specification | aps",
     "domain": "https://wallabyway.github.io/aps-sdk-openapi/",
     "description": "OpenAPI specifications used for generating the APS SDKs.",
     "llmsTxtUrl": "https://wallabyway.github.io/aps-sdk-openapi/llms.txt",
@@ -342,9 +342,9 @@
     "publishedAt": "2025-02-24"
   },
   {
-    "name": "Car Rental in Airports of Georgia",
+    "name": "Car Rental in Airports of\u00a0Georgia",
     "domain": "https://parent.ge",
-    "description": "Best rated car rental in Georgia. Best deals for economy, SUV and 4x4 cars in Tbilisi, Kutaisi and Batumi Airports. Affordable prices, driver's service.",
+    "description": "Best rated car rental in Georgia. Best deals for economy, SUV and 4x4 cars in Tbilisi, Kutaisi and Batumi Airports. Affordable prices, driver's\u00a0service.",
     "llmsTxtUrl": "https://parent.ge/llms.txt",
     "category": "security-identity",
     "favicon": "https://www.google.com/s2/favicons?domain=parent.ge&sz=128",
@@ -390,7 +390,7 @@
   {
     "name": "Clerk",
     "domain": "https://clerk.com/",
-    "description": "The easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and “The Modern Web”.",
+    "description": "The easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and \u201cThe Modern Web\u201d.",
     "llmsTxtUrl": "https://clerk.com/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=clerk.com&sz=128",
@@ -590,7 +590,7 @@
   {
     "name": "Customer Service AI platform",
     "domain": "https://www.gladly.ai/",
-    "description": "Gladly is the AI customer service software that powers radically efficient, radically personal support—treating people like people, not tickets.",
+    "description": "Gladly is the AI customer service software that powers radically efficient, radically personal support\u2014treating people like people, not tickets.",
     "llmsTxtUrl": "https://www.gladly.ai/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.gladly.ai&sz=128",
@@ -674,7 +674,7 @@
   {
     "name": "DexPaprika API | Live Crypto & Pool Data",
     "domain": "https://docs.dexpaprika.com/",
-    "description": "DexPaprika API streams real-time DEX token prices, liquidity pools & volumes—ideal fuel for AI agents powering trading dashboards, portfolios & DeFi apps.",
+    "description": "DexPaprika API streams real-time DEX token prices, liquidity pools & volumes\u2014ideal fuel for AI agents powering trading dashboards, portfolios & DeFi apps.",
     "llmsTxtUrl": "https://docs.dexpaprika.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.dexpaprika.com/llms-full.txt",
     "category": "data-analytics",
@@ -1140,7 +1140,7 @@
   {
     "name": "Heyflow",
     "domain": "https://heyflow.com/",
-    "description": "Create interactive lead funnels, multi-step forms and customized landing pages that drive conversions and engage your website visitors—without writing any code.",
+    "description": "Create interactive lead funnels, multi-step forms and customized landing pages that drive conversions and engage your website visitors\u2014without writing any code.",
     "llmsTxtUrl": "https://heyflow.com/llms.txt",
     "llmsFullTxtUrl": "https://heyflow.com/llms-full.txt",
     "category": "integration-automation",
@@ -1167,7 +1167,7 @@
     "publishedAt": "2025-05-30"
   },
   {
-    "name": "Home • Angular",
+    "name": "Home \u2022 Angular",
     "domain": "https://angular.dev",
     "description": "The web development framework for building modern apps.",
     "llmsTxtUrl": "https://angular.dev/llms.txt",
@@ -1253,12 +1253,21 @@
   {
     "name": "ID21",
     "domain": "https://id21.com.sg/",
-    "description": "ID21 designs innovative workplaces that inspire collaboration, productivity, and well‑being.",
+    "description": "ID21 designs innovative workplaces that inspire collaboration, productivity, and well\u2011being.",
     "llmsTxtUrl": "https://id21.com.sg/llms.txt",
     "llmsFullTxtUrl": "https://id21.com.sg/llms-full.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=id21.com.sg&sz=128",
     "publishedAt": "2025-06-20"
+  },
+  {
+    "name": "IMZAInvest",
+    "domain": "https://imzainvest.com",
+    "description": "UK investing education for beginners. Covers ISAs, SIPPs, ETFs, index funds, dividend investing and long-term wealth building for UK families.",
+    "llmsTxtUrl": "https://imzainvest.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=imzainvest.com&sz=128",
+    "publishedAt": "2026-02-19"
   },
   {
     "name": "Infisical",
@@ -1339,7 +1348,7 @@
   {
     "name": "Ladendirekt",
     "domain": "https://ladendirekt.de/",
-    "description": "Kaufen günstig und bequem - Vergleichen Sie die Preise für Möbel, Mode und Elektronik mit Ladendirekt-Preisvergleich.",
+    "description": "Kaufen g\u00fcnstig und bequem - Vergleichen Sie die Preise f\u00fcr M\u00f6bel, Mode und Elektronik mit Ladendirekt-Preisvergleich.",
     "llmsTxtUrl": "https://ladendirekt.de/llms.txt",
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=ladendirekt.de&sz=128",
@@ -1605,7 +1614,7 @@
   {
     "name": "MilleChek.ai",
     "domain": "https://millecheck.ai",
-    "description": "MilleCheck.ai est l&#x27;outil tout-en-un qui analyse en profondeur rapidité, écoconception, SEO, sécurité et accessibilité de vos pages web afin d&#x27;optimiser les performances frontend et améliorer l&#x27;expérience utilisateur.",
+    "description": "MilleCheck.ai est l&#x27;outil tout-en-un qui analyse en profondeur rapidit\u00e9, \u00e9coconception, SEO, s\u00e9curit\u00e9 et accessibilit\u00e9 de vos pages web afin d&#x27;optimiser les performances frontend et am\u00e9liorer l&#x27;exp\u00e9rience utilisateur.",
     "llmsTxtUrl": "https://millecheck.ai/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=millecheck.ai&sz=128",
@@ -1643,7 +1652,7 @@
   {
     "name": "MODESER",
     "domain": "https://www.modeser.com",
-    "description": "MODESER - Modern Tasarım Hizmetleri olarak Web Tasarım, WordPress, Dijital Pazarlama, Alan Adı, Hosting, Sunucu, E-Ticaret ve SSL çözümleri sunuyoruz.",
+    "description": "MODESER - Modern Tasar\u0131m Hizmetleri olarak Web Tasar\u0131m, WordPress, Dijital Pazarlama, Alan Ad\u0131, Hosting, Sunucu, E-Ticaret ve SSL \u00e7\u00f6z\u00fcmleri sunuyoruz.",
     "llmsTxtUrl": "https://www.modeser.com/llms.txt",
     "llmsFullTxtUrl": "https://www.modeser.com/llms-full.txt",
     "category": "developer-tools",
@@ -1651,9 +1660,9 @@
     "publishedAt": "2025-06-10"
   },
   {
-    "name": "MOREMEDIA®",
+    "name": "MOREMEDIA\u00ae",
     "domain": "https://www.moremedia.at",
-    "description": "Kreative Konzepte, performante Websites und smarte digitale Lösungen: wir unterstützen KMU & Hidden Champions dabei, erfolgreicher zu kommunizieren.",
+    "description": "Kreative Konzepte, performante Websites und smarte digitale L\u00f6sungen: wir unterst\u00fctzen KMU & Hidden Champions dabei, erfolgreicher zu kommunizieren.",
     "llmsTxtUrl": "https://www.moremedia.at/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.moremedia.at&sz=128",
@@ -1716,6 +1725,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=docs.nativescript.org&sz=128",
     "publishedAt": "2025-04-28"
+  },
+  {
+    "name": "NearbyTraders",
+    "domain": "https://nearbytraders.co.uk",
+    "description": "UK local trader directory covering plumbers, electricians, builders, roofers and more across Kent and London. Includes cost guides and verified listings.",
+    "llmsTxtUrl": "https://nearbytraders.co.uk/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=nearbytraders.co.uk&sz=128",
+    "publishedAt": "2026-02-19"
   },
   {
     "name": "Netlify",
@@ -1831,6 +1849,15 @@
     "publishedAt": "2025-07-26"
   },
   {
+    "name": "PawsField",
+    "domain": "https://pawsfield.co.uk",
+    "description": "UK directory of secure, privately enclosed dog walking fields. Find safe off-lead dog exercise venues by county across England, Scotland and Wales.",
+    "llmsTxtUrl": "https://pawsfield.co.uk/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=pawsfield.co.uk&sz=128",
+    "publishedAt": "2026-02-19"
+  },
+  {
     "name": "PayrollRabbit",
     "domain": "https://www.payrollrabbit.com",
     "description": "Generate Compliant Payslips in 60 seconds.\r\nInstantly compliant. Highly accurate. Fully automated.",
@@ -1890,7 +1917,7 @@
   {
     "name": "PlaceMania",
     "domain": "https://www.placemania.sk/",
-    "description": "Sprievodca po nie práve turistických a krajších miesta sveta. Cestovateľské tipy, články, fakty na ktoré nezabudneš.",
+    "description": "Sprievodca po nie pr\u00e1ve turistick\u00fdch a kraj\u0161\u00edch miesta sveta. Cestovate\u013esk\u00e9 tipy, \u010dl\u00e1nky, fakty na ktor\u00e9 nezabudne\u0161.",
     "llmsTxtUrl": "https://www.placemania.sk/llms.txt",
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=www.placemania.sk&sz=128",
@@ -2219,7 +2246,7 @@
   {
     "name": "Schweizer Naturkosmetik mit Bio",
     "domain": "https://bepure.ch/",
-    "description": "Minimalistische Naturkosmetik mit Bio-Arganöl aus fairer Produktion – ohne Alkohol, Zusatzstoffe, hochkonzentriert, natürlich für ein ausgeglichenes Hautbild.",
+    "description": "Minimalistische Naturkosmetik mit Bio-Argan\u00f6l aus fairer Produktion \u2013 ohne Alkohol, Zusatzstoffe, hochkonzentriert, nat\u00fcrlich f\u00fcr ein ausgeglichenes Hautbild.",
     "llmsTxtUrl": "https://bepure.ch/llms.txt",
     "llmsFullTxtUrl": "https://bepure.ch/llms-full.txt",
     "category": "data-analytics",
@@ -2286,7 +2313,7 @@
   {
     "name": "SEO KAOS",
     "domain": "https://www.seokaos.com/",
-    "description": "SEO danışmanı Seokaos ile Google başta olmak üzere dijital ortamda işlerinizi büyütün. 7/24 SEO danışmanlığı etik ve kalıcı hizmet.",
+    "description": "SEO dan\u0131\u015fman\u0131 Seokaos ile Google ba\u015fta olmak \u00fczere dijital ortamda i\u015flerinizi b\u00fcy\u00fct\u00fcn. 7/24 SEO dan\u0131\u015fmanl\u0131\u011f\u0131 etik ve kal\u0131c\u0131 hizmet.",
     "llmsTxtUrl": "https://www.seokaos.com/llms.txt",
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=www.seokaos.com&sz=128",
@@ -2313,7 +2340,7 @@
   {
     "name": "SimplePDF",
     "domain": "https://simplepdf.com",
-    "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
+    "description": "PDF editor in the browser \u2013 add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages \u2013 iframe, script and React component.",
     "llmsTxtUrl": "https://simplepdf.com/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=simplepdf.com&sz=128",
@@ -2339,7 +2366,7 @@
     "publishedAt": "2025-02-24"
   },
   {
-    "name": "Skywork︱The  AI Workspace Agents",
+    "name": "Skywork\ufe31The  AI Workspace Agents",
     "domain": "https://skywork.ai/",
     "description": "Skywork - Skywork turns simple input into multimodal content - docs, slides, sheets with deep research, podcasts & webpages.",
     "llmsTxtUrl": "https://skywork.ai/llms.txt",
@@ -2359,9 +2386,18 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "SmartHomeUK",
+    "domain": "https://smarthomeuk.co.uk",
+    "description": "UK smart home guides, product reviews, buying advice and setup tutorials. Covers smart thermostats, doorbells, cameras, plugs, lighting and robot vacuums.",
+    "llmsTxtUrl": "https://smarthomeuk.co.uk/llms.txt",
+    "category": "integration-automation",
+    "favicon": "https://www.google.com/s2/favicons?domain=smarthomeuk.co.uk&sz=128",
+    "publishedAt": "2026-02-19"
+  },
+  {
     "name": "Sociality.io",
     "domain": "https://sociality.io/",
-    "description": "Sociality.io is an AI‑first, human‑in‑the‑loop platform for social media analytics, engagement, social listening, competitor analysis and publishing automation.",
+    "description": "Sociality.io is an AI\u2011first, human\u2011in\u2011the\u2011loop platform for social media analytics, engagement, social listening, competitor analysis and publishing automation.",
     "llmsTxtUrl": "https://sociality.io/llms.txt",
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=sociality.io&sz=128",
@@ -2491,7 +2527,7 @@
   {
     "name": "Syndicats eG",
     "domain": "https://syndicats.de",
-    "description": "Digitale Geschäftsmodelle, Digitale Produkte & Prozesse. Lass machen, Syndicats.",
+    "description": "Digitale Gesch\u00e4ftsmodelle, Digitale Produkte & Prozesse. Lass machen, Syndicats.",
     "llmsTxtUrl": "https://syndicats.de/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=syndicats.de&sz=128",
@@ -2509,7 +2545,7 @@
   {
     "name": "Taskade AI",
     "domain": "https://www.taskade.com/",
-    "description": "Meet your AI workforce in Taskade. Build apps from a prompt. Connect tasks, data, and agents that think, plan, and act—automating work across your team.",
+    "description": "Meet your AI workforce in Taskade. Build apps from a prompt. Connect tasks, data, and agents that think, plan, and act\u2014automating work across your team.",
     "llmsTxtUrl": "https://www.taskade.com/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.taskade.com&sz=128",
@@ -2642,7 +2678,7 @@
   {
     "name": "TurboDocx",
     "domain": "https://turbodocx.com",
-    "description": "TurboDocx is an AI-powered document and slide deck automation platform. It helps businesses generate professional documents—like statements of work, runbooks, reports, and sales presentations—by pulling structured data from tools like CRMs, project management systems, and spreadsheets. Users can use their own branded templates, and TurboDocx takes care of the formatting, content population, and even e-signatures. It works via web app, API, SDK, and integrations—making it ideal for teams and software platforms that want to eliminate manual copy-paste and deliver polished outputs at scale.",
+    "description": "TurboDocx is an AI-powered document and slide deck automation platform. It helps businesses generate professional documents\u2014like statements of work, runbooks, reports, and sales presentations\u2014by pulling structured data from tools like CRMs, project management systems, and spreadsheets. Users can use their own branded templates, and TurboDocx takes care of the formatting, content population, and even e-signatures. It works via web app, API, SDK, and integrations\u2014making it ideal for teams and software platforms that want to eliminate manual copy-paste and deliver polished outputs at scale.",
     "llmsTxtUrl": "https://docs.turbodocx.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.turbodocx.com/llms-full.txt",
     "category": "integration-automation",
@@ -2671,7 +2707,7 @@
   {
     "name": "UFC Velvet",
     "domain": "https://ufcvelvet.com/",
-    "description": "UFC Velvet offers delicious plant-based milk made from almonds and coconuts—creamy, dairy-free, and perfect for your healthy lifestyle.",
+    "description": "UFC Velvet offers delicious plant-based milk made from almonds and coconuts\u2014creamy, dairy-free, and perfect for your healthy lifestyle.",
     "llmsTxtUrl": "https://ufcvelvet.com/llms.txt",
     "llmsFullTxtUrl": "https://ufcvelvet.com/llms-full.txt",
     "category": "ai-ml",
@@ -2775,7 +2811,7 @@
   {
     "name": "Various Interactive",
     "domain": "https://various.at",
-    "description": "Various Interactive ist eine interdisziplinäre Digitalagentur. Various Interactive bietet spannende Lösungen und frische Ansätze für Ihre digitale Zukunft.",
+    "description": "Various Interactive ist eine interdisziplin\u00e4re Digitalagentur. Various Interactive bietet spannende L\u00f6sungen und frische Ans\u00e4tze f\u00fcr Ihre digitale Zukunft.",
     "llmsTxtUrl": "https://various.at/llms.txt",
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=various.at&sz=128",
@@ -2853,7 +2889,7 @@
   {
     "name": "Voyager Shuffle",
     "domain": "https://games.stardreamcruises.com/",
-    "description": "Play fun and interactive web games from Star Dream Cruises—designed to entertain guests and enhance the cruise experience online.",
+    "description": "Play fun and interactive web games from Star Dream Cruises\u2014designed to entertain guests and enhance the cruise experience online.",
     "llmsTxtUrl": "https://games.stardreamcruises.com/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=games.stardreamcruises.com&sz=128",
@@ -2938,7 +2974,7 @@
   {
     "name": "Welcome to Alen Malkoc",
     "domain": "https://www.alenmalkoc.com",
-    "description": "Hi, I’m Alen Malkoč — a serial entrepreneur behind HulkApps and Shop Circle, now building AI-native companies from Sarajevo.",
+    "description": "Hi, I\u2019m Alen Malko\u010d \u2014 a serial entrepreneur behind HulkApps and Shop Circle, now building AI-native companies from Sarajevo.",
     "llmsTxtUrl": "https://www.alenmalkoc.com/llms.txt",
     "llmsFullTxtUrl": "https://www.alenmalkoc.com/llms-full.txt",
     "category": "developer-tools",
@@ -3024,7 +3060,7 @@
   {
     "name": "Wot UI",
     "domain": "https://wot-design-uni.cn",
-    "description": "一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件，支持暗黑模式、国际化和自定义主题.",
+    "description": "\u4e00\u4e2a\u57fa\u4e8eVue3+TS\u5f00\u53d1\u7684uni-app\u7ec4\u4ef6\u5e93\uff0c\u63d0\u4f9b70+\u9ad8\u8d28\u91cf\u7ec4\u4ef6\uff0c\u652f\u6301\u6697\u9ed1\u6a21\u5f0f\u3001\u56fd\u9645\u5316\u548c\u81ea\u5b9a\u4e49\u4e3b\u9898.",
     "llmsTxtUrl": "https://wot-design-uni.cn/llms.txt",
     "llmsFullTxtUrl": "https://wot-design-uni.cn/llms-full.txt",
     "category": "developer-tools",
@@ -3081,7 +3117,7 @@
     "publishedAt": "2025-07-14"
   },
   {
-    "name": "Zap.ts ⚡️",
+    "name": "Zap.ts \u26a1\ufe0f",
     "domain": "https://zap-ts.alexandretrotel.org",
     "description": "The boilerplate to build applications as fast as a zap.",
     "llmsTxtUrl": "https://zap-ts.alexandretrotel.org/llms.txt",
