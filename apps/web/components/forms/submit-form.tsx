@@ -20,6 +20,7 @@ import { generateLlmsUrl } from './submit-form-utils'
 export function SubmitForm() {
   const [step, setStep] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+  const [fetchFailed, setFetchFailed] = useState(false)
   const [prUrl, setPrUrl] = useState<string>('')
   const [llmsUrlStatus, setLlmsUrlStatus] = useState<{
     checking: boolean
@@ -84,19 +85,25 @@ export function SubmitForm() {
   }, [trackFormStepStart])
 
   /**
+   * Transitions to step 2 with pre-populated form data
+   */
+  function transitionToStep2(formData: Step2Data, failed: boolean) {
+    step2Form.reset(formData)
+    setFetchFailed(failed)
+    setStep(2)
+    trackFormStepStart(2, 'submit-form', 'submit-page')
+  }
+
+  /**
    * Fetches metadata for the website
    */
   async function onFetchMetadata(data: Step1Data) {
     setIsLoading(true)
-    // Track step 1 completion
     trackFormStepComplete(1, 'submit-form', 'submit-page')
 
     try {
-      // Get CSRF token from meta tag for API call
       const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json'
-      }
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
       if (csrfMetaTag?.content) {
         headers['x-csrf-token'] = csrfMetaTag.content
       }
@@ -114,7 +121,6 @@ export function SubmitForm() {
       const result = await response.json()
 
       if (result.isDuplicate) {
-        // Track duplicate submission attempt
         trackFetchMetadataError(data.website, 'duplicate_website', 'submit-page')
         toast.warning(
           `This website is already in our directory under the name "${result.existingWebsite.name}".`
@@ -123,32 +129,39 @@ export function SubmitForm() {
         return
       }
 
-      // Track successful metadata fetch
       trackFetchMetadataSuccess(data.website, 'submit-page')
 
-      // Auto-generate llms.txt URL if not provided
       const autoLlmsUrl = result.metadata.llmsUrl || generateLlmsUrl(data.website)
-
-      // Pre-populate form with fetched metadata
-      step2Form.reset({
-        name: result.metadata.name || '',
-        description: result.metadata.description || '',
-        mdxContent: '',
-        website: data.website,
-        llmsUrl: autoLlmsUrl,
-        llmsFullUrl: result.metadata.llmsFullUrl || '', // Only use if found in metadata, don't auto-generate
-        category: result.metadata.category || ''
-      })
-
-      setStep(2)
-      // Track step 2 start
-      trackFormStepStart(2, 'submit-form', 'submit-page')
+      transitionToStep2(
+        {
+          name: result.metadata.name || '',
+          description: result.metadata.description || '',
+          mdxContent: '',
+          website: data.website,
+          llmsUrl: autoLlmsUrl,
+          llmsFullUrl: result.metadata.llmsFullUrl || '',
+          category: result.metadata.category || ''
+        },
+        false
+      )
       toast.success('Website info fetched. Please review and complete the submission.')
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-      // Track metadata fetch error
       trackFetchMetadataError(data.website, errorMessage, 'submit-page')
-      toast.error('Failed to fetch website information. Please try again.')
+      toast.error('Failed to fetch website information. You can fill in the details manually.')
+
+      transitionToStep2(
+        {
+          name: '',
+          description: '',
+          mdxContent: '',
+          website: data.website,
+          llmsUrl: generateLlmsUrl(data.website),
+          llmsFullUrl: '',
+          category: ''
+        },
+        true
+      )
     } finally {
       setIsLoading(false)
     }
@@ -159,51 +172,38 @@ export function SubmitForm() {
    */
   async function onSubmitStep2(values: Step2Data) {
     setIsLoading(true)
-    // Track step 2 completion
     trackFormStepComplete(2, 'submit-form', 'submit-page')
 
     try {
       const formData = new FormData()
-      // Set current date for publishedAt
       const currentDate = new Date().toISOString().split('T')[0]
 
-      // Get CSRF token from meta tag
       const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
       if (csrfMetaTag?.content) {
         formData.append('_csrf', csrfMetaTag.content)
       }
 
-      // Process values before adding to formData
-      const processedValues = {
-        ...values,
-        name: values.name.trim() // Trim title/name
-      }
-
-      // Add all form values except publishedAt
+      const processedValues = { ...values, name: values.name.trim() }
       Object.entries(processedValues).forEach(([key, value]) => {
         if (key !== 'publishedAt' && value) {
           formData.append(key, value)
         }
       })
-      // Add the current date as publishedAt
       formData.append('publishedAt', currentDate)
 
       const result = await submitLlmsTxt(formData)
 
       if (result.success && result.prUrl) {
-        // Track successful submission
         trackSubmitSuccess(values.website, values.category, 'submit-page')
         toast.success('Your PR has been created successfully!')
         setPrUrl(String(result.prUrl))
         setStep(3)
-        // Track step 3 start (success page)
         trackFormStepStart(3, 'submit-form', 'submit-page')
       } else {
         throw new Error(result.error || 'Unknown error occurred')
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-      // Track submission error
       trackSubmitError(values.website, errorMessage, 'submit-page')
       toast.error(
         error instanceof Error
@@ -221,6 +221,7 @@ export function SubmitForm() {
   function handleReset() {
     step2Form.reset()
     step1Form.reset()
+    setFetchFailed(false)
     setStep(1)
   }
 
@@ -280,6 +281,7 @@ export function SubmitForm() {
           form={step2Form}
           onSubmit={onSubmitStep2}
           isLoading={isLoading}
+          fetchFailed={fetchFailed}
           websiteUrlStatus={websiteUrlStatus}
           llmsUrlStatus={llmsUrlStatus}
           llmsFullUrlStatus={llmsFullUrlStatus}
@@ -291,7 +293,6 @@ export function SubmitForm() {
         <SubmitFormSuccess prUrl={prUrl} onSubmitAnother={handleReset} />
       )}
 
-      {/* Add guidelines for all steps except success */}
       {step !== 3 && <SubmitFormGuidelines />}
     </>
   )
