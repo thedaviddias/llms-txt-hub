@@ -174,18 +174,14 @@ function generateNonce(): string {
 }
 
 /**
- * Adds security headers including CSP to all responses
- * @param response - NextResponse object to add headers to
- * @param nonce - CSP nonce for inline scripts
- * @returns NextResponse with security headers added
+ * Build the CSP header value for a given nonce.
+ * Centralised so both request and response headers use the same policy.
  */
-function addSecurityHeaders(response: NextResponse, nonce?: string): NextResponse {
-  const scriptNonceDirective = nonce ? `'nonce-${nonce}'` : ''
-
-  // Stronger Content Security Policy
+function buildCspValue(nonce: string): string {
+  const isDev = process.env.NODE_ENV === 'development'
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' ${scriptNonceDirective} https://plausible.io https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://plausible.io https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
@@ -197,10 +193,14 @@ function addSecurityHeaders(response: NextResponse, nonce?: string): NextRespons
     "form-action 'self'",
     'upgrade-insecure-requests'
   ]
+  return cspDirectives.join('; ')
+}
 
-  response.headers.set('Content-Security-Policy', cspDirectives.join('; '))
-
-  // Enhanced security headers
+/**
+ * Adds non-CSP security headers to a response.
+ * CSP is set separately via buildCspValue() on both request and response headers.
+ */
+function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
@@ -219,11 +219,6 @@ function addSecurityHeaders(response: NextResponse, nonce?: string): NextRespons
       'Strict-Transport-Security',
       'max-age=31536000; includeSubDomains; preload'
     )
-  }
-
-  // CSP nonce for inline scripts
-  if (nonce) {
-    response.headers.set('X-Nonce', nonce)
   }
 
   return response
@@ -440,6 +435,10 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 
+  // Generate a nonce early so every response path can use it.
+  const nonce = generateNonce()
+  const cspValue = buildCspValue(nonce)
+
   // Check if route is protected
   if (!isPublicRoute(req)) {
     // Check if user is authenticated
@@ -449,26 +448,33 @@ export default clerkMiddleware(async (auth, req) => {
       // For API routes, return 401 instead of redirecting
       if (req.nextUrl.pathname.startsWith('/api/')) {
         const response = NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        response.headers.set('Content-Security-Policy', cspValue)
         return addSecurityHeaders(response)
       }
 
       // For web routes, redirect to custom login page
       const loginUrl = new URL('/login', req.url)
       const response = NextResponse.redirect(loginUrl)
+      response.headers.set('Content-Security-Policy', cspValue)
       return addSecurityHeaders(response)
     }
   }
 
-  // Generate a nonce for CSP on every request and make it available downstream.
-  const nonce = generateNonce()
+  // Forward nonce and CSP to the rendering pipeline via request headers.
+  // Next.js reads Content-Security-Policy from request headers to extract the
+  // nonce and automatically apply it to its own inline <script> tags.
   const requestHeaders = new Headers(req.headers)
   requestHeaders.set('x-nonce', nonce)
+  requestHeaders.set('Content-Security-Policy', cspValue)
 
-  // Add security headers to all responses
   const response = NextResponse.next({
     request: { headers: requestHeaders }
   })
-  return addSecurityHeaders(response, nonce)
+
+  // Set the same CSP on the response so the browser enforces it.
+  response.headers.set('Content-Security-Policy', cspValue)
+  response.headers.set('X-Nonce', nonce)
+  return addSecurityHeaders(response)
 })
 
 export const config = {

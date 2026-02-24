@@ -2,6 +2,7 @@ import { PlausibleAnalyticsComponent } from './providers/plausible'
 
 interface AnalyticsProviderProps {
   readonly plausibleDomain: string
+  readonly nonce?: string
 }
 
 /**
@@ -18,7 +19,7 @@ interface AnalyticsProviderProps {
  * <AnalyticsProvider plausibleDomain="example.com" />
  * ```
  */
-export function AnalyticsProvider({ plausibleDomain }: AnalyticsProviderProps) {
+export function AnalyticsProvider({ plausibleDomain, nonce }: AnalyticsProviderProps) {
   // Validate domain in development
   if (process.env.NODE_ENV === 'development' && !plausibleDomain.trim()) {
     throw new Error('plausibleDomain is required for AnalyticsProvider')
@@ -29,5 +30,5 @@ export function AnalyticsProvider({ plausibleDomain }: AnalyticsProviderProps) {
     return null
   }
 
-  return <PlausibleAnalyticsComponent domain={plausibleDomain} />
+  return <PlausibleAnalyticsComponent domain={plausibleDomain} nonce={nonce} />
 }
