@@ -2,6 +2,7 @@ import PlausibleProvider from 'next-plausible'
 
 type PlausibleAnalyticsProps = {
   domain: string
+  nonce?: string
 }
 
 /**
@@ -17,7 +18,7 @@ type PlausibleAnalyticsProps = {
  * <PlausibleAnalyticsComponent domain="llmstxthub.com" />
  * ```
  */
-export const PlausibleAnalyticsComponent = ({ domain }: PlausibleAnalyticsProps) => {
+export const PlausibleAnalyticsComponent = ({ domain, nonce }: PlausibleAnalyticsProps) => {
   if (!domain) {
     return null
   }
@@ -30,6 +31,7 @@ export const PlausibleAnalyticsComponent = ({ domain }: PlausibleAnalyticsProps)
       enabled={true}
       trackOutboundLinks={true}
       taggedEvents={true}
+      scriptProps={nonce ? { nonce } : undefined}
     />
   )
 }
