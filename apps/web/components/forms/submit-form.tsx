@@ -255,7 +255,7 @@ export function SubmitForm() {
                   {hasGitHubAuth ? (
                     <>
                       <span className="text-green-700 dark:text-green-400">GitHub connected:</span>{' '}
-                      Your submission will create a pull request under your account
+                      Your submission will create a pull request under the account below:
                     </>
                   ) : (
                     <>
