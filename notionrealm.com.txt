@@ -1,0 +1,7 @@
+Site: https://notionrealm.com
+Description: NotionRealm provides premium Notion templates for productivity, freelancers, agencies, creators, and students. Templates include planners, CRM systems, task trackers, and more to organize personal and professional life.
+Owner: NotionRealm
+Contact: notionrealm@gmail.com
+
+User-agent: *
+Allow: /
