@@ -2023,6 +2023,15 @@
     "publishedAt": "2025-04-07"
   },
   {
+    "name": "PutPut",
+    "domain": "https://putput.io",
+    "description": "File upload API for AI agents. Upload files and get CDN URLs — no signup, no API keys, no OAuth.",
+    "llmsTxtUrl": "https://putput.io/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=putput.io&sz=128",
+    "publishedAt": "2026-02-27"
+  },
+  {
     "name": "Pydantic",
     "domain": "https://docs.pydantic.dev/latest/",
     "description": "Pydantic is the most widely used data validation library for Python.",
