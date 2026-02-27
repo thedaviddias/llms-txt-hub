@@ -10,9 +10,14 @@ export const step1Schema = z.object({
     .url({
       message: 'Please enter a valid URL.'
     })
-    .refine(value => !value.toLowerCase().includes('llms.txt'), {
-      message: 'Please enter your website URL, not the path to your llms.txt file'
-    })
+    .refine(
+      value =>
+        !value.toLowerCase().includes('llms.txt') && !value.toLowerCase().includes('llms-full.txt'),
+      {
+        message:
+          'Please enter your website URL, not the path to your llms.txt or llms-full.txt file'
+      }
+    )
 })
 
 const validCategorySlugs = categories.map(category => category.slug) as [string, ...string[]]
@@ -49,9 +54,14 @@ export const step2Schema = z.object({
     .url({
       message: 'Please enter a valid URL.'
     })
-    .refine(value => !value.toLowerCase().includes('llms.txt'), {
-      message: 'Please enter your website URL, not the path to your llms.txt file'
-    }),
+    .refine(
+      value =>
+        !value.toLowerCase().includes('llms.txt') && !value.toLowerCase().includes('llms-full.txt'),
+      {
+        message:
+          'Please enter your website URL, not the path to your llms.txt or llms-full.txt file'
+      }
+    ),
   llmsUrl: z
     .string()
     .url({
@@ -99,9 +109,14 @@ export const submitActionSchema = z.object({
   website: z
     .string()
     .url({ message: 'Please enter a valid URL.' })
-    .refine(value => !value.toLowerCase().includes('llms.txt'), {
-      message: 'Please enter your website URL, not the path to your llms.txt file'
-    }),
+    .refine(
+      value =>
+        !value.toLowerCase().includes('llms.txt') && !value.toLowerCase().includes('llms-full.txt'),
+      {
+        message:
+          'Please enter your website URL, not the path to your llms.txt or llms-full.txt file'
+      }
+    ),
   llmsUrl: z
     .string()
     .url({ message: 'Please enter a valid URL.' })
