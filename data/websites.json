@@ -2311,6 +2311,16 @@
     "publishedAt": "2025-07-30"
   },
   {
+    "name": "Silicon Friendly",
+    "domain": "https://siliconfriendly.com",
+    "description": "Directory rating websites on AI-agent friendliness. L0-L5 levels, 30 criteria, 834+ websites rated. MCP server, API, and search available.",
+    "llmsTxtUrl": "https://siliconfriendly.com/llms.txt",
+    "llmsFullTxtUrl": "",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=siliconfriendly.com&sz=128",
+    "publishedAt": "2026-02-28"
+  },
+  {
     "name": "SimplePDF",
     "domain": "https://simplepdf.com",
     "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
