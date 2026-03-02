@@ -2311,6 +2311,15 @@
     "publishedAt": "2025-07-30"
   },
   {
+    "name": "shortlist",
+    "domain": "https://shortlistresume.com",
+    "description": "AI resume tailoring tool. Paste a job posting and your resume, get targeted improvement suggestions. Nothing is stored.",
+    "llmsTxtUrl": "https://shortlistresume.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=shortlistresume.com&sz=128",
+    "publishedAt": "2026-03-02"
+  },
+  {
     "name": "SimplePDF",
     "domain": "https://simplepdf.com",
     "description": "PDF editor in the browser – add text, checkboxes, pictures, signatures to PDF files. Merge, rotate PDF pages – iframe, script and React component.",
