@@ -233,6 +233,26 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "BallroomAI",
+    "domain": "https://ballroomai.com",
+    "description": "AI coaching and performance analysis platform for ballroom dance competitors and studios.",
+    "llmsTxtUrl": "https://ballroomai.com/llms.txt",
+    "llmsFullTxtUrl": "https://ballroomai.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=ballroomai.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
+    "name": "BarnBeacon",
+    "domain": "https://barnbeacon.com",
+    "description": "AI farm management and livestock tracking platform for modern agricultural operations.",
+    "llmsTxtUrl": "https://barnbeacon.com/llms.txt",
+    "llmsFullTxtUrl": "https://barnbeacon.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=barnbeacon.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "BaseHub",
     "domain": "https://basehub.com",
     "description": "Database and data infrastructure platform",
@@ -559,6 +579,16 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "CricketOps",
+    "domain": "https://cricketops.com",
+    "description": "AI operations platform for cricket clubs, coaches, and academies.",
+    "llmsTxtUrl": "https://cricketops.com/llms.txt",
+    "llmsFullTxtUrl": "https://cricketops.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=cricketops.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Cross Browser & Mobile App Testing",
     "domain": "https://testingbot.com",
     "description": "Instant access to over 5200 browsers with physical iOS and Android devices. Boost your testing with TestingBot.",
@@ -846,6 +876,16 @@
     "publishedAt": "2025-09-19"
   },
   {
+    "name": "FarrierIQ",
+    "domain": "https://farrieriq.com",
+    "description": "AI operations and scheduling platform for farriers and equine hoof care professionals.",
+    "llmsTxtUrl": "https://farrieriq.com/llms.txt",
+    "llmsFullTxtUrl": "https://farrieriq.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=farrieriq.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "FastHTML",
     "domain": "https://fastht.ml",
     "description": "High-performance HTML templating engine",
@@ -1100,6 +1140,16 @@
     "publishedAt": "2025-05-06"
   },
   {
+    "name": "HatchLedger",
+    "domain": "https://hatchledger.com",
+    "description": "AI financial and operations intelligence platform for hatcheries and aquaculture businesses.",
+    "llmsTxtUrl": "https://hatchledger.com/llms.txt",
+    "llmsFullTxtUrl": "https://hatchledger.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=hatchledger.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Helicone",
     "domain": "https://helicone.ai",
     "description": "LLM observability and monitoring platform",
@@ -1328,6 +1378,16 @@
     "publishedAt": "2025-07-01"
   },
   {
+    "name": "KoiQuanta",
+    "domain": "https://koiquanta.com",
+    "description": "AI koi fish health monitoring and pond management platform for enthusiasts and breeders.",
+    "llmsTxtUrl": "https://koiquanta.com/llms.txt",
+    "llmsFullTxtUrl": "https://koiquanta.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=koiquanta.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Kruzty",
     "domain": "https://www.kruzty.com",
     "description": "Live Wallpapers. Browse millions of high quality live wallpapers and give your pc an aesthetic look.",
@@ -1400,6 +1460,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=liambx.com&sz=128",
     "publishedAt": "2025-04-30"
+  },
+  {
+    "name": "LittleWords",
+    "domain": "https://littlewords.ai",
+    "description": "AI early literacy platform helping children develop language and reading skills.",
+    "llmsTxtUrl": "https://littlewords.ai/llms.txt",
+    "llmsFullTxtUrl": "https://littlewords.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=littlewords.ai&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "llms.txt",
@@ -1670,6 +1740,16 @@
     "publishedAt": "2025-06-22"
   },
   {
+    "name": "MountChief",
+    "domain": "https://mountchief.com",
+    "description": "AI trip planning and safety platform for mountaineers, climbers, and outdoor guides.",
+    "llmsTxtUrl": "https://mountchief.com/llms.txt",
+    "llmsFullTxtUrl": "https://mountchief.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=mountchief.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Mubashir Hassan",
     "domain": "https://www.mubashirhassan.com",
     "description": "Mubashir Hassan offers expert services in Local & Ecommerce SEO, Prompt Engineering, AI/Vibe Coding, Shopify & WordPress SEO, Web Development.",
@@ -1697,6 +1777,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=multisynq.io&sz=128",
     "publishedAt": "2025-08-06"
+  },
+  {
+    "name": "MyHairline",
+    "domain": "https://myhairline.ai",
+    "description": "AI-powered hair restoration analysis and personalised treatment planning platform.",
+    "llmsTxtUrl": "https://myhairline.ai/llms.txt",
+    "llmsFullTxtUrl": "https://myhairline.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=myhairline.ai&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "Mystery-o-matic",
@@ -1745,6 +1835,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=nextevogroup.com&sz=128",
     "publishedAt": "2025-06-19"
+  },
+  {
+    "name": "NextPhase Sports",
+    "domain": "https://nextphasesports.com",
+    "description": "AI sports performance analytics platform for athletes, coaches, and training programs.",
+    "llmsTxtUrl": "https://nextphasesports.com/llms.txt",
+    "llmsFullTxtUrl": "https://nextphasesports.com/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=nextphasesports.com&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "NomadHelper.AI",
@@ -1915,6 +2015,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=planharmony.com&sz=128",
     "publishedAt": "2025-06-18"
+  },
+  {
+    "name": "PollenOps",
+    "domain": "https://pollenops.com",
+    "description": "AI operations platform for beekeepers and commercial apiaries.",
+    "llmsTxtUrl": "https://pollenops.com/llms.txt",
+    "llmsFullTxtUrl": "https://pollenops.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=pollenops.com&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "POPSMASH",
@@ -2302,6 +2412,16 @@
     "publishedAt": "2025-07-16"
   },
   {
+    "name": "SepticMind",
+    "domain": "https://septicmind.com",
+    "description": "AI-powered septic system monitoring and field service operations platform.",
+    "llmsTxtUrl": "https://septicmind.com/llms.txt",
+    "llmsFullTxtUrl": "https://septicmind.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=septicmind.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Shop Positioner LLC",
     "domain": "https://shoppositioner.com/",
     "description": "Shop Positioner is a digital agency specializing in web design, SEO, PPC, and CRM solutions tailored for auto detailing, PPF and window tint businesses.",
@@ -2347,6 +2467,16 @@
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=skywork.ai&sz=128",
     "publishedAt": "2025-08-10"
+  },
+  {
+    "name": "SlabWise",
+    "domain": "https://slabwise.com",
+    "description": "AI-powered stone slab marketplace connecting countertop fabricators with natural stone inventory.",
+    "llmsTxtUrl": "https://slabwise.com/llms.txt",
+    "llmsFullTxtUrl": "https://slabwise.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=slabwise.com&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "Smartcar",
@@ -2395,6 +2525,26 @@
     "publishedAt": "2025-05-19"
   },
   {
+    "name": "Spawned",
+    "domain": "https://spawned.com",
+    "description": "AI gaming team management and operations platform for competitive players and esports organisations.",
+    "llmsTxtUrl": "https://spawned.com/llms.txt",
+    "llmsFullTxtUrl": "https://spawned.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=spawned.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
+    "name": "Sprouted",
+    "domain": "https://sprouted.com",
+    "description": "AI sprouting and microgreens production management platform for growers and food businesses.",
+    "llmsTxtUrl": "https://sprouted.com/llms.txt",
+    "llmsFullTxtUrl": "https://sprouted.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=sprouted.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Statusfield",
     "domain": "https://statusfield.com",
     "description": "Real-time alerts for outages in the cloud services you rely on.",
@@ -2423,6 +2573,16 @@
     "publishedAt": "2025-08-05"
   },
   {
+    "name": "StitchDesk",
+    "domain": "https://stitchdesk.com",
+    "description": "AI operations platform for tailors, seamstresses, and alterations businesses.",
+    "llmsTxtUrl": "https://stitchdesk.com/llms.txt",
+    "llmsFullTxtUrl": "https://stitchdesk.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=stitchdesk.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Stock trading & investment app",
     "domain": "https://freetrade.io",
     "description": "Invest commission-free with Freetrade. Trade thousands of UK, US, and European stocks and ETFs easily, on desktop or mobile.",
@@ -2440,6 +2600,16 @@
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=stripe.com&sz=128",
     "publishedAt": "2025-03-20"
+  },
+  {
+    "name": "StumpIQ",
+    "domain": "https://stumpiq.com",
+    "description": "AI-powered tree service operations platform with photo quoting, crew dispatch, and safety tracking.",
+    "llmsTxtUrl": "https://stumpiq.com/llms.txt",
+    "llmsFullTxtUrl": "https://stumpiq.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=stumpiq.com&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "Sunra AI",
@@ -2612,6 +2782,16 @@
     "publishedAt": "2025-07-14"
   },
   {
+    "name": "TributeIQ",
+    "domain": "https://tributeiq.com",
+    "description": "AI platform for funeral homes and memorial service businesses to manage tributes and family communications.",
+    "llmsTxtUrl": "https://tributeiq.com/llms.txt",
+    "llmsFullTxtUrl": "https://tributeiq.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=tributeiq.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Trigger.dev",
     "domain": "https://trigger.dev",
     "description": "Background job and workflow automation platform",
@@ -2782,6 +2962,16 @@
     "publishedAt": "2025-07-12"
   },
   {
+    "name": "VarroaVault",
+    "domain": "https://varroavault.com",
+    "description": "AI varroa mite detection and treatment tracking platform for beekeepers.",
+    "llmsTxtUrl": "https://varroavault.com/llms.txt",
+    "llmsFullTxtUrl": "https://varroavault.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=varroavault.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Velt",
     "domain": "https://velt.dev",
     "description": "Real-time collaboration platform",
@@ -2839,6 +3029,16 @@
     "category": "integration-automation",
     "favicon": "https://www.google.com/s2/favicons?domain=tryvital.io&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "VitiScribe",
+    "domain": "https://vitiscribe.com",
+    "description": "AI wine and viticulture documentation platform for wineries and vineyard managers.",
+    "llmsTxtUrl": "https://vitiscribe.com/llms.txt",
+    "llmsFullTxtUrl": "https://vitiscribe.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=vitiscribe.com&sz=128",
+    "publishedAt": "2026-03-01"
   },
   {
     "name": "Voxel Busters",
