@@ -26,6 +26,10 @@ export const routes = {
     list: '/guides',
     guide: '/guides/[slug]'
   },
+  extension: {
+    whatsNew: '/extension/whats-new',
+    uninstall: '/extension/uninstall'
+  },
   faq: '/faq',
   login: '/login',
   news: '/news',
@@ -55,6 +59,8 @@ type StaticRoutes =
   | 'docs.list'
   | 'favorites'
   | 'guides.list'
+  | 'extension.whatsNew'
+  | 'extension.uninstall'
   | 'faq'
   | 'login'
   | 'news'
