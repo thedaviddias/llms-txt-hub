@@ -30,7 +30,11 @@ type RootLayoutProps = {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const nonce = (await headers()).get('x-nonce') ?? undefined
+  const requestHeaders = await headers()
+  const nonce = requestHeaders.get('x-nonce') ?? undefined
+  const pathname = requestHeaders.get('x-pathname') ?? ''
+  const isExtensionRoute = pathname.startsWith('/extension')
+  const showSiteChrome = !isExtensionRoute
 
   return (
     <ClerkProvider signInUrl="/login" signUpUrl="/login" signInFallbackRedirectUrl="/">
@@ -51,11 +55,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 <AnalyticsTracker />
                 <CSRFProvider />
                 <div className="flex min-h-screen flex-col">
-                  <Header />
+                  {showSiteChrome && <Header />}
                   <main className="flex flex-1 flex-col">{children}</main>
-                  <Footer />
+                  {showSiteChrome && <Footer />}
                 </div>
-                <BackToTop />
+                {showSiteChrome && <BackToTop />}
                 {process.env.NODE_ENV === 'production' && <VercelToolbar />}
               </FavoritesProvider>
             </SentryUserProvider>

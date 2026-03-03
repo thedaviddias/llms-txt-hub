@@ -466,6 +466,7 @@ export default clerkMiddleware(async (auth, req) => {
   // Next.js reads Content-Security-Policy from request headers to extract the
   // nonce and automatically apply it to its own inline <script> tags.
   const requestHeaders = new Headers(req.headers)
+  requestHeaders.set('x-pathname', pathname)
   requestHeaders.set('x-nonce', nonce)
   requestHeaders.set('Content-Security-Policy', cspValue)
 

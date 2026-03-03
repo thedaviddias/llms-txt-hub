@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import type { ImgHTMLAttributes } from 'react'
 import { components } from '@/components/mdx'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   type ExtensionUpdateMetadata,
   getExtensionUpdateByVersion,
@@ -13,8 +13,6 @@ import { generateBaseMetadata } from '@/lib/seo/seo-config'
 
 const CHROME_STORE_URL =
   'https://chromewebstore.google.com/detail/llmstxt-checker/klcihkijejcgnaiinaehcjbggamippej'
-const CHANGELOG_URL =
-  'https://github.com/thedaviddias/llms-txt-chrome-extension/blob/main/CHANGELOG.md'
 
 interface WhatsNewPageProps {
   searchParams: Promise<{
@@ -63,6 +61,30 @@ const formatReleaseDate = (date: string): string => {
   })
 }
 
+type ExtensionMdxImageProps = ImgHTMLAttributes<HTMLImageElement>
+
+const extensionMdxComponents = {
+  ...components,
+  img: ({ className, alt = '', title, ...props }: ExtensionMdxImageProps) => {
+    const caption = typeof title === 'string' && title.trim().length > 0 ? title.trim() : null
+
+    return (
+      <>
+        <img
+          className={['mx-auto my-8 block h-auto max-w-full rounded-md', className]
+            .filter(Boolean)
+            .join(' ')}
+          alt={alt}
+          {...props}
+        />
+        {caption && (
+          <span className="mt-3 block text-center text-sm text-muted-foreground">{caption}</span>
+        )}
+      </>
+    )
+  }
+}
+
 export default async function ExtensionWhatsNewPage({ searchParams }: WhatsNewPageProps) {
   const { v, pv, lang } = await searchParams
   const release = resolveRelease(v)
@@ -75,12 +97,12 @@ export default async function ExtensionWhatsNewPage({ searchParams }: WhatsNewPa
           <p className="text-muted-foreground">We could not find release notes for this version.</p>
           <div className="flex flex-wrap gap-3">
             <Link
-              href={CHANGELOG_URL}
+              href={CHROME_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
             >
-              View changelog
+              Chrome Web Store
             </Link>
             <Link href={getRoute('home')} className="underline">
               Go to llms.txt Hub
@@ -132,22 +154,17 @@ export default async function ExtensionWhatsNewPage({ searchParams }: WhatsNewPa
           <h2 id="top-highlights" className="text-2xl font-semibold">
             Top highlights
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
             {release.highlights.slice(0, 5).map(highlight => (
-              <Card key={highlight} className="h-full border-border/50">
-                <CardHeader>
-                  <CardTitle className="text-base">Key improvement</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">{highlight}</p>
-                </CardContent>
-              </Card>
+              <li key={highlight} className="leading-relaxed">
+                {highlight}
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
         <section className="prose dark:prose-invert max-w-none">
-          <MDXRemote source={release.content || ''} components={components} />
+          <MDXRemote source={release.content || ''} components={extensionMdxComponents} />
         </section>
 
         <section
@@ -163,14 +180,6 @@ export default async function ExtensionWhatsNewPage({ searchParams }: WhatsNewPa
               className="underline"
             >
               Chrome Web Store
-            </Link>
-            <Link
-              href={CHANGELOG_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-            >
-              GitHub changelog
             </Link>
             <Link href={getRoute('home')} className="underline">
               LLMs.txt Hub homepage
