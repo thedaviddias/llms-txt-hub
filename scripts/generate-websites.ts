@@ -100,7 +100,7 @@ function generateWebsitesJson(): void {
   // Excluded sites from secondary categories
 
   // Write to JSON file
-  writeFileSync(outputFile, JSON.stringify(websites))
+  writeFileSync(outputFile, `${JSON.stringify(websites, null, 2)}\n`)
 }
 
 generateWebsitesJson()

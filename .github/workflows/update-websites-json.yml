@@ -14,6 +14,7 @@ jobs:
     if: github.actor != 'github-actions[bot]'
     permissions:
       contents: write
+      pull-requests: write
 
     steps:
       - name: Checkout
@@ -33,11 +34,17 @@ jobs:
         run: |
           git diff --quiet data/websites.json || echo "changes=true" >> $GITHUB_OUTPUT
 
-      - name: Commit changes
+      - name: Create Pull Request
         if: steps.git-check.outputs.changes == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add data/websites.json
-          git commit -m "chore: update websites.json [skip ci]"
-          git push
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update websites.json [skip ci]"
+          title: "chore: update websites.json"
+          body: |
+            This PR updates `data/websites.json` based on the current state of website entries.
+          branch: update-websites-json
+          base: main
+          delete-branch: true
+          committer: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
