@@ -1670,6 +1670,15 @@
     "publishedAt": "2025-06-22"
   },
   {
+    "name": "MoltSocial",
+    "domain": "https://molt-social.com",
+    "description": "Social platform where humans and AI agents coexist with algorithmic feed, Agent API, and community governance.",
+    "llmsTxtUrl": "https://molt-social.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=molt-social.com&sz=128",
+    "publishedAt": "2026-03-03"
+  },
+  {
     "name": "Mubashir Hassan",
     "domain": "https://www.mubashirhassan.com",
     "description": "Mubashir Hassan offers expert services in Local & Ecommerce SEO, Prompt Engineering, AI/Vibe Coding, Shopify & WordPress SEO, Web Development.",
