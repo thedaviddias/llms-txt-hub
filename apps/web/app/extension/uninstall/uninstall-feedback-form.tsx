@@ -36,7 +36,7 @@ export function UninstallFeedbackForm({ version, lang }: UninstallFeedbackFormPr
   const remainingCharacters = useMemo(() => 1000 - comment.length, [comment])
 
   /**
-   * Validate and submit uninstall feedback using CSRF-protected API calls.
+   * Validate and submit uninstall feedback.
    *
    * @param event - Form submit event
    */
@@ -60,27 +60,10 @@ export function UninstallFeedbackForm({ version, lang }: UninstallFeedbackFormPr
     try {
       setSubmitState('submitting')
 
-      const csrfResponse = await fetch('/api/csrf', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json'
-        }
-      })
-
-      if (!csrfResponse.ok) {
-        throw new Error('Failed to initialize secure submission')
-      }
-
-      const csrfData = (await csrfResponse.json()) as { token?: string }
-      if (typeof csrfData.token !== 'string' || csrfData.token.length === 0) {
-        throw new Error('Missing CSRF token')
-      }
-
       const response = await fetch('/api/extension-feedback', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'x-csrf-token': csrfData.token
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           event: 'uninstall',

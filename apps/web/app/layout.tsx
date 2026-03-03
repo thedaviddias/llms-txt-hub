@@ -49,11 +49,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           />
         </head>
         <body className={fonts}>
-          <DesignSystemProvider>
+          <DesignSystemProvider nonce={nonce}>
             <SentryUserProvider>
               <FavoritesProvider>
                 <AnalyticsTracker />
-                <CSRFProvider />
+                {!isExtensionRoute && <CSRFProvider />}
                 <div className="flex min-h-screen flex-col">
                   {showSiteChrome && <Header />}
                   <main className="flex flex-1 flex-col">{children}</main>

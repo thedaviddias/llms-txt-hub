@@ -56,17 +56,11 @@ describe('UninstallFeedbackForm', () => {
     })
   })
 
-  it('fetches CSRF token and submits expected payload', async () => {
-    const fetchMock = jest
-      .fn()
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ token: 'csrf-token-value' })
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ ok: true })
-      })
+  it('submits expected payload directly to extension feedback API', async () => {
+    const fetchMock = jest.fn().mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ ok: true })
+    })
 
     global.fetch = fetchMock as typeof global.fetch
 
@@ -85,29 +79,22 @@ describe('UninstallFeedbackForm', () => {
     fireEvent.submit(form as HTMLFormElement)
 
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledTimes(2)
+      expect(fetchMock).toHaveBeenCalledTimes(1)
     })
 
     expect(fetchMock).toHaveBeenNthCalledWith(
       1,
-      '/api/csrf',
-      expect.objectContaining({ method: 'GET' })
-    )
-
-    expect(fetchMock).toHaveBeenNthCalledWith(
-      2,
       '/api/extension-feedback',
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
-          'Content-Type': 'application/json',
-          'x-csrf-token': 'csrf-token-value'
+          'Content-Type': 'application/json'
         })
       })
     )
 
-    const secondCall = fetchMock.mock.calls[1]
-    const payload = JSON.parse(secondCall[1]?.body as string)
+    const firstCall = fetchMock.mock.calls[0]
+    const payload = JSON.parse(firstCall[1]?.body as string)
 
     expect(payload.event).toBe('uninstall')
     expect(payload.reason).toBe('Too noisy or distracting')
@@ -122,16 +109,10 @@ describe('UninstallFeedbackForm', () => {
   })
 
   it('shows an error state when API submission fails', async () => {
-    const fetchMock = jest
-      .fn()
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ token: 'csrf-token-value' })
-      })
-      .mockResolvedValueOnce({
-        ok: false,
-        json: async () => ({ error: 'Rate limit exceeded. Please try again later.' })
-      })
+    const fetchMock = jest.fn().mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ error: 'Rate limit exceeded. Please try again later.' })
+    })
 
     global.fetch = fetchMock as typeof global.fetch
 
