@@ -1,11 +1,19 @@
+import crypto from 'node:crypto'
 import * as Sentry from '@sentry/nextjs'
 import { logger } from '@thedaviddias/logging'
 import { type NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { getRawClient } from '@/lib/redis'
 
 const requestCounts = new Map<string, { count: number; resetTime: number }>()
 const MAX_REQUESTS_PER_WINDOW = 10
 const RATE_LIMIT_WINDOW_MS = 60 * 1000
+const FEEDBACK_STORAGE_KEY = 'extension-feedback:uninstall:v1'
+const MAX_STORED_FEEDBACK_ITEMS = 1000
+const FEEDBACK_READ_TOKEN_HEADER = 'x-feedback-token'
+const FEEDBACK_READ_TOKEN_ENV = 'EXTENSION_FEEDBACK_READ_TOKEN'
+const MAX_FEEDBACK_LIST_LIMIT = 200
+const DEFAULT_FEEDBACK_LIST_LIMIT = 50
 
 const feedbackPayloadSchema = z
   .object({
@@ -23,6 +31,30 @@ interface CheckRateLimitInput {
   maxRequests?: number
   windowMs?: number
 }
+
+interface PersistedExtensionFeedback {
+  id: string
+  event: 'uninstall'
+  reason: string
+  comment?: string
+  version?: string
+  lang?: string
+  submittedAt: string
+  receivedAt: string
+}
+
+const persistedFeedbackSchema = z
+  .object({
+    id: z.string().trim().min(1),
+    event: z.literal('uninstall'),
+    reason: z.string().trim().min(1),
+    comment: z.string().trim().max(1000).optional(),
+    version: z.string().trim().max(64).optional(),
+    lang: z.string().trim().max(35).optional(),
+    submittedAt: z.string().datetime({ offset: true }),
+    receivedAt: z.string().datetime({ offset: true })
+  })
+  .strict()
 
 /**
  * Build a per-IP rate-limit key from proxy headers.
@@ -75,6 +107,91 @@ function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTi
 }
 
 /**
+ * Read extension feedback API token from environment.
+ */
+function getFeedbackReadToken(): string | null {
+  const token = process.env[FEEDBACK_READ_TOKEN_ENV]?.trim()
+  return token ? token : null
+}
+
+/**
+ * Perform constant-time token comparison.
+ */
+function tokensMatch(provided: string, expected: string): boolean {
+  const providedBuffer = Buffer.from(provided)
+  const expectedBuffer = Buffer.from(expected)
+  return (
+    providedBuffer.length === expectedBuffer.length &&
+    crypto.timingSafeEqual(providedBuffer, expectedBuffer)
+  )
+}
+
+/**
+ * Resolve request limit with guard rails.
+ */
+function parseFeedbackListLimit(request: NextRequest): number {
+  const searchParams =
+    request.nextUrl?.searchParams ?? new URL(request.url, 'http://localhost').searchParams
+  const limitParam = searchParams.get('limit')
+  const parsedLimit = Number.parseInt(limitParam || '', 10)
+  if (Number.isNaN(parsedLimit) || parsedLimit <= 0) {
+    return DEFAULT_FEEDBACK_LIST_LIMIT
+  }
+  return Math.min(parsedLimit, MAX_FEEDBACK_LIST_LIMIT)
+}
+
+/**
+ * Persist full uninstall feedback payload to Redis for later review.
+ */
+async function persistFeedback(feedback: PersistedExtensionFeedback): Promise<void> {
+  const redis = getRawClient()
+  if (!redis) {
+    logger.warn('Redis unavailable for extension feedback persistence', {
+      data: {
+        feedbackId: feedback.id,
+        storageKey: FEEDBACK_STORAGE_KEY
+      },
+      tags: {
+        type: 'extension-feedback',
+        source: 'uninstall'
+      }
+    })
+    return
+  }
+
+  const pipeline = redis.pipeline()
+  pipeline.lpush(FEEDBACK_STORAGE_KEY, JSON.stringify(feedback))
+  pipeline.ltrim(FEEDBACK_STORAGE_KEY, 0, MAX_STORED_FEEDBACK_ITEMS - 1)
+  await pipeline.exec()
+}
+
+/**
+ * Read persisted feedback entries from Redis.
+ */
+async function readPersistedFeedback(limit: number): Promise<PersistedExtensionFeedback[]> {
+  const redis = getRawClient()
+  if (!redis) {
+    return []
+  }
+
+  const entries = await redis.lrange<string>(FEEDBACK_STORAGE_KEY, 0, limit - 1)
+  const parsedEntries: PersistedExtensionFeedback[] = []
+
+  for (const entry of entries) {
+    try {
+      const parsedEntry = persistedFeedbackSchema.safeParse(JSON.parse(entry))
+      if (parsedEntry.success) {
+        parsedEntries.push(parsedEntry.data)
+      }
+    } catch {
+      // Skip malformed rows rather than failing the whole request.
+    }
+  }
+
+  return parsedEntries
+}
+
+/**
  * Handle uninstall feedback submissions from extension lifecycle pages.
  *
  * @param request - JSON request containing uninstall feedback payload
@@ -121,16 +238,29 @@ export async function POST(request: NextRequest) {
     }
 
     const payload = parseResult.data
+    const feedback: PersistedExtensionFeedback = {
+      id: crypto.randomUUID(),
+      event: payload.event,
+      reason: payload.reason,
+      comment: payload.comment,
+      version: payload.version,
+      lang: payload.lang,
+      submittedAt: payload.submittedAt,
+      receivedAt: new Date().toISOString()
+    }
 
-    // Log-only retention in this phase. We intentionally avoid collecting identifiers.
+    await persistFeedback(feedback)
+
+    // Keep logs for ops visibility; full payload is now stored in Redis.
     logger.info('Extension uninstall feedback received', {
       data: {
-        event: payload.event,
-        reason: payload.reason,
-        commentLength: payload.comment?.length || 0,
-        version: payload.version || null,
-        lang: payload.lang || null,
-        submittedAt: payload.submittedAt
+        id: feedback.id,
+        event: feedback.event,
+        reason: feedback.reason,
+        comment: feedback.comment || null,
+        version: feedback.version || null,
+        lang: feedback.lang || null,
+        submittedAt: feedback.submittedAt
       },
       tags: {
         type: 'extension-feedback',
@@ -155,6 +285,53 @@ export async function POST(request: NextRequest) {
       {
         ok: false,
         error: 'Unable to process feedback right now. Please try again later.'
+      },
+      { status: 500 }
+    )
+  }
+}
+
+/**
+ * List recent uninstall feedback entries.
+ *
+ * Requires `x-feedback-token` header matching `EXTENSION_FEEDBACK_READ_TOKEN`.
+ */
+export async function GET(request: NextRequest) {
+  try {
+    const requiredToken = getFeedbackReadToken()
+    if (!requiredToken) {
+      return NextResponse.json({ ok: false, error: 'Not found' }, { status: 404 })
+    }
+
+    const providedToken = request.headers.get(FEEDBACK_READ_TOKEN_HEADER)
+    if (!providedToken || !tokensMatch(providedToken, requiredToken)) {
+      return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const limit = parseFeedbackListLimit(request)
+    const feedback = await readPersistedFeedback(limit)
+
+    return NextResponse.json({
+      ok: true,
+      feedback,
+      count: feedback.length
+    })
+  } catch (error) {
+    logger.error('Failed to read extension feedback', {
+      data: error,
+      tags: { type: 'extension-feedback', source: 'uninstall' }
+    })
+
+    Sentry.captureException(error, {
+      tags: {
+        operation: 'extension_feedback_list'
+      }
+    })
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Unable to load feedback right now.'
       },
       { status: 500 }
     )
