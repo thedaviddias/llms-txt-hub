@@ -1,3 +1,4 @@
+import type { ImgHTMLAttributes, ReactElement } from 'react'
 import { render, screen } from '@/__tests__/utils/test-utils.helper'
 import ExtensionWhatsNewPage from '@/app/extension/whats-new/page'
 import { getExtensionUpdateByVersion, getLatestExtensionUpdate } from '@/lib/extension-updates'
@@ -8,8 +9,13 @@ jest.mock('@/lib/seo/seo-config', () => ({
   }))
 }))
 
+let capturedMdxComponents: Record<string, unknown> | undefined
+
 jest.mock('next-mdx-remote/rsc', () => ({
-  MDXRemote: ({ source }: { source: string }) => <div data-testid="mdx-content">{source}</div>
+  MDXRemote: ({ source, components }: { source: string; components?: Record<string, unknown> }) => {
+    capturedMdxComponents = components
+    return <div data-testid="mdx-content">{source}</div>
+  }
 }))
 
 jest.mock('@/lib/extension-updates', () => ({
@@ -52,6 +58,7 @@ const latestRelease = {
 describe('/extension/whats-new page', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    capturedMdxComponents = undefined
   })
 
   it('renders the requested known version when v is provided', async () => {
@@ -115,5 +122,37 @@ describe('/extension/whats-new page', () => {
     render(page)
 
     expect(screen.queryByText(/Updated from/)).not.toBeInTheDocument()
+  })
+
+  it('provides an MDX image renderer with optional caption support', async () => {
+    mockedGetExtensionUpdateByVersion.mockReturnValue(release200)
+    mockedGetLatestExtensionUpdate.mockReturnValue(latestRelease)
+
+    const page = await ExtensionWhatsNewPage({
+      searchParams: Promise.resolve({ v: '2.0.0' })
+    })
+
+    render(page)
+
+    const imageRenderer = capturedMdxComponents?.img as
+      | ((props: ImgHTMLAttributes<HTMLImageElement>) => ReactElement)
+      | undefined
+
+    expect(typeof imageRenderer).toBe('function')
+
+    if (!imageRenderer) {
+      throw new Error('Expected MDX image renderer to be defined')
+    }
+
+    render(
+      imageRenderer({
+        src: '/extension-updates/screenshots/new-popup-v2.png',
+        alt: 'New popup screenshot',
+        title: 'New popup interface in v2.0.0'
+      })
+    )
+
+    expect(screen.getByAltText('New popup screenshot')).toBeInTheDocument()
+    expect(screen.getByText('New popup interface in v2.0.0')).toBeInTheDocument()
   })
 })
