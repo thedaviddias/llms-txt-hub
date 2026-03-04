@@ -4553,6 +4553,15 @@
     "publishedAt": "2025-07-03"
   },
   {
+  "name": "Strale",
+  "domain": "https://strale.dev",
+  "description": "Capability marketplace for AI agents. Agents call strale.do(task) to buy missing capabilities at runtime across multiple verticals and countries.",
+  "llmsTxtUrl": "https://strale.dev/llms.txt",
+  "category": "ai-ml",
+  "favicon": "https://www.google.com/s2/favicons?domain=strale.dev&sz=128",
+  "publishedAt": "2026-03-04"
+}
+  {
     "name": "Study Fetch",
     "domain": "https://www.studyfetch.com",
     "description": "Study Fetch - Platform and services",
