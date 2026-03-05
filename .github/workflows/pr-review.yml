@@ -47,9 +47,32 @@ jobs:
   #         args: --config ./lychee.toml --verbose --no-progress .
   #         fail: true
 
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    outputs:
+      e2e_relevant: ${{ steps.filter.outputs.e2e_relevant }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for e2e-relevant changes
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            e2e_relevant:
+              - 'apps/web/app/**'
+              - 'apps/web/components/**'
+              - 'apps/web/lib/**'
+              - 'apps/web/public/**'
+              - 'apps/e2e/**'
+              - 'packages/ui/**'
+
   e2e:
     name: E2E Tests
-    needs: [validate]
+    needs: [validate, changes]
+    if: needs.changes.outputs.e2e_relevant == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

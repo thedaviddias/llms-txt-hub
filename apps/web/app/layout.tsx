@@ -1,7 +1,7 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import { VercelToolbar } from '@vercel/toolbar/next'
-import type { Metadata } from 'next'
-import type React from 'react'
+import { headers } from 'next/headers'
+import type { ReactNode } from 'react'
 import '../../../packages/design-system/styles/globals.css'
 import { AnalyticsHead } from '@thedaviddias/analytics/head'
 import { fonts } from '@thedaviddias/design-system/lib/fonts'
@@ -15,7 +15,7 @@ import { Header } from '@/components/layout/header'
 import { BackToTop } from '@/components/ui/back-to-top'
 import { FavoritesProvider } from '@/contexts/favorites-context'
 
-export const metadata: Metadata = {
+export const metadata: import('next').Metadata = {
   title: {
     default: 'llms.txt Hub - Directory of AI-Ready Documentation',
     template: '%s | llms.txt Hub'
@@ -26,15 +26,21 @@ export const metadata: Metadata = {
 }
 
 type RootLayoutProps = {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const requestHeaders = await headers()
+  const nonce = requestHeaders.get('x-nonce') ?? undefined
+  const pathname = requestHeaders.get('x-pathname') ?? ''
+  const isExtensionRoute = pathname.startsWith('/extension')
+  const showSiteChrome = !isExtensionRoute
+
   return (
     <ClerkProvider signInUrl="/login" signUpUrl="/login" signInFallbackRedirectUrl="/">
       <html lang="en" suppressHydrationWarning>
         <head>
-          <AnalyticsHead domain="llmstxthub.com" />
+          <AnalyticsHead domain="llmstxthub.com" nonce={nonce} />
           <link
             rel="alternate"
             type="application/feed+json"
@@ -43,17 +49,17 @@ export default function RootLayout({ children }: RootLayoutProps) {
           />
         </head>
         <body className={fonts}>
-          <DesignSystemProvider>
+          <DesignSystemProvider nonce={nonce}>
             <SentryUserProvider>
               <FavoritesProvider>
                 <AnalyticsTracker />
-                <CSRFProvider />
+                {!isExtensionRoute && <CSRFProvider />}
                 <div className="flex min-h-screen flex-col">
-                  <Header />
+                  {showSiteChrome && <Header />}
                   <main className="flex flex-1 flex-col">{children}</main>
-                  <Footer />
+                  {showSiteChrome && <Footer />}
                 </div>
-                <BackToTop />
+                {showSiteChrome && <BackToTop />}
                 {process.env.NODE_ENV === 'production' && <VercelToolbar />}
               </FavoritesProvider>
             </SentryUserProvider>

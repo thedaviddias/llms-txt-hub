@@ -89,46 +89,6 @@ export function ContentFields({ form }: ContentFieldsProps) {
 
       <FormField
         control={form.control}
-        name="mdxContent"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Additional Content (optional)</FormLabel>
-            <FormControl>
-              <MDXTextarea
-                value={field.value || ''}
-                onChange={field.onChange}
-                placeholder={`## Key Focus Areas
-
-- **AI Integration**: Details about AI/ML capabilities
-- **API Documentation**: Coverage of API endpoints and usage
-- **Developer Tools**: Build tools, SDKs, and integrations
-- **Data Processing**: How data is handled and transformed
-
-## About llms.txt Implementation
-
-Our llms.txt file provides comprehensive documentation about our platform's AI-ready content structure, making it easy for language models to understand and work with our system.
-
-## Features
-
-- Feature 1: Description of key functionality
-- Feature 2: Another important capability
-- Feature 3: Additional tools and integrations
-
-## Getting Started
-
-Brief overview of how users can get started with this project, including any setup requirements or first steps.`}
-              />
-            </FormControl>
-            <FormMessage className="text-red-500 dark:text-red-400" />
-            <p className="text-sm text-muted-foreground">
-              Use markdown to format your content. This will be added to the project's detail page.
-            </p>
-          </FormItem>
-        )}
-      />
-
-      <FormField
-        control={form.control}
         name="category"
         render={({ field }) => (
           <FormItem>
@@ -181,6 +141,46 @@ Brief overview of how users can get started with this project, including any set
               </SelectContent>
             </Select>
             <FormMessage className="text-red-500 dark:text-red-400" />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="mdxContent"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Additional Content (optional)</FormLabel>
+            <FormControl>
+              <MDXTextarea
+                value={field.value || ''}
+                onChange={field.onChange}
+                placeholder={`## Key Focus Areas
+
+- **AI Integration**: Details about AI/ML capabilities
+- **API Documentation**: Coverage of API endpoints and usage
+- **Developer Tools**: Build tools, SDKs, and integrations
+- **Data Processing**: How data is handled and transformed
+
+## About llms.txt Implementation
+
+Our llms.txt file provides comprehensive documentation about our platform's AI-ready content structure, making it easy for language models to understand and work with our system.
+
+## Features
+
+- Feature 1: Description of key functionality
+- Feature 2: Another important capability
+- Feature 3: Additional tools and integrations
+
+## Getting Started
+
+Brief overview of how users can get started with this project, including any setup requirements or first steps.`}
+              />
+            </FormControl>
+            <FormMessage className="text-red-500 dark:text-red-400" />
+            <p className="text-sm text-muted-foreground">
+              Use markdown to format your content. This will be added to the project's detail page.
+            </p>
           </FormItem>
         )}
       />

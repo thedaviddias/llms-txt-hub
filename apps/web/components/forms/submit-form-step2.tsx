@@ -1,7 +1,9 @@
 'use client'
 
+import { Alert, AlertDescription, AlertTitle } from '@thedaviddias/design-system/alert'
 import { Button } from '@thedaviddias/design-system/button'
 import { Form } from '@thedaviddias/design-system/form'
+import { AlertTriangle } from 'lucide-react'
 import type { UseFormReturn } from 'react-hook-form'
 import type { Step2Data } from './submit-form-schemas'
 import { ContentFields } from './submit-form-step2-content-fields'
@@ -12,6 +14,7 @@ interface SubmitFormStep2Props {
   form: UseFormReturn<Step2Data>
   onSubmit: (data: Step2Data) => void
   isLoading: boolean
+  fetchFailed?: boolean
   websiteUrlStatus: {
     checking: boolean
     accessible: boolean | null
@@ -47,6 +50,7 @@ export function SubmitFormStep2({
   form,
   onSubmit,
   isLoading,
+  fetchFailed,
   websiteUrlStatus,
   llmsUrlStatus,
   llmsFullUrlStatus,
@@ -149,6 +153,17 @@ export function SubmitFormStep2({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        {fetchFailed && (
+          <Alert variant="destructive">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertTitle>Could not fetch website information</AlertTitle>
+            <AlertDescription>
+              We were unable to automatically retrieve details for this website. Please fill in the
+              fields below manually.
+            </AlertDescription>
+          </Alert>
+        )}
+
         <UrlFields
           form={form}
           websiteUrlStatus={websiteUrlStatus}

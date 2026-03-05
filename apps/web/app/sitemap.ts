@@ -43,8 +43,14 @@ function getContentPages(dir: string, baseDir = ''): string[] {
       const stat = statSync(fullPath)
 
       if (stat.isDirectory()) {
-        // Skip hidden directories, _meta files, and websites/ (handled separately via getWebsites)
-        if (!item.startsWith('_') && !item.startsWith('.') && item !== 'websites') {
+        // Skip hidden directories, _meta files, websites/ (handled separately),
+        // and extension-updates/ (internal release content served via query route)
+        if (
+          !item.startsWith('_') &&
+          !item.startsWith('.') &&
+          item !== 'websites' &&
+          item !== 'extension-updates'
+        ) {
           pages.push(...getContentPages(fullPath, join(baseDir, item)))
         }
       } else if (item.endsWith('.mdx') && !item.startsWith('_')) {

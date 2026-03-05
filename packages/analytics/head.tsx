@@ -2,6 +2,7 @@ import { AnalyticsProvider } from './index'
 
 interface AnalyticsHeadProps {
   domain: string
+  nonce?: string
 }
 
 /**
@@ -10,16 +11,17 @@ interface AnalyticsHeadProps {
  *
  * @param props - Component properties
  * @param props.domain - Domain for Plausible Analytics tracking (e.g., "example.com")
+ * @param props.nonce - CSP nonce for inline scripts
  * @returns Analytics script component for head section
  *
  * @example
  * ```tsx
  * // In your root layout.tsx
  * <head>
- *   <AnalyticsHead domain="example.com" />
+ *   <AnalyticsHead domain="example.com" nonce={nonce} />
  * </head>
  * ```
  */
-export function AnalyticsHead({ domain }: AnalyticsHeadProps) {
-  return <AnalyticsProvider plausibleDomain={domain} />
+export function AnalyticsHead({ domain, nonce }: AnalyticsHeadProps) {
+  return <AnalyticsProvider plausibleDomain={domain} nonce={nonce} />
 }
