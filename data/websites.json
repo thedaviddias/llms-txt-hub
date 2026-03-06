@@ -3983,6 +3983,16 @@
     "publishedAt": "2025-04-07"
   },
   {
+    "name": "Purple Flea",
+    "domain": "https://purpleflea.com",
+    "description": "Blue chip financial infrastructure for AI agents — casino, wallet, trading, domains, escrow, and faucet APIs",
+    "llmsTxtUrl": "https://purpleflea.com/llms.txt",
+    "llmsFullTxtUrl": "https://purpleflea.com/llms.txt",
+    "category": "finance",
+    "favicon": "https://www.google.com/s2/favicons?domain=purpleflea.com&sz=128",
+    "publishedAt": "2026-03-06"
+  },
+  {
     "name": "Pydantic",
     "domain": "https://docs.pydantic.dev/latest/",
     "description": "Pydantic is the most widely used data validation library for Python.",
