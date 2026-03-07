@@ -1,0 +1,55 @@
+---
+version: '2.0.0'
+title: 'LLMs.txt Checker v2.0.0'
+description: 'A quieter, clearer extension with better lifecycle and trust controls.'
+date: '2026-03-03'
+published: true
+highlights:
+  - 'Per-site pause controls with explicit host:port rules.'
+  - 'Localhost is now opt-in by default to reduce development noise.'
+  - 'Popup, sidebar, and status UX were redesigned for faster scanability and a smoother workflow.'
+  - 'Lifecycle updates include automatic What''s New opening plus manual controls in settings.'
+  - 'Privacy and trust upgrades include uninstall feedback hooks, improved reporting controls, and stronger automated tests.'
+---
+
+v2.0.0 focuses on one goal: make the extension faster to use and easier to trust during real daily browsing.
+
+## What changed for everyday use
+
+The extension now makes it easier to decide where checks should run.
+You can pause checks on specific host:port targets and keep those rules explicit, so behavior is predictable.
+
+![image](/extension-updates/screenshots/site-exclusion.png "Exclude any site or domain")
+
+Local development is quieter too.
+`localhost` and loopback hosts are disabled by default unless you explicitly opt them in.
+
+## Better at-a-glance feedback
+
+The popup and status presentation were rebuilt to be easier to parse in a few seconds.
+States like loading, paused, found, and missing are clearer, and refresh actions are less noisy.
+
+![image](/extension-updates/screenshots/new-popup-v2.png "New popup interface in v2.0.0")
+
+## A smoother overall experience
+
+v2.0.0 also improves how the extension feels as a product, not just a checker.
+The sidebar experience is now better supported for longer reading and deeper exploration, while popup interactions stay quick for short checks.
+
+![image](/extension-updates/screenshots/checker-sidebar.png "Checker details now work with Chrome sidebar")
+
+
+Across settings, popup, and panel surfaces, the UI is more consistent and easier to scan.
+The goal was to reduce friction and make everyday use more efficient and reliable.
+
+## Lifecycle and trust improvements
+
+When the extension updates in production, it can open release notes automatically.
+You can also open the latest update page manually from settings whenever you want context.
+
+On uninstall, users can share anonymous feedback to help prioritize fixes and improvements.
+Privacy controls and reliability coverage were also strengthened to support safer iteration.
+
+## Under the hood
+
+This release also includes infrastructure and maintenance work (tooling updates, dependency migration, and internal refactors) that improve stability, but are intentionally summarized here instead of listed in detail.

@@ -17,11 +17,14 @@ const isPublicRoute = createRouteMatcher([
   '/api/rss-feed(.*)',
   '/api/fetch-metadata(.*)',
   '/api/members(.*)',
+  '/api/extension-feedback(.*)',
+  '/proxy/api/(.*)', // Plausible proxy API endpoint
   '/search(.*)',
   '/websites(.*)',
   '/projects(.*)',
   '/docs(.*)',
   '/guides(.*)',
+  '/extension(.*)',
   '/news(.*)',
   '/tools(.*)',
   '/resources(.*)',
@@ -305,6 +308,8 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap') ||
     // Plausible Analytics proxy endpoints
+    pathname.startsWith('/proxy/api/') ||
+    pathname.startsWith('/proxy/js/script') ||
     pathname === '/api/event' ||
     pathname.startsWith('/js/script') ||
     // Regular page loads (non-API routes) - exclude search route
@@ -374,6 +379,8 @@ export default clerkMiddleware(async (auth, req) => {
     return new Response(null, { status: 404 })
   }
 
+  const isPlausibleProxyApiRoute = pathname.startsWith('/proxy/api/')
+
   // Block non-safe HTTP methods on page routes (not API, not _next)
   // Next.js Server Actions are POST requests to page URLs with a `Next-Action` header
   // (e.g., Clerk's invalidateCacheAction during sign-out)
@@ -381,6 +388,7 @@ export default clerkMiddleware(async (auth, req) => {
   if (
     !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
     !isServerAction &&
+    !isPlausibleProxyApiRoute &&
     !pathname.startsWith('/api/') &&
     !pathname.startsWith('/_next/')
   ) {
@@ -404,6 +412,7 @@ export default clerkMiddleware(async (auth, req) => {
       !req.nextUrl.pathname.startsWith('/api/members') &&
       !req.nextUrl.pathname.startsWith('/api/auth') &&
       !req.nextUrl.pathname.startsWith('/api/cli/') &&
+      !req.nextUrl.pathname.startsWith('/api/extension-feedback') &&
       !['GET', 'HEAD', 'OPTIONS'].includes(req.method)
     ) {
       const isValidCSRF = await validateCSRFToken(req)
@@ -464,6 +473,7 @@ export default clerkMiddleware(async (auth, req) => {
   // Next.js reads Content-Security-Policy from request headers to extract the
   // nonce and automatically apply it to its own inline <script> tags.
   const requestHeaders = new Headers(req.headers)
+  requestHeaders.set('x-pathname', pathname)
   requestHeaders.set('x-nonce', nonce)
   requestHeaders.set('Content-Security-Policy', cspValue)
 
