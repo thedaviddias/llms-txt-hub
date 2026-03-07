@@ -1065,16 +1065,6 @@
     "publishedAt": "2025-08-26"
   },
   {
-    "name": "Claw-Stack",
-    "domain": "https://claw-stack.com",
-    "description": "A modular research platform for autonomous AI agent governance and security. Explores multi-agent coordination, persistent memory, and policy enforcement for self-hosted AI systems.",
-    "llmsTxtUrl": "https://claw-stack.com/llms.txt",
-    "llmsFullTxtUrl": "https://claw-stack.com/llms-full.txt",
-    "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=claw-stack.com&sz=128",
-    "publishedAt": "2026-03-07"
-  },
-  {
     "name": "Clerk",
     "domain": "https://clerk.com/",
     "description": "The easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and “The Modern Web”.",
