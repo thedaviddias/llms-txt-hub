@@ -577,6 +577,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Banan AI - AI Image Generator",
+    "domain": "https://bananai.net/",
+    "description": "Create AI images by chatting — no prompt engineering needed. Built for e-commerce, creators, and marketers. Start free today.",
+    "llmsTxtUrl": "https://bananai.net/llms.txt",
+    "llmsFullTxtUrl": "https://bananai.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=bananai.net&sz=128",
+    "publishedAt": "2026-03-04"
+  },
+  {
     "name": "BaseHub",
     "domain": "https://basehub.com",
     "description": "Database and data infrastructure platform",
@@ -1063,6 +1073,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.claudemcp.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Claw-Stack",
+    "domain": "https://claw-stack.com",
+    "description": "A modular research platform for autonomous AI agent governance and security. Explores multi-agent coordination, persistent memory, and policy enforcement for self-hosted AI systems.",
+    "llmsTxtUrl": "https://claw-stack.com/llms.txt",
+    "llmsFullTxtUrl": "https://claw-stack.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=claw-stack.com&sz=128",
+    "publishedAt": "2026-03-07"
   },
   {
     "name": "Clerk",
@@ -4598,6 +4618,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=superwall.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "SupplementScience.ai",
+    "domain": "https://supplementscience.ai",
+    "description": "Evidence-based supplement guides backed by clinical research. Expert-reviewed ingredient deep dives, dosage recommendations, and product comparisons.",
+    "llmsTxtUrl": "https://supplementscience.ai/llms.txt",
+    "llmsFullTxtUrl": "https://supplementscience.ai/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=supplementscience.ai&sz=128",
+    "publishedAt": "2026-03-11"
   },
   {
     "name": "Svelte",
