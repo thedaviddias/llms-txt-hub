@@ -4590,16 +4590,6 @@
     "publishedAt": "2025-07-26"
   },
   {
-    "name": "SupplementScience.ai",
-    "domain": "https://supplementscience.ai",
-    "description": "Evidence-based supplement guides backed by clinical research. Expert-reviewed ingredient deep dives, dosage recommendations, and product comparisons.",
-    "llmsTxtUrl": "https://supplementscience.ai/llms.txt",
-    "llmsFullTxtUrl": "https://supplementscience.ai/llms-full.txt",
-    "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=supplementscience.ai&sz=128",
-    "publishedAt": "2026-03-11"
-  },
-  {
     "name": "Superwall",
     "domain": "https://superwall.com",
     "description": "Superwall - Paywalls made easy",
@@ -4608,6 +4598,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=superwall.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "SupplementScience.ai",
+    "domain": "https://supplementscience.ai",
+    "description": "Evidence-based supplement guides backed by clinical research. Expert-reviewed ingredient deep dives, dosage recommendations, and product comparisons.",
+    "llmsTxtUrl": "https://supplementscience.ai/llms.txt",
+    "llmsFullTxtUrl": "https://supplementscience.ai/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=supplementscience.ai&sz=128",
+    "publishedAt": "2026-03-11"
   },
   {
     "name": "Svelte",
