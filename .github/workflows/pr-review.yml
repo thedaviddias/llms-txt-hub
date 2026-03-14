@@ -28,6 +28,9 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
 
+      - name: Run repository policy tests
+        run: pnpm test:repo
+
       - name: Run type check
         run: pnpm typecheck
 

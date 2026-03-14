@@ -1,0 +1,248 @@
+name: PR Intake
+
+on:
+  pull_request_target:
+    branches: ['main']
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+
+jobs:
+  intake:
+    name: Intake
+    if: github.repository_owner == 'thedaviddias' && startsWith(github.event.pull_request.title, 'feat(community):')
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Ensure managed labels exist
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const labelDefinitions = [
+              {
+                name: 'area:content',
+                color: '0E8A16',
+                description: 'Touches content website entries or generated website data.'
+              },
+              {
+                name: 'lane:mdx-fast',
+                color: '1D76DB',
+                description: 'Eligible for the MDX auto-merge fast lane.'
+              },
+              {
+                name: 'lane:standard',
+                color: '5319E7',
+                description: 'Requires standard human review.'
+              },
+              {
+                name: 'lane:blocked',
+                color: 'B60205',
+                description: 'Blocked from fast-lane processing.'
+              },
+              {
+                name: 'status:blocked',
+                color: 'D93F0B',
+                description: 'Needs manual intervention before review.'
+              },
+              {
+                name: 'risk:low',
+                color: '0E8A16',
+                description: 'Low-risk change based on deterministic intake rules.'
+              },
+              {
+                name: 'risk:high',
+                color: 'B60205',
+                description: 'High-risk or mixed change based on deterministic intake rules.'
+              },
+              {
+                name: 'generated:websites-json',
+                color: 'FBCA04',
+                description: 'Touches generated data/websites.json.'
+              },
+              {
+                name: 'needs:generated-file-review',
+                color: 'D876E3',
+                description: 'Manual review required because data/websites.json was changed outside automation.'
+              },
+              {
+                name: 'automerge:candidate',
+                color: '0E8A16',
+                description: 'Eligible for auto-merge after required checks pass.'
+              }
+            ]
+
+            const existingLabels = await github.paginate(github.rest.issues.listLabelsForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            })
+
+            const existingByName = new Map(
+              existingLabels.map(label => [label.name, label])
+            )
+
+            for (const definition of labelDefinitions) {
+              const existing = existingByName.get(definition.name)
+
+              if (!existing) {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ...definition
+                })
+                continue
+              }
+
+              if (
+                existing.color.toLowerCase() !== definition.color.toLowerCase() ||
+                (existing.description ?? '') !== definition.description
+              ) {
+                await github.rest.issues.updateLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: definition.name,
+                  new_name: definition.name,
+                  color: definition.color,
+                  description: definition.description
+                })
+              }
+            }
+
+      - name: Collect PR context
+        id: context
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('node:fs')
+            const pullRequest = context.payload.pull_request
+
+            const [files, commits] = await Promise.all([
+              github.paginate(github.rest.pulls.listFiles, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number,
+                per_page: 100
+              }),
+              github.paginate(github.rest.pulls.listCommits, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number,
+                per_page: 100
+              })
+            ])
+
+            const payload = {
+              authorLogin: pullRequest.user.login,
+              commits: commits.map(commit => ({
+                authorLogin: commit.author?.login ?? null,
+                committerLogin: commit.committer?.login ?? null
+              })),
+              files: files.map(file => ({
+                additions: file.additions,
+                changes: file.changes,
+                deletions: file.deletions,
+                filename: file.filename,
+                previousFilename: file.previous_filename ?? null,
+                status: file.status
+              })),
+              headRefName: pullRequest.head.ref,
+              title: pullRequest.title
+            }
+
+            fs.writeFileSync('pr-context.json', JSON.stringify(payload, null, 2))
+            core.setOutput('pr_number', String(pullRequest.number))
+
+      - name: Classify PR
+        id: classify
+        run: pnpm exec tsx scripts/pr-triage.ts pr-context.json > classification.json
+
+      - name: Sync intake labels
+        uses: actions/github-script@v8
+        env:
+          CLASSIFICATION_LABELS: ${{ steps.classify.outputs.labels }}
+          PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+        with:
+          script: |
+            const labels = JSON.parse(process.env.CLASSIFICATION_LABELS ?? '[]')
+            const prNumber = Number(process.env.PR_NUMBER)
+            const managedPrefixes = ['lane:', 'risk:', 'status:', 'needs:']
+            const managedExact = ['automerge:candidate']
+
+            const currentLabels = await github.paginate(github.rest.issues.listLabelsOnIssue, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              per_page: 100
+            })
+
+            const currentNames = currentLabels.map(label => label.name)
+            const labelsToRemove = currentNames.filter(name =>
+              managedPrefixes.some(prefix => name.startsWith(prefix)) ||
+              managedExact.includes(name)
+            ).filter(name => !labels.includes(name))
+
+            for (const name of labelsToRemove) {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                name
+              })
+            }
+
+            const labelsToAdd = labels.filter(label => !currentNames.includes(label))
+
+            if (labelsToAdd.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                labels: labelsToAdd
+              })
+            }
+
+      - name: Upsert intake summary
+        uses: actions/github-script@v8
+        env:
+          CLASSIFICATION_SUMMARY: ${{ steps.classify.outputs.summary }}
+          PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+        with:
+          script: |
+            const marker = '<!-- pr-intake-summary -->'
+            const prNumber = Number(process.env.PR_NUMBER)
+            const body = `${marker}\n${process.env.CLASSIFICATION_SUMMARY}`
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              per_page: 100
+            })
+
+            const existingComment = comments.find(comment =>
+              comment.user?.login === 'github-actions[bot]' &&
+              comment.body?.includes(marker)
+            )
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body
+              })
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body
+              })
+            }

@@ -1,0 +1,9 @@
+area:content:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'packages/content/data/websites/**'
+
+generated:websites-json:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'data/websites.json'
