@@ -38,11 +38,11 @@
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
-    "@types/node": "^22.19.11",
+    "@types/node": "catalog:",
     "gray-matter": "^4.0.3",
     "tsup": "^8.5.1",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
     "vitest": "^4.0.18"
   },
   "engines": {

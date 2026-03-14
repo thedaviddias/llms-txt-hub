@@ -76,7 +76,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@thedaviddias/auth": "workspace:*",
     "@thedaviddias/observability": "workspace:*",
-    "@vercel/toolbar": "^0.1.41",
+    "@vercel/toolbar": "catalog:",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -86,27 +86,27 @@
     "input-otp": "^1.4.2",
     "lucide-react": "^0.486.0",
     "next-themes": "^0.4.6",
-    "react": "^19.2.4",
+    "react": "catalog:",
     "react-day-picker": "^9.13.2",
     "react-hook-form": "^7.71.1",
     "react-moveable": "^0.56.0",
     "react-resizable-panels": "^2.1.9",
     "recharts": "^2.15.4",
-    "server-only": "^0.0.1",
+    "server-only": "catalog:",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "vaul": "^1.1.2",
-    "zod": "^3.25.76"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/analytics": "workspace:*",
     "@thedaviddias/config-typescript": "workspace:*",
     "@thedaviddias/utils": "workspace:*",
-    "@types/node": "^22.19.11",
-    "@types/react": "19.2.14",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.6",
-    "tailwindcss": "^4.1.18",
-    "typescript": "^5.9.3"
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   }
 }

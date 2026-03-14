@@ -16,8 +16,8 @@
     "glob": "^11.1.0"
   },
   "devDependencies": {
-    "@types/node": "^22.19.11",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   }
 }

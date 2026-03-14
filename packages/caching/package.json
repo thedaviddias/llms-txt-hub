@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@t3-oss/env-nextjs": "^0.12.0",
-    "@upstash/redis": "^1.36.2"
+    "@t3-oss/env-nextjs": "catalog:",
+    "@upstash/redis": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

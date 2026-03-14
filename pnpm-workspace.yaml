@@ -1,6 +1,23 @@
 autoInstallPeers: true
 strictPeerDependencies: false
 nodeLinker: hoisted
+catalogMode: manual
+
+catalog:
+  '@t3-oss/env-nextjs': ^0.12.0
+  '@types/node': ^22.19.11
+  '@types/react': 19.2.14
+  '@types/react-dom': 19.2.3
+  '@upstash/redis': ^1.36.2
+  '@vercel/toolbar': ^0.1.41
+  next: 16.1.6
+  react: ^19.2.4
+  react-dom: ^19.2.4
+  server-only: ^0.0.1
+  tailwindcss: ^4.1.18
+  tsx: ^4.21.0
+  typescript: ^5.9.3
+  zod: ^3.25.76
 
 packages:
   - 'apps/*'

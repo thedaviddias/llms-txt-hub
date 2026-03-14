@@ -13,6 +13,6 @@
   "main": "index.js",
   "scripts": {},
   "devDependencies": {
-    "@types/node": "^22.19.11"
+    "@types/node": "catalog:"
   }
 }

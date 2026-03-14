@@ -15,8 +15,8 @@
     "@thedaviddias/logging": "workspace:*"
   },
   "devDependencies": {
-    "next": "16.1.6",
-    "typescript": "^5.9.3"
+    "next": "catalog:",
+    "typescript": "catalog:"
   },
   "peerDependencies": {
     "next": "^16.0.0"

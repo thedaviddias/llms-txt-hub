@@ -8,18 +8,18 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^10.38.0",
-    "@t3-oss/env-nextjs": "^0.12.0",
-    "react": "^19.2.4",
-    "zod": "^3.25.76"
+    "@t3-oss/env-nextjs": "catalog:",
+    "react": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/auth": "workspace:*",
     "@thedaviddias/config-typescript": "workspace:*",
     "@thedaviddias/logging": "workspace:*",
     "@thedaviddias/utils": "workspace:*",
-    "@types/node": "^22.19.11",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "typescript": "^5.9.3"
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
   }
 }
