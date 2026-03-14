@@ -350,6 +350,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "APIMesh",
+    "domain": "https://apimesh.xyz",
+    "description": "14 web analysis APIs for AI agents. x402 micropayments on Base. No API keys, no accounts. Pay per call.",
+    "llmsTxtUrl": "https://apimesh.xyz/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=apimesh.xyz&sz=128",
+    "publishedAt": "2026-03-03"
+  },
+  {
     "name": "Aporia",
     "domain": "https://aporia.com",
     "description": "ML observability and monitoring platform",
@@ -577,6 +586,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Banan AI - AI Image Generator",
+    "domain": "https://bananai.net/",
+    "description": "Create AI images by chatting — no prompt engineering needed. Built for e-commerce, creators, and marketers. Start free today.",
+    "llmsTxtUrl": "https://bananai.net/llms.txt",
+    "llmsFullTxtUrl": "https://bananai.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=bananai.net&sz=128",
+    "publishedAt": "2026-03-04"
+  },
+  {
     "name": "BaseHub",
     "domain": "https://basehub.com",
     "description": "Database and data infrastructure platform",
@@ -624,6 +643,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "BigHub",
+    "domain": "https://bighub.ai",
+    "description": "End-to-end enterprise AI and data delivery: GenAI assistants, AI agents, ML, MLOps/LLMOps, and scalable data platforms—from strategy to production.",
+    "llmsTxtUrl": "https://bighub.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=bighub.ai&sz=128",
+    "publishedAt": "2026-02-03"
+  },
+  {
     "name": "Bika",
     "domain": "https://bika.ai",
     "description": "Automate your work with Business AI Agents",
@@ -641,6 +669,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=birdie.so&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Bit Refinery",
+    "domain": "https://bitrefinery.com",
+    "description": "Hybrid Cloud Infrastructure - Run Your Workloads Efficiently. Enterprise-grade dedicated servers, GPU hosting, and cloud solutions.",
+    "llmsTxtUrl": "https://bitrefinery.com/llms.txt",
+    "llmsFullTxtUrl": "https://bitrefinery.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=bitrefinery.com&sz=128",
+    "publishedAt": "2026-02-12"
   },
   {
     "name": "Bitcoin Cold Storage Tools",
@@ -796,6 +834,16 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=bunny.com&sz=128",
     "publishedAt": "2025-05-01"
+  },
+  {
+    "name": "BunnyEnhancer",
+    "domain": "https://bunnyenhancer.com",
+    "description": "Manage your Bunny.net CDN with powerful tools for video migration, pull zone management, and more.",
+    "llmsTxtUrl": "https://bunnyenhancer.com/llms.txt",
+    "llmsFullTxtUrl": "https://bunnyenhancer.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=bunnyenhancer.com&sz=128",
+    "publishedAt": "2026-02-25"
   },
   {
     "name": "Butlr",
@@ -1065,6 +1113,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Claw-Stack",
+    "domain": "https://claw-stack.com",
+    "description": "A modular research platform for autonomous AI agent governance and security. Explores multi-agent coordination, persistent memory, and policy enforcement for self-hosted AI systems.",
+    "llmsTxtUrl": "https://claw-stack.com/llms.txt",
+    "llmsFullTxtUrl": "https://claw-stack.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=claw-stack.com&sz=128",
+    "publishedAt": "2026-03-07"
+  },
+  {
     "name": "Clerk",
     "domain": "https://clerk.com/",
     "description": "The easiest way to add authentication and user management to your application. Purpose-built for React, Next.js, Remix, and “The Modern Web”.",
@@ -1090,6 +1148,25 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=clore.ai&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Cloud Studio IoT",
+    "domain": "https://cloudstudioiot.com/",
+    "description": "Full-stack IoT solutions provider: CS Gear platform, CS Link connectivity & CS Sense devices. 250K+ devices, 30+ verticals, cloud or on-premise.",
+    "llmsTxtUrl": "https://cloudstudioiot.com/llms.txt",
+    "llmsFullTxtUrl": "https://cloudstudioiot.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=cloudstudioiot.com&sz=128",
+    "publishedAt": "2026-03-05"
+  },
+  {
+    "name": "Cloud Studio IoT",
+    "domain": "https://www.cloudstudioiot.com",
+    "description": "Monitor, automate, and grow your operation from a single IoT solution without the complexity.",
+    "llmsTxtUrl": "https://www.cloudstudioiot.com/llms.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.cloudstudioiot.com&sz=128",
+    "publishedAt": "2026-02-19"
   },
   {
     "name": "CloudFix",
@@ -1514,6 +1591,16 @@
     "publishedAt": "2025-04-19"
   },
   {
+    "name": "DadSEO",
+    "domain": "https://getdadseo.com",
+    "description": "Connect Google Search Console to get a strategic SEO diagnosis in under 5 minutes - see threats, gaps, and opportunities ranked by impact from months of data.",
+    "llmsTxtUrl": "https://getdadseo.com/llms.txt",
+    "llmsFullTxtUrl": "https://getdadseo.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=getdadseo.com&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "daisyUI",
     "domain": "https://daisyui.com/",
     "description": "Best Tailwind Components Library - Free UI components for Tailwind CSS.",
@@ -1607,6 +1694,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.daytona.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "deAPI",
+    "domain": "https://deapi.ai",
+    "description": "deAPI provides a unified REST API to run open-source AI models on a decentralized GPU cloud, offering services like Text-to-Image, Text-to-Speech,OCR and video.",
+    "llmsTxtUrl": "https://deapi.ai/llms.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=deapi.ai&sz=128",
+    "publishedAt": "2025-12-02"
   },
   {
     "name": "deco.cx",
@@ -1759,6 +1855,15 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "DreamMasonry",
+    "domain": "https://adioof.github.io/dream-masonry",
+    "description": "Virtualized React masonry grid library with infinite scroll for rendering 10,000+ items.",
+    "llmsTxtUrl": "https://adioof.github.io/dream-masonry/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=adioof.github.io/dream-masonry&sz=128",
+    "publishedAt": "2026-02-23"
+  },
+  {
     "name": "Drizzle ORM",
     "domain": "https://orm.drizzle.team",
     "description": "Headless TypeScript ORM with a head. Runs on Node, Bun and Deno. Lives on the Edge and yes, it's a JavaScript ORM too.",
@@ -1884,6 +1989,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.essio.ai&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "EveryDev.ai",
+    "domain": "https://www.everydev.ai",
+    "description": "Discover, review, and discuss AI tools. Join the community where builders share insights, rate tools, and connect around AI development.",
+    "llmsTxtUrl": "https://www.everydev.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.everydev.ai&sz=128",
+    "publishedAt": "2026-02-04"
   },
   {
     "name": "Expo Documentation",
@@ -2262,6 +2376,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.gumlet.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "HappyEndpoint",
+    "domain": "https://happyendpoint.com",
+    "description": "Premium, real-time data APIs for Tesco, Ikea, Priceline, Rightmove, and more. Engineered for developers who demand reliability and clean data.",
+    "llmsTxtUrl": "https://happyendpoint.com/llms.txt",
+    "llmsFullTxtUrl": "https://happyendpoint.com/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=happyendpoint.com&sz=128",
+    "publishedAt": "2026-03-05"
   },
   {
     "name": "Helicone",
@@ -2727,6 +2851,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=islandrouter.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "iSpring Suite: eLearning Tool",
+    "domain": "https://www.ispringsolutions.com/",
+    "description": "PowerPoint-based eLearning authoring tool for creating SCORM courses, quizzes, simulations, and training videos for corporate learning teams.",
+    "llmsTxtUrl": "https://www.ispringsolutions.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.ispringsolutions.com&sz=128",
+    "publishedAt": "2026-03-10"
   },
   {
     "name": "Jam",
@@ -3551,6 +3684,15 @@
     "publishedAt": "2025-03-20"
   },
   {
+    "name": "NewsMesh",
+    "domain": "https://newsmesh.co/",
+    "description": "Build powerful news applications with NewsMesh. Access real-time news, trending articles, and search across 10+ categories.",
+    "llmsTxtUrl": "https://newsmesh.co/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=newsmesh.co&sz=128",
+    "publishedAt": "2026-01-20"
+  },
+  {
     "name": "Nextevo",
     "domain": "https://nextevo.one/",
     "description": "Crafting the future of fashion sustainably, Nextevo transforms pineapple leaves into eco-conscious fabrics.",
@@ -3724,6 +3866,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Overview",
+    "domain": "https://agentskills.io/",
+    "description": "A simple, open format for giving agents new capabilities and expertise.",
+    "llmsTxtUrl": "https://agentskills.io/llms.txt",
+    "llmsFullTxtUrl": "https://agentskills.io/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=agentskills.io&sz=128",
+    "publishedAt": "2026-03-11"
+  },
+  {
     "name": "Oxla",
     "domain": "https://oxla.com",
     "description": "Data processing and analytics platform",
@@ -3888,6 +4040,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Poof",
+    "domain": "https://poof.bg",
+    "description": "The ultimate background removal API for developers. Integrate high-accuracy, real-time image background removal into your SaaS or e-commerce platform.",
+    "llmsTxtUrl": "https://docs.poof.bg/llms.txt",
+    "llmsFullTxtUrl": "https://docs.poof.bg/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=poof.bg&sz=128",
+    "publishedAt": "2026-02-13"
+  },
+  {
     "name": "Preact",
     "domain": "https://preactjs.com",
     "description": "Fast 3kB alternative to React with the same modern API.",
@@ -3974,6 +4136,16 @@
     "publishedAt": "2025-06-26"
   },
   {
+    "name": "PrompTessor",
+    "domain": "https://promptessor.com",
+    "description": "Analyze, optimize, and reverse-engineer AI prompts with deep metrics. Craft production-ready prompts that deliver higher-quality LLM results.",
+    "llmsTxtUrl": "https://promptessor.com/llms.txt",
+    "llmsFullTxtUrl": "https://promptessor.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=promptessor.com&sz=128",
+    "publishedAt": "2025-12-15"
+  },
+  {
     "name": "promptfoo",
     "domain": "https://www.promptfoo.dev",
     "description": "Evaluate and test LLM outputs, collect human feedback, prevent regressions,' and improve your prompts",
@@ -4001,6 +4173,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=ai.pydantic.dev&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Qeeebo",
+    "domain": "https://qeeebo.com",
+    "description": "AI-curated question-and-answer platform built to become the world’s largest.",
+    "llmsTxtUrl": "https://qeeebo.com/llms.txt",
+    "llmsFullTxtUrl": "https://qeeebo.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=qeeebo.com&sz=128",
+    "publishedAt": "2026-01-31"
   },
   {
     "name": "QRco.au",
@@ -4133,6 +4315,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=reown.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "RePhoto",
+    "domain": "https://www.rephoto.app/",
+    "description": "RePhoto virtually stages empty rooms, fixes HDR lighting, and performs day-to-dusk conversions in seconds using AI.",
+    "llmsTxtUrl": "https://www.rephoto.app/llms.txt",
+    "llmsFullTxtUrl": "https://www.rephoto.app/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.rephoto.app&sz=128",
+    "publishedAt": "2026-02-25"
   },
   {
     "name": "Replit",
@@ -4525,6 +4717,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Static Hosting · ShipStatic",
+    "domain": "https://www.shipstatic.com",
+    "description": "Simple static hosting. Drop your files, get a live URL in seconds. Free SSL, custom domains, instant deploys.",
+    "llmsTxtUrl": "https://www.shipstatic.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.shipstatic.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.shipstatic.com&sz=128",
+    "publishedAt": "2026-03-13"
+  },
+  {
     "name": "Statusfield",
     "domain": "https://statusfield.com",
     "description": "Real-time alerts for outages in the cloud services you rely on.",
@@ -4618,6 +4820,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=svgviewer.app&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "SwissCarInfo",
+    "domain": "https://swisscarinfo.ch",
+    "description": "Swiss vehicle type approval database with 731,000+ official records from OFROU/ASTRA. Search by type approval number, VIN, brand/model. Includes cantonal statistics, EV adoption data, market shares, aviation registry, and Euro NCAP ratings. Available in FR/DE/IT/EN.",
+    "llmsTxtUrl": "https://swisscarinfo.ch/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=swisscarinfo.ch&sz=128",
+    "publishedAt": "2026-02-22"
   },
   {
     "name": "Tamagui",
@@ -4772,6 +4983,16 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "TinyMCE 8 Documentation",
+    "domain": "https://www.tiny.cloud/docs/",
+    "description": "llms.txt is a structured docs index for LLMs, llms-full.txt contains the complete documentation in machine-readable text.",
+    "llmsTxtUrl": "https://www.tiny.cloud/docs/llms.txt",
+    "llmsFullTxtUrl": "https://www.tiny.cloud/docs/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tiny.cloud/docs&sz=128",
+    "publishedAt": "2026-02-27"
+  },
+  {
     "name": "Tiptap",
     "domain": "https://tiptap.dev",
     "description": "Tiptap is a suite of content editing & real time collaboration tools. Build editor experiences like Notion in weeks, not years.",
@@ -4865,6 +5086,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "TryOpenClaw.ai",
+    "domain": "https://www.tryopenclaw.ai",
+    "description": "Managed hosting platform for OpenClaw, the open-source AI assistant that connects to WhatsApp, Telegram, Discord, Slack, and iMessage.",
+    "llmsTxtUrl": "https://www.tryopenclaw.ai/llms.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tryopenclaw.ai&sz=128",
+    "publishedAt": "2026-03-01"
+  },
+  {
     "name": "Turbo",
     "domain": "https://turbo.build",
     "description": "Turbo is an incremental bundler and build system optimized for JavaScript and TypeScript, written in Rust.",
@@ -4910,6 +5140,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=ufcvelvet.com&sz=128",
     "publishedAt": "2025-06-19"
+  },
+  {
+    "name": "UI Thing",
+    "domain": "https://uithing.com",
+    "description": "TailwindCSS component library and CLI for Nuxt (shadcn-style), powered by Reka UI",
+    "llmsTxtUrl": "https://uithing.com/llms.txt",
+    "llmsFullTxtUrl": "https://uithing.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=uithing.com&sz=128",
+    "publishedAt": "2026-01-18"
   },
   {
     "name": "uminai MCP",
