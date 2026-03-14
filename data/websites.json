@@ -5515,5 +5515,14 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=zoko.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "MapleBridge.io",
+    "domain": "https://maplebridge.io",
+    "description": "AI-powered B2B matching platform connecting Canadian buyers with Chinese manufacturers. LLM semantic matching for Canada-China trade. Free for buyers.",
+    "llmsTxtUrl": "https://maplebridge.io/llms.txt",
+    "category": "e-commerce",
+    "favicon": "https://www.google.com/s2/favicons?domain=maplebridge.io&sz=128",
+    "publishedAt": "2026-03-14"
   }
 ]
