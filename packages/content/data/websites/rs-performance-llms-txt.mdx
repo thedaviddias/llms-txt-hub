@@ -1,0 +1,30 @@
+---
+name: 'RS Performance'
+description: 'Professional car workshop in Gdańsk, Poland with 21,000+ DTC fault code pages, AI-native discovery (llms.txt, MCP agent card, JSON feeds, markdown mirrors), and answer-first architecture for AI browsers.'
+website: 'https://rsperformance.online'
+llmsUrl: 'https://rsperformance.online/llms.txt'
+llmsFullUrl: 'https://rsperformance.online/llms-full.txt'
+category: 'other'
+publishedAt: '2026-03-13'
+priority: 'medium'
+---
+
+# RS Performance
+
+RS Performance is a professional automotive workshop in Gdańsk, Poland, serving the Trójmiasto (Tri-City) area. What makes it unique in this directory is its comprehensive AI-agent architecture — built entirely by a single mechanic — covering 21,000+ individual DTC fault code pages, each with a dedicated JSON endpoint, answer-first blocks, provenance metadata, and freshness timestamps.
+
+## Key Features
+
+- 21,000+ DTC fault code pages with per-code JSON endpoints (`/kody-usterek/{code}.json`)
+- Full `llms.txt` and `llms-full.txt` with AI routing instructions
+- `/.well-known/ai-resources.json` manifest with topic clusters and intent mapping
+- `/.well-known/mcp-agent-card.json` for MCP agent discovery
+- Markdown mirrors for all hubs (`/uslugi.md`, `/problemy.md`, `/blog.md`, `/raporty-napraw.md`)
+- JSON feeds: DTC feed, content index, repair reports, changes feed
+- Atom and RSS feeds for freshness tracking
+- `robots.txt` with explicit Allow rules for 12+ AI crawlers (Claude, GPT, Perplexity, Cohere, Meta, Bytespider, Amazonbot)
+- Schema.org JSON-LD (AutoRepair, FAQPage, ImageGallery)
+
+## About llms.txt Implementation
+
+RS Performance's llms.txt goes beyond a simple file listing — it includes routing instructions telling AI systems how to handle different user intents (fault codes → `/kody-usterek/`, symptoms → `/problemy/`, services → `/uslugi/`), a preferred fetch order for agents, and an explicit policy not to invent repair prices. The full AI discovery stack (ai-resources.json → llms-full.txt → content.json → markdown mirrors → JSON feeds) creates a complete navigation layer for any AI agent or RAG system.
