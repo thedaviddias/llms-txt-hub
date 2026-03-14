@@ -22,8 +22,17 @@ describe('proxy public route coverage', () => {
     const source = readFileSync(proxyPath, 'utf8')
 
     expect(source).toContain("'/proxy/api/(.*)'")
-    expect(source).toContain("pathname.startsWith('/api/op/')")
+    expect(source).toContain("'/track(.*)'")
+    expect(source).toContain('const isAnalyticsProxyRoute = isAnalyticsProxyPath(pathname)')
     expect(source).toContain('const isAnalyticsProxyRoute =')
     expect(source).toContain('!isAnalyticsProxyRoute')
+  })
+
+  it('skips CSRF validation for analytics proxy requests', () => {
+    const proxyPath = join(process.cwd(), 'proxy.ts')
+    const source = readFileSync(proxyPath, 'utf8')
+
+    expect(source).toContain('!isAnalyticsProxyRoute &&')
+    expect(source).toContain('const isAnalyticsProxyRoute = isAnalyticsProxyPath(pathname)')
   })
 })

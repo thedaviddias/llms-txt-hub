@@ -1,3 +1,7 @@
+autoInstallPeers: true
+strictPeerDependencies: false
+nodeLinker: hoisted
+
 packages:
   - 'apps/*'
   - 'packages/*'
