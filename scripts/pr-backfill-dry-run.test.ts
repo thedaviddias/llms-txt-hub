@@ -4,6 +4,7 @@ import {
   buildClassifierContext,
   calculateManagedLabelSync,
   deriveManagedLabels,
+  deriveMergeAction,
   deriveStructuralDecision,
   deriveWouldMergeDecision,
   parseSubmissionFrontmatter
@@ -307,6 +308,56 @@ describe('deriveWouldMergeDecision', () => {
       policyEligible: false,
       reason: 'Latest PR Review status is missing.',
       wouldMerge: false
+    })
+  })
+})
+
+describe('deriveMergeAction', () => {
+  it('plans a merge during dry-run when the PR is eligible', () => {
+    const result = deriveMergeAction({
+      desiredLabels: ['automerge:candidate'],
+      dryRun: true,
+      wouldMerge: true,
+      wouldMergeReason: 'Would auto-merge now.'
+    })
+
+    expect(result).toEqual({
+      attempted: true,
+      mode: 'dry-run',
+      reason: 'Would merge now.',
+      status: 'planned'
+    })
+  })
+
+  it('skips merge when manual review labeling is present', () => {
+    const result = deriveMergeAction({
+      desiredLabels: ['needs:manual-review'],
+      dryRun: false,
+      wouldMerge: true,
+      wouldMergeReason: 'Would auto-merge now.'
+    })
+
+    expect(result).toEqual({
+      attempted: false,
+      mode: 'applied',
+      reason: 'Merge skipped because the PR is labeled for manual review.',
+      status: 'skipped'
+    })
+  })
+
+  it('skips merge when the PR is not eligible', () => {
+    const result = deriveMergeAction({
+      desiredLabels: ['needs:manual-review'],
+      dryRun: false,
+      wouldMerge: false,
+      wouldMergeReason: 'Latest PR Review status is failure.'
+    })
+
+    expect(result).toEqual({
+      attempted: false,
+      mode: 'applied',
+      reason: 'Latest PR Review status is failure.',
+      status: 'skipped'
     })
   })
 })
