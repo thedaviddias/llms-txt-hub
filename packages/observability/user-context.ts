@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs'
 /**
  * Utility functions for configuring Sentry user context
  */
-import type { AuthUser } from '@thedaviddias/auth'
+import type { AuthUser } from '@thedaviddias/auth/types'
 
 /**
  * Configure Sentry user context with GitHub user information

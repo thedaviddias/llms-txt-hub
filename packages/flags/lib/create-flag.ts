@@ -1,6 +1,12 @@
-import { currentUser } from '@thedaviddias/auth'
+import { currentUser } from '@thedaviddias/auth/server'
 import { flag } from '@vercel/flags/next'
 
+/**
+ * Create a feature flag resolver backed by the current authenticated user.
+ *
+ * @param key - The feature flag key
+ * @returns A configured Vercel flag instance
+ */
 export const createFlag = (key: string) =>
   flag({
     key,
