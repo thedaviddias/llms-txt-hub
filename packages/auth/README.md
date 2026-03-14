@@ -1,6 +1,6 @@
 # @thedaviddias/auth
 
-A comprehensive authentication package built for Next.js applications using Clerk as the authentication provider. This package provides a complete authentication solution with both server and client-side utilities, React components, and middleware support.
+A comprehensive authentication package built for Next.js applications using Clerk as the authentication provider. This package provides a complete authentication solution with both server and client-side utilities, React components, and request-proxy support.
 
 ## Features
 
@@ -9,7 +9,7 @@ A comprehensive authentication package built for Next.js applications using Cler
 - 🎣 Type-safe React hooks for authentication state
 - 🧩 Pre-built authentication components
 - 🛡️ Strict type safety with TypeScript
-- 🔄 Next.js middleware support
+- 🔄 Next.js proxy support
 - 🔒 Built-in error handling
 - 🎭 Fallback provider for testing and development
 
@@ -104,12 +104,12 @@ export default async function ServerComponent() {
 }
 ```
 
-### 4. Middleware Protection
+### 4. Proxy Protection
 
-Protect your routes using the provided middleware:
+Protect your routes using the provided handler. On Next.js 16+, place this in `proxy.ts`:
 
 ```tsx
-// middleware.ts
+// proxy.ts
 import { middleware } from '@thedaviddias/auth'
 
 export default middleware
@@ -217,7 +217,7 @@ try {
 
 1. Always use environment variables for Clerk credentials
 2. Implement proper CORS policies
-3. Use middleware to protect sensitive routes
+3. Use a proxy to protect sensitive routes
 4. Keep authentication tokens secure
 5. Implement proper session management
 

@@ -79,9 +79,9 @@ import { withPlausibleProxy } from 'next-plausible'
 const nextConfig = withPlausibleProxy()(baseConfig)
 ```
 
-### 5. Update middleware
+### 5. Update proxy
 
-Add these to your middleware:
+Add these to your `proxy.ts`:
 
 - **Public routes**: Add `'/api/op/(.*)'` so the proxy is accessible without auth.
 - **CSP script-src**: Add `https://openpanel.dev` as a fallback origin.
