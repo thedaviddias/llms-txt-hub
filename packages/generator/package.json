@@ -14,11 +14,11 @@
     "dotenv": "^16.6.1",
     "firecrawl": "^1.29.3",
     "inquirer": "^12.11.1",
-    "tsx": "^4.21.0"
+    "tsx": "catalog:"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.9",
-    "@types/node": "^22.19.11",
-    "typescript": "^5.9.3"
+    "@types/node": "catalog:",
+    "typescript": "catalog:"
   }
 }

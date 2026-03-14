@@ -9,11 +9,11 @@
   "dependencies": {
     "@next/bundle-analyzer": "^16.1.6",
     "@t3-oss/env-core": "^0.12.0",
-    "@t3-oss/env-nextjs": "^0.12.0",
-    "zod": "^3.25.76"
+    "@t3-oss/env-nextjs": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "next": "16.1.6"
+    "next": "catalog:"
   }
 }

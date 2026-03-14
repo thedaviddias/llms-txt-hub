@@ -30,16 +30,16 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.37.3",
-    "next": "16.1.6",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "server-only": "^0.0.1"
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "server-only": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
-    "@types/node": "^22.19.11",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
-    "typescript": "^5.9.3"
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
   }
 }
