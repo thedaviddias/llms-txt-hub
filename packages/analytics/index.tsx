@@ -1,3 +1,4 @@
+/// <reference types="@openpanel/web" />
 import { OpenPanelAnalyticsComponent } from './providers/openpanel'
 import { PlausibleAnalyticsComponent } from './providers/plausible'
 
