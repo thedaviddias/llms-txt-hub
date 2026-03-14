@@ -1,0 +1,137 @@
+name: Auto-merge MDX Entry PRs
+
+on:
+  workflow_run:
+    workflows: ['PR Review']
+    types: [completed]
+
+jobs:
+  automerge:
+    name: Auto-merge
+    if: github.repository_owner == 'thedaviddias' && github.event.workflow_run.conclusion == 'success'
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect PR context
+        id: context
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require('node:fs')
+            const pullRequestRef = context.payload.workflow_run.pull_requests[0]
+
+            if (!pullRequestRef) {
+              core.setOutput('is_community_pr', 'false')
+              core.setOutput('pr_number', '')
+              return
+            }
+
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pullRequestRef.number
+            })
+
+            const [files, commits] = await Promise.all([
+              github.paginate(github.rest.pulls.listFiles, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number,
+                per_page: 100
+              }),
+              github.paginate(github.rest.pulls.listCommits, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pullRequest.number,
+                per_page: 100
+              })
+            ])
+
+            const payload = {
+              authorLogin: pullRequest.user.login,
+              commits: commits.map(commit => ({
+                authorLogin: commit.author?.login ?? null,
+                committerLogin: commit.committer?.login ?? null
+              })),
+              files: files.map(file => ({
+                additions: file.additions,
+                changes: file.changes,
+                deletions: file.deletions,
+                filename: file.filename,
+                previousFilename: file.previous_filename ?? null,
+                status: file.status
+              })),
+              headRefName: pullRequest.head.ref,
+              title: pullRequest.title
+            }
+
+            fs.writeFileSync('pr-context.json', JSON.stringify(payload, null, 2))
+            core.setOutput(
+              'is_community_pr',
+              String(pullRequest.title.startsWith('feat(community):'))
+            )
+            core.setOutput('pr_number', String(pullRequest.number))
+
+      - name: Checkout
+        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
+        uses: actions/checkout@v6
+
+      - name: Install
+        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
+        uses: ./.github/actions/install
+
+      - name: Classify PR
+        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
+        id: classify
+        run: pnpm exec tsx scripts/pr-triage.ts pr-context.json > classification.json
+
+      - name: Merge PR
+        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
+        uses: actions/github-script@v8
+        env:
+          PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+        with:
+          script: |
+            const prNumber = Number(process.env.PR_NUMBER)
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+            for (let attempt = 1; attempt <= 5; attempt += 1) {
+              const { data: pullRequest } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              })
+
+              if (pullRequest.state !== 'open' || pullRequest.draft) {
+                core.info('Pull request is not mergeable in its current state.')
+                return
+              }
+
+              try {
+                await github.rest.pulls.merge({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber,
+                  merge_method: 'squash'
+                })
+
+                core.info(`Merged PR #${prNumber} on attempt ${attempt}.`)
+                return
+              } catch (error) {
+                const status = error.status ?? 0
+
+                if (status !== 405 && status !== 409) {
+                  throw error
+                }
+
+                core.info(
+                  `Merge attempt ${attempt} for PR #${prNumber} returned ${status}; retrying.`
+                )
+
+                await sleep(5000)
+              }
+            }
+
+            core.setFailed(`PR #${prNumber} stayed unmergeable after retries.`)

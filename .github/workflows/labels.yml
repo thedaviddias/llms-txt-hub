@@ -7,11 +7,106 @@ jobs:
   triage:
     permissions:
       contents: read
+      issues: write
       pull-requests: write
     runs-on: ubuntu-latest
 
     if: github.repository_owner == 'thedaviddias'
     steps:
+      - name: Ensure managed labels exist
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const labelDefinitions = [
+              {
+                name: 'area:content',
+                color: '0E8A16',
+                description: 'Touches content website entries or generated website data.'
+              },
+              {
+                name: 'lane:mdx-fast',
+                color: '1D76DB',
+                description: 'Eligible for the MDX auto-merge fast lane.'
+              },
+              {
+                name: 'lane:standard',
+                color: '5319E7',
+                description: 'Requires standard human review.'
+              },
+              {
+                name: 'lane:blocked',
+                color: 'B60205',
+                description: 'Blocked from fast-lane processing.'
+              },
+              {
+                name: 'status:blocked',
+                color: 'D93F0B',
+                description: 'Needs manual intervention before review.'
+              },
+              {
+                name: 'risk:low',
+                color: '0E8A16',
+                description: 'Low-risk change based on deterministic intake rules.'
+              },
+              {
+                name: 'risk:high',
+                color: 'B60205',
+                description: 'High-risk or mixed change based on deterministic intake rules.'
+              },
+              {
+                name: 'generated:websites-json',
+                color: 'FBCA04',
+                description: 'Touches generated data/websites.json.'
+              },
+              {
+                name: 'needs:generated-file-review',
+                color: 'D876E3',
+                description: 'Manual review required because data/websites.json was changed outside automation.'
+              },
+              {
+                name: 'automerge:candidate',
+                color: '0E8A16',
+                description: 'Eligible for auto-merge after required checks pass.'
+              }
+            ]
+
+            const existingLabels = await github.paginate(github.rest.issues.listLabelsForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            })
+
+            const existingByName = new Map(
+              existingLabels.map(label => [label.name, label])
+            )
+
+            for (const definition of labelDefinitions) {
+              const existing = existingByName.get(definition.name)
+
+              if (!existing) {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ...definition
+                })
+                continue
+              }
+
+              if (
+                existing.color.toLowerCase() !== definition.color.toLowerCase() ||
+                (existing.description ?? '') !== definition.description
+              ) {
+                await github.rest.issues.updateLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: definition.name,
+                  new_name: definition.name,
+                  color: definition.color,
+                  description: definition.description
+                })
+              }
+            }
+
       - uses: actions/labeler@v6
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
