@@ -412,7 +412,6 @@ export default clerkMiddleware(async (auth, req) => {
       !req.nextUrl.pathname.startsWith('/api/members') &&
       !req.nextUrl.pathname.startsWith('/api/auth') &&
       !req.nextUrl.pathname.startsWith('/api/cli/') &&
-      !req.nextUrl.pathname.startsWith('/api/extension-feedback') &&
       !['GET', 'HEAD', 'OPTIONS'].includes(req.method)
     ) {
       const isValidCSRF = await validateCSRFToken(req)

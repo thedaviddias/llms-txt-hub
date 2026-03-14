@@ -57,6 +57,11 @@ describe('UninstallFeedbackForm', () => {
   })
 
   it('submits expected payload directly to extension feedback API', async () => {
+    const csrfMeta = document.createElement('meta')
+    csrfMeta.setAttribute('name', 'csrf-token')
+    csrfMeta.setAttribute('content', 'test-csrf-token')
+    document.head.appendChild(csrfMeta)
+
     const fetchMock = jest.fn().mockResolvedValueOnce({
       ok: true,
       json: async () => ({ ok: true })
@@ -88,7 +93,8 @@ describe('UninstallFeedbackForm', () => {
       expect.objectContaining({
         method: 'POST',
         headers: expect.objectContaining({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-csrf-token': 'test-csrf-token'
         })
       })
     )
@@ -106,6 +112,8 @@ describe('UninstallFeedbackForm', () => {
     await waitFor(() => {
       expect(screen.getByText('Thanks for the feedback')).toBeInTheDocument()
     })
+
+    csrfMeta.remove()
   })
 
   it('shows an error state when API submission fails', async () => {

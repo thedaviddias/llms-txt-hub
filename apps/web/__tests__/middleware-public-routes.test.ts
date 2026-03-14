@@ -10,11 +10,11 @@ describe('middleware public route coverage', () => {
     expect(source).toContain("'/api/extension-feedback(.*)'")
   })
 
-  it('exempts uninstall feedback route from CSRF validation', () => {
+  it('keeps uninstall feedback route protected by CSRF validation', () => {
     const middlewarePath = join(process.cwd(), 'middleware.ts')
     const source = readFileSync(middlewarePath, 'utf8')
 
-    expect(source).toContain("!req.nextUrl.pathname.startsWith('/api/extension-feedback')")
+    expect(source).not.toContain("!req.nextUrl.pathname.startsWith('/api/extension-feedback')")
   })
 
   it('allows plausible analytics proxy non-safe method requests', () => {

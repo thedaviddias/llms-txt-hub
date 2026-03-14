@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { fetchWithCSRF } from '@/lib/csrf-client'
 import { getRoute } from '@/lib/routes'
 
 export const UNINSTALL_REASONS = [
@@ -60,7 +61,7 @@ export function UninstallFeedbackForm({ version, lang }: UninstallFeedbackFormPr
     try {
       setSubmitState('submitting')
 
-      const response = await fetch('/api/extension-feedback', {
+      const response = await fetchWithCSRF('/api/extension-feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
