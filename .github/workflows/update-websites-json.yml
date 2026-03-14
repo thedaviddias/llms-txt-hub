@@ -8,6 +8,10 @@ on:
     paths:
       - "packages/content/data/websites/**"
 
+concurrency:
+  group: update-websites-json-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   update-websites-json:
     runs-on: ubuntu-latest

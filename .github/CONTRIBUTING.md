@@ -19,9 +19,11 @@ The easiest way to contribute is through our web interface:
 
 If you prefer to contribute directly through GitHub:
 
+> **Important:** Do NOT edit `data/websites.json`. This file is **auto-generated** and any manual changes will be rejected. Only add or edit `.mdx` files under `packages/content/data/websites/`.
+
 1. Fork the repository
 2. Create a new branch for your addition: `git checkout -b add/your-website-name`
-3. Create a new MDX file in the content/websites directory
+3. Create a new `.mdx` file in `packages/content/data/websites/`
 4. Add your website information following our template format
 5. Test your changes thoroughly
 6. Commit your changes with clear, descriptive commit messages

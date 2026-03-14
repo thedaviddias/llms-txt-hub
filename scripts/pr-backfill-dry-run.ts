@@ -36,7 +36,7 @@ const COLUMN_WIDTHS = {
   guidelines: 10,
   lane: 8,
   labels: 46,
-  merge: 5,
+  merge: 7,
   policy: 6,
   pr: 4,
   reason: 60,
@@ -211,6 +211,7 @@ interface PullRequestReviewSnapshot {
   guidelineReasons: string[]
   guidelineStatus: GuidelineStatus
   labelSync: LabelSyncResult
+  mergeAction: MergeAction
   number: number
   policyEligible: boolean
   reviewStatus: ReviewConclusion
@@ -225,6 +226,9 @@ interface DryRunSummary {
   labelsPlanned: number
   blockedManualWebsitesJsonChanges: number
   guidelineConcerns: number
+  mergeFailures: number
+  mergesCompleted: number
+  mergesPlanned: number
   mdxFast: number
   policyEligible: number
   scanned: number
@@ -240,6 +244,13 @@ interface LabelSyncPlan {
 
 interface LabelSyncResult extends LabelSyncPlan {
   mode: 'applied' | 'dry-run'
+}
+
+interface MergeAction {
+  attempted: boolean
+  mode: 'applied' | 'dry-run'
+  reason: string
+  status: 'failed' | 'merged' | 'planned' | 'skipped'
 }
 
 /**
@@ -385,6 +396,44 @@ export function deriveWouldMergeDecision(input: {
     policyEligible: true,
     reason: 'Would auto-merge now.',
     wouldMerge: true
+  }
+}
+
+/**
+ * Determine whether the local operator should attempt a merge.
+ */
+export function deriveMergeAction(input: {
+  desiredLabels: string[]
+  dryRun: boolean
+  wouldMerge: boolean
+  wouldMergeReason: string
+}): MergeAction {
+  if (!input.wouldMerge) {
+    return {
+      attempted: false,
+      mode: input.dryRun ? 'dry-run' : 'applied',
+      reason: input.wouldMergeReason,
+      status: 'skipped'
+    }
+  }
+
+  if (
+    input.desiredLabels.includes('generated:websites-json') ||
+    input.desiredLabels.includes('needs:manual-review')
+  ) {
+    return {
+      attempted: false,
+      mode: input.dryRun ? 'dry-run' : 'applied',
+      reason: 'Merge skipped because the PR is labeled for manual review.',
+      status: 'skipped'
+    }
+  }
+
+  return {
+    attempted: true,
+    mode: input.dryRun ? 'dry-run' : 'applied',
+    reason: input.dryRun ? 'Would merge now.' : 'Merge queued.',
+    status: input.dryRun ? 'planned' : 'skipped'
   }
 }
 
@@ -585,7 +634,7 @@ async function main(): Promise<void> {
     }
 
     process.stderr.write(
-      `[${progress.completed}/${progress.total}] #${progress.snapshot.number} ${progress.snapshot.classification.lane} guidelines=${progress.snapshot.guidelineStatus} merge=${progress.snapshot.wouldMerge ? 'yes' : 'no'} labels=${formatLabelSync(progress.snapshot.labelSync)}\n`
+      `[${progress.completed}/${progress.total}] #${progress.snapshot.number} ${progress.snapshot.classification.lane} guidelines=${progress.snapshot.guidelineStatus} merge=${progress.snapshot.mergeAction.status} labels=${formatLabelSync(progress.snapshot.labelSync)}\n`
     )
     printSnapshotRow(progress.snapshot)
   })
@@ -791,12 +840,24 @@ async function analyzePullRequest(
       prNumber: details.number,
       repo
     })
+    const mergePlan = deriveMergeAction({
+      desiredLabels,
+      dryRun: options.dryRun,
+      wouldMerge: decision.wouldMerge,
+      wouldMergeReason: decision.reason
+    })
+    const mergeAction = await executeMergeAction({
+      mergePlan,
+      prNumber: details.number,
+      repo
+    })
 
     return {
       classification,
       guidelineReasons: moderation.guidelineReasons,
       guidelineStatus: moderation.guidelineStatus,
       labelSync,
+      mergeAction,
       number: details.number,
       policyEligible: decision.policyEligible,
       reviewStatus,
@@ -830,6 +891,12 @@ async function analyzePullRequest(
         desired: [],
         mode: options.dryRun ? 'dry-run' : 'applied',
         removed: []
+      },
+      mergeAction: {
+        attempted: false,
+        mode: options.dryRun ? 'dry-run' : 'applied',
+        reason: `Analysis failed: ${message}`,
+        status: 'failed'
       },
       number: pullRequestNumber,
       policyEligible: false,
@@ -929,6 +996,46 @@ async function syncManagedLabels(input: {
   return {
     ...plan,
     mode: 'applied'
+  }
+}
+
+/**
+ * Execute the planned merge action against GitHub.
+ */
+async function executeMergeAction(input: {
+  mergePlan: MergeAction
+  prNumber: number
+  repo: string
+}): Promise<MergeAction> {
+  if (!input.mergePlan.attempted || input.mergePlan.mode === 'dry-run') {
+    return input.mergePlan
+  }
+
+  try {
+    await execGh([
+      'api',
+      `repos/${input.repo}/pulls/${input.prNumber}/merge`,
+      '--method',
+      'PUT',
+      '-f',
+      'merge_method=squash'
+    ])
+
+    return {
+      attempted: true,
+      mode: 'applied',
+      reason: 'Merged successfully.',
+      status: 'merged'
+    }
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    return {
+      attempted: true,
+      mode: 'applied',
+      reason: `Merge failed: ${message}`,
+      status: 'failed'
+    }
   }
 }
 
@@ -1222,6 +1329,9 @@ function summarizeSnapshots(snapshots: PullRequestReviewSnapshot[]): DryRunSumma
     guidelineConcerns: snapshots.filter(
       snapshot => snapshot.guidelineStatus === 'warn' || snapshot.guidelineStatus === 'fail'
     ).length,
+    mergeFailures: snapshots.filter(snapshot => snapshot.mergeAction.status === 'failed').length,
+    mergesCompleted: snapshots.filter(snapshot => snapshot.mergeAction.status === 'merged').length,
+    mergesPlanned: snapshots.filter(snapshot => snapshot.mergeAction.status === 'planned').length,
     mdxFast: snapshots.filter(snapshot => snapshot.classification.lane === 'mdx-fast').length,
     policyEligible: snapshots.filter(snapshot => snapshot.policyEligible).length,
     scanned: snapshots.length,
@@ -1273,10 +1383,10 @@ function printSnapshotRow(snapshot: PullRequestReviewSnapshot): void {
     guidelines: snapshot.guidelineStatus,
     lane: snapshot.classification.lane,
     labels: truncate(formatLabelSync(snapshot.labelSync), COLUMN_WIDTHS.labels),
-    merge: snapshot.wouldMerge ? 'yes' : 'no',
+    merge: snapshot.mergeAction.status,
     policy: snapshot.policyEligible ? 'yes' : 'no',
     pr: `#${snapshot.number}`,
-    reason: truncate(snapshot.wouldMergeReason, COLUMN_WIDTHS.reason),
+    reason: truncate(snapshot.mergeAction.reason, COLUMN_WIDTHS.reason),
     review: snapshot.reviewStatus,
     risk: snapshot.classification.risk,
     title: truncate(snapshot.title, COLUMN_WIDTHS.title)
@@ -1308,6 +1418,9 @@ function printSummary(summary: DryRunSummary): void {
     `- Scanned: ${summary.scanned}`,
     `- PRs with label changes: ${summary.labelsPlanned}`,
     `- PRs labeled now: ${summary.labelsApplied}`,
+    `- PRs planned for merge: ${summary.mergesPlanned}`,
+    `- PRs merged now: ${summary.mergesCompleted}`,
+    `- Merge failures: ${summary.mergeFailures}`,
     `- MDX fast lane: ${summary.mdxFast}`,
     `- Policy eligible: ${summary.policyEligible}`,
     `- Would merge now: ${summary.wouldMerge}`,
