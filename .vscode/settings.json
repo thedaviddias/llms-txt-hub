@@ -39,7 +39,7 @@
     "**/.cursor": true,
     "**/.agents": true,
     "**/.git": true,
-    "**/.github": true,
+    // "**/.github": true,
     "**/.history": true,
     "**/.next": true,
     "**/node_modules": true,
