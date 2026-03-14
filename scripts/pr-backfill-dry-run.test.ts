@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   assessSubmissionGuidelines,
   buildClassifierContext,
+  calculateManagedLabelSync,
+  deriveManagedLabels,
   deriveStructuralDecision,
   deriveWouldMergeDecision,
   parseSubmissionFrontmatter
@@ -305,6 +307,91 @@ describe('deriveWouldMergeDecision', () => {
       policyEligible: false,
       reason: 'Latest PR Review status is missing.',
       wouldMerge: false
+    })
+  })
+})
+
+describe('deriveManagedLabels', () => {
+  const baseClassification = {
+    automergeEligible: true,
+    labels: ['lane:mdx-fast', 'risk:low', 'automerge:candidate', 'area:content'],
+    lane: 'mdx-fast' as const,
+    manualWebsitesJsonChange: false,
+    reason: 'PR only adds new .mdx entries under packages/content/data/websites/**.',
+    risk: 'low' as const,
+    stats: {
+      fileCount: 1,
+      totalChanges: 25,
+      touchesWebsitesJson: false
+    },
+    summary: 'summary'
+  }
+
+  it('keeps fast-lane labels for structurally and policy-eligible PRs', () => {
+    const result = deriveManagedLabels({
+      classification: baseClassification,
+      guidelineStatus: 'pass',
+      policyEligible: true,
+      structurallyEligible: true
+    })
+
+    expect(result).toEqual(['automerge:candidate'])
+  })
+
+  it('downgrades to standard lane and manual review when guidelines warn', () => {
+    const result = deriveManagedLabels({
+      classification: baseClassification,
+      guidelineStatus: 'warn',
+      policyEligible: false,
+      structurallyEligible: true
+    })
+
+    expect(result).toEqual(['needs:manual-review'])
+  })
+
+  it('uses manual review for structurally blocked PRs', () => {
+    const result = deriveManagedLabels({
+      classification: {
+        ...baseClassification,
+        labels: ['lane:blocked', 'risk:high', 'status:blocked'],
+        lane: 'blocked',
+        risk: 'high'
+      },
+      guidelineStatus: 'skipped',
+      policyEligible: false,
+      structurallyEligible: false
+    })
+
+    expect(result).toEqual(['needs:manual-review'])
+  })
+
+  it('preserves generated websites.json labeling when present', () => {
+    const result = deriveManagedLabels({
+      classification: {
+        ...baseClassification,
+        labels: ['generated:websites-json'],
+        manualWebsitesJsonChange: true
+      },
+      guidelineStatus: 'skipped',
+      policyEligible: false,
+      structurallyEligible: false
+    })
+
+    expect(result).toEqual(['generated:websites-json', 'needs:manual-review'])
+  })
+})
+
+describe('calculateManagedLabelSync', () => {
+  it('removes stale managed labels but preserves unrelated labels', () => {
+    const result = calculateManagedLabelSync(
+      ['area:content', 'guideline:pass', 'lane:mdx-fast', 'risk:low', 'custom:keep'],
+      ['needs:manual-review']
+    )
+
+    expect(result).toEqual({
+      added: ['needs:manual-review'],
+      desired: ['needs:manual-review'],
+      removed: ['area:content', 'guideline:pass', 'lane:mdx-fast', 'risk:low']
     })
   })
 })

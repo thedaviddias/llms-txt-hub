@@ -19,9 +19,23 @@ const FETCH_TIMEOUT_MS = 8_000
 const MAX_FETCH_TEXT_LENGTH = 20_000
 const PAGE_SIZE = 100
 const PR_REVIEW_WORKFLOW_NAME = 'PR Review'
+const EXACT_MANAGED_LABELS = [
+  'area:content',
+  'automerge:candidate',
+  'generated:websites-json'
+] as const
+const MANAGED_LABEL_PREFIXES = [
+  'guideline:',
+  'lane:',
+  'needs:',
+  'policy:',
+  'risk:',
+  'status:'
+] as const
 const COLUMN_WIDTHS = {
   guidelines: 10,
   lane: 8,
+  labels: 46,
   merge: 5,
   policy: 6,
   pr: 4,
@@ -69,6 +83,25 @@ const CATEGORY_SIGNAL_TERMS: Record<string, string[]> = {
 }
 
 const categoryBySlug = new Map(categories.map(category => [category.slug, category]))
+const managedLabelSet = new Set<string>(EXACT_MANAGED_LABELS)
+
+const LABEL_DEFINITIONS = [
+  {
+    color: '0E8A16',
+    description: 'Eligible for auto-merge after required checks pass.',
+    name: 'automerge:candidate'
+  },
+  {
+    color: 'FBCA04',
+    description: 'Touches generated data/websites.json.',
+    name: 'generated:websites-json'
+  },
+  {
+    color: 'D876E3',
+    description: 'Manual review required before merging.',
+    name: 'needs:manual-review'
+  }
+] as const
 
 type GuidelineStatus = 'pass' | 'warn' | 'fail' | 'skipped'
 type ReviewConclusion =
@@ -85,6 +118,7 @@ type ReviewConclusion =
 
 interface DryRunOptions {
   concurrency: number
+  dryRun: boolean
   json: boolean
   limit?: number
   pullRequestNumber?: number
@@ -176,6 +210,7 @@ interface PullRequestReviewSnapshot {
   classification: PullRequestClassification
   guidelineReasons: string[]
   guidelineStatus: GuidelineStatus
+  labelSync: LabelSyncResult
   number: number
   policyEligible: boolean
   reviewStatus: ReviewConclusion
@@ -186,6 +221,8 @@ interface PullRequestReviewSnapshot {
 }
 
 interface DryRunSummary {
+  labelsApplied: number
+  labelsPlanned: number
   blockedManualWebsitesJsonChanges: number
   guidelineConcerns: number
   mdxFast: number
@@ -193,6 +230,16 @@ interface DryRunSummary {
   scanned: number
   waitingOnReview: number
   wouldMerge: number
+}
+
+interface LabelSyncPlan {
+  added: string[]
+  desired: string[]
+  removed: string[]
+}
+
+interface LabelSyncResult extends LabelSyncPlan {
+  mode: 'applied' | 'dry-run'
 }
 
 /**
@@ -342,6 +389,49 @@ export function deriveWouldMergeDecision(input: {
 }
 
 /**
+ * Derive the managed triage labels that should be present on a pull request.
+ */
+export function deriveManagedLabels(snapshot: {
+  classification: PullRequestClassification
+  guidelineStatus: GuidelineStatus
+  policyEligible: boolean
+  structurallyEligible: boolean
+}): string[] {
+  const labels = new Set<string>()
+
+  if (snapshot.classification.labels.includes('generated:websites-json')) {
+    labels.add('generated:websites-json')
+  }
+
+  if (snapshot.structurallyEligible && snapshot.policyEligible) {
+    labels.add('automerge:candidate')
+  } else {
+    labels.add('needs:manual-review')
+  }
+
+  return [...labels].sort()
+}
+
+/**
+ * Calculate the add/remove delta between current and desired managed labels.
+ */
+export function calculateManagedLabelSync(
+  currentLabels: string[],
+  desiredLabels: string[]
+): LabelSyncPlan {
+  const currentManaged = currentLabels.filter(label => isManagedLabel(label)).sort()
+  const desired = [...new Set(desiredLabels)].sort()
+  const added = desired.filter(label => !currentManaged.includes(label))
+  const removed = currentManaged.filter(label => !desired.includes(label))
+
+  return {
+    added,
+    desired,
+    removed
+  }
+}
+
+/**
  * Assess a submission against moderation and guideline heuristics.
  */
 export function assessSubmissionGuidelines(input: {
@@ -474,12 +564,17 @@ async function main(): Promise<void> {
 
   await ensureGitHubAuth()
 
+  if (!options.dryRun) {
+    await ensureManagedLabelsExist(options.repo)
+  }
+
   const openPullRequests = await fetchOpenPullRequests(options)
   const total = openPullRequests.length
 
   if (!options.json) {
+    const modeLabel = options.dryRun ? 'dry-run' : 'apply-labels'
     process.stderr.write(
-      `Scanning ${total} open PR${total === 1 ? '' : 's'} with concurrency ${options.concurrency}...\n`
+      `Scanning ${total} open PR${total === 1 ? '' : 's'} with concurrency ${options.concurrency} (${modeLabel})...\n`
     )
     printTableHeader()
   }
@@ -490,7 +585,7 @@ async function main(): Promise<void> {
     }
 
     process.stderr.write(
-      `[${progress.completed}/${progress.total}] #${progress.snapshot.number} ${progress.snapshot.classification.lane} guidelines=${progress.snapshot.guidelineStatus} merge=${progress.snapshot.wouldMerge ? 'yes' : 'no'}\n`
+      `[${progress.completed}/${progress.total}] #${progress.snapshot.number} ${progress.snapshot.classification.lane} guidelines=${progress.snapshot.guidelineStatus} merge=${progress.snapshot.wouldMerge ? 'yes' : 'no'} labels=${formatLabelSync(progress.snapshot.labelSync)}\n`
     )
     printSnapshotRow(progress.snapshot)
   })
@@ -518,6 +613,7 @@ async function main(): Promise<void> {
 function parseArgs(args: string[]): DryRunOptions {
   const options: DryRunOptions = {
     concurrency: DEFAULT_CONCURRENCY,
+    dryRun: false,
     json: false,
     repo: DEFAULT_REPO
   }
@@ -531,6 +627,11 @@ function parseArgs(args: string[]): DryRunOptions {
 
     if (arg === '--json') {
       options.json = true
+      continue
+    }
+
+    if (arg === '--dry-run') {
+      options.dryRun = true
       continue
     }
 
@@ -588,11 +689,62 @@ async function ensureGitHubAuth(): Promise<void> {
 }
 
 /**
+ * Ensure all locally managed triage labels exist in the repository.
+ */
+async function ensureManagedLabelsExist(repo: string): Promise<void> {
+  const existingLabels = await paginateGhApi<{
+    color: string
+    description?: string | null
+    name: string
+  }>(`repos/${repo}/labels`)
+  const existingByName = new Map(existingLabels.map(label => [label.name, label]))
+
+  for (const definition of LABEL_DEFINITIONS) {
+    const existing = existingByName.get(definition.name)
+
+    if (!existing) {
+      await execGh([
+        'api',
+        `repos/${repo}/labels`,
+        '--method',
+        'POST',
+        '-f',
+        `name=${definition.name}`,
+        '-f',
+        `color=${definition.color}`,
+        '-f',
+        `description=${definition.description}`
+      ])
+      continue
+    }
+
+    if (
+      existing.color.toLowerCase() !== definition.color.toLowerCase() ||
+      (existing.description ?? '') !== definition.description
+    ) {
+      await execGh([
+        'api',
+        `repos/${repo}/labels/${encodeURIComponent(definition.name)}`,
+        '--method',
+        'PATCH',
+        '-f',
+        `new_name=${definition.name}`,
+        '-f',
+        `color=${definition.color}`,
+        '-f',
+        `description=${definition.description}`
+      ])
+    }
+  }
+}
+
+/**
  * Analyze a single pull request from GitHub and combine structural and guideline decisions.
  */
 async function analyzePullRequest(
   repo: string,
-  pullRequestNumber: number
+  pullRequestNumber: number,
+  options: DryRunOptions
 ): Promise<PullRequestReviewSnapshot> {
   try {
     const details = await fetchPullRequestDetails(repo, pullRequestNumber)
@@ -627,11 +779,24 @@ async function analyzePullRequest(
       guidelineStatus: moderation.guidelineStatus,
       structuralDecision
     })
+    const desiredLabels = deriveManagedLabels({
+      classification,
+      guidelineStatus: moderation.guidelineStatus,
+      policyEligible: decision.policyEligible,
+      structurallyEligible: structuralDecision.structurallyEligible
+    })
+    const labelSync = await syncManagedLabels({
+      desiredLabels,
+      dryRun: options.dryRun,
+      prNumber: details.number,
+      repo
+    })
 
     return {
       classification,
       guidelineReasons: moderation.guidelineReasons,
       guidelineStatus: moderation.guidelineStatus,
+      labelSync,
       number: details.number,
       policyEligible: decision.policyEligible,
       reviewStatus,
@@ -660,6 +825,12 @@ async function analyzePullRequest(
       },
       guidelineReasons: [`Failed to analyze PR: ${message}`],
       guidelineStatus: 'warn',
+      labelSync: {
+        added: [],
+        desired: [],
+        mode: options.dryRun ? 'dry-run' : 'applied',
+        removed: []
+      },
       number: pullRequestNumber,
       policyEligible: false,
       reviewStatus: 'unknown',
@@ -696,7 +867,7 @@ async function analyzePullRequests(
         return
       }
 
-      const snapshot = await analyzePullRequest(options.repo, pullRequest.number)
+      const snapshot = await analyzePullRequest(options.repo, pullRequest.number, options)
       snapshots.push(snapshot)
       completed += 1
       onProgress({
@@ -710,6 +881,55 @@ async function analyzePullRequests(
   await Promise.all(workers)
 
   return snapshots.sort((left, right) => right.number - left.number)
+}
+
+/**
+ * Sync the managed label set for a pull request, optionally in read-only mode.
+ */
+async function syncManagedLabels(input: {
+  desiredLabels: string[]
+  dryRun: boolean
+  prNumber: number
+  repo: string
+}): Promise<LabelSyncResult> {
+  const currentLabels = await paginateGhApi<{ name: string }>(
+    `repos/${input.repo}/issues/${input.prNumber}/labels`
+  )
+  const plan = calculateManagedLabelSync(
+    currentLabels.map(label => label.name),
+    input.desiredLabels
+  )
+
+  if (input.dryRun) {
+    return {
+      ...plan,
+      mode: 'dry-run'
+    }
+  }
+
+  for (const label of plan.removed) {
+    await execGh([
+      'api',
+      `repos/${input.repo}/issues/${input.prNumber}/labels/${encodeURIComponent(label)}`,
+      '--method',
+      'DELETE'
+    ])
+  }
+
+  if (plan.added.length > 0) {
+    const args = ['api', `repos/${input.repo}/issues/${input.prNumber}/labels`, '--method', 'POST']
+
+    for (const label of plan.added) {
+      args.push('-f', `labels[]=${label}`)
+    }
+
+    await execGh(args)
+  }
+
+  return {
+    ...plan,
+    mode: 'applied'
+  }
 }
 
 /**
@@ -988,6 +1208,14 @@ async function execGh(args: string[]): Promise<{ stdout: string }> {
  */
 function summarizeSnapshots(snapshots: PullRequestReviewSnapshot[]): DryRunSummary {
   return {
+    labelsApplied: snapshots.filter(
+      snapshot =>
+        snapshot.labelSync.mode === 'applied' &&
+        (snapshot.labelSync.added.length > 0 || snapshot.labelSync.removed.length > 0)
+    ).length,
+    labelsPlanned: snapshots.filter(
+      snapshot => snapshot.labelSync.added.length > 0 || snapshot.labelSync.removed.length > 0
+    ).length,
     blockedManualWebsitesJsonChanges: snapshots.filter(
       snapshot => snapshot.classification.manualWebsitesJsonChange
     ).length,
@@ -1016,12 +1244,14 @@ function printTableHeader(): void {
     'guidelines',
     'policy',
     'merge',
+    'labels',
     'title',
     'reason'
   ]
   const headers: Record<(typeof columns)[number], string> = {
     guidelines: 'Guideline',
     lane: 'Lane',
+    labels: 'Labels',
     merge: 'Merge',
     policy: 'Policy',
     pr: 'PR',
@@ -1042,6 +1272,7 @@ function printSnapshotRow(snapshot: PullRequestReviewSnapshot): void {
   const row = {
     guidelines: snapshot.guidelineStatus,
     lane: snapshot.classification.lane,
+    labels: truncate(formatLabelSync(snapshot.labelSync), COLUMN_WIDTHS.labels),
     merge: snapshot.wouldMerge ? 'yes' : 'no',
     policy: snapshot.policyEligible ? 'yes' : 'no',
     pr: `#${snapshot.number}`,
@@ -1059,6 +1290,7 @@ function printSnapshotRow(snapshot: PullRequestReviewSnapshot): void {
     row.guidelines.padEnd(COLUMN_WIDTHS.guidelines),
     row.policy.padEnd(COLUMN_WIDTHS.policy),
     row.merge.padEnd(COLUMN_WIDTHS.merge),
+    row.labels.padEnd(COLUMN_WIDTHS.labels),
     row.title.padEnd(COLUMN_WIDTHS.title),
     row.reason.padEnd(COLUMN_WIDTHS.reason)
   ].join('  ')
@@ -1074,6 +1306,8 @@ function printSummary(summary: DryRunSummary): void {
     '',
     'Summary',
     `- Scanned: ${summary.scanned}`,
+    `- PRs with label changes: ${summary.labelsPlanned}`,
+    `- PRs labeled now: ${summary.labelsApplied}`,
     `- MDX fast lane: ${summary.mdxFast}`,
     `- Policy eligible: ${summary.policyEligible}`,
     `- Would merge now: ${summary.wouldMerge}`,
@@ -1124,6 +1358,30 @@ function mergeGuidelineStatus(current: GuidelineStatus, next: GuidelineStatus): 
   }
 
   return priority[next] > priority[current] ? next : current
+}
+
+/**
+ * Return true when a label is managed by the local triage command.
+ */
+function isManagedLabel(label: string): boolean {
+  return (
+    managedLabelSet.has(label) || MANAGED_LABEL_PREFIXES.some(prefix => label.startsWith(prefix))
+  )
+}
+
+/**
+ * Format a label sync result for streaming terminal output.
+ */
+function formatLabelSync(result: LabelSyncResult): string {
+  const added = result.added.length > 0 ? `+${result.added.join(',')}` : ''
+  const removed = result.removed.length > 0 ? `-${result.removed.join(',')}` : ''
+  const combined = [added, removed].filter(Boolean).join(' ')
+
+  if (combined.length === 0) {
+    return result.mode === 'dry-run' ? 'no-change' : 'unchanged'
+  }
+
+  return result.mode === 'dry-run' ? `plan ${combined}` : `applied ${combined}`
 }
 
 /**
