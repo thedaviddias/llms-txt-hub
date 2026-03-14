@@ -1,5 +1,4 @@
 import { ClerkProvider } from '@clerk/nextjs'
-import { VercelToolbar } from '@vercel/toolbar/next'
 import { headers } from 'next/headers'
 import type { ReactNode } from 'react'
 import '../../../packages/design-system/styles/globals.css'
@@ -65,7 +64,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                   {showSiteChrome && <Footer />}
                 </div>
                 {showSiteChrome && <BackToTop />}
-                {process.env.NODE_ENV === 'production' && <VercelToolbar />}
               </FavoritesProvider>
             </SentryUserProvider>
           </DesignSystemProvider>

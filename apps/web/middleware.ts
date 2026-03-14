@@ -183,15 +183,16 @@ function generateNonce(): string {
  */
 function buildCspValue(nonce: string): string {
   const isDev = process.env.NODE_ENV === 'development'
+  const vercelLive = isDev ? ' https://va.vercel-scripts.com https://vercel.live' : ''
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://plausible.io https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://plausible.io https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
     "font-src 'self' data:",
-    "connect-src 'self' https: wss: blob: https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com https://*.clerk.accounts.dev https://*.clerk.com",
-    "frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://*.substack.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com",
+    `connect-src 'self' https: wss: blob:${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com https://*.clerk.accounts.dev https://*.clerk.com`,
+    `frame-src 'self' https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://*.substack.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
