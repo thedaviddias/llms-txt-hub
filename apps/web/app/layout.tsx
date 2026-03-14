@@ -3,7 +3,7 @@ import { VercelToolbar } from '@vercel/toolbar/next'
 import { headers } from 'next/headers'
 import type { ReactNode } from 'react'
 import '../../../packages/design-system/styles/globals.css'
-import { AnalyticsHead } from '@thedaviddias/analytics/head'
+import { AnalyticsHead, OpenPanelIdentify } from '@thedaviddias/analytics/head'
 import { fonts } from '@thedaviddias/design-system/lib/fonts'
 import { DesignSystemProvider } from '@thedaviddias/design-system/theme-provider'
 import { SentryUserProvider } from '@thedaviddias/observability/providers'
@@ -40,7 +40,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <ClerkProvider signInUrl="/login" signUpUrl="/login" signInFallbackRedirectUrl="/">
       <html lang="en" suppressHydrationWarning>
         <head>
-          <AnalyticsHead domain="llmstxthub.com" nonce={nonce} />
+          <AnalyticsHead
+            domain="llmstxthub.com"
+            openPanelClientId={process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID}
+            nonce={nonce}
+          />
           <link
             rel="alternate"
             type="application/feed+json"
@@ -53,6 +57,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <SentryUserProvider>
               <FavoritesProvider>
                 <AnalyticsTracker />
+                <OpenPanelIdentify />
                 {!isExtensionRoute && <CSRFProvider />}
                 <div className="flex min-h-screen flex-col">
                   {showSiteChrome && <Header />}

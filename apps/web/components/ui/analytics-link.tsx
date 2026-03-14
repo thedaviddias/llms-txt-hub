@@ -29,25 +29,19 @@ export function AnalyticsLink({
   onClick,
   ...props
 }: AnalyticsLinkProps) {
-  /**
-   * Tracks click analytics for the link
-   */
+  /** Sends analytics events to all configured providers on click */
   const handleClick = () => {
-    // Custom onClick handler
     if (onClick) {
       onClick()
     }
 
-    // Track with analytics if event provided
     if (analyticsEvent) {
-      if (window.plausible) {
-        window.plausible(analyticsEvent, { props: analyticsProps })
+      window.plausible?.(analyticsEvent, { props: analyticsProps })
+      if (process.env.NODE_ENV === 'production') {
+        window.op?.track(analyticsEvent, analyticsProps)
       }
-    } else {
-      // Default tracking based on href
-      if (href.startsWith('http')) {
-        analytics.externalLink(href, typeof children === 'string' ? children : href)
-      }
+    } else if (href.startsWith('http')) {
+      analytics.externalLink(href, typeof children === 'string' ? children : href)
     }
   }
 

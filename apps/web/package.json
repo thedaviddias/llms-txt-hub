@@ -47,6 +47,7 @@
     "@thedaviddias/rate-limiting": "workspace:*",
     "@thedaviddias/utils": "workspace:*",
     "@upstash/redis": "^1.36.2",
+    "@vercel/functions": "^3.4.3",
     "@vercel/toolbar": "^0.1.41",
     "cheerio": "^1.2.0",
     "clsx": "^2.1.1",
