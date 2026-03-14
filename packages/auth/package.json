@@ -4,6 +4,22 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./client": {
+      "types": "./src/client/index.ts",
+      "default": "./src/client/index.ts"
+    },
+    "./middleware": {
+      "types": "./src/server/middleware.ts",
+      "default": "./src/server/middleware.ts"
+    },
+    "./server": {
+      "types": "./src/server/index.ts",
+      "default": "./src/server/index.ts"
+    },
+    "./types": {
+      "types": "./src/core/types.ts",
+      "default": "./src/core/types.ts"
+    },
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"

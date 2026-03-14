@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from '@thedaviddias/auth'
+import { useAuth } from '@thedaviddias/auth/client'
 import { useEffect } from 'react'
 
 /**
