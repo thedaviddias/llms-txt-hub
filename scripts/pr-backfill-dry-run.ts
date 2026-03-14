@@ -45,42 +45,7 @@ const COLUMN_WIDTHS = {
   title: 52
 } as const
 
-const SUSPICIOUS_FAIL_TERMS = ['adult', 'casino', 'gambling', 'loan', 'malware', 'porn', 'viagra']
-const SERVICE_REVIEW_TERMS = [
-  'agency',
-  'app development company',
-  'consultancy',
-  'consulting',
-  'development company',
-  'digital agency',
-  'service provider',
-  'services'
-]
-const TOOL_SIGNAL_TERMS = [
-  'api',
-  'cli',
-  'developer',
-  'developer tool',
-  'documentation',
-  'docs',
-  'framework',
-  'integration',
-  'library',
-  'open source',
-  'platform',
-  'sdk',
-  'tool'
-]
-const CATEGORY_SIGNAL_TERMS: Record<string, string[]> = {
-  'ai-ml': ['ai', 'agent', 'llm', 'machine learning', 'model'],
-  'automation-workflow': ['automation', 'integration', 'workflow', 'zapier'],
-  'data-analytics': ['analytics', 'data', 'database', 'warehouse'],
-  'developer-tools': ['api', 'cli', 'developer', 'docs', 'framework', 'library', 'sdk'],
-  'finance-fintech': ['bank', 'crypto', 'finance', 'fintech', 'payment'],
-  'infrastructure-cloud': ['cloud', 'container', 'hosting', 'infrastructure', 'kubernetes'],
-  'marketing-sales': ['crm', 'marketing', 'sales'],
-  'security-identity': ['auth', 'compliance', 'identity', 'security']
-}
+const SUSPICIOUS_FAIL_TERMS = ['casino', 'gambling', 'malware', 'porn', 'viagra']
 
 const categoryBySlug = new Map(categories.map(category => [category.slug, category]))
 const managedLabelSet = new Set<string>(EXACT_MANAGED_LABELS)
@@ -306,7 +271,6 @@ export function deriveStructuralDecision(input: {
   classification: PullRequestClassification
   isDraft: boolean
   mergeable: boolean | null
-  reviewStatus: ReviewConclusion
   state: string
 }): { reason: string; structurallyEligible: boolean } {
   if (input.classification.lane !== 'mdx-fast') {
@@ -347,13 +311,6 @@ export function deriveStructuralDecision(input: {
   if (input.mergeable !== true) {
     return {
       reason: 'GitHub does not currently mark the PR as mergeable.',
-      structurallyEligible: false
-    }
-  }
-
-  if (input.reviewStatus !== 'success') {
-    return {
-      reason: `Latest ${PR_REVIEW_WORKFLOW_NAME} status is ${input.reviewStatus}.`,
       structurallyEligible: false
     }
   }
@@ -492,17 +449,9 @@ export function assessSubmissionGuidelines(input: {
   const reasons: string[] = []
   let guidelineStatus: GuidelineStatus = 'pass'
 
-  const category = categoryBySlug.get(input.frontmatter.category)
-  if (!category) {
+  if (!categoryBySlug.has(input.frontmatter.category)) {
     addGuidelineReason(reasons, 'Invalid category slug in frontmatter.', 'fail')
     guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-  } else if (category.type !== 'tool') {
-    addGuidelineReason(
-      reasons,
-      `Category "${input.frontmatter.category}" requires manual review for auto-merge.`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
   }
 
   if (!sameWebsiteFamily(input.frontmatter.website, input.frontmatter.llmsUrl)) {
@@ -573,29 +522,6 @@ export function assessSubmissionGuidelines(input: {
       'fail'
     )
     guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-  }
-
-  const serviceTerm = findMatchedTerm(combinedText, SERVICE_REVIEW_TERMS)
-  if (serviceTerm && category?.type === 'tool') {
-    addGuidelineReason(
-      reasons,
-      `Site appears service-oriented ("${serviceTerm}") and may not fit the selected tool category.`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
-  }
-
-  if (
-    category?.type === 'tool' &&
-    !matchesCategorySignals(input.frontmatter.category, combinedText) &&
-    !matchesAnyTerm(combinedText, TOOL_SIGNAL_TERMS)
-  ) {
-    addGuidelineReason(
-      reasons,
-      `Category "${input.frontmatter.category}" does not match visible site or llms.txt signals.`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
   }
 
   return {
@@ -814,7 +740,6 @@ async function analyzePullRequest(
       classification,
       isDraft: details.draft,
       mergeable: details.mergeable,
-      reviewStatus,
       state: details.state
     })
     const moderation = await moderatePullRequest({
@@ -1516,20 +1441,6 @@ function addGuidelineReason(
 function looksLikeHtmlResponse(result: UrlInspection): boolean {
   const contentType = result.contentType?.toLowerCase() ?? ''
   return contentType.includes('text/html') || /<html[\s>]/i.test(result.text)
-}
-
-/**
- * Return true when the content contains signals matching the selected category.
- */
-function matchesCategorySignals(categorySlug: string, text: string): boolean {
-  return matchesAnyTerm(text, CATEGORY_SIGNAL_TERMS[categorySlug] ?? [])
-}
-
-/**
- * Return true when any term appears in the normalized content.
- */
-function matchesAnyTerm(text: string, terms: string[]): boolean {
-  return terms.some(term => text.includes(term))
 }
 
 /**

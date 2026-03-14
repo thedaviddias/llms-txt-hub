@@ -16,6 +16,7 @@ export async function JsonLd({ data }: JsonLdProps) {
     <script
       type="application/ld+json"
       nonce={nonce}
+      suppressHydrationWarning
       // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires unescaped JSON; content is sanitized above by escaping < to \u003c
       dangerouslySetInnerHTML={{ __html: safeJson }}
     />

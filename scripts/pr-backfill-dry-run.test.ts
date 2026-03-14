@@ -155,9 +155,9 @@ describe('assessSubmissionGuidelines', () => {
       }
     })
 
-    expect(result.guidelineStatus).toBe('warn')
-    expect(result.policyEligible).toBe(false)
-    expect(result.guidelineReasons[0]).toContain('requires manual review')
+    expect(result.guidelineStatus).toBe('pass')
+    expect(result.policyEligible).toBe(true)
+    expect(result.guidelineReasons).toEqual(['No guideline concerns detected.'])
   })
 
   it('fails when llms.txt is inaccessible', () => {
@@ -184,12 +184,9 @@ describe('assessSubmissionGuidelines', () => {
     expect(result.guidelineReasons).toContain('llms.txt is not accessible (fetch failed).')
   })
 
-  it('warns when category signals do not match the submitted content', () => {
+  it('does not block service-oriented wording on its own anymore', () => {
     const result = assessSubmissionGuidelines({
-      frontmatter: {
-        ...baseFrontmatter,
-        category: 'security-identity'
-      },
+      frontmatter: baseFrontmatter,
       homepageInspection: {
         contentType: 'text/html',
         ok: true,
@@ -206,9 +203,59 @@ describe('assessSubmissionGuidelines', () => {
       }
     })
 
-    expect(result.guidelineStatus).toBe('warn')
+    expect(result.guidelineStatus).toBe('pass')
+    expect(result.policyEligible).toBe(true)
+    expect(result.guidelineReasons).toEqual(['No guideline concerns detected.'])
+  })
+
+  it('only fails on the narrowed suspicious-term list', () => {
+    const result = assessSubmissionGuidelines({
+      frontmatter: {
+        ...baseFrontmatter,
+        category: 'personal'
+      },
+      homepageInspection: {
+        contentType: 'text/html',
+        ok: true,
+        status: 200,
+        text: 'Adult learning programs for career growth and continuing education.',
+        url: 'https://example.com'
+      },
+      llmsInspection: {
+        contentType: 'text/plain',
+        ok: true,
+        status: 200,
+        text: 'Adult education resources and professional development courses.'.repeat(4),
+        url: 'https://example.com/llms.txt'
+      }
+    })
+
+    expect(result.guidelineStatus).toBe('pass')
+    expect(result.policyEligible).toBe(true)
+  })
+
+  it('still fails on obvious suspicious-site terms', () => {
+    const result = assessSubmissionGuidelines({
+      frontmatter: baseFrontmatter,
+      homepageInspection: {
+        contentType: 'text/html',
+        ok: true,
+        status: 200,
+        text: 'This casino platform offers betting, gambling, and bonus promotions.',
+        url: 'https://example.com'
+      },
+      llmsInspection: {
+        contentType: 'text/plain',
+        ok: true,
+        status: 200,
+        text: 'Casino betting gambling promotions and slots.'.repeat(4),
+        url: 'https://example.com/llms.txt'
+      }
+    })
+
+    expect(result.guidelineStatus).toBe('fail')
     expect(result.policyEligible).toBe(false)
-    expect(result.guidelineReasons.join(' ')).toContain('service-oriented')
+    expect(result.guidelineReasons.join(' ')).toContain('casino')
   })
 })
 
@@ -233,7 +280,6 @@ describe('deriveStructuralDecision', () => {
       classification,
       isDraft: false,
       mergeable: true,
-      reviewStatus: 'success',
       state: 'open'
     })
 
@@ -243,18 +289,17 @@ describe('deriveStructuralDecision', () => {
     })
   })
 
-  it('returns false when the PR Review workflow has not succeeded', () => {
+  it('no longer treats PR Review as part of local structural eligibility', () => {
     const result = deriveStructuralDecision({
       classification,
       isDraft: false,
       mergeable: true,
-      reviewStatus: 'failure',
       state: 'open'
     })
 
     expect(result).toEqual({
-      reason: 'Latest PR Review status is failure.',
-      structurallyEligible: false
+      reason: 'Structural checks passed.',
+      structurallyEligible: true
     })
   })
 })

@@ -1,4 +1,4 @@
 'use client'
 
-export { useAuth } from './hooks/use-auth'
+export { type AuthProvider, useAuth } from './context'
 export { useUser } from './hooks/use-user'
