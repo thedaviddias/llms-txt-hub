@@ -19,6 +19,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/members(.*)',
   '/api/extension-feedback(.*)',
   '/proxy/api/(.*)', // Plausible proxy API endpoint
+  '/api/op/(.*)', // OpenPanel proxy API endpoint
   '/search(.*)',
   '/websites(.*)',
   '/projects(.*)',
@@ -184,7 +185,7 @@ function buildCspValue(nonce: string): string {
   const isDev = process.env.NODE_ENV === 'development'
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://plausible.io https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://plausible.io https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com https://va.vercel-scripts.com https://vercel.live https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
@@ -307,11 +308,12 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap') ||
-    // Plausible Analytics proxy endpoints
+    // Analytics proxy endpoints (Plausible + OpenPanel)
     pathname.startsWith('/proxy/api/') ||
     pathname.startsWith('/proxy/js/script') ||
     pathname === '/api/event' ||
     pathname.startsWith('/js/script') ||
+    pathname.startsWith('/api/op/') ||
     // Regular page loads (non-API routes) - exclude search route
     (!pathname.startsWith('/api/') && req.method === 'GET' && pathname !== '/search')
   ) {
@@ -379,16 +381,14 @@ export default clerkMiddleware(async (auth, req) => {
     return new Response(null, { status: 404 })
   }
 
-  const isPlausibleProxyApiRoute = pathname.startsWith('/proxy/api/')
+  const isAnalyticsProxyRoute =
+    pathname.startsWith('/proxy/api/') || pathname.startsWith('/api/op/')
 
-  // Block non-safe HTTP methods on page routes (not API, not _next)
-  // Next.js Server Actions are POST requests to page URLs with a `Next-Action` header
-  // (e.g., Clerk's invalidateCacheAction during sign-out)
   const isServerAction = req.method === 'POST' && req.headers.has('next-action')
   if (
     !['GET', 'HEAD', 'OPTIONS'].includes(req.method) &&
     !isServerAction &&
-    !isPlausibleProxyApiRoute &&
+    !isAnalyticsProxyRoute &&
     !pathname.startsWith('/api/') &&
     !pathname.startsWith('/_next/')
   ) {

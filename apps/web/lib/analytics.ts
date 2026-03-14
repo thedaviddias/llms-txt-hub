@@ -1,6 +1,3 @@
-// Plausible Analytics Event Tracking
-// This works on both server and client, with client-only execution
-
 declare global {
   interface Window {
     plausible?: (event: string, options?: { props?: Record<string, string | number> }) => void
@@ -125,41 +122,51 @@ interface EventProps {
 }
 
 /**
- * Track an event with Plausible Analytics
+ * Track an event with all configured analytics providers (Plausible + OpenPanel)
  */
 export function trackEvent(event: AnalyticsEvent, props?: EventProps) {
-  if (typeof window !== 'undefined' && window.plausible) {
-    try {
-      // Filter out undefined values and ensure types match Plausible expectations
-      const cleanProps: Record<string, string | number> = {}
-      if (props) {
-        Object.entries(props).forEach(([key, value]) => {
-          if (value !== undefined) {
-            cleanProps[key] = value
-          }
-        })
+  if (typeof window === 'undefined') return
+
+  const cleanProps: Record<string, string | number> = {}
+  if (props) {
+    Object.entries(props).forEach(([key, value]) => {
+      if (value !== undefined) {
+        cleanProps[key] = value
       }
-      window.plausible(event, { props: cleanProps })
+    })
+  }
+
+  try {
+    window.plausible?.(event, { props: cleanProps })
+  } catch (error) {
+    console.warn('Plausible tracking failed:', error)
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    try {
+      window.op?.track(event, cleanProps)
     } catch (error) {
-      console.warn('Analytics tracking failed:', error)
+      console.warn('OpenPanel tracking failed:', error)
     }
   }
 }
 
 /**
- * Track page view (usually automatic, but can be used for SPA navigation)
+ * Track page view (usually automatic, but can be used for SPA navigation).
+ * OpenPanel handles pageviews automatically via trackScreenViews, so this
+ * only sends to Plausible.
  */
 export function trackPageView(url?: string) {
-  if (typeof window !== 'undefined' && window.plausible) {
-    try {
-      if (url) {
-        window.plausible('pageview', { props: { url } })
-      } else {
-        window.plausible('pageview')
-      }
-    } catch (error) {
-      console.warn('Page view tracking failed:', error)
+  if (typeof window === 'undefined') return
+
+  try {
+    if (url) {
+      window.plausible?.('pageview', { props: { url } })
+    } else {
+      window.plausible?.('pageview')
     }
+  } catch (error) {
+    console.warn('Page view tracking failed:', error)
   }
 }
 
@@ -473,7 +480,10 @@ export const analytics = {
   }
 }
 
-// Hook for tracking component mount/unmount
+/**
+ * Hook for tracking component mount/unmount analytics events.
+ * Currently a no-op placeholder for future use.
+ */
 export function useAnalytics(_eventName: AnalyticsEvent, _props?: EventProps) {
   if (typeof window !== 'undefined') {
     // Track on mount if needed
