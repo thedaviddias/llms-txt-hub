@@ -2,6 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { logger } from '@thedaviddias/logging'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import { isAnalyticsProxyPath } from '@/lib/analytics-proxy'
 import { validateCSRFToken } from '@/lib/middleware-csrf'
 
 // Edge Runtime compatible implementations
@@ -20,6 +21,7 @@ const isPublicRoute = createRouteMatcher([
   '/api/extension-feedback(.*)',
   '/proxy/api/(.*)', // Plausible proxy API endpoint
   '/api/op/(.*)', // OpenPanel proxy API endpoint
+  '/track(.*)', // OpenPanel proxy endpoint
   '/search(.*)',
   '/websites(.*)',
   '/projects(.*)',
@@ -310,11 +312,7 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap') ||
     // Analytics proxy endpoints (Plausible + OpenPanel)
-    pathname.startsWith('/proxy/api/') ||
-    pathname.startsWith('/proxy/js/script') ||
-    pathname === '/api/event' ||
-    pathname.startsWith('/js/script') ||
-    pathname.startsWith('/api/op/') ||
+    isAnalyticsProxyPath(pathname) ||
     // Regular page loads (non-API routes) - exclude search route
     (!pathname.startsWith('/api/') && req.method === 'GET' && pathname !== '/search')
   ) {
@@ -382,8 +380,7 @@ export default clerkMiddleware(async (auth, req) => {
     return new Response(null, { status: 404 })
   }
 
-  const isAnalyticsProxyRoute =
-    pathname.startsWith('/proxy/api/') || pathname.startsWith('/api/op/')
+  const isAnalyticsProxyRoute = isAnalyticsProxyPath(pathname)
 
   const isServerAction = req.method === 'POST' && req.headers.has('next-action')
   if (
@@ -409,6 +406,7 @@ export default clerkMiddleware(async (auth, req) => {
   if (req.nextUrl.pathname.startsWith('/api/')) {
     // Skip CSRF for webhook endpoints, auth endpoints, and GET requests
     if (
+      !isAnalyticsProxyRoute &&
       !req.nextUrl.pathname.startsWith('/api/webhooks') &&
       !req.nextUrl.pathname.startsWith('/api/members') &&
       !req.nextUrl.pathname.startsWith('/api/auth') &&

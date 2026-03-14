@@ -1,4 +1,4 @@
-import { render as rtlRender } from '@testing-library/react'
+import { type RenderOptions, type RenderResult, render as rtlRender } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import { Toaster } from 'sonner'
@@ -36,10 +36,24 @@ export const mockThemeContext = {
   setTheme: jest.fn()
 }
 
+/**
+ * Renders a React element with the test-only providers used across component tests.
+ *
+ * @param ui - React element to render
+ * @param options - Testing Library render options
+ * @returns The Testing Library render result
+ */
 function render(
   ui: React.ReactElement,
-  { authContext = mockAuthContext, themeContext = mockThemeContext, ...options } = {}
-) {
+  {
+    authContext = mockAuthContext,
+    themeContext = mockThemeContext,
+    ...options
+  }: RenderOptions & {
+    authContext?: typeof mockAuthContext
+    themeContext?: typeof mockThemeContext
+  } = {}
+): RenderResult {
   function Wrapper({ children }: { children: React.ReactNode }) {
     return (
       <MockThemeProvider attribute="class" defaultTheme="system" enableSystem>
