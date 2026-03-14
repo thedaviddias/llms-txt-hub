@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       tags: { type: 'newsletter' }
     })
 
-    // CSRF is enforced by middleware for all non-GET API routes
+    // CSRF is enforced by the app proxy for all non-GET API routes
     if (!provider) {
       logger.error('Newsletter provider is not configured. Check your environment variables.')
       Sentry.captureMessage('Newsletter provider not configured', 'warning')
