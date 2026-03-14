@@ -63,3 +63,5 @@ sessions/
 .agents/
 .claude/
 .cursor/
+
+.codex/config.toml
