@@ -352,6 +352,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Agile Automation",
+    "description": "Extensive experience in automation software, controls and web application development for control solutions and IoT connected systems.",
+    "url": "/agile-automation-llms-txt",
+    "content": "# Agile Automation\n\nExtensive experience in automation software, controls and web application development for control solutions and IoT connected systems.",
+    "category": "agency-services",
+    "slug": "agile-automation-llms-txt",
+    "website": "https://www.agileautomation.ca/",
+    "llmsUrl": "https://www.agileautomation.ca/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Agile IT | CMMC Compliance Consultant",
     "description": "Agile IT offers expert CMMC consulting services to ensure business meets the US DoD cybersecurity standards.",
     "url": "/agile-it-cmmc-compliance-llms-txt",
@@ -374,6 +385,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "ahmedali",
+    "description": "Ahmed showcase expertise and projects in blockchain development, smart contracts, and decentralized applications to attract clients and collaborators in tech.",
+    "url": "/ahmedali-llms-txt",
+    "content": "# ahmedali\n\nAhmed showcase expertise and projects in blockchain development, smart contracts, and decentralized applications to attract clients and collaborators in tech.",
+    "category": "personal",
+    "slug": "ahmedali-llms-txt",
+    "website": "https://ahmedali.dev",
+    "llmsUrl": "https://ahmedali.dev/llms.txt",
+    "llmsFullUrl": "https://ahmedali.dev/llms-full.txt"
+  },
+  {
     "name": "AI Consulting",
     "description": "Discover expert consulting solutions for small businesses and nonprofits. Maxwell Strategy Group specializes in AI tools, market entry strategies.",
     "url": "/ai-consulting-llms-txt",
@@ -393,6 +415,17 @@
     "slug": "ai-dream-scope-llms-txt",
     "website": "https://aidreamscope.com",
     "llmsUrl": "https://aidreamscope.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "AI Financial management",
+    "description": "Smarter money decisions start here. Your artificial intelligence financial advisor in one powerful app for personal and business goals.",
+    "url": "/ai-financial-management-llms-txt",
+    "content": "# AI Financial management\n\nSmarter money decisions start here. Your artificial intelligence financial advisor in one powerful app for personal and business goals.",
+    "category": "finance-fintech",
+    "slug": "ai-financial-management-llms-txt",
+    "website": "https://scripnote.com",
+    "llmsUrl": "https://scripnote.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -547,6 +580,17 @@
     "slug": "alva-llms-txt",
     "website": "https://alva.xyz",
     "llmsUrl": "https://alva.xyz/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Ambriel",
+    "description": "Ambriel offers a comprehensive suite of fraud prevention and compliance solutions tailored for businesses seeking effective risk management tools.",
+    "url": "/ambriel-llms-txt",
+    "content": "# Ambriel\n\nAmbriel offers a comprehensive suite of fraud prevention and compliance solutions tailored for businesses seeking effective risk management tools.",
+    "category": "security-identity",
+    "slug": "ambriel-llms-txt",
+    "website": "https://ambriel.io",
+    "llmsUrl": "https://ambriel.io/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1109,6 +1153,17 @@
     "website": "https://digitlnomad.com",
     "llmsUrl": "https://digitlnomad.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Banan AI - AI Image Generator",
+    "description": "Create AI images by chatting — no prompt engineering needed. Built for e-commerce, creators, and marketers. Start free today.",
+    "url": "/banan-ai-ai-image-generator-llms-txt",
+    "content": "# Banan AI - AI Image Generator\n\nCreate AI images by chatting — no prompt engineering needed. Built for e-commerce, creators, and marketers. Start free today.",
+    "category": "ai-ml",
+    "slug": "banan-ai-ai-image-generator-llms-txt",
+    "website": "https://bananai.net/",
+    "llmsUrl": "https://bananai.net/llms.txt",
+    "llmsFullUrl": "https://bananai.net/llms-full.txt"
   },
   {
     "name": "Bartending School",
@@ -1705,6 +1760,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Cardless ID",
+    "description": "Decentralized identity credential system built on Algorand blockchain with W3C Verifiable Credentials",
+    "url": "/cardless-id-llms-txt",
+    "content": "# Cardless ID\n\nDecentralized identity credential system built on Algorand blockchain with W3C Verifiable Credentials and ability to create your own verification tools",
+    "category": "security-identity",
+    "slug": "cardless-id-llms-txt",
+    "website": "https://cardlessid.org",
+    "llmsUrl": "https://cardlessid.org/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "CARTO",
     "description": "Cloud-native location intelligence platform for spatial analytics. Analyze, visualize, and develop apps with your spatial data at a limitless scale.",
     "url": "/carto-llms-txt",
@@ -2044,6 +2110,17 @@
     "website": "https://www.claudemcp.com",
     "llmsUrl": "https://www.claudemcp.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Claw-Stack",
+    "description": "A modular research platform for autonomous AI agent governance and security. Explores multi-agent coordination, persistent memory, and policy enforcement for self-hosted AI systems.",
+    "url": "/claw-stack-llms-txt",
+    "content": "# Claw-Stack\n\nA modular research platform for autonomous AI agent governance and security. Explores multi-agent coordination, persistent memory, and policy enforcement for self-hosted AI systems.",
+    "category": "ai-ml",
+    "slug": "claw-stack-llms-txt",
+    "website": "https://claw-stack.com",
+    "llmsUrl": "https://claw-stack.com/llms.txt",
+    "llmsFullUrl": "https://claw-stack.com/llms-full.txt"
   },
   {
     "name": "CLB CONSULT",
@@ -2649,6 +2726,17 @@
     "website": "https://crewai.com",
     "llmsUrl": "https://docs.crewai.com/llms.txt",
     "llmsFullUrl": "https://docs.crewai.com/llms-full.txt"
+  },
+  {
+    "name": "Criticaster",
+    "description": "We analyze thousands of professional tech reviews to calculate a single critic score. See which products consistently impress the experts and which don't.",
+    "url": "/criticaster-llms-txt",
+    "content": "# Criticaster\n\nWe analyze thousands of professional tech reviews to calculate a single critic score. See which products consistently impress the experts and which don't.",
+    "category": "content-media",
+    "slug": "criticaster-llms-txt",
+    "website": "https://www.criticaster.com",
+    "llmsUrl": "https://www.criticaster.com/llms.txt",
+    "llmsFullUrl": "https://www.criticaster.com/llms-full.txt"
   },
   {
     "name": "Cross Browser & Mobile App Testing",
@@ -6193,6 +6281,17 @@
     "llmsFullUrl": "https://mintlify.com/docs/llms-full.txt"
   },
   {
+    "name": "MiruSuite",
+    "description": "MiruSuite AI-powered live production automation software for PTZ cameras. Streamline video production workflows with automatic tracking and intelligent cutting.",
+    "url": "/mirusuite-llms-txt",
+    "content": "# MiruSuite\n\nMiruSuite AI-powered live production automation software for PTZ cameras. Streamline video production workflows with automatic tracking and intelligent cutting.",
+    "category": "automation-workflow",
+    "slug": "mirusuite-llms-txt",
+    "website": "https://mirusuite.com",
+    "llmsUrl": "https://mirusuite.com/llms.txt",
+    "llmsFullUrl": "https://mirusuite.com/llms-full.txt"
+  },
+  {
     "name": "Mixo",
     "description": "AI-powered website builder that generates complete landing pages from just a sentence.",
     "url": "/mixo-llms-txt",
@@ -8701,6 +8800,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "TRG International",
+    "description": "TRG International is a leading global technology firm, focused on delivering IT solutions so our customers can be free to focus on their core business.",
+    "url": "/trg-international-llms-txt",
+    "content": "# TRG International\n\nTRG International is a leading global technology firm, focused on delivering IT solutions so our customers can be free to focus on their core business.",
+    "category": "agency-services",
+    "slug": "trg-international-llms-txt",
+    "website": "https://trginternational.com/",
+    "llmsUrl": "https://trginternational.com/llms.txt",
+    "llmsFullUrl": "https://trginternational.com/llms-full.txt"
+  },
+  {
     "name": "Trigger.dev",
     "description": "Background job and workflow automation platform",
     "url": "/trigger-dev-llms-txt",
@@ -9414,6 +9524,17 @@
     "website": "https://webrecorder.net",
     "llmsUrl": "https://webrecorder.net/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Website Monitoring",
+    "description": "Multi-region uptime monitoring with cross-validated checks to reduce false alarms. Monitor uptime, SSL, content, and 700+ services. Free plan available.",
+    "url": "/website-monitoring-llms-txt",
+    "content": "# Website Monitoring\n\nMulti-region uptime monitoring with cross-validated checks to reduce false alarms. Monitor uptime, SSL, content, and 700+ services. Free plan available.",
+    "category": "agency-services",
+    "slug": "website-monitoring-llms-txt",
+    "website": "https://flarewarden.com",
+    "llmsUrl": "https://flarewarden.com/llms.txt",
+    "llmsFullUrl": "https://flarewarden.com/llms-full.txt"
   },
   {
     "name": "Wedgwood Insurance",

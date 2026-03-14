@@ -259,6 +259,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "ambriel",
+    "webSlug": "ambriel-llms-txt",
+    "name": "Ambriel",
+    "domain": "https://ambriel.io",
+    "description": "Ambriel offers a comprehensive suite of fraud prevention and compliance solutions tailored for businesses seeking effective risk management tools.",
+    "llmsTxtUrl": "https://ambriel.io/llms.txt",
+    "category": "security-identity"
+  },
+  {
     "slug": "amema",
     "webSlug": "amema-llms-txt",
     "name": "amema",
@@ -616,6 +625,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "banan-ai-ai-image-generator",
+    "webSlug": "banan-ai-ai-image-generator-llms-txt",
+    "name": "Banan AI - AI Image Generator",
+    "domain": "https://bananai.net/",
+    "description": "Create AI images by chatting — no prompt engineering needed. Built for e-commerce, creators, and marketers. Start free today.",
+    "llmsTxtUrl": "https://bananai.net/llms.txt",
+    "llmsFullTxtUrl": "https://bananai.net/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "basehub",
     "webSlug": "basehub-llms-txt",
     "name": "BaseHub",
@@ -947,6 +966,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "cardless-id",
+    "webSlug": "cardless-id-llms-txt",
+    "name": "Cardless ID",
+    "domain": "https://cardlessid.org",
+    "description": "Decentralized identity credential system built on Algorand blockchain with W3C Verifiable Credentials",
+    "llmsTxtUrl": "https://cardlessid.org/llms.txt",
+    "category": "security-identity"
+  },
+  {
     "slug": "carto",
     "webSlug": "carto-llms-txt",
     "name": "CARTO",
@@ -1128,6 +1156,16 @@
     "domain": "https://www.claudemcp.com",
     "description": "Claude MCP is an open protocol standard for unified context interaction between AI models and development environments. claudemcp.com as the community website, providing documentation, example code, server listings, and best practices.",
     "llmsTxtUrl": "https://www.claudemcp.com/llms.txt",
+    "category": "ai-ml"
+  },
+  {
+    "slug": "claw-stack",
+    "webSlug": "claw-stack-llms-txt",
+    "name": "Claw-Stack",
+    "domain": "https://claw-stack.com",
+    "description": "A modular research platform for autonomous AI agent governance and security. Explores multi-agent coordination, persistent memory, and policy enforcement for self-hosted AI systems.",
+    "llmsTxtUrl": "https://claw-stack.com/llms.txt",
+    "llmsFullTxtUrl": "https://claw-stack.com/llms-full.txt",
     "category": "ai-ml"
   },
   {
@@ -3701,6 +3739,16 @@
     "llmsTxtUrl": "https://mintlify.com/docs/llms.txt",
     "llmsFullTxtUrl": "https://mintlify.com/docs/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "mirusuite",
+    "webSlug": "mirusuite-llms-txt",
+    "name": "MiruSuite",
+    "domain": "https://mirusuite.com",
+    "description": "MiruSuite AI-powered live production automation software for PTZ cameras. Streamline video production workflows with automatic tracking and intelligent cutting.",
+    "llmsTxtUrl": "https://mirusuite.com/llms.txt",
+    "llmsFullTxtUrl": "https://mirusuite.com/llms-full.txt",
+    "category": "automation-workflow"
   },
   {
     "slug": "mixo",
