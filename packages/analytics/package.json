@@ -21,7 +21,6 @@
     "@openpanel/sdk": "^1.2.0",
     "@thedaviddias/auth": "workspace:*",
     "next": "catalog:",
-    "next-plausible": "^3.12.5",
     "react": "catalog:",
     "server-only": "catalog:"
   },

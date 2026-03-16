@@ -40,7 +40,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <html lang="en" suppressHydrationWarning>
         <head>
           <AnalyticsHead
-            domain="llmstxthub.com"
             openPanelClientId={process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID}
             nonce={nonce}
           />

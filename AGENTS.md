@@ -15,13 +15,13 @@
 ## Learned Workspace Facts
 
 - Monorepo using pnpm workspaces + Turborepo with apps/web, packages/*, and configs/* directories
-- Analytics package (@thedaviddias/analytics) supports dual-tracking to Plausible and OpenPanel in parallel; OpenPanel is production-only
+- Analytics package (@thedaviddias/analytics) tracks events via OpenPanel; OpenPanel is production-only
 - Auth is handled by Clerk via @thedaviddias/auth package; the useAuth() hook provides { user, isLoaded, isSignedIn, signOut }
 - Clerk signOut requires the middleware to allow POST requests with a next-action header (Server Actions) on page routes, otherwise it returns 405
 - The @openpanel/web package (transitive dep of @openpanel/nextjs) declares a global Window.op type; the analytics package references it via `/// <reference types="@openpanel/web" />` in its entry point to propagate the type to all consumers
 - Server-side OpenPanel SDK is at @openpanel/sdk (not @openpanel/nextjs); the class is OpenPanel (not OpenpanelSdk); the method is .track() (not .event())
 - Shared TypeScript base config uses moduleResolution: "NodeNext" which requires explicit file extensions in relative imports; the auth package has pre-existing violations surfacing when type-checked from other packages
-- The web app's middleware handles CSP with nonces, rate limiting, CSRF validation, Clerk auth, and analytics proxy routes (/proxy/api/ for Plausible, /api/op/ for OpenPanel)
+- The web app's middleware handles CSP with nonces, rate limiting, CSRF validation, Clerk auth, and analytics proxy routes (/api/op/ for OpenPanel)
 - crypto.timingSafeEqual throws RangeError on mismatched buffer lengths; always guard with a length check first
 - Server-side fetch calls (GitHub API, metadata fetching) should use AbortController with timeouts to prevent hanging in serverless
 - The @openpanel/nextjs OpenPanelComponent has zero CSP nonce support; it was replaced with a custom server component rendering raw `<script>` tags with nonce (same pattern as json-ld.tsx)

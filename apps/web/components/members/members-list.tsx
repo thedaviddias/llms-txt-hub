@@ -125,10 +125,7 @@ export function MembersList({
               return (
                 <Card key={user.id} className="hover:bg-muted/50 transition-colors">
                   <CardContent className="p-4">
-                    <Link
-                      href={`/u/${userSlug}`}
-                      className="block text-center plausible-event-name=Member+Profile+Click"
-                    >
+                    <Link href={`/u/${userSlug}`} className="block text-center">
                       <Avatar className="w-16 h-16 mx-auto mb-3">
                         {user.imageUrl ? (
                           <AvatarImage
@@ -161,7 +158,7 @@ export function MembersList({
                             href={`https://github.com/${username}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-1 plausible-event-name=GitHub+Link+Click"
+                            className="flex items-center justify-center gap-1"
                           >
                             <Github className="w-3 h-3" />
                             <span className="text-xs">GitHub</span>
@@ -183,10 +180,7 @@ export function MembersList({
                 <li>
                   <Button variant="outline" disabled={!hasPrevPage} asChild={hasPrevPage}>
                     {hasPrevPage ? (
-                      <Link
-                        href={currentPage === 2 ? '/members' : `/members/${currentPage - 1}`}
-                        className="plausible-event-name=External+Link+Click"
-                      >
+                      <Link href={currentPage === 2 ? '/members' : `/members/${currentPage - 1}`}>
                         Previous
                       </Link>
                     ) : (
@@ -215,10 +209,7 @@ export function MembersList({
                         size="sm"
                         asChild
                       >
-                        <Link
-                          href={pageNum === 1 ? '/members' : `/members/${pageNum}`}
-                          className="plausible-event-name=External+Link+Click"
-                        >
+                        <Link href={pageNum === 1 ? '/members' : `/members/${pageNum}`}>
                           {pageNum}
                         </Link>
                       </Button>
@@ -230,12 +221,7 @@ export function MembersList({
                 <li>
                   <Button variant="outline" disabled={!hasNextPage} asChild={hasNextPage}>
                     {hasNextPage ? (
-                      <Link
-                        href={`/members/${currentPage + 1}`}
-                        className="plausible-event-name=External+Link+Click"
-                      >
-                        Next
-                      </Link>
+                      <Link href={`/members/${currentPage + 1}`}>Next</Link>
                     ) : (
                       <span>Next</span>
                     )}

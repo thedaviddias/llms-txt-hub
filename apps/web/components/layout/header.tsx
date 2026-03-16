@@ -146,7 +146,7 @@ export function Header() {
             </button>
             <Link
               href={getRoute('home')}
-              className="group text-lg font-bold whitespace-nowrap tracking-tight plausible-event-name=External+Link+Click"
+              className="group text-lg font-bold whitespace-nowrap tracking-tight"
             >
               <span className="inline transition-colors">llms.txt</span>
               <span className="inline ml-1 text-muted-foreground group-hover:text-foreground transition-colors">
@@ -205,7 +205,7 @@ export function Header() {
             ) : (
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-none text-sm font-bold h-9 px-4 bg-foreground text-background hover:bg-foreground/90 transition-all duration-200 press-effect plausible-event-name=Login"
+                className="inline-flex items-center justify-center rounded-none text-sm font-bold h-9 px-4 bg-foreground text-background hover:bg-foreground/90 transition-all duration-200 press-effect"
                 aria-label="Sign up"
                 title="Sign up"
               >

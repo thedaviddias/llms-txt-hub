@@ -1,11 +1,6 @@
 import { withContentCollections } from '@content-collections/next'
 import withMDX from '@next/mdx'
-import {
-  baseConfig,
-  withAnalyzer,
-  withPlausibleProxyConfig,
-  withVercelToolbarConfig
-} from '@thedaviddias/config-next'
+import { baseConfig, withAnalyzer, withVercelToolbarConfig } from '@thedaviddias/config-next'
 import { withSentry } from '@thedaviddias/observability/next-config'
 import type { NextConfig } from 'next'
 import { env } from '@/env'
@@ -103,7 +98,6 @@ let nextConfig: NextConfig = {
 }
 
 // Apply other plugins first
-nextConfig = withPlausibleProxyConfig(nextConfig)
 nextConfig = withVercelToolbarConfig(nextConfig)
 nextConfig = withSentry(nextConfig)
 nextConfig = withMDX()(nextConfig)

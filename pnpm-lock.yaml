@@ -429,9 +429,6 @@ importers:
       next:
         specifier: 'catalog:'
         version: 16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      next-plausible:
-        specifier: ^3.12.5
-        version: 3.12.5(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react:
         specifier: 'catalog:'
         version: 19.2.4
@@ -7449,13 +7446,6 @@ packages:
     engines: {node: '>=14', npm: '>=7'}
     peerDependencies:
       react: '>=16'
-
-  next-plausible@3.12.5:
-    resolution: {integrity: sha512-l1YMuTI9akb2u7z4hyTuxXpudy8KfSteRNXCYpWpnhAoBjaWQlv6sITai1TwcR7wWvVW8DFbLubvMQAsirAjcA==}
-    peerDependencies:
-      next: '^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 '
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   next-test-api-route-handler@5.0.3:
     resolution: {integrity: sha512-cAg3J2ZboQnzSWGo6EH54BQwlrXbcJ3eDF70dy2T4tfXui0Cb+ryBr+5R6n5gqB5e1i6mbsfsqXq1LI6eMm3GQ==}
@@ -16955,12 +16945,6 @@ snapshots:
       - '@types/react'
       - acorn
       - supports-color
-
-  next-plausible@3.12.5(next@16.1.6(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-    dependencies:
-      next: 16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
 
   next-test-api-route-handler@5.0.3(next@16.1.6(@babel/core@7.26.9)(@opentelemetry/api@1.9.0)(@playwright/test@1.58.2)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
     dependencies:

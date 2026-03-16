@@ -16,7 +16,7 @@ interface AnalyticsLinkProps {
 }
 
 /**
- * Link component that automatically tracks clicks with Plausible
+ * Link component that automatically tracks clicks with analytics
  */
 export function AnalyticsLink({
   href,
@@ -36,7 +36,6 @@ export function AnalyticsLink({
     }
 
     if (analyticsEvent) {
-      window.plausible?.(analyticsEvent, { props: analyticsProps })
       if (process.env.NODE_ENV === 'production') {
         window.op?.track(analyticsEvent, analyticsProps)
       }

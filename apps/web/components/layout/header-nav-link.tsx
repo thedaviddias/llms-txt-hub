@@ -38,8 +38,7 @@ export function NavLink({ href, children, exact = false }: NavLinkProps) {
         'hover:after:scale-x-100',
         isActive
           ? 'text-foreground font-bold after:scale-x-100'
-          : 'text-muted-foreground hover:text-foreground',
-        'plausible-event-name=External+Link+Click'
+          : 'text-muted-foreground hover:text-foreground'
       )}
       aria-current={isActive ? 'page' : undefined}
     >

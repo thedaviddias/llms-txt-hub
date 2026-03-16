@@ -48,7 +48,7 @@ export function AppSidebar({ currentCategory, featuredCount = 0 }: AppSidebarPro
                   document.getElementById('all-websites')?.scrollIntoView()
                 }
               }}
-              className={`flex items-center gap-2 px-2 py-1 text-sm rounded-md transition-colors cursor-pointer plausible-event-name=Category+Click ${
+              className={`flex items-center gap-2 px-2 py-1 text-sm rounded-md transition-colors cursor-pointer ${
                 !currentCategory
                   ? 'text-foreground font-medium bg-accent'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -59,7 +59,7 @@ export function AppSidebar({ currentCategory, featuredCount = 0 }: AppSidebarPro
             </a>
             <Link
               href="/featured"
-              className="flex items-center justify-between gap-2 px-2 py-1 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors cursor-pointer plausible-event-name=Featured+Click"
+              className="flex items-center justify-between gap-2 px-2 py-1 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-2">
                 <Trophy className="h-4 w-4" />
@@ -73,7 +73,7 @@ export function AppSidebar({ currentCategory, featuredCount = 0 }: AppSidebarPro
               <Link
                 key={category.slug}
                 href={getRoute('category.page', { category: category.slug })}
-                className={`flex items-center gap-2 px-2 py-1 text-sm rounded-md transition-colors plausible-event-name=Category+Click ${
+                className={`flex items-center gap-2 px-2 py-1 text-sm rounded-md transition-colors ${
                   category.slug === currentCategory
                     ? 'text-foreground font-medium bg-accent'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
@@ -96,7 +96,7 @@ export function AppSidebar({ currentCategory, featuredCount = 0 }: AppSidebarPro
                 href={tool.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between gap-2 px-2 py-1 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors group plausible-event-name=Tool+Click"
+                className="flex items-center justify-between gap-2 px-2 py-1 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-md transition-colors group"
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <tool.icon className="h-4 w-4 flex-shrink-0" />
