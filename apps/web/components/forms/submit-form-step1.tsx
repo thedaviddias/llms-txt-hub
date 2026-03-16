@@ -49,7 +49,7 @@ export function SubmitFormStep1({ form, onSubmit, isLoading }: SubmitFormStep1Pr
         <Button
           type="submit"
           disabled={isLoading}
-          className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900 plausible-event-name=Form+Step+Complete"
+          className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
         >
           {isLoading ? 'Fetching...' : 'Get Website Details'}
         </Button>

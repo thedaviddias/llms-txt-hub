@@ -182,7 +182,7 @@ export function SubmitFormStep2({
           <Button
             type="button"
             onClick={onReset}
-            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 plausible-event-name=Form+Reset"
+            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
           >
             Reset
           </Button>
@@ -190,7 +190,7 @@ export function SubmitFormStep2({
           <Button
             type="submit"
             disabled={isLoading}
-            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900 plausible-event-name=Submit+Website"
+            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
           >
             {isLoading ? 'Submitting...' : 'Submit for Review'}
           </Button>

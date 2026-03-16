@@ -19,7 +19,7 @@ export function Footer() {
               Discover AI-ready documentation and explore websites implementing the proposed{' '}
               <a
                 href="https://llmstxt.org/"
-                className="underline plausible-event-name=External+Link+Click"
+                className="underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -30,7 +30,7 @@ export function Footer() {
               <ModeToggle />
               <Link
                 href="https://github.com/thedaviddias/llms-txt-hub"
-                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors plausible-event-name=Social+Link+Click plausible-event-platform=GitHub plausible-event-source=Footer"
+                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -39,7 +39,7 @@ export function Footer() {
               </Link>
               <Link
                 href="https://www.reddit.com/r/llmstxt/"
-                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors plausible-event-name=Social+Link+Click plausible-event-platform=Reddit plausible-event-source=Footer"
+                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -48,7 +48,7 @@ export function Footer() {
               </Link>
               <Link
                 href="https://x.com/llmstxthub"
-                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors plausible-event-name=Social+Link+Click plausible-event-platform=Twitter plausible-event-source=Footer"
+                className="inline-flex items-center justify-center size-9 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -59,7 +59,6 @@ export function Footer() {
             <a
               title="Install llms-txt Raycast Extension"
               href="https://www.raycast.com/thedaviddias/llms-txt"
-              className="plausible-event-name=Tool+Click"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -80,42 +79,30 @@ export function Footer() {
               </h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link
-                    href={getRoute('projects')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('projects')} className="hover:text-foreground">
                     Projects
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={getRoute('guides.list')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('guides.list')} className="hover:text-foreground">
                     Guides
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={getRoute('members.list')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('members.list')} className="hover:text-foreground">
                     Members
                   </Link>
                 </li>
                 {/* <li>
                   <Link
                     href={getRoute('news')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
+                    className="hover:text-foreground"
                   >
                     News
                   </Link>
                 </li> */}
                 <li>
-                  <Link
-                    href={getRoute('faq')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('faq')} className="hover:text-foreground">
                     FAQ
                   </Link>
                 </li>
@@ -132,10 +119,7 @@ export function Footer() {
                   </Link>
                 </li> */}
                 <li>
-                  <Link
-                    href={getRoute('submit')}
-                    className="hover:text-foreground plausible-event-name=Submit+Website"
-                  >
+                  <Link href={getRoute('submit')} className="hover:text-foreground">
                     Submit llms.txt
                   </Link>
                 </li>
@@ -147,34 +131,22 @@ export function Footer() {
               </h4>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link
-                    href={getRoute('about')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('about')} className="hover:text-foreground">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={getRoute('privacy')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('privacy')} className="hover:text-foreground">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={getRoute('terms')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('terms')} className="hover:text-foreground">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href={getRoute('cookies')}
-                    className="hover:text-foreground plausible-event-name=External+Link+Click"
-                  >
+                  <Link href={getRoute('cookies')} className="hover:text-foreground">
                     Cookie Policy
                   </Link>
                 </li>
@@ -190,7 +162,7 @@ export function Footer() {
             Made with ❤️ by{' '}
             <a
               href="https://thedaviddias.com"
-              className="font-bold text-foreground hover:underline transition-colors plausible-event-name=External+Link+Click"
+              className="font-bold text-foreground hover:underline transition-colors"
               target="_blank"
               rel="noopener noreferrer"
             >

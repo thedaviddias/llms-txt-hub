@@ -19,7 +19,6 @@ const isPublicRoute = createRouteMatcher([
   '/api/fetch-metadata(.*)',
   '/api/members(.*)',
   '/api/extension-feedback(.*)',
-  '/proxy/api/(.*)', // Plausible proxy API endpoint
   '/api/op/(.*)', // OpenPanel proxy API endpoint
   '/track(.*)', // OpenPanel proxy endpoint
   '/search(.*)',
@@ -188,7 +187,7 @@ function buildCspValue(nonce: string): string {
   const vercelLive = isDev ? ' https://va.vercel-scripts.com https://vercel.live' : ''
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://plausible.io https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
@@ -311,7 +310,7 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
     pathname.startsWith('/favicon.ico') ||
     pathname.startsWith('/robots.txt') ||
     pathname.startsWith('/sitemap') ||
-    // Analytics proxy endpoints (Plausible + OpenPanel)
+    // Analytics proxy endpoints (OpenPanel)
     isAnalyticsProxyPath(pathname) ||
     // Regular page loads (non-API routes) - exclude search route
     (!pathname.startsWith('/api/') && req.method === 'GET' && pathname !== '/search')

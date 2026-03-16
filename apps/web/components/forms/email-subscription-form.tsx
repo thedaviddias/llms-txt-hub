@@ -21,6 +21,7 @@ interface FormData {
   email: string
 }
 
+/** Email subscription form for newsletter signups */
 export function EmailSubscriptionForm({
   title = 'Never miss an update from llms.txt hub!',
   description = 'Join our newsletter for AI documentation insights and best practices.',
@@ -36,10 +37,12 @@ export function EmailSubscriptionForm({
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState('')
 
+  /** Updates the email field in form state */
   const handleEmailChange = (value: string) => {
     setFormData({ email: value })
   }
 
+  /** Submits the newsletter subscription */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -132,12 +135,12 @@ export function EmailSubscriptionForm({
             value={formData.email}
             onChange={e => handleEmailChange(e.target.value)}
             required
-            className="plausible-event-name=Newsletter+Input+Focus px-4 py-2 rounded-lg flex-1"
+            className="px-4 py-2 rounded-lg flex-1"
           />
           <Button
             type="submit"
             disabled={isSubmitting || !formData.email}
-            className="plausible-event-name=Newsletter+Submit whitespace-nowrap"
+            className="whitespace-nowrap"
           >
             {isSubmitting ? (
               <>

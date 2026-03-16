@@ -1,7 +1,6 @@
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import withVercelToolbar from '@vercel/toolbar/plugins/next'
 import type { NextConfig } from 'next'
-import { withPlausibleProxy } from 'next-plausible'
 
 export const baseConfig: NextConfig = {
   reactStrictMode: true,
@@ -18,9 +17,3 @@ export const withAnalyzer = (sourceConfig: NextConfig) => withBundleAnalyzer()(s
  */
 export const withVercelToolbarConfig = (sourceConfig: NextConfig) =>
   withVercelToolbar()(sourceConfig)
-
-/**
- * Wraps a Next.js config with Plausible analytics proxy support
- */
-export const withPlausibleProxyConfig = (sourceConfig: NextConfig) =>
-  withPlausibleProxy()(sourceConfig)

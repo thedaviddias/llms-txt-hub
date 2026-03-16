@@ -21,7 +21,7 @@ export function FavoritesLink({ className, isMobile = false }: FavoritesLinkProp
   const isFavoritesPage = pathname === '/favorites'
 
   const baseClasses = cn(
-    'flex items-center justify-between gap-2 text-sm rounded-md transition-colors plausible-event-name=Favorites+Click',
+    'flex items-center justify-between gap-2 text-sm rounded-md transition-colors',
     {
       'px-2 py-1': !isMobile,
       'px-2 py-1.5': isMobile,

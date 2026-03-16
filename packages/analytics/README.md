@@ -1,12 +1,12 @@
 # @thedaviddias/analytics
 
-Unified analytics package that runs **Plausible** and **OpenPanel** in parallel. Drop the provider into your Next.js layout to get pageviews, outbound link tracking, tagged events, and user identification out of the box.
+Analytics package powered by **OpenPanel**. Drop the provider into your Next.js layout to get pageviews, outbound link tracking, tagged events, and user identification out of the box.
 
 ## Exports
 
 | Import path                                            | Description                                                              |
 | ------------------------------------------------------ | ------------------------------------------------------------------------ |
-| `@thedaviddias/analytics`                              | `AnalyticsProvider` — renders both Plausible and OpenPanel script tags   |
+| `@thedaviddias/analytics`                              | `AnalyticsProvider` — renders OpenPanel script tags                      |
 | `@thedaviddias/analytics/head`                         | `AnalyticsHead` — thin wrapper for use inside `<head>`                   |
 | `@thedaviddias/analytics/server`                       | `opServer` — server-side OpenPanel SDK singleton                         |
 | `@thedaviddias/analytics/providers/openpanel-identify` | `OpenPanelIdentify` — client component that syncs auth user to OpenPanel |
@@ -19,8 +19,6 @@ Unified analytics package that runs **Plausible** and **OpenPanel** in parallel.
 | `OPENPANEL_CLIENT_SECRET`         | Only for server-side tracking | Server only     | OpenPanel client secret (never expose to the browser)           |
 
 Both variables must be added to `turbo.json` → `tasks.build.env` so Turborepo invalidates the build cache when they change.
-
-Plausible does not require environment variables — the domain is passed as a prop.
 
 ## Setup
 
@@ -44,7 +42,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <AnalyticsHead
-          domain="your-domain.com"
           openPanelClientId={process.env.NEXT_PUBLIC_OPENPANEL_CLIENT_ID}
           nonce={nonce}
         />
@@ -69,26 +66,15 @@ import { createRouteHandler } from '@openpanel/nextjs/server'
 export const { GET, POST } = createRouteHandler()
 ```
 
-### 4. Configure the Plausible proxy
-
-In your `next.config.ts`, apply the Plausible proxy wrapper:
-
-```ts
-import { withPlausibleProxy } from 'next-plausible'
-
-const nextConfig = withPlausibleProxy()(baseConfig)
-```
-
-### 5. Update proxy
+### 4. Update proxy
 
 Add these to your `proxy.ts`:
 
 - **Public routes**: Add `'/api/op/(.*)'` so the proxy is accessible without auth.
 - **CSP script-src**: Add `https://openpanel.dev` as a fallback origin.
 - **Rate-limit skip**: Exclude `/api/op/` paths from rate limiting.
-- **HTTP method allow**: Allow `POST` for `/api/op/` alongside your Plausible proxy.
 
-### 6. Add environment variables to turbo.json
+### 5. Add environment variables to turbo.json
 
 ```jsonc
 // turbo.json → tasks.build.env
@@ -97,8 +83,6 @@ Add these to your `proxy.ts`:
 ```
 
 ## Client-side event tracking
-
-All events are dual-tracked to both Plausible and OpenPanel automatically.
 
 ```ts
 import { trackEvent, ANALYTICS_EVENTS } from '@/lib/analytics'
@@ -109,7 +93,7 @@ trackEvent(ANALYTICS_EVENTS.WEBSITE_CLICK, {
 })
 ```
 
-OpenPanel events are only sent in production (`NODE_ENV === 'production'`). Plausible events are sent in all environments (controlled by the `enabled` prop on the provider).
+OpenPanel events are only sent in production (`NODE_ENV === 'production'`).
 
 ## Server-side event tracking
 
@@ -139,7 +123,6 @@ This component must be rendered inside your auth provider tree (e.g. inside `Cle
 ```
 AnalyticsHead
   └─ AnalyticsProvider
-       ├─ PlausibleAnalyticsComponent  → loads script via next-plausible proxy
        └─ OpenPanelAnalyticsComponent  → loads op1.js via /api/op proxy
             └─ globalProperties: { environment }
 
@@ -147,7 +130,6 @@ OpenPanelIdentify (body)
   └─ useAuth() → window.op.identify() / window.op.clear()
 
 trackEvent() (client)
-  ├─ window.plausible(event, { props })
   └─ window.op.track(event, props)  [production only]
 
 opServer.track() (server)
@@ -161,5 +143,3 @@ OpenPanel tracking is gated behind `process.env.NODE_ENV === 'production'` in th
 1. **Component rendering** — `AnalyticsProvider` only renders `OpenPanelAnalyticsComponent` in production.
 2. **Client-side tracking** — `trackEvent()` and `AnalyticsLink` skip `window.op.track()` in non-production.
 3. **Server-side tracking** — `trackServerEvent()` returns early in non-production.
-
-Plausible is always rendered (its proxy handles dev/prod separation).

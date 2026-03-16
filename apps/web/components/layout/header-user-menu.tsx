@@ -67,7 +67,7 @@ export function UserDropdownMenu({
           <DropdownMenuItem asChild className="p-0">
             <Link
               href={`/u/${userSlug}`}
-              className="flex w-full items-center px-3 py-2.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-150 cursor-pointer plausible-event-name=Member+Profile+Click"
+              className="flex w-full items-center px-3 py-2.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-150 cursor-pointer"
             >
               <User className="mr-3 h-4 w-4" />
               <span className="cursor-pointer">Profile</span>
@@ -103,7 +103,7 @@ export function UserDropdownMenu({
           <DropdownMenuItem asChild className="p-0">
             <Link
               href={getRoute('submit')}
-              className="flex w-full items-center px-3 py-2.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-150 cursor-pointer plausible-event-name=Submit+Project"
+              className="flex w-full items-center px-3 py-2.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-150 cursor-pointer"
             >
               <Plus className="mr-3 h-4 w-4" />
               <span className="cursor-pointer">Add your llms.txt</span>
@@ -112,7 +112,7 @@ export function UserDropdownMenu({
           <DropdownMenuItem asChild className="p-0">
             <Link
               href="/settings"
-              className="flex w-full items-center px-3 py-2.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-150 cursor-pointer plausible-event-name=Settings"
+              className="flex w-full items-center px-3 py-2.5 text-sm hover:bg-accent hover:text-accent-foreground transition-colors duration-150 cursor-pointer"
             >
               <Settings className="mr-3 h-4 w-4" />
               <span className="cursor-pointer">Settings</span>
