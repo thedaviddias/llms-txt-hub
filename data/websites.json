@@ -4684,6 +4684,16 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "Satori Defense",
+    "domain": "https://satoridefense.com",
+    "description": "SDVOSB-certified intelligence platform aggregating Houston public safety data — HFD incidents, TRAINFO rail sensors, NOAA weather, and 311 complaints — into a live intelligence layer for EMS, marine drayage, insurance, and petrochemical sectors.",
+    "llmsTxtUrl": "https://satoridefense.com/llms.txt",
+    "llmsFullTxtUrl": "https://satoridefense.com/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=satoridefense.com&sz=128",
+    "publishedAt": "2026-03-16"
+  },
+  {
     "name": "Scottish Art Prints by Carol McEwan",
     "domain": "https://www.carolmcewan.scot",
     "description": "Bring the beauty of Scotland into your home with Carol McEwan''s landscape prints. Modern, high-quality art perfect for gifts, home decor, and art lovers.",
