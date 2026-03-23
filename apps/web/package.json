@@ -6,7 +6,7 @@
     "analyze": "ANALYZE=true pnpm build",
     "build": "NODE_NO_WARNINGS=1 next build",
     "clean": "git clean -xdf .cache .turbo .next coverage node_modules",
-    "dev": "NODE_OPTIONS='--inspect' next dev --port 3000",
+    "dev": "portless llmstxt next dev",
     "lint": "biome check --write",
     "start": "next start",
     "test": "jest",

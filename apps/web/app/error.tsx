@@ -2,15 +2,11 @@
 
 import { Button } from '@thedaviddias/design-system/button'
 import { logger } from '@thedaviddias/logging'
+import type { ErrorInfo } from 'next/error'
 import { useEffect } from 'react'
 
-type ErrorProps = {
-  error: Error & { digest?: string }
-  reset: () => void
-}
-
 // biome-ignore lint/suspicious/noShadowRestrictedNames: Next.js requires this component to be named Error
-export default function Error({ error, reset }: ErrorProps) {
+export default function Error({ error, unstable_retry }: ErrorInfo) {
   useEffect(() => {
     logger.error(error)
   }, [error])
@@ -28,7 +24,7 @@ export default function Error({ error, reset }: ErrorProps) {
           <p className="mx-auto mt-5 max-w-xl text-center text-base font-medium text-neutral-400">
             An unexpected error occurred. Please try again later.
           </p>
-          <Button onClick={reset} className="mt-8">
+          <Button onClick={() => unstable_retry()} className="mt-8">
             Try again
           </Button>
         </div>
