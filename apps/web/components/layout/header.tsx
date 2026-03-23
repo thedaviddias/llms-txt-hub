@@ -42,7 +42,7 @@ export function Header() {
   const [showAutocomplete, setShowAutocomplete] = useState(false)
   const [showMobileAutocomplete, setShowMobileAutocomplete] = useState(false)
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()
-  const { user, signOut } = useAuth()
+  const { user, isLoaded, signOut } = useAuth()
   const { trackSearch } = useAnalyticsEvents()
 
   const userSlug = user ? generateSlugFromUser(user) : ''
@@ -194,7 +194,9 @@ export function Header() {
               <GithubStars mobileCompact={true} />
             </div>
 
-            {user ? (
+            {!isLoaded ? (
+              <div className="h-9 w-9 sm:w-[88px]" />
+            ) : user ? (
               <UserDropdownMenu
                 user={user}
                 userSlug={userSlug}

@@ -10,7 +10,7 @@ catalog:
   '@types/react-dom': 19.2.3
   '@upstash/redis': ^1.36.2
   '@vercel/toolbar': ^0.1.41
-  next: 16.1.6
+  next: 16.2.0
   react: ^19.2.4
   react-dom: ^19.2.4
   server-only: ^0.0.1
