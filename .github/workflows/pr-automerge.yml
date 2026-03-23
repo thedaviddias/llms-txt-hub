@@ -20,12 +20,29 @@ jobs:
         with:
           script: |
             const fs = require('node:fs')
-            const pullRequestRef = context.payload.workflow_run.pull_requests[0]
+            let pullRequestRef = context.payload.workflow_run.pull_requests[0]
 
             if (!pullRequestRef) {
-              core.setOutput('is_community_pr', 'false')
-              core.setOutput('pr_number', '')
-              return
+              // workflow_run.pull_requests is empty for fork PRs — find the PR by head SHA
+              const headSha = context.payload.workflow_run.head_sha
+              const { data: openPrs } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                sort: 'updated',
+                direction: 'desc',
+                per_page: 10
+              })
+
+              const matchingPr = openPrs.find(pr => pr.head.sha === headSha)
+
+              if (!matchingPr) {
+                core.setOutput('is_community_pr', 'false')
+                core.setOutput('pr_number', '')
+                return
+              }
+
+              pullRequestRef = { number: matchingPr.number }
             }
 
             const { data: pullRequest } = await github.rest.pulls.get({
