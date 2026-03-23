@@ -21,10 +21,9 @@ describe('proxy public route coverage', () => {
     const proxyPath = join(process.cwd(), 'proxy.ts')
     const source = readFileSync(proxyPath, 'utf8')
 
-    expect(source).toContain("'/proxy/api/(.*)'")
+    expect(source).toContain("'/api/op/(.*)'")
     expect(source).toContain("'/track(.*)'")
     expect(source).toContain('const isAnalyticsProxyRoute = isAnalyticsProxyPath(pathname)')
-    expect(source).toContain('const isAnalyticsProxyRoute =')
     expect(source).toContain('!isAnalyticsProxyRoute')
   })
 
