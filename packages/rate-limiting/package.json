@@ -14,6 +14,10 @@
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
+    "next": "catalog:",
     "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "^16.0.0"
   }
 }
