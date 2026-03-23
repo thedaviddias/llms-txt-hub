@@ -21,7 +21,6 @@
     "@openpanel/sdk": "^1.2.0",
     "@openpanel/web": "^1.2.0",
     "@thedaviddias/auth": "workspace:*",
-    "next": "catalog:",
     "react": "catalog:",
     "server-only": "catalog:"
   },
@@ -29,7 +28,8 @@
     "@thedaviddias/config-typescript": "workspace:*",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
-    "@types/react-dom": "catalog:"
+    "@types/react-dom": "catalog:",
+    "next": "catalog:"
   },
   "peerDependencies": {
     "next": "^16.0.0"
