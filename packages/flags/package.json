@@ -23,5 +23,8 @@
     "@types/react-dom": "catalog:",
     "next": "catalog:",
     "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "^16.0.0"
   }
 }
