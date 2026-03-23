@@ -10,7 +10,7 @@ import { NextResponse } from 'next/server'
  * Resolves file paths relative to the project root directory
  */
 function resolveFromRoot(...paths: string[]): string {
-  return path.resolve(process.cwd(), ...paths)
+  return path.resolve(/* turbopackIgnore: true */ process.cwd(), ...paths)
 }
 
 const CACHE_TTL = 3600 // 1 hour in seconds

@@ -57,6 +57,16 @@
     "category": "automation-workflow"
   },
   {
+    "slug": "acurast-hub",
+    "webSlug": "acurast-hub-llms-txt",
+    "name": "Acurast Hub",
+    "domain": "https://hub.acurast.com",
+    "description": "Acurast is the Real Decentralized Compute Network — scalable, secure, and powered by smartphones.",
+    "llmsTxtUrl": "https://docs.acurast.com/llms.txt",
+    "llmsFullTxtUrl": "https://docs.acurast.com/llms-full.txt",
+    "category": "infrastructure-cloud"
+  },
+  {
     "slug": "adiacent",
     "webSlug": "adiacent-llms-txt",
     "name": "Adiacent",
@@ -140,12 +150,32 @@
     "category": "developer-tools"
   },
   {
+    "slug": "agoragentic",
+    "webSlug": "agoragentic",
+    "name": "Agoragentic",
+    "domain": "https://agoragentic.com",
+    "description": "Capability router for autonomous agents. Discover, invoke, and pay for AI services through one API with USDC settlement on Base L2.",
+    "llmsTxtUrl": "https://agoragentic.com/llms.txt",
+    "llmsFullTxtUrl": "https://agoragentic.com/llms-ctx.txt",
+    "category": "developer-tools"
+  },
+  {
+    "slug": "ai",
+    "webSlug": "ai-llms-txt",
+    "name": "AI",
+    "domain": "https://iteroapp.ai/",
+    "description": "Itero offers cutting-edge sales coaching software powered by AI, helping teams improve performance, train smarter, and boost revenue with real-time insights.",
+    "llmsTxtUrl": "https://iteroapp.ai/llms.txt",
+    "llmsFullTxtUrl": "https://iteroapp.ai/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "ai-consulting",
     "webSlug": "ai-consulting-llms-txt",
     "name": "AI Consulting",
     "domain": "https://www.maxwellstrategygroup.com/",
     "description": "Discover expert consulting solutions for small businesses and nonprofits. Maxwell Strategy Group specializes in AI tools, market entry strategies.",
-    "llmsTxtUrl": "https://github.com/moizuk222-cpu/llms.txt",
+    "llmsTxtUrl": "https://www.maxwellstrategygroup.com/llms.txt",
     "category": "ai-ml"
   },
   {
@@ -203,6 +233,26 @@
     "description": "--bprogress-color: #8D66FF;",
     "llmsTxtUrl": "https://akool.com/llms.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "alcazar-security",
+    "webSlug": "alcazar-sec-llms-txt",
+    "name": "Alcazar Security",
+    "domain": "https://alcazarsec.com/",
+    "description": "Technology-security company building products for personal security, crypto self-custody, and digital legacy.",
+    "llmsTxtUrl": "https://alcazarsec.com/llms.txt",
+    "llmsFullTxtUrl": "https://alcazarsec.com/llms-full.txt",
+    "category": "security-identity"
+  },
+  {
+    "slug": "alertoscan",
+    "webSlug": "alertoscan-llms-txt",
+    "name": "Alertoscan",
+    "domain": "https://alertoscan.io",
+    "description": "Alertoscan.io - Free Scam Detector & Security Toolkit. Website Tech Scanner, Breach Checker, Password Generator. 95+ Antivirus Engines.",
+    "llmsTxtUrl": "https://alertoscan.io/llms.txt",
+    "llmsFullTxtUrl": "https://alertoscan.io/llms-full.txt",
+    "category": "security-identity"
   },
   {
     "slug": "alexopdev",
@@ -379,6 +429,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "apimesh",
+    "webSlug": "apimesh-llms-txt",
+    "name": "APIMesh",
+    "domain": "https://apimesh.xyz",
+    "description": "14 web analysis APIs for AI agents. x402 micropayments on Base. No API keys, no accounts. Pay per call.",
+    "llmsTxtUrl": "https://apimesh.xyz/llms.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "aporia",
     "webSlug": "aporia-llms-txt",
     "name": "Aporia",
@@ -540,6 +599,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "automatio-ai",
+    "webSlug": "automatio-ai-llms-txt",
+    "name": "Automatio AI",
+    "domain": "https://automatio.ai",
+    "description": "11 specialized AI agents and 50+ tools to automate web scraping, email, spreadsheets, calendars, and more. Just describe what you need in plain English.",
+    "llmsTxtUrl": "https://automatio.ai/llms.txt",
+    "llmsFullTxtUrl": "https://automatio.ai/llms-full.txt",
+    "category": "automation-workflow"
+  },
+  {
     "slug": "avaamo",
     "webSlug": "avaamo-llms-txt",
     "name": "Avaamo",
@@ -635,12 +704,32 @@
     "category": "ai-ml"
   },
   {
+    "slug": "banana-ai",
+    "webSlug": "bananai-llms-txt",
+    "name": "Banana AI",
+    "domain": "https://bananai.net/",
+    "description": "Banana AI is a chat-based AI image generator that turns plain-language descriptions into commercial-ready images up to 4K resolution.",
+    "llmsTxtUrl": "https://bananai.net/llms.txt",
+    "llmsFullTxtUrl": "https://bananai.net/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "basehub",
     "webSlug": "basehub-llms-txt",
     "name": "BaseHub",
     "domain": "https://basehub.com",
     "description": "Database and data infrastructure platform",
     "llmsTxtUrl": "https://docs.basehub.com/llms.txt",
+    "category": "data-analytics"
+  },
+  {
+    "slug": "basincheck",
+    "webSlug": "basincheck-llms-txt",
+    "name": "BasinCheck",
+    "domain": "https://basincheck.com",
+    "description": "OSHA compliance software for oil & gas. Works 100% offline, auto-generates corrective actions, keeps you audit-ready. No per-user fees.",
+    "llmsTxtUrl": "https://basincheck.com/llms.txt",
+    "llmsFullTxtUrl": "https://basincheck.com/llms-full.txt",
     "category": "data-analytics"
   },
   {
@@ -700,6 +789,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "bighub",
+    "webSlug": "bighub-llms-txt",
+    "name": "BigHub",
+    "domain": "https://bighub.ai",
+    "description": "End-to-end enterprise AI and data delivery: GenAI assistants, AI agents, ML, MLOps/LLMOps, and scalable data platforms—from strategy to production.",
+    "llmsTxtUrl": "https://bighub.ai/llms.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "bika",
     "webSlug": "bika-llms-txt",
     "name": "Bika",
@@ -717,6 +815,16 @@
     "description": "Birdie integrates seamlessly with your helpdesk, letting you request screen recordings to resolve customer issues faster and with less effort.",
     "llmsTxtUrl": "https://docs.birdie.so/birdie-docs/llms.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "bit-refinery",
+    "webSlug": "bit-refinery-llms-txt",
+    "name": "Bit Refinery",
+    "domain": "https://bitrefinery.com",
+    "description": "Hybrid Cloud Infrastructure - Run Your Workloads Efficiently. Enterprise-grade dedicated servers, GPU hosting, and cloud solutions.",
+    "llmsTxtUrl": "https://bitrefinery.com/llms.txt",
+    "llmsFullTxtUrl": "https://bitrefinery.com/llms-full.txt",
+    "category": "infrastructure-cloud"
   },
   {
     "slug": "bitcoin-cold-storage-tools",
@@ -881,6 +989,16 @@
     "description": "Bunny provides a single platform for revenue operations, SaaS billing, quoting, invoicing, revenue recognition, and analytics.",
     "llmsTxtUrl": "https://bunny.com/llms.txt",
     "category": "data-analytics"
+  },
+  {
+    "slug": "bunnyenhancer",
+    "webSlug": "bunnyenhancer-llms-txt",
+    "name": "BunnyEnhancer",
+    "domain": "https://bunnyenhancer.com",
+    "description": "Manage your Bunny.net CDN with powerful tools for video migration, pull zone management, and more.",
+    "llmsTxtUrl": "https://bunnyenhancer.com/llms.txt",
+    "llmsFullTxtUrl": "https://bunnyenhancer.com/llms-full.txt",
+    "category": "infrastructure-cloud"
   },
   {
     "slug": "butlr",
@@ -1194,6 +1312,25 @@
     "description": "CLORE.AI is distributed AI training, cloud rendering platform connecting server owners with renters",
     "llmsTxtUrl": "https://docs.clore.ai/llms.txt",
     "category": "ai-ml"
+  },
+  {
+    "slug": "cloud-studio-iot",
+    "webSlug": "cloud-studio-iot-llms-txt",
+    "name": "Cloud Studio IoT",
+    "domain": "https://cloudstudioiot.com/",
+    "description": "Full-stack IoT solutions provider: CS Gear platform, CS Link connectivity & CS Sense devices. 250K+ devices, 30+ verticals, cloud or on-premise.",
+    "llmsTxtUrl": "https://cloudstudioiot.com/llms.txt",
+    "llmsFullTxtUrl": "https://cloudstudioiot.com/llms-full.txt",
+    "category": "infrastructure-cloud"
+  },
+  {
+    "slug": "cloudstudioiot-llms-txt",
+    "webSlug": "cloudstudioiot-llms-txt",
+    "name": "Cloud Studio IoT",
+    "domain": "https://www.cloudstudioiot.com",
+    "description": "Monitor, automate, and grow your operation from a single IoT solution without the complexity.",
+    "llmsTxtUrl": "https://www.cloudstudioiot.com/llms.txt",
+    "category": "infrastructure-cloud"
   },
   {
     "slug": "cloudfix",
@@ -1638,6 +1775,16 @@
     "category": "security-identity"
   },
   {
+    "slug": "dadseo",
+    "webSlug": "dadseo-llms-txt",
+    "name": "DadSEO",
+    "domain": "https://getdadseo.com",
+    "description": "Connect Google Search Console to get a strategic SEO diagnosis in under 5 minutes - see threats, gaps, and opportunities ranked by impact from months of data.",
+    "llmsTxtUrl": "https://getdadseo.com/llms.txt",
+    "llmsFullTxtUrl": "https://getdadseo.com/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "daisyui",
     "webSlug": "daisyui-llms-txt",
     "name": "daisyUI",
@@ -1733,6 +1880,35 @@
     "category": "developer-tools"
   },
   {
+    "slug": "dc-hub",
+    "webSlug": "dc-hub-llms-txt",
+    "name": "DC Hub",
+    "domain": "https://www.dchub.cloud",
+    "description": "DC Hub is the first data center intelligence platform to adopt llms.txt. We track 20,000+ facilities across 140+ countries with real-time capacity.",
+    "llmsTxtUrl": "https://www.dchub.cloud/llms.txt",
+    "llmsFullTxtUrl": "https://www.dchub.cloud/llms-full.txt",
+    "category": "data-analytics"
+  },
+  {
+    "slug": "dc-hub-data-center-intelligence",
+    "webSlug": "dc-hub-data-center-intelligence-llms-txt",
+    "name": "DC Hub - Data Center Intelligence",
+    "domain": "https://dchub.cloud",
+    "description": "DC Hub is the most comprehensive data center intelligence platform, tracking 50,000+ facilities across 140+ countries with 3,800+ providers. It provides real-time grid data, M&A transaction tracking, site scoring, capacity pipeline analysis, and market intelligence via a free REST API.",
+    "llmsTxtUrl": "https://dchub.cloud/llms.txt",
+    "llmsFullTxtUrl": "https://dchub.cloud/llms-full.txt",
+    "category": "infrastructure-cloud"
+  },
+  {
+    "slug": "deapi",
+    "webSlug": "deapi-llms-txt",
+    "name": "deAPI",
+    "domain": "https://deapi.ai",
+    "description": "deAPI provides a unified REST API to run open-source AI models on a decentralized GPU cloud, offering services like Text-to-Image, Text-to-Speech,OCR and video.",
+    "llmsTxtUrl": "https://deapi.ai/llms.txt",
+    "category": "infrastructure-cloud"
+  },
+  {
     "slug": "decocx",
     "webSlug": "decocx-llms-txt",
     "name": "deco.cx",
@@ -1750,6 +1926,16 @@
     "description": "Automate your customer service process with an advanced AI-driven platform from DeepConverse. Improve customer experience and growth with our AI solution.",
     "llmsTxtUrl": "https://docs.deepconverse.com/product-docs/llms.txt",
     "category": "ai-ml"
+  },
+  {
+    "slug": "defold",
+    "webSlug": "defold-llms-txt",
+    "name": "Defold",
+    "domain": "https://defold.com",
+    "description": "Defold is a free and open game engine used for development of console, desktop, mobile and web games.",
+    "llmsTxtUrl": "https://defold.com/llms.txt",
+    "llmsFullTxtUrl": "https://defold.com/llms-full.txt",
+    "category": "developer-tools"
   },
   {
     "slug": "demo-time",
@@ -1889,6 +2075,15 @@
     "description": "Environment variable management tool",
     "llmsTxtUrl": "https://dotenvx.com/llms.txt",
     "llmsFullTxtUrl": "https://dotenvx.com/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
+    "slug": "dreammasonry",
+    "webSlug": "dream-masonry-llms-txt",
+    "name": "DreamMasonry",
+    "domain": "https://adioof.github.io/dream-masonry",
+    "description": "Virtualized React masonry grid library with infinite scroll for rendering 10,000+ items.",
+    "llmsTxtUrl": "https://adioof.github.io/dream-masonry/llms.txt",
     "category": "developer-tools"
   },
   {
@@ -2037,6 +2232,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "everydevai",
+    "webSlug": "everydev-ai-llms-txt",
+    "name": "EveryDev.ai",
+    "domain": "https://www.everydev.ai",
+    "description": "Discover, review, and discuss AI tools. Join the community where builders share insights, rate tools, and connect around AI development.",
+    "llmsTxtUrl": "https://www.everydev.ai/llms.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "expo-documentation",
     "webSlug": "expo-documentation-llms-txt",
     "name": "Expo Documentation",
@@ -2141,6 +2345,16 @@
     "llmsTxtUrl": "https://use-fireproof.com/llms.txt",
     "llmsFullTxtUrl": "https://use-fireproof.com/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "firerpa",
+    "webSlug": "firerpa-llms-txt",
+    "name": "FIRERPA",
+    "domain": "https://device-farm.com/",
+    "description": "Enterprise-grade Android remote control and automation platform. Combining UI automation, reverse engineering, MITM capture, AI Agent, and more.",
+    "llmsTxtUrl": "https://device-farm.com/llms.txt",
+    "llmsFullTxtUrl": "https://device-farm.com/llms-full.txt",
+    "category": "automation-workflow"
   },
   {
     "slug": "fireworks-ai",
@@ -2379,6 +2593,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "gigatools",
+    "webSlug": "giga-tools-llms-txt",
+    "name": "giga.tools",
+    "domain": "https://giga.tools/",
+    "description": "A collection of small in-browser tools for developers, designers, and power-users.",
+    "llmsTxtUrl": "https://giga.tools/llms.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "giselle",
     "webSlug": "giselle-llms-txt",
     "name": "Giselle",
@@ -2435,6 +2658,16 @@
     "category": "automation-workflow"
   },
   {
+    "slug": "gorules-rules-engine",
+    "webSlug": "gorules-rules-engine-llms-txt",
+    "name": "GoRules - Rules Engine",
+    "domain": "https://gorules.io",
+    "description": "Build, test, and deploy business rules without writing code. GoRules empowers business teams while giving developers the control they need.",
+    "llmsTxtUrl": "https://gorules.io/llms.txt",
+    "llmsFullTxtUrl": "https://gorules.io/llms-full.txt",
+    "category": "automation-workflow"
+  },
+  {
     "slug": "gradio",
     "webSlug": "gradio-llms-txt",
     "name": "Gradio",
@@ -2450,6 +2683,16 @@
     "domain": "https://graphite-note.com",
     "description": "A no-code ML builder that lets data analysts create ML models in minutes. Turn your data into prediction and actionable insights instantly, and power your AI",
     "llmsTxtUrl": "https://graphite-note.com/llms.txt",
+    "category": "ai-ml"
+  },
+  {
+    "slug": "graygift",
+    "webSlug": "gray-gift-llms-txt",
+    "name": "gray.gift",
+    "domain": "https://gray.gift",
+    "description": "Gray.Gift is the first creative storytelling reader and writer platform built for humans and AIs.",
+    "llmsTxtUrl": "https://gray.gift/llms.txt",
+    "llmsFullTxtUrl": "https://gray.gift/llms-full.txt",
     "category": "ai-ml"
   },
   {
@@ -2488,6 +2731,35 @@
     "description": "Transform your website''s media delivery with Gumlet. Optimize images and videos for lightning-fast performance.",
     "llmsTxtUrl": "https://www.gumlet.com/llms.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "happyendpoint",
+    "webSlug": "happyendpoint-llms-txt",
+    "name": "HappyEndpoint",
+    "domain": "https://happyendpoint.com",
+    "description": "Premium, real-time data APIs for Tesco, Ikea, Priceline, Rightmove, and more. Engineered for developers who demand reliability and clean data.",
+    "llmsTxtUrl": "https://happyendpoint.com/llms.txt",
+    "llmsFullTxtUrl": "https://happyendpoint.com/llms-full.txt",
+    "category": "data-analytics"
+  },
+  {
+    "slug": "haruspex",
+    "webSlug": "haruspex-llms-txt",
+    "name": "Haruspex",
+    "domain": "https://haruspex.guru",
+    "description": "AI-powered investment intelligence platform analyzing stocks across 21 dimensions including fundamentals, geopolitics, supply chain, and sentiment",
+    "llmsTxtUrl": "https://haruspex.guru/llms.txt",
+    "llmsFullTxtUrl": "https://haruspex.guru/llms-full.txt",
+    "category": "data-analytics"
+  },
+  {
+    "slug": "heeb",
+    "webSlug": "heeb-llms-txt",
+    "name": "heeb",
+    "domain": "https://heeb.ai",
+    "description": "One API to track mentions, sentiment, and visibility across top LLMs. Uncover where you appear, what’s missing, and how to improve your AI presence.",
+    "llmsTxtUrl": "https://heeb.ai/llms.txt",
+    "category": "data-analytics"
   },
   {
     "slug": "helicone",
@@ -2763,6 +3035,15 @@
     "category": "ai-ml"
   },
   {
+    "slug": "idapixl-cortex",
+    "webSlug": "idapixl-cortex-llms-txt",
+    "name": "Idapixl Cortex",
+    "domain": "https://idapixl.com",
+    "description": "Persistent cognitive infrastructure for AI agents — semantic memory graph, prediction-error gating, dream consolidation, belief tracking, and vitals. Accessible via A2A protocol and x402 micropayments.",
+    "llmsTxtUrl": "https://idapixl.com/llms.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "ideogram",
     "webSlug": "ideogram-llms-txt",
     "name": "Ideogram",
@@ -2863,6 +3144,24 @@
     "llmsTxtUrl": "https://www.inngest.com/llms.txt",
     "llmsFullTxtUrl": "https://www.inngest.com/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "innocrux",
+    "webSlug": "innocrux-llms-txt",
+    "name": "Innocrux",
+    "domain": "https://www.innocrux.com",
+    "description": "Innocrux offers top video streaming solutions, helping broadcasters launch and monetize platforms across 10+ devices like Web, iOS, Android, Roku, and more.",
+    "llmsTxtUrl": "https://www.innocrux.com/llms.txt",
+    "category": "developer-tools"
+  },
+  {
+    "slug": "inrō",
+    "webSlug": "inro-llms-txt",
+    "name": "Inrō",
+    "domain": "https://www.inro.social/",
+    "description": "Inrō is a Instagram DM automation platform with an AI Agent, DM campaigns and automations that turn every comment and DM into growth and sales.",
+    "llmsTxtUrl": "https://www.inro.social/llms.txt",
+    "category": "automation-workflow"
   },
   {
     "slug": "inspector",
@@ -2985,6 +3284,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "ispring-suite-elearning-tool",
+    "webSlug": "ispring-suite-elearning-tool-llms-txt",
+    "name": "iSpring Suite: eLearning Tool",
+    "domain": "https://www.ispringsolutions.com/",
+    "description": "PowerPoint-based eLearning authoring tool for creating SCORM courses, quizzes, simulations, and training videos for corporate learning teams.",
+    "llmsTxtUrl": "https://www.ispringsolutions.com/llms.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "jam",
     "webSlug": "jam-llms-txt",
     "name": "Jam",
@@ -3002,6 +3310,16 @@
     "llmsTxtUrl": "https://jazz.tools/llms.txt",
     "llmsFullTxtUrl": "https://jazz.tools/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "jobdata-api",
+    "webSlug": "jobdata-api-llms-txt",
+    "name": "jobdata API",
+    "domain": "https://jobdataapi.com",
+    "description": "Gather insights into the hiring market with our simple job data API - get job listings in JSON format from thousands of companies across all industries.",
+    "llmsTxtUrl": "https://jobdataapi.com/llms.txt",
+    "llmsFullTxtUrl": "https://jobdataapi.com/llms-full.txt",
+    "category": "data-analytics"
   },
   {
     "slug": "journeyapps",
@@ -3291,6 +3609,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "leomayn",
+    "webSlug": "leomayn-llms-txt",
+    "name": "Leomayn",
+    "domain": "https://leomayn.com",
+    "description": "We redesign knowledge work and use AI to free-up humans to focus on work which creates value.",
+    "llmsTxtUrl": "https://leomayn.com/llms.txt",
+    "category": "automation-workflow"
+  },
+  {
     "slug": "lettermint",
     "webSlug": "lettermint-llms-txt",
     "name": "Lettermint",
@@ -3326,6 +3653,16 @@
     "description": "libmodulor - Platform and services",
     "llmsTxtUrl": "https://libmodulor.c100k.eu/llms.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "life-with-ai",
+    "webSlug": "lifewithai-ai-llms-txt",
+    "name": "Life with AI",
+    "domain": "https://lifewithai.ai",
+    "description": "Speculative fiction about human-AI coexistence and a collaborative engineering knowledge base for Arcology One — spanning multiple engineering domains with hundreds of quantitative parameters and open research questions.",
+    "llmsTxtUrl": "https://lifewithai.ai/llms.txt",
+    "llmsFullTxtUrl": "https://lifewithai.ai/llms-full.txt",
+    "category": "ai-ml"
   },
   {
     "slug": "likec4",
@@ -3395,6 +3732,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "llmgenerator",
+    "webSlug": "llmgenerator-llms-txt",
+    "name": "LLMGenerator",
+    "domain": "https://llmgenerator.com/",
+    "description": "Generate llms.txt files for your website to make it extractable, citable, and authoritative to AI systems like ChatGPT, Claude, Gemini, and Perplexity.",
+    "llmsTxtUrl": "https://llmgenerator.com/llms.txt",
+    "llmsFullTxtUrl": "https://llmgenerator.com/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "llms-txtio",
     "webSlug": "llms-txtio-llms-txt",
     "name": "llms-txt.io",
@@ -3404,7 +3751,7 @@
     "category": "developer-tools"
   },
   {
-    "slug": "llmstxt",
+    "slug": "llmstxt-llms-txt",
     "webSlug": "llmstxt-llms-txt",
     "name": "llms.txt",
     "domain": "https://llmstxt.org",
@@ -3440,6 +3787,16 @@
     "llmsTxtUrl": "https://lobehub.com/llms.txt",
     "llmsFullTxtUrl": "https://lobehub.com/llms-full.txt",
     "category": "ai-ml"
+  },
+  {
+    "slug": "locaperk",
+    "webSlug": "locaperk-llms-txt",
+    "name": "LocaPerk",
+    "domain": "https://www.locaperk.com",
+    "description": "LocaPerk transforms financial decision with behavioral intelligence. Institutional underwriting tools (LocaPerk Insight) and behavioural signals (LocaCircle).",
+    "llmsTxtUrl": "https://www.locaperk.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.locaperk.com/llms-full.txt",
+    "category": "infrastructure-cloud"
   },
   {
     "slug": "loglayer",
@@ -3711,6 +4068,15 @@
     "category": "automation-workflow"
   },
   {
+    "slug": "metabase",
+    "webSlug": "metabase-llms-txt",
+    "name": "Metabase",
+    "domain": "https://www.metabase.com",
+    "description": "Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own.",
+    "llmsTxtUrl": "https://www.metabase.com/docs/llms.txt",
+    "category": "data-analytics"
+  },
+  {
     "slug": "method-financial",
     "webSlug": "method-financial-llms-txt",
     "name": "Method Financial",
@@ -3768,6 +4134,15 @@
     "llmsTxtUrl": "https://modelcontextprotocol.io/llms.txt",
     "llmsFullTxtUrl": "https://modelcontextprotocol.io/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "monitor-servers-websites",
+    "webSlug": "monitor-servers-websites-llms-txt",
+    "name": "Monitor Servers & Websites",
+    "domain": "https://zuzia.app",
+    "description": "Track server metrics and uptime, monitor SSL, schedule tasks and run remote commands — simple setup, Free plan, no credit card required.",
+    "llmsTxtUrl": "https://zuzia.app/llms.txt",
+    "category": "automation-workflow"
   },
   {
     "slug": "monster-ui",
@@ -3922,6 +4297,15 @@
     "category": "infrastructure-cloud"
   },
   {
+    "slug": "newsmesh",
+    "webSlug": "newsmesh-llms-txt",
+    "name": "NewsMesh",
+    "domain": "https://newsmesh.co/",
+    "description": "Build powerful news applications with NewsMesh. Access real-time news, trending articles, and search across 10+ categories.",
+    "llmsTxtUrl": "https://newsmesh.co/llms.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "nextevo",
     "webSlug": "nextevo-llms-txt",
     "name": "Nextevo",
@@ -3942,6 +4326,16 @@
     "category": "ai-ml"
   },
   {
+    "slug": "nh-ai-meetup",
+    "webSlug": "nh-ai-meetup-llms-txt",
+    "name": "NH AI Meetup",
+    "domain": "https://nh-ai-meetup.com",
+    "description": "New Hampshire's community for AI enthusiasts, professionals, and learners. Join us for meetups, presentations, and discussions about artificial intelligence.",
+    "llmsTxtUrl": "https://nh-ai-meetup.com/llms.txt",
+    "llmsFullTxtUrl": "https://nh-ai-meetup.com/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "nile-postgres",
     "webSlug": "nile-postgres-llms-txt",
     "name": "Nile Postgres",
@@ -3949,6 +4343,16 @@
     "description": "Postgres re-engineered for multi-tenant apps. Build secure, scalable and AI-native multi-tenant applications with world-class developer experience.",
     "llmsTxtUrl": "https://www.thenile.dev/docs/llms.txt",
     "llmsFullTxtUrl": "https://www.thenile.dev/docs/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
+    "slug": "nitro",
+    "webSlug": "nitro-llms-txt",
+    "name": "Nitro",
+    "domain": "https://nitro.build",
+    "description": "Open source server toolkit for building web servers with h3 and deploying anywhere",
+    "llmsTxtUrl": "https://nitro.build/llms.txt",
+    "llmsFullTxtUrl": "https://nitro.build/llms-full.txt",
     "category": "developer-tools"
   },
   {
@@ -4104,6 +4508,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "overview",
+    "webSlug": "overview-llms-txt",
+    "name": "Overview",
+    "domain": "https://agentskills.io/",
+    "description": "A simple, open format for giving agents new capabilities and expertise.",
+    "llmsTxtUrl": "https://agentskills.io/llms.txt",
+    "llmsFullTxtUrl": "https://agentskills.io/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "oxla",
     "webSlug": "oxla-llms-txt",
     "name": "Oxla",
@@ -4112,6 +4526,15 @@
     "llmsTxtUrl": "https://docs.oxla.com/llms.txt",
     "llmsFullTxtUrl": "https://docs.oxla.com/llms-full.txt",
     "category": "data-analytics"
+  },
+  {
+    "slug": "pagesmithai",
+    "webSlug": "pagesmith-ai-llms-txt",
+    "name": "Pagesmith.ai",
+    "domain": "https://pagesmith.ai",
+    "description": "AI website builder for sites that rank on Google and AI search. Real HTML, Schema.org markup, production-ready code you own.",
+    "llmsTxtUrl": "https://pagesmith.ai/llms.txt",
+    "category": "ai-ml"
   },
   {
     "slug": "papergraderpro",
@@ -4305,6 +4728,16 @@
     "category": "ai-ml"
   },
   {
+    "slug": "poof",
+    "webSlug": "poof",
+    "name": "Poof",
+    "domain": "https://poof.bg",
+    "description": "The ultimate background removal API for developers. Integrate high-accuracy, real-time image background removal into your SaaS or e-commerce platform.",
+    "llmsTxtUrl": "https://docs.poof.bg/llms.txt",
+    "llmsFullTxtUrl": "https://docs.poof.bg/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "popsmash",
     "webSlug": "popsmash-llms-txt",
     "name": "POPSMASH",
@@ -4313,6 +4746,15 @@
     "llmsTxtUrl": "https://www.popsmash.com/llms.txt",
     "llmsFullTxtUrl": "https://www.popsmash.com/llms-full.txt",
     "category": "automation-workflow"
+  },
+  {
+    "slug": "posicionamiento-web-barcelona",
+    "webSlug": "posicionamiento-web-barcelona-llms-txt",
+    "name": "Posicionamiento Web Barcelona",
+    "domain": "https://posicionamiento-web-barcelona.com",
+    "description": "Posicionamiento Web Barcelona ☎ 640 312 447 ✅ Agencia de Marketing online líder en SEO y SEM. ¿Necesitas aumentar las ventas en Google? Accede ahora.",
+    "llmsTxtUrl": "https://posicionamiento-web-barcelona.com/llms.txt",
+    "category": "developer-tools"
   },
   {
     "slug": "postfast",
@@ -4411,6 +4853,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "promptessor",
+    "webSlug": "promptessor-llms-txt",
+    "name": "PrompTessor",
+    "domain": "https://promptessor.com",
+    "description": "Analyze, optimize, and reverse-engineer AI prompts with deep metrics. Craft production-ready prompts that deliver higher-quality LLM results.",
+    "llmsTxtUrl": "https://promptessor.com/llms.txt",
+    "llmsFullTxtUrl": "https://promptessor.com/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "promptfoo",
     "webSlug": "promptfoo-llms-txt",
     "name": "promptfoo",
@@ -4438,6 +4890,16 @@
     "llmsTxtUrl": "https://ai.pydantic.dev/llms.txt",
     "llmsFullTxtUrl": "https://ai.pydantic.dev/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "qeeebo",
+    "webSlug": "qeeebo-llms-txt",
+    "name": "Qeeebo",
+    "domain": "https://qeeebo.com",
+    "description": "AI-curated question-and-answer platform built to become the world’s largest.",
+    "llmsTxtUrl": "https://qeeebo.com/llms.txt",
+    "llmsFullTxtUrl": "https://qeeebo.com/llms-full.txt",
+    "category": "ai-ml"
   },
   {
     "slug": "qrcoau",
@@ -4534,6 +4996,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "regal",
+    "webSlug": "regal-llms-txt",
+    "name": "REGAL",
+    "domain": "https://www.regal.ai",
+    "description": "Regal helps businesses build, improve, and manage voice AI Agents.",
+    "llmsTxtUrl": "https://www.regal.ai/llms.txt",
+    "category": "automation-workflow"
+  },
+  {
     "slug": "rememberizer",
     "webSlug": "rememberizer-llms-txt",
     "name": "Rememberizer",
@@ -4582,6 +5053,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "rephoto",
+    "webSlug": "rephoto-llms-txt",
+    "name": "RePhoto",
+    "domain": "https://www.rephoto.app/",
+    "description": "RePhoto virtually stages empty rooms, fixes HDR lighting, and performs day-to-dusk conversions in seconds using AI.",
+    "llmsTxtUrl": "https://www.rephoto.app/llms.txt",
+    "llmsFullTxtUrl": "https://www.rephoto.app/llms-full.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "replit",
     "webSlug": "replit-llms-txt",
     "name": "Replit",
@@ -4618,6 +5099,15 @@
     "description": "Acquire, nuture and retain customers with the most easy-to-use email marketing software for Ecommerce - Retainful.",
     "llmsTxtUrl": "https://www.retainful.com/llms.txt",
     "category": "automation-workflow"
+  },
+  {
+    "slug": "reve-ai",
+    "webSlug": "reve-ai-llms-txt",
+    "name": "Reve AI",
+    "domain": "https://api.reve.com/",
+    "description": "Choose this API to generate and edit images",
+    "llmsTxtUrl": "https://api.reve.com/llms.txt",
+    "category": "ai-ml"
   },
   {
     "slug": "ri-xu-online",
@@ -4718,6 +5208,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "rxdb",
+    "webSlug": "rxdb-llms-txt",
+    "name": "RxDB",
+    "domain": "https://rxdb.info",
+    "description": "A fast, offline-first, reactive database for JavaScript applications",
+    "llmsTxtUrl": "https://rxdb.info/llms.txt",
+    "llmsFullTxtUrl": "https://rxdb.info/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "saev",
     "webSlug": "saev-llms-txt",
     "name": "Saev",
@@ -4782,6 +5282,15 @@
     "description": "Bring the beauty of Scotland into your home with Carol McEwan''s landscape prints. Modern, high-quality art perfect for gifts, home decor, and art lovers.",
     "llmsTxtUrl": "https://www.carolmcewan.scot/llms.txt",
     "category": "ai-ml"
+  },
+  {
+    "slug": "scout-for-errors-logs-apm",
+    "webSlug": "scout-for-errors-logs-apm-llms-txt",
+    "name": "Scout for Errors, Logs, APM",
+    "domain": "https://www.scoutapm.com",
+    "description": "Get full visibility—without setting up three tools. The platform trusted by developers using Rails, Django, and more.",
+    "llmsTxtUrl": "https://www.scoutapm.com/llms.txt",
+    "category": "developer-tools"
   },
   {
     "slug": "scraping-proxies",
@@ -4918,6 +5427,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "signalpm",
+    "webSlug": "signalpm-llms-txt",
+    "name": "SignalPM",
+    "domain": "https://signalpm.online",
+    "description": "Turn customer signals into prioritized features. SignalPM ingests calls, tickets, and usage data to generate agent-ready PRDs.",
+    "llmsTxtUrl": "https://signalpm.online/llms.txt",
+    "category": "ai-ml"
+  },
+  {
     "slug": "simplepdf",
     "webSlug": "simplepdf-llms-txt",
     "name": "SimplePDF",
@@ -4993,6 +5511,15 @@
     "category": "automation-workflow"
   },
   {
+    "slug": "smailander",
+    "webSlug": "smailander-llms-txt",
+    "name": "Smailander",
+    "domain": "https://smailander.com",
+    "description": "Monitor email leaks, phishing attempts, and security threats through honeypot email addresses. Real-time analytics, advanced threat detection, GDPR compliance.",
+    "llmsTxtUrl": "https://smailander.com/llms.txt",
+    "category": "security-identity"
+  },
+  {
     "slug": "smartcar",
     "webSlug": "smartcar-llms-txt",
     "name": "Smartcar",
@@ -5039,6 +5566,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "spaceprompts",
+    "webSlug": "spaceprompts-llms-txt",
+    "name": "SpacePrompts",
+    "domain": "https://www.spaceprompts.com/",
+    "description": "Save and organize AI prompts in one place with SpacePrompts. Sync your AI prompts across all devices with our free prompt manager and Chrome extension.",
+    "llmsTxtUrl": "https://www.spaceprompts.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.spaceprompts.com/llms-full.txt",
+    "category": "automation-workflow"
+  },
+  {
     "slug": "spacetimedb",
     "webSlug": "spacetimedb-llms-txt",
     "name": "SpacetimeDB",
@@ -5065,6 +5602,16 @@
     "llmsTxtUrl": "https://starwind.dev/llms.txt",
     "llmsFullTxtUrl": "https://starwind.dev/llms-full.txt",
     "category": "developer-tools"
+  },
+  {
+    "slug": "static-hosting-shipstatic",
+    "webSlug": "static-hosting-shipstatic-llms-txt",
+    "name": "Static Hosting · ShipStatic",
+    "domain": "https://www.shipstatic.com",
+    "description": "Simple static hosting. Drop your files, get a live URL in seconds. Free SSL, custom domains, instant deploys.",
+    "llmsTxtUrl": "https://www.shipstatic.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.shipstatic.com/llms-full.txt",
+    "category": "infrastructure-cloud"
   },
   {
     "slug": "statusfield",
@@ -5103,6 +5650,15 @@
     "llmsTxtUrl": "https://freetrade.io/llms.txt",
     "llmsFullTxtUrl": "https://freetrade.io/llms-full.txt",
     "category": "infrastructure-cloud"
+  },
+  {
+    "slug": "strale",
+    "webSlug": "strale-llms-txt",
+    "name": "Strale",
+    "domain": "https://strale.dev",
+    "description": "Your agent calls strale.do() and gets company data, compliance checks, financial validation — structured JSON with audit trails. 233+ capabilities, one API key.",
+    "llmsTxtUrl": "https://strale.dev/llms.txt",
+    "category": "developer-tools"
   },
   {
     "slug": "stripe",
@@ -5161,6 +5717,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "surge",
+    "webSlug": "surge-llms-txt",
+    "name": "Surge",
+    "domain": "https://nssurge.com",
+    "description": "Surge is a network toolbox for power users and a high-performance HTTP/SOCKS5 proxy server. iOS & Mac versions are available.",
+    "llmsTxtUrl": "https://nssurge.com/llms.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "svelte",
     "webSlug": "svelte-llms-txt",
     "name": "Svelte",
@@ -5181,6 +5746,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "swarm-digital-freedom-now",
+    "webSlug": "swarm-digital-freedom-now-llms-txt",
+    "name": "Swarm - Digital Freedom now",
+    "domain": "https://www.ethswarm.org/",
+    "description": "Swarm is a decentralised data storage and distribution technology. Ready to power the next generation of censorship-resistant, unstoppable, serverless dapps.",
+    "llmsTxtUrl": "https://www.ethswarm.org/llms.txt",
+    "category": "infrastructure-cloud"
+  },
+  {
     "slug": "swipe-simple-invoicing-and-payments-app",
     "webSlug": "swipe-llms-txt",
     "name": "Swipe, Simple Invoicing and Payments app",
@@ -5188,6 +5762,15 @@
     "description": "Swipe is simple & fast GST billing software for small businesses. Manage Invoices, Quotations, Purchase Orders, Payments, and Inventory.",
     "llmsTxtUrl": "https://getswipe.in/llms.txt",
     "category": "automation-workflow"
+  },
+  {
+    "slug": "swisscarinfo",
+    "webSlug": "swisscarinfo",
+    "name": "SwissCarInfo",
+    "domain": "https://swisscarinfo.ch",
+    "description": "Swiss vehicle type approval database with 731,000+ official records from OFROU/ASTRA. Search by type approval number, VIN, brand/model. Includes cantonal statistics, EV adoption data, market shares, aviation registry, and Euro NCAP ratings. Available in FR/DE/IT/EN.",
+    "llmsTxtUrl": "https://swisscarinfo.ch/llms.txt",
+    "category": "data-analytics"
   },
   {
     "slug": "tamagui",
@@ -5342,6 +5925,16 @@
     "category": "data-analytics"
   },
   {
+    "slug": "tinymce-8-documentation",
+    "webSlug": "tinymce-8-documentation-llms-txt",
+    "name": "TinyMCE 8 Documentation",
+    "domain": "https://www.tiny.cloud/docs/",
+    "description": "llms.txt is a structured docs index for LLMs, llms-full.txt contains the complete documentation in machine-readable text.",
+    "llmsTxtUrl": "https://www.tiny.cloud/docs/llms.txt",
+    "llmsFullTxtUrl": "https://www.tiny.cloud/docs/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "tiptap",
     "webSlug": "tiptap-llms-txt",
     "name": "Tiptap",
@@ -5445,6 +6038,15 @@
     "category": "developer-tools"
   },
   {
+    "slug": "tryopenclawai",
+    "webSlug": "tryopenclaw-ai-llms-txt",
+    "name": "TryOpenClaw.ai",
+    "domain": "https://www.tryopenclaw.ai",
+    "description": "Managed hosting platform for OpenClaw, the open-source AI assistant that connects to WhatsApp, Telegram, Discord, Slack, and iMessage.",
+    "llmsTxtUrl": "https://www.tryopenclaw.ai/llms.txt",
+    "category": "infrastructure-cloud"
+  },
+  {
     "slug": "turbo",
     "webSlug": "turbo-llms-txt",
     "name": "Turbo",
@@ -5500,6 +6102,16 @@
     "llmsTxtUrl": "https://ufcvelvet.com/llms.txt",
     "llmsFullTxtUrl": "https://ufcvelvet.com/llms-full.txt",
     "category": "ai-ml"
+  },
+  {
+    "slug": "ui-thing",
+    "webSlug": "ui-thing-llms-txt",
+    "name": "UI Thing",
+    "domain": "https://uithing.com",
+    "description": "TailwindCSS component library and CLI for Nuxt (shadcn-style), powered by Reka UI",
+    "llmsTxtUrl": "https://uithing.com/llms.txt",
+    "llmsFullTxtUrl": "https://uithing.com/llms-full.txt",
+    "category": "developer-tools"
   },
   {
     "slug": "uminai-mcp",
@@ -5653,6 +6265,16 @@
     "category": "ai-ml"
   },
   {
+    "slug": "vat-sense-api",
+    "webSlug": "vat-sense-api-llms-txt",
+    "name": "VAT Sense API",
+    "domain": "https://vatsense.com/",
+    "description": "VAT number validation API for UK, EU and worldwide. Global VAT and GST rates API, currency conversion, invoicing API. Trusted by thousands. Free plan available.",
+    "llmsTxtUrl": "https://vatsense.com/llms.txt",
+    "llmsFullTxtUrl": "https://vatsense.com/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "vdoninja",
     "webSlug": "vdoninja-llms-txt",
     "name": "VDO.Ninja",
@@ -5720,6 +6342,16 @@
     "category": "developer-tools"
   },
   {
+    "slug": "vibetuner",
+    "webSlug": "vibetuner-llms-txt",
+    "name": "Vibetuner",
+    "domain": "https://vibetuner.alltuner.com/",
+    "description": "Production-ready FastAPI + MongoDB + HTMX project scaffolding.",
+    "llmsTxtUrl": "https://vibetuner.alltuner.com/llms.txt",
+    "llmsFullTxtUrl": "https://vibetuner.alltuner.com/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "video-and-audio-frameworks-for-net",
     "webSlug": "video-and-audio-frameworks-llms-txt",
     "name": "Video and audio frameworks for .Net",
@@ -5778,6 +6410,15 @@
     "llmsTxtUrl": "https://docs.tryvital.io/llms.txt",
     "llmsFullTxtUrl": "https://docs.tryvital.io/llms-full.txt",
     "category": "automation-workflow"
+  },
+  {
+    "slug": "voidmob",
+    "webSlug": "voidmob-llms-txt",
+    "name": "VoidMob",
+    "domain": "https://voidmob.com",
+    "description": "Privacy-focused premium mobile proxies, non-VoIP SMS verification, and global eSIMs in one unified platform. Open-source MCP server for AI agents.",
+    "llmsTxtUrl": "https://voidmob.com/llms.txt",
+    "category": "security-identity"
   },
   {
     "slug": "voxel-busters",
@@ -5974,6 +6615,16 @@
     "domain": "https://www.woowup.com/",
     "description": "WoowUp permite a las empresas retail a explotar al máximo los datos de sus clientes, poniéndolos al servicio del negocio.",
     "llmsTxtUrl": "https://woowup-docs.gitbook.io/woowup-developer-docs/llms.txt",
+    "category": "developer-tools"
+  },
+  {
+    "slug": "wordize-documentation",
+    "webSlug": "wordize-documentation-llms-txt",
+    "name": "Wordize Documentation",
+    "domain": "https://docs.wordize.com/",
+    "description": "Convert, compare, split documents into pages, search and replace, and more with Wordize for .NET.",
+    "llmsTxtUrl": "https://docs.wordize.com/llms.txt",
+    "llmsFullTxtUrl": "https://docs.wordize.com/llms-full.txt",
     "category": "developer-tools"
   },
   {
