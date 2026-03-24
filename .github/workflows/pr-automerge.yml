@@ -84,7 +84,8 @@ jobs:
               title: pullRequest.title
             }
 
-            fs.writeFileSync('pr-context.json', JSON.stringify(payload, null, 2))
+            const tempDir = process.env.RUNNER_TEMP || '/tmp'
+            fs.writeFileSync(`${tempDir}/pr-context.json`, JSON.stringify(payload, null, 2))
             core.setOutput(
               'is_community_pr',
               String(pullRequest.title.startsWith('feat(community):'))
@@ -102,7 +103,7 @@ jobs:
       - name: Classify PR
         if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
         id: classify
-        run: pnpm exec tsx scripts/pr-triage.ts pr-context.json > classification.json
+        run: pnpm exec tsx scripts/pr-triage.ts "$RUNNER_TEMP/pr-context.json" > classification.json
 
       - name: Merge PR
         if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
