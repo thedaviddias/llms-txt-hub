@@ -144,7 +144,7 @@
     "name": "AI Consulting",
     "domain": "https://www.maxwellstrategygroup.com/",
     "description": "Discover expert consulting solutions for small businesses and nonprofits. Maxwell Strategy Group specializes in AI tools, market entry strategies.",
-    "llmsTxtUrl": "https://github.com/moizuk222-cpu/llms.txt",
+    "llmsTxtUrl": "https://www.maxwellstrategygroup.com/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.maxwellstrategygroup.com&sz=128",
     "publishedAt": "2025-07-17"
@@ -644,6 +644,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=bananai.net&sz=128",
     "publishedAt": "2026-03-04"
+  },
+  {
+    "name": "Banana AI",
+    "domain": "https://bananai.net/",
+    "description": "Banana AI is a chat-based AI image generator that turns plain-language descriptions into commercial-ready images up to 4K resolution.",
+    "llmsTxtUrl": "https://bananai.net/llms.txt",
+    "llmsFullTxtUrl": "https://bananai.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=bananai.net&sz=128",
+    "publishedAt": "2026-03-02"
   },
   {
     "name": "BaseHub",
@@ -1766,6 +1776,16 @@
     "publishedAt": "2026-02-01"
   },
   {
+    "name": "DC Hub - Data Center Intelligence",
+    "domain": "https://dchub.cloud",
+    "description": "DC Hub is the most comprehensive data center intelligence platform, tracking 50,000+ facilities across 140+ countries with 3,800+ providers. It provides real-time grid data, M&A transaction tracking, site scoring, capacity pipeline analysis, and market intelligence via a free REST API.",
+    "llmsTxtUrl": "https://dchub.cloud/llms.txt",
+    "llmsFullTxtUrl": "https://dchub.cloud/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=dchub.cloud&sz=128",
+    "publishedAt": "2026-02-01"
+  },
+  {
     "name": "deAPI",
     "domain": "https://deapi.ai",
     "description": "deAPI provides a unified REST API to run open-source AI models on a decentralized GPU cloud, offering services like Text-to-Image, Text-to-Speech,OCR and video.",
@@ -2439,6 +2459,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "gray.gift",
+    "domain": "https://gray.gift",
+    "description": "Gray.Gift is the first creative storytelling reader and writer platform built for humans and AIs.",
+    "llmsTxtUrl": "https://gray.gift/llms.txt",
+    "llmsFullTxtUrl": "https://gray.gift/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=gray.gift&sz=128",
+    "publishedAt": "2026-03-16"
+  },
+  {
     "name": "Greece Vacation Search",
     "domain": "https://www.greecevacationsearch.com/",
     "description": "Greece Vacation Search will help you find the best greek island for your vacations in Greece among the dozens of famous Greek islands.",
@@ -2475,6 +2505,16 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=happyendpoint.com&sz=128",
     "publishedAt": "2026-03-05"
+  },
+  {
+    "name": "Haruspex",
+    "domain": "https://haruspex.guru",
+    "description": "AI-powered investment intelligence platform analyzing stocks across 21 dimensions including fundamentals, geopolitics, supply chain, and sentiment",
+    "llmsTxtUrl": "https://haruspex.guru/llms.txt",
+    "llmsFullTxtUrl": "https://haruspex.guru/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=haruspex.guru&sz=128",
+    "publishedAt": "2026-03-16"
   },
   {
     "name": "heeb",
@@ -3378,6 +3418,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=livespotting.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "LLMGenerator",
+    "domain": "https://llmgenerator.com/",
+    "description": "Generate llms.txt files for your website to make it extractable, citable, and authoritative to AI systems like ChatGPT, Claude, Gemini, and Perplexity.",
+    "llmsTxtUrl": "https://llmgenerator.com/llms.txt",
+    "llmsFullTxtUrl": "https://llmgenerator.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmgenerator.com&sz=128",
+    "publishedAt": "2026-03-20"
   },
   {
     "name": "llms-txt.io",
@@ -4899,6 +4949,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=docs.skydeck.ai&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "Smailander",
+    "domain": "https://smailander.com",
+    "description": "Monitor email leaks, phishing attempts, and security threats through honeypot email addresses. Real-time analytics, advanced threat detection, GDPR compliance.",
+    "llmsTxtUrl": "https://smailander.com/llms.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=smailander.com&sz=128",
+    "publishedAt": "2026-03-16"
   },
   {
     "name": "Social+",
