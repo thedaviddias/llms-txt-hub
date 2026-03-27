@@ -11,6 +11,7 @@
 - GPG commit signing via 1Password can fail in automated contexts; use --no-gpg-sign as a workaround when needed
 - Skip LEFTHOOK_EXCLUDE=check-file-complexity for commits touching analytics.ts since its complexity is pre-existing
 - Always check package documentation for existing types before creating custom type declarations; internal packages should be self-contained and export their own types to consumers
+- Always verify the full production build passes before committing dependency or config changes; Vercel's strict pnpm resolution catches phantom dependency issues that local hoisting hides
 
 ## Learned Workspace Facts
 
@@ -22,7 +23,7 @@
 - Server-side OpenPanel SDK is at @openpanel/sdk (not @openpanel/nextjs); the class is OpenPanel (not OpenpanelSdk); the method is .track() (not .event())
 - Shared TypeScript base config uses moduleResolution: "NodeNext" which requires explicit file extensions in relative imports; the auth package has pre-existing violations surfacing when type-checked from other packages
 - The web app's middleware handles CSP with nonces, rate limiting, CSRF validation, Clerk auth, and analytics proxy routes (/api/op/ for OpenPanel)
-- crypto.timingSafeEqual throws RangeError on mismatched buffer lengths; always guard with a length check first
+- Every internal package that imports from `next` must declare it in both peerDependencies and devDependencies; manypkg's postinstall enforces that peerDependencies have matching devDependencies, and violating this causes infinite install loops
 - Server-side fetch calls (GitHub API, metadata fetching) should use AbortController with timeouts to prevent hanging in serverless
-- The @openpanel/nextjs OpenPanelComponent has zero CSP nonce support; it was replaced with a custom server component rendering raw `<script>` tags with nonce (same pattern as json-ld.tsx)
+- The @openpanel/nextjs OpenPanelComponent has zero CSP nonce support; it was replaced with a custom server component rendering raw `<script>` tags with nonce (same pattern as json-ld.tsx); the /api/op/ proxy route handler is inlined rather than importing from @openpanel/nextjs/server, which fails on Vercel as a transitive dependency
 - Typefully integration is available for social media posts via the typefully skill; the user's social set ID is 290319 with X, LinkedIn, and Threads connected
