@@ -114,6 +114,8 @@ jobs:
           script: |
             const prNumber = Number(process.env.PR_NUMBER)
             const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+            const transientMergeStates = new Set(['unknown', 'unstable'])
+            const readyMergeStates = new Set(['clean', 'has_hooks'])
 
             for (let attempt = 1; attempt <= 5; attempt += 1) {
               const { data: pullRequest } = await github.rest.pulls.get({
@@ -124,6 +126,31 @@ jobs:
 
               if (pullRequest.state !== 'open' || pullRequest.draft) {
                 core.info('Pull request is not mergeable in its current state.')
+                return
+              }
+
+              const mergeableState = pullRequest.mergeable_state ?? 'unknown'
+
+              if (pullRequest.mergeable !== true) {
+                if (pullRequest.mergeable === null || transientMergeStates.has(mergeableState)) {
+                  core.info(
+                    `Mergeability for PR #${prNumber} is still pending (mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}); retrying.`
+                  )
+
+                  await sleep(5000)
+                  continue
+                }
+
+                core.info(
+                  `Skipping auto-merge for PR #${prNumber}: mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}.`
+                )
+                return
+              }
+
+              if (!readyMergeStates.has(mergeableState)) {
+                core.info(
+                  `Skipping auto-merge for PR #${prNumber}: GitHub reports mergeable_state=${mergeableState}. This usually means required review or another repository rule is still unmet.`
+                )
                 return
               }
 
@@ -142,6 +169,34 @@ jobs:
 
                 if (status !== 405 && status !== 409) {
                   throw error
+                }
+
+                const { data: refreshedPullRequest } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber
+                })
+                const refreshedMergeableState = refreshedPullRequest.mergeable_state ?? 'unknown'
+
+                if (
+                  refreshedPullRequest.mergeable === true &&
+                  !readyMergeStates.has(refreshedMergeableState)
+                ) {
+                  core.info(
+                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and now reports mergeable_state=${refreshedMergeableState}.`
+                  )
+                  return
+                }
+
+                if (
+                  refreshedPullRequest.mergeable === false ||
+                  (!readyMergeStates.has(refreshedMergeableState) &&
+                    !transientMergeStates.has(refreshedMergeableState))
+                ) {
+                  core.info(
+                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and mergeable=${refreshedPullRequest.mergeable}, mergeable_state=${refreshedMergeableState}.`
+                  )
+                  return
                 }
 
                 core.info(

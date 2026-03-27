@@ -124,10 +124,7 @@ export async function submitLlmsTxt(formData: FormData) {
       throw new Error('Name and description are required after sanitization')
     }
 
-    // Get user info for attribution
     const githubUsername = session.user.user_metadata?.user_name
-    const userEmail = session.user.email
-    const displayName = githubUsername || userEmail?.split('@')[0] || 'Anonymous'
 
     const accessToken = process.env.GITHUB_TOKEN || null
     if (!accessToken) {
@@ -275,12 +272,6 @@ ${description}
         headRef = branchName
       }
 
-      // Create appropriate attribution
-      const attribution =
-        useUserToken && githubUsername
-          ? `Submitted by: @${githubUsername}`
-          : `Submitted by: ${displayName}`
-
       // Create pull request
       logger.info('Creating pull request')
       const pr = await octokit.pulls.create({
@@ -290,8 +281,6 @@ ${description}
         head: headRef,
         base: defaultBranch,
         body: `This PR adds ${name} to the llms.txt hub.
-
-${attribution}
 
 **Website:** ${website}
 **llms.txt:** ${llmsUrl}
