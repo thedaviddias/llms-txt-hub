@@ -20,12 +20,29 @@ jobs:
         with:
           script: |
             const fs = require('node:fs')
-            const pullRequestRef = context.payload.workflow_run.pull_requests[0]
+            let pullRequestRef = context.payload.workflow_run.pull_requests[0]
 
             if (!pullRequestRef) {
-              core.setOutput('is_community_pr', 'false')
-              core.setOutput('pr_number', '')
-              return
+              // workflow_run.pull_requests is empty for fork PRs — find the PR by head SHA
+              const headSha = context.payload.workflow_run.head_sha
+              const { data: openPrs } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                sort: 'updated',
+                direction: 'desc',
+                per_page: 10
+              })
+
+              const matchingPr = openPrs.find(pr => pr.head.sha === headSha)
+
+              if (!matchingPr) {
+                core.setOutput('is_community_pr', 'false')
+                core.setOutput('pr_number', '')
+                return
+              }
+
+              pullRequestRef = { number: matchingPr.number }
             }
 
             const { data: pullRequest } = await github.rest.pulls.get({
@@ -67,7 +84,8 @@ jobs:
               title: pullRequest.title
             }
 
-            fs.writeFileSync('pr-context.json', JSON.stringify(payload, null, 2))
+            const tempDir = process.env.RUNNER_TEMP || '/tmp'
+            fs.writeFileSync(`${tempDir}/pr-context.json`, JSON.stringify(payload, null, 2))
             core.setOutput(
               'is_community_pr',
               String(pullRequest.title.startsWith('feat(community):'))
@@ -85,7 +103,7 @@ jobs:
       - name: Classify PR
         if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
         id: classify
-        run: pnpm exec tsx scripts/pr-triage.ts pr-context.json > classification.json
+        run: pnpm exec tsx scripts/pr-triage.ts "$RUNNER_TEMP/pr-context.json" > classification.json
 
       - name: Merge PR
         if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
@@ -96,6 +114,8 @@ jobs:
           script: |
             const prNumber = Number(process.env.PR_NUMBER)
             const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+            const transientMergeStates = new Set(['unknown', 'unstable'])
+            const readyMergeStates = new Set(['clean', 'has_hooks'])
 
             for (let attempt = 1; attempt <= 5; attempt += 1) {
               const { data: pullRequest } = await github.rest.pulls.get({
@@ -106,6 +126,31 @@ jobs:
 
               if (pullRequest.state !== 'open' || pullRequest.draft) {
                 core.info('Pull request is not mergeable in its current state.')
+                return
+              }
+
+              const mergeableState = pullRequest.mergeable_state ?? 'unknown'
+
+              if (pullRequest.mergeable !== true) {
+                if (pullRequest.mergeable === null || transientMergeStates.has(mergeableState)) {
+                  core.info(
+                    `Mergeability for PR #${prNumber} is still pending (mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}); retrying.`
+                  )
+
+                  await sleep(5000)
+                  continue
+                }
+
+                core.info(
+                  `Skipping auto-merge for PR #${prNumber}: mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}.`
+                )
+                return
+              }
+
+              if (!readyMergeStates.has(mergeableState)) {
+                core.info(
+                  `Skipping auto-merge for PR #${prNumber}: GitHub reports mergeable_state=${mergeableState}. This usually means required review or another repository rule is still unmet.`
+                )
                 return
               }
 
@@ -124,6 +169,34 @@ jobs:
 
                 if (status !== 405 && status !== 409) {
                   throw error
+                }
+
+                const { data: refreshedPullRequest } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber
+                })
+                const refreshedMergeableState = refreshedPullRequest.mergeable_state ?? 'unknown'
+
+                if (
+                  refreshedPullRequest.mergeable === true &&
+                  !readyMergeStates.has(refreshedMergeableState)
+                ) {
+                  core.info(
+                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and now reports mergeable_state=${refreshedMergeableState}.`
+                  )
+                  return
+                }
+
+                if (
+                  refreshedPullRequest.mergeable === false ||
+                  (!readyMergeStates.has(refreshedMergeableState) &&
+                    !transientMergeStates.has(refreshedMergeableState))
+                ) {
+                  core.info(
+                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and mergeable=${refreshedPullRequest.mergeable}, mergeable_state=${refreshedMergeableState}.`
+                  )
+                  return
                 }
 
                 core.info(

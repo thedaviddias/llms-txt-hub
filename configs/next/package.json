@@ -10,10 +10,14 @@
     "@next/bundle-analyzer": "^16.1.6",
     "@t3-oss/env-core": "^0.12.0",
     "@t3-oss/env-nextjs": "catalog:",
+    "@vercel/toolbar": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
     "next": "catalog:"
+  },
+  "peerDependencies": {
+    "next": "^16.0.0"
   }
 }

@@ -22,6 +22,10 @@ let nextConfig: NextConfig = {
 
   transpilePackages: INTERNAL_PACKAGES,
 
+  experimental: {
+    prefetchInlining: true
+  },
+
   pageExtensions: ['mdx', 'ts', 'tsx'],
 
   // Configure logging behavior
