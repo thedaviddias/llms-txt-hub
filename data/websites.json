@@ -1775,6 +1775,16 @@
     "publishedAt": "2025-12-02"
   },
   {
+    "name": "Deckaura",
+    "domain": "https://deckaura.com",
+    "description": "Deckaura is an oracle card and tarot deck brand offering 19 free interactive spiritual tools and 100+ tarot card meaning guides. Includes llms.txt + llms-full.txt with structured listings of tools, guides, and card meanings.",
+    "llmsTxtUrl": "https://deckaura.com/llms.txt",
+    "llmsFullTxtUrl": "https://deckaura.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=deckaura.com&sz=128",
+    "publishedAt": "2026-04-08"
+  },
+  {
     "name": "deco.cx",
     "domain": "https://deco.cx",
     "description": "The all-in-one solution for developers to build and evolve full-stack, enterprise-class web apps faster.",
