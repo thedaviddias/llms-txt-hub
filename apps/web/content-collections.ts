@@ -37,7 +37,7 @@ const websites = defineCollection({
   }),
   transform: document => ({
     ...document,
-    slug: document._meta.path || document._meta.fileName.replace(/\.mdx$/, '')
+    slug: document.slug || document._meta.path || document._meta.fileName.replace(/\.mdx$/, '')
   })
 })
 

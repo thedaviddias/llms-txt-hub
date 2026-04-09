@@ -35,7 +35,7 @@ const searchIndex = files
       const { data, content } = matter(fileContent)
 
       // Extract slug from file path
-      const slug = path.basename(filePath, path.extname(filePath))
+      const slug = data.slug || path.basename(filePath, path.extname(filePath))
 
       return {
         name: data.name || data.title || '',

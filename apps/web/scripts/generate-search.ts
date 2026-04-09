@@ -11,6 +11,9 @@ interface SearchEntry {
   category?: string
 }
 
+/**
+ * Generates the website search index used by the web app.
+ */
 async function generateSearchIndex() {
   const websitesDirectory = getContentPath('websites')
   const allFiles = fs.readdirSync(websitesDirectory)
@@ -28,7 +31,7 @@ async function generateSearchIndex() {
     entries.push({
       title: data.name,
       description: data.description,
-      url: `/${file.replace(/\.mdx$/, '')}`,
+      url: `/${data.slug || file.replace(/\.mdx$/, '')}`,
       content: mdxContent,
       category: data.category
     })
