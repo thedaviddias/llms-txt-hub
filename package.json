@@ -55,7 +55,7 @@
     "chalk": "^5.6.2",
     "cross-env": "^7.0.3",
     "csv-parse": "^6.1.0",
-    "dompurify": "^3.3.1",
+    "dompurify": "^3.3.2",
     "glob": "^11.1.0",
     "gray-matter": "^4.0.3",
     "husky": "^9.1.7",
