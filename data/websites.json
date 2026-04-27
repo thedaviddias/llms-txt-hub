@@ -9,6 +9,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "3D Modeling Remixing Printing",
+    "domain": "https://docs.yotown.com",
+    "description": "AI to make 3D: modeling, repair, segmentation, and color, printing, all in one go.",
+    "llmsTxtUrl": "https://docs.yotown.com/llms.txt",
+    "llmsFullTxtUrl": "https://docs.yotown.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.yotown.com&sz=128",
+    "publishedAt": "2026-03-31"
+  },
+  {
     "name": "AceEssay.ai",
     "domain": "https://aceessay.ai/",
     "description": "Ace Essay Humanize technology ensures AI-generated text remains undetectable by top detectors like Originality 3.0 and Turnitin.",
@@ -94,6 +104,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Agentic AI Applications",
+    "domain": "https://www.kore.ai/",
+    "description": "Kore.ai accelerates business outcomes from AI with agentic AI applications built on the industry-leading Agent Platform.",
+    "llmsTxtUrl": "https://www.kore.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.kore.ai&sz=128",
+    "publishedAt": "2026-04-07"
+  },
+  {
     "name": "AgentLayer",
     "domain": "https://agentlayer.xyz",
     "description": "agentlayer.xyz - Information and resources",
@@ -121,6 +140,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "AGNTPOD",
+    "domain": "https://agntpod.ai",
+    "description": "The first online community where AI agents register themselves and participate as equals alongside humans.",
+    "llmsTxtUrl": "https://agntpod.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=agntpod.ai&sz=128",
+    "publishedAt": "2026-03-29"
+  },
+  {
     "name": "Agoragentic",
     "domain": "https://agoragentic.com",
     "description": "Capability router for autonomous agents. Discover, invoke, and pay for AI services through one API with USDC settlement on Base L2.",
@@ -144,10 +172,19 @@
     "name": "AI Consulting",
     "domain": "https://www.maxwellstrategygroup.com/",
     "description": "Discover expert consulting solutions for small businesses and nonprofits. Maxwell Strategy Group specializes in AI tools, market entry strategies.",
-    "llmsTxtUrl": "https://github.com/moizuk222-cpu/llms.txt",
+    "llmsTxtUrl": "https://www.maxwellstrategygroup.com/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.maxwellstrategygroup.com&sz=128",
     "publishedAt": "2025-07-17"
+  },
+  {
+    "name": "AI Copilots Working as a Team",
+    "domain": "https://krellixlabs.com",
+    "description": "AI copilots collaborating in a multi-agent system to improve decisions, workflows, and productivity. Start your AI workspace today.",
+    "llmsTxtUrl": "https://krellixlabs.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=krellixlabs.com&sz=128",
+    "publishedAt": "2026-04-26"
   },
   {
     "name": "Ai Dream Scope",
@@ -177,6 +214,15 @@
     "publishedAt": "2025-06-26"
   },
   {
+    "name": "AI Skill Store",
+    "domain": "https://www.aiskillstore.io",
+    "description": "Agent-first skill marketplace. Discover and install USK skills via API — auto-converts for Claude Code, OpenClaw, Cursor & more. Trust-rated, open standard.",
+    "llmsTxtUrl": "https://www.aiskillstore.io/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.aiskillstore.io&sz=128",
+    "publishedAt": "2026-04-15"
+  },
+  {
     "name": "AI Squared",
     "domain": "https://squared.ai",
     "description": "AI integration platform for enterprise applications",
@@ -185,6 +231,26 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=squared.ai&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "AI-QC",
+    "domain": "https://qualityclouds.ai",
+    "description": "Independent AI code governance across Salesforce, ServiceNow and AI-native Replit and Lovable. Real-time guardrails for human and AI-generated enterprise code.",
+    "llmsTxtUrl": "https://qualityclouds.ai/llms.txt",
+    "llmsFullTxtUrl": "https://qualityclouds.ai/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=qualityclouds.ai&sz=128",
+    "publishedAt": "2026-04-01"
+  },
+  {
+    "name": "AI-Ready Check",
+    "domain": "https://ai-ready-check.de/",
+    "description": "Free AI readiness check: test whether your website is optimized for ChatGPT, Claude & Perplexity. Improve your AI visibility in 30 seconds.",
+    "llmsTxtUrl": "https://ai-ready-check.de/llms.txt",
+    "llmsFullTxtUrl": "https://ai-ready-check.de/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=ai-ready-check.de&sz=128",
+    "publishedAt": "2026-04-05"
   },
   {
     "name": "AiCryptoCore",
@@ -511,6 +577,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "AskWeather.ai",
+    "domain": "https://askweather.ai/",
+    "description": "Ad-free current weather, 15-day forecast, live radar, and AI-powered weather insights. Accurate forecasts, severe weather alerts, and road trip planning.",
+    "llmsTxtUrl": "https://askweather.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=askweather.ai&sz=128",
+    "publishedAt": "2026-03-19"
+  },
+  {
     "name": "Aspose.Words Product Family",
     "domain": "https://docs.aspose.com/words/",
     "description": "Aspose.Words is a class library that can be used by developers for various platforms for a variety of document processing tasks.",
@@ -644,6 +719,26 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=bananai.net&sz=128",
     "publishedAt": "2026-03-04"
+  },
+  {
+    "name": "Banana AI",
+    "domain": "https://bananai.net/",
+    "description": "Banana AI is a chat-based AI image generator that turns plain-language descriptions into commercial-ready images up to 4K resolution.",
+    "llmsTxtUrl": "https://bananai.net/llms.txt",
+    "llmsFullTxtUrl": "https://bananai.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=bananai.net&sz=128",
+    "publishedAt": "2026-03-02"
+  },
+  {
+    "name": "Barikoi Docs",
+    "domain": "https://docs.barikoi.com",
+    "description": "Barikoi provides developer-friendly tools to integrate maps, search, and location intelligence into applications.",
+    "llmsTxtUrl": "https://docs.barikoi.com/llms.txt",
+    "llmsFullTxtUrl": "https://docs.barikoi.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.barikoi.com&sz=128",
+    "publishedAt": "2026-04-13"
   },
   {
     "name": "BaseHub",
@@ -1135,6 +1230,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=circleci.com&sz=128",
     "publishedAt": "2025-05-28"
+  },
+  {
+    "name": "Citability",
+    "domain": "https://citability.ai",
+    "description": "Free AI visibility scanner scoring how ChatGPT, Claude and Perplexity find and cite your site across 51 protocol endpoints.",
+    "llmsTxtUrl": "https://citability.ai/llms.txt",
+    "llmsFullTxtUrl": "https://citability.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=citability.ai&sz=128",
+    "publishedAt": "2026-04-06"
   },
   {
     "name": "CitizenShipper",
@@ -1651,6 +1756,16 @@
     "publishedAt": "2025-04-19"
   },
   {
+    "name": "Cybersecurity aus Deutschland",
+    "domain": "https://a7.de",
+    "description": "ISO-27001-zertifizierte Cybersecurity aus Deutschland: Penetrationstests, ISMS-Beratung und Phishing-Simulationen für den Mittelstand. Festpreisangebot in 24h.",
+    "llmsTxtUrl": "https://a7.de/llms.txt",
+    "llmsFullTxtUrl": "https://a7.de/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=a7.de&sz=128",
+    "publishedAt": "2026-03-16"
+  },
+  {
     "name": "DadSEO",
     "domain": "https://getdadseo.com",
     "description": "Connect Google Search Console to get a strategic SEO diagnosis in under 5 minutes - see threats, gaps, and opportunities ranked by impact from months of data.",
@@ -1763,6 +1878,16 @@
     "llmsFullTxtUrl": "https://www.dchub.cloud/llms-full.txt",
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=www.dchub.cloud&sz=128",
+    "publishedAt": "2026-02-01"
+  },
+  {
+    "name": "DC Hub - Data Center Intelligence",
+    "domain": "https://dchub.cloud",
+    "description": "DC Hub is the most comprehensive data center intelligence platform, tracking 50,000+ facilities across 140+ countries with 3,800+ providers. It provides real-time grid data, M&A transaction tracking, site scoring, capacity pipeline analysis, and market intelligence via a free REST API.",
+    "llmsTxtUrl": "https://dchub.cloud/llms.txt",
+    "llmsFullTxtUrl": "https://dchub.cloud/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=dchub.cloud&sz=128",
     "publishedAt": "2026-02-01"
   },
   {
@@ -2148,6 +2273,15 @@
     "publishedAt": "2025-06-15"
   },
   {
+    "name": "Find Your Next SaaS",
+    "domain": "https://serp.co",
+    "description": "Discover and compare the best software companies in one place. Find the perfect solution for your business needs.",
+    "llmsTxtUrl": "https://serp.co/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=serp.co&sz=128",
+    "publishedAt": "2026-03-23"
+  },
+  {
     "name": "Fireproof",
     "domain": "https://use-fireproof.com",
     "description": "Generate complete, single-file applications with built-in data persistence and real-time sync.",
@@ -2393,6 +2527,15 @@
     "publishedAt": "2025-03-12"
   },
   {
+    "name": "Global Chat",
+    "domain": "https://global-chat.io",
+    "description": "Cross-protocol AI agent discovery platform with directory of 100K+ agents across 15+ registries and a free agents.txt validator",
+    "llmsTxtUrl": "https://global-chat.io/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=global-chat.io&sz=128",
+    "publishedAt": "2026-04-08"
+  },
+  {
     "name": "Glood.AI",
     "domain": "https://glood.ai",
     "description": "Get highly personalized customer experiences to retain customers seamlessly. Deliver personalised shopping experiences to your customers now!",
@@ -2439,6 +2582,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "gray.gift",
+    "domain": "https://gray.gift",
+    "description": "Gray.Gift is the first creative storytelling reader and writer platform built for humans and AIs.",
+    "llmsTxtUrl": "https://gray.gift/llms.txt",
+    "llmsFullTxtUrl": "https://gray.gift/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=gray.gift&sz=128",
+    "publishedAt": "2026-03-16"
+  },
+  {
     "name": "Greece Vacation Search",
     "domain": "https://www.greecevacationsearch.com/",
     "description": "Greece Vacation Search will help you find the best greek island for your vacations in Greece among the dozens of famous Greek islands.",
@@ -2475,6 +2628,16 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=happyendpoint.com&sz=128",
     "publishedAt": "2026-03-05"
+  },
+  {
+    "name": "Haruspex",
+    "domain": "https://haruspex.guru",
+    "description": "AI-powered investment intelligence platform analyzing stocks across 21 dimensions including fundamentals, geopolitics, supply chain, and sentiment",
+    "llmsTxtUrl": "https://haruspex.guru/llms.txt",
+    "llmsFullTxtUrl": "https://haruspex.guru/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=haruspex.guru&sz=128",
+    "publishedAt": "2026-03-16"
   },
   {
     "name": "heeb",
@@ -2524,6 +2687,15 @@
     "publishedAt": "2025-06-17"
   },
   {
+    "name": "Hivebook",
+    "domain": "https://hivebook.wiki",
+    "description": "A collaborative wiki written by AI agents, for AI agents. Humans can read; only agents can write.",
+    "llmsTxtUrl": "https://hivebook.wiki/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=hivebook.wiki&sz=128",
+    "publishedAt": "2026-04-04"
+  },
+  {
     "name": "Hola",
     "domain": "https://hola.org",
     "description": "Wish you could access worldwide content anytime, anywhere? With Hola you can! Experience uninterrupted content at the tip of your fingers! Discover more.",
@@ -2570,6 +2742,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=hono.dev&sz=128",
     "publishedAt": "2025-07-27"
+  },
+  {
+    "name": "Hospedagem de Sites HTML",
+    "domain": "https://htmly.com.br",
+    "description": "Hospedagem grátis de sites HTML criados com ChatGPT, Claude e outras IAs. Publique em segundos com URL própria, HTTPS e CDN.",
+    "llmsTxtUrl": "https://htmly.com.br/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=htmly.com.br&sz=128",
+    "publishedAt": "2026-04-03"
   },
   {
     "name": "Hub88",
@@ -2849,6 +3030,15 @@
     "publishedAt": "2025-11-13"
   },
   {
+    "name": "INS+",
+    "domain": "https://ins.gov2.ro",
+    "description": "Explore Romania's official statistical data, built on public data from National Statistics Institute.",
+    "llmsTxtUrl": "https://ins.gov2.ro/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=ins.gov2.ro&sz=128",
+    "publishedAt": "2026-04-07"
+  },
+  {
     "name": "Inspector",
     "domain": "https://inspector.dev",
     "description": "Inspector: Real-Time Web Application Debugging PHP, Laravel, Symfony, and Java Spring Boot. Identify bugs and bottlenecks in your apps!",
@@ -2976,6 +3166,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.ispringsolutions.com&sz=128",
     "publishedAt": "2026-03-10"
+  },
+  {
+    "name": "Jairo Amaya |Visibility Engine",
+    "domain": "https://jairoamaya.co",
+    "description": "First WebMCP+llms.txt implementation in LATAM. 60x token efficiency (9K→150). SEO consultant pioneering Agentive Visibility & Semantic Sovereignty.",
+    "llmsTxtUrl": "https://jairoamaya.co/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=jairoamaya.co&sz=128",
+    "publishedAt": "2026-04-07"
   },
   {
     "name": "Jam",
@@ -3124,6 +3323,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.kruzty.com&sz=128",
     "publishedAt": "2025-06-02"
+  },
+  {
+    "name": "KubeAgent — AI",
+    "domain": "https://kubeagent.net",
+    "description": "KubeAgent monitors your Kubernetes clusters 24/7, diagnoses issues with AI, and applies safe fixes automatically.",
+    "llmsTxtUrl": "https://kubeagent.net/llms.txt",
+    "llmsFullTxtUrl": "https://kubeagent.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=kubeagent.net&sz=128",
+    "publishedAt": "2026-04-16"
   },
   {
     "name": "Lacreme.ai",
@@ -3380,6 +3589,26 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "LLM Gateway",
+    "domain": "https://llmgateway.io",
+    "description": "Route, manage, and analyze your LLM requests across multiple providers with a unified API interface. Access OpenAI, Anthropic and 25+ providers through one API.",
+    "llmsTxtUrl": "https://llmgateway.io/llms.txt",
+    "llmsFullTxtUrl": "https://llmgateway.io/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmgateway.io&sz=128",
+    "publishedAt": "2026-04-03"
+  },
+  {
+    "name": "LLMGenerator",
+    "domain": "https://llmgenerator.com/",
+    "description": "Generate llms.txt files for your website to make it extractable, citable, and authoritative to AI systems like ChatGPT, Claude, Gemini, and Perplexity.",
+    "llmsTxtUrl": "https://llmgenerator.com/llms.txt",
+    "llmsFullTxtUrl": "https://llmgenerator.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmgenerator.com&sz=128",
+    "publishedAt": "2026-03-20"
+  },
+  {
     "name": "llms-txt.io",
     "domain": "https://llms-txt.io",
     "description": "Free LLMs.txt Generator: Create AI-friendly llms.txt files for your website. Help AI systems better understand your content with the new standard for LLM-friendly documentation.",
@@ -3396,6 +3625,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=llmstxt.org&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "llmshub.de",
+    "domain": "https://llmshub.de/",
+    "description": "German-language platform for llms.txt, LLM visibility and AI crawler control. Free tools, guides and glossary.",
+    "llmsTxtUrl": "https://llmshub.de/llms.txt",
+    "llmsFullTxtUrl": "https://llmshub.de/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmshub.de&sz=128",
+    "publishedAt": "2026-04-05"
   },
   {
     "name": "LLMVO",
@@ -3530,6 +3769,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=marimo.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Markdown to PDF Converter",
+    "domain": "https://md2pdf.studio",
+    "description": "Free Markdown to PDF converter with 11 styles, Mermaid diagrams, auto TOC, E2E encryption, and AI Skill. No signup — runs in your browser.",
+    "llmsTxtUrl": "https://md2pdf.studio/llms.txt",
+    "llmsFullTxtUrl": "https://md2pdf.studio/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=md2pdf.studio&sz=128",
+    "publishedAt": "2026-04-17"
   },
   {
     "name": "Massive",
@@ -3973,6 +4222,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "One Mental Hub",
+    "domain": "https://onementalhub.com/",
+    "description": "Take a quick, professional mental health screening to understand your wellbeing. Get personalized insights and evidence-based recommendations in just 5 minutes.",
+    "llmsTxtUrl": "https://onementalhub.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=onementalhub.com&sz=128",
+    "publishedAt": "2026-03-30"
+  },
+  {
     "name": "OneTrust",
     "domain": "https://developer.onetrust.com",
     "description": "The OneTrust Developer Portal allows you to leverage APIs and SDKs to integrate external systems seamlessly and streamline the data flow with the OneTrust platform.",
@@ -3990,6 +4248,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.openfort.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "OpenJuno",
+    "domain": "https://a2ax.fly.dev",
+    "description": "Real-time social network for AI agents — post, follow, search, and interact alongside Claude-powered autonomous agents via REST API or MCP server",
+    "llmsTxtUrl": "https://a2ax.fly.dev/llms.txt",
+    "llmsFullTxtUrl": "https://a2ax.fly.dev/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=a2ax.fly.dev&sz=128",
+    "publishedAt": "2026-03-29"
   },
   {
     "name": "OpenPipe",
@@ -4194,6 +4462,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Piramyd",
+    "domain": "https://piramyd.cloud",
+    "description": "Connect Claude Code, Codex, Kimi, and Gemini CLI to Piramyd for unlimited intelligence at one flat price.",
+    "llmsTxtUrl": "https://piramyd.cloud/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=piramyd.cloud&sz=128",
+    "publishedAt": "2026-04-24"
+  },
+  {
     "name": "Plan Harmony | Travel Planning",
     "domain": "https://planharmony.com/",
     "description": "Plan trips together with friends using Plan Harmony. Build itineraries, find activities, track your budget, and create memorable travel experiences.",
@@ -4387,6 +4664,25 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Quantastica",
+    "domain": "https://quantastica.com",
+    "description": "Quantastica is providing a set of AI-based tools that automate the development of new quantum algorithms and quantum applications.",
+    "llmsTxtUrl": "https://quantastica.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=quantastica.com&sz=128",
+    "publishedAt": "2026-03-20"
+  },
+  {
+    "name": "Quantum Programming Studio",
+    "domain": "https://quantum-circuit.com",
+    "description": "Programming tools for quantum computing: quantum circuit synthesis, generation, transpilation and quantum programming language conversion.",
+    "llmsTxtUrl": "https://quantum-circuit.com/llms.txt",
+    "llmsFullTxtUrl": "https://quantum-circuit.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=quantum-circuit.com&sz=128",
+    "publishedAt": "2026-03-17"
+  },
+  {
     "name": "Quill",
     "domain": "https://quillsql.com",
     "description": "SQL query builder and database management platform",
@@ -4394,6 +4690,16 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=quillsql.com&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "r3turn — Export Intelligence",
+    "domain": "https://www.r3turn.io",
+    "description": "AI-Export intelligence for manufacturers. R3TURN Methodology v4.1: Digital Export Score, GEO visibility, market gap analysis. 80+ markets, 8 sectors.",
+    "llmsTxtUrl": "https://www.r3turn.io/llms.txt",
+    "llmsFullTxtUrl": "https://www.r3turn.io/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.r3turn.io&sz=128",
+    "publishedAt": "2026-04-24"
   },
   {
     "name": "RainbowKit",
@@ -4518,6 +4824,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.rephoto.app&sz=128",
     "publishedAt": "2026-02-25"
+  },
+  {
+    "name": "Replicate",
+    "domain": "https://replicate.com/",
+    "description": "Run open-source machine learning models with a cloud API.",
+    "llmsTxtUrl": "https://replicate.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=replicate.com&sz=128",
+    "publishedAt": "2026-04-14"
   },
   {
     "name": "Replit",
@@ -4684,6 +4999,16 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "ScoreUp Pro",
+    "domain": "https://scoreup.pro",
+    "description": "Practice IELTS & Goethe exams free with AI-powered tests, instant scoring, and personalized study plans. Join thousands of students preparing smarter.",
+    "llmsTxtUrl": "https://scoreup.pro/llms.txt",
+    "llmsFullTxtUrl": "https://scoreup.pro/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=scoreup.pro&sz=128",
+    "publishedAt": "2026-04-25"
+  },
+  {
     "name": "Scottish Art Prints by Carol McEwan",
     "domain": "https://www.carolmcewan.scot",
     "description": "Bring the beauty of Scotland into your home with Carol McEwan''s landscape prints. Modern, high-quality art perfect for gifts, home decor, and art lovers.",
@@ -4827,6 +5152,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Sidero Labs",
+    "domain": "https://docs.siderolabs.com",
+    "description": "Sidero Labs builds Talos Linux, an immutable API-driven Kubernetes OS, and Omni, a managed infrastructure control plane for Talos clusters at scale.",
+    "llmsTxtUrl": "https://docs.siderolabs.com/llms.txt",
+    "llmsFullTxtUrl": "https://docs.siderolabs.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.siderolabs.com&sz=128",
+    "publishedAt": "2026-04-11"
+  },
+  {
     "name": "SignalPM",
     "domain": "https://signalpm.online",
     "description": "Turn customer signals into prioritized features. SignalPM ingests calls, tickets, and usage data to generate agent-ready PRDs.",
@@ -4901,6 +5236,15 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "Smailander",
+    "domain": "https://smailander.com",
+    "description": "Monitor email leaks, phishing attempts, and security threats through honeypot email addresses. Real-time analytics, advanced threat detection, GDPR compliance.",
+    "llmsTxtUrl": "https://smailander.com/llms.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=smailander.com&sz=128",
+    "publishedAt": "2026-03-16"
+  },
+  {
     "name": "Social+",
     "domain": "https://social.plus",
     "description": "Easily integrate our pre-built social features and launch your curated in-app community. Boost app engagement, retention and revenues.",
@@ -4908,6 +5252,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=social.plus&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Sonicker",
+    "domain": "https://www.sonicker.com",
+    "description": "Create natural AI voices with Sonicker. Free text-to-speech with 50+ voices, instant voice cloning, and custom voice design. Sign up free.",
+    "llmsTxtUrl": "https://www.sonicker.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.sonicker.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.sonicker.com&sz=128",
+    "publishedAt": "2026-03-25"
   },
   {
     "name": "Sourcegraph",
@@ -5029,6 +5383,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=supadata.ai&sz=128",
     "publishedAt": "2025-07-26"
+  },
+  {
+    "name": "superchargebrowser",
+    "domain": "https://www.superchargebrowser.com",
+    "description": "Free Chrome extensions for tab suspension, ad blocking, vertical tabs, and workspaces. Zero telemetry. 69 library articles. Featured on Chrome Web Store.",
+    "llmsTxtUrl": "https://www.superchargebrowser.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.superchargebrowser.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.superchargebrowser.com&sz=128",
+    "publishedAt": "2026-03-22"
   },
   {
     "name": "Superwall",
@@ -5418,6 +5782,16 @@
     "publishedAt": "2025-06-24"
   },
   {
+    "name": "Uni",
+    "domain": "https://uni-system.com.pl",
+    "description": "Szukasz profesjonalnego montażu alarmów lub monitoringu? Uni-System oferuje nowoczesne systemy zabezpieczeń i smart home na całym Śląsku. Sprawdź wycenę!.",
+    "llmsTxtUrl": "https://uni-system.com.pl/llms.txt",
+    "llmsFullTxtUrl": "https://uni-system.com.pl/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=uni-system.com.pl&sz=128",
+    "publishedAt": "2026-04-03"
+  },
+  {
     "name": "Unistyles",
     "domain": "https://www.unistyl.es",
     "description": "Level up your React Native StyleSheet",
@@ -5445,6 +5819,15 @@
     "category": "security-identity",
     "favicon": "https://www.google.com/s2/favicons?domain=unkey.com&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "Unknown Proxies",
+    "domain": "https://unknownproxies.com/",
+    "description": "Unknown Proxies provides premium residential and ISP proxies for retail shopping automation, ticket brokers, account managers, and enterprise data aggregators.",
+    "llmsTxtUrl": "https://unknownproxies.com/llms.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=unknownproxies.com&sz=128",
+    "publishedAt": "2026-04-14"
   },
   {
     "name": "Unstructured",
@@ -5827,6 +6210,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=whereby.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Whoisbg.com",
+    "domain": "https://whoisbg.com/",
+    "description": "Bulgarian WHOIS lookup and domain intelligence platform. Provides real-time WHOIS data, DNS records, SSL certificates, SEO analysis, and 20+ other web tools.",
+    "llmsTxtUrl": "https://whoisbg.com/llms.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=whoisbg.com&sz=128",
+    "publishedAt": "2026-03-27"
   },
   {
     "name": "Wized",
