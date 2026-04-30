@@ -5116,15 +5116,6 @@
     "publishedAt": "2025-02-24"
   },
   {
-    "name": "Téléassistance Sénior",
-    "domain": "https://www.tele-assistance-senior.fr",
-    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
-    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
-    "publishedAt": "2025-08-26"
-  },
-  {
     "name": "Television.AI",
     "domain": "https://www.television.ai/",
     "description": "Television.AI is an AI-powered video editor specialized in news and sports video production for broadcasters, publishers, and news agencies.",
@@ -5371,6 +5362,24 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "Tw93 Blog",
+    "domain": "https://tw93.fun",
+    "description": "Personal blog by Tw93, a product engineer from Hangzhou. Posts on product engineering, AI-assisted coding, macOS development, and design.",
+    "llmsTxtUrl": "https://tw93.fun/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=tw93.fun&sz=128",
+    "publishedAt": "2026-04-30"
+  },
+  {
+    "name": "Tw93 Weekly",
+    "domain": "https://weekly.tw93.fun",
+    "description": "Weekly curation of tech discoveries and lifestyle by Tw93. 266+ issues since 2021, covering frontend, tools, design, and open source.",
+    "llmsTxtUrl": "https://weekly.tw93.fun/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=weekly.tw93.fun&sz=128",
+    "publishedAt": "2026-04-30"
+  },
+  {
     "name": "TwicPics by Frontify",
     "domain": "https://www.twicpics.com",
     "description": "TwicPics delivers perfectly sized media to your websites and applications in real-time to provide the best possible experience to all your end users.",
@@ -5386,6 +5395,15 @@
     "llmsTxtUrl": "https://www.twoshoes.be/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.twoshoes.be&sz=128",
+    "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Téléassistance Sénior",
+    "domain": "https://www.tele-assistance-senior.fr",
+    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
+    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
     "publishedAt": "2025-08-26"
   },
   {
@@ -5950,6 +5968,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=yamlresume.dev&sz=128",
     "publishedAt": "2025-06-12"
+  },
+  {
+    "name": "Yobi",
+    "domain": "https://yobi.tw93.fun",
+    "description": "AI visibility aggregation layer for Tw93 digital assets, providing structured data and machine-readable endpoints for AI crawlers.",
+    "llmsTxtUrl": "https://yobi.tw93.fun/llms.txt",
+    "llmsFullTxtUrl": "https://yobi.tw93.fun/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=yobi.tw93.fun&sz=128",
+    "publishedAt": "2026-04-30"
   },
   {
     "name": "Youform",
