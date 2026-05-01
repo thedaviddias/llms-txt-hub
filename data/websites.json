@@ -6051,5 +6051,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=zoko.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Visual Architect Pro | 雪沐江南",
+    "domain": "https://art.zedpapa.top",
+    "description": "AI-generated automotive engineering concept visualization gallery - 546 concepts across 6 categories with 5+ visual styles.",
+    "llmsTxtUrl": "https://art.zedpapa.top/llms.txt",
+    "llmsFullTxtUrl": "https://art.zedpapa.top/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=art.zedpapa.top&sz=128",
+    "publishedAt": "2026-05-01"
   }
 ]
