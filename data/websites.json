@@ -6051,5 +6051,14 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=zoko.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Fix72",
+    "domain": "https://fix72.com",
+    "description": "Fix72 — Dépannage informatique à Le Mans et à distance. Réparation PC, suppression de virus, récupération de données, création de site web.",
+    "llmsTxtUrl": "https://fix72.com/llms.txt",
+    "category": "local-business",
+    "favicon": "https://www.google.com/s2/favicons?domain=fix72.com&sz=128",
+    "publishedAt": "2026-05-06"
   }
 ]
