@@ -1,0 +1,34 @@
+---
+name: 'BrewPage'
+description: 'Free instant hosting for HTML, Markdown, multi-file sites, and files with shareable HTTPS links'
+website: 'https://brewpage.app'
+llmsUrl: 'https://brewpage.app/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-05-06'
+priority: 'medium'
+---
+
+# BrewPage
+
+BrewPage is a free instant hosting service for HTML pages, Markdown documents, AI artifacts, and files. No registration required. Get a shareable HTTPS link in seconds.
+
+## Key Features
+
+- **HTML Hosting** — publish HTML content instantly with custom namespaces and optional password protection
+- **Markdown Support** — render Markdown to styled HTML automatically
+- **Multi-File Sites** — upload ZIP archives or individual files for complete website hosting
+- **File Uploads** — share images, PDFs, video, audio with inline previews and optional download
+- **KV & JSON Storage** — key-value store and JSON document hosting with TTL support
+- **Privacy Controls** — public/private namespaces, password protection, owner tokens
+- **No Registration** — start sharing in seconds with no account needed
+
+## Publishing Methods
+
+- HTML via POST `/api/html` with optional Markdown format
+- Files via POST `/api/files` with inline preview support
+- Multi-file sites via POST `/api/sites` for complete website bundles
+- KV store and JSON documents for structured data
+
+## Documentation
+
+BrewPage's llms.txt provides complete API documentation for all publishing methods, storage options, and privacy features. Comprehensive coverage of namespaces, TTLs, authentication, and rate limits included.
