@@ -4165,6 +4165,15 @@
     "publishedAt": "2025-06-19"
   },
   {
+    "name": "PigeonPod",
+    "domain": "https://pigeonpod.cloud",
+    "description": "Convert YouTube channels and videos into private podcast RSS feeds for an ad-free, background listening experience.",
+    "llmsTxtUrl": "https://pigeonpod.cloud/llms.txt",
+    "category": "utilities",
+    "favicon": "https://www.google.com/s2/favicons?domain=pigeonpod.cloud&sz=128",
+    "publishedAt": "2026-05-10"
+  },
+  {
     "name": "Pikaicons",
     "domain": "https://pikaicons.com/",
     "description": "Browse 5,000+ beautifully crafted SVG icons for web and mobile. Free & premium icon library available. Easy integration with React, Solid, and more.",
@@ -5116,15 +5125,6 @@
     "publishedAt": "2025-02-24"
   },
   {
-    "name": "Téléassistance Sénior",
-    "domain": "https://www.tele-assistance-senior.fr",
-    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
-    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
-    "publishedAt": "2025-08-26"
-  },
-  {
     "name": "Television.AI",
     "domain": "https://www.television.ai/",
     "description": "Television.AI is an AI-powered video editor specialized in news and sports video production for broadcasters, publishers, and news agencies.",
@@ -5386,6 +5386,15 @@
     "llmsTxtUrl": "https://www.twoshoes.be/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.twoshoes.be&sz=128",
+    "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Téléassistance Sénior",
+    "domain": "https://www.tele-assistance-senior.fr",
+    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
+    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
     "publishedAt": "2025-08-26"
   },
   {
