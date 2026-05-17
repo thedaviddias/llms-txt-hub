@@ -4,11 +4,26 @@ on:
   workflow_run:
     workflows: ['PR Review']
     types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number to merge.'
+        required: true
+        type: string
+
+concurrency:
+  group: auto-merge-mdx-main
+  cancel-in-progress: false
 
 jobs:
   automerge:
     name: Auto-merge
-    if: github.repository_owner == 'thedaviddias' && github.event.workflow_run.conclusion == 'success'
+    if: |
+      github.repository_owner == 'thedaviddias' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        github.event.workflow_run.conclusion == 'success'
+      )
     permissions:
       contents: write
       pull-requests: write
@@ -17,10 +32,26 @@ jobs:
       - name: Collect PR context
         id: context
         uses: actions/github-script@v8
+        env:
+          DISPATCH_PR_NUMBER: ${{ inputs.pr_number }}
         with:
+          github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const fs = require('node:fs')
-            let pullRequestRef = context.payload.workflow_run.pull_requests[0]
+            let pullRequestRef = null
+
+            if (context.eventName === 'workflow_dispatch') {
+              const prNumber = Number(process.env.DISPATCH_PR_NUMBER)
+
+              if (!Number.isInteger(prNumber) || prNumber <= 0) {
+                core.setFailed('workflow_dispatch requires a valid pr_number input.')
+                return
+              }
+
+              pullRequestRef = { number: prNumber }
+            } else {
+              pullRequestRef = context.payload.workflow_run.pull_requests[0]
+            }
 
             if (!pullRequestRef) {
               // workflow_run.pull_requests is empty for fork PRs — find the PR by head SHA
@@ -91,6 +122,7 @@ jobs:
               String(pullRequest.title.startsWith('feat(community):'))
             )
             core.setOutput('pr_number', String(pullRequest.number))
+            core.setOutput('pr_head_sha', pullRequest.head.sha)
 
       - name: Checkout
         if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
@@ -107,104 +139,38 @@ jobs:
 
       - name: Merge PR
         if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          PR_HEAD_SHA: ${{ steps.context.outputs.pr_head_sha }}
+          PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+        run: |
+          for attempt in 1 2 3; do
+            gh pr merge "$PR_NUMBER" \
+              --repo "$GITHUB_REPOSITORY" \
+              --squash \
+              --admin \
+              --match-head-commit "$PR_HEAD_SHA" && exit 0
+
+            sleep 5
+          done
+
+          echo "Failed to merge PR #${PR_NUMBER} with admin privileges after retries." >&2
+          exit 1
+
+      - name: Report failed merge
+        if: failure() && steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
         uses: actions/github-script@v8
         env:
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
         with:
+          github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const prNumber = Number(process.env.PR_NUMBER)
-            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-            const transientMergeStates = new Set(['unknown', 'unstable'])
-            const readyMergeStates = new Set(['clean', 'has_hooks'])
 
-            for (let attempt = 1; attempt <= 5; attempt += 1) {
-              const { data: pullRequest } = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber
-              })
-
-              if (pullRequest.state !== 'open' || pullRequest.draft) {
-                core.info('Pull request is not mergeable in its current state.')
-                return
-              }
-
-              const mergeableState = pullRequest.mergeable_state ?? 'unknown'
-
-              if (pullRequest.mergeable !== true) {
-                if (pullRequest.mergeable === null || transientMergeStates.has(mergeableState)) {
-                  core.info(
-                    `Mergeability for PR #${prNumber} is still pending (mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}); retrying.`
-                  )
-
-                  await sleep(5000)
-                  continue
-                }
-
-                core.info(
-                  `Skipping auto-merge for PR #${prNumber}: mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}.`
-                )
-                return
-              }
-
-              if (!readyMergeStates.has(mergeableState)) {
-                core.info(
-                  `Skipping auto-merge for PR #${prNumber}: GitHub reports mergeable_state=${mergeableState}. This usually means required review or another repository rule is still unmet.`
-                )
-                return
-              }
-
-              try {
-                await github.rest.pulls.merge({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: prNumber,
-                  merge_method: 'squash'
-                })
-
-                core.info(`Merged PR #${prNumber} on attempt ${attempt}.`)
-                return
-              } catch (error) {
-                const status = error.status ?? 0
-
-                if (status !== 405 && status !== 409) {
-                  throw error
-                }
-
-                const { data: refreshedPullRequest } = await github.rest.pulls.get({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: prNumber
-                })
-                const refreshedMergeableState = refreshedPullRequest.mergeable_state ?? 'unknown'
-
-                if (
-                  refreshedPullRequest.mergeable === true &&
-                  !readyMergeStates.has(refreshedMergeableState)
-                ) {
-                  core.info(
-                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and now reports mergeable_state=${refreshedMergeableState}.`
-                  )
-                  return
-                }
-
-                if (
-                  refreshedPullRequest.mergeable === false ||
-                  (!readyMergeStates.has(refreshedMergeableState) &&
-                    !transientMergeStates.has(refreshedMergeableState))
-                ) {
-                  core.info(
-                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and mergeable=${refreshedPullRequest.mergeable}, mergeable_state=${refreshedMergeableState}.`
-                  )
-                  return
-                }
-
-                core.info(
-                  `Merge attempt ${attempt} for PR #${prNumber} returned ${status}; retrying.`
-                )
-
-                await sleep(5000)
-              }
-            }
-
-            core.setFailed(`PR #${prNumber} stayed unmergeable after retries.`)
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body:
+                'Auto-merge tried to merge this PR with administrator privileges but GitHub still rejected it. This usually means the PR has merge conflicts or the token does not have the expected bypass capability.'
+            })
