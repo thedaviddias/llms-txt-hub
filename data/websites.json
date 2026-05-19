@@ -2556,7 +2556,7 @@
     "domain": "https://angular.dev",
     "description": "The web development framework for building modern apps.",
     "llmsTxtUrl": "https://angular.dev/llms.txt",
-    "llmsFullTxtUrl": "https://angular.dev/llms-full.txt",
+    "llmsFullTxtUrl": "https://angular.dev/assets/context/llms-full.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=angular.dev&sz=128",
     "publishedAt": "2025-05-24"
