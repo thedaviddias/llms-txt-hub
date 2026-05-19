@@ -1,0 +1,19 @@
+---
+name: 'AI-First Search'
+description: 'Search-engine-backed multi-URL Markdown extraction API for LLM agents. Free OSS alternative to Tavily / Exa / Perplexity. Runs a real web search, fetches the top-N result pages in parallel, returns each as clean ad-free Markdown.'
+website: 'https://fingerdog50-ai-first-search.hf.space'
+llmsUrl: 'https://fingerdog50-ai-first-search.hf.space/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-05-18'
+---
+
+# AI-First Search
+
+Search-engine-backed multi-URL Markdown extraction API for LLM agents.
+Query in → top-N pages as clean Markdown out. Free OSS alternative to
+Tavily / Exa / Perplexity's search-and-read APIs.
+
+Endpoint: `GET /search?q=<query>&k=<1..10>&max_tokens=<int?>` →
+JSON `{query, k, scraper_url, results[]}`. Each result includes URL,
+title, snippet, and the cleaned Markdown body of the page.

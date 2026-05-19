@@ -1,0 +1,25 @@
+---
+name: 'AI-First Scraper'
+description: 'Ad-free Markdown extraction API designed for LLM and AI agent consumption. Fetches any URL or PDF, strips ads / nav / scripts / trackers, returns clean Markdown. Supports batch fetch (25 URLs in parallel) and per-page token budgets.'
+website: 'https://ai-first-scraper.onrender.com'
+llmsUrl: 'https://ai-first-scraper.onrender.com/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-05-18'
+---
+
+# AI-First Scraper
+
+Ad-free Markdown extraction API designed for LLM and AI agent consumption.
+URL in → clean Markdown out. Strips ads, navigation, scripts, trackers; supports
+HTML and PDF. Includes `/scrape` (JSON envelope), `/raw` (text/markdown), and
+`POST /batch` for up to 25 parallel URLs. Per-page `max_tokens` cap protects
+your prompt budget.
+
+Endpoints exposed for AI agents:
+
+- `GET /scrape?url=<url>&max_tokens=<int?>` → JSON
+- `GET /raw?url=<url>&max_tokens=<int?>` → `text/markdown`
+- `POST /batch` body `{"urls": [...up to 25...]}` → array
+- `GET /llms.txt` — self-describing spec
+- `GET /.well-known/ai-plugin.json` — ChatGPT plugin manifest
