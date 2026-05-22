@@ -5409,6 +5409,15 @@
     "publishedAt": "2026-01-18"
   },
   {
+    "name": "UiPath",
+    "domain": "https://docs.uipath.com",
+    "description": "Complete reference documentation for UiPath automation platform — Orchestrator, Studio, Agents, Maestro, and 40+ products.",
+    "llmsTxtUrl": "https://docs.uipath.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.uipath.com&sz=128",
+    "publishedAt": "2026-05-22"
+  },
+  {
     "name": "uminai MCP",
     "domain": "https://mcp.umin.ai",
     "description": "Curated collection of MCP Servers, MCP Clients including Awesome MCP Servers and workflow for LLM integration.",
