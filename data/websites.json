@@ -5116,6 +5116,15 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "Téléassistance Sénior",
+    "domain": "https://www.tele-assistance-senior.fr",
+    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
+    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
+    "publishedAt": "2025-08-26"
+  },
+  {
     "name": "Television.AI",
     "domain": "https://www.television.ai/",
     "description": "Television.AI is an AI-powered video editor specialized in news and sports video production for broadcasters, publishers, and news agencies.",
@@ -5404,15 +5413,6 @@
     "llmsTxtUrl": "https://www.twoshoes.be/llms.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.twoshoes.be&sz=128",
-    "publishedAt": "2025-08-26"
-  },
-  {
-    "name": "Téléassistance Sénior",
-    "domain": "https://www.tele-assistance-senior.fr",
-    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
-    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
     "publishedAt": "2025-08-26"
   },
   {
