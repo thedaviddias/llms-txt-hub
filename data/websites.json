@@ -177,6 +177,16 @@
     "publishedAt": "2025-06-26"
   },
   {
+    "name": "AIwayfarer",
+    "domain": "https://aiwayfarer.com",
+    "description": "Explore the digital frontier of artificial intelligence. A curated collection of AI learning notes, resource recommendations, and Vibe Coding projects.",
+    "llmsTxtUrl": "https://aiwayfarer.com/llms.txt",
+    "llmsFullTxtUrl": "https://aiwayfarer.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=aiwayfarer.com&sz=128",
+    "publishedAt": "2026-05-10"
+  },
+  {
     "name": "AI Squared",
     "domain": "https://squared.ai",
     "description": "AI integration platform for enterprise applications",
