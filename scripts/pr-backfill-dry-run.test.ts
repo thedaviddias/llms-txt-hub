@@ -431,7 +431,7 @@ describe('deriveManagedLabels', () => {
       structurallyEligible: true
     })
 
-    expect(result).toEqual(['automerge:candidate'])
+    expect(result).toEqual(['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low'])
   })
 
   it('downgrades to standard lane and manual review when guidelines warn', () => {
@@ -442,7 +442,7 @@ describe('deriveManagedLabels', () => {
       structurallyEligible: true
     })
 
-    expect(result).toEqual(['needs:manual-review'])
+    expect(result).toEqual(['area:content', 'lane:mdx-fast', 'needs:manual-review', 'risk:low'])
   })
 
   it('uses manual review for structurally blocked PRs', () => {
@@ -458,7 +458,7 @@ describe('deriveManagedLabels', () => {
       structurallyEligible: false
     })
 
-    expect(result).toEqual(['needs:manual-review'])
+    expect(result).toEqual(['lane:blocked', 'needs:manual-review', 'risk:high', 'status:blocked'])
   })
 
   it('preserves generated websites.json labeling when present', () => {

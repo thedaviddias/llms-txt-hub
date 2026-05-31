@@ -1,0 +1,194 @@
+name: Vercel Preview
+
+on:
+  pull_request:
+    branches: ['main']
+    types: [labeled, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number to deploy'
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || inputs.pr_number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    name: Deploy labeled PR preview
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID || secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID || secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Resolve pull request
+        id: pr
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const deployLabel = 'deploy:preview'
+            const isDispatch = context.eventName === 'workflow_dispatch'
+
+            let pullRequest = context.payload.pull_request
+
+            if (isDispatch) {
+              const prNumber = Number(core.getInput('pr_number'))
+
+              if (!Number.isInteger(prNumber) || prNumber < 1) {
+                core.setFailed('workflow_dispatch requires a valid pr_number input.')
+                return
+              }
+
+              const response = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: prNumber
+              })
+
+              pullRequest = response.data
+            }
+
+            if (!pullRequest) {
+              core.setFailed('Unable to resolve pull request context.')
+              return
+            }
+
+            const labels = (pullRequest.labels ?? []).map(label =>
+              typeof label === 'string' ? label : label.name
+            )
+            const sameRepository =
+              pullRequest.head.repo?.full_name === `${context.repo.owner}/${context.repo.repo}`
+            const labelEventMatches =
+              context.payload.action !== 'labeled' ||
+              context.payload.label?.name === deployLabel
+            const hasDeployLabel = labels.includes(deployLabel)
+            const shouldDeploy = sameRepository && hasDeployLabel && labelEventMatches
+
+            core.setOutput('should_deploy', String(shouldDeploy))
+            core.setOutput('head_sha', pullRequest.head.sha)
+            core.setOutput('head_ref', pullRequest.head.ref)
+            core.setOutput('number', String(pullRequest.number))
+
+            if (!sameRepository) {
+              core.notice('Skipping Vercel Preview because the PR comes from a fork.')
+              return
+            }
+
+            if (!hasDeployLabel) {
+              core.notice(`Skipping Vercel Preview because the PR does not have ${deployLabel}.`)
+              return
+            }
+
+            if (!labelEventMatches) {
+              core.notice(`Skipping Vercel Preview because a different label triggered this run.`)
+            }
+
+      - name: Validate Vercel configuration
+        if: steps.pr.outputs.should_deploy == 'true'
+        run: |
+          missing=0
+
+          for name in VERCEL_ORG_ID VERCEL_PROJECT_ID VERCEL_TOKEN; do
+            if [ -z "${!name}" ]; then
+              echo "::error::${name} is required for Vercel Preview deployments."
+              missing=1
+            fi
+          done
+
+          exit "$missing"
+
+      - name: Checkout PR head
+        if: steps.pr.outputs.should_deploy == 'true'
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.pr.outputs.head_sha }}
+
+      - name: Install
+        if: steps.pr.outputs.should_deploy == 'true'
+        uses: ./.github/actions/install
+
+      - name: Pull Vercel project settings
+        if: steps.pr.outputs.should_deploy == 'true'
+        run: pnpm dlx vercel@50.43.0 pull --yes --environment=preview --token="${VERCEL_TOKEN}"
+
+      - name: Build Vercel Preview
+        if: steps.pr.outputs.should_deploy == 'true'
+        run: pnpm dlx vercel@50.43.0 build --token="${VERCEL_TOKEN}"
+
+      - name: Deploy Vercel Preview
+        if: steps.pr.outputs.should_deploy == 'true'
+        id: deploy
+        run: |
+          deployment_output="$(pnpm dlx vercel@50.43.0 deploy --prebuilt --archive=tgz --token="${VERCEL_TOKEN}")"
+          deployment_url="$(printf '%s\n' "$deployment_output" | tail -n 1)"
+
+          if [ -z "$deployment_url" ]; then
+            echo "Vercel did not return a deployment URL." >&2
+            exit 1
+          fi
+
+          case "$deployment_url" in
+            http*) ;;
+            *) deployment_url="https://${deployment_url}" ;;
+          esac
+
+          echo "deployment_url=${deployment_url}" >> "$GITHUB_OUTPUT"
+
+      - name: Upsert PR preview comment
+        if: steps.pr.outputs.should_deploy == 'true'
+        uses: actions/github-script@v8
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+          HEAD_REF: ${{ steps.pr.outputs.head_ref }}
+          HEAD_SHA: ${{ steps.pr.outputs.head_sha }}
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        with:
+          script: |
+            const marker = '<!-- vercel-preview-deployment -->'
+            const prNumber = Number(process.env.PR_NUMBER)
+            const shortSha = process.env.HEAD_SHA.slice(0, 7)
+            const body = [
+              marker,
+              '## Vercel Preview',
+              '',
+              `Preview deployment: ${process.env.DEPLOYMENT_URL}`,
+              '',
+              `Branch: \`${process.env.HEAD_REF}\``,
+              `Commit: \`${shortSha}\``
+            ].join('\n')
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              per_page: 100
+            })
+
+            const existing = comments.find(comment =>
+              comment.user?.type === 'Bot' && comment.body?.includes(marker)
+            )
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              })
+              return
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body
+            })

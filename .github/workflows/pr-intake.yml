@@ -72,9 +72,19 @@ jobs:
                 description: 'Manual review required because data/websites.json was changed outside automation.'
               },
               {
+                name: 'needs:manual-review',
+                color: 'D876E3',
+                description: 'Manual review required before merging.'
+              },
+              {
                 name: 'automerge:candidate',
                 color: '0E8A16',
                 description: 'Eligible for auto-merge after required checks pass.'
+              },
+              {
+                name: 'deploy:preview',
+                color: '5319E7',
+                description: 'Opt in to building a Vercel Preview deployment for this PR.'
               }
             ]
 

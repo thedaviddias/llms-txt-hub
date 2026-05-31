@@ -1,14 +1,14 @@
 name: Auto-merge MDX Entry PRs
 
 on:
-  workflow_run:
-    workflows: ['PR Review']
-    types: [completed]
+  pull_request_target:
+    branches: ['main']
+    types: [opened, reopened, synchronize, edited, ready_for_review]
   workflow_dispatch:
     inputs:
       pr_number:
-        description: 'Pull request number to merge.'
-        required: true
+        description: 'Optional pull request number to process. Leave empty to scan all open PRs.'
+        required: false
         type: string
 
 concurrency:
@@ -18,147 +18,51 @@ concurrency:
 jobs:
   automerge:
     name: Auto-merge
-    if: |
-      github.repository_owner == 'thedaviddias' &&
-      (
-        github.event_name == 'workflow_dispatch' ||
-        github.event.workflow_run.conclusion == 'success'
-      )
+    if: github.repository_owner == 'thedaviddias'
     permissions:
       contents: write
+      issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Collect PR context
+      - name: Resolve PR number
         id: context
-        uses: actions/github-script@v8
         env:
           DISPATCH_PR_NUMBER: ${{ inputs.pr_number }}
-        with:
-          github-token: ${{ secrets.PAT_TOKEN }}
-          script: |
-            const fs = require('node:fs')
-            let pullRequestRef = null
+          EVENT_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          pr_number="${EVENT_PR_NUMBER:-${DISPATCH_PR_NUMBER:-}}"
 
-            if (context.eventName === 'workflow_dispatch') {
-              const prNumber = Number(process.env.DISPATCH_PR_NUMBER)
+          if [ -n "$pr_number" ]; then
+            case "$pr_number" in
+              *[!0-9]*)
+                echo "Invalid pull request number: $pr_number" >&2
+                exit 1
+                ;;
+            esac
+          fi
 
-              if (!Number.isInteger(prNumber) || prNumber <= 0) {
-                core.setFailed('workflow_dispatch requires a valid pr_number input.')
-                return
-              }
+          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
 
-              pullRequestRef = { number: prNumber }
-            } else {
-              pullRequestRef = context.payload.workflow_run.pull_requests[0]
-            }
-
-            if (!pullRequestRef) {
-              // workflow_run.pull_requests is empty for fork PRs — find the PR by head SHA
-              const headSha = context.payload.workflow_run.head_sha
-              const { data: openPrs } = await github.rest.pulls.list({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                state: 'open',
-                sort: 'updated',
-                direction: 'desc',
-                per_page: 10
-              })
-
-              const matchingPr = openPrs.find(pr => pr.head.sha === headSha)
-
-              if (!matchingPr) {
-                core.setOutput('is_community_pr', 'false')
-                core.setOutput('pr_number', '')
-                return
-              }
-
-              pullRequestRef = { number: matchingPr.number }
-            }
-
-            const { data: pullRequest } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pullRequestRef.number
-            })
-
-            const [files, commits] = await Promise.all([
-              github.paginate(github.rest.pulls.listFiles, {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number,
-                per_page: 100
-              }),
-              github.paginate(github.rest.pulls.listCommits, {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number,
-                per_page: 100
-              })
-            ])
-
-            const payload = {
-              authorLogin: pullRequest.user.login,
-              commits: commits.map(commit => ({
-                authorLogin: commit.author?.login ?? null,
-                committerLogin: commit.committer?.login ?? null
-              })),
-              files: files.map(file => ({
-                additions: file.additions,
-                changes: file.changes,
-                deletions: file.deletions,
-                filename: file.filename,
-                previousFilename: file.previous_filename ?? null,
-                status: file.status
-              })),
-              headRefName: pullRequest.head.ref,
-              title: pullRequest.title
-            }
-
-            const tempDir = process.env.RUNNER_TEMP || '/tmp'
-            fs.writeFileSync(`${tempDir}/pr-context.json`, JSON.stringify(payload, null, 2))
-            core.setOutput(
-              'is_community_pr',
-              String(pullRequest.title.startsWith('feat(community):'))
-            )
-            core.setOutput('pr_number', String(pullRequest.number))
-            core.setOutput('pr_head_sha', pullRequest.head.sha)
-
-      - name: Checkout
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
+      - name: Checkout trusted base
         uses: actions/checkout@v6
 
       - name: Install
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
         uses: ./.github/actions/install
 
-      - name: Classify PR
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
-        id: classify
-        run: pnpm exec tsx scripts/pr-triage.ts "$RUNNER_TEMP/pr-context.json" > classification.json
-
-      - name: Merge PR
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
+      - name: Validate, label, and merge eligible PR
         env:
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
-          PR_HEAD_SHA: ${{ steps.context.outputs.pr_head_sha }}
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
         run: |
-          for attempt in 1 2 3; do
-            gh pr merge "$PR_NUMBER" \
-              --repo "$GITHUB_REPOSITORY" \
-              --squash \
-              --admin \
-              --match-head-commit "$PR_HEAD_SHA" && exit 0
-
-            sleep 5
-          done
-
-          echo "Failed to merge PR #${PR_NUMBER} with admin privileges after retries." >&2
-          exit 1
+          if [ -n "$PR_NUMBER" ]; then
+            pnpm exec tsx scripts/pr-backfill-dry-run.ts --pr "$PR_NUMBER"
+          else
+            pnpm exec tsx scripts/pr-backfill-dry-run.ts --concurrency 4
+          fi
 
       - name: Report failed merge
-        if: failure() && steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
+        if: failure() && steps.context.outputs.pr_number != ''
         uses: actions/github-script@v8
         env:
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
@@ -172,5 +76,5 @@ jobs:
               repo: context.repo.repo,
               issue_number: prNumber,
               body:
-                'Auto-merge tried to merge this PR with administrator privileges but GitHub still rejected it. This usually means the PR has merge conflicts or the token does not have the expected bypass capability.'
+                'Trusted PR automation failed while validating, labeling, or merging this PR. Check the Auto-merge MDX Entry PRs workflow logs for the exact failure.'
             })

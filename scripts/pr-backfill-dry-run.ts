@@ -53,6 +53,11 @@ const managedLabelSet = new Set<string>(EXACT_MANAGED_LABELS)
 const LABEL_DEFINITIONS = [
   {
     color: '0E8A16',
+    description: 'Touches content website entries or generated website data.',
+    name: 'area:content'
+  },
+  {
+    color: '0E8A16',
     description: 'Eligible for auto-merge after required checks pass.',
     name: 'automerge:candidate'
   },
@@ -65,6 +70,42 @@ const LABEL_DEFINITIONS = [
     color: 'D876E3',
     description: 'Manual review required before merging.',
     name: 'needs:manual-review'
+  },
+  {
+    color: 'D876E3',
+    description:
+      'Manual review required because data/websites.json was changed outside automation.',
+    name: 'needs:generated-file-review'
+  },
+  {
+    color: '1D76DB',
+    description: 'Eligible for the MDX auto-merge fast lane.',
+    name: 'lane:mdx-fast'
+  },
+  {
+    color: '5319E7',
+    description: 'Requires standard human review.',
+    name: 'lane:standard'
+  },
+  {
+    color: 'B60205',
+    description: 'Blocked from fast-lane processing.',
+    name: 'lane:blocked'
+  },
+  {
+    color: '0E8A16',
+    description: 'Low-risk change based on deterministic intake rules.',
+    name: 'risk:low'
+  },
+  {
+    color: 'B60205',
+    description: 'High-risk or mixed change based on deterministic intake rules.',
+    name: 'risk:high'
+  },
+  {
+    color: 'D93F0B',
+    description: 'Needs manual intervention before review.',
+    name: 'status:blocked'
   }
 ] as const
 
@@ -403,7 +444,7 @@ export function deriveManagedLabels(snapshot: {
   policyEligible: boolean
   structurallyEligible: boolean
 }): string[] {
-  const labels = new Set<string>()
+  const labels = new Set<string>(snapshot.classification.labels)
 
   if (snapshot.classification.labels.includes('generated:websites-json')) {
     labels.add('generated:websites-json')
@@ -411,7 +452,9 @@ export function deriveManagedLabels(snapshot: {
 
   if (snapshot.structurallyEligible && snapshot.policyEligible) {
     labels.add('automerge:candidate')
+    labels.delete('needs:manual-review')
   } else {
+    labels.delete('automerge:candidate')
     labels.add('needs:manual-review')
   }
 
@@ -772,6 +815,7 @@ async function analyzePullRequest(
       wouldMergeReason: decision.reason
     })
     const mergeAction = await executeMergeAction({
+      headSha: details.head.sha,
       mergePlan,
       prNumber: details.number,
       repo
@@ -928,6 +972,7 @@ async function syncManagedLabels(input: {
  * Execute the planned merge action against GitHub.
  */
 async function executeMergeAction(input: {
+  headSha: string
   mergePlan: MergeAction
   prNumber: number
   repo: string
@@ -942,6 +987,8 @@ async function executeMergeAction(input: {
       `repos/${input.repo}/pulls/${input.prNumber}/merge`,
       '--method',
       'PUT',
+      '-f',
+      `sha=${input.headSha}`,
       '-f',
       'merge_method=squash'
     ])
