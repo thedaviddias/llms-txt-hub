@@ -1,210 +1,80 @@
 name: Auto-merge MDX Entry PRs
 
 on:
-  workflow_run:
-    workflows: ['PR Review']
-    types: [completed]
+  pull_request_target:
+    branches: ['main']
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Optional pull request number to process. Leave empty to scan all open PRs.'
+        required: false
+        type: string
+
+concurrency:
+  group: auto-merge-mdx-main
+  cancel-in-progress: false
 
 jobs:
   automerge:
     name: Auto-merge
-    if: github.repository_owner == 'thedaviddias' && github.event.workflow_run.conclusion == 'success'
+    if: github.repository_owner == 'thedaviddias'
     permissions:
       contents: write
+      issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Collect PR context
+      - name: Resolve PR number
         id: context
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const fs = require('node:fs')
-            let pullRequestRef = context.payload.workflow_run.pull_requests[0]
+        env:
+          DISPATCH_PR_NUMBER: ${{ inputs.pr_number }}
+          EVENT_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          pr_number="${EVENT_PR_NUMBER:-${DISPATCH_PR_NUMBER:-}}"
 
-            if (!pullRequestRef) {
-              // workflow_run.pull_requests is empty for fork PRs — find the PR by head SHA
-              const headSha = context.payload.workflow_run.head_sha
-              const { data: openPrs } = await github.rest.pulls.list({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                state: 'open',
-                sort: 'updated',
-                direction: 'desc',
-                per_page: 10
-              })
+          if [ -n "$pr_number" ]; then
+            case "$pr_number" in
+              *[!0-9]*)
+                echo "Invalid pull request number: $pr_number" >&2
+                exit 1
+                ;;
+            esac
+          fi
 
-              const matchingPr = openPrs.find(pr => pr.head.sha === headSha)
+          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
 
-              if (!matchingPr) {
-                core.setOutput('is_community_pr', 'false')
-                core.setOutput('pr_number', '')
-                return
-              }
-
-              pullRequestRef = { number: matchingPr.number }
-            }
-
-            const { data: pullRequest } = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: pullRequestRef.number
-            })
-
-            const [files, commits] = await Promise.all([
-              github.paginate(github.rest.pulls.listFiles, {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number,
-                per_page: 100
-              }),
-              github.paginate(github.rest.pulls.listCommits, {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pullRequest.number,
-                per_page: 100
-              })
-            ])
-
-            const payload = {
-              authorLogin: pullRequest.user.login,
-              commits: commits.map(commit => ({
-                authorLogin: commit.author?.login ?? null,
-                committerLogin: commit.committer?.login ?? null
-              })),
-              files: files.map(file => ({
-                additions: file.additions,
-                changes: file.changes,
-                deletions: file.deletions,
-                filename: file.filename,
-                previousFilename: file.previous_filename ?? null,
-                status: file.status
-              })),
-              headRefName: pullRequest.head.ref,
-              title: pullRequest.title
-            }
-
-            const tempDir = process.env.RUNNER_TEMP || '/tmp'
-            fs.writeFileSync(`${tempDir}/pr-context.json`, JSON.stringify(payload, null, 2))
-            core.setOutput(
-              'is_community_pr',
-              String(pullRequest.title.startsWith('feat(community):'))
-            )
-            core.setOutput('pr_number', String(pullRequest.number))
-
-      - name: Checkout
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
+      - name: Checkout trusted base
         uses: actions/checkout@v6
 
       - name: Install
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
         uses: ./.github/actions/install
 
-      - name: Classify PR
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true'
-        id: classify
-        run: pnpm exec tsx scripts/pr-triage.ts "$RUNNER_TEMP/pr-context.json" > classification.json
+      - name: Validate, label, and merge eligible PR
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+        run: |
+          if [ -n "$PR_NUMBER" ]; then
+            pnpm exec tsx scripts/pr-backfill-dry-run.ts --pr "$PR_NUMBER"
+          else
+            pnpm exec tsx scripts/pr-backfill-dry-run.ts --concurrency 4
+          fi
 
-      - name: Merge PR
-        if: steps.context.outputs.pr_number != '' && steps.context.outputs.is_community_pr == 'true' && steps.classify.outputs.automerge_eligible == 'true' && steps.classify.outputs.manual_websites_json_change != 'true'
+      - name: Report failed merge
+        if: failure() && steps.context.outputs.pr_number != ''
         uses: actions/github-script@v8
         env:
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
         with:
+          github-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const prNumber = Number(process.env.PR_NUMBER)
-            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-            const transientMergeStates = new Set(['unknown', 'unstable'])
-            const readyMergeStates = new Set(['clean', 'has_hooks'])
 
-            for (let attempt = 1; attempt <= 5; attempt += 1) {
-              const { data: pullRequest } = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: prNumber
-              })
-
-              if (pullRequest.state !== 'open' || pullRequest.draft) {
-                core.info('Pull request is not mergeable in its current state.')
-                return
-              }
-
-              const mergeableState = pullRequest.mergeable_state ?? 'unknown'
-
-              if (pullRequest.mergeable !== true) {
-                if (pullRequest.mergeable === null || transientMergeStates.has(mergeableState)) {
-                  core.info(
-                    `Mergeability for PR #${prNumber} is still pending (mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}); retrying.`
-                  )
-
-                  await sleep(5000)
-                  continue
-                }
-
-                core.info(
-                  `Skipping auto-merge for PR #${prNumber}: mergeable=${pullRequest.mergeable}, mergeable_state=${mergeableState}.`
-                )
-                return
-              }
-
-              if (!readyMergeStates.has(mergeableState)) {
-                core.info(
-                  `Skipping auto-merge for PR #${prNumber}: GitHub reports mergeable_state=${mergeableState}. This usually means required review or another repository rule is still unmet.`
-                )
-                return
-              }
-
-              try {
-                await github.rest.pulls.merge({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: prNumber,
-                  merge_method: 'squash'
-                })
-
-                core.info(`Merged PR #${prNumber} on attempt ${attempt}.`)
-                return
-              } catch (error) {
-                const status = error.status ?? 0
-
-                if (status !== 405 && status !== 409) {
-                  throw error
-                }
-
-                const { data: refreshedPullRequest } = await github.rest.pulls.get({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: prNumber
-                })
-                const refreshedMergeableState = refreshedPullRequest.mergeable_state ?? 'unknown'
-
-                if (
-                  refreshedPullRequest.mergeable === true &&
-                  !readyMergeStates.has(refreshedMergeableState)
-                ) {
-                  core.info(
-                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and now reports mergeable_state=${refreshedMergeableState}.`
-                  )
-                  return
-                }
-
-                if (
-                  refreshedPullRequest.mergeable === false ||
-                  (!readyMergeStates.has(refreshedMergeableState) &&
-                    !transientMergeStates.has(refreshedMergeableState))
-                ) {
-                  core.info(
-                    `Skipping auto-merge for PR #${prNumber}: GitHub returned ${status} and mergeable=${refreshedPullRequest.mergeable}, mergeable_state=${refreshedMergeableState}.`
-                  )
-                  return
-                }
-
-                core.info(
-                  `Merge attempt ${attempt} for PR #${prNumber} returned ${status}; retrying.`
-                )
-
-                await sleep(5000)
-              }
-            }
-
-            core.setFailed(`PR #${prNumber} stayed unmergeable after retries.`)
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body:
+                'Trusted PR automation failed while validating, labeling, or merging this PR. Check the Auto-merge MDX Entry PRs workflow logs for the exact failure.'
+            })
