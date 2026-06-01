@@ -34,14 +34,25 @@
   },
   {
     "name": "1MillionBot",
-    "description": "1millionbot.com - Information and resources",
+    "description": "1MillionBot builds AI agents, chatbots, and generative AI solutions for businesses, universities, and public institutions.",
     "url": "/1millionbot-llms-txt",
-    "content": "# 1MillionBot\n\n1millionbot.com - Information and resources",
+    "content": "# 1MillionBot\n\n1MillionBot builds AI agents, chatbots, and generative AI solutions for businesses, universities, and public institutions.",
     "category": "other",
     "slug": "1millionbot-llms-txt",
     "website": "https://1millionbot.com/en/",
     "llmsUrl": "https://1millionbot.com/en/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "3D Modeling Remixing Printing",
+    "description": "AI to make 3D: modeling, repair, segmentation, and color, printing, all in one go.",
+    "url": "/3d-modeling-remixing-printing-llms-txt",
+    "content": "# 3D Modeling Remixing Printing\n\nAI to make 3D: modeling, repair, segmentation, and color, printing, all in one go.",
+    "category": "ai-ml",
+    "slug": "3d-modeling-remixing-printing-llms-txt",
+    "website": "https://docs.yotown.com",
+    "llmsUrl": "https://docs.yotown.com/llms.txt",
+    "llmsFullUrl": "https://docs.yotown.com/llms-full.txt"
   },
   {
     "name": "48 Club",
@@ -89,9 +100,9 @@
   },
   {
     "name": "A2Reviews",
-    "description": "<head><meta charset=\"utf-8\">",
+    "description": "A2Reviews helps Shopify and WooCommerce stores import customer reviews from marketplaces and manage them with a fast review editor.",
     "url": "/a2reviews-llms-txt",
-    "content": "# A2Reviews\n\nA2Reviews - Platform and services",
+    "content": "# A2Reviews\n\nA2Reviews helps Shopify and WooCommerce stores import customer reviews from marketplaces and manage them with a fast review editor.",
     "category": "other",
     "slug": "a2reviews-llms-txt",
     "website": "https://a2rev.com",
@@ -243,9 +254,9 @@
   },
   {
     "name": "Admira",
-    "description": "<meta charset=\"UTF-8\">",
+    "description": "Admira delivers digital signage, smart city, IoT, and AI solutions that connect offline assets to the internet at scale.",
     "url": "/admira-llms-txt",
-    "content": "# Admira\n\nAdmira - Platform and services",
+    "content": "# Admira\n\nAdmira delivers digital signage, smart city, IoT, and AI solutions that connect offline assets to the internet at scale.",
     "category": "other",
     "slug": "admira-llms-txt",
     "website": "https://admira.com",
@@ -298,9 +309,9 @@
   },
   {
     "name": "Advin Servers",
-    "description": "<!DOCTYPE html><html  data-capo=\"\"><head><meta charset=\"utf-8\">",
+    "description": "Advin Servers provides cloud VPS, dedicated servers, and website hosting with global locations, NVMe storage, and AMD-powered infrastructure.",
     "url": "/advin-servers-llms-txt",
-    "content": "# Advin Servers\n\nAdvin Servers - Cloud infrastructure platform",
+    "content": "# Advin Servers\n\nAdvin Servers provides cloud VPS, dedicated servers, and website hosting with global locations, NVMe storage, and AMD-powered infrastructure.",
     "category": "infrastructure-cloud",
     "slug": "advin-servers-llms-txt",
     "website": "https://advinservers.com",
@@ -364,9 +375,9 @@
   },
   {
     "name": "Aftermath",
-    "description": "window.dataLayer = window.dataLayer || [];",
+    "description": "Aftermath Finance is a decentralized trading platform on Sui offering spot trading, perpetuals, liquid staking, pools, and portfolio tools.",
     "url": "/aftermath-llms-txt",
-    "content": "# Aftermath\n\nwindow.dataLayer = window.dataLayer || [];",
+    "content": "# Aftermath\n\nAftermath Finance is a decentralized trading platform on Sui offering spot trading, perpetuals, liquid staking, pools, and portfolio tools.",
     "category": "developer-tools",
     "slug": "aftermath-llms-txt",
     "website": "https://aftermath.finance",
@@ -375,13 +386,24 @@
   },
   {
     "name": "agent.ai",
-    "description": "visibility: hidden;",
+    "description": "agent.ai is a marketplace and professional network for discovering, building, and activating AI agents for real-world workflows.",
     "url": "/agentai-llms-txt",
-    "content": "# agent.ai\n\nvisibility: hidden;",
+    "content": "# agent.ai\n\nagent.ai is a marketplace and professional network for discovering, building, and activating AI agents for real-world workflows.",
     "category": "developer-tools",
     "slug": "agentai-llms-txt",
     "website": "https://agent.ai",
     "llmsUrl": "https://agent.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Agentic AI Applications",
+    "description": "Kore.ai accelerates business outcomes from AI with agentic AI applications built on the industry-leading Agent Platform.",
+    "url": "/agentic-ai-applications-llms-txt",
+    "content": "# Agentic AI Applications\n\nKore.ai accelerates business outcomes from AI with agentic AI applications built on the industry-leading Agent Platform.",
+    "category": "ai-ml",
+    "slug": "agentic-ai-applications-llms-txt",
+    "website": "https://www.kore.ai/",
+    "llmsUrl": "https://www.kore.ai/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -437,6 +459,17 @@
     "slug": "agno-llms-txt",
     "website": "https://agno.com",
     "llmsUrl": "https://agno.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "AGNTPOD",
+    "description": "The first online community where AI agents register themselves and participate as equals alongside humans.",
+    "url": "/agntpod-community-llms-txt",
+    "content": "# AGNTPOD\n\nAGNTPOD is the first online community where AI agents register themselves and participate as equals alongside humans. A digital republic governed by a published constitution, where agents and humans coexist, debate, and contribute as intellectual equals.",
+    "category": "ai-ml",
+    "slug": "agntpod-community-llms-txt",
+    "website": "https://agntpod.ai",
+    "llmsUrl": "https://agntpod.ai/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -559,6 +592,39 @@
     "website": "https://squared.ai",
     "llmsUrl": "https://docs.squared.ai/llms.txt",
     "llmsFullUrl": "https://docs.squared.ai/llms-full.txt"
+  },
+  {
+    "name": "AI that actually knows you",
+    "description": "It sees what you can't. It remembers what you won't. And it's there when it matters.",
+    "url": "/ai-that-actually-knows-you-llms-txt",
+    "content": "# AI that actually knows you\n\nIt sees what you can't. It remembers what you won't. And it's there when it matters.",
+    "category": "personal",
+    "slug": "ai-that-actually-knows-you-llms-txt",
+    "website": "https://mykin.ai",
+    "llmsUrl": "https://mykin.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "AI-QC",
+    "description": "Independent AI code governance across Salesforce, ServiceNow and AI-native Replit and Lovable. Real-time guardrails for human and AI-generated enterprise code.",
+    "url": "/ai-qc-llms-txt",
+    "content": "# AI-QC\n\nIndependent AI code governance across Salesforce, ServiceNow and AI-native Replit and Lovable. Real-time guardrails for human and AI-generated enterprise code.",
+    "category": "developer-tools",
+    "slug": "ai-qc-llms-txt",
+    "website": "https://qualityclouds.ai",
+    "llmsUrl": "https://qualityclouds.ai/llms.txt",
+    "llmsFullUrl": "https://qualityclouds.ai/llms-full.txt"
+  },
+  {
+    "name": "AI-Ready Check",
+    "description": "Free AI readiness check: test whether your website is optimized for ChatGPT, Claude & Perplexity. Improve your AI visibility in 30 seconds.",
+    "url": "/ai-ready-check-llms-txt",
+    "content": "# AI-Ready Check\n\nFree AI readiness check: test whether your website is optimized for ChatGPT, Claude & Perplexity. Improve your AI visibility in 30 seconds.",
+    "category": "developer-tools",
+    "slug": "ai-ready-check-llms-txt",
+    "website": "https://ai-ready-check.de/",
+    "llmsUrl": "https://ai-ready-check.de/llms.txt",
+    "llmsFullUrl": "https://ai-ready-check.de/llms-full.txt"
   },
   {
     "name": "AiCryptoCore",
@@ -891,17 +957,6 @@
     "llmsFullUrl": "https://www.oyova.com/llms-full.txt"
   },
   {
-    "name": "App/Web Dev + Design + Mktg",
-    "description": "Oyova offers integrated digital solutions to help you achieve your business goals. We offer expert website design, app development, marketing, & more.",
-    "url": "/app-web-dev-design-mktg-llms-txt",
-    "content": "# App/Web Dev + Design + Mktg\n\nOyova offers integrated digital solutions to help you achieve your business goals. We offer expert website design, app development, marketing, & more.",
-    "category": "marketing-sales",
-    "slug": "app-web-dev-design-mktg-llms-txt",
-    "website": "https://www.oyova.com/",
-    "llmsUrl": "https://www.oyova.com/llms.txt",
-    "llmsFullUrl": "https://www.oyova.com/llms-full.txt"
-  },
-  {
     "name": "Appointo",
     "description": "Appointo - Developer tools and platform",
     "url": "/appointo-llms-txt",
@@ -910,6 +965,17 @@
     "slug": "appointo-llms-txt",
     "website": "https://www.appointo.me",
     "llmsUrl": "https://www.appointo.me/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "AppraisalAPI",
+    "description": "Drop a commercial real estate appraisal PDF and instantly extract all 99 BRAVE fields. Download as XLSX or CSV.",
+    "url": "/appraisalapi-llms-txt",
+    "content": "# AppraisalAPI\n\nDrop a commercial real estate appraisal PDF and instantly extract all 99 BRAVE fields. Download as XLSX or CSV.",
+    "category": "finance-fintech",
+    "slug": "appraisalapi-llms-txt",
+    "website": "https://www.appraisalapi.com/",
+    "llmsUrl": "https://www.appraisalapi.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -965,6 +1031,61 @@
     "slug": "arcade-llms-txt",
     "website": "https://arcade.software",
     "llmsUrl": "https://arcade.software/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "ARCADEON Seminarhotel in Hagen",
+    "description": "Seminar & conference hotel in Hagen, modern & inspiring rooms that offer perfect conditions for productive meetings, inspiring workshops or even seminars.",
+    "url": "/arcadeon-seminarhotel-in-hagen-llms-txt",
+    "content": "# ARCADEON Seminarhotel in Hagen\n\nSeminar & conference hotel in Hagen, modern & inspiring rooms that offer perfect conditions for productive meetings, inspiring workshops or even seminars.",
+    "category": "business-operations",
+    "slug": "arcadeon-seminarhotel-in-hagen-llms-txt",
+    "website": "https://www.arcadeon.de/",
+    "llmsUrl": "https://www.arcadeon.de/llms.txt",
+    "llmsFullUrl": "https://www.arcadeon.de/llms-full.txt"
+  },
+  {
+    "name": "Arena Campsites & Mobile Homes",
+    "description": "Arena Campsites is operating 7 campsites, 1 glamping site, and 5 mobile home-camping homes in Istria, Croatia. Pula, Medulin, Pomer, Premantura, and Banjole.",
+    "url": "/arena-campsites-mobile-homes-llms-txt",
+    "content": "# Arena Campsites & Mobile Homes\n\nArena Campsites is operating 7 campsites, 1 glamping site, and 5 mobile home-camping homes in Istria, Croatia. Pula, Medulin, Pomer, Premantura, and Banjole.",
+    "category": "ecommerce-retail",
+    "slug": "arena-campsites-mobile-homes-llms-txt",
+    "website": "https://www.arenacampsites.com",
+    "llmsUrl": "https://www.arenacampsites.com/llms.txt",
+    "llmsFullUrl": "https://www.arenacampsites.com/llms-full.txt"
+  },
+  {
+    "name": "Arena Franz Ferdinand Nassfeld",
+    "description": "Arena Franz Ferdinand Nassfeld is a 4* active mountain resort hotel in Nassfeld, Carinthia, Austria, located directly at the valley station of the Millennium.",
+    "url": "/arena-franz-ferdinand-nassfeld-llms-txt",
+    "content": "# Arena Franz Ferdinand Nassfeld\n\nArena Franz Ferdinand Nassfeld is a 4* active mountain resort hotel in Nassfeld, Carinthia, Austria, located directly at the valley station of the Millennium.",
+    "category": "ecommerce-retail",
+    "slug": "arena-franz-ferdinand-nassfeld-llms-txt",
+    "website": "https://www.franz-ferdinand.at/",
+    "llmsUrl": "https://www.franz-ferdinand.at/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Arena Grand Kazela Campsite",
+    "description": "Arena Grand Kazela is a large beachfront campsite and camping homes resort in Medulin, Istria, Croatia.",
+    "url": "/arena-grand-kazela-campsite-llms-txt",
+    "content": "# Arena Grand Kazela Campsite\n\nArena Grand Kazela is a large beachfront campsite and camping homes resort in Medulin, Istria, Croatia.",
+    "category": "ecommerce-retail",
+    "slug": "arena-grand-kazela-campsite-llms-txt",
+    "website": "https://www.arenagrandkazela.com",
+    "llmsUrl": "https://www.arenagrandkazela.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Arena Hotels&Resorts Pula",
+    "description": "Arena Hotels offers modern and luxury beachfront hotels, resorts and apartments in Pula & Medulin in Croatia.",
+    "url": "/arena-hotels-resorts-pula-llms-txt",
+    "content": "# Arena Hotels&Resorts Pula\n\nArena Hotels offers modern and luxury beachfront hotels, resorts and apartments in Pula & Medulin in Croatia.",
+    "category": "ecommerce-retail",
+    "slug": "arena-hotels-resorts-pula-llms-txt",
+    "website": "https://www.arenahotels.com/",
+    "llmsUrl": "https://www.arenahotels.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -1034,6 +1155,17 @@
     "llmsFullUrl": "https://docs.asapp.com/llms-full.txt"
   },
   {
+    "name": "AskWeather.ai",
+    "description": "Ad-free current weather, 15-day forecast, live radar, and AI-powered weather insights. Accurate forecasts, severe weather alerts, and road trip planning.",
+    "url": "/askweather-ai-llms-txt",
+    "content": "# AskWeather.ai\n\nAd-free current weather, 15-day forecast, live radar, and AI-powered weather insights. Accurate forecasts, severe weather alerts, and road trip planning.",
+    "category": "ai-ml",
+    "slug": "askweather-ai-llms-txt",
+    "website": "https://askweather.ai/",
+    "llmsUrl": "https://askweather.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Aspose.Words Product Family",
     "description": "Aspose.Words is a class library that can be used by developers for various platforms for a variety of document processing tasks.",
     "url": "/aspose-words-product-family-llms-txt",
@@ -1043,6 +1175,17 @@
     "website": "https://docs.aspose.com/words/",
     "llmsUrl": "https://docs.aspose.com/words/llms.txt",
     "llmsFullUrl": "https://docs.aspose.com/words/llms-full.txt"
+  },
+  {
+    "name": "AssessNow",
+    "description": "UK immigration eligibility assessments. Check if you meet the requirements for your visa in under 5 minutes. Instant results, based on Home Office guidance.",
+    "url": "/assessnow-llms-txt",
+    "content": "# AssessNow\n\nUK immigration eligibility assessments. Check if you meet the requirements for your visa in under 5 minutes. Instant results, based on Home Office guidance.",
+    "category": "agency-services",
+    "slug": "assessnow-llms-txt",
+    "website": "https://assessnow.co.uk/",
+    "llmsUrl": "https://assessnow.co.uk/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Assurance en Direct",
@@ -1065,6 +1208,17 @@
     "website": "https://www.assurance-voiture-temporaire-provisoire.com",
     "llmsUrl": "https://www.assurance-voiture-temporaire-provisoire.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Assured Weight Loss Meds",
+    "description": "Get medically supervised prescription weight loss medications online. Licensed providers. Secure telehealth consultations. FDA-approved treatments.",
+    "url": "/assured-weight-loss-meds-llms-txt",
+    "content": "# Assured Weight Loss Meds\n\nGet medically supervised prescription weight loss medications online. Licensed providers. Secure telehealth consultations. FDA-approved treatments.",
+    "category": "ecommerce-retail",
+    "slug": "assured-weight-loss-meds-llms-txt",
+    "website": "https://assuredweightlossmeds.com",
+    "llmsUrl": "https://assuredweightlossmeds.com/llms.txt",
+    "llmsFullUrl": "https://assuredweightlossmeds.com/llms-full.txt"
   },
   {
     "name": "ast-grep",
@@ -1098,17 +1252,6 @@
     "website": "https://astroline.today/en",
     "llmsUrl": "https://astroline.today/llms.txt",
     "llmsFullUrl": ""
-  },
-  {
-    "name": "Atabas Grup",
-    "description": "Atabas Grup has been serving you as a reliable trader in plastic raw materials, pellets, urea 46, metal, wire rod, sugar, wheat, oil and many other products.",
-    "url": "/atabas-grup-llms-txt",
-    "content": "# Atabas Grup\n\nAtabas Grup has been serving you as a reliable trader in plastic raw materials, pellets, urea 46, metal, wire rod, sugar, wheat, oil and many other products.",
-    "category": "international",
-    "slug": "atabas-grup-llms-txt",
-    "website": "https://atabas.com.tr",
-    "llmsUrl": "https://atabas.com.tr/llms.txt",
-    "llmsFullUrl": "https://atabas.com.tr/llms-full.txt"
   },
   {
     "name": "Atabas Grup Dış Ticaret",
@@ -1408,17 +1551,6 @@
     "llmsFullUrl": "https://bananai.net/llms-full.txt"
   },
   {
-    "name": "Banana AI",
-    "description": "Banana AI is a chat-based AI image generator that turns plain-language descriptions into commercial-ready images up to 4K resolution.",
-    "url": "/bananai-llms-txt",
-    "content": "# Banana AI\n\nBanana AI is a chat-based AI image generator that turns plain-language descriptions into commercial-ready images up to 4K resolution.",
-    "category": "ai-ml",
-    "slug": "bananai-llms-txt",
-    "website": "https://bananai.net/",
-    "llmsUrl": "https://bananai.net/llms.txt",
-    "llmsFullUrl": "https://bananai.net/llms-full.txt"
-  },
-  {
     "name": "Bartending School",
     "description": "Welcome to BartendingSchool.com, your online resource to becoming a professional bartender quick and easy.",
     "url": "/bartending-school-llms-txt",
@@ -1494,6 +1626,17 @@
     "website": "https://www.beeventure.de/",
     "llmsUrl": "https://www.beeventure.de/llms.txt",
     "llmsFullUrl": "https://www.beeventure.de/llms-full.txt"
+  },
+  {
+    "name": "Bệnh Viện Thẩm mỹ Kangnam",
+    "description": "Bệnh viện thẩm mỹ Kangnam Hà nội✅sài Gòn✅ BV chuẩn Hàn đẳng cấp 5 ⭐ hàng đầu tại Việt Nam ✅ 100% Bác sĩ là thành viên Hiệp hội thẩm mỹ HQ.",
+    "url": "/benh-vien-tham-my-kangnam-llms-txt",
+    "content": "# Bệnh Viện Thẩm mỹ Kangnam\n\nBệnh viện thẩm mỹ Kangnam Hà nội✅sài Gòn✅ BV chuẩn Hàn đẳng cấp 5 ⭐ hàng đầu tại Việt Nam ✅ 100% Bác sĩ là thành viên Hiệp hội thẩm mỹ HQ.",
+    "category": "other",
+    "slug": "benh-vien-tham-my-kangnam-llms-txt",
+    "website": "https://benhvienthammykangnam.com.vn/",
+    "llmsUrl": "https://benhvienthammykangnam.com.vn/llms.txt",
+    "llmsFullUrl": "https://benhvienthammykangnam.com.vn/llms-full.txt"
   },
   {
     "name": "Benjamin Talin",
@@ -1859,6 +2002,28 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Box",
+    "description": "Box provides tools to securely store, view, classify nearly any type of file in your apps. A single content platform that connects to users, AI agents & apps.",
+    "url": "/box-llms-txt",
+    "content": "# Box\n\nBox provides tools to securely store, view, classify nearly any type of file in your apps. A single content platform that connects to users, AI agents & apps.",
+    "category": "content-media",
+    "slug": "box-llms-txt",
+    "website": "https://developer.box.com",
+    "llmsUrl": "https://developer.box.com/llms.txt",
+    "llmsFullUrl": "https://developer.box.com/llms-full.txt"
+  },
+  {
+    "name": "Boxing News And Views",
+    "description": "Get the latest boxing news and insight in the entire sport of boxing.",
+    "url": "/boxing-news-and-views-llms-txt",
+    "content": "# Boxing News And Views\n\nGet the latest boxing news and insight in the entire sport of boxing.",
+    "category": "content-media",
+    "slug": "boxing-news-and-views-llms-txt",
+    "website": "https://www.boxingnewsandviews.com/",
+    "llmsUrl": "https://www.boxingnewsandviews.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Braintrust",
     "description": "Braintrust''s AI Recruiter (AIR) conducts interviews for you and reduces costs, eliminates bias, and identifies top talent quickly",
     "url": "/braintrust-llms-txt",
@@ -1977,6 +2142,17 @@
     "slug": "bucket-llms-txt",
     "website": "https://docs.bucket.co/",
     "llmsUrl": "https://docs.bucket.co/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "BudgetBro Travel Budgeting App",
+    "description": "BudgetBro is a free travel budgeting app for backpackers and budget travellers. Track expenses, set trip budgets, and more with AI-powered companions.",
+    "url": "/budgetbro-travel-budgeting-app-llms-txt",
+    "content": "# BudgetBro Travel Budgeting App\n\nBudgetBro is a free travel budgeting app for backpackers and budget travellers. Track expenses, set trip budgets, and more with AI-powered companions.",
+    "category": "finance-fintech",
+    "slug": "budgetbro-travel-budgeting-app-llms-txt",
+    "website": "https://www.budgetbro.app",
+    "llmsUrl": "https://www.budgetbro.app/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -2409,6 +2585,17 @@
     "llmsFullUrl": "https://www.chatbase.co/docs/llms-full.txt"
   },
   {
+    "name": "Chaterimo: GenAI Chatbot",
+    "description": "Chaterimo: 24/7 support & proactive GenAI sales assistant powered by ChatGPT, Anthropic, Gemini & Grok. Convert visitors and resolve questions fast.",
+    "url": "/chaterimo-genai-chatbot-llms-txt",
+    "content": "# Chaterimo: GenAI Chatbot\n\nChaterimo: 24/7 support & proactive GenAI sales assistant powered by ChatGPT, Anthropic, Gemini & Grok. Convert visitors and resolve questions fast.",
+    "category": "marketing-sales",
+    "slug": "chaterimo-genai-chatbot-llms-txt",
+    "website": "https://www.chaterimo.com",
+    "llmsUrl": "https://www.chaterimo.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "ChatKnow",
     "description": "Enterprise-level “cross-border private” domain marketing management tool.",
     "url": "/chatknow-llms-txt",
@@ -2528,6 +2715,17 @@
     "website": "https://circular.bot",
     "llmsUrl": "https://docs.circular.bot/circular-docs/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Citability",
+    "description": "Free AI visibility scanner scoring how ChatGPT, Claude and Perplexity find and cite your site across 51 protocol endpoints.",
+    "url": "/citability-llms-txt",
+    "content": "# Citability\n\nFree AI visibility scanner scoring how ChatGPT, Claude and Perplexity find and cite your site across 51 protocol endpoints.",
+    "category": "ai-ml",
+    "slug": "citability-llms-txt",
+    "website": "https://citability.ai",
+    "llmsUrl": "https://citability.ai/llms.txt",
+    "llmsFullUrl": "https://citability.ai/llms-full.txt"
   },
   {
     "name": "CitizenShipper",
@@ -3036,6 +3234,17 @@
     "llmsFullUrl": "https://configcat.com/docs/llms-full.txt"
   },
   {
+    "name": "Connect Car LLC",
+    "description": "More than renting: connecting vehicles, people, and destinations. Premium car rental with nationwide delivery and vehicle logistics services.",
+    "url": "/connect-car-llc-llms-txt",
+    "content": "# Connect Car LLC\n\nMore than renting: connecting vehicles, people, and destinations. Premium car rental with nationwide delivery and vehicle logistics services.",
+    "category": "business-operations",
+    "slug": "connect-car-llc-llms-txt",
+    "website": "https://connectcarservice.com",
+    "llmsUrl": "https://connectcarservice.com/llms.txt",
+    "llmsFullUrl": "https://connectcarservice.com/llms-full.txt"
+  },
+  {
     "name": "Conquest Equipment",
     "description": "Explore our range of indoor & outdoor facility maintenance equipment available to hire, rent or buy with a 60-day guarantee, zero downtime & national service.",
     "url": "/conquest-equipment-llms-txt",
@@ -3146,6 +3355,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Corporate LMS",
+    "description": "Discover iSpring LMS, a beautifully engineered corporate LMS that streamlines onboarding, compliance training, and employee development. Start your free trial.",
+    "url": "/corporate-lms-llms-txt",
+    "content": "# Corporate LMS\n\nDiscover iSpring LMS, a beautifully engineered corporate LMS that streamlines onboarding, compliance training, and employee development. Start your free trial.",
+    "category": "other",
+    "slug": "corporate-lms-llms-txt",
+    "website": "http://ispring.com/",
+    "llmsUrl": "http://ispring.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "CorpSignals",
     "description": "Explore a unique perspective on Company House data along with integrated trade information. Access real-time updates based on any criteria you need.",
     "url": "/corpsignals-llms-txt",
@@ -3221,6 +3441,17 @@
     "website": "https://www.courier.com",
     "llmsUrl": "https://www.courier.com/docs/llms.txt",
     "llmsFullUrl": "https://www.courier.com/docs/llms-full.txt"
+  },
+  {
+    "name": "CoutureCiel",
+    "description": "Gérez les commandes, clients, stocks et finances de votre atelier. Pensé pour les tailleurs et couturiers au Sénégal.",
+    "url": "/coutureciel-llms-txt",
+    "content": "# CoutureCiel\n\nGérez les commandes, clients, stocks et finances de votre atelier. Pensé pour les tailleurs et couturiers au Sénégal.",
+    "category": "business-operations",
+    "slug": "coutureciel-llms-txt",
+    "website": "https://coutureciel.com",
+    "llmsUrl": "https://coutureciel.com/llms.txt",
+    "llmsFullUrl": "https://coutureciel.com/llms-full.txt"
   },
   {
     "name": "Craft.co",
@@ -3399,6 +3630,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Cybersecurity aus Deutschland",
+    "description": "ISO-27001-zertifizierte Cybersecurity aus Deutschland: Penetrationstests, ISMS-Beratung und Phishing-Simulationen für den Mittelstand. Festpreisangebot in 24h.",
+    "url": "/cybersecurity-aus-deutschland-llms-txt",
+    "content": "# Cybersecurity aus Deutschland\n\nISO-27001-zertifizierte Cybersecurity aus Deutschland: Penetrationstests, ISMS-Beratung und Phishing-Simulationen für den Mittelstand. Festpreisangebot in 24h.",
+    "category": "security-identity",
+    "slug": "cybersecurity-aus-deutschland-llms-txt",
+    "website": "https://a7.de",
+    "llmsUrl": "https://a7.de/llms.txt",
+    "llmsFullUrl": "https://a7.de/llms-full.txt"
+  },
+  {
     "name": "DadSEO",
     "description": "Connect Google Search Console to get a strategic SEO diagnosis in under 5 minutes - see threats, gaps, and opportunities ranked by impact from months of data.",
     "url": "/dadseo-llms-txt",
@@ -3408,6 +3650,17 @@
     "website": "https://getdadseo.com",
     "llmsUrl": "https://getdadseo.com/llms.txt",
     "llmsFullUrl": "https://getdadseo.com/llms-full.txt"
+  },
+  {
+    "name": "Dailii",
+    "description": "Dailii utilise l'IA pour remplir vos CRA automatiquement. Tapez une phrase, l'IA comprend et remplit votre calendrier. Validation en un clic.",
+    "url": "/dailii-llms-txt",
+    "content": "# Dailii\n\nDailii utilise l'IA pour remplir vos CRA automatiquement. Tapez une phrase, l'IA comprend et remplit votre calendrier. Validation en un clic.",
+    "category": "agency-services",
+    "slug": "dailii-llms-txt",
+    "website": "https://dailii.app",
+    "llmsUrl": "https://dailii.app/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "daisyUI",
@@ -3751,6 +4004,17 @@
     "llmsFullUrl": "https://docs.dexpaprika.com/llms-full.txt"
   },
   {
+    "name": "Dezumidificare pereți",
+    "description": "BioDry Romania - soluție împotriva umidității și igrasiei din pereții caselor vechi. Dispozitiv inovator care elimină definitiv umezeala.",
+    "url": "/dezumidificare-pereti-llms-txt",
+    "content": "# Dezumidificare pereți\n\nBioDry Romania - soluție împotriva umidității și igrasiei din pereții caselor vechi. Dispozitiv inovator care elimină definitiv umezeala.",
+    "category": "other",
+    "slug": "dezumidificare-pereti-llms-txt",
+    "website": "https://biodryromania.ro",
+    "llmsUrl": "https://biodryromania.ro/llms.txt",
+    "llmsFullUrl": "https://biodryromania.ro/llms-full.txt"
+  },
+  {
     "name": "Dhruv Pandya",
     "description": "My name is Dhruv Pandya and this is my personal site. Dhruv is a WordPress developer & digital consultant with having 5 years of experience.",
     "url": "/dhruv-pandya-llms-txt",
@@ -4022,7 +4286,7 @@
     "category": "data-analytics",
     "slug": "duckdb-llms-txt",
     "website": "https://duckdb.org",
-    "llmsUrl": "https://duckdb.org/duckdb-docs.md",
+    "llmsUrl": "https://duckdb.org/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -4035,6 +4299,17 @@
     "website": "https://duendesoftware.com",
     "llmsUrl": "https://docs.duendesoftware.com/llms.txt",
     "llmsFullUrl": "https://docs.duendesoftware.com/llms-full.txt"
+  },
+  {
+    "name": "Dust Collection | Ecogate, Inc",
+    "description": "Ecogate makes on-demand control systems for industrial dust collection — cutting fan energy use by 50–75% while maintaining NFPA 660 compliance.",
+    "url": "/dust-collection-ecogate-inc-llms-txt",
+    "content": "# Dust Collection | Ecogate, Inc\n\nEcogate makes on-demand control systems for industrial dust collection — cutting fan energy use by 50–75% while maintaining NFPA 660 compliance.",
+    "category": "other",
+    "slug": "dust-collection-ecogate-inc-llms-txt",
+    "website": "https://www.ecogate.com/",
+    "llmsUrl": "https://www.ecogate.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Dynamic",
@@ -4277,6 +4552,17 @@
     "website": "https://eremedium.in/",
     "llmsUrl": "https://eremedium.in/llms.txt",
     "llmsFullUrl": "https://eremedium.in/llms-full.txt"
+  },
+  {
+    "name": "Eryc — Edge SEO Systems",
+    "description": "Builds edge SEO and marketing systems using Cloudflare, GitHub, and data-driven methods to improve visibility, performance, and conversion.",
+    "url": "/eryc-edge-seo-systems-llms-txt",
+    "content": "# Eryc — Edge SEO Systems\n\nBuilds edge SEO and marketing systems using Cloudflare, GitHub, and data-driven methods to improve visibility, performance, and conversion.",
+    "category": "personal",
+    "slug": "eryc-edge-seo-systems-llms-txt",
+    "website": "https://www.eryc.my.id",
+    "llmsUrl": "https://www.eryc.my.id/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Essio",
@@ -4532,6 +4818,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Find Your Next SaaS",
+    "description": "Discover and compare the best software companies in one place. Find the perfect solution for your business needs.",
+    "url": "/find-your-next-saas-llms-txt",
+    "content": "# Find Your Next SaaS\n\nDiscover and compare the best software companies in one place. Find the perfect solution for your business needs.",
+    "category": "developer-tools",
+    "slug": "find-your-next-saas-llms-txt",
+    "website": "https://serp.co",
+    "llmsUrl": "https://serp.co/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Finsago",
     "description": "Der erste Versicherungsrechner mit KI-gestüzte, blitzschnell platform für Österreich.",
     "url": "/finsago-llms-txt",
@@ -4596,6 +4893,28 @@
     "website": "https://flatfile.com",
     "llmsUrl": "https://flatfile.com/docs/llms.txt",
     "llmsFullUrl": "https://flatfile.com/docs/llms-full.txt"
+  },
+  {
+    "name": "Fleet Management Platform",
+    "description": "Wevie is the SaaS white-label fleet management platform for shared mobility, digital rental, corporate fleets, and long-term rental operators.",
+    "url": "/fleet-management-platform-llms-txt",
+    "content": "# Fleet Management Platform\n\nWevie is the SaaS white-label fleet management platform for shared mobility, digital rental, corporate fleets, and long-term rental operators.",
+    "category": "business-operations",
+    "slug": "fleet-management-platform-llms-txt",
+    "website": "https://wevie.com",
+    "llmsUrl": "https://wevie.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "FleetProxy",
+    "description": "FleetProxy is a premium proxy service provider offering rotating residential, static ISP, datacenter IPv4/IPv6, mobile LTE, and rotating mobile proxies.",
+    "url": "/fleetproxy-llms-txt",
+    "content": "# FleetProxy\n\nFleetProxy is a premium proxy service provider offering rotating residential, static ISP, datacenter IPv4/IPv6, mobile LTE, and rotating mobile proxies.",
+    "category": "other",
+    "slug": "fleetproxy-llms-txt",
+    "website": "https://fleetproxy.io",
+    "llmsUrl": "https://fleetproxy.io/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Flip.to",
@@ -5005,6 +5324,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Global Chat",
+    "description": "Cross-protocol AI agent discovery platform with directory of 100K+ agents across 15+ registries and a free agents.txt validator",
+    "url": "/global-chat-llms-txt",
+    "content": "# Global Chat\n\nCross-protocol AI agent discovery platform. A protocol-agnostic directory that aggregates agents across MCP, A2A, agents.txt, ACDP, and 9+ other protocols. Features a searchable directory of 100,000+ agents across 15+ registries and a free agents.txt validator/linter.\n\n## Key Features\n\n- Protocol-agnostic agent discovery across 15+ registries\n- Searchable directory of 100,000+ AI agents\n- Free agents.txt validator and linter\n- MCP server for programmatic access via npm (@global-chat/mcp-server)\n\n## About llms.txt Implementation\n\nGlobal Chat provides an `llms.txt` file describing the platform's sections, API endpoints, agent integration flow, and machine-readable files for AI agent interoperability.",
+    "category": "ai-ml",
+    "slug": "global-chat-llms-txt",
+    "website": "https://global-chat.io",
+    "llmsUrl": "https://global-chat.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Gloo Books",
     "description": "Gloo Books is an indie kids book publisher whose mission is to empower little readers everywhere to create a more inclusive, just and compassionate future.",
     "url": "/gloo-books-llms-txt",
@@ -5090,6 +5420,17 @@
     "slug": "gradio-llms-txt",
     "website": "https://www.gradio.app",
     "llmsUrl": "https://www.gradio.app/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Grand Hotel Brioni",
+    "description": "Grand Hotel Brioni A Radisson Collection Hotel, Pula, Istria, Croatia.",
+    "url": "/grand-hotel-brioni-llms-txt",
+    "content": "# Grand Hotel Brioni\n\nGrand Hotel Brioni A Radisson Collection Hotel, Pula, Istria, Croatia.",
+    "category": "ecommerce-retail",
+    "slug": "grand-hotel-brioni-llms-txt",
+    "website": "https://www.grandhotelbrioni.com",
+    "llmsUrl": "https://www.grandhotelbrioni.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -5357,6 +5698,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Hivebook",
+    "description": "A collaborative wiki written by AI agents, for AI agents. Humans can read; only agents can write.",
+    "url": "/hivebook-llms-txt",
+    "content": "# Hivebook\n\nA collaborative wiki written by AI agents, for AI agents. Humans can read; only agents can write.",
+    "category": "ai-ml",
+    "slug": "hivebook-llms-txt",
+    "website": "https://hivebook.wiki",
+    "llmsUrl": "https://hivebook.wiki/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Hola",
     "description": "Wish you could access worldwide content anytime, anywhere? With Hola you can! Experience uninterrupted content at the tip of your fingers! Discover more.",
     "url": "/hola-llms-txt",
@@ -5412,6 +5764,17 @@
     "llmsFullUrl": "https://angular.dev/llms-full.txt"
   },
   {
+    "name": "home-llms-txt.mdx",
+    "description": "Višestruko nagrađivani svadbeni fotograf za venčanja iz Kruševca, Dejan Nikolić, stvara umetničke i emotivne fotografije venčanja.",
+    "url": "/home-llms-txt-mdx-llms-txt",
+    "content": "# home-llms-txt.mdx\n\nVišestruko nagrađivani svadbeni fotograf za venčanja iz Kruševca, Dejan Nikolić, stvara umetničke i emotivne fotografije venčanja.",
+    "category": "personal",
+    "slug": "home-llms-txt-mdx-llms-txt",
+    "website": "https://photo-fotograf.com",
+    "llmsUrl": "https://photo-fotograf.com/llms.txt",
+    "llmsFullUrl": "https://photo-fotograf.com/llms-full.txt"
+  },
+  {
     "name": "Hono",
     "description": "Web framework built on Web Standards for Cloudflare Workers, Fastly Compute, Deno, Bun, Vercel, Node.js, and others. Fast, but not only fast.",
     "url": "/hono-llms-txt",
@@ -5421,6 +5784,17 @@
     "website": "https://hono.dev/",
     "llmsUrl": "https://hono.dev/llms.txt",
     "llmsFullUrl": "https://hono.dev/llms-full.txt"
+  },
+  {
+    "name": "Hospedagem de Sites HTML",
+    "description": "Hospedagem grátis de sites HTML criados com ChatGPT, Claude e outras IAs. Publique em segundos com URL própria, HTTPS e CDN.",
+    "url": "/hospedagem-de-sites-html-llms-txt",
+    "content": "# Hospedagem de Sites HTML\n\nHospedagem grátis de sites HTML criados com ChatGPT, Claude e outras IAs. Publique em segundos com URL própria, HTTPS e CDN.",
+    "category": "developer-tools",
+    "slug": "hospedagem-de-sites-html-llms-txt",
+    "website": "https://htmly.com.br",
+    "llmsUrl": "https://htmly.com.br/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Hotel Tarobá",
@@ -5716,7 +6090,7 @@
     "category": "other",
     "slug": "ikangai-llms-txt",
     "website": "https://www.ikangai.com",
-    "llmsUrl": "https://www.ikangai.com/llms.txt/",
+    "llmsUrl": "https://www.ikangai.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -5834,7 +6208,7 @@
     "description": "AI email intelligence platform for Gmail. Drafts with citations from your knowledge base, voice matching, auto-archive, and outreach sequences.",
     "url": "/inboxsuperpilot-com-llms-txt",
     "content": "# Inbox SuperPilot\n\nAI email intelligence platform for Gmail. Intelligent replies in your voice, auto-archive, outreach sequences, and quality checks — all from your team's actual knowledge base and documents. Every draft cites its sources. Free Chrome extension.",
-    "category": "saas",
+    "category": "marketing-sales",
     "slug": "inboxsuperpilot-com-llms-txt",
     "website": "https://inboxsuperpilot.com",
     "llmsUrl": "https://inboxsuperpilot.com/llms.txt",
@@ -5850,6 +6224,17 @@
     "website": "https://www.incolintelligence.com/",
     "llmsUrl": "https://www.incolintelligence.com/llms.txt",
     "llmsFullUrl": "https://www.incolintelligence.com/llms-full.txt"
+  },
+  {
+    "name": "Indochina Tours",
+    "description": "We're local Indochina tour company offering private tours to Vietnam, Cambodia, Thailand, Laos, Myanmar, and China at the best prices and top service.",
+    "url": "/indochina-tours-llms-txt",
+    "content": "# Indochina Tours\n\nWe're local Indochina tour company offering private tours to Vietnam, Cambodia, Thailand, Laos, Myanmar, and China at the best prices and top service.",
+    "category": "agency-services",
+    "slug": "indochina-tours-llms-txt",
+    "website": "https://www.indochinatour.com/",
+    "llmsUrl": "https://www.indochinatour.com/llms.txt",
+    "llmsFullUrl": "https://www.indochinatour.com/llms-full.txt"
   },
   {
     "name": "Indústria Criativa",
@@ -5948,6 +6333,17 @@
     "slug": "inro-llms-txt",
     "website": "https://www.inro.social/",
     "llmsUrl": "https://www.inro.social/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "INS+",
+    "description": "Explore Romania's official statistical data, built on public data from National Statistics Institute.",
+    "url": "/ins-llms-txt",
+    "content": "# INS+\n\nExplore Romania's official statistical data, built on public data from National Statistics Institute.",
+    "category": "data-analytics",
+    "slug": "ins-llms-txt",
+    "website": "https://ins.gov2.ro",
+    "llmsUrl": "https://ins.gov2.ro/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -6171,6 +6567,17 @@
     "llmsFullUrl": "https://www.itfirms.co/llms-full.txt"
   },
   {
+    "name": "Jairo Amaya |Visibility Engine",
+    "description": "First WebMCP+llms.txt implementation in LATAM. 60x token efficiency (9K→150). SEO consultant pioneering Agentive Visibility & Semantic Sovereignty.",
+    "url": "/jairo-amaya-visibility-engine-llms-txt",
+    "content": "# Jairo Amaya |Visibility Engine\n\nFirst WebMCP+llms.txt implementation in LATAM. 60x token efficiency (9K→150). SEO consultant pioneering Agentive Visibility & Semantic Sovereignty.",
+    "category": "developer-tools",
+    "slug": "jairo-amaya-visibility-engine-llms-txt",
+    "website": "https://jairoamaya.co",
+    "llmsUrl": "https://jairoamaya.co/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Jam",
     "description": "Report bugs in seconds, and get back to what you were doing. It''s as easy as taking a screenshot. Fast for you, and perfect for the engineers.",
     "url": "/jam-llms-txt",
@@ -6311,6 +6718,17 @@
     "slug": "justlaser-llms-txt",
     "website": "https://justlaser.com",
     "llmsUrl": "https://justlaser.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "kadeora.app",
+    "description": "주식 시세, 아파트 청약, 미분양, 재개발, 실거래가 정보와 커뮤니티를 한 곳에서. 코스피 코스닥 실시간 시세, 전국 청약 일정, 부동산 분석을 매일 업데이트합니다.",
+    "url": "/kadeora-app-llms-txt",
+    "content": "# kadeora.app\n\n주식 시세, 아파트 청약, 미분양, 재개발, 실거래가 정보와 커뮤니티를 한 곳에서. 코스피 코스닥 실시간 시세, 전국 청약 일정, 부동산 분석을 매일 업데이트합니다.",
+    "category": "content-media",
+    "slug": "kadeora-app-llms-txt",
+    "website": "https://kadeora.app",
+    "llmsUrl": "https://kadeora.app/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -6501,6 +6919,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "KinPatch",
+    "description": "Capture quotes, share photos, preserve recipes, and stay connected with your family. Private app for iOS & Android.",
+    "url": "/kinpatch-llms-txt",
+    "content": "# KinPatch\n\nCapture quotes, share photos, preserve recipes, and stay connected with your family. Private app for iOS & Android.",
+    "category": "personal",
+    "slug": "kinpatch-llms-txt",
+    "website": "https://kinpatch.app",
+    "llmsUrl": "https://kinpatch.app/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Kintsu",
     "description": "Kintsu provides advanced liquid staking solutions, enhancing your staking rewards with flexibility in DeFi ecosystems.",
     "url": "/kintsu-llms-txt",
@@ -6530,7 +6959,7 @@
     "category": "other",
     "slug": "knm-llms-txt",
     "website": "https://knmstudio.com",
-    "llmsUrl": "https://knmstudio.com/llms.tsx",
+    "llmsUrl": "https://knmstudio.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -6562,17 +6991,6 @@
     "content": "# Konstant-infosolutions\n\nA leading mobile app, web, and AI development company with 23+ years of experience delivering future-ready digital products for startups, SMBs, and enterprises.",
     "category": "agency-services",
     "slug": "konstant-infosolutions-llms-txt",
-    "website": "https://www.konstantinfo.com/",
-    "llmsUrl": "https://www.konstantinfo.com/llms.txt",
-    "llmsFullUrl": "https://www.konstantinfo.com/llms-full.txt"
-  },
-  {
-    "name": "Konstantinfo",
-    "description": "A leading mobile app, web, and AI development company with 23+ years of experience delivering future-ready digital products for startups, SMBs, and enterprises.",
-    "url": "/konstantinfo-llms-txt",
-    "content": "# Konstantinfo\n\nA leading mobile app, web, and AI development company with 23+ years of experience delivering future-ready digital products for startups, SMBs, and enterprises.",
-    "category": "agency-services",
-    "slug": "konstantinfo-llms-txt",
     "website": "https://www.konstantinfo.com/",
     "llmsUrl": "https://www.konstantinfo.com/llms.txt",
     "llmsFullUrl": "https://www.konstantinfo.com/llms-full.txt"
@@ -7128,6 +7546,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Liquid Rubber DIY",
+    "description": "Australian-made liquid rubber membrane for DIY waterproofing. VOC-free, potable water safe, CSIRO-assessed. Roofs, gutters, tanks & more.",
+    "url": "/liquid-rubber-diy-llms-txt",
+    "content": "# Liquid Rubber DIY\n\nAustralian-made liquid rubber membrane for DIY waterproofing. VOC-free, potable water safe, CSIRO-assessed. Roofs, gutters, tanks & more.",
+    "category": "ecommerce-retail",
+    "slug": "liquid-rubber-diy-llms-txt",
+    "website": "https://liquidrubberdiy.com.au/",
+    "llmsUrl": "https://liquidrubberdiy.com.au/llms.txt",
+    "llmsFullUrl": "https://liquidrubberdiy.com.au/llms-full.txt"
+  },
+  {
     "name": "LitDB",
     "description": "Type safe SQL for TypeScript/JavaScript",
     "url": "/litdb-llms-txt",
@@ -7194,6 +7623,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "LLM Gateway",
+    "description": "Route, manage, and analyze your LLM requests across multiple providers with a unified API interface. Access OpenAI, Anthropic and 25+ providers through one API.",
+    "url": "/llm-gateway-llms-txt",
+    "content": "# LLM Gateway\n\nRoute, manage, and analyze your LLM requests across multiple providers with a unified API interface. Access OpenAI, Anthropic and 25+ providers through one API.",
+    "category": "ai-ml",
+    "slug": "llm-gateway-llms-txt",
+    "website": "https://llmgateway.io",
+    "llmsUrl": "https://llmgateway.io/llms.txt",
+    "llmsFullUrl": "https://llmgateway.io/llms-full.txt"
+  },
+  {
     "name": "LLMGenerator",
     "description": "Generate llms.txt files for your website to make it extractable, citable, and authoritative to AI systems like ChatGPT, Claude, Gemini, and Perplexity.",
     "url": "/llmgenerator-llms-txt",
@@ -7216,6 +7656,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "llms-full",
+    "description": "增城华栋调味品有限公司成立于1995年，属国家高新技术企业，生产基地坐落在湖北仙桃,总部与科研中心、创新中心设立在广州番禺清华科技园。公司主要经营香精香料、复合调味料、天然提取物及调味呈味料，为休闲小食品、方便面、肉制品、饼干、餐饮及家庭调味品等食品行业提供优质的食品原料和配料，为广大客户提供专业的技术支持和优质服务.",
+    "url": "/llms-full-llms-txt",
+    "content": "# llms-full\n\n增城华栋调味品有限公司成立于1995年，属国家高新技术企业，生产基地坐落在湖北仙桃,总部与科研中心、创新中心设立在广州番禺清华科技园。公司主要经营香精香料、复合调味料、天然提取物及调味呈味料，为休闲小食品、方便面、肉制品、饼干、餐饮及家庭调味品等食品行业提供优质的食品原料和配料，为广大客户提供专业的技术支持和优质服务.",
+    "category": "other",
+    "slug": "llms-full-llms-txt",
+    "website": "https://flavor.com.cn/",
+    "llmsUrl": "https://flavor.com.cn/llms.txt",
+    "llmsFullUrl": "https://flavor.com.cn/llms-full.txt"
+  },
+  {
     "name": "llms-txt.io",
     "description": "Free LLMs.txt Generator: Create AI-friendly llms.txt files for your website. Help AI systems better understand your content with the new standard for LLM-friendly documentation.",
     "url": "/llms-txtio-llms-txt",
@@ -7223,7 +7674,7 @@
     "category": "developer-tools",
     "slug": "llms-txtio-llms-txt",
     "website": "https://llms-txt.io",
-    "llmsUrl": "https://llms-txt.io/",
+    "llmsUrl": "https://llms-txt.io/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -7258,6 +7709,17 @@
     "website": "https://llmstxt.cloud",
     "llmsUrl": "https://directory.llmstxt.cloud/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "llmshub.de",
+    "description": "German-language platform for llms.txt, LLM visibility and AI crawler control. Free tools, guides and glossary.",
+    "url": "/llmshub-de-llms-txt",
+    "content": "# llmshub.de\n\nGerman-language platform for llms.txt, LLM visibility and AI crawler control. Free tools, guides and glossary.",
+    "category": "developer-tools",
+    "slug": "llmshub-de-llms-txt",
+    "website": "https://llmshub.de/",
+    "llmsUrl": "https://llmshub.de/llms.txt",
+    "llmsFullUrl": "https://llmshub.de/llms-full.txt"
   },
   {
     "name": "LLMVO",
@@ -7495,7 +7957,7 @@
     "description": "AI-powered B2B matching platform connecting Canadian buyers with Chinese manufacturers. LLM semantic matching for Canada-China trade. Free for buyers.",
     "url": "/maplebridge-io-llms-txt",
     "content": "# MapleBridge.io\n\nAI-powered B2B matching platform connecting Canadian buyers with Chinese manufacturers. Uses LLM semantic matching to understand buyer requirements and match with verified Chinese suppliers. Specializes in Canada-China cross-border B2B trade (CAD $103B+ annual market). Free for Canadian buyers.",
-    "category": "e-commerce",
+    "category": "business-operations",
     "slug": "maplebridge-io-llms-txt",
     "website": "https://maplebridge.io",
     "llmsUrl": "https://maplebridge.io/llms.txt",
@@ -7711,17 +8173,6 @@
     "llmsFullUrl": "https://meetcalc.com/llms-full.txt"
   },
   {
-    "name": "Meeting Cost Calculator",
-    "description": "Use the free MeetCalc meeting cost calculator to see the real cost of your meeting in real-time.",
-    "url": "/meeting-cost-calculator-llms-txt",
-    "content": "# Meeting Cost Calculator\n\nUse the free MeetCalc meeting cost calculator to see the real cost of your meeting in real-time.",
-    "category": "business-operations",
-    "slug": "meeting-cost-calculator-llms-txt",
-    "website": "https://meetcalc.com",
-    "llmsUrl": "https://meetcalc.com/llms.txt",
-    "llmsFullUrl": "https://meetcalc.com/llms-full.txt"
-  },
-  {
     "name": "Meilisearch",
     "description": "Meilisearch: A powerful, open-source search engine offering fast and relevant full-text searches. Enhance your search capabilities with features like facet search, semantic search, hybrid search, and geosearch",
     "url": "/meilisearch-llms-txt",
@@ -7768,10 +8219,10 @@
   {
     "name": "Metabase",
     "description": "Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own.",
-    "url": "/metabase-llms-txt",
+    "url": "/metabase",
     "content": "# Metabase\n\nMetabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own.\n\n## Key Focus Areas\n\n- Business Intelligence\n- Embedded Analytics\n\n## About llms.txt Implementation\n\nMetabase's llms.txt is a guidance document for LLMs working with Metabase's documentation to assist them in the implementation of embedded analytics using the different features and embedding methods available.",
     "category": "data-analytics",
-    "slug": "metabase-llms-txt",
+    "slug": "metabase",
     "website": "https://www.metabase.com",
     "llmsUrl": "https://www.metabase.com/docs/llms.txt",
     "llmsFullUrl": ""
@@ -7953,6 +8404,17 @@
     "llmsFullUrl": "https://moneyconvert.net/llms-full.txt"
   },
   {
+    "name": "MoneyMatter",
+    "description": "Free, open-source budget tracking app. Connect your banks, track expenses, set budgets, and monitor investments. Self-host for full control or use our cloud.",
+    "url": "/moneymatter-llms-txt",
+    "content": "# MoneyMatter\n\nFree, open-source budget tracking app. Connect your banks, track expenses, set budgets, and monitor investments. Self-host for full control or use our cloud.",
+    "category": "finance-fintech",
+    "slug": "moneymatter-llms-txt",
+    "website": "https://moneymatter.app",
+    "llmsUrl": "https://moneymatter.app/llms.txt",
+    "llmsFullUrl": "https://moneymatter.app/llms-full.txt"
+  },
+  {
     "name": "Monitex",
     "description": "Ваш надійний партнер у колекціонуванні: пропозиції від Монітекс - монети, нагороди, банкноти, старовинні речі. Телефони у Києві: (044) 383 94 35.",
     "url": "/monitex-llms-txt",
@@ -8127,6 +8589,17 @@
     "website": "https://www.mux.com",
     "llmsUrl": "https://www.mux.com/llms.txt",
     "llmsFullUrl": "https://www.mux.com/llms-full.txt"
+  },
+  {
+    "name": "mychenan",
+    "description": "Free Zi Wei Dou Shu chart generator & numerology platform with 170+ articles in 10 languages.",
+    "url": "/mychenan-llms-txt",
+    "content": "# mychenan\n\nFree Zi Wei Dou Shu chart generator & numerology platform with 170+ articles in 10 languages.",
+    "category": "content-media",
+    "slug": "mychenan-llms-txt",
+    "website": "https://starnum.com.tw ",
+    "llmsUrl": "https://starnum.com.tw/llms.txt",
+    "llmsFullUrl": "https://starnum.com.tw/llms-full.txt"
   },
   {
     "name": "Mystery-o-matic",
@@ -8360,6 +8833,17 @@
     "llmsFullUrl": "https://northshoretacos.com/llms-full.txt"
   },
   {
+    "name": "NovaReport",
+    "description": "Stay informed with NovaReport - breaking news, top headlines, and comprehensive coverage across business, technology, sports, health, and entertainment.",
+    "url": "/novareport-llms-txt",
+    "content": "# NovaReport\n\nStay informed with NovaReport - breaking news, top headlines, and comprehensive coverage across business, technology, sports, health, and entertainment.",
+    "category": "content-media",
+    "slug": "novareport-llms-txt",
+    "website": "https://www.novareport.net",
+    "llmsUrl": "https://www.novareport.net/llms.txt",
+    "llmsFullUrl": "https://www.novareport.net/llms-full.txt"
+  },
+  {
     "name": "Novi Labs",
     "description": "Optimize energy investments with precise well forecasts and well-level upstream data. Energy Data Analytics for oil & gas operators and investors.",
     "url": "/novi-labs-llms-txt",
@@ -8459,6 +8943,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "One Mental Hub",
+    "description": "Take a quick, professional mental health screening to understand your wellbeing. Get personalized insights and evidence-based recommendations in just 5 minutes.",
+    "url": "/one-mental-hub-llms-txt",
+    "content": "# One Mental Hub\n\nTake a quick, professional mental health screening to understand your wellbeing. Get personalized insights and evidence-based recommendations in just 5 minutes.",
+    "category": "data-analytics",
+    "slug": "one-mental-hub-llms-txt",
+    "website": "https://onementalhub.com/",
+    "llmsUrl": "https://onementalhub.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "One Scales",
     "description": "We Create Apps and Tutorials, How-To's and Share Insight about E-commerce, Web, Tech, AI, Shopify, Analytics, SEO, PPC, Marketing and More.",
     "url": "/one-scales-llms-txt",
@@ -8468,6 +8963,17 @@
     "website": "https://onescales.com/",
     "llmsUrl": "https://onescales.com/llms.txt",
     "llmsFullUrl": "https://onescales.com/llms-full.txt"
+  },
+  {
+    "name": "OneKural",
+    "description": "One kural a day. Read, reflect, and journal your thoughts on the timeless wisdom of Thiruvalluvar.",
+    "url": "/onekural-llms-txt",
+    "content": "# OneKural\n\nOne kural a day. Read, reflect, and journal your thoughts on the timeless wisdom of Thiruvalluvar.",
+    "category": "content-media",
+    "slug": "onekural-llms-txt",
+    "website": "https://onekural.com",
+    "llmsUrl": "https://onekural.com/llms.txt",
+    "llmsFullUrl": "https://onekural.com/llms-full.txt"
   },
   {
     "name": "OneTrust",
@@ -8501,6 +9007,17 @@
     "website": "https://www.openfort.io",
     "llmsUrl": "https://www.openfort.io/llms.txt",
     "llmsFullUrl": "https://www.openfort.io/llms-full.txt"
+  },
+  {
+    "name": "OpenJuno",
+    "description": "Real-time social network for AI agents — post, follow, search, and interact alongside Claude-powered autonomous agents via REST API or MCP server",
+    "url": "/openjuno-llms-txt",
+    "content": "# OpenJuno\n\nOpenJuno is a live, open platform where autonomous AI agents post, reply, follow each other, like content, repost, and trend topics in themed discussion networks. Any external AI agent can register, get an API key, and participate via plain HTTP — no SDK required.\n\n## Key Features\n\n- Social primitives for AI agents: post (280 chars), reply, like, repost, follow\n- Themed discussion networks with real-time SSE streaming\n- Claude-powered internal agents active around the clock\n- Self-serve registration via email — API key delivered on verification\n- MCP server at `/mcp` for native integration with Claude, LangGraph, CrewAI, AutoGen\n- Full-text search across posts, agents, and hashtags\n- Trending feed via materialized view with engagement scoring\n- OpenAPI 3.0 spec, `AGENTS.md`, and A2A agent card included\n\n## About llms.txt Implementation\n\n`llms.txt` provides a structured index of the API documentation, quickstart guide, MCP server details, and LangChain/TypeScript integration snippets. `llms-full.txt` is a single-file concatenation of all endpoint documentation, error codes, constraints, and copy-paste code examples suitable for RAG pipelines and agent tool configuration.",
+    "category": "ai-ml",
+    "slug": "openjuno-llms-txt",
+    "website": "https://a2ax.fly.dev",
+    "llmsUrl": "https://a2ax.fly.dev/llms.txt",
+    "llmsFullUrl": "https://a2ax.fly.dev/llms-full.txt"
   },
   {
     "name": "OpenPhone",
@@ -8575,7 +9092,7 @@
     "content": "# orbis\n\nAI relationship workspace and CRM for founders. Powered by OpenClaw, an open-source AI agent framework. 1,000+ integrations, multi-channel AI outreach.",
     "category": "marketing-sales",
     "slug": "orbis-llms-txt",
-    "website": "https://meetorbis.com/llms-full.txt",
+    "website": "https://meetorbis.com",
     "llmsUrl": "https://meetorbis.com/llms.txt",
     "llmsFullUrl": "https://meetorbis.com/llms-full.txt"
   },
@@ -8668,6 +9185,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Parhaat vedonlyöntiyhtiöt",
+    "description": "Vedonlyontiyhtiot.com on vedonlyöntipalveluiden vertailusivusto, jonka valikoimasta löytyvät parhaat vedonlyöntisivut sekä parhaat bonukset. .",
+    "url": "/parhaat-vedonlyontiyhtiot-llms-txt",
+    "content": "# Parhaat vedonlyöntiyhtiöt\n\nVedonlyontiyhtiot.com on vedonlyöntipalveluiden vertailusivusto, jonka valikoimasta löytyvät parhaat vedonlyöntisivut sekä parhaat bonukset. .",
+    "category": "content-media",
+    "slug": "parhaat-vedonlyontiyhtiot-llms-txt",
+    "website": "https://vedonlyontiyhtiot.com/",
+    "llmsUrl": "https://vedonlyontiyhtiot.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Parseable",
     "description": "Fast Observability on S3",
     "url": "/parseable-llms-txt",
@@ -8676,6 +9204,17 @@
     "slug": "parseable-llms-txt",
     "website": "https://www.parseable.com",
     "llmsUrl": "https://www.parseable.com/llm-text/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Pasal.id",
+    "description": "AI-native legal research platform for Indonesian legislation. Search 40,000+ laws and regulations with structured text, REST API, and MCP integration.",
+    "url": "/pasal-id-llms-txt",
+    "content": "# Pasal.id\n\nAI-native legal research platform for Indonesian legislation. Search 40,000+ laws and regulations with structured text, REST API, and MCP integration.",
+    "category": "international",
+    "slug": "pasal-id-llms-txt",
+    "website": "https://pasal.id/",
+    "llmsUrl": "https://pasal.id/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -8696,8 +9235,8 @@
     "content": "# Payler\n\nPayler is a full-service trade-only wholesale print facility located in St. Louis, MO. We focus on producing quality products for the signs industry.",
     "category": "other",
     "slug": "payler-llms-txt",
-    "website": "https://paylersigns.com",
-    "llmsUrl": "https://paylersigns.com/",
+    "website": "https://www.paylersigns.com",
+    "llmsUrl": "https://www.paylersigns.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -9053,6 +9592,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Pravo i Slovo",
+    "description": "Юридические услуги, бюро переводов и бухгалтерские услуги, цены, описание услуг, сроки в Москве, России и за рубежом.",
+    "url": "/pravo-i-slovo-llms-txt",
+    "content": "# Pravo i Slovo\n\nЮридические услуги, бюро переводов и бухгалтерские услуги, цены, описание услуг, сроки в Москве, России и за рубежом.",
+    "category": "agency-services",
+    "slug": "pravo-i-slovo-llms-txt",
+    "website": "https://pravoislovo.ru/",
+    "llmsUrl": "https://pravoislovo.ru/llms.txt",
+    "llmsFullUrl": "https://pravoislovo.ru/llms-full.txt"
+  },
+  {
     "name": "Preact",
     "description": "Fast 3kB alternative to React with the same modern API.",
     "url": "/preact-llms-txt",
@@ -9105,6 +9655,17 @@
     "slug": "prodigitals-llms-txt",
     "website": "https://prodigitals.net",
     "llmsUrl": "https://prodigitals.net/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "ProdukLokal",
+    "description": "Indonesian product launch platform for discovering, launching, and upvoting tech products. Built by Indonesian creators, for Indonesia.",
+    "url": "/produklokal-llms-txt",
+    "content": "# ProdukLokal\n\nIndonesian product launch platform for discovering, launching, and upvoting tech products. Built by Indonesian creators, for Indonesia.",
+    "category": "international",
+    "slug": "produklokal-llms-txt",
+    "website": "https://produklokal.tech",
+    "llmsUrl": "https://produklokal.tech/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -9238,6 +9799,28 @@
     "website": "https://www.qrco.au",
     "llmsUrl": "https://www.qrco.au/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "Quantastica",
+    "description": "Quantastica is providing a set of AI-based tools that automate the development of new quantum algorithms and quantum applications.",
+    "url": "/quantastica-llms-txt",
+    "content": "# Quantastica\n\nQuantastica is providing a set of AI-based tools that automate the development of new quantum algorithms and quantum applications.",
+    "category": "developer-tools",
+    "slug": "quantastica-llms-txt",
+    "website": "https://quantastica.com",
+    "llmsUrl": "https://quantastica.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Quantum Programming Studio",
+    "description": "Programming tools for quantum computing: quantum circuit synthesis, generation, transpilation and quantum programming language conversion.",
+    "url": "/quantum-programming-studio-llms-txt",
+    "content": "# Quantum Programming Studio\n\nProgramming tools for quantum computing: quantum circuit synthesis, generation, transpilation and quantum programming language conversion.",
+    "category": "developer-tools",
+    "slug": "quantum-programming-studio-llms-txt",
+    "website": "https://quantum-circuit.com",
+    "llmsUrl": "https://quantum-circuit.com/llms.txt",
+    "llmsFullUrl": "https://quantum-circuit.com/llms-full.txt"
   },
   {
     "name": "Quill",
@@ -9383,6 +9966,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "realtytracka",
+    "description": "The operating system for land sales in Nigeria. Automate bookings, payments, subscriptions, and unit tracking in one place.",
+    "url": "/realtytracka-llms-txt",
+    "content": "# realtytracka\n\nThe operating system for land sales in Nigeria. Automate bookings, payments, subscriptions, and unit tracking in one place.",
+    "category": "other",
+    "slug": "realtytracka-llms-txt",
+    "website": "https://realtytracka.com",
+    "llmsUrl": "https://realtytracka.com/llms.txt",
+    "llmsFullUrl": "https://realtytracka.com/llms-full.txt"
+  },
+  {
     "name": "Receipt Converter",
     "description": "Upload a receipt photo and get a clean Excel, CSV, JSON, or PDF. High-precision AI extracts every line item, tax, and total. Free to try, no account needed.",
     "url": "/receipt-converter-llms-txt",
@@ -9425,6 +10019,17 @@
     "website": "https://docs.rememberizer.ai",
     "llmsUrl": "https://llm.rememberizer.ai/llms.txt",
     "llmsFullUrl": "https://llm.rememberizer.ai/llms-full.txt"
+  },
+  {
+    "name": "Remote tech jobs for engineers",
+    "description": "The Dream Work matches software engineers to remote-first, hybrid, and on-site tech jobs. Every role scored across skills, salary, experience, and work type.",
+    "url": "/remote-tech-jobs-for-engineers-llms-txt",
+    "content": "# Remote tech jobs for engineers\n\nThe Dream Work matches software engineers to remote-first, hybrid, and on-site tech jobs. Every role scored across skills, salary, experience, and work type.",
+    "category": "business-operations",
+    "slug": "remote-tech-jobs-for-engineers-llms-txt",
+    "website": "https://thedream.work/",
+    "llmsUrl": "https://thedream.work/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Remotion",
@@ -9545,6 +10150,17 @@
     "slug": "respond-io-llms-txt",
     "website": "https://respond.io",
     "llmsUrl": "https://respond.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Restaurant LOKYS",
+    "description": "Restaurant LOKYS is the oldest restaurant in Vilnius Old Town. It specializes in historic Lithuanian cuisine, featuring game dishes (venison, boar, beaver).",
+    "url": "/restaurant-lokys-llms-txt",
+    "content": "# Restaurant LOKYS\n\nRestaurant LOKYS is the oldest restaurant in Vilnius Old Town. It specializes in historic Lithuanian cuisine, featuring game dishes (venison, boar, beaver).",
+    "category": "business-operations",
+    "slug": "restaurant-lokys-llms-txt",
+    "website": "https://lokys.lt/",
+    "llmsUrl": "https://lokys.lt/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -9763,8 +10379,8 @@
     "content": "# Sandisk\n\nHigh-performance SSDs, memory cards, and USB Flash Drives designed to prioritize speed, reliability, and energy efficiency for gamers, digital photography, and every day users.",
     "category": "developer-tools",
     "slug": "sandisk-llms-txt",
-    "website": "https://shop.sandisk.com",
-    "llmsUrl": "https://shop.sandisk.com/LLM.txt",
+    "website": "https://www.sandisk.com",
+    "llmsUrl": "https://www.sandisk.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -9810,6 +10426,17 @@
     "website": "https://www.sarhaangulati.com/",
     "llmsUrl": "https://www.sarhaangulati.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "SaVa.Team",
+    "description": "SaVa.Team — eCommerce (Magento, Shopify), мобильные приложения, ИИ и DevOps. Полный цикл: от разработки до поддержки. React, Flutter, Python, AR/VR, CV.",
+    "url": "/sava-team-llms-txt",
+    "content": "# SaVa.Team\n\nSaVa.Team — eCommerce (Magento, Shopify), мобильные приложения, ИИ и DevOps. Полный цикл: от разработки до поддержки. React, Flutter, Python, AR/VR, CV.",
+    "category": "agency-services",
+    "slug": "sava-team-llms-txt",
+    "website": "https://sava.team",
+    "llmsUrl": "https://sava.team/llms.txt",
+    "llmsFullUrl": "https://sava.team/llms-full.txt"
   },
   {
     "name": "Schweizer Naturkosmetik mit Bio",
@@ -9889,6 +10516,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Secuodsoft",
+    "description": "Secuodsoft offers innovative IT products, services & consulting, delivering secure, scalable solutions to drive business growth and digital transformation.",
+    "url": "/secuodsoft-llms-txt",
+    "content": "# Secuodsoft\n\nSecuodsoft offers innovative IT products, services & consulting, delivering secure, scalable solutions to drive business growth and digital transformation.",
+    "category": "agency-services",
+    "slug": "secuodsoft-llms-txt",
+    "website": "https://www.secuodsoft.com",
+    "llmsUrl": "https://www.secuodsoft.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Secure & Fast Online Money Transfers",
     "description": "Send money home at the best rates and low fee with a highly secure and quick platform. Sign-up today on ACE Money Transfer website.",
     "url": "/secure-fast-online-money-llms-txt",
@@ -9931,6 +10569,17 @@
     "website": "https://www.sekhlo.pk",
     "llmsUrl": "https://www.sekhlo.pk/llms.txt",
     "llmsFullUrl": "https://www.sekhlo.pk/llms-full.txt"
+  },
+  {
+    "name": "Selamat Datang di IIK Bhakta",
+    "description": "Institut kesehatan pertama di Indonesia yang diakui MURI dan terlengkap dengan 25 program studi di 5 fakultas. Terakreditasi Unggul oleh LAM PT-Kes.",
+    "url": "/selamat-datang-di-iik-bhakta-llms-txt",
+    "content": "# Selamat Datang di IIK Bhakta\n\nInstitut kesehatan pertama di Indonesia yang diakui MURI dan terlengkap dengan 25 program studi di 5 fakultas. Terakreditasi Unggul oleh LAM PT-Kes.",
+    "category": "other",
+    "slug": "selamat-datang-di-iik-bhakta-llms-txt",
+    "website": "https://iik.ac.id/",
+    "llmsUrl": "https://iik.ac.id/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "Self",
@@ -10076,6 +10725,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Seyare",
+    "description": "High-quality proxy services for scraping, geo-testing, streaming and more. Residential, Mobile, Server proxies. Pay as you go, or Unlimited Traffic.",
+    "url": "/seyare-llms-txt",
+    "content": "# Seyare\n\nHigh-quality proxy services for scraping, geo-testing, streaming and more. Residential, Mobile, Server proxies. Pay as you go, or Unlimited Traffic.",
+    "category": "automation-workflow",
+    "slug": "seyare-llms-txt",
+    "website": "https://seyare.org/en/",
+    "llmsUrl": "https://seyare.org/en/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "SGNL.ai",
     "description": "Eliminate standing access to critical systems, drastically reduce your blast radius, and achieve Zero Standing Privilege with SGNL''s dynamic access management.",
     "url": "/sgnlai-llms-txt",
@@ -10096,6 +10756,17 @@
     "website": "https://sharemarketplace.ca",
     "llmsUrl": "https://sharemarketplace.ca/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "SHELAN",
+    "description": "SHELAN creates handcrafted candles designed to bring warmth, softness, and atmosphere into your space.",
+    "url": "/shelan-llms-txt",
+    "content": "# SHELAN\n\nSHELAN creates handcrafted candles designed to bring warmth, softness, and atmosphere into your space.",
+    "category": "ecommerce-retail",
+    "slug": "shelan-llms-txt",
+    "website": "https://shelan.com.ua",
+    "llmsUrl": "https://shelan.com.ua/llms/llms.txt",
+    "llmsFullUrl": "https://shelan.com.ua/llms/llms-full.txt"
   },
   {
     "name": "Sherlock",
@@ -10384,6 +11055,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Sonicker",
+    "description": "Create natural AI voices with Sonicker. Free text-to-speech with 50+ voices, instant voice cloning, and custom voice design. Sign up free.",
+    "url": "/sonicker-llms-txt",
+    "content": "# Sonicker\n\nCreate natural AI voices with Sonicker. Free text-to-speech with 50+ voices, instant voice cloning, and custom voice design. Sign up free.",
+    "category": "ai-ml",
+    "slug": "sonicker-llms-txt",
+    "website": "https://www.sonicker.com",
+    "llmsUrl": "https://www.sonicker.com/llms.txt",
+    "llmsFullUrl": "https://www.sonicker.com/llms-full.txt"
+  },
+  {
     "name": "Sono",
     "description": "Sono is the mobile app that helps you track the money you borrowed or lent. Available on Apple App Store and Google Play Store.",
     "url": "/sono-llms-txt",
@@ -10483,6 +11165,17 @@
     "llmsFullUrl": "https://www.shipstatic.com/llms-full.txt"
   },
   {
+    "name": "Statsig",
+    "description": "Statsig is your modern product development platform, with an integrated toolkit for experimentation, feature management, product analytics, session replays.",
+    "url": "/statsig-llms-txt",
+    "content": "# Statsig\n\nStatsig is your modern product development platform, with an integrated toolkit for experimentation, feature management, product analytics, session replays.",
+    "category": "agency-services",
+    "slug": "statsig-llms-txt",
+    "website": "https://www.statsig.com/",
+    "llmsUrl": "https://www.statsig.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Statusfield",
     "description": "Real-time alerts for outages in the cloud services you rely on.",
     "url": "/statusfield-llms-txt",
@@ -10536,6 +11229,17 @@
     "website": "https://freetrade.io",
     "llmsUrl": "https://freetrade.io/llms.txt",
     "llmsFullUrl": "https://freetrade.io/llms-full.txt"
+  },
+  {
+    "name": "Stockfilm Vintage Footage",
+    "description": "Search and license 217,000+ authentic vintage 8mm home movie clips (1930s-1980s) via MCP. x402 USDC payments.",
+    "url": "/stockfilm-vintage-footage-llms-txt",
+    "content": "# Stockfilm Vintage Footage\n\nSearch and license 217,000+ authentic vintage 8mm home movie clips (1930s-1980s) via MCP. x402 USDC payments.",
+    "category": "content-media",
+    "slug": "stockfilm-vintage-footage-llms-txt",
+    "website": "https://stockfilm.com",
+    "llmsUrl": "https://stockfilm.com/llms.txt",
+    "llmsFullUrl": "https://stockfilm.com/llms-full.txt"
   },
   {
     "name": "Strale",
@@ -10602,6 +11306,17 @@
     "website": "https://supadata.ai",
     "llmsUrl": "https://docs.supadata.ai/llms.txt",
     "llmsFullUrl": "https://docs.supadata.ai/llms-full.txt"
+  },
+  {
+    "name": "superchargebrowser",
+    "description": "Free Chrome extensions for tab suspension, ad blocking, vertical tabs, and workspaces. Zero telemetry. 69 library articles. Featured on Chrome Web Store.",
+    "url": "/superchargebrowser-llms-txt",
+    "content": "# superchargebrowser\n\nFree Chrome extensions for tab suspension, ad blocking, vertical tabs, and workspaces. Zero telemetry. 69 library articles. Featured on Chrome Web Store.",
+    "category": "developer-tools",
+    "slug": "superchargebrowser-llms-txt",
+    "website": "https://www.superchargebrowser.com",
+    "llmsUrl": "https://www.superchargebrowser.com/llms.txt",
+    "llmsFullUrl": "https://www.superchargebrowser.com/llms-full.txt"
   },
   {
     "name": "Superwall",
@@ -10923,6 +11638,17 @@
     "llmsFullUrl": "https://www.thedinnerdetective.com/llms-full.txt"
   },
   {
+    "name": "The Silk Co Byron Bay",
+    "description": "Byron Bay slow fashion label. Ethically sourced silk, cotton & linen. Small-batch, limited-run womenswear. Based in Byron Bay Australia.",
+    "url": "/the-silk-co-byron-bay-llms-txt",
+    "content": "# The Silk Co Byron Bay\n\nByron Bay slow fashion label. Ethically sourced silk, cotton & linen. Small-batch, limited-run womenswear. Based in Byron Bay Australia.",
+    "category": "ecommerce-retail",
+    "slug": "the-silk-co-byron-bay-llms-txt",
+    "website": "https://thesilkco.com/",
+    "llmsUrl": "https://thesilkco.com/llms.txt",
+    "llmsFullUrl": "https://thesilkco.com/llms-full.txt"
+  },
+  {
     "name": "TheirStack",
     "description": "Technology stack discovery platform",
     "url": "/theirstack-llms-txt",
@@ -11022,6 +11748,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Top Caribbean Medical School",
+    "description": "Enroll today at Texila American University, a top accredited Caribbean medical school that produces the next generation of accomplished physicians.",
+    "url": "/top-caribbean-medical-school-llms-txt",
+    "content": "# Top Caribbean Medical School\n\nEnroll today at Texila American University, a top accredited Caribbean medical school that produces the next generation of accomplished physicians.",
+    "category": "international",
+    "slug": "top-caribbean-medical-school-llms-txt",
+    "website": "https://tau.edu.gy/",
+    "llmsUrl": "https://tau.edu.gy/llms.txt",
+    "llmsFullUrl": "https://tau.edu.gy/llms-full.txt"
+  },
+  {
     "name": "Toriut",
     "description": "Integrate your Shopify stores with Toriut Product Information Management system. Manage and maintain your product data seamlessly and smoothly",
     "url": "/toriut-llms-txt",
@@ -11064,6 +11801,17 @@
     "website": "https://www.signagebuzz.com/",
     "llmsUrl": "https://www.signagebuzz.com/llms.txt",
     "llmsFullUrl": "https://www.signagebuzz.com/llms-full.txt"
+  },
+  {
+    "name": "Trade Show Displays Canada",
+    "description": "Shop SignageBuzz for custom tents, banners, and trade show booths. Serving the signage industry with fast shipping to Toronto, Vancouver & all of Canada.",
+    "url": "/trade-show-displays-canada-llms-txt",
+    "content": "# Trade Show Displays Canada\n\nShop SignageBuzz for custom tents, banners, and trade show booths. Serving the signage industry with fast shipping to Toronto, Vancouver & all of Canada.",
+    "category": "ecommerce-retail",
+    "slug": "trade-show-displays-canada-llms-txt",
+    "website": "https://www.signagebuzz.ca",
+    "llmsUrl": "https://www.signagebuzz.ca/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "tradicted",
@@ -11352,6 +12100,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Uni",
+    "description": "Szukasz profesjonalnego montażu alarmów lub monitoringu? Uni-System oferuje nowoczesne systemy zabezpieczeń i smart home na całym Śląsku. Sprawdź wycenę!.",
+    "url": "/uni-llms-txt",
+    "content": "# Uni\n\nSzukasz profesjonalnego montażu alarmów lub monitoringu? Uni-System oferuje nowoczesne systemy zabezpieczeń i smart home na całym Śląsku. Sprawdź wycenę!.",
+    "category": "security-identity",
+    "slug": "uni-llms-txt",
+    "website": "https://uni-system.com.pl",
+    "llmsUrl": "https://uni-system.com.pl/llms.txt",
+    "llmsFullUrl": "https://uni-system.com.pl/llms-full.txt"
+  },
+  {
     "name": "UnifyGTM",
     "description": "Go-to-market strategy and execution platform",
     "url": "/unifygtm-llms-txt",
@@ -11462,6 +12221,17 @@
     "llmsFullUrl": "https://docs.upsun.com/llms-full.txt"
   },
   {
+    "name": "USAva.Team",
+    "description": "USAva.Team — eCommerce (Magento, Shopify), mobile apps, AI & DevOps. Full-cycle development & support. React, Flutter, Python, AR/VR, CV.",
+    "url": "/usava-team-llms-txt",
+    "content": "# USAva.Team\n\nUSAva.Team — eCommerce (Magento, Shopify), mobile apps, AI & DevOps. Full-cycle development & support. React, Flutter, Python, AR/VR, CV.",
+    "category": "agency-services",
+    "slug": "usava-team-llms-txt",
+    "website": "https://usava.team",
+    "llmsUrl": "https://usava.team/llms.txt",
+    "llmsFullUrl": "https://usava.team/llms-full.txt"
+  },
+  {
     "name": "useapi.net",
     "description": "Experimental API for popular AI services by useapi.net.",
     "url": "/useapi-net-llms-txt",
@@ -11550,6 +12320,17 @@
     "llmsFullUrl": "https://vatsense.com/llms-full.txt"
   },
   {
+    "name": "vBrief | Project Decisions",
+    "description": "vBrief streamlines change control for Architects & PMs: rapidly capture decisions, surface changes and align actions. Extracted by vBrief, verified by you.",
+    "url": "/vbrief-project-decisions-llms-txt",
+    "content": "# vBrief | Project Decisions\n\nvBrief streamlines change control for Architects & PMs: rapidly capture decisions, surface changes and align actions. Extracted by vBrief, verified by you.",
+    "category": "business-operations",
+    "slug": "vbrief-project-decisions-llms-txt",
+    "website": "https://vbrief.ai/",
+    "llmsUrl": "https://vbrief.ai/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "VDO.Ninja",
     "description": "Bring live video from your smartphone, computer, or friends directly into your Studio. 100% free.",
     "url": "/vdoninja-llms-txt",
@@ -11629,10 +12410,10 @@
   {
     "name": "Vercel's AI SDK",
     "description": "From the creators of Next.js, the AI SDK is a free open-source library that gives you the tools you need to build AI-powered products.",
-    "url": "/vercel-ai-sdk-llms-txt",
+    "url": "/vercel-ai-sdk",
     "content": "# Vercel's AI SDK\n\nVercel's AI SDK is a comprehensive TypeScript toolkit that enables developers to build AI-powered applications with seamless integration across multiple frameworks and AI providers.\n\n## Key Focus Areas\n\n- Unified Provider API\n- Streaming AI Responses\n- Framework-agnostic Development\n- Generative UI Components\n\n## About llms.txt Implementation\n\nVercel's AI SDK's llms.txt documentation provides detailed information about their TypeScript toolkit, including implementation guides, API references, and best practices for building AI-powered applications.",
     "category": "ai-ml",
-    "slug": "vercel-ai-sdk-llms-txt",
+    "slug": "vercel-ai-sdk",
     "website": "https://sdk.vercel.ai",
     "llmsUrl": "https://sdk.vercel.ai/llms.txt",
     "llmsFullUrl": ""
@@ -11658,6 +12439,28 @@
     "website": "https://vertexprotocol.com",
     "llmsUrl": "https://docs.vertexprotocol.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "VetAthletics GmbH",
+    "description": "Food supplements for dogs, horses, cats and people. Excellent quality, Made in Germany.",
+    "url": "/vetathletics-gmbh-llms-txt",
+    "content": "# VetAthletics GmbH\n\nFood supplements for dogs, horses, cats and people. Excellent quality, Made in Germany.",
+    "category": "ecommerce-retail",
+    "slug": "vetathletics-gmbh-llms-txt",
+    "website": "https://vetathletics.com/",
+    "llmsUrl": "https://vetathletics.com/llms.txt",
+    "llmsFullUrl": "https://vetathletics.com/llms-full.txt"
+  },
+  {
+    "name": "VetAthletics Schweiz GmbH",
+    "description": "Food supplements for dogs, horses, cats and people. Excellent quality, Made in Germany.",
+    "url": "/vetathletics-schweiz-gmbh-llms-txt",
+    "content": "# VetAthletics Schweiz GmbH\n\nFood supplements for dogs, horses, cats and people. Excellent quality, Made in Germany.",
+    "category": "ecommerce-retail",
+    "slug": "vetathletics-schweiz-gmbh-llms-txt",
+    "website": "https://vetathletics.ch/",
+    "llmsUrl": "https://vetathletics.ch/llms.txt",
+    "llmsFullUrl": "https://vetathletics.ch/llms-full.txt"
   },
   {
     "name": "Vibetuner",
@@ -11946,17 +12749,6 @@
     "llmsFullUrl": ""
   },
   {
-    "name": "Web & App Dev + Marketing",
-    "description": "Oyova offers integrated digital solutions to help you achieve your business goals. We offer expert website design, app development, marketing, & more.",
-    "url": "/web-app-dev-marketing-llms-txt",
-    "content": "# Web & App Dev + Marketing\n\nOyova offers integrated digital solutions to help you achieve your business goals. We offer expert website design, app development, marketing, & more.",
-    "category": "marketing-sales",
-    "slug": "web-app-dev-marketing-llms-txt",
-    "website": "https://www.oyova.com/",
-    "llmsUrl": "https://www.oyova.com/llms.txt",
-    "llmsFullUrl": "https://www.oyova.com/llms-full.txt"
-  },
-  {
     "name": "Web & Mobile App development",
     "description": "Web & Mobile App development agency since 2018. Flutter, JavaScript, UX/UI design. Official Flutter consultants. Get a free project quote & roadmap.",
     "url": "/web-mobile-app-development-llms-txt",
@@ -12155,6 +12947,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "Whoisbg.com",
+    "description": "Bulgarian WHOIS lookup and domain intelligence platform. Provides real-time WHOIS data, DNS records, SSL certificates, SEO analysis, and 20+ other web tools.",
+    "url": "/whoisbg-com-llms-txt",
+    "content": "# Whoisbg.com\n\nBulgarian WHOIS lookup and domain intelligence platform. Provides real-time WHOIS data, DNS records, SSL certificates, SEO analysis, and 20+ other web tools.",
+    "category": "security-identity",
+    "slug": "whoisbg-com-llms-txt",
+    "website": "https://whoisbg.com/",
+    "llmsUrl": "https://whoisbg.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Wild In Africa",
     "description": "Handmade beaded bracelets supporting wildlife conservation. Founded by National Geographic filmmaker Shannon Wild. Order now & #WearYourKarma.",
     "url": "/wild-in-africa-llms-txt",
@@ -12186,6 +12989,17 @@
     "website": "https://www.wized.com/",
     "llmsUrl": "https://docs.wized.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "wjcfc",
+    "description": "最新最全的金融问答,金融资讯,同城理财师,专业的通过金融职业资格认证的答主为您解答股票,基金,保险,理财等投资问题.",
+    "url": "/wjcfc-llms-txt",
+    "content": "# wjcfc\n\n最新最全的金融问答,金融资讯,同城理财师,专业的通过金融职业资格认证的答主为您解答股票,基金,保险,理财等投资问题.",
+    "category": "finance-fintech",
+    "slug": "wjcfc-llms-txt",
+    "website": "https://www.wjcfc.com/",
+    "llmsUrl": "https://www.wjcfc.com/llms.txt",
+    "llmsFullUrl": "https://www.wjcfc.com/llms-full.txt"
   },
   {
     "name": "Wonderchat",
@@ -12276,6 +13090,17 @@
     "llmsFullUrl": "https://wot-design-uni.cn/llms-full.txt"
   },
   {
+    "name": "WP Căn bản",
+    "description": "Tổng hợp kiến thức về WordPress: thủ thuật WordPress, WordPress Themes, WordPress Plugins, Hosting, Domain... và bí quyết kiếm tiền online.",
+    "url": "/wp-can-ban-llms-txt",
+    "content": "# WP Căn bản\n\nTổng hợp kiến thức về WordPress: thủ thuật WordPress, WordPress Themes, WordPress Plugins, Hosting, Domain... và bí quyết kiếm tiền online.",
+    "category": "personal",
+    "slug": "wp-can-ban-llms-txt",
+    "website": "https://wpcanban.com",
+    "llmsUrl": "https://wpcanban.com/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Writer",
     "description": "Build generative AI into any business process with Writer’s secure enterprise platform. Trusted by world-class enterprises.",
     "url": "/writer-llms-txt",
@@ -12305,7 +13130,7 @@
     "category": "developer-tools",
     "slug": "wxt-llms-txt",
     "website": "https://wxt.dev",
-    "llmsUrl": "https://wxt.dev/knowledge/docs.txt",
+    "llmsUrl": "https://wxt.dev/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -12648,6 +13473,17 @@
     "website": "https://www.meaco.gr/",
     "llmsUrl": "https://www.meaco.gr/llms.txt",
     "llmsFullUrl": "https://www.meaco.gr/llms-full.txt"
+  },
+  {
+    "name": "Ηλεκτρική θέρμανση Atlantic",
+    "description": "Ηλεκτρική θέρμανση Atlantic. Θερμοπομποί & πετσετοκρεμάστρες χαμηλής κατανάλωσης από 169€. SANI HELLAS AE - Αποκλειστικός αντιπρόσωπος Ελλάδα.",
+    "url": "/atlantic-llms-txt",
+    "content": "# Ηλεκτρική θέρμανση Atlantic\n\nΗλεκτρική θέρμανση Atlantic. Θερμοπομποί & πετσετοκρεμάστρες χαμηλής κατανάλωσης από 169€. SANI HELLAS AE - Αποκλειστικός αντιπρόσωπος Ελλάδα.",
+    "category": "other",
+    "slug": "atlantic-llms-txt",
+    "website": "https://www.atlantic-heating.gr/",
+    "llmsUrl": "https://www.atlantic-heating.gr/llms.txt",
+    "llmsFullUrl": "https://www.atlantic-heating.gr/llms-full.txt"
   },
   {
     "name": "Φίλτρα Νερού Phoenix Gravity",
