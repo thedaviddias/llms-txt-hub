@@ -24,6 +24,8 @@ function cleanTitle(title: string): string {
 }
 
 const FETCH_TIMEOUT_MS = 10_000
+const METADATA_FETCH_ERROR_MESSAGE =
+  'Unable to fetch this website. Please check the URL and try again.'
 
 /**
  * Error used to signal user-facing URL safety failures (e.g. restricted redirects).
@@ -32,6 +34,16 @@ class UrlSafetyError extends Error {
   constructor(message: string) {
     super(message)
     this.name = 'UrlSafetyError'
+  }
+}
+
+/**
+ * Error used to signal expected failures while fetching user-provided websites.
+ */
+class MetadataFetchError extends Error {
+  constructor(message = METADATA_FETCH_ERROR_MESSAGE) {
+    super(message)
+    this.name = 'MetadataFetchError'
   }
 }
 
@@ -50,11 +62,16 @@ async function fetchWithTimeout(
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
 
     try {
-      const response = await fetch(currentUrl, {
-        ...init,
-        redirect: 'manual',
-        signal: controller.signal
-      })
+      let response: Response
+      try {
+        response = await fetch(currentUrl, {
+          ...init,
+          redirect: 'manual',
+          signal: controller.signal
+        })
+      } catch {
+        throw new MetadataFetchError()
+      }
 
       const isRedirect = response.status >= 300 && response.status < 400
       if (!isRedirect) {
@@ -64,7 +81,7 @@ async function fetchWithTimeout(
       const location = response.headers.get('location')
       if (!location) return response
       if (redirects === maxRedirects) {
-        throw new Error('Too many redirects')
+        throw new MetadataFetchError()
       }
 
       const nextUrl = new URL(location, currentUrl).toString()
@@ -79,7 +96,19 @@ async function fetchWithTimeout(
     }
   }
 
-  throw new Error('Too many redirects')
+  throw new MetadataFetchError()
+}
+
+/**
+ * Checks whether a URL exists without making optional llms.txt probes fail metadata extraction.
+ */
+async function urlExists(url: string): Promise<boolean> {
+  try {
+    const response = await fetchWithTimeout(url)
+    return response.ok
+  } catch {
+    return false
+  }
 }
 
 /**
@@ -137,6 +166,10 @@ async function fetchMetadata(url: string) {
     }
     // Fetch the main page
     const response = await fetchWithTimeout(url)
+    if (!response.ok) {
+      throw new MetadataFetchError()
+    }
+
     const html = await response.text()
     const $ = cheerio.load(html)
 
@@ -156,13 +189,11 @@ async function fetchMetadata(url: string) {
 
     // Check for llms.txt
     const llmsUrl = `${url}/llms.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsResponse = await fetchWithTimeout(llmsUrl)
-    const llmsExists = llmsResponse.ok
+    const llmsExists = await urlExists(llmsUrl)
 
     // Check for llms-full.txt
     const llmsFullUrl = `${url}/llms-full.txt`.replace(/([^:]\/)\/+/g, '$1')
-    const llmsFullResponse = await fetchWithTimeout(llmsFullUrl)
-    const llmsFullExists = llmsFullResponse.ok
+    const llmsFullExists = await urlExists(llmsFullUrl)
 
     return {
       isDuplicate: false,
@@ -175,7 +206,7 @@ async function fetchMetadata(url: string) {
       }
     }
   } catch (error) {
-    if (error instanceof UrlSafetyError) {
+    if (error instanceof UrlSafetyError || error instanceof MetadataFetchError) {
       throw error
     }
 
@@ -208,6 +239,9 @@ export async function GET(request: Request) {
     return NextResponse.json(metadata)
   } catch (error) {
     if (error instanceof UrlSafetyError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+    if (error instanceof MetadataFetchError) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 
@@ -244,6 +278,9 @@ export async function POST(request: Request) {
     return NextResponse.json(metadata)
   } catch (error) {
     if (error instanceof UrlSafetyError) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+    if (error instanceof MetadataFetchError) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
 

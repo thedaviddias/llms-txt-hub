@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import * as Sentry from '@sentry/nextjs'
 import { UpstashCache } from '@thedaviddias/caching/upstash'
+import { logger } from '@thedaviddias/logging'
 import { createRateLimiter, slidingWindow } from '@thedaviddias/rate-limiting'
 import { NextResponse } from 'next/server'
 
@@ -66,15 +66,6 @@ export async function GET(
   try {
     // Check if the file name is valid
     if (!['llms.txt', 'llms-full.txt'].includes(file)) {
-      Sentry.captureMessage('Invalid file name requested', {
-        level: 'warning',
-        extra: {
-          ip,
-          slug,
-          file,
-          error: 'Invalid file name'
-        }
-      })
       return new NextResponse('Not Found', { status: 404 })
     }
 
@@ -83,17 +74,6 @@ export async function GET(
     const { success, limit, reset, remaining } = await rateLimiter.limit(ip)
 
     if (!success) {
-      Sentry.captureMessage('Rate limit exceeded', {
-        level: 'warning',
-        extra: {
-          ip,
-          slug,
-          file,
-          limit,
-          remaining,
-          reset
-        }
-      })
       return new NextResponse('Rate limit exceeded', {
         status: 429,
         headers: {
@@ -115,14 +95,14 @@ export async function GET(
       isCacheHit = !!content
     } catch (error) {
       // Log cache error but continue with filesystem
-      Sentry.captureException(error, {
-        level: 'warning',
+      logger.error(error instanceof Error ? error : new Error('Cache get error'), {
         extra: {
-          ip,
-          slug,
           file,
-          error: 'Cache get error'
-        }
+          operation: 'cache-get',
+          slug
+        },
+        fingerprint: ['website-file-route', 'cache-get'],
+        tags: { route: 'website-file', type: 'api' }
       })
     }
 
@@ -132,30 +112,12 @@ export async function GET(
       const websiteDir = path.join(unofficialDir, slug)
 
       if (!fs.existsSync(websiteDir)) {
-        Sentry.captureMessage('Website directory not found', {
-          level: 'error',
-          extra: {
-            ip,
-            slug,
-            file,
-            websiteDir
-          }
-        })
         return new NextResponse('Not Found', { status: 404 })
       }
 
       const filePath = path.join(websiteDir, file)
 
       if (!fs.existsSync(filePath)) {
-        Sentry.captureMessage('File not found', {
-          level: 'error',
-          extra: {
-            ip,
-            slug,
-            file,
-            filePath
-          }
-        })
         return new NextResponse('Not Found', { status: 404 })
       }
 
@@ -167,14 +129,14 @@ export async function GET(
         await fileCache.set(cacheKey, content, { ttl: CACHE_TTL })
       } catch (error) {
         // Log cache error but continue serving content
-        Sentry.captureException(error, {
-          level: 'warning',
+        logger.error(error instanceof Error ? error : new Error('Cache set error'), {
           extra: {
-            ip,
-            slug,
             file,
-            error: 'Cache set error'
-          }
+            operation: 'cache-set',
+            slug
+          },
+          fingerprint: ['website-file-route', 'cache-set'],
+          tags: { route: 'website-file', type: 'api' }
         })
       }
     }
@@ -191,14 +153,17 @@ export async function GET(
     })
   } catch (error) {
     // Log unexpected errors
-    Sentry.captureException(error, {
-      extra: {
-        ip,
-        slug,
-        file,
-        error: error instanceof Error ? error.message : 'Unknown error'
+    logger.error(
+      error instanceof Error ? error : new Error('Unexpected website file route error'),
+      {
+        extra: {
+          file,
+          slug
+        },
+        fingerprint: ['website-file-route', 'unexpected'],
+        tags: { route: 'website-file', type: 'api' }
       }
-    })
+    )
 
     return new NextResponse('Internal Server Error', { status: 500 })
   }
