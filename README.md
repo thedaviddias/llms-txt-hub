@@ -315,6 +315,7 @@ A curated list of LLM-powered tools and resources with llms.txt implementation.
 - ![Zapier favicon](https://www.google.com/s2/favicons?domain=zapier.com&size=128) **[Zapier](https://zapier.com)** - Workflow automation and integration platform <sub>[llms.txt](https://docs.zapier.com/llms.txt) • [llms-full.txt](https://docs.zapier.com/llms-full.txt)</sub>
 - ![ZODORI favicon](https://www.google.com/s2/favicons?domain=zodoristudio.com&size=128) **[ZODORI](https://zodoristudio.com)** - Zodori creates artisan jewelry from rare woods and fine gemstones, each piece inspired by ancient wisdom and heritage, crafted into meaningful wearable art. <sub>[llms.txt](https://zodoristudio.com/llms.txt)</sub>
 - ![Zoomry_conveyor_shiploader manufacturer favicon](https://www.google.com/s2/favicons?domain=zoomry-ind.com&size=128) **[Zoomry_conveyor_shiploader manufacturer](https://zoomry-ind.com)** - Zoomry is a global provider of bulk material handling solutions. specialize in telescopic stacker, belt conveyor and ship loaders. <sub>[llms.txt](https://zoomry-ind.com/llms.txt)</sub>
+- [Spectrum Talent Management](https://spectrumtalentmod.com/) - Global comprehensive HR services, Employer of Record (EOR), and workforce solutions.</sub>
 
 ### 🔍 business operations
 
