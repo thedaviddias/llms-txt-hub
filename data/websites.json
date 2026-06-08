@@ -2283,16 +2283,6 @@
     "publishedAt": "2025-03-20"
   },
   {
-    "name": "Chánh Đại",
-    "domain": "https://chanhdai.com/",
-    "description": "Creating with code. Small details matter.",
-    "llmsTxtUrl": "https://chanhdai.com/llms.txt",
-    "llmsFullTxtUrl": "https://chanhdai.com/llms-full.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=chanhdai.com&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
     "name": "Chargeblast",
     "domain": "https://chargeblast.com",
     "description": "Chargeblast helps hypergrowth startups reduce chargeback rates by up to 99%",
@@ -2440,6 +2430,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=chronova.dev&sz=128",
     "publishedAt": "2026-05-15"
+  },
+  {
+    "name": "Chánh Đại",
+    "domain": "https://chanhdai.com/",
+    "description": "Creating with code. Small details matter.",
+    "llmsTxtUrl": "https://chanhdai.com/llms.txt",
+    "llmsFullTxtUrl": "https://chanhdai.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=chanhdai.com&sz=128",
+    "publishedAt": "2026-05-31"
   },
   {
     "name": "CID Contact",
@@ -3158,15 +3158,6 @@
     "publishedAt": "2026-05-24"
   },
   {
-    "name": "Créer une société en Irlande — Accompagnement pour entrepreneurs francophones | Société-France-Irlande",
-    "domain": "https://societe-france-irlande.com/",
-    "description": "Notre cabinet conseil entrepreneurial vous accompagne sur la création de votre société en Irlande, la banque en Irlande et les autres services.",
-    "llmsTxtUrl": "https://societe-france-irlande.com/llms.txt",
-    "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=societe-france-irlande.com&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
     "name": "CrewAI",
     "domain": "https://crewai.com",
     "description": "AI-powered team collaboration platform",
@@ -3201,6 +3192,15 @@
     "llmsTxtUrl": "https://coincodex.com/llms.txt",
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=coincodex.com&sz=128",
+    "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Créer une société en Irlande — Accompagnement pour entrepreneurs francophones | Société-France-Irlande",
+    "domain": "https://societe-france-irlande.com/",
+    "description": "Notre cabinet conseil entrepreneurial vous accompagne sur la création de votre société en Irlande, la banque en Irlande et les autres services.",
+    "llmsTxtUrl": "https://societe-france-irlande.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=societe-france-irlande.com&sz=128",
     "publishedAt": "2026-05-31"
   },
   {
@@ -5427,6 +5427,15 @@
     "publishedAt": "2025-05-30"
   },
   {
+    "name": "Home Page",
+    "domain": "https://www.consumermesh.com/",
+    "description": "Launch enterprise websites and portals in weeks — not months. Preserve your exact Figma vision with scalable, compliant digital experiences you can update without developers.",
+    "llmsTxtUrl": "https://www.consumermesh.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.consumermesh.com&sz=128",
+    "publishedAt": "2026-05-31"
+  },
+  {
     "name": "Home • Angular",
     "domain": "https://angular.dev",
     "description": "The web development framework for building modern apps.",
@@ -5435,15 +5444,6 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=angular.dev&sz=128",
     "publishedAt": "2025-05-24"
-  },
-  {
-    "name": "Home Page",
-    "domain": "https://www.consumermesh.com/",
-    "description": "Launch enterprise websites and portals in weeks — not months. Preserve your exact Figma vision with scalable, compliant digital experiences you can update without developers.",
-    "llmsTxtUrl": "https://www.consumermesh.com/llms.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.consumermesh.com&sz=128",
-    "publishedAt": "2026-05-31"
   },
   {
     "name": "Hono",
@@ -7237,16 +7237,6 @@
     "publishedAt": "2025-08-26"
   },
   {
-    "name": "Manşet Etkisi",
-    "domain": "https://mansetetkisi.com/",
-    "description": "Manset Etkisi, önemli manşet haberler, güncel yorumlar ve derinlemesine analizler sunar.",
-    "llmsTxtUrl": "https://mansetetkisi.com/llms.txt",
-    "llmsFullTxtUrl": "https://mansetetkisi.com/llms-full.txt",
-    "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=mansetetkisi.com&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
     "name": "Mantine",
     "domain": "https://mantine.dev/",
     "description": "A fully featured React components library with 120+ customizable components, hooks, and utilities. Build accessible web applications faster.",
@@ -7254,6 +7244,16 @@
     "llmsFullTxtUrl": "https://mantine.dev/llms-full.txt",
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=mantine.dev&sz=128",
+    "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Manşet Etkisi",
+    "domain": "https://mansetetkisi.com/",
+    "description": "Manset Etkisi, önemli manşet haberler, güncel yorumlar ve derinlemesine analizler sunar.",
+    "llmsTxtUrl": "https://mansetetkisi.com/llms.txt",
+    "llmsFullTxtUrl": "https://mansetetkisi.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=mansetetkisi.com&sz=128",
     "publishedAt": "2026-05-31"
   },
   {
@@ -8361,6 +8361,15 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=online-casinosbe.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Open Space Facilitation Europe",
+    "domain": "https://openspace-facilitation.eu",
+    "description": "Professional Open Space Technology facilitation for conferences, strategy sessions and complex organisational challenges. Active in Belgium, Netherlands and Europe.",
+    "llmsTxtUrl": "https://openspace-facilitation.eu/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=openspace-facilitation.eu&sz=128",
+    "publishedAt": "2026-06-08"
   },
   {
     "name": "OpenCage",
@@ -9719,15 +9728,6 @@
     "publishedAt": "2026-05-31"
   },
   {
-    "name": "Réservez un taxi à Paris - Tarifs fixes",
-    "domain": "https://taxi-paris-online.com/",
-    "description": "Tarifs fixes pour tous vos trajets à Paris et en Île-de-France - Réservez gratuitement en ligne ou par téléphone",
-    "llmsTxtUrl": "https://taxi-paris-online.com/llms.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=taxi-paris-online.com&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
     "name": "REVA Global",
     "domain": "https://revaglobal.com/",
     "description": "REVA Global is the leading provider of highly trained real estate Virtual Assistants to support the growth of your business.",
@@ -9943,6 +9943,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=rxdb.info&sz=128",
     "publishedAt": "2026-03-05"
+  },
+  {
+    "name": "Réservez un taxi à Paris - Tarifs fixes",
+    "domain": "https://taxi-paris-online.com/",
+    "description": "Tarifs fixes pour tous vos trajets à Paris et en Île-de-France - Réservez gratuitement en ligne ou par téléphone",
+    "llmsTxtUrl": "https://taxi-paris-online.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=taxi-paris-online.com&sz=128",
+    "publishedAt": "2026-05-31"
   },
   {
     "name": "S.K.KUNATHAM GROUP",
@@ -10603,15 +10612,6 @@
     "publishedAt": "2026-05-31"
   },
   {
-    "name": "Snøkam",
-    "domain": "https://www.snokam.no/",
-    "description": "Hos Snøkam er vi opptatt av å forvandle teknologiske utfordringer til elegante løsninger. Våre konsulenter er spesialister innen fullstack-utvikling, data engineering og AI, og vi har et øye for detaljene som utgjør en stor forskjell.",
-    "llmsTxtUrl": "https://www.snokam.no/llms.txt",
-    "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.snokam.no&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
     "name": "SNUC",
     "domain": "https://snuc.com/",
     "description": "SNUC powers USA enterprises and federal agencies with fanless, rugged, AI-ready edge computers and extremeEDGE servers with NANO BMC systems.",
@@ -10627,6 +10627,15 @@
     "llmsTxtUrl": "https://snugsite.com.au/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=snugsite.com.au&sz=128",
+    "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Snøkam",
+    "domain": "https://www.snokam.no/",
+    "description": "Hos Snøkam er vi opptatt av å forvandle teknologiske utfordringer til elegante løsninger. Våre konsulenter er spesialister innen fullstack-utvikling, data engineering og AI, og vi har et øye for detaljene som utgjør en stor forskjell.",
+    "llmsTxtUrl": "https://www.snokam.no/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.snokam.no&sz=128",
     "publishedAt": "2026-05-31"
   },
   {
@@ -11151,15 +11160,6 @@
     "category": "infrastructure-cloud",
     "favicon": "https://www.google.com/s2/favicons?domain=techtown.fr&sz=128",
     "publishedAt": "2026-05-31"
-  },
-  {
-    "name": "Téléassistance Sénior",
-    "domain": "https://www.tele-assistance-senior.fr",
-    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
-    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
-    "category": "developer-tools",
-    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
-    "publishedAt": "2025-08-26"
   },
   {
     "name": "Television.AI",
@@ -11758,6 +11758,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Téléassistance Sénior",
+    "domain": "https://www.tele-assistance-senior.fr",
+    "description": "Téléassistance pour 24,90 € / mois. N° 1 en France avec plus de 250 000 abonnés. Installation par nos techniciens à domicile en moins de 7 jours.",
+    "llmsTxtUrl": "https://www.tele-assistance-senior.fr/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tele-assistance-senior.fr&sz=128",
+    "publishedAt": "2025-08-26"
+  },
+  {
     "name": "U.S. Language Services",
     "domain": "https://www.uslanguageservices.com/",
     "description": "Get your documents translated for $39.00 per page or $0.12 per word. 35 Languages Supported. Available 24 hours a day, 7 days a week.",
@@ -11998,15 +12007,6 @@
     "llmsTxtUrl": "https://valuesense.io/llms.txt",
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=valuesense.io&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
-    "name": "Văn hay trong hiện tại, chữ tốt ở tương lai",
-    "domain": "https://nhavan.vn/",
-    "description": "Nhà văn là chuyên trang nghiên cứu, phát triển văn hóa đọc, có sứ mệnh duy trì, nâng cao văn hóa đọc, cải thiện năng lực cảm thụ văn chương cho người Việt.",
-    "llmsTxtUrl": "https://nhavan.vn/llms.txt",
-    "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=nhavan.vn&sz=128",
     "publishedAt": "2026-05-31"
   },
   {
@@ -12360,6 +12360,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=vuejs.org&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Văn hay trong hiện tại, chữ tốt ở tương lai",
+    "domain": "https://nhavan.vn/",
+    "description": "Nhà văn là chuyên trang nghiên cứu, phát triển văn hóa đọc, có sứ mệnh duy trì, nâng cao văn hóa đọc, cải thiện năng lực cảm thụ văn chương cho người Việt.",
+    "llmsTxtUrl": "https://nhavan.vn/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=nhavan.vn&sz=128",
+    "publishedAt": "2026-05-31"
   },
   {
     "name": "Waitlist Software — Build a Pre-Launch Waitlist",
