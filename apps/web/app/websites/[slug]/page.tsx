@@ -19,14 +19,10 @@ interface ProjectPageProps {
 }
 
 /**
- * Revalidates on-demand website detail pages hourly.
+ * Website detail pages use request-time CSP nonces from the root layout and
+ * JSON-LD script tags, so they must render dynamically instead of ISR/SSG.
  */
-export const revalidate = 3600
-
-/**
- * Allows website detail slugs to render on demand instead of returning 404.
- */
-export const dynamicParams = true
+export const dynamic = 'force-dynamic'
 
 /**
  * Generates metadata for the website page
@@ -78,15 +74,6 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       description: 'Website information'
     }
   }
-}
-
-/**
- * Skips build-time generation for high-cardinality website detail pages.
- *
- * @returns Empty static params so pages are generated on demand and cached with ISR
- */
-export async function generateStaticParams() {
-  return []
 }
 
 /**
