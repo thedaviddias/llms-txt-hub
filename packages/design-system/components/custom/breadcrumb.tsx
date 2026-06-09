@@ -1,13 +1,16 @@
+import { headers } from 'next/headers'
 import Link from 'next/link'
 import * as React from 'react'
-import {
+import * as BreadcrumbPrimitive from '../shadcn/breadcrumb'
+
+const {
+  Breadcrumb: BreadcrumbRoot,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
-  Breadcrumb as ShadcnBreadcrumb
-} from '../shadcn/breadcrumb'
+  BreadcrumbSeparator
+} = BreadcrumbPrimitive
 
 /**
  * Represents a breadcrumb navigation item data
@@ -32,10 +35,12 @@ export interface BreadcrumbProps {
  * @param props.baseUrl - Optional base URL for JSON-LD (defaults to window.location.origin)
  * @returns React component with breadcrumb navigation and structured data
  */
-export function Breadcrumb({ items, homeHref = '/', baseUrl }: BreadcrumbProps) {
+export async function Breadcrumb({ items, homeHref = '/', baseUrl }: BreadcrumbProps) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined
+
   return (
     <div className="mb-4">
-      <ShadcnBreadcrumb>
+      <BreadcrumbRoot>
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
@@ -57,9 +62,11 @@ export function Breadcrumb({ items, homeHref = '/', baseUrl }: BreadcrumbProps) 
             </React.Fragment>
           ))}
         </BreadcrumbList>
-      </ShadcnBreadcrumb>
+      </BreadcrumbRoot>
       <script
         type="application/ld+json"
+        nonce={nonce}
+        suppressHydrationWarning
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Required for JSON-LD
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
