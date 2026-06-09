@@ -1,5 +1,4 @@
-import { dynamicParams, generateStaticParams, revalidate } from '@/app/websites/[slug]/page'
-import { getWebsites } from '@/lib/content-loader'
+import { dynamic } from '@/app/websites/[slug]/page'
 
 jest.mock('@/components/json-ld', () => ({
   JsonLd: () => null
@@ -38,8 +37,7 @@ jest.mock('@/components/website/website-related-projects', () => ({
 }))
 
 jest.mock('@/lib/content-loader', () => ({
-  getWebsiteBySlug: jest.fn(),
-  getWebsites: jest.fn()
+  getWebsiteBySlug: jest.fn()
 }))
 
 jest.mock('@/lib/routes', () => ({
@@ -54,20 +52,8 @@ jest.mock('@/lib/seo/seo-config', () => ({
   generateDynamicMetadata: jest.fn(() => ({}))
 }))
 
-const mockGetWebsites = getWebsites as jest.MockedFunction<typeof getWebsites>
-
-describe('website detail page static generation', () => {
-  it('does not prebuild website detail pages at build time', async () => {
-    mockGetWebsites.mockImplementation(() => {
-      throw new Error('getWebsites should not be called during static param generation')
-    })
-
-    await expect(generateStaticParams()).resolves.toEqual([])
-    expect(mockGetWebsites).not.toHaveBeenCalled()
-  })
-
-  it('keeps on-demand static generation enabled for valid website slugs', () => {
-    expect(dynamicParams).toBe(true)
-    expect(revalidate).toBe(3600)
+describe('website detail page rendering mode', () => {
+  it('renders dynamically so request-time CSP nonces are available', () => {
+    expect(dynamic).toBe('force-dynamic')
   })
 })
