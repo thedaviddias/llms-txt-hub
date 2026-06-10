@@ -1,0 +1,22 @@
+---
+name: 'Graceful Boundaries'
+description: 'Open spec for how services communicate operational limits to humans and agents: limits discovery, structured refusals, conformance levels.'
+website: 'https://gracefulboundaries.dev'
+llmsUrl: 'https://gracefulboundaries.dev/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-06-10'
+---
+
+# Graceful Boundaries
+
+Graceful Boundaries is an open specification (CC-BY-4.0) for how HTTP services communicate operational limits — rate limits, quotas, auth, payload size — to humans and autonomous agents. It extends RFC 9457 problem-details with a structured refusal vocabulary, defines a limits-discovery endpoint, and specifies four conformance levels (L0–L4).
+
+## Key Focus Areas
+
+- Operational-limit communication
+- Agent-safe HTTP error responses
+- Conformance checking via `npx graceful-boundaries check <url>`
+
+## About llms.txt Implementation
+
+The llms.txt at gracefulboundaries.dev points to the spec, the RFC 9457 profile, the conformance checker, and worked examples — the minimum context an agent needs to either implement the spec or interpret a conformant service's responses.
