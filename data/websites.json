@@ -10981,6 +10981,15 @@
     "publishedAt": "2026-03-22"
   },
   {
+    "name": "Superhighway",
+    "domain": "https://superhighway.walls.sh",
+    "description": "Web search for AI agents — live web search, news, and read-any-page-as-markdown, paid per call in USDC via x402 or a free API-key tier. No signup needed.",
+    "llmsTxtUrl": "https://superhighway.walls.sh/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=superhighway.walls.sh&sz=128",
+    "publishedAt": "2026-06-10"
+  },
+  {
     "name": "Superwall",
     "domain": "https://superwall.com",
     "description": "Superwall - Paywalls made easy",
