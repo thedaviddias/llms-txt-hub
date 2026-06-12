@@ -37,7 +37,10 @@
     "update-llms-list": "node scripts/update-llms-list.js",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
-    "contributors:check": "all-contributors check"
+    "contributors:check": "all-contributors check",
+    "viberaven:gate": "npx -y viberaven --agent-mode",
+    "viberaven:verify": "npx -y viberaven --verify",
+    "viberaven:strict": "npx -y viberaven --strict"
   },
   "devDependencies": {
     "@auto-it/all-contributors": "^11.3.6",
