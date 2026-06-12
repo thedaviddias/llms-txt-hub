@@ -1,5 +1,3 @@
-@AGENTS.md
-
 <!-- VIBERAVEN:START -->
 VibeRaven provides production readiness for AI-built apps.
 
@@ -82,12 +80,3 @@ Before ending any deploy, auth, RLS, webhook, or dependency task, run:
 `npx -y viberaven --agent-mode`
 Gate is not clear until `gate.status === "clear"` in `.viberaven/gate-result.json`.
 <!-- VIBERAVEN:END -->
-
-<!-- llmstxt:start -->
-## Installed Documentation (llmstxt)
-
-When working with these technologies, read the corresponding skill for detailed reference:
-
-- Stripe: .agents/skills/stripe/SKILL.md
-- AI SDK: .agents/skills/ai-sdk/SKILL.md
-<!-- llmstxt:end -->
