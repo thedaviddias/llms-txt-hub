@@ -363,6 +363,16 @@
     "publishedAt": "2026-05-06"
   },
   {
+    "name": "AI Image Generator | Pixparkle",
+    "domain": "https://pixparkle.com/",
+    "description": "Pixparkle is a chat-based AI image generator: describe, refine, export pro-quality visuals. For creators, brands, and e-commerce. Free to start.",
+    "llmsTxtUrl": "https://pixparkle.com/llms.txt",
+    "llmsFullTxtUrl": "https://pixparkle.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=pixparkle.com&sz=128",
+    "publishedAt": "2026-06-08"
+  },
+  {
     "name": "AI Plant Doctor",
     "domain": "https://theaiplantdoctor.com/",
     "description": "Free AI plant doctor app: snap a photo to identify 10,000+ plant species and diagnose diseases, pests & deficiencies instantly. Treatment plans, care reminders & plant journal.",
@@ -919,6 +929,16 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "App-Compose",
+    "domain": "https://app-compose.dev/",
+    "description": "Lightweight IoC for the front-end. Compose apps you can control and trust.",
+    "llmsTxtUrl": "https://app-compose.dev/llms.txt",
+    "llmsFullTxtUrl": "https://app-compose.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=app-compose.dev&sz=128",
+    "publishedAt": "2026-06-07"
+  },
+  {
     "name": "Appio: Mobile Features for Your Web App",
     "domain": "https://appio.so/",
     "description": "Appio helps businesses add widgets and notifications to their products, without building or maintaining mobile apps, hiring developers, or dealing with app stores.",
@@ -991,6 +1011,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=argil.ai&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "Ariadne Loop",
+    "domain": "https://zhangzeyu99-web.github.io/ariadne-loop/",
+    "description": "Ariadne Loop is a local-first Loop Engineering workbench for turning rough coding-agent context into verifiable specs, agent packets, verifier gates, stop rules, rollback rules, and JSON reports.",
+    "llmsTxtUrl": "https://zhangzeyu99-web.github.io/ariadne-loop/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=zhangzeyu99-web.github.io/ariadne-loop&sz=128",
+    "publishedAt": "2026-06-11"
   },
   {
     "name": "Arias Sanguinetti Wang & Team, LLP",
@@ -3195,6 +3224,35 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Crypto APIs",
+    "domain": "https://cryptoapis.io",
+    "description": "Blockchain infrastructure suite — unified APIs for blockchain data, transactions, wallets, events, AML screening, and market data across 20+ chains.",
+    "llmsTxtUrl": "https://cryptoapis.io/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=cryptoapis.io&sz=128",
+    "publishedAt": "2026-05-20"
+  },
+  {
+    "name": "Crypto APIs Developers",
+    "domain": "https://developers.cryptoapis.io",
+    "description": "Developer reference for the Crypto APIs blockchain platform — endpoint inventory, FAQ-style worked examples, MCP server pointer, and explicit guardrails directing AI agents to the current API surface.",
+    "llmsTxtUrl": "https://developers.cryptoapis.io/llms.txt",
+    "llmsFullTxtUrl": "https://developers.cryptoapis.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=developers.cryptoapis.io&sz=128",
+    "publishedAt": "2026-06-01"
+  },
+  {
+    "name": "Crypto APIs REST",
+    "domain": "https://cryptoapis.io",
+    "description": "Production REST API host for the Crypto APIs blockchain platform — agent-facing entry point served at the API base URL, with product inventory, conventions, MCP server pointer, and deprecation guardrails.",
+    "llmsTxtUrl": "https://rest.cryptoapis.io/llms.txt",
+    "llmsFullTxtUrl": "https://rest.cryptoapis.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=cryptoapis.io&sz=128",
+    "publishedAt": "2026-06-02"
+  },
+  {
     "name": "Crypto Prices, Charts and Cryptocurrency Market Cap",
     "domain": "https://coincodex.com/",
     "description": "Live cryptocurrency prices and charts of top cryptocurrencies by crypto market cap. Complete cryptocurrency market overview including Bitcoin and 47398 altcoins.",
@@ -3758,6 +3816,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=diventarefelici.it&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "DNACORE",
+    "domain": "https://dnacore.ai",
+    "description": "Open-protocol directory of AI-native websites. Verifies llms.txt and agents.json compliance, issues trust badges, and makes verified sites queryable by AI agents and IDE assistants.",
+    "llmsTxtUrl": "https://dnacore.ai/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=dnacore.ai&sz=128",
+    "publishedAt": "2026-06-08"
   },
   {
     "name": "dns0.eu",
@@ -5036,6 +5103,15 @@
     "publishedAt": "2026-05-14"
   },
   {
+    "name": "Graceful Boundaries",
+    "domain": "https://gracefulboundaries.dev",
+    "description": "Open spec for how services communicate operational limits to humans and agents: limits discovery, structured refusals, conformance levels.",
+    "llmsTxtUrl": "https://gracefulboundaries.dev/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=gracefulboundaries.dev&sz=128",
+    "publishedAt": "2026-06-10"
+  },
+  {
     "name": "Gradio",
     "domain": "https://www.gradio.app",
     "description": "Build & Share Delightful Machine Learning Apps",
@@ -5822,6 +5898,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "InfiniVerde Ltd",
+    "domain": "https://infiniverde.com",
+    "description": "Closed-source quantitative research across 30+ UK and European built environment markets.",
+    "llmsTxtUrl": "https://infiniverde.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=infiniverde.com&sz=128",
+    "publishedAt": "2026-04-28"
+  },
+  {
     "name": "Infisical",
     "domain": "https://infisical.com",
     "description": "Secure secrets management platform",
@@ -5859,6 +5944,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=in.fosprout.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "InfraNode",
+    "domain": "https://infranode.dev",
+    "description": "Free unified REST API for German city infrastructure data (weather, air quality, water levels, EV chargers, live public transport, demographics) from 35+ official sources",
+    "llmsTxtUrl": "https://infranode.dev/llms.txt",
+    "llmsFullTxtUrl": "https://infranode.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=infranode.dev&sz=128",
+    "publishedAt": "2026-06-13"
   },
   {
     "name": "Ingenimax - Developer Tools for Cloud",
@@ -5989,6 +6084,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=instruqt.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "intelica-intel-api",
+    "domain": "https://api.intelica.dev",
+    "description": "Competitive intelligence API for autonomous AI agents. Pay-per-call via x402 with USDC. 10 analysis modes, MCP server, 8 languages.",
+    "llmsTxtUrl": "https://api.intelica.dev/llms.txt",
+    "llmsFullTxtUrl": "https://api.intelica.dev/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=api.intelica.dev&sz=128",
+    "publishedAt": "2026-06-11"
   },
   {
     "name": "Intelligems",
@@ -7018,6 +7123,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "LLMs.txt Generator",
+    "domain": "https://llmstxtgenerator.svcpool.com",
+    "description": "AI-powered service that automatically crawls your website, clusters pages by semantic similarity, and generates a hierarchical llms.txt file optimized for LLMs. Supports multiple AI models, no registration required for the free tier.",
+    "llmsTxtUrl": "https://llmstxtgenerator.svcpool.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmstxtgenerator.svcpool.com&sz=128",
+    "publishedAt": "2026-06-01"
+  },
+  {
     "name": "llmshub.de",
     "domain": "https://llmshub.de/",
     "description": "German-language platform for llms.txt, LLM visibility and AI crawler control. Free tools, guides and glossary.",
@@ -7168,6 +7282,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=macgence.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Madhda Inc",
+    "domain": "https://madhda.com/",
+    "description": "Certified Microsoft Solutions Partner specializing in Dynamics 365 Business Central. We deliver expert ERP implementation, upgrades.",
+    "llmsTxtUrl": "https://madhda.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=madhda.com&sz=128",
+    "publishedAt": "2026-06-02"
   },
   {
     "name": "Magis5 Hub",
@@ -7474,6 +7597,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=michael-hansmeyer.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Micra.js Documentation",
+    "domain": "https://denisfl.github.io/micra.js/",
+    "description": "Micra.js is a ~5 KB reactive UI library for server-rendered pages: reactive `state` via a shallow `Proxy`, declarative `data-*` and a cross-component event bus.",
+    "llmsTxtUrl": "https://denisfl.github.io/micra.js/llms.txt",
+    "llmsFullTxtUrl": "https://denisfl.github.io/micra.js/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=denisfl.github.io/micra.js&sz=128",
+    "publishedAt": "2026-06-08"
   },
   {
     "name": "Micro1",
@@ -8537,6 +8670,16 @@
     "publishedAt": "2026-03-11"
   },
   {
+    "name": "Ownkube",
+    "domain": "https://ownkube.io",
+    "description": "A Heroku in your cloud. The developer experience you love, running on your own AWS or GCP account, with AI-powered operations from day one.",
+    "llmsTxtUrl": "https://ownkube.io/llms.txt",
+    "llmsFullTxtUrl": "https://ownkube.io/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=ownkube.io&sz=128",
+    "publishedAt": "2026-04-25"
+  },
+  {
     "name": "Oxla",
     "domain": "https://oxla.com",
     "description": "Data processing and analytics platform",
@@ -9229,6 +9372,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=propertyfinder.bg&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "ProWebLook",
+    "domain": "https://proweblook.com",
+    "description": "API toolkit for phone check, passive WhatsApp check, email validator, and IP geo API.",
+    "llmsTxtUrl": "https://proweblook.com/llms.txt",
+    "llmsFullTxtUrl": "https://proweblook.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=proweblook.com&sz=128",
+    "publishedAt": "2026-06-07"
   },
   {
     "name": "Pub Nummer 4 Plauen - Fassbier 🍺 Sofa",
@@ -10320,6 +10473,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "sf-llms-context",
+    "domain": "https://github.com/sf-llms-context/sf-llms-context",
+    "description": "Curated Salesforce knowledge base for AI coding agents — stops LLMs from generating deprecated Apex, LWC, SOQL, and Flow patterns. Verified against Summer '26 (API v67.0).",
+    "llmsTxtUrl": "https://sf-llms-context.github.io/llms.txt",
+    "llmsFullTxtUrl": "https://sf-llms-context.github.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com/sf-llms-context/sf-llms-context&sz=128",
+    "publishedAt": "2026-06-01"
+  },
+  {
     "name": "SGNL.ai",
     "domain": "https://sgnl.ai",
     "description": "Eliminate standing access to critical systems, drastically reduce your blast radius, and achieve Zero Standing Privilege with SGNL''s dynamic access management.",
@@ -10385,6 +10548,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=signalpm.online&sz=128",
     "publishedAt": "2026-02-24"
+  },
+  {
+    "name": "Signaturegen",
+    "domain": "https://signaturegen.app",
+    "description": "Free AI signature generator that turns your name into a downloadable handwritten or typed signature image (SVG or PNG). No account, commercial use.",
+    "llmsTxtUrl": "https://signaturegen.app/llms.txt",
+    "llmsFullTxtUrl": "https://signaturegen.app/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=signaturegen.app&sz=128",
+    "publishedAt": "2026-06-04"
   },
   {
     "name": "Signet",
@@ -11684,6 +11857,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "TrustBoost PII Sanitizer",
+    "domain": "https://api.trustboost.dev",
+    "description": "TrustBoost sanitizes PII from text before it reaches LLMs. Blockchain-verified, x402 native, 8 languages, EU AI Act compliant.",
+    "llmsTxtUrl": "https://api.trustboost.dev/llms.txt",
+    "llmsFullTxtUrl": "https://api.trustboost.dev/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=api.trustboost.dev&sz=128",
+    "publishedAt": "2026-06-11"
+  },
+  {
     "name": "TryOpenClaw.ai",
     "domain": "https://www.tryopenclaw.ai",
     "description": "Managed hosting platform for OpenClaw, the open-source AI assistant that connects to WhatsApp, Telegram, Discord, Slack, and iMessage.",
@@ -12172,6 +12355,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "VibeRaven",
+    "domain": "https://viberaven.dev/",
+    "description": "Production-readiness gate for AI-built apps. VibeRaven gives coding agents a launch checklist, prioritized gaps, agent tasklists, and deploy verification before auth, billing, database, RLS, env vars, webhooks, monitoring, or tests.",
+    "llmsTxtUrl": "https://viberaven.dev/llms.txt",
+    "llmsFullTxtUrl": "https://viberaven.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=viberaven.dev&sz=128",
+    "publishedAt": "2026-06-10"
+  },
+  {
     "name": "Vibetuner",
     "domain": "https://vibetuner.alltuner.com/",
     "description": "Production-ready FastAPI + MongoDB + HTMX project scaffolding.",
@@ -12220,6 +12413,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=viem.sh&sz=128",
     "publishedAt": "2025-03-01"
+  },
+  {
+    "name": "Virality Predictor",
+    "domain": "http://viralitypredictor.net/",
+    "description": "Stop guessing your content performance. Use the Virality Predictor for AI video analysis and optimize your video engagement score before you publish.",
+    "llmsTxtUrl": "http://viralitypredictor.net/llms.txt",
+    "llmsFullTxtUrl": "http://viralitypredictor.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=viralitypredictor.net&sz=128",
+    "publishedAt": "2026-06-08"
   },
   {
     "name": "Virgin Atlantic Careers",
@@ -12549,6 +12752,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.webshare.io&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "WebsiteReady",
+    "domain": "https://websiteready.org/",
+    "description": "Free pre-launch website audit for indie makers and AI tool sites, with launch-readiness checks for SEO basics, crawlability, sitemap, robots.txt, analytics signals, security headers, and AI search readiness.",
+    "llmsTxtUrl": "https://websiteready.org/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=websiteready.org&sz=128",
+    "publishedAt": "2026-06-11"
   },
   {
     "name": "Wedding Shop - Wedding Guest Dresses - Pakistani Bridal Gowns",
