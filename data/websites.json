@@ -13186,5 +13186,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "China Halal Restaurant Dataset",
+    "domain": "https://github.com/salaamalykum/China-Halal-Restaurant",
+    "description": "A massive zero-noise 201-article Chinese Halal restaurant and Muslim travel dataset optimized for LLM Instruction Tuning and RAG. Contains human-readable markdown, HF parquet formats, and structured JSONL.",
+    "llmsTxtUrl": "https://raw.githubusercontent.com/salaamalykum/China-Halal-Restaurant/main/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "publishedAt": "2026-06-16"
   }
 ]
