@@ -4,6 +4,7 @@
  * Tests metadata extraction, URL validation, duplicate detection, and sanitization.
  */
 
+import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import { GET, POST } from '@/app/api/fetch-metadata/route'
 import { getWebsites } from '@/lib/content-loader'
@@ -307,14 +308,16 @@ describe('Fetch Metadata API Route', () => {
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
+      expect(response.status).toBe(400)
+      expect(data.error).toBe('Unable to fetch this website. Please check the URL and try again.')
+      expect(logger.error).not.toHaveBeenCalled()
     })
 
     it('handles non-200 responses', async () => {
       mockFetch.mockResolvedValueOnce({
         ok: false,
-        status: 404
+        status: 404,
+        text: () => Promise.resolve('Not found')
       } as Response)
 
       const request = new Request('http://localhost/api/fetch-metadata', {
@@ -326,8 +329,9 @@ describe('Fetch Metadata API Route', () => {
       const response = await POST(request)
       const data = await response.json()
 
-      expect(response.status).toBe(500)
-      expect(data.error).toBe('Failed to fetch metadata')
+      expect(response.status).toBe(400)
+      expect(data.error).toBe('Unable to fetch this website. Please check the URL and try again.')
+      expect(logger.error).not.toHaveBeenCalled()
     })
 
     it('sanitizes HTML content', async () => {

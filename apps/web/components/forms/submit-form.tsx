@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { FETCH_METADATA_FALLBACK_MESSAGE, getMetadataErrorMessage } from './submit-form-errors'
 import { SubmitFormGuidelines } from './submit-form-guidelines'
 import { type Step1Data, type Step2Data, step1Schema, step2Schema } from './submit-form-schemas'
 import { SubmitFormStep1 } from './submit-form-step1'
@@ -53,7 +54,6 @@ export function SubmitForm() {
     trackSubmitError
   } = useAnalyticsEvents()
 
-  // Determine submission type
   const hasGitHubAuth =
     user && (user.user_metadata?.github_username || user.user_metadata?.user_name)
   const userDisplayName =
@@ -79,7 +79,6 @@ export function SubmitForm() {
     }
   })
 
-  // Track form start on component mount
   useEffect(() => {
     trackFormStepStart(1, 'submit-form', 'submit-page')
   }, [trackFormStepStart])
@@ -115,7 +114,7 @@ export function SubmitForm() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to fetch metadata')
+        throw new Error(await getMetadataErrorMessage(response))
       }
 
       const result = await response.json()
@@ -146,9 +145,9 @@ export function SubmitForm() {
       )
       toast.success('Website info fetched. Please review and complete the submission.')
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+      const errorMessage = error instanceof Error ? error.message : FETCH_METADATA_FALLBACK_MESSAGE
       trackFetchMetadataError(data.website, errorMessage, 'submit-page')
-      toast.error('Failed to fetch website information. You can fill in the details manually.')
+      toast.error(errorMessage)
 
       transitionToStep2(
         {
@@ -237,7 +236,6 @@ export function SubmitForm() {
             </p>
           </div>
 
-          {/* User submission info */}
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
             <div className="flex items-start space-x-3">
               <div className="flex-shrink-0">

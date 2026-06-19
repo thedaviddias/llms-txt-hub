@@ -9,7 +9,7 @@ import { WebsiteDocsSection } from '@/components/website/website-docs-section'
 import { WebsiteError } from '@/components/website/website-error'
 import { WebsiteHero } from '@/components/website/website-hero'
 import { WebsiteRelatedProjects } from '@/components/website/website-related-projects'
-import { getWebsiteBySlug, getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
+import { getWebsiteBySlug } from '@/lib/content-loader'
 import { getRoute } from '@/lib/routes'
 import { generateWebsiteDetailSchema } from '@/lib/schema'
 import { generateDynamicMetadata } from '@/lib/seo/seo-config'
@@ -17,6 +17,12 @@ import { generateDynamicMetadata } from '@/lib/seo/seo-config'
 interface ProjectPageProps {
   params: Promise<{ slug: string }>
 }
+
+/**
+ * Website detail pages use request-time CSP nonces from the root layout and
+ * JSON-LD script tags, so they must render dynamically instead of ISR/SSG.
+ */
+export const dynamic = 'force-dynamic'
 
 /**
  * Generates metadata for the website page
@@ -67,32 +73,6 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       title: 'Website | llms.txt hub',
       description: 'Website information'
     }
-  }
-}
-
-/**
- * Generates static parameters for all website pages
- *
- * @returns Promise<Array<{ slug: string }>> - Array of website slugs for static generation
- */
-export async function generateStaticParams() {
-  try {
-    const websites = await getWebsites()
-
-    if (!websites || websites.length === 0) {
-      return []
-    }
-
-    // Only include websites with valid string slugs
-    const params = websites
-      .filter((website: WebsiteMetadata) => website.slug && typeof website.slug === 'string')
-      .map((website: WebsiteMetadata) => ({
-        slug: website.slug
-      }))
-
-    return params
-  } catch (_error) {
-    return []
   }
 }
 
