@@ -1,10 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "git": {
-    "deploymentEnabled": {
-      "main": true,
-      "**": false
-    }
-  },
+  "ignoreCommand": "test \"$VERCEL_ENV\" != \"production\"",
   "github": { "silent": true }
 }
