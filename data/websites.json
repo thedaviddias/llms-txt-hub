@@ -13186,5 +13186,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Shieldz",
+    "domain": "https://shieldz.cash",
+    "description": "Non-custodial crypto payment gateway and API. Accept USDC, USDT, Bitcoin and Zcash directly to your own wallet with $0 platform fees.",
+    "llmsTxtUrl": "https://shieldz.cash/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=shieldz.cash&sz=128",
+    "publishedAt": "2026-06-30"
   }
 ]
