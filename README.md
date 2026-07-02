@@ -1125,6 +1125,8 @@ AI SEO Search Visibility & AI Rank Tracking Platform for LLM Search Engines like
 - ![orbis favicon](https://www.google.com/s2/favicons?domain=meetorbis.com&size=128) **[orbis](https://meetorbis.com)** - AI relationship workspace and CRM for founders. Powered by OpenClaw, an open-source AI agent framework. 1,000+ integrations, multi-channel AI outreach. <sub>[llms.txt](https://meetorbis.com/llms.txt) • [llms-full.txt](https://meetorbis.com/llms-full.txt)</sub>
 - ![RepuAI favicon](https://www.google.com/s2/favicons?domain=repuai.live&size=128) **[RepuAI](https://repuai.live)** - Monitor and optimize your brand in AI search engines like ChatGPT, Perplexity, and Grok. Track visibility and improve your AI presence. <sub>[llms.txt](https://repuai.live/llms.txt) • [llms-full.txt](https://repuai.live/llms-full.txt)</sub>
 
+- ![Sellexa favicon](https://www.google.com/s2/favicons?domain=sellexa.cz&size=128) **[Sellexa](https://sellexa.cz)** - Nejlepší české B2B call centrum. Sjednáváme schůzky s rozhodovateli — cold calling, lead generation, appointment setting. 80%+ průchod přes recepce, 124M+ Kč sjednaných kontraktů. Lidský tým, žádní roboti. ČR, SR, EU. <sub>[llms.txt](https://sellexa.cz/llms.txt) • [llms-full.txt](https://sellexa.cz/llms-full.txt)</sub>
+
 ### 🔍 other
 
 - ![1MillionBot favicon](https://www.google.com/s2/favicons?domain=1millionbot.com&size=128) **[1MillionBot](https://1millionbot.com/en/)** - 1MillionBot builds AI agents, chatbots, and generative AI solutions for businesses, universities, and public institutions. <sub>[llms.txt](https://1millionbot.com/en/llms.txt)</sub>
