@@ -13186,5 +13186,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Conformi",
+    "domain": "https://conformi.eu",
+    "description": "EU legal research with verifiable CELEX citations from the EUR-Lex corpus (DE/EN/FR). Semantic search, knowledge reports and application-date timelines for GDPR, AI Act, NIS2, DORA — as SaaS, REST API and MCP server.",
+    "llmsTxtUrl": "https://conformi.eu/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=conformi.eu&sz=128",
+    "publishedAt": "2026-06-20"
   }
 ]
