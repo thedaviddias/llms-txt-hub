@@ -1326,6 +1326,9 @@ Ich bin in den Bereichen Elektrotechnik und IT tätig. <sub>[llms.txt](https://w
 - ![Unkey favicon](https://www.google.com/s2/favicons?domain=unkey.com&size=128) **[Unkey](https://unkey.com)** - API key management and authentication platform <sub>[llms.txt](https://www.unkey.com/docs/llms.txt)</sub>
 - ![VoidMob favicon](https://www.google.com/s2/favicons?domain=voidmob.com&size=128) **[VoidMob](https://voidmob.com)** - Privacy-focused premium mobile proxies, non-VoIP SMS verification, and global eSIMs in one unified platform. Open-source MCP server for AI agents. <sub>[llms.txt](https://voidmob.com/llms.txt)</sub>
 - ![Whoisbg.com favicon](https://www.google.com/s2/favicons?domain=whoisbg.com&size=128) **[Whoisbg.com](https://whoisbg.com/)** - Bulgarian WHOIS lookup and domain intelligence platform. Provides real-time WHOIS data, DNS records, SSL certificates, SEO analysis, and 20+ other web tools. <sub>[llms.txt](https://whoisbg.com/llms.txt)</sub>
+- ![AsmiAI favicon](https://www.google.com/s2/favicons?domain=asmiai.xyz&size=128) **[AsmiAI](https://asmiai.xyz)** - Independent AI tools directory with 236 reviewed and ranked AI products across 29 categories, 1,638 side-by-side comparisons, and an AI-powered tool advisor. <sub>[llms.txt](https://asmiai.xyz/llms.txt) • [llms-full.txt](https://asmiai.xyz/llms-full.txt)</sub>
+
+
 
 <!-- LLMS-LIST:END -->
 
