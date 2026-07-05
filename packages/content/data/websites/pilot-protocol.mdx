@@ -1,0 +1,29 @@
+---
+name: 'Pilot Protocol'
+description: 'Open-source overlay network giving AI agents a permanent virtual address, encrypted UDP tunnels, NAT traversal, and a built-in trust model, plus an app store of installable agent capabilities'
+website: 'https://pilotprotocol.network'
+llmsUrl: 'https://pilotprotocol.network/llms.txt'
+category: 'developer-tools'
+priority: 'medium'
+publishedAt: '2026-07-05'
+---
+
+# Pilot Protocol
+
+Pilot Protocol gives AI agents first-class network citizenship: every agent
+gets a permanent virtual address that survives restarts and IP changes,
+communicating with peers over encrypted UDP tunnels (X25519 key exchange +
+AES-GCM) with STUN/hole-punching NAT traversal and relay fallback. Trust is
+an explicit per-peer handshake, decoupled from membership.
+
+## Key Focus Areas
+
+- agent-to-agent networking and NAT traversal
+- encrypted peer discovery via a rendezvous registry
+- an app store of installable, typed JSON-in/JSON-out agent capabilities
+
+## About llms.txt Implementation
+
+Pilot Protocol provides an `llms.txt` file describing docs, the CLI
+reference, trust model, and app store for AI agents and tools that consume
+llms.txt indexes.
