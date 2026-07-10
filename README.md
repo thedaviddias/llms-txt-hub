@@ -35,6 +35,7 @@ We organize projects into primary categories (🤖 **AI & ML**, 💻 **Developer
 | ⚡ **Raycast Extension**  | Search and explore llms.txt files directly in Raycast           | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
 | ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI            | [LLMs.txt Generator](https://llmstxtgenerator.co/)                                                            |
 | 🛠 **llmstxt-cli**        | Install llms.txt docs as skills into 35+ AI coding agents       | [npm](https://www.npmjs.com/package/llmstxt-cli) · [README](packages/cli/README.md)                           |
+| 📄 **@geosuite/llms-txt-generator** | Zero-dependency CLI + GitHub Action: turn a site's `sitemap.xml` into an `llms.txt` (open source, MIT) | [GitHub](https://github.com/TryGeoSuite/llms-txt-generator) · [npm](https://www.npmjs.com/package/@geosuite/llms-txt-generator) |
 
 <!-- LLMS-LIST:START - Do not remove or modify this section -->
 ## LLM Tools and Resources
