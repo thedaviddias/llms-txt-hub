@@ -1,0 +1,24 @@
+---
+name: 'paas.build'
+description: 'Payments for AI-built apps — open a real merchant account through progressive KYB and accept payments on FCA-authorised rails (UK/EU/US), from a prompt via MCP or REST API.'
+website: 'https://paas.build'
+llmsUrl: 'https://paas.build/llms.txt'
+llmsFullUrl: 'https://paas.build/llms-full.txt'
+category: 'finance-fintech'
+publishedAt: '2026-07-10'
+---
+
+# paas.build
+
+paas.build lets AI coding agents (and the developers driving them) add real payments to an app in one session: identify the business, open a live merchant account through progressive KYB on UniPaaS (FCA-authorised, reference 929994), and create hosted checkouts. It ships an official MCP server (`@paasbuild/mcp` on npm, remote endpoints at `https://paas.build/mcp` and `https://paas.build/sse`) with three tools: `identify_business`, `go_live`, and `create_checkout`.
+
+## Key Focus Areas
+
+- Merchant onboarding — progressive KYB that returns a real, live merchant account, not a sandbox
+- Hosted checkout — create checkout sessions from a prompt or an API call
+- MCP-first integration — official npm server plus streamable HTTP and SSE remote endpoints
+- Regulated rails — payments processed on UniPaaS's FCA-authorised infrastructure (UK/EU/US)
+
+## About llms.txt Implementation
+
+paas.build publishes llms.txt and llms-full.txt so AI agents can discover the API surface, MCP tools, onboarding flow, and go-live requirements directly, without scraping the marketing site.
