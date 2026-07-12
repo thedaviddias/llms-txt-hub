@@ -11928,6 +11928,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Use AI For",
+    "domain": "https://use-ai-for.com",
+    "description": "AI tools directory organized by profession — helps non-technical professionals find the right AI tools for their specific job role",
+    "llmsTxtUrl": "https://use-ai-for.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=use-ai-for.com&sz=128",
+    "publishedAt": "2026-07-12"
+  },
+  {
     "name": "useapi.net",
     "domain": "https://useapi.net",
     "description": "Experimental API for popular AI services by useapi.net.",
