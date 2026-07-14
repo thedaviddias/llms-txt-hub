@@ -30,7 +30,7 @@
     "test:e2e:smoke": "turbo test:e2e:smoke --filter=e2e",
     "test:e2e:ui": "turbo test:e2e:ui --filter=e2e",
     "test:e2e:debug": "turbo test:e2e:debug --filter=e2e",
-    "test:repo": "pnpm exec vitest run scripts/pr-triage.test.ts scripts/pr-backfill-dry-run.test.ts",
+    "test:repo": "pnpm exec vitest run scripts/pr-triage.test.ts scripts/pr-backfill-dry-run.test.ts scripts/deployment-dependencies.test.ts",
     "test:watch": "turbo test:watch --cache-dir=.turbo",
     "typecheck": "turbo typecheck",
     "update": "pnpm update -r",
