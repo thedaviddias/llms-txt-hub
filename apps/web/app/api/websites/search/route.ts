@@ -18,7 +18,7 @@ interface SearchWebsitesResponse {
 
 /**
  * API endpoint for searching all websites
- * Searches across all 887+ websites regardless of what's loaded on the page
+ * Searches across the full website directory regardless of what's loaded on the page
  * Supports search by name, description, and category
  */
 export async function GET(request: Request) {
@@ -31,11 +31,13 @@ export async function GET(request: Request) {
     )
 
     if (!query) {
-      return NextResponse.json({
+      const response: SearchWebsitesResponse = {
         websites: [],
         totalCount: 0,
         query: ''
-      } as SearchWebsitesResponse)
+      }
+
+      return NextResponse.json(response)
     }
 
     const allWebsites = await getWebsites()

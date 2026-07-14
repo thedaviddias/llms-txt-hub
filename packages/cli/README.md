@@ -2,7 +2,7 @@
 
 Install llms.txt documentation into your AI coding agents.
 
-> 650+ entries from the [llms-txt-hub](https://github.com/thedaviddias/llms-txt-hub) registry, delivered as agent skills for Claude Code, Cursor, Windsurf, Cline, Codex, Gemini CLI & 30+ more.
+> 1,500+ entries from the [llms-txt-hub](https://github.com/thedaviddias/llms-txt-hub) registry, delivered as agent skills for Claude Code, Cursor, Windsurf, Cline, Codex, Gemini CLI & 30+ more.
 
 ## Quick Start
 
