@@ -30,7 +30,7 @@ describe('/api/cli/stats/[slug]', () => {
 
     expect(response.status).toBe(200)
     expect(data.count).toBe(42)
-    expect(mockHget).toHaveBeenCalledWith('telemetry:skills:total', 'astro')
+    expect(mockHget).toHaveBeenCalledWith('telemetry:v2:skills:installs', 'astro')
   })
 
   it('returns 0 for a slug with no installs', async () => {

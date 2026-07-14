@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { getRawClient } from '@/lib/redis'
 
 const ALLOWED_EVENTS = ['install', 'remove', 'init', 'update', 'search'] as const
+const INSTALL_EVENTS = ['install', 'init'] as const
 
 const DAY_SECONDS = 86_400
 const TTL_DAYS = 90
@@ -63,6 +64,29 @@ function isValidEvent(value: unknown): value is (typeof ALLOWED_EVENTS)[number] 
 }
 
 /**
+ * Check whether a telemetry event represents a successful installation flow.
+ */
+function isInstallEvent(event: (typeof ALLOWED_EVENTS)[number]): boolean {
+  return INSTALL_EVENTS.some(installEvent => installEvent === event)
+}
+
+/**
+ * Parse and deduplicate a comma-separated telemetry field.
+ */
+function parseTelemetryList(value: unknown): string[] {
+  if (typeof value !== 'string') return []
+
+  return [
+    ...new Set(
+      value
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean)
+    )
+  ]
+}
+
+/**
  * Handle CLI telemetry POST requests.
  */
 export async function POST(request: NextRequest) {
@@ -83,7 +107,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { event, skills, agents } = body
+    const { event, skills, agents, schemaVersion } = body
 
     if (!isValidEvent(event)) {
       return NextResponse.json({ ok: false, error: 'Invalid event type' }, { status: 400 })
@@ -100,35 +124,24 @@ export async function POST(request: NextRequest) {
     // Per-event type daily counter
     pipeline.hincrby(`telemetry:events:${date}`, event, 1)
 
-    // Per-skill counters
-    const slugs =
-      skills && typeof skills === 'string'
-        ? skills
-            .split(',')
-            .map(s => s.trim())
-            .filter(Boolean)
-        : []
-    for (const slug of slugs) {
-      pipeline.hincrby(`telemetry:daily:${date}`, slug, 1)
-      pipeline.hincrby('telemetry:skills:total', slug, 1)
-    }
+    const slugs = parseTelemetryList(skills)
 
-    // Per-agent-per-skill counters (e.g. telemetry:skills:agents:stripe → { cursor: 5, claude-code: 3 })
-    if (event === 'install' && slugs.length > 0 && agents && typeof agents === 'string') {
-      const agentNames = agents
-        .split(',')
-        .map(a => a.trim())
-        .filter(Boolean)
+    if (isInstallEvent(event)) {
+      const agentNames = schemaVersion === 2 ? parseTelemetryList(agents) : []
+
       for (const slug of slugs) {
+        pipeline.hincrby(`telemetry:v2:daily:${date}`, slug, 1)
+        pipeline.hincrby('telemetry:v2:skills:installs', slug, 1)
+
         for (const agent of agentNames) {
-          pipeline.hincrby(`telemetry:skills:agents:${slug}`, agent, 1)
+          pipeline.hincrby(`telemetry:v2:skills:agents:${slug}`, agent, 1)
         }
       }
     }
 
     // Set TTL on daily keys
     pipeline.expire(`telemetry:events:${date}`, TTL_SECONDS)
-    pipeline.expire(`telemetry:daily:${date}`, TTL_SECONDS)
+    pipeline.expire(`telemetry:v2:daily:${date}`, TTL_SECONDS)
 
     await pipeline.exec()
 

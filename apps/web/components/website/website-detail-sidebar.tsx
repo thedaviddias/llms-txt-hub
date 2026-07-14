@@ -34,7 +34,8 @@ interface WebsiteDetailSidebarProps {
 export async function WebsiteDetailSidebar({ website }: WebsiteDetailSidebarProps) {
   const cliSlug = webSlugToCliSlug.get(website.slug)
 
-  let installCount = 0
+  let installRuns = 0
+  let agentPlacements = 0
   let agentInstalls: { name: string; count: number }[] = []
 
   if (cliSlug) {
@@ -42,16 +43,18 @@ export async function WebsiteDetailSidebar({ website }: WebsiteDetailSidebarProp
       const redis = getRawClient()
       if (redis) {
         const [totalCount, agentData] = await Promise.all([
-          redis.hget<number>('telemetry:skills:total', cliSlug),
-          redis.hgetall<Record<string, number>>(`telemetry:skills:agents:${cliSlug}`)
+          redis.hget<number>('telemetry:v2:skills:installs', cliSlug),
+          redis.hgetall<Record<string, number>>(`telemetry:v2:skills:agents:${cliSlug}`)
         ])
-        installCount = totalCount ?? 0
+        installRuns = totalCount ?? 0
 
         if (agentData) {
-          agentInstalls = Object.entries(agentData)
-            .map(([name, count]) => ({ name, count: Number(count) }))
-            .sort((a, b) => b.count - a.count)
-            .slice(0, 8)
+          const installs = Object.entries(agentData).map(([name, count]) => ({
+            name,
+            count: Number(count)
+          }))
+          agentPlacements = installs.reduce((total, install) => total + install.count, 0)
+          agentInstalls = installs.sort((a, b) => b.count - a.count).slice(0, 8)
         }
       }
     } catch {
@@ -63,14 +66,28 @@ export async function WebsiteDetailSidebar({ website }: WebsiteDetailSidebarProp
     <aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
       <div className="rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm p-6 space-y-6">
         {/* Install count */}
-        {cliSlug && installCount > 0 && (
+        {cliSlug && installRuns > 0 && (
           <div>
             <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
               <Download className="size-3" aria-hidden />
-              Total Installs
+              Install runs
             </span>
             <p className="text-3xl font-semibold font-mono tracking-tight mt-1">
-              {formatCount(installCount)}
+              {formatCount(installRuns)}
+            </p>
+          </div>
+        )}
+
+        {cliSlug && agentPlacements > 0 && (
+          <div>
+            <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              Agent placements
+            </span>
+            <p className="text-3xl font-semibold font-mono tracking-tight mt-1">
+              {formatCount(agentPlacements)}
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground">
+              One run can install into multiple agents.
             </p>
           </div>
         )}
@@ -108,11 +125,11 @@ export async function WebsiteDetailSidebar({ website }: WebsiteDetailSidebarProp
           </div>
         )}
 
-        {/* Installed on — per-agent breakdown */}
+        {/* Installed into — per-agent breakdown */}
         {cliSlug && agentInstalls.length > 0 && (
           <div>
             <span className="text-xs font-mono uppercase tracking-wider text-muted-foreground mb-3 block">
-              Installed on
+              Installed into
             </span>
             <div className="divide-y divide-border/50">
               {agentInstalls.map(({ name, count }) => (

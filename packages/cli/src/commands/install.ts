@@ -200,6 +200,6 @@ export async function install({ names, options }: InstallInput): Promise<void> {
   track({
     event: 'install',
     skills: installedSlugs.join(','),
-    agents: agents.map(a => a.name).join(',')
+    agents: targetAgents.map(agent => agent.name).join(',')
   })
 }

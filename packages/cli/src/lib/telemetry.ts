@@ -1,4 +1,5 @@
 const TELEMETRY_ENDPOINT = 'https://llmstxthub.com/api/cli/telemetry'
+const TELEMETRY_SCHEMA_VERSION = 2
 const CLI_VERSION = __CLI_VERSION__
 
 const CI_ENV_VARS = ['CI', 'GITHUB_ACTIONS', 'GITLAB_CI', 'CIRCLECI', 'TRAVIS']
@@ -34,6 +35,7 @@ export function track(params: TrackParams): void {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       ...params,
+      schemaVersion: TELEMETRY_SCHEMA_VERSION,
       version: CLI_VERSION,
       ci: isCI() || undefined
     }),

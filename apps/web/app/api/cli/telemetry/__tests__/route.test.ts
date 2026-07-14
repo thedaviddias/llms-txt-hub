@@ -50,11 +50,16 @@ describe('/api/cli/telemetry', () => {
       expect(data.ok).toBe(true)
     })
 
-    it('stores per-event daily counters via pipeline', async () => {
+    it('stores install-run counters for init events', async () => {
       const request = createMockRequest('/api/cli/telemetry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: { event: 'init', skills: 'stripe,astro' }
+        body: {
+          event: 'init',
+          skills: 'stripe,astro',
+          agents: 'cursor,codex',
+          schemaVersion: 2
+        }
       })
 
       await POST(request)
@@ -66,19 +71,21 @@ describe('/api/cli/telemetry', () => {
         'init',
         1
       )
-      // skill counters — 2 skills × 2 calls each (daily + total)
+      // install-run counters
       expect(mockHincrby).toHaveBeenCalledWith(
-        expect.stringMatching(/^telemetry:daily:\d{4}-\d{2}-\d{2}$/),
+        expect.stringMatching(/^telemetry:v2:daily:\d{4}-\d{2}-\d{2}$/),
         'stripe',
         1
       )
-      expect(mockHincrby).toHaveBeenCalledWith('telemetry:skills:total', 'stripe', 1)
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:v2:skills:installs', 'stripe', 1)
       expect(mockHincrby).toHaveBeenCalledWith(
-        expect.stringMatching(/^telemetry:daily:\d{4}-\d{2}-\d{2}$/),
+        expect.stringMatching(/^telemetry:v2:daily:\d{4}-\d{2}-\d{2}$/),
         'astro',
         1
       )
-      expect(mockHincrby).toHaveBeenCalledWith('telemetry:skills:total', 'astro', 1)
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:v2:skills:installs', 'astro', 1)
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:v2:skills:agents:stripe', 'cursor', 1)
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:v2:skills:agents:astro', 'codex', 1)
       expect(mockExec).toHaveBeenCalled()
     })
 
@@ -103,29 +110,82 @@ describe('/api/cli/telemetry', () => {
       const request = createMockRequest('/api/cli/telemetry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: { event: 'install', skills: 'stripe', agents: 'cursor,claude-code' }
+        body: {
+          event: 'install',
+          skills: 'stripe',
+          agents: 'cursor,claude-code',
+          schemaVersion: 2
+        }
       })
 
       await POST(request)
 
-      expect(mockHincrby).toHaveBeenCalledWith('telemetry:skills:agents:stripe', 'cursor', 1)
-      expect(mockHincrby).toHaveBeenCalledWith('telemetry:skills:agents:stripe', 'claude-code', 1)
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:v2:skills:agents:stripe', 'cursor', 1)
+      expect(mockHincrby).toHaveBeenCalledWith(
+        'telemetry:v2:skills:agents:stripe',
+        'claude-code',
+        1
+      )
     })
 
-    it('does not store per-agent counters for non-install events', async () => {
+    it.each(['search', 'update', 'remove'])('%s does not change install counters', async event => {
       const request = createMockRequest('/api/cli/telemetry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: { event: 'search', skills: 'stripe', agents: 'cursor' }
+        body: { event, skills: 'stripe', agents: 'cursor' }
       })
 
       await POST(request)
 
       expect(mockHincrby).not.toHaveBeenCalledWith(
-        expect.stringMatching(/^telemetry:skills:agents:/),
+        expect.stringMatching(/^telemetry:v2:(daily|skills:)/),
         expect.anything(),
         expect.anything()
       )
+    })
+
+    it('deduplicates skill and agent names before incrementing counters', async () => {
+      const request = createMockRequest('/api/cli/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+          event: 'install',
+          skills: 'stripe,stripe,astro,stripe',
+          agents: 'cursor,cursor,codex,cursor',
+          schemaVersion: 2
+        }
+      })
+
+      await POST(request)
+
+      expect(mockHincrby.mock.calls).toEqual(
+        expect.arrayContaining([
+          ['telemetry:v2:skills:installs', 'stripe', 1],
+          ['telemetry:v2:skills:installs', 'astro', 1],
+          ['telemetry:v2:skills:agents:stripe', 'cursor', 1],
+          ['telemetry:v2:skills:agents:stripe', 'codex', 1],
+          ['telemetry:v2:skills:agents:astro', 'cursor', 1],
+          ['telemetry:v2:skills:agents:astro', 'codex', 1]
+        ])
+      )
+      expect(
+        mockHincrby.mock.calls.filter(
+          ([key, field]) => key === 'telemetry:v2:skills:agents:stripe' && field === 'cursor'
+        )
+      ).toHaveLength(1)
+    })
+
+    it('does not trust agent attribution from legacy CLI payloads', async () => {
+      const request = createMockRequest('/api/cli/telemetry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: { event: 'install', skills: 'stripe', agents: 'cursor' }
+      })
+
+      await POST(request)
+
+      expect(mockHincrby).toHaveBeenCalledWith('telemetry:v2:skills:installs', 'stripe', 1)
+      expect(mockHincrby).not.toHaveBeenCalledWith('telemetry:v2:skills:agents:stripe', 'cursor', 1)
     })
 
     it('handles events without skills field', async () => {

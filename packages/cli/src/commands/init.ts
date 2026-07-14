@@ -77,7 +77,6 @@ export async function init(options: InitOptions): Promise<void> {
       projectDir,
       entries: depMatches.map(m => m.registryEntry),
       options,
-      agents,
       targetAgents: agents
     })
   }
@@ -108,7 +107,6 @@ export async function init(options: InitOptions): Promise<void> {
     projectDir,
     entries: selectedEntries,
     options: { ...options, full: format === 'llms-full.txt' },
-    agents,
     targetAgents
   })
 }
@@ -342,7 +340,6 @@ interface InstallEntriesInput {
   projectDir: string
   entries: RegistryEntry[]
   options: InitOptions
-  agents: ReturnType<typeof detectInstalledAgents>
   targetAgents: AgentConfig[]
 }
 
@@ -353,7 +350,6 @@ async function installEntries({
   projectDir,
   entries,
   options,
-  agents,
   targetAgents
 }: InstallEntriesInput): Promise<void> {
   if (options.dryRun) {
@@ -443,6 +439,6 @@ async function installEntries({
   track({
     event: 'init',
     skills: installedSlugs.join(','),
-    agents: agents.map(a => a.name).join(',')
+    agents: targetAgents.map(agent => agent.name).join(',')
   })
 }
