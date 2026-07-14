@@ -8,6 +8,7 @@
       "env": [
         "CLERK_SECRET_KEY",
         "CLERK_WEBHOOK_SECRET",
+        "ENABLE_EXPERIMENTAL_COREPACK",
         "FLAGS_SECRET",
         "GITHUB_TOKEN",
         "KV_REST_API_READ_ONLY_TOKEN",

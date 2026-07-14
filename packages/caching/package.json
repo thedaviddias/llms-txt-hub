@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@t3-oss/env-nextjs": "catalog:",
-    "@upstash/redis": "catalog:"
+    "@upstash/redis": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",

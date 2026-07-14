@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "catalog:",
-    "@thedaviddias/utils": "workspace:*"
+    "@thedaviddias/utils": "workspace:*",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@thedaviddias/config-next": "workspace:*",
