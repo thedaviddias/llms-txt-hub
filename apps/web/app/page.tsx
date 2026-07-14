@@ -17,7 +17,7 @@ import { generateBaseMetadata, generateWebsiteSchema, KEYWORDS } from '@/lib/seo
 export const metadata: Metadata = generateBaseMetadata({
   title: 'Directory of AI-Ready Documentation & llms.txt Examples',
   description:
-    'Discover 500+ websites implementing the llms.txt standard. Browse real llms.txt examples, learn the specification, and find AI-ready documentation for APIs, platforms, and developer tools.',
+    'Discover 2,500+ websites implementing the llms.txt standard. Browse real llms.txt examples, learn the specification, and find AI-ready documentation for APIs, platforms, and developer tools.',
   keywords: [
     ...KEYWORDS.homepage,
     ...KEYWORDS.global,

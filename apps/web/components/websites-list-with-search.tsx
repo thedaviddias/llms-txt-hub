@@ -49,7 +49,7 @@ export function WebsitesListWithSearch({
 
   /**
    * Search all websites using server-side search
-   * Searches across all 887+ websites regardless of what's loaded on the page
+   * Searches across the full website directory regardless of what's loaded on the page
    */
   const searchAllWebsites = useCallback(async (query: string) => {
     if (!query.trim()) {
