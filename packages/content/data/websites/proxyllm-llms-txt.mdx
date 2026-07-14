@@ -1,0 +1,12 @@
+---
+name: 'ProxyLLM'
+description: 'OpenAI-compatible LLM gateway that routes workloads across flat-fee ChatGPT/Codex subscription lanes, Claude Code bridges, and metered API keys with fallback, budgets, and logs. Agents can sign up autonomously via email OTP (see /auth.md).'
+website: 'https://proxyllm.ai/'
+llmsUrl: 'https://proxyllm.ai/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-07-15'
+---
+
+# ProxyLLM
+
+OpenAI-compatible LLM gateway. One routing key rides provider lanes with fallback: a flat-fee ChatGPT/Codex subscription, self-hosted Claude Code bridges, or metered API keys, with budgets and request logs. Agents can create an account without a human in the loop: email OTP in, sk_ token out, HTTP 402 with a checkout link until the membership is activated. Machine manifest at https://proxyllm.ai/auth.md, OpenAPI at https://proxyllm.ai/openapi.json.
