@@ -23,7 +23,7 @@ export async function GET(
   }
 
   try {
-    const count = await redis.hget<number>('telemetry:skills:total', slug)
+    const count = await redis.hget<number>('telemetry:v2:skills:installs', slug)
     return NextResponse.json(
       { count: count ?? 0 },
       {
