@@ -1,0 +1,35 @@
+---
+name: 'Chinng Lab AI-Agent Portal'
+description: 'AI-agent-first content hub serving news, CVE advisories, and Japanese/US government documents metadata-first over MCP and REST, plus an Agent-Readiness directory scoring how well other sites expose agent surfaces.'
+website: 'https://portal.chinng-lab-srv.dev'
+llmsUrl: 'https://portal.chinng-lab-srv.dev/llms.txt'
+llmsFullUrl: 'https://portal.chinng-lab-srv.dev/llms-full.txt'
+category: 'ai-ml'
+publishedAt: '2026-07-25'
+---
+
+# Chinng Lab AI-Agent Portal
+
+An AI-agent-first content hub. Crawlers ingest articles three times a day and an asynchronous worker enriches them with LLM summaries, machine translation to English, and knowledge-graph entity lookup. Everything is served metadata-first — title, summary, entities, related links — so agents can filter before fetching bodies. Article bodies are gated per each item's redistribution license: first-party content is served in full, third-party sources are link-only.
+
+## Key Focus Areas
+
+- News articles (`news/`) — crawled and enriched with `summary_en` as the English pivot
+- CVE and security advisories (`security/`) — vulnerability feed with its own sitemap
+- Government documents (`government/`) — Japanese agencies and the U.S. Federal Register, with provenance fields
+- Agent-Readiness directory — scores other domains 0–100 across Discoverability, Content, Bot Access Control, API/Auth/MCP/Skill, and Commerce, mapped to Level 0–3
+- Citation Packs — per-article attribution, license, content hash, and reuse policy at `/citations/<id>.json`
+
+## Agent Surfaces
+
+- **MCP server**: `https://portal.chinng-lab-srv.dev/mcp` (streamable-http, eight tools)
+- **MCP Server Card**: `/.well-known/mcp/server-card.json`
+- **AI catalog** (Agentic Resource Discovery): `/.well-known/ai-catalog.json`
+- **API catalog** (RFC 9727 linkset): `/.well-known/api-catalog`
+- **Agent Skills index**: `/.well-known/agent-skills/index.json`
+- **REST, no auth**: `/api/search`, `/api/government`, `/api/popular`, `/api/changes`, `/api/surfaces`
+- **Markdown views**: every article is `text/markdown` at its canonical URL; category feeds at `/feeds/<category>.md`
+
+## About llms.txt Implementation
+
+The portal's `llms.txt` documents the full read surface — MCP tools, REST endpoints, the license model that governs body exposure, and the incremental-monitoring pattern via `content_hash` change detection — so an agent can go from discovery to a correctly attributed citation without scraping HTML. `llms-full.txt` expands this with the complete endpoint and schema detail. Sitemaps are split by content family (`sitemap_news.xml`, `sitemap_cve.xml`, `sitemap_government.xml`, `sitemap_sites.xml`) so agents never mix categories.
