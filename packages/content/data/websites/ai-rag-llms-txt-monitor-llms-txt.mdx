@@ -1,6 +1,6 @@
 ---
-name: 'AI/RAG llms.txt Monitor'
-description: 'Pay-per-result Apify Actor that generates review-ready llms.txt files, site manifests, and page-change reports across repeat runs.'
+name: 'llms.txt Generator on Apify'
+description: 'Pay-per-result Apify Actor that crawls public same-domain pages and generates review-ready llms.txt, optional llms-full.txt, and an exportable per-page dataset.'
 website: 'https://cekuu35.github.io/llms-txt-generator/'
 llmsUrl: 'https://cekuu35.github.io/llms.txt'
 llmsFullUrl: ''
@@ -8,18 +8,18 @@ category: 'developer-tools'
 publishedAt: '2026-07-25'
 ---
 
-# AI/RAG llms.txt Monitor
+# llms.txt Generator on Apify
 
-A public landing page for a bounded, pay-per-result Apify Actor that generates review-ready `llms.txt` and optional `llms-full.txt` files from public pages. It also produces a per-page inventory, normalized metadata, SHA-256 content fingerprints, and a comparable change report for later successful runs.
+A public landing page for a pay-per-result Apify Actor that crawls public same-domain pages and generates review-ready `llms.txt` and optional `llms-full.txt` files. Each processed page is also written to an exportable dataset with its URL, title, description, and content size.
 
 ## Key Focus Areas
 
+- Bounded same-domain crawling through the `maxPages` input
 - Reviewable `llms.txt` and optional `llms-full.txt` outputs
-- Public-page inventory with normalized URLs and metadata
-- Hashed manifests for repeatable comparisons
-- Added, changed, unchanged, and possible-removal reporting
-- Bounded crawl inputs and human review before publication
+- Per-page dataset exportable as JSON or CSV
+- Batch and API use through Apify
+- Human review before publishing generated files
 
 ## About llms.txt Implementation
 
-The root `llms.txt` describes the current public product and developer surfaces. The Actor checks public pages only, can respect `robots.txt`, and does not bypass authentication. `llms.txt` is an emerging optional convention; neither the landing page nor the Actor guarantees rankings, AI citations, traffic, conversions, or revenue.
+The root `llms.txt` describes the current public product and developer surfaces. The Actor processes public pages and does not bypass authentication. `llms.txt` is an emerging optional convention; neither the landing page nor the Actor guarantees rankings, AI citations, traffic, conversions, or revenue.
