@@ -1,0 +1,25 @@
+---
+name: 'AI/RAG Readiness & llms.txt Change Monitor'
+description: 'Public landing page for a pay-per-result Apify Actor that generates review-ready llms.txt and llms-full.txt files, creates hashed site manifests, and reports page changes across repeat runs.'
+website: 'https://cekuu35.github.io/llms-txt-generator/'
+llmsUrl: 'https://cekuu35.github.io/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-07-25'
+---
+
+# AI/RAG Readiness & llms.txt Change Monitor
+
+A public landing page for a bounded, pay-per-result Apify Actor that generates review-ready `llms.txt` and optional `llms-full.txt` files from public site pages. It also produces a per-page inventory, normalized metadata, SHA-256 content fingerprints, and a comparable change report for later successful runs.
+
+## Key Focus Areas
+
+- Reviewable `llms.txt` and optional `llms-full.txt` outputs
+- Public-page inventory with normalized URLs and metadata
+- Hashed manifests for repeatable comparisons
+- Added, changed, unchanged, and possible-removal reporting
+- Bounded crawl inputs and human review before publication
+
+## About llms.txt Implementation
+
+The root `llms.txt` describes the current public product and developer surfaces. The Actor checks public pages only, can respect `robots.txt`, and does not bypass authentication. `llms.txt` is an emerging optional convention; neither the landing page nor the Actor guarantees rankings, AI citations, traffic, conversions, or revenue.
