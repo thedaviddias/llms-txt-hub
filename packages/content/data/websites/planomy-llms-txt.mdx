@@ -1,0 +1,31 @@
+---
+name: 'Planomy'
+description: 'Free, local-first US retirement and personal-finance planner — year-by-year cash flow, tax, Social Security, Medicare and RMD modelling, 37 calculators, and source-cited tax figures published as JSON.'
+website: 'https://planomy.net'
+llmsUrl: 'https://planomy.net/llms.txt'
+llmsFullUrl: 'https://planomy.net/llms-full.txt'
+category: 'finance-fintech'
+publishedAt: '2026-07-28'
+---
+
+# Planomy
+
+> Planomy is a free, local-first US personal-finance and retirement planner. Its browser-based tools model year-by-year cash flow, federal and state tax, Social Security, Medicare and IRMAA, required minimum distributions, Roth conversions, Monte Carlo outcomes and historical returns without requiring an account.
+
+## Key Focus Areas
+
+- Retirement planner — year-by-year projection of cash flow, tax, Social Security, Medicare and RMDs, run entirely in the browser
+- Calculators — 37 focused calculators covering FIRE, Roth conversions, RMDs, IRMAA, take-home pay, debt payoff and college savings
+- Guides — 34 plain-English guides to retirement, tax and personal-finance questions
+- Tax data — dated, source-attributed IRS, SSA and CMS figures for 2026, also published as free JSON at /data/
+- Local-first storage — plan data stays on the user's device unless they choose an account and cloud sync
+
+## About llms.txt Implementation
+
+Planomy publishes both `llms.txt` and `llms-full.txt`. Each entry pairs a page
+with a one-line statement of the question it answers, so an assistant can route
+a specific question — "what is my RMD this year", "which IRMAA bracket am I in",
+"Roth or traditional" — to the single page that actually computes it rather than
+to a generic landing page. The `/data/` entry additionally points at
+machine-readable JSON of current US tax and retirement figures, each value
+carrying a citation to the IRS, SSA or CMS publication it came from.
