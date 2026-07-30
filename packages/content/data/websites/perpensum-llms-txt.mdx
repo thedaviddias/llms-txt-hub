@@ -1,0 +1,25 @@
+---
+name: 'Perpensum'
+description: 'Open definition of agent-directed manipulation: what counts as web page text placed to steer a machine reader, with a conformance suite and a reference implementation.'
+website: 'https://perpensum.org'
+llmsUrl: 'https://perpensum.org/llms.txt'
+llmsFullUrl: 'https://perpensum.org/llms-full.txt'
+category: 'security-identity'
+publishedAt: '2026-07-31'
+---
+
+# Perpensum
+
+Perpensum publishes a definition separating agent-directed manipulation — text placed on a web page to steer an AI reader's judgment — from legitimate machine-readable self-presentation such as structured data, llms.txt, and ordinary marketing copy. Classification uses two mechanically decidable axes, region (first-party or third-party) and visibility (visible or hidden), and no subjective axis, so independent implementations reach the same verdict on the same page.
+
+## Key Focus Areas
+
+- Definition of agent-directed manipulation, in English and Japanese
+- Severity derived from region and visibility, with no judgment of intent or tone
+- Conformance suite of 18 cases, 13 of which expect no finding
+- Dependency-free reference implementation, runnable as `curl -s <url> | node scan.mjs`
+- Stated limits: external CSS is not fetched, runtime JavaScript is not evaluated, region detection is inference
+
+## About llms.txt Implementation
+
+The llms.txt indexes the definition, its structured JSON form, the conformance suite, and the reference implementation. llms-full.txt carries the complete definition in a single file. Both state the same content as the HTML pages: the definition holds that machine-readable self-presentation is legitimate and that serving different content to different readers is the practice it exists to name, so the site publishes identical content to every reader.
