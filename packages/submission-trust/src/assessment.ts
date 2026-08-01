@@ -2,7 +2,6 @@ import {
   assessmentEvidenceDetails,
   hasSameSiteFamily,
   isHtmlContentType,
-  isSuccessfulHttpStatus,
   isTextContentType,
   isTransientHttpStatus,
   isValidSafeReputation
@@ -12,6 +11,7 @@ import {
   SUBMISSION_LLMS_MAX_BYTES,
   SUBMISSION_POLICY_VERSION
 } from '#constants'
+import { sanitizeAssessmentEvidenceDetails } from '#evidence'
 import type {
   AssessmentEvidence,
   AssessmentEvidenceDetails,
@@ -82,7 +82,13 @@ const evidence = (
   decision: SubmissionDecision,
   reasonCode: SubmissionAssessment['reasonCode'],
   details?: AssessmentEvidenceDetails
-): AssessmentEvidence => ({ check: 'resource', decision, details, reasonCode, resource })
+): AssessmentEvidence => ({
+  check: 'resource',
+  decision,
+  details: sanitizeAssessmentEvidenceDetails(details),
+  reasonCode,
+  resource
+})
 
 const outcome = (
   variant: AssessmentVariant,
@@ -119,6 +125,14 @@ const failureOutcome = (
   if (result.reasonCode === 'reputation_unknown') {
     return outcome(
       { decision: 'retry_later', reasonCode: 'reputation_unknown' },
+      RETRY_MESSAGE,
+      resource,
+      details
+    )
+  }
+  if (result.reasonCode === 'required_resource_transient_failure') {
+    return outcome(
+      { decision: 'retry_later', reasonCode: 'required_resource_transient_failure' },
       RETRY_MESSAGE,
       resource,
       details
@@ -198,20 +212,20 @@ const reputationOutcome = (
 }
 
 const statusOutcome = (name: ResourceName, resource: InspectedResource): Outcome | undefined => {
-  if (isSuccessfulHttpStatus(resource.statusCode)) return undefined
+  if (resource.statusCode >= 200 && resource.statusCode < 300) return undefined
   const details = assessmentEvidenceDetails(resource)
-  if (name === 'llms_full') {
-    return outcome(
-      { decision: 'reject', reasonCode: 'invalid_optional_resource' },
-      OPTIONAL_MESSAGE,
-      name,
-      details
-    )
-  }
   if (isTransientHttpStatus(resource.statusCode)) {
     return outcome(
       { decision: 'retry_later', reasonCode: 'required_resource_transient_failure' },
       RETRY_MESSAGE,
+      name,
+      details
+    )
+  }
+  if (name === 'llms_full') {
+    return outcome(
+      { decision: 'reject', reasonCode: 'invalid_optional_resource' },
+      OPTIONAL_MESSAGE,
       name,
       details
     )
@@ -302,9 +316,11 @@ const evaluateResource = (
   nowMs: number
 ): readonly Outcome[] => {
   if (!result.ok) return [failureOutcome(target.name, result)]
+  const reputation = reputationOutcome(target.name, result.resource, nowMs)
+  if (reputation) return [reputation]
+  const status = statusOutcome(target.name, result.resource)
+  if (status) return [status]
   const outcomes = [
-    reputationOutcome(target.name, result.resource, nowMs),
-    statusOutcome(target.name, result.resource),
     familyOutcome(target.name, result.resource, website),
     contentOutcome(target.name, result.resource)
   ].filter((value): value is Outcome => value !== undefined)

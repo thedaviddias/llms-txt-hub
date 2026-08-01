@@ -493,6 +493,79 @@ describe('createNetworkInspector', () => {
     expect(JSON.stringify(result)).not.toContain('\ufffd')
   })
 
+  it.each([408, 429, 503, 404, 410])(
+    'does not read the body for non-success HTTP %s',
+    async statusCode => {
+      let iterations = 0
+      const discard = vi.fn()
+      const body: AsyncIterable<Uint8Array> = {
+        async *[Symbol.asyncIterator]() {
+          iterations += 1
+          yield new Uint8Array([0xc3, 0x28])
+          while (true) {
+            iterations += 1
+            yield Buffer.alloc(10_000)
+          }
+        }
+      }
+      const inspector = createNetworkInspector(
+        dependencies({
+          transport: vi.fn(async () => ({
+            body,
+            discard,
+            headers: { 'content-type': 'application/octet-stream' },
+            statusCode
+          }))
+        })
+      )
+
+      const result = await inspector.inspect('https://example.com', { maxBytes: 10 })
+
+      expect(result).toMatchObject({
+        ok: true,
+        resource: { body: undefined, byteCount: 0, statusCode }
+      })
+      expect(iterations).toBe(0)
+      expect(discard).toHaveBeenCalledTimes(1)
+    }
+  )
+
+  it('bounds unsafe provider evidence before returning an inspector failure', async () => {
+    const unsafe: ReputationResult = JSON.parse(
+      JSON.stringify({
+        checkedAt: 'private-invalid-date',
+        status: 'unsafe',
+        threatTypes: [
+          ` ${'A'.repeat(1_000)} `,
+          'SECOND',
+          { private: true },
+          'THIRD',
+          'FOURTH',
+          'FIFTH',
+          ...Array.from({ length: 1_000 }, () => 'OVERFLOW')
+        ]
+      })
+    )
+    const inspector = createNetworkInspector(
+      dependencies({ checkReputation: vi.fn(async () => unsafe) })
+    )
+
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+
+    expect(result).toMatchObject({
+      failure: {
+        evidence: { checkedAt: '2026-08-01T12:00:00.000Z', providerStatus: 'unsafe' },
+        kind: 'reputation_match'
+      },
+      ok: false
+    })
+    if (!result.ok) {
+      expect(result.failure.evidence.threatTypes).toHaveLength(4)
+      expect(result.failure.evidence.threatTypes?.every(value => value.length <= 64)).toBe(true)
+    }
+    expect(JSON.stringify(result)).not.toMatch(/private-invalid-date|"private"|OVERFLOW/)
+  })
+
   it.each(['gzip', 'br', 'gzip, identity'])('rejects content encoding %s', async encoding => {
     const inspector = createNetworkInspector(
       dependencies({
