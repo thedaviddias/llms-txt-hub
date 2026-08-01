@@ -1,0 +1,29 @@
+{
+  "name": "@thedaviddias/submission-trust",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./assessment": "./src/assessment.ts",
+    "./attestation": "./src/attestation.ts",
+    "./constants": "./src/constants.ts",
+    "./editorial-policy": "./src/editorial-policy.ts",
+    "./network-inspector": "./src/network-inspector.ts",
+    "./types": "./src/types.ts",
+    "./url-policy": "./src/url-policy.ts",
+    "./web-risk": "./src/web-risk.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "tldts": "^7.0.23"
+  },
+  "devDependencies": {
+    "@thedaviddias/config-typescript": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "^4.0.18"
+  }
+}
