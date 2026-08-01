@@ -354,6 +354,19 @@ describe('assessPublicationFields', () => {
     expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
   })
 
+  it.each([' \t', '  \t', '   \t'])(
+    'accepts a mixed %j-indented HTML example in required Markdown',
+    async indentation => {
+      const body = `${LONG_TEXT}\n\n${indentation}<script>exampleOnly()</script>`
+      const result = await assessPublicationFields(
+        FIELDS,
+        dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+      )
+
+      expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+    }
+  )
+
   it('sends a different submitted documentation family to manual review', async () => {
     const fields = { ...FIELDS, llmsUrl: 'https://docs-host.example.net/llms.txt' }
     const result = await assessPublicationFields(
