@@ -16,6 +16,9 @@ describe('validateSubmissionUrl', () => {
   it.each([
     ['http://example.com', 'https_required'],
     ['ftp://example.com', 'https_required'],
+    ['javascript:alert(1)', 'https_required'],
+    ['data:text/html,<script>alert(1)</script>', 'https_required'],
+    ['vbscript:msgbox', 'https_required'],
     ['not a URL', 'invalid_url'],
     ['https://user:password@example.com', 'credentials_disallowed'],
     ['https://127.0.0.1', 'ip_literal_disallowed'],

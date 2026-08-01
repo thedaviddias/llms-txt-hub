@@ -16,14 +16,17 @@ describe('validatePublicHttpUrl', () => {
     expect(result).toEqual({ error: 'Invalid URL format', ok: false })
   })
 
-  it.each(['http://example.com', 'ftp://example.com'])(
-    'rejects non-HTTPS URL %s with the stable protocol error',
-    candidate => {
-      const result = validatePublicHttpUrl(candidate)
+  it.each([
+    'http://example.com',
+    'ftp://example.com',
+    'javascript:alert(1)',
+    'data:text/html,<script>alert(1)</script>',
+    'vbscript:msgbox'
+  ])('rejects non-HTTPS URL %s with the stable protocol error', candidate => {
+    const result = validatePublicHttpUrl(candidate)
 
-      expect(result).toEqual({ error: 'Invalid URL protocol', ok: false })
-    }
-  )
+    expect(result).toEqual({ error: 'Invalid URL protocol', ok: false })
+  })
 
   it.each(['http://localhost:3000', 'http://192.168.1.12'])(
     'preserves restricted-target precedence for %s',

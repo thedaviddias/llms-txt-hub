@@ -238,6 +238,10 @@ export const validateSubmissionUrl = (value: string): SubmissionUrlValidationRes
     return failure('invalid_url')
   }
 
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    return failure('https_required')
+  }
+
   const hostname = normalizeIpInput(url.hostname).replace(/\.$/, '')
   if (!hostname) {
     return failure('invalid_url')
