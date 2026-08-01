@@ -38,7 +38,13 @@ acceptAssessment({
   decision: 'manual_review',
   reasonCode: 'editorial_uncertainty'
 })
+acceptAssessment({
+  ...ASSESSMENT_BASE,
+  decision: 'manual_review',
+  reasonCode: 'site_family_uncertain'
+})
 acceptAssessment({ ...ASSESSMENT_BASE, decision: 'reject', reasonCode: 'prohibited_content' })
+acceptAssessment({ ...ASSESSMENT_BASE, decision: 'reject', reasonCode: 'unrelated_site_family' })
 acceptAssessment({
   ...ASSESSMENT_BASE,
   decision: 'retry_later',
@@ -57,6 +63,14 @@ acceptAssessment({ ...ASSESSMENT_BASE, decision: 'manual_review', reasonCode: 'p
 acceptAssessment({ ...ASSESSMENT_BASE, decision: 'reject', reasonCode: 'reputation_unknown' })
 // @ts-expect-error retry later cannot represent established prohibited content
 acceptAssessment({ ...ASSESSMENT_BASE, decision: 'retry_later', reasonCode: 'prohibited_content' })
+// @ts-expect-error an established unrelated site family must be rejected
+acceptAssessment({
+  ...ASSESSMENT_BASE,
+  decision: 'manual_review',
+  reasonCode: 'unrelated_site_family'
+})
+// @ts-expect-error an uncertain site family must receive manual review
+acceptAssessment({ ...ASSESSMENT_BASE, decision: 'reject', reasonCode: 'site_family_uncertain' })
 
 acceptEvidence({
   check: 'resource',
