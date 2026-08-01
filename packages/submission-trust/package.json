@@ -6,6 +6,7 @@
   "imports": {
     "#assessment-resources": "./src/assessment-resources.ts",
     "#constants": "./src/constants.ts",
+    "#evidence": "./src/evidence.ts",
     "#node-https-transport": "./src/node-https-transport.ts",
     "#types": "./src/types.ts",
     "#url-policy": "./src/url-policy.ts"

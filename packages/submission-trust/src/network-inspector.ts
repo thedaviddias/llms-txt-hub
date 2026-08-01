@@ -9,6 +9,7 @@ import {
   SUBMISSION_REQUEST_TIMEOUT_MS,
   WEB_RISK_FRESHNESS_MS
 } from '#constants'
+import { sanitizeAssessmentEvidenceDetails } from '#evidence'
 import { createNodeHttpsTransport } from '#node-https-transport'
 import type {
   NetworkInspectionOptions,
@@ -26,6 +27,7 @@ import { isPublicIpAddress, validateSubmissionUrl } from '#url-policy'
 
 const USER_AGENT = 'llms-txt-hub-submission-inspector/1.0'
 const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308])
+const isSuccessfulStatus = (statusCode: number): boolean => statusCode >= 200 && statusCode < 300
 type InspectionReasonCode = Extract<ResourceInspectionResult, { ok: false }>['reasonCode']
 type SafeReputation = Extract<ReputationResult, { status: 'safe' }>
 type Dependencies = NetworkInspectorDependencies
@@ -258,15 +260,21 @@ class InspectionRunner {
     if (!result || typeof result !== 'object') return this.reputationUnknown()
     const checkedAt = typeof result.checkedAt === 'string' ? result.checkedAt : undefined
     if (result.status === 'unsafe') {
+      const unsafeCheckedAt =
+        typeof result.checkedAt === 'string' &&
+        result.checkedAt.length <= 64 &&
+        Number.isFinite(Date.parse(result.checkedAt))
+          ? result.checkedAt
+          : this.dependencies.now().toISOString()
       return safeFailure(
         'reputation_match',
         'reputation_match',
         'The resource was reported as unsafe.',
-        {
-          checkedAt: result.checkedAt,
+        sanitizeAssessmentEvidenceDetails({
+          checkedAt: unsafeCheckedAt,
           providerStatus: 'unsafe',
           threatTypes: result.threatTypes
-        }
+        })
       )
     }
     if (result.status !== 'safe') return this.reputationUnknown(checkedAt)
@@ -329,15 +337,24 @@ class InspectionRunner {
       throwIfAborted(signal)
       return { kind: 'failure', result: transportFailure() }
     }
-    const encoding = response.headers['content-encoding']
-    if (encoding && encoding.trim().toLowerCase() !== SUBMISSION_ACCEPT_ENCODING) {
-      response.discard?.()
-      return { kind: 'failure', result: transportFailure(response.statusCode) }
-    }
     const redirect = this.redirect(response, requestDetails.url, redirectCount, visited, signal)
     if (redirect) {
       response.discard?.()
       return redirect
+    }
+    if (!isSuccessfulStatus(response.statusCode)) {
+      response.discard?.()
+      return {
+        collected: { byteCount: 0 },
+        contentType: response.headers['content-type'],
+        kind: 'success',
+        statusCode: response.statusCode
+      }
+    }
+    const encoding = response.headers['content-encoding']
+    if (encoding && encoding.trim().toLowerCase() !== SUBMISSION_ACCEPT_ENCODING) {
+      response.discard?.()
+      return { kind: 'failure', result: transportFailure(response.statusCode) }
     }
     const abort = (): void => response.discard?.()
     signal.addEventListener('abort', abort, { once: true })

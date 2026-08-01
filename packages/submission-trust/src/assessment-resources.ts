@@ -1,6 +1,7 @@
 import { getDomain } from 'tldts'
 
 import { WEB_RISK_FRESHNESS_MS } from '#constants'
+import { sanitizeAssessmentEvidenceDetails } from '#evidence'
 import type { AssessmentEvidenceDetails, InspectedResource, ReputationResult } from '#types'
 
 const hostname = (url: string): string | undefined => {
@@ -14,52 +15,25 @@ const hostname = (url: string): string | undefined => {
 const siteFamily = (url: string): string | undefined => {
   const host = hostname(url)
   if (!host) return undefined
-  return getDomain(host) ?? host
+  return getDomain(host, { allowPrivateDomains: true, extractHostname: false }) ?? host
 }
 
 /** Builds sanitized, bounded metadata for one inspected resource. */
-export const assessmentEvidenceDetails = (
-  resource: InspectedResource
-): AssessmentEvidenceDetails => {
-  const rawCheckedAt = resource.reputationChecks[0]?.reputation.checkedAt
-  const checkedAt =
-    typeof rawCheckedAt === 'string' && rawCheckedAt.length > 0
-      ? rawCheckedAt.slice(0, 160)
-      : undefined
-  const providerStatus =
-    resource.reputation?.status === 'safe' ||
-    resource.reputation?.status === 'unsafe' ||
-    resource.reputation?.status === 'unknown'
-      ? resource.reputation.status
-      : 'unknown'
-  const threatTypes =
-    resource.reputation?.status === 'unsafe' && Array.isArray(resource.reputation.threatTypes)
-      ? resource.reputation.threatTypes
-          .slice(0, 8)
-          .flatMap(value =>
-            typeof value === 'string' && value.length > 0 ? [value.slice(0, 80)] : []
-          )
-      : undefined
-  return {
-    byteCount:
-      Number.isFinite(resource.byteCount) && resource.byteCount >= 0
-        ? Math.floor(resource.byteCount)
-        : undefined,
-    checkedAt,
-    contentType:
-      typeof resource.contentType === 'string' && resource.contentType.length > 0
-        ? resource.contentType.slice(0, 160)
-        : undefined,
+export const assessmentEvidenceDetails = (resource: InspectedResource): AssessmentEvidenceDetails =>
+  sanitizeAssessmentEvidenceDetails({
+    byteCount: resource.byteCount,
+    checkedAt: resource.reputationChecks[0]?.reputation.checkedAt,
+    contentType: resource.contentType,
     finalHost: hostname(resource.finalUrl),
-    providerStatus,
-    redirectHosts: resource.redirectUrls.slice(0, 4).flatMap(url => {
+    providerStatus: resource.reputation?.status,
+    redirectHosts: resource.redirectUrls.flatMap(url => {
       const host = hostname(url)
       return host ? [host] : []
     }),
-    statusCode: Number.isInteger(resource.statusCode) ? resource.statusCode : undefined,
-    threatTypes
-  }
-}
+    statusCode: resource.statusCode,
+    threatTypes:
+      resource.reputation?.status === 'unsafe' ? resource.reputation.threatTypes : undefined
+  })
 
 /** Reports whether two resource URLs share one registrable site family. */
 export const hasSameSiteFamily = (left: string, right: string): boolean => {
@@ -71,10 +45,6 @@ export const hasSameSiteFamily = (left: string, right: string): boolean => {
 /** Reports whether a response content type is HTML. */
 export const isHtmlContentType = (contentType: string | undefined): boolean =>
   contentType?.split(';')[0]?.trim().toLowerCase() === 'text/html'
-
-/** Reports whether a status code represents a successful HTTP response. */
-export const isSuccessfulHttpStatus = (statusCode: number): boolean =>
-  statusCode >= 200 && statusCode < 300
 
 /** Reports whether a response content type is suitable for an llms text resource. */
 export const isTextContentType = (contentType: string | undefined): boolean => {
