@@ -11,6 +11,7 @@
         "ENABLE_EXPERIMENTAL_COREPACK",
         "FLAGS_SECRET",
         "GITHUB_TOKEN",
+        "GOOGLE_WEB_RISK_API_KEY",
         "KV_REST_API_READ_ONLY_TOKEN",
         "KV_REST_API_TOKEN",
         "KV_REST_API_URL",
@@ -30,7 +31,9 @@
         "STORAGE_KV_REST_API_TOKEN",
         "STORAGE_KV_REST_API_URL",
         "STORAGE_KV_URL",
-        "STORAGE_REDIS_URL"
+        "STORAGE_REDIS_URL",
+        "SUBMISSION_ASSESSMENT_SIGNING_SECRET",
+        "SUBMISSION_AUTOPUBLISH_MODE"
       ]
     },
     "clean": {
