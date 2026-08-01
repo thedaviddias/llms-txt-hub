@@ -1,6 +1,13 @@
 import { execFile } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
+import { assessPublicationFields } from '@thedaviddias/submission-trust/assessment'
+import { createNetworkInspector } from '@thedaviddias/submission-trust/network-inspector'
+import type {
+  PublicationAssessmentDependencies,
+  SubmissionFields
+} from '@thedaviddias/submission-trust/types'
+import { checkWebRiskUrl } from '@thedaviddias/submission-trust/web-risk'
 import matter from 'gray-matter'
 import { categories } from '../apps/web/lib/categories.ts'
 import {
@@ -15,8 +22,6 @@ const execFileAsync = promisify(execFile)
 
 const DEFAULT_REPO = 'thedaviddias/llms-txt-hub'
 const DEFAULT_CONCURRENCY = 8
-const FETCH_TIMEOUT_MS = 8_000
-const MAX_FETCH_TEXT_LENGTH = 20_000
 const PAGE_SIZE = 100
 const PR_REVIEW_WORKFLOW_NAME = 'PR Review'
 const EXACT_MANAGED_LABELS = [
@@ -45,9 +50,19 @@ const COLUMN_WIDTHS = {
   title: 52
 } as const
 
-const SUSPICIOUS_FAIL_TERMS = ['casino', 'gambling', 'malware', 'porn', 'viagra']
+const editorialCategories = categories.map(category => ({
+  description: category.description,
+  name: category.name,
+  slug: category.slug
+}))
 
-const categoryBySlug = new Map(categories.map(category => [category.slug, category]))
+/**
+ * Create the hardened inspector used by trusted PR moderation.
+ */
+const createReviewInspector = () =>
+  createNetworkInspector({
+    checkReputation: url => checkWebRiskUrl(url, { apiKey: process.env.GOOGLE_WEB_RISK_API_KEY })
+  })
 const managedLabelSet = new Set<string>(EXACT_MANAGED_LABELS)
 
 const LABEL_DEFINITIONS = [
@@ -195,15 +210,6 @@ export interface SubmissionFrontmatter {
   name: string
   publishedAt?: string
   website: string
-}
-
-interface UrlInspection {
-  contentType: string | null
-  error?: string
-  ok: boolean
-  status?: number
-  text: string
-  url: string
 }
 
 interface GuidelineAssessment {
@@ -428,10 +434,10 @@ export function deriveMergeAction(input: {
   }
 
   return {
-    attempted: true,
+    attempted: false,
     mode: input.dryRun ? 'dry-run' : 'applied',
-    reason: input.dryRun ? 'Would merge now.' : 'Merge queued.',
-    status: input.dryRun ? 'planned' : 'skipped'
+    reason: 'Automatic merge is disabled until signed attestation verification is available.',
+    status: 'skipped'
   }
 }
 
@@ -481,96 +487,44 @@ export function calculateManagedLabelSync(
 }
 
 /**
- * Assess a submission against moderation and guideline heuristics.
+ * Assess a submission with the shared fail-closed publication policy.
  */
-export function assessSubmissionGuidelines(input: {
+export async function assessSubmissionGuidelines(input: {
   frontmatter: SubmissionFrontmatter
-  homepageInspection: UrlInspection
-  llmsFullInspection?: UrlInspection | null
-  llmsInspection: UrlInspection
-}): GuidelineAssessment {
-  const reasons: string[] = []
-  let guidelineStatus: GuidelineStatus = 'pass'
-
-  if (!categoryBySlug.has(input.frontmatter.category)) {
-    addGuidelineReason(reasons, 'Invalid category slug in frontmatter.', 'fail')
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
+  inspectResource?: PublicationAssessmentDependencies['inspectResource']
+  now?: () => Date
+}): Promise<GuidelineAssessment> {
+  const fields: SubmissionFields = {
+    category: input.frontmatter.category,
+    description: input.frontmatter.description,
+    llmsUrl: input.frontmatter.llmsUrl,
+    name: input.frontmatter.name,
+    publishedAt: input.frontmatter.publishedAt ?? '',
+    website: input.frontmatter.website
   }
-
-  if (!sameWebsiteFamily(input.frontmatter.website, input.frontmatter.llmsUrl)) {
-    addGuidelineReason(
-      reasons,
-      'Website URL and llms.txt URL do not appear to belong to the same site.',
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
+  if (input.frontmatter.llmsFullUrl) {
+    fields.llmsFullUrl = input.frontmatter.llmsFullUrl
   }
-
-  if (!input.homepageInspection.ok) {
-    addGuidelineReason(
-      reasons,
-      `Website homepage could not be inspected (${input.homepageInspection.error ?? `HTTP ${input.homepageInspection.status ?? 'unknown'}`}).`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
+  const dependencies: PublicationAssessmentDependencies = {
+    categories: editorialCategories,
+    inspectResource: input.inspectResource ?? createReviewInspector().inspect
   }
-
-  if (!input.llmsInspection.ok) {
-    addGuidelineReason(
-      reasons,
-      `llms.txt is not accessible (${input.llmsInspection.error ?? `HTTP ${input.llmsInspection.status ?? 'unknown'}`}).`,
-      'fail'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-  } else {
-    if (looksLikeHtmlResponse(input.llmsInspection)) {
-      addGuidelineReason(
-        reasons,
-        'llms.txt URL appears to return HTML instead of plain text.',
-        'fail'
-      )
-      guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-    }
-
-    if (input.llmsInspection.text.trim().length < 80) {
-      addGuidelineReason(reasons, 'llms.txt content is unusually short.', 'warn')
-      guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
-    }
-  }
-
-  if (input.frontmatter.llmsFullUrl && input.llmsFullInspection && !input.llmsFullInspection.ok) {
-    addGuidelineReason(
-      reasons,
-      `llms-full.txt could not be inspected (${input.llmsFullInspection.error ?? `HTTP ${input.llmsFullInspection.status ?? 'unknown'}`}).`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
-  }
-
-  const combinedText = normalizeText(
-    [
-      input.frontmatter.name,
-      input.frontmatter.description,
-      input.homepageInspection.text,
-      input.llmsInspection.text,
-      input.llmsFullInspection?.text ?? ''
-    ].join(' ')
-  )
-
-  const failTerm = findMatchedTerm(combinedText, SUSPICIOUS_FAIL_TERMS)
-  if (failTerm) {
-    addGuidelineReason(
-      reasons,
-      `Content contains suspicious term "${failTerm}" and requires manual review.`,
-      'fail'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-  }
+  if (input.now) dependencies.now = input.now
+  const assessment = await assessPublicationFields(fields, dependencies)
+  const guidelineStatus: GuidelineStatus =
+    assessment.decision === 'auto_publish'
+      ? 'pass'
+      : assessment.decision === 'reject'
+        ? 'fail'
+        : 'warn'
 
   return {
-    guidelineReasons: reasons.length > 0 ? reasons : ['No guideline concerns detected.'],
+    guidelineReasons:
+      assessment.decision === 'auto_publish'
+        ? ['No guideline concerns detected.']
+        : [assessment.publicMessage],
     guidelineStatus,
-    policyEligible: guidelineStatus === 'pass'
+    policyEligible: assessment.decision === 'auto_publish'
   }
 }
 
@@ -1142,17 +1096,7 @@ async function moderatePullRequest(input: {
   for (const file of mdxFiles) {
     const fileContent = await fetchRepositoryFileContent(input.repo, file.filename, input.sha)
     const frontmatter = parseSubmissionFrontmatter(fileContent)
-    const [homepageInspection, llmsInspection, llmsFullInspection] = await Promise.all([
-      inspectUrl(frontmatter.website, 'html'),
-      inspectUrl(frontmatter.llmsUrl, 'text'),
-      frontmatter.llmsFullUrl ? inspectUrl(frontmatter.llmsFullUrl, 'text') : Promise.resolve(null)
-    ])
-    const assessment = assessSubmissionGuidelines({
-      frontmatter,
-      homepageInspection,
-      llmsFullInspection,
-      llmsInspection
-    })
+    const assessment = await assessSubmissionGuidelines({ frontmatter })
 
     mergedStatus = mergeGuidelineStatus(mergedStatus, assessment.guidelineStatus)
     for (const reason of assessment.guidelineReasons) {
@@ -1185,47 +1129,6 @@ async function fetchRepositoryFileContent(
   }
 
   return Buffer.from(response.content.replace(/\n/g, ''), 'base64').toString('utf8')
-}
-
-/**
- * Fetch a URL with a timeout and return a bounded text snapshot for moderation heuristics.
- */
-async function inspectUrl(url: string, expectedKind: 'html' | 'text'): Promise<UrlInspection> {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
-
-  try {
-    const response = await fetch(url, {
-      headers:
-        expectedKind === 'html'
-          ? { Accept: 'text/html,application/xhtml+xml' }
-          : { Accept: 'text/plain,text/markdown,text/*,*/*;q=0.1' },
-      redirect: 'follow',
-      signal: controller.signal
-    })
-    const contentType = response.headers.get('content-type')
-    const text = truncate(await response.text(), MAX_FETCH_TEXT_LENGTH)
-
-    return {
-      contentType,
-      ok: response.ok,
-      status: response.status,
-      text,
-      url
-    }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-
-    return {
-      contentType: null,
-      error: message,
-      ok: false,
-      text: '',
-      url
-    }
-  } finally {
-    clearTimeout(timeout)
-  }
 }
 
 /**
@@ -1467,58 +1370,6 @@ function formatLabelSync(result: LabelSyncResult): string {
   }
 
   return result.mode === 'dry-run' ? `plan ${combined}` : `applied ${combined}`
-}
-
-/**
- * Append a unique guideline reason.
- */
-function addGuidelineReason(
-  reasons: string[],
-  reason: string,
-  _severity: Extract<GuidelineStatus, 'warn' | 'fail'>
-): void {
-  if (!reasons.includes(reason)) {
-    reasons.push(reason)
-  }
-}
-
-/**
- * Return true when the fetched llms.txt payload appears to be HTML.
- */
-function looksLikeHtmlResponse(result: UrlInspection): boolean {
-  const contentType = result.contentType?.toLowerCase() ?? ''
-  return contentType.includes('text/html') || /<html[\s>]/i.test(result.text)
-}
-
-/**
- * Return the first matched moderation term, if any.
- */
-function findMatchedTerm(text: string, terms: string[]): string | null {
-  return terms.find(term => text.includes(term)) ?? null
-}
-
-/**
- * Normalize free text for heuristic matching.
- */
-function normalizeText(value: string): string {
-  return value.toLowerCase().replace(/\s+/g, ' ').trim()
-}
-
-/**
- * Return true when the website and llms URLs appear to belong to the same site family.
- */
-function sameWebsiteFamily(website: string, llmsUrl: string): boolean {
-  try {
-    const websiteHost = new URL(website).hostname.toLowerCase()
-    const llmsHost = new URL(llmsUrl).hostname.toLowerCase()
-    return (
-      websiteHost === llmsHost ||
-      websiteHost.endsWith(`.${llmsHost}`) ||
-      llmsHost.endsWith(`.${websiteHost}`)
-    )
-  } catch {
-    return false
-  }
 }
 
 /**

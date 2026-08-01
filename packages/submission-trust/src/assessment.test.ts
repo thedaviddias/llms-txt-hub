@@ -13,6 +13,13 @@ const NOW = new Date('2026-08-01T12:00:00.000Z')
 const CHECKED_AT = NOW.toISOString()
 const SUFFICIENT_PROSE_AND_LINK = `${'A useful documentation index. '.repeat(4)}https://example.com/docs`
 const LONG_TEXT = `# Example\n\n${SUFFICIENT_PROSE_AND_LINK}`
+const CATEGORIES = [
+  {
+    description: 'APIs, frameworks, libraries, IDEs, and development utilities',
+    name: 'Developer Tools',
+    slug: 'developer-tools'
+  }
+] as const
 const NON_DOCUMENT_H1_CASES: readonly (readonly [string, string])[] = [
   ['empty H1', `#\n\n${SUFFICIENT_PROSE_AND_LINK}`],
   ['blockquote H1', `> # Quoted title\n\n${SUFFICIENT_PROSE_AND_LINK}`],
@@ -20,7 +27,7 @@ const NON_DOCUMENT_H1_CASES: readonly (readonly [string, string])[] = [
 ]
 const FIELDS: SubmissionFields = {
   category: 'developer-tools',
-  description: 'Useful example documentation.',
+  description: 'Useful developer API documentation.',
   llmsUrl: 'https://example.com/llms.txt',
   name: 'Example',
   publishedAt: '2026-08-01',
@@ -63,7 +70,11 @@ const failure = (
 
 const dependencies = (
   inspectResource: PublicationAssessmentDependencies['inspectResource']
-): PublicationAssessmentDependencies => ({ inspectResource, now: () => NOW })
+): PublicationAssessmentDependencies => ({
+  categories: CATEGORIES,
+  inspectResource,
+  now: () => NOW
+})
 
 describe('assessPublicationFields', () => {
   it('inspects homepage, llms, and optional llms-full with bounded options', async () => {
@@ -87,6 +98,90 @@ describe('assessPublicationFields', () => {
     await assessPublicationFields(FIELDS, dependencies(inspectResource))
 
     expect(inspectResource).toHaveBeenCalledTimes(2)
+  })
+
+  it('rejects deterministic prohibited content after technical checks pass', async () => {
+    const result = await assessPublicationFields(
+      {
+        ...FIELDS,
+        description: 'Buy backlinks and paid website traffic from our link farm network.'
+      },
+      dependencies(async url => resource(url))
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'prohibited_content' })
+    expect(result.evidence).toContainEqual({
+      check: 'editorial',
+      decision: 'reject',
+      details: { evidenceId: 'editorial:prohibited:search-manipulation' },
+      reasonCode: 'prohibited_content'
+    })
+  })
+
+  it('routes regulated editorial ambiguity to manual review', async () => {
+    const result = await assessPublicationFields(
+      { ...FIELDS, description: 'Example is an investment platform for financial planning.' },
+      dependencies(async url => resource(url))
+    )
+
+    expect(result).toMatchObject({
+      decision: 'manual_review',
+      reasonCode: 'editorial_uncertainty'
+    })
+    expect(result.evidence).toContainEqual({
+      check: 'editorial',
+      decision: 'manual_review',
+      details: { evidenceId: 'editorial:regulated:finance' },
+      reasonCode: 'editorial_uncertainty'
+    })
+  })
+
+  it('fails closed to manual review when category descriptors are unavailable', async () => {
+    const result = await assessPublicationFields(FIELDS, {
+      inspectResource: async url => resource(url),
+      now: () => NOW
+    })
+
+    expect(result).toMatchObject({
+      decision: 'manual_review',
+      reasonCode: 'editorial_uncertainty'
+    })
+    expect(result.evidence).toContainEqual({
+      check: 'editorial',
+      decision: 'manual_review',
+      details: { evidenceId: 'editorial:category:unknown' },
+      reasonCode: 'editorial_uncertainty'
+    })
+  })
+
+  it('keeps reputation unknown ahead of prohibited editorial content', async () => {
+    const result = await assessPublicationFields(
+      {
+        ...FIELDS,
+        description: 'Buy backlinks and paid website traffic from our link farm network.'
+      },
+      dependencies(async url =>
+        url === FIELDS.website ? failure('reputation_unknown', 'reputation_unknown') : resource(url)
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'retry_later', reasonCode: 'reputation_unknown' })
+    expect(result.evidence.some(item => item.check === 'editorial')).toBe(false)
+  })
+
+  it('keeps an unsafe reputation match ahead of prohibited editorial content', async () => {
+    const result = await assessPublicationFields(
+      {
+        ...FIELDS,
+        description: 'Buy backlinks and paid website traffic from our link farm network.'
+      },
+      dependencies(async url =>
+        url === FIELDS.website ? failure('reputation_match', 'reputation_match') : resource(url)
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'reputation_match' })
+    expect(result.evidence.some(item => item.check === 'editorial')).toBe(false)
   })
 
   it.each([404, 410])('rejects stable required HTTP %s responses', async statusCode => {
@@ -501,7 +596,7 @@ describe('assessPublicationFields', () => {
     ['https://victim.github.io', 'https://docs.victim.github.io/llms.txt'],
     ['https://victim.vercel.app', 'https://docs.victim.vercel.app/llms.txt']
   ])('accepts subdomains within one private suffix tenant', async (website, llmsUrl) => {
-    const fields = { ...FIELDS, llmsUrl, website }
+    const fields = { ...FIELDS, llmsUrl, name: 'Victim', website }
     const result = await assessPublicationFields(
       fields,
       dependencies(async url => resource(url))

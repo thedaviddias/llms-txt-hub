@@ -8,7 +8,7 @@ import { checkWebRiskUrl } from './web-risk.js'
 const NOW = new Date('2026-08-01T12:00:00.000Z')
 const FIELDS: SubmissionFields = {
   category: 'developer-tools',
-  description: 'Useful example documentation.',
+  description: 'Useful developer API documentation.',
   llmsUrl: 'https://example.com/llms.txt',
   name: 'Example',
   publishedAt: '2026-08-01',
@@ -47,6 +47,13 @@ describe('submission trust composition', () => {
     })
 
     const result = await assessPublicationFields(FIELDS, {
+      categories: [
+        {
+          description: 'APIs, frameworks, libraries, IDEs, and development utilities',
+          name: 'Developer Tools',
+          slug: 'developer-tools'
+        }
+      ],
       inspectResource: inspector.inspect,
       now: () => NOW
     })
