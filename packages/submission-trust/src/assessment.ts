@@ -9,6 +9,7 @@ import {
 import {
   SUBMISSION_HOMEPAGE_MAX_BYTES,
   SUBMISSION_LLMS_MAX_BYTES,
+  SUBMISSION_MAX_REDIRECTS,
   SUBMISSION_POLICY_VERSION
 } from '#constants'
 import { sanitizeAssessmentEvidenceDetails } from '#evidence'
@@ -23,6 +24,7 @@ import type {
   SubmissionDecision,
   SubmissionFields
 } from '#types'
+import { mergeSubmissionDecisions } from '#types'
 
 const RETRY_MESSAGE =
   'We could not safely verify this site right now. Nothing was published. Please try again later.'
@@ -50,13 +52,6 @@ interface ResourceTarget {
   name: ResourceName
   options: NetworkInspectionOptions
   url: string
-}
-
-const decisionPriority: Readonly<Record<SubmissionDecision, number>> = {
-  auto_publish: 0,
-  manual_review: 1,
-  reject: 3,
-  retry_later: 2
 }
 
 const reasonPriority: Readonly<Record<SubmissionAssessment['reasonCode'], number>> = {
@@ -184,6 +179,14 @@ const reputationOutcome = (
       details
     )
   }
+  if (resource.redirectUrls.length > SUBMISSION_MAX_REDIRECTS) {
+    return outcome(
+      { decision: 'retry_later', reasonCode: 'reputation_unknown' },
+      RETRY_MESSAGE,
+      name,
+      details
+    )
+  }
   const expectedUrls = [resource.requestedUrl, ...resource.redirectUrls]
   if (
     resource.reputationChecks.length !== expectedUrls.length ||
@@ -261,6 +264,16 @@ const familyOutcome = (
   return undefined
 }
 
+const hasDisallowedTextControl = (body: string): boolean => {
+  for (let index = 0; index < body.length; index += 1) {
+    const code = body.charCodeAt(index)
+    if (code <= 8 || code === 11 || code === 12 || (code >= 14 && code <= 31) || code === 127) {
+      return true
+    }
+  }
+  return false
+}
+
 const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcome | undefined => {
   const body = typeof resource.body === 'string' ? resource.body.trim() : ''
   const details = assessmentEvidenceDetails(resource)
@@ -282,7 +295,9 @@ const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcom
   if (
     !isTextContentType(resource.contentType) ||
     isHtmlContentType(resource.contentType) ||
-    !body
+    !body ||
+    /^\s*(?:<!doctype\s+html\b|<html\b|<head\b|<body\b)/i.test(body) ||
+    hasDisallowedTextControl(body)
   ) {
     const variant: AssessmentVariant =
       name === 'llms_full'
@@ -295,7 +310,15 @@ const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcom
       details
     )
   }
-  if (name === 'llms_full') return undefined
+  if (name === 'llms_full') {
+    if (body.length >= 80) return undefined
+    return outcome(
+      { decision: 'reject', reasonCode: 'invalid_optional_resource' },
+      OPTIONAL_MESSAGE,
+      name,
+      details
+    )
+  }
   const hasHeading = /^#\s+\S/m.test(body)
   const hasAbsoluteLink = /https?:\/\/[^\s)>\]]+/i.test(body)
   if (body.length < 80 || !hasHeading || !hasAbsoluteLink) {
@@ -356,23 +379,19 @@ const inspect = async (
 }
 
 const selectOutcome = (outcomes: readonly Outcome[]): Outcome => {
-  let selected = outcomes[0]
+  const selectedDecision = mergeSubmissionDecisions(outcomes.map(value => value.decision))
+  const candidates = outcomes.filter(value => value.decision === selectedDecision)
+  let selected = candidates[0]
   if (!selected) {
     return {
-      decision: 'auto_publish',
+      decision: 'retry_later',
       evidence: [],
-      publicMessage: PASSED_MESSAGE,
-      reasonCode: 'passed'
+      publicMessage: RETRY_MESSAGE,
+      reasonCode: 'publication_unavailable'
     }
   }
-  for (const candidate of outcomes.slice(1)) {
-    const candidateDecision = decisionPriority[candidate.decision]
-    const selectedDecision = decisionPriority[selected.decision]
-    if (
-      candidateDecision > selectedDecision ||
-      (candidateDecision === selectedDecision &&
-        reasonPriority[candidate.reasonCode] > reasonPriority[selected.reasonCode])
-    ) {
+  for (const candidate of candidates.slice(1)) {
+    if (reasonPriority[candidate.reasonCode] > reasonPriority[selected.reasonCode]) {
       selected = candidate
     }
   }
@@ -387,7 +406,6 @@ export const assessPublicationFields = async (
   fields: SubmissionFields,
   dependencies: PublicationAssessmentDependencies
 ): Promise<SubmissionAssessment> => {
-  const now = dependencies.now?.() ?? new Date()
   const targets: ResourceTarget[] = [
     { name: 'homepage', options: { maxBytes: SUBMISSION_HOMEPAGE_MAX_BYTES }, url: fields.website },
     { name: 'llms', options: { maxBytes: SUBMISSION_LLMS_MAX_BYTES }, url: fields.llmsUrl }
@@ -402,6 +420,7 @@ export const assessPublicationFields = async (
   const results = await Promise.all(
     targets.map(target => inspect(target, dependencies.inspectResource))
   )
+  const now = dependencies.now?.() ?? new Date()
   const outcomes = targets.flatMap((target, index) => {
     const result = results[index]
     return result ? evaluateResource(target, result, fields.website, now.getTime()) : []

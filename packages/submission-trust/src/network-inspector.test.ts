@@ -225,6 +225,7 @@ describe('createNetworkInspector', () => {
       [
         {
           checkedAt: '2026-08-01T12:00:00.000Z',
+          expiresAt: '2026-08-01T12:05:00.000Z',
           status: 'unsafe',
           threatTypes: ['MALWARE']
         },
@@ -295,26 +296,57 @@ describe('createNetworkInspector', () => {
     expect(transport).not.toHaveBeenCalled()
   })
 
-  it('rejects unsafe reputation evidence even when its timestamp is malformed', async () => {
-    const transport = vi.fn(async () => response())
-    const inspector = createNetworkInspector(
-      dependencies({
-        checkReputation: vi.fn(
-          async (): Promise<ReputationResult> => ({
-            checkedAt: 'not-a-date',
-            status: 'unsafe',
-            threatTypes: ['SOCIAL_ENGINEERING']
-          })
-        ),
-        transport
-      })
-    )
+  const invalidUnsafeEvidence: readonly [ReputationResult, string][] = [
+    [
+      {
+        checkedAt: 'not-a-date',
+        expiresAt: '2026-08-01T12:05:00.000Z',
+        status: 'unsafe',
+        threatTypes: ['SOCIAL_ENGINEERING']
+      },
+      'malformed checkedAt'
+    ],
+    [
+      {
+        checkedAt: '2026-08-01T12:00:00.000Z',
+        status: 'unsafe',
+        threatTypes: ['SOCIAL_ENGINEERING']
+      },
+      'missing expiry'
+    ],
+    [
+      {
+        checkedAt: '2026-08-01T12:00:00.000Z',
+        expiresAt: 'not-a-date',
+        status: 'unsafe',
+        threatTypes: ['SOCIAL_ENGINEERING']
+      },
+      'malformed expiry'
+    ],
+    [
+      {
+        checkedAt: '2026-08-01T12:00:00.000Z',
+        expiresAt: '2026-08-01T12:00:00.000Z',
+        status: 'unsafe',
+        threatTypes: ['SOCIAL_ENGINEERING']
+      },
+      'expired evidence'
+    ]
+  ]
 
-    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
-    expect(result.ok).toBe(false)
-    if (!result.ok) expect(result.failure.kind).toBe('reputation_match')
-    expect(transport).not.toHaveBeenCalled()
-  })
+  it.each(invalidUnsafeEvidence)(
+    'fails closed for unsafe reputation with %s',
+    async (unsafe, _case) => {
+      const transport = vi.fn(async () => response())
+      const inspector = createNetworkInspector(
+        dependencies({ checkReputation: vi.fn(async () => unsafe), transport })
+      )
+
+      const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+      expect(result).toMatchObject({ failure: { kind: 'reputation_unknown' }, ok: false })
+      expect(transport).not.toHaveBeenCalled()
+    }
+  )
 
   it('accepts safe reputation evidence exactly at the freshness limit', async () => {
     const transport = vi.fn(async () => response())
@@ -533,7 +565,8 @@ describe('createNetworkInspector', () => {
   it('bounds unsafe provider evidence before returning an inspector failure', async () => {
     const unsafe: ReputationResult = JSON.parse(
       JSON.stringify({
-        checkedAt: 'private-invalid-date',
+        checkedAt: '2026-08-01T12:00:00.000Z',
+        expiresAt: '2026-08-01T12:05:00.000Z',
         status: 'unsafe',
         threatTypes: [
           ` ${'A'.repeat(1_000)} `,
@@ -563,7 +596,7 @@ describe('createNetworkInspector', () => {
       expect(result.failure.evidence.threatTypes).toHaveLength(4)
       expect(result.failure.evidence.threatTypes?.every(value => value.length <= 64)).toBe(true)
     }
-    expect(JSON.stringify(result)).not.toMatch(/private-invalid-date|"private"|OVERFLOW/)
+    expect(JSON.stringify(result)).not.toMatch(/"private"|OVERFLOW/)
   })
 
   it.each(['gzip', 'br', 'gzip, identity'])('rejects content encoding %s', async encoding => {

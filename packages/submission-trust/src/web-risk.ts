@@ -3,6 +3,7 @@ import type { ReputationResult } from '#types'
 
 const WEB_RISK_LOOKUP_URL = 'https://webrisk.googleapis.com/v1/uris:search'
 const UNKNOWN_REASON = 'URL reputation could not be verified.'
+const WEB_RISK_BODY_MAX_BYTES = 16_384
 
 /** Web Risk Lookup lists required by the submission trust policy. */
 export const WEB_RISK_THREAT_TYPES = [
@@ -11,6 +12,8 @@ export const WEB_RISK_THREAT_TYPES = [
   'UNWANTED_SOFTWARE',
   'SOCIAL_ENGINEERING_EXTENDED_COVERAGE'
 ] as const
+
+const SUPPORTED_THREAT_TYPES: ReadonlySet<string> = new Set(WEB_RISK_THREAT_TYPES)
 
 interface WebRiskOptions {
   apiKey?: string
@@ -41,7 +44,11 @@ const parseThreat = (value: unknown, checkedAtMs: number): WebRiskThreat | null 
     typeof expireTime !== 'string' ||
     !Array.isArray(threatTypes) ||
     threatTypes.length === 0 ||
-    !threatTypes.every(threatType => typeof threatType === 'string' && threatType.length > 0)
+    threatTypes.length > WEB_RISK_THREAT_TYPES.length ||
+    !threatTypes.every(
+      threatType => typeof threatType === 'string' && SUPPORTED_THREAT_TYPES.has(threatType)
+    ) ||
+    new Set(threatTypes).size !== threatTypes.length
   ) {
     return null
   }
@@ -64,21 +71,44 @@ const fetchWithDeadline = async (
   transport: typeof fetch,
   url: URL,
   timeoutMs: number
-): Promise<Response> => {
+): Promise<unknown> => {
   const controller = new AbortController()
+  let reader: ReadableStreamDefaultReader<Uint8Array> | undefined
   let rejectTimeout: ((reason: Error) => void) | undefined
   const deadline = new Promise<never>((_resolve, reject) => {
     rejectTimeout = reject
   })
   const timer = setTimeout(() => {
     controller.abort()
+    reader?.cancel().catch(() => undefined)
     rejectTimeout?.(new Error('web-risk-timeout'))
   }, timeoutMs)
+  const request = async (): Promise<unknown> => {
+    const providerResponse = await transport(url, { method: 'GET', signal: controller.signal })
+    if (!providerResponse.ok) {
+      await providerResponse.body?.cancel().catch(() => undefined)
+      return null
+    }
+    if (!providerResponse.body) return null
+    reader = providerResponse.body.getReader()
+    const decoder = new TextDecoder('utf-8', { fatal: true })
+    let body = ''
+    let byteCount = 0
+    while (true) {
+      const chunk = await reader.read()
+      if (chunk.done) break
+      byteCount += chunk.value.byteLength
+      if (byteCount > WEB_RISK_BODY_MAX_BYTES) {
+        await reader.cancel().catch(() => undefined)
+        return null
+      }
+      body += decoder.decode(chunk.value, { stream: true })
+    }
+    body += decoder.decode()
+    return JSON.parse(body)
+  }
   try {
-    return await Promise.race([
-      transport(url, { method: 'GET', signal: controller.signal }),
-      deadline
-    ])
+    return await Promise.race([request(), deadline])
   } finally {
     clearTimeout(timer)
   }
@@ -100,13 +130,11 @@ export const checkWebRiskUrl = async (
   if (!apiKey) return unknown(checkedAt)
 
   try {
-    const providerResponse = await fetchWithDeadline(
+    const payload = await fetchWithDeadline(
       options.fetch ?? fetch,
       requestUrl(url, apiKey),
       options.timeoutMs ?? SUBMISSION_REQUEST_TIMEOUT_MS
     )
-    if (!providerResponse.ok) return unknown(checkedAt)
-    const payload: unknown = await providerResponse.json()
     if (!isRecord(payload)) return unknown(checkedAt)
     if (!Object.hasOwn(payload, 'threat')) {
       if (Object.keys(payload).length !== 0) return unknown(checkedAt)

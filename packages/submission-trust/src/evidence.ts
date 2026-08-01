@@ -5,19 +5,29 @@ const CONTENT_TYPE_MAX_LENGTH = 128
 const EVIDENCE_ID_MAX_LENGTH = 128
 const HOSTNAME_MAX_LENGTH = 253
 const THREAT_TYPE_MAX_LENGTH = 64
+const MAX_ARRAY_ENTRIES_EXAMINED = 16
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
-const sanitizeString = (value: unknown, maxLength: number): string | undefined => {
+const sanitizePrintable = (value: unknown, maxLength: number): string | undefined => {
   if (typeof value !== 'string') return undefined
-  const trimmed = value.trim()
+  const trimmed = value
+    .slice(0, maxLength + 1)
+    .trim()
+    .slice(0, maxLength)
+  if (!/^[\u0020-\u007e]+$/.test(trimmed)) return undefined
   return trimmed.length > 0 ? trimmed.slice(0, maxLength) : undefined
+}
+
+const sanitizeToken = (value: unknown, maxLength: number): string | undefined => {
+  const token = sanitizePrintable(value, maxLength)
+  return token && /^[a-z0-9._:-]+$/i.test(token) ? token : undefined
 }
 
 const sanitizeTimestamp = (value: unknown): string | undefined => {
   if (typeof value !== 'string') return undefined
-  const timestamp = value.trim()
+  const timestamp = value.slice(0, 65).trim()
   if (!timestamp || timestamp.length > 64) return undefined
   const milliseconds = Date.parse(timestamp)
   return Number.isFinite(milliseconds) ? new Date(milliseconds).toISOString() : undefined
@@ -25,7 +35,10 @@ const sanitizeTimestamp = (value: unknown): string | undefined => {
 
 const sanitizeHostname = (value: unknown): string | undefined => {
   if (typeof value !== 'string') return undefined
-  const hostname = value.trim().toLowerCase()
+  const hostname = value
+    .slice(0, HOSTNAME_MAX_LENGTH + 1)
+    .trim()
+    .toLowerCase()
   if (!hostname || hostname.length > HOSTNAME_MAX_LENGTH || !/^[a-z0-9.-]+$/.test(hostname)) {
     return undefined
   }
@@ -43,23 +56,27 @@ const sanitizeHostname = (value: unknown): string | undefined => {
 
 const sanitizeThreatTypes = (value: unknown): readonly string[] | undefined => {
   if (!Array.isArray(value)) return undefined
-  const threatTypes = value
-    .flatMap(threatType => {
-      const sanitized = sanitizeString(threatType, THREAT_TYPE_MAX_LENGTH)
-      return sanitized ? [sanitized] : []
-    })
-    .slice(0, 4)
+  const threatTypes: string[] = []
+  const entries = Math.min(value.length, MAX_ARRAY_ENTRIES_EXAMINED)
+  for (let index = 0; index < entries && threatTypes.length < 4; index += 1) {
+    const sanitized = sanitizeToken(value[index], THREAT_TYPE_MAX_LENGTH)
+    if (sanitized) threatTypes.push(sanitized)
+  }
   return threatTypes.length > 0 ? threatTypes : undefined
 }
 
 const sanitizeRedirectHosts = (value: unknown): readonly string[] | undefined => {
   if (!Array.isArray(value)) return undefined
-  const redirectHosts = value
-    .flatMap(host => {
-      const sanitized = sanitizeHostname(host)
-      return sanitized ? [sanitized] : []
-    })
-    .slice(0, SUBMISSION_MAX_REDIRECTS)
+  const redirectHosts: string[] = []
+  const entries = Math.min(value.length, MAX_ARRAY_ENTRIES_EXAMINED)
+  for (
+    let index = 0;
+    index < entries && redirectHosts.length < SUBMISSION_MAX_REDIRECTS;
+    index += 1
+  ) {
+    const sanitized = sanitizeHostname(value[index])
+    if (sanitized) redirectHosts.push(sanitized)
+  }
   return redirectHosts
 }
 
@@ -92,8 +109,8 @@ export const sanitizeAssessmentEvidenceDetails = (value: unknown): AssessmentEvi
       ? value.statusCode
       : undefined
   const checkedAt = sanitizeTimestamp(value.checkedAt)
-  const contentType = sanitizeString(value.contentType, CONTENT_TYPE_MAX_LENGTH)
-  const evidenceId = sanitizeString(value.evidenceId, EVIDENCE_ID_MAX_LENGTH)
+  const contentType = sanitizePrintable(value.contentType, CONTENT_TYPE_MAX_LENGTH)
+  const evidenceId = sanitizeToken(value.evidenceId, EVIDENCE_ID_MAX_LENGTH)
   const finalHost = sanitizeHostname(value.finalHost)
   const redirectHosts = sanitizeRedirectHosts(value.redirectHosts)
   const threatTypes = sanitizeThreatTypes(value.threatTypes)

@@ -165,6 +165,40 @@ describe('/api/check-url hardened inspector route', () => {
     expect(global.fetch).not.toHaveBeenCalled()
   })
 
+  it('fails closed at the route boundary when the server Web Risk key is missing', async () => {
+    const originalKey = process.env.GOOGLE_WEB_RISK_API_KEY
+    delete process.env.GOOGLE_WEB_RISK_API_KEY
+    mockCheckWebRiskUrl.mockResolvedValueOnce({
+      checkedAt: '2026-08-01T12:00:00.000Z',
+      reason: 'URL reputation could not be verified.',
+      status: 'unknown'
+    })
+    mockCreateNetworkInspector.mockImplementationOnce(dependencies => ({
+      inspect: async url => {
+        const reputation = await dependencies?.checkReputation?.(url)
+        return reputation?.status === 'unknown'
+          ? failed('reputation_unknown', 'reputation_unknown', 'private should not escape')
+          : inspected()
+      }
+    }))
+
+    try {
+      const response = await POST(request({ url: 'https://example.com' }))
+
+      await expect(response.json()).resolves.toEqual({
+        accessible: false,
+        error:
+          'We could not safely verify this site right now. Nothing was published. Please try again later.'
+      })
+      expect(mockCheckWebRiskUrl).toHaveBeenCalledWith('https://example.com/', {
+        apiKey: undefined
+      })
+    } finally {
+      if (originalKey === undefined) delete process.env.GOOGLE_WEB_RISK_API_KEY
+      else process.env.GOOGLE_WEB_RISK_API_KEY = originalKey
+    }
+  })
+
   it('returns a safe client error for malformed JSON', async () => {
     const response = await POST(request('not-json'))
     await expect(response.json()).resolves.toEqual({

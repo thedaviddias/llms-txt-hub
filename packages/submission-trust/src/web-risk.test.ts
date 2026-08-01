@@ -118,7 +118,36 @@ describe('checkWebRiskUrl', () => {
       now: () => NOW
     })
 
-    expect(result.status).not.toBe('safe')
+    expect(result.status).toBe('unknown')
+  })
+
+  it.each([
+    ['unsupported', ['FUTURE_THREAT']],
+    ['duplicate', ['MALWARE', 'MALWARE']],
+    [
+      'too many',
+      [
+        'MALWARE',
+        'SOCIAL_ENGINEERING',
+        'UNWANTED_SOFTWARE',
+        'SOCIAL_ENGINEERING_EXTENDED_COVERAGE',
+        'MALWARE'
+      ]
+    ]
+  ])('fails closed for %s provider threat types', async (_case, threatTypes) => {
+    const result = await checkWebRiskUrl('https://example.com', {
+      apiKey: API_KEY,
+      fetch: vi.fn<FetchTransport>(async () =>
+        response(
+          JSON.stringify({
+            threat: { expireTime: '2026-08-01T12:05:00.000Z', threatTypes }
+          })
+        )
+      ),
+      now: () => NOW
+    })
+
+    expect(result.status).toBe('unknown')
   })
 
   it.each([undefined, '', '   '])('does not request without a usable API key', async apiKey => {
@@ -168,5 +197,78 @@ describe('checkWebRiskUrl', () => {
     await expect(pending).resolves.toMatchObject({ status: 'unknown' })
     expect(capturedSignal?.aborted).toBe(true)
     expect(vi.getTimerCount()).toBe(0)
+  })
+
+  it('keeps the timeout active while reading a stalled response body', async () => {
+    vi.useFakeTimers()
+    let capturedSignal: AbortSignal | undefined
+    const cancel = vi.fn()
+    const stalledBody = new ReadableStream<Uint8Array>({
+      cancel,
+      start(controller) {
+        controller.enqueue(new TextEncoder().encode('{'))
+      }
+    })
+    const pending = checkWebRiskUrl('https://example.com', {
+      apiKey: API_KEY,
+      fetch: vi.fn<FetchTransport>(async (_input, init) => {
+        capturedSignal = init?.signal ?? undefined
+        return new Response(stalledBody, {
+          headers: { 'content-type': 'application/json' },
+          status: 200
+        })
+      }),
+      now: () => NOW,
+      timeoutMs: 25
+    })
+
+    await vi.advanceTimersByTimeAsync(25)
+
+    await expect(pending).resolves.toMatchObject({ status: 'unknown' })
+    expect(capturedSignal?.aborted).toBe(true)
+    expect(cancel).toHaveBeenCalledTimes(1)
+    expect(vi.getTimerCount()).toBe(0)
+  })
+
+  it('cancels and rejects an oversized provider response body', async () => {
+    const cancel = vi.fn()
+    const oversizedBody = new ReadableStream<Uint8Array>({
+      cancel,
+      start(controller) {
+        controller.enqueue(new Uint8Array(32_000))
+      }
+    })
+
+    const result = await checkWebRiskUrl('https://example.com', {
+      apiKey: API_KEY,
+      fetch: vi.fn<FetchTransport>(
+        async () =>
+          new Response(oversizedBody, {
+            headers: { 'content-type': 'application/json' },
+            status: 200
+          })
+      ),
+      now: () => NOW
+    })
+
+    expect(result.status).toBe('unknown')
+    expect(cancel).toHaveBeenCalledTimes(1)
+  })
+
+  it('discards a non-success provider body without reading it', async () => {
+    const cancel = vi.fn()
+    const body = new ReadableStream<Uint8Array>({
+      cancel,
+      start() {}
+    })
+
+    const result = await checkWebRiskUrl('https://example.com', {
+      apiKey: API_KEY,
+      fetch: vi.fn<FetchTransport>(async () => new Response(body, { status: 503 })),
+      now: () => NOW
+    })
+
+    expect(result.status).toBe('unknown')
+    expect(cancel).toHaveBeenCalledTimes(1)
   })
 })
