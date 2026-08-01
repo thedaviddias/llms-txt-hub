@@ -348,6 +348,32 @@ describe('createNetworkInspector', () => {
     }
   )
 
+  it('keeps an unsafe match authoritative until its provider expiry', async () => {
+    const transport = vi.fn(async () => response())
+    const inspector = createNetworkInspector(
+      dependencies({
+        checkReputation: vi.fn(
+          async (): Promise<ReputationResult> => ({
+            checkedAt: '2026-08-01T11:49:00.000Z',
+            expiresAt: '2026-08-01T12:05:00.000Z',
+            status: 'unsafe',
+            threatTypes: ['MALWARE']
+          })
+        ),
+        transport
+      })
+    )
+
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+
+    expect(result).toMatchObject({
+      failure: { kind: 'reputation_match' },
+      ok: false,
+      reasonCode: 'reputation_match'
+    })
+    expect(transport).not.toHaveBeenCalled()
+  })
+
   it('accepts safe reputation evidence exactly at the freshness limit', async () => {
     const transport = vi.fn(async () => response())
     const inspector = createNetworkInspector(

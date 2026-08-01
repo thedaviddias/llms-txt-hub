@@ -268,7 +268,6 @@ class InspectionRunner {
         !Number.isFinite(now) ||
         !Number.isFinite(checked) ||
         checked > now ||
-        now - checked > WEB_RISK_FRESHNESS_MS ||
         !Number.isFinite(expires) ||
         expires <= now
       ) {
