@@ -14,13 +14,41 @@ const H1_HEADING = /^#\s+\S/m
 /** Internal confidence levels for bounded llms text classification. */
 export type LlmsTextClassification = 'high_confidence' | 'invalid' | 'nonstandard'
 
-const stripMarkdownCode = (body: string): string =>
-  body
+const stripIndentedCode = (body: string): string => {
+  const lines = body.split('\n')
+  const masked: string[] = []
+  let inBlock = false
+  let previousBlank = true
+  for (const line of lines) {
+    const blank = line.length === 0 || /^[ \t\r]+$/.test(line)
+    if (blank) {
+      masked.push('')
+      previousBlank = true
+      continue
+    }
+    const indented = line.startsWith('\t') || line.startsWith('    ')
+    if (indented && (inBlock || previousBlank)) {
+      masked.push('')
+      inBlock = true
+      previousBlank = false
+      continue
+    }
+    masked.push(line)
+    inBlock = false
+    previousBlank = false
+  }
+  return masked.join('\n')
+}
+
+const stripMarkdownCode = (body: string): string => {
+  const withoutFences = body
     .replace(/(^|\n)[ \t]*```[^\n]*\n[\s\S]*?(?:\n[ \t]*```[ \t]*(?=\n|$)|$)/g, '$1')
     .replace(/(^|\n)[ \t]*~~~[^\n]*\n[\s\S]*?(?:\n[ \t]*~~~[ \t]*(?=\n|$)|$)/g, '$1')
+  return stripIndentedCode(withoutFences)
     .replace(/`[^`\n]*`/g, '')
     .replace(/<https?:\/\/[^>\n]+>/gi, '')
     .replace(/<[^<>\s@]+@[^<>\s]+>/g, '')
+}
 
 const normalizedLeadingContent = (body: string): string | undefined => {
   const limit = Math.min(body.length, LEADING_METADATA_MAX_CHARS)
