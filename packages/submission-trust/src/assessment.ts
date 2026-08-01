@@ -13,6 +13,7 @@ import {
   SUBMISSION_POLICY_VERSION
 } from '#constants'
 import { sanitizeAssessmentEvidenceDetails } from '#evidence'
+import { classifyLlmsTextBody } from '#llms-content-classifier'
 import type {
   AssessmentEvidence,
   AssessmentEvidenceDetails,
@@ -264,16 +265,6 @@ const familyOutcome = (
   return undefined
 }
 
-const hasDisallowedTextControl = (body: string): boolean => {
-  for (let index = 0; index < body.length; index += 1) {
-    const code = body.charCodeAt(index)
-    if (code <= 8 || code === 11 || code === 12 || (code >= 14 && code <= 31) || code === 127) {
-      return true
-    }
-  }
-  return false
-}
-
 const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcome | undefined => {
   const body = typeof resource.body === 'string' ? resource.body.trim() : ''
   const details = assessmentEvidenceDetails(resource)
@@ -295,9 +286,7 @@ const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcom
   if (
     !isTextContentType(resource.contentType) ||
     isHtmlContentType(resource.contentType) ||
-    !body ||
-    /^\s*(?:<!doctype\s+html\b|<html\b|<head\b|<body\b)/i.test(body) ||
-    hasDisallowedTextControl(body)
+    !body
   ) {
     const variant: AssessmentVariant =
       name === 'llms_full'
@@ -310,8 +299,21 @@ const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcom
       details
     )
   }
+  const classification = classifyLlmsTextBody(body)
+  if (classification === 'invalid') {
+    const variant: AssessmentVariant =
+      name === 'llms_full'
+        ? { decision: 'reject', reasonCode: 'invalid_optional_resource' }
+        : { decision: 'reject', reasonCode: 'required_resource_missing' }
+    return outcome(
+      variant,
+      name === 'llms_full' ? OPTIONAL_MESSAGE : REQUIRED_MESSAGE,
+      name,
+      details
+    )
+  }
   if (name === 'llms_full') {
-    if (body.length >= 80) return undefined
+    if (classification === 'high_confidence') return undefined
     return outcome(
       { decision: 'reject', reasonCode: 'invalid_optional_resource' },
       OPTIONAL_MESSAGE,
@@ -319,9 +321,7 @@ const contentOutcome = (name: ResourceName, resource: InspectedResource): Outcom
       details
     )
   }
-  const hasHeading = /^#\s+\S/m.test(body)
-  const hasAbsoluteLink = /https?:\/\/[^\s)>\]]+/i.test(body)
-  if (body.length < 80 || !hasHeading || !hasAbsoluteLink) {
+  if (classification === 'nonstandard') {
     return outcome(
       { decision: 'manual_review', reasonCode: 'nonstandard_llms_format' },
       MANUAL_MESSAGE,
