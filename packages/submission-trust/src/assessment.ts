@@ -26,6 +26,8 @@ import type {
   SubmissionFields
 } from '#types'
 import { mergeSubmissionDecisions } from '#types'
+import { createEditorialOutcome } from './assessment-editorial.js'
+import { assessEditorialPolicy } from './editorial-policy.js'
 
 const RETRY_MESSAGE =
   'We could not safely verify this site right now. Nothing was published. Please try again later.'
@@ -444,6 +446,36 @@ export const assessPublicationFields = async (
       )
     )
   }
+
+  const technicalSelected = selectOutcome(outcomes)
+  if (technicalSelected.decision === 'reject' || technicalSelected.decision === 'retry_later') {
+    return {
+      ...technicalSelected,
+      checkedAt: now.toISOString(),
+      evidence: outcomes.flatMap(value => value.evidence),
+      policyVersion: SUBMISSION_POLICY_VERSION
+    }
+  }
+
+  const bodyByResource = new Map<ResourceName, string>()
+  for (let index = 0; index < targets.length; index += 1) {
+    const target = targets[index]
+    const result = results[index]
+    if (target && result?.ok && typeof result.resource.body === 'string') {
+      bodyByResource.set(target.name, result.resource.body)
+    }
+  }
+  outcomes.push(
+    createEditorialOutcome(
+      assessEditorialPolicy({
+        categories: dependencies.categories ?? [],
+        fields,
+        homepageText: bodyByResource.get('homepage') ?? '',
+        llmsFullText: bodyByResource.get('llms_full'),
+        llmsText: bodyByResource.get('llms') ?? ''
+      })
+    )
+  )
 
   const selected = selectOutcome(outcomes)
   return {

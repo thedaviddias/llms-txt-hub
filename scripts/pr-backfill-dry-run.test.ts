@@ -1,3 +1,8 @@
+import type {
+  InspectedResource,
+  PublicationAssessmentDependencies,
+  ResourceInspectionResult
+} from '@thedaviddias/submission-trust/types'
 import { describe, expect, it } from 'vitest'
 import {
   assessSubmissionGuidelines,
@@ -98,32 +103,48 @@ publishedAt: '2026-03-14'
 })
 
 describe('assessSubmissionGuidelines', () => {
+  const checkedAt = '2026-08-01T12:00:00.000Z'
   const baseFrontmatter = {
     category: 'developer-tools',
-    description: 'Example is a developer platform with API docs for AI agents.',
+    description: 'Example is a developer platform with API documentation for AI agents.',
     llmsFullUrl: '',
     llmsUrl: 'https://example.com/llms.txt',
     name: 'Example',
     website: 'https://example.com'
   }
 
-  it('passes a structurally safe tool submission with matching signals', () => {
-    const result = assessSubmissionGuidelines({
-      frontmatter: baseFrontmatter,
-      homepageInspection: {
-        contentType: 'text/html',
-        ok: true,
-        status: 200,
-        text: 'Example is a developer platform with API docs and SDK references.',
-        url: 'https://example.com'
-      },
-      llmsInspection: {
-        contentType: 'text/plain',
-        ok: true,
-        status: 200,
-        text: 'Example docs for API integration, SDK usage, and developer workflows.'.repeat(4),
-        url: 'https://example.com/llms.txt'
+  const resource = (
+    requestedUrl: string,
+    overrides: Partial<InspectedResource> = {}
+  ): ResourceInspectionResult => {
+    const safe = { checkedAt, status: 'safe' } as const
+    return {
+      ok: true,
+      resource: {
+        body: requestedUrl.endsWith('.txt')
+          ? `# Example\n\n${'Developer API documentation, SDK usage, and integration guides. '.repeat(3)}https://example.com/docs`
+          : `<html><body>${'Example developer platform with API docs and SDK references. '.repeat(3)}</body></html>`,
+        byteCount: 256,
+        contentType: requestedUrl.endsWith('.txt') ? 'text/plain' : 'text/html',
+        finalUrl: requestedUrl,
+        redirectUrls: [],
+        reputation: safe,
+        reputationChecks: [{ reputation: safe, url: requestedUrl }],
+        requestedUrl,
+        statusCode: 200,
+        ...overrides
       }
+    }
+  }
+
+  const inspectResource: PublicationAssessmentDependencies['inspectResource'] = async url =>
+    resource(url)
+
+  it('passes a structurally safe tool submission with matching signals', async () => {
+    const result = await assessSubmissionGuidelines({
+      frontmatter: baseFrontmatter,
+      inspectResource,
+      now: () => new Date(checkedAt)
     })
 
     expect(result).toEqual({
@@ -133,26 +154,15 @@ describe('assessSubmissionGuidelines', () => {
     })
   })
 
-  it('warns when a non-tool category requires manual review', () => {
-    const result = assessSubmissionGuidelines({
+  it('preserves a plausible non-tool category as a passing guideline result', async () => {
+    const result = await assessSubmissionGuidelines({
       frontmatter: {
         ...baseFrontmatter,
-        category: 'personal'
+        category: 'personal',
+        description: 'Example is a personal website, portfolio, and developer blog.'
       },
-      homepageInspection: {
-        contentType: 'text/html',
-        ok: true,
-        status: 200,
-        text: 'A personal website and blog.',
-        url: 'https://example.com'
-      },
-      llmsInspection: {
-        contentType: 'text/plain',
-        ok: true,
-        status: 200,
-        text: 'This personal site includes some notes and posts.'.repeat(4),
-        url: 'https://example.com/llms.txt'
-      }
+      inspectResource,
+      now: () => new Date(checkedAt)
     })
 
     expect(result.guidelineStatus).toBe('pass')
@@ -160,102 +170,66 @@ describe('assessSubmissionGuidelines', () => {
     expect(result.guidelineReasons).toEqual(['No guideline concerns detected.'])
   })
 
-  it('fails when llms.txt is inaccessible', () => {
-    const result = assessSubmissionGuidelines({
+  it('fails when llms.txt is inaccessible', async () => {
+    const result = await assessSubmissionGuidelines({
       frontmatter: baseFrontmatter,
-      homepageInspection: {
-        contentType: 'text/html',
-        ok: true,
-        status: 200,
-        text: 'Example is a developer platform.',
-        url: 'https://example.com'
-      },
-      llmsInspection: {
-        contentType: null,
-        error: 'fetch failed',
-        ok: false,
-        text: '',
-        url: 'https://example.com/llms.txt'
-      }
+      inspectResource: async url =>
+        url === baseFrontmatter.llmsUrl
+          ? resource(url, { body: '', statusCode: 404 })
+          : resource(url),
+      now: () => new Date(checkedAt)
     })
 
     expect(result.guidelineStatus).toBe('fail')
     expect(result.policyEligible).toBe(false)
-    expect(result.guidelineReasons).toContain('llms.txt is not accessible (fetch failed).')
+    expect(result.guidelineReasons[0]).toContain('required site resource')
   })
 
-  it('does not block service-oriented wording on its own anymore', () => {
-    const result = assessSubmissionGuidelines({
-      frontmatter: baseFrontmatter,
-      homepageInspection: {
-        contentType: 'text/html',
-        ok: true,
-        status: 200,
-        text: 'We are a digital agency providing consulting services for local businesses.',
-        url: 'https://example.com'
-      },
-      llmsInspection: {
-        contentType: 'text/plain',
-        ok: true,
-        status: 200,
-        text: 'We provide consulting services and agency work for clients.'.repeat(4),
-        url: 'https://example.com/llms.txt'
-      }
-    })
-
-    expect(result.guidelineStatus).toBe('pass')
-    expect(result.policyEligible).toBe(true)
-    expect(result.guidelineReasons).toEqual(['No guideline concerns detected.'])
-  })
-
-  it('only fails on the narrowed suspicious-term list', () => {
-    const result = assessSubmissionGuidelines({
+  it('warns for first-person promotional copy', async () => {
+    const result = await assessSubmissionGuidelines({
       frontmatter: {
         ...baseFrontmatter,
-        category: 'personal'
+        description:
+          'We offer developer tools and API services. Contact us today for a free consultation.'
       },
-      homepageInspection: {
-        contentType: 'text/html',
-        ok: true,
-        status: 200,
-        text: 'Adult learning programs for career growth and continuing education.',
-        url: 'https://example.com'
+      inspectResource,
+      now: () => new Date(checkedAt)
+    })
+
+    expect(result.guidelineStatus).toBe('warn')
+    expect(result.policyEligible).toBe(false)
+    expect(result.guidelineReasons[0]).toContain('maintainer decision')
+  })
+
+  it('does not block adult education wording on its own', async () => {
+    const result = await assessSubmissionGuidelines({
+      frontmatter: {
+        ...baseFrontmatter,
+        description: 'Example provides developer tools for adult education programs.'
       },
-      llmsInspection: {
-        contentType: 'text/plain',
-        ok: true,
-        status: 200,
-        text: 'Adult education resources and professional development courses.'.repeat(4),
-        url: 'https://example.com/llms.txt'
-      }
+      inspectResource,
+      now: () => new Date(checkedAt)
     })
 
     expect(result.guidelineStatus).toBe('pass')
     expect(result.policyEligible).toBe(true)
   })
 
-  it('still fails on obvious suspicious-site terms', () => {
-    const result = assessSubmissionGuidelines({
-      frontmatter: baseFrontmatter,
-      homepageInspection: {
-        contentType: 'text/html',
-        ok: true,
-        status: 200,
-        text: 'This casino platform offers betting, gambling, and bonus promotions.',
-        url: 'https://example.com'
+  it('fails on an established gambling promotion pattern without leaking it in reasons', async () => {
+    const result = await assessSubmissionGuidelines({
+      frontmatter: {
+        ...baseFrontmatter,
+        description: 'Compare casino bonus offers with our gambling affiliate reviews.'
       },
-      llmsInspection: {
-        contentType: 'text/plain',
-        ok: true,
-        status: 200,
-        text: 'Casino betting gambling promotions and slots.'.repeat(4),
-        url: 'https://example.com/llms.txt'
-      }
+      inspectResource,
+      now: () => new Date(checkedAt)
     })
 
     expect(result.guidelineStatus).toBe('fail')
     expect(result.policyEligible).toBe(false)
-    expect(result.guidelineReasons.join(' ')).toContain('casino')
+    expect(result.guidelineReasons).toEqual([
+      'This submission does not meet the directory content policy.'
+    ])
   })
 })
 
@@ -358,7 +332,7 @@ describe('deriveWouldMergeDecision', () => {
 })
 
 describe('deriveMergeAction', () => {
-  it('plans a merge during dry-run when the PR is eligible', () => {
+  it('does not authorize a merge before signed attestation verification exists', () => {
     const result = deriveMergeAction({
       desiredLabels: ['automerge:candidate'],
       dryRun: true,
@@ -367,10 +341,10 @@ describe('deriveMergeAction', () => {
     })
 
     expect(result).toEqual({
-      attempted: true,
+      attempted: false,
       mode: 'dry-run',
-      reason: 'Would merge now.',
-      status: 'planned'
+      reason: 'Automatic merge is disabled until signed attestation verification is available.',
+      status: 'skipped'
     })
   })
 
