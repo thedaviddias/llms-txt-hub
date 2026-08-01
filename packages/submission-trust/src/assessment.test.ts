@@ -256,12 +256,47 @@ describe('assessPublicationFields', () => {
     expect(result).toMatchObject({ decision: 'reject', reasonCode: 'required_resource_missing' })
   })
 
+  it.each([
+    [
+      'HTML after a leading comment',
+      `\uFEFF \n<!-- generated -->\n<html><body></body></html>\n${LONG_TEXT}`
+    ],
+    [
+      'HTML after an XML declaration',
+      `<?xml version="1.0"?>\n<html><body></body></html>\n${LONG_TEXT}`
+    ],
+    ['active script markup', `<script src="https://example.com/app.js"></script>\n${LONG_TEXT}`],
+    ['mid-body HTML', `${LONG_TEXT}\n<div>Injected HTML content</div>`]
+  ])('rejects required llms %s', async (_case, body) => {
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'required_resource_missing' })
+  })
+
   it('rejects a supplied one-character optional llms resource', async () => {
     const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
     const result = await assessPublicationFields(
       fields,
       dependencies(async url =>
         resource(url, url === fields.llmsFullUrl ? { body: 'x', contentType: 'text/plain' } : {})
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'invalid_optional_resource' })
+  })
+
+  it('rejects format-only optional llms content', async () => {
+    const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+    const result = await assessPublicationFields(
+      fields,
+      dependencies(async url =>
+        resource(
+          url,
+          url === fields.llmsFullUrl ? { body: '\u200b'.repeat(80), contentType: 'text/plain' } : {}
+        )
       )
     )
 
@@ -277,6 +312,19 @@ describe('assessPublicationFields', () => {
           url,
           url === fields.llmsFullUrl ? { body: LONG_TEXT, contentType: 'text/plain' } : {}
         )
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+  })
+
+  it('accepts HTML examples inside optional Markdown code', async () => {
+    const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+    const body = `${LONG_TEXT}\n\nUse \`<script>\` only as an example.\n\n\`\`\`html\n<div>Example</div>\n\`\`\``
+    const result = await assessPublicationFields(
+      fields,
+      dependencies(async url =>
+        resource(url, url === fields.llmsFullUrl ? { body, contentType: 'text/markdown' } : {})
       )
     )
 
