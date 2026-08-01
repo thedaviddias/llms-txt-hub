@@ -331,6 +331,29 @@ describe('assessPublicationFields', () => {
     expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
   })
 
+  it('accepts a four-space-indented HTML example in required Markdown', async () => {
+    const body = `${LONG_TEXT}\n\n    <script>exampleOnly()</script>`
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+  })
+
+  it('accepts a tab-indented HTML example in optional Markdown', async () => {
+    const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+    const body = `${LONG_TEXT}\n\n\t<div>Example only</div>`
+    const result = await assessPublicationFields(
+      fields,
+      dependencies(async url =>
+        resource(url, url === fields.llmsFullUrl ? { body, contentType: 'text/markdown' } : {})
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+  })
+
   it('sends a different submitted documentation family to manual review', async () => {
     const fields = { ...FIELDS, llmsUrl: 'https://docs-host.example.net/llms.txt' }
     const result = await assessPublicationFields(
