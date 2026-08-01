@@ -4,7 +4,7 @@ import type {
   NetworkInspectorDependencies,
   PinnedTransportRequest,
   PinnedTransportResponse
-} from './types.js'
+} from '#types'
 
 /** Narrow request handle used by the private production HTTPS seam. */
 export interface NodeHttpsRequestHandle {

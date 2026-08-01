@@ -1,4 +1,7 @@
 import { logger } from '@thedaviddias/logging'
+import { SUBMISSION_HOMEPAGE_MAX_BYTES } from '@thedaviddias/submission-trust/constants'
+import { createNetworkInspector } from '@thedaviddias/submission-trust/network-inspector'
+import { checkWebRiskUrl } from '@thedaviddias/submission-trust/web-risk'
 import { type NextRequest, NextResponse } from 'next/server'
 import { validatePublicHttpUrl } from '@/lib/url-safety'
 
@@ -6,7 +9,16 @@ import { validatePublicHttpUrl } from '@/lib/url-safety'
 const requestCounts = new Map<string, { count: number; resetTime: number }>()
 const MAX_REQUESTS_PER_WINDOW = 10
 const RATE_LIMIT_WINDOW_MS = 60 * 1000
-const URL_CHECK_TIMEOUT_MS = 5000
+const UNAVAILABLE_MESSAGE =
+  'We could not safely verify this site right now. Nothing was published. Please try again later.'
+
+/**
+ * Creates the hardened URL inspector with server-only reputation credentials.
+ */
+const createUrlInspector = () =>
+  createNetworkInspector({
+    checkReputation: url => checkWebRiskUrl(url, { apiKey: process.env.GOOGLE_WEB_RISK_API_KEY })
+  })
 
 /**
  * Extract a rate-limit key from the request IP address
@@ -61,24 +73,6 @@ function checkRateLimit(input: CheckRateLimitInput): { allowed: boolean; resetTi
 }
 
 /**
- * Execute a fetch request with AbortController timeout handling.
- */
-async function fetchWithTimeout(
-  url: string,
-  init: RequestInit,
-  timeoutMs: number
-): Promise<Response> {
-  const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs)
-
-  try {
-    return await fetch(url, { ...init, signal: controller.signal })
-  } finally {
-    clearTimeout(timeoutId)
-  }
-}
-
-/**
  * Handle POST request to check whether a URL is accessible
  */
 export async function POST(request: NextRequest) {
@@ -105,7 +99,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const body = await request.json()
+    let body: unknown
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json(
+        { accessible: false, error: 'Invalid request body.' },
+        { status: 400 }
+      )
+    }
+    if (!body || typeof body !== 'object' || !('url' in body)) {
+      return NextResponse.json({ accessible: false, error: 'URL is required' }, { status: 400 })
+    }
     const { url } = body
 
     if (!url || typeof url !== 'string') {
@@ -117,52 +122,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ accessible: false, error: validation.error }, { status: 400 })
     }
 
-    // Check URL accessibility with additional security headers
-    try {
-      const response = await fetchWithTimeout(
-        validation.url.toString(),
-        {
-          method: 'HEAD', // Use HEAD to avoid downloading content
-          headers: {
-            'User-Agent': 'LLMs.txt Hub URL Checker/1.0',
-            Accept: 'text/html,application/xhtml+xml',
-            'Cache-Control': 'no-cache'
-          },
-          // Security: Prevent following too many redirects
-          redirect: 'manual'
-        },
-        URL_CHECK_TIMEOUT_MS
-      )
-
-      const accessible = response.ok // 2xx status codes
-
+    const result = await createUrlInspector().inspect(validation.url.toString(), {
+      maxBytes: SUBMISSION_HOMEPAGE_MAX_BYTES
+    })
+    if (result.ok) {
+      const { statusCode } = result.resource
+      const accessible = statusCode >= 200 && statusCode < 300
       return NextResponse.json({
         accessible,
-        status: response.status,
-        statusText: response.statusText,
-        error: accessible ? null : `HTTP ${response.status}: ${response.statusText}`
-      })
-    } catch (error) {
-      let errorMessage = 'Failed to reach URL'
-
-      if (error instanceof Error) {
-        if (error.name === 'AbortError' || error.name === 'TimeoutError') {
-          errorMessage = 'Request timed out'
-        } else if (error.message.includes('fetch')) {
-          errorMessage = 'Network error or URL unreachable'
-        } else {
-          errorMessage = error.message
-        }
-      }
-
-      return NextResponse.json({
-        accessible: false,
-        error: errorMessage
+        status: statusCode,
+        statusText: accessible ? 'OK' : '',
+        error: accessible ? null : `The site returned HTTP ${statusCode}.`
       })
     }
-  } catch (error) {
-    logger.error(error instanceof Error ? error : new Error(String(error)), {
-      data: error,
+    const unavailable =
+      result.reasonCode === 'reputation_unknown' ||
+      result.reasonCode === 'required_resource_transient_failure'
+    return NextResponse.json({
+      accessible: false,
+      error: unavailable ? UNAVAILABLE_MESSAGE : result.failure.safeMessage
+    })
+  } catch {
+    logger.error(new Error('URL check route failed'), {
       tags: { type: 'api', route: 'check-url' }
     })
     return NextResponse.json({ accessible: false, error: 'Internal server error' }, { status: 500 })

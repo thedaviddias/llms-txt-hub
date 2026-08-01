@@ -159,6 +159,15 @@ const RESOURCE_RESULTS = [
     },
     ok: false,
     reasonCode: 'required_resource_transient_failure'
+  },
+  {
+    failure: {
+      evidence: { evidenceId: 'strict-utf8-required' },
+      kind: 'invalid_encoding',
+      safeMessage: 'The resource did not contain valid UTF-8 text.'
+    },
+    ok: false,
+    reasonCode: 'required_resource_missing'
   }
 ] satisfies readonly ResourceInspectionResult[]
 

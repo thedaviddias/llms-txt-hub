@@ -470,6 +470,29 @@ describe('createNetworkInspector', () => {
     expect(JSON.stringify(result)).not.toContain('12345678')
   })
 
+  it.each([
+    [false, 'required_resource_missing'],
+    [true, 'invalid_optional_resource']
+  ] as const)('rejects invalid UTF-8 with optional=%s', async (optional, reasonCode) => {
+    const body: AsyncIterable<Uint8Array> = {
+      async *[Symbol.asyncIterator]() {
+        yield new Uint8Array([0xc3, 0x28])
+      }
+    }
+    const inspector = createNetworkInspector(
+      dependencies({ transport: vi.fn(async () => response(200, {}, body)) })
+    )
+
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100, optional })
+
+    expect(result).toMatchObject({
+      failure: { kind: 'invalid_encoding' },
+      ok: false,
+      reasonCode
+    })
+    expect(JSON.stringify(result)).not.toContain('\ufffd')
+  })
+
   it.each(['gzip', 'br', 'gzip, identity'])('rejects content encoding %s', async encoding => {
     const inspector = createNetworkInspector(
       dependencies({
