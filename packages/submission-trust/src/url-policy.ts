@@ -3,21 +3,33 @@ import { isIP } from 'node:net'
 import { getDomain } from 'tldts'
 
 const RESTRICTED_HOSTNAMES = new Set([
+  'alt',
+  'arpa',
+  'example',
+  'home.arpa',
+  'internal',
+  'invalid',
   'localhost',
   'localhost.localdomain',
   'metadata',
-  'metadata.google.internal'
+  'metadata.google.internal',
+  'onion',
+  'test'
 ])
 
 const RESTRICTED_HOST_SUFFIXES = [
+  '.alt',
+  '.arpa',
   '.example',
   '.home',
+  '.home.arpa',
   '.internal',
   '.invalid',
   '.lan',
   '.local',
   '.localhost',
   '.localdomain',
+  '.onion',
   '.test'
 ]
 
@@ -155,16 +167,14 @@ const NON_PUBLIC_IPV6_CIDRS: readonly [string, number][] = [
   ['::', 96],
   ['64:ff9b:1::', 48],
   ['100::', 64],
-  ['2001::', 32],
-  ['2001:2::', 48],
-  ['2001:10::', 28],
-  ['2001:20::', 28],
+  ['2001::', 23],
   ['2001:db8::', 32],
   ['2002::', 16],
   ['3fff::', 20],
   ['5f00::', 16],
   ['fc00::', 7],
   ['fe80::', 10],
+  ['fec0::', 10],
   ['ff00::', 8]
 ]
 
@@ -200,6 +210,10 @@ export const isPublicIpAddress = (address: string): boolean => {
     return !NON_PUBLIC_IPV4_CIDRS.some(([base, prefix]) => ipv4InCidr(mappedIpv4, base, prefix))
   }
 
+  if (!ipv6InCidr(parsed, '2000::', 3)) {
+    return false
+  }
+
   return !NON_PUBLIC_IPV6_CIDRS.some(([base, prefix]) => ipv6InCidr(parsed, base, prefix))
 }
 
@@ -224,16 +238,6 @@ export const validateSubmissionUrl = (value: string): SubmissionUrlValidationRes
     return failure('invalid_url')
   }
 
-  if (url.protocol !== 'https:') {
-    return failure('https_required')
-  }
-  if (url.username || url.password) {
-    return failure('credentials_disallowed')
-  }
-  if (url.port) {
-    return failure('port_disallowed')
-  }
-
   const hostname = normalizeIpInput(url.hostname).replace(/\.$/, '')
   if (!hostname) {
     return failure('invalid_url')
@@ -243,6 +247,15 @@ export const validateSubmissionUrl = (value: string): SubmissionUrlValidationRes
   }
   if (isRestrictedHostname(hostname)) {
     return failure('restricted_hostname')
+  }
+  if (url.protocol !== 'https:') {
+    return failure('https_required')
+  }
+  if (url.username || url.password) {
+    return failure('credentials_disallowed')
+  }
+  if (url.port) {
+    return failure('port_disallowed')
   }
 
   const registrableDomain = getDomain(hostname, {

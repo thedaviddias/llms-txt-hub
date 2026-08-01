@@ -25,6 +25,16 @@ describe('validatePublicHttpUrl', () => {
     }
   )
 
+  it.each(['http://localhost:3000', 'http://192.168.1.12'])(
+    'preserves restricted-target precedence for %s',
+    candidate => {
+      expect(validatePublicHttpUrl(candidate)).toEqual({
+        error: 'URL points to a restricted network address',
+        ok: false
+      })
+    }
+  )
+
   it.each([
     'https://user:password@example.com',
     'https://example.com:444',

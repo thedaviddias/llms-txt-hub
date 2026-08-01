@@ -33,6 +33,53 @@ describe('validateSubmissionUrl', () => {
       expect(result.error.message).not.toContain(candidate)
     }
   })
+
+  it.each([
+    'home.arpa',
+    'service.home.arpa',
+    'arpa',
+    'service.arpa',
+    'onion',
+    'service.onion',
+    'alt',
+    'service.alt',
+    'test',
+    'service.test',
+    'invalid',
+    'service.invalid',
+    'example',
+    'service.example',
+    'internal',
+    'service.internal'
+  ])('rejects reserved hostname %s', hostname => {
+    const result = validateSubmissionUrl(`https://${hostname}`)
+
+    expect(result).toMatchObject({
+      error: { code: 'restricted_hostname' },
+      ok: false
+    })
+  })
+
+  it.each([
+    'https://home-arpa.example.com',
+    'https://onion-ring.example.com',
+    'https://alternative.example.com',
+    'https://internal-tools.example.com'
+  ])('does not reject ordinary labels that merely contain reserved text in %s', candidate => {
+    expect(validateSubmissionUrl(candidate).ok).toBe(true)
+  })
+
+  it.each(['http://localhost:3000', 'http://192.168.1.12'])(
+    'reports the restricted host before the protocol for %s',
+    candidate => {
+      const result = validateSubmissionUrl(candidate)
+
+      expect(result.ok).toBe(false)
+      if (!result.ok) {
+        expect(result.error.code).toMatch(/^(ip_literal_disallowed|restricted_hostname)$/)
+      }
+    }
+  )
 })
 
 describe('areUrlsInSameSiteFamily', () => {
@@ -74,16 +121,26 @@ describe('isPublicIpAddress', () => {
     'fe80::1',
     'ff00::1',
     '2001:db8::1',
+    '100:0:0:1::1',
+    '1fff:ffff:ffff:ffff:ffff:ffff:ffff:ffff',
+    '2001:40::1',
+    '3fff::1',
+    '4000::1',
+    'fec0::1',
     '::ffff:10.0.0.1',
     'malformed-address'
   ])('classifies %s as non-public', address => {
     expect(isPublicIpAddress(address)).toBe(false)
   })
 
-  it.each(['8.8.8.8', '1.1.1.1', '2606:4700:4700::1111', '::ffff:8.8.8.8'])(
-    'classifies %s as public',
-    address => {
-      expect(isPublicIpAddress(address)).toBe(true)
-    }
-  )
+  it.each([
+    '8.8.8.8',
+    '1.1.1.1',
+    '2606:4700:4700::1111',
+    '2001:4860:4860::8888',
+    '2a00:1450:4009:80b::200e',
+    '::ffff:8.8.8.8'
+  ])('classifies %s as public', address => {
+    expect(isPublicIpAddress(address)).toBe(true)
+  })
 })
