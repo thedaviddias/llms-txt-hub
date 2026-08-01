@@ -1,3 +1,5 @@
+import type { RequestOptions } from 'node:https'
+
 /**
  * Available publication outcomes.
  *
@@ -114,6 +116,12 @@ export type ReputationResult =
       status: 'unknown'
     }
 
+/** Safe reputation evidence retained for one normalized inspection hop. */
+export interface ResourceReputationCheck {
+  readonly reputation: Extract<ReputationResult, { status: 'safe' }>
+  readonly url: string
+}
+
 /** Result of inspecting one submitted resource through the pinned transport. */
 export interface InspectedResource {
   readonly body?: string
@@ -122,6 +130,7 @@ export interface InspectedResource {
   readonly finalUrl: string
   readonly redirectUrls: readonly string[]
   readonly reputation: ReputationResult
+  readonly reputationChecks: readonly ResourceReputationCheck[]
   readonly requestedUrl: string
   readonly statusCode: number
 }
@@ -210,4 +219,78 @@ export const mergeSubmissionDecisions = (
   return decisions.reduce((strictest, decision) =>
     DECISION_PRECEDENCE[decision] > DECISION_PRECEDENCE[strictest] ? decision : strictest
   )
+}
+
+/** DNS answer consumed by the pinned network inspector. */
+export interface ResolvedAddress {
+  readonly address: string
+  readonly family: number
+}
+
+/** Request passed to transport after URL, DNS, and reputation checks. */
+export interface PinnedTransportRequest {
+  readonly address: string
+  readonly family: 4 | 6
+  readonly headers: Readonly<Record<string, string>>
+  readonly hostname: string
+  readonly servername: string
+  readonly signal: AbortSignal
+  readonly timeoutMs: number
+  readonly url: string
+}
+
+/** Bounded response stream returned by a pinned transport. */
+export interface PinnedTransportResponse {
+  readonly body: AsyncIterable<Uint8Array>
+  readonly discard?: () => void
+  readonly headers: Readonly<Record<string, string | undefined>>
+  readonly statusCode: number
+}
+
+/** Narrow request handle used by the production HTTPS transport. */
+export interface NodeHttpsRequestHandle {
+  destroy: (error?: Error) => void
+  end: () => void
+  once: (event: 'error', listener: (error: Error) => void) => unknown
+  removeListener: (event: 'error', listener: (error: Error) => void) => unknown
+  setTimeout: (timeoutMs: number, listener: () => void) => unknown
+}
+
+/** Narrow response handle used by the production HTTPS transport. */
+export interface NodeHttpsResponseHandle extends AsyncIterable<Uint8Array> {
+  readonly headers: Readonly<Record<string, string | readonly string[] | undefined>>
+  readonly statusCode?: number
+  destroy: (error?: Error) => void
+  once: (event: 'close' | 'end', listener: () => void) => unknown
+  removeListener: (event: 'close' | 'end', listener: () => void) => unknown
+}
+
+/** Injectable Node request factory for production binding verification. */
+export type NodeHttpsRequestFactory = (
+  options: RequestOptions,
+  onResponse: (response: NodeHttpsResponseHandle) => void
+) => NodeHttpsRequestHandle
+
+/** Deterministic boundaries injected into the inspector. */
+export interface NetworkInspectorDependencies {
+  readonly checkReputation: (url: string) => Promise<ReputationResult>
+  readonly now: () => Date
+  readonly resolve: (hostname: string) => Promise<readonly ResolvedAddress[]>
+  readonly runWithTimeout: <Value>(
+    operation: (signal: AbortSignal) => Promise<Value>,
+    timeoutMs: number,
+    parentSignal?: AbortSignal
+  ) => Promise<Value>
+  readonly transport: (request: PinnedTransportRequest) => Promise<PinnedTransportResponse>
+}
+
+/** Response limit and optional-resource classification supplied by callers. */
+export interface NetworkInspectionOptions {
+  readonly maxBytes: number
+  readonly optional?: boolean
+}
+
+/** Public inspector API. */
+export interface NetworkInspector {
+  inspect: (url: string, options: NetworkInspectionOptions) => Promise<ResourceInspectionResult>
 }

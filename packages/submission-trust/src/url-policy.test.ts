@@ -13,6 +13,35 @@ describe('validateSubmissionUrl', () => {
     })
   })
 
+  it('canonicalizes one DNS root dot on a public hostname', () => {
+    const result = validateSubmissionUrl('https://example.com./docs#section')
+
+    expect(result).toEqual({
+      normalizedUrl: 'https://example.com/docs',
+      ok: true,
+      url: new URL('https://example.com/docs')
+    })
+  })
+
+  it.each([
+    '127.0.0.1..',
+    '2130706433..',
+    '0x7f000001..',
+    'localhost..',
+    'metadata.google.internal..',
+    'printer.local..',
+    'foo.home.arpa..',
+    'foo.onion..',
+    'localhost\u3002\u3002'
+  ])('rejects repeated DNS root dots for %s', hostname => {
+    const result = validateSubmissionUrl(`https://${hostname}`)
+
+    expect(result).toMatchObject({ ok: false })
+    if (result.ok) {
+      expect(result.url.hostname).not.toMatch(/^(127\.0\.0\.1|localhost)$/)
+    }
+  })
+
   it.each([
     ['http://example.com', 'https_required'],
     ['ftp://example.com', 'https_required'],
