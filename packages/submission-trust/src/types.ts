@@ -17,6 +17,7 @@ export type SubmissionReasonCode =
   | 'required_resource_missing'
   | 'required_resource_transient_failure'
   | 'invalid_optional_resource'
+  | 'site_family_uncertain'
   | 'unrelated_site_family'
   | 'nonstandard_llms_format'
   | 'editorial_uncertainty'
@@ -72,7 +73,7 @@ export type SubmissionAssessment =
     })
   | (SubmissionAssessmentBase & {
       decision: 'manual_review'
-      reasonCode: 'unrelated_site_family' | 'nonstandard_llms_format' | 'editorial_uncertainty'
+      reasonCode: 'site_family_uncertain' | 'nonstandard_llms_format' | 'editorial_uncertainty'
     })
   | (SubmissionAssessmentBase & {
       decision: 'reject'
@@ -82,6 +83,7 @@ export type SubmissionAssessment =
         | 'reputation_match'
         | 'required_resource_missing'
         | 'invalid_optional_resource'
+        | 'unrelated_site_family'
         | 'prohibited_content'
     })
   | (SubmissionAssessmentBase & {
