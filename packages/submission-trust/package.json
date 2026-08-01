@@ -27,7 +27,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "tldts": "^7.0.23"
+    "remark-parse": "^11.0.0",
+    "tldts": "^7.0.23",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@thedaviddias/config-typescript": "workspace:*",
