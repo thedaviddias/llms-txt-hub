@@ -56,6 +56,10 @@ class FakeNodeRequest implements NodeHttpsRequestHandle {
     this.destroyCount += 1
   }
 
+  emitError(error: Error): void {
+    this.errorListener?.(error)
+  }
+
   end(): void {
     this.endCount += 1
   }
@@ -74,6 +78,10 @@ class FakeNodeRequest implements NodeHttpsRequestHandle {
     this.timeoutMs = timeoutMs
     this.timeoutListener = listener
     return this
+  }
+
+  get hasErrorListener(): boolean {
+    return Boolean(this.errorListener)
   }
 }
 
@@ -218,5 +226,33 @@ describe('createNodeHttpsTransport', () => {
 
     await rejection
     expect(outbound.destroyCount).toBe(1)
+  })
+
+  it('sanitizes a request error before headers and cleans its listeners', async () => {
+    const outbound = new FakeNodeRequest()
+    const controller = new AbortController()
+    const transport = createNodeHttpsTransport(() => outbound)
+    const pending = transport({
+      address: '93.184.216.34',
+      family: 4,
+      headers: {},
+      hostname: 'example.com',
+      servername: 'example.com',
+      signal: controller.signal,
+      timeoutMs: 5_000,
+      url: 'https://example.com/'
+    })
+    const stableFailure = pending.then(
+      () => 'unexpected success',
+      error => String(error)
+    )
+
+    outbound.emitError(new Error('authorization=private raw socket failure'))
+
+    expect(await stableFailure).toBe('Error: submission-request-failed')
+    expect(outbound.destroyCount).toBe(0)
+    expect(outbound.hasErrorListener).toBe(false)
+    controller.abort()
+    expect(outbound.destroyCount).toBe(0)
   })
 })

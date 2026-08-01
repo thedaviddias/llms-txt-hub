@@ -11,6 +11,7 @@ const SAFE_REPUTATION: ReputationResult = {
   checkedAt: '2026-08-01T12:00:00.000Z',
   status: 'safe'
 }
+const CURRENT_CHECKED_AT = '"checkedAt":"2026-08-01T12:00:00.000Z"'
 
 const chunks = (...values: string[]): AsyncIterable<Uint8Array> => ({
   async *[Symbol.asyncIterator]() {
@@ -255,36 +256,44 @@ describe('createNetworkInspector', () => {
   })
 
   it.each([
-    ['2026-08-01T11:49:59.999Z', undefined, 'stale'],
-    ['not-a-date', undefined, 'invalid'],
-    ['2026-08-01T12:00:00.001Z', undefined, 'future'],
-    ['2026-08-01T12:00:00.000Z', '2026-08-01T11:59:59.999Z', 'expired'],
-    ['2026-08-01T12:00:00.000Z', '2026-08-01T12:00:00.000Z', 'expires now'],
-    ['2026-08-01T12:00:00.000Z', 'not-a-date', 'invalid expiry']
-  ])(
-    'treats %s safe reputation evidence as unknown when %s',
-    async (checkedAt, expiresAt, _reason) => {
-      const transport = vi.fn(async () => response())
-      const inspector = createNetworkInspector(
-        dependencies({
-          checkReputation: vi.fn(
-            async (): Promise<ReputationResult> =>
-              expiresAt ? { checkedAt, expiresAt, status: 'safe' } : { checkedAt, status: 'safe' }
-          ),
-          transport
-        })
-      )
-
-      const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
-
-      expect(result).toMatchObject({
-        failure: { kind: 'reputation_unknown' },
-        ok: false,
-        reasonCode: 'reputation_unknown'
+    [JSON.parse('{"checkedAt":"2026-08-01T11:49:59.999Z","status":"safe"}'), 'stale'],
+    [JSON.parse('{"checkedAt":"not-a-date","status":"safe"}'), 'invalid checkedAt'],
+    [JSON.parse('{"checkedAt":"2026-08-01T12:00:00.001Z","status":"safe"}'), 'future'],
+    [
+      JSON.parse(`{${CURRENT_CHECKED_AT},"expiresAt":"2026-08-01T11:59:59Z","status":"safe"}`),
+      'expired'
+    ],
+    [
+      JSON.parse(`{${CURRENT_CHECKED_AT},"expiresAt":"2026-08-01T12:00:00Z","status":"safe"}`),
+      'expires now'
+    ],
+    [
+      JSON.parse(`{${CURRENT_CHECKED_AT},"expiresAt":"not-a-date","status":"safe"}`),
+      'invalid expiry'
+    ],
+    [JSON.parse(`{${CURRENT_CHECKED_AT},"expiresAt":"","status":"safe"}`), 'empty expiry'],
+    [JSON.parse(`{${CURRENT_CHECKED_AT},"expiresAt":null,"status":"safe"}`), 'null expiry'],
+    [JSON.parse(`{${CURRENT_CHECKED_AT},"status":"unexpected"}`), 'unexpected status'],
+    [JSON.parse(`{${CURRENT_CHECKED_AT}}`), 'missing status'],
+    [JSON.parse(`{${CURRENT_CHECKED_AT},"status":1}`), 'non-string status']
+  ])('treats malformed runtime reputation evidence as unknown: %s', async (reputation, _reason) => {
+    const transport = vi.fn(async () => response())
+    const inspector = createNetworkInspector(
+      dependencies({
+        checkReputation: vi.fn(async () => reputation),
+        transport
       })
-      expect(transport).not.toHaveBeenCalled()
-    }
-  )
+    )
+
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+
+    expect(result).toMatchObject({
+      failure: { kind: 'reputation_unknown' },
+      ok: false,
+      reasonCode: 'reputation_unknown'
+    })
+    expect(transport).not.toHaveBeenCalled()
+  })
 
   it('rejects unsafe reputation evidence even when its timestamp is malformed', async () => {
     const transport = vi.fn(async () => response())
@@ -301,11 +310,9 @@ describe('createNetworkInspector', () => {
       })
     )
 
-    expect(await inspector.inspect('https://example.com', { maxBytes: 100 })).toMatchObject({
-      failure: { kind: 'reputation_match' },
-      ok: false,
-      reasonCode: 'reputation_match'
-    })
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.failure.kind).toBe('reputation_match')
     expect(transport).not.toHaveBeenCalled()
   })
 
@@ -323,9 +330,7 @@ describe('createNetworkInspector', () => {
       })
     )
 
-    expect(await inspector.inspect('https://example.com', { maxBytes: 100 })).toMatchObject({
-      ok: true
-    })
+    expect((await inspector.inspect('https://example.com', { maxBytes: 100 })).ok).toBe(true)
     expect(transport).toHaveBeenCalledTimes(1)
   })
 
