@@ -14,6 +14,17 @@ const H1_HEADING = /^#\s+\S/m
 /** Internal confidence levels for bounded llms text classification. */
 export type LlmsTextClassification = 'high_confidence' | 'invalid' | 'nonstandard'
 
+const hasCommonMarkCodeIndent = (line: string): boolean => {
+  let columns = 0
+  for (const character of line) {
+    if (character === ' ') columns += 1
+    else if (character === '\t') columns += 4 - (columns % 4)
+    else return false
+    if (columns >= 4) return true
+  }
+  return false
+}
+
 const stripIndentedCode = (body: string): string => {
   const lines = body.split('\n')
   const masked: string[] = []
@@ -26,7 +37,7 @@ const stripIndentedCode = (body: string): string => {
       previousBlank = true
       continue
     }
-    const indented = line.startsWith('\t') || line.startsWith('    ')
+    const indented = hasCommonMarkCodeIndent(line)
     if (indented && (inBlock || previousBlank)) {
       masked.push('')
       inBlock = true
