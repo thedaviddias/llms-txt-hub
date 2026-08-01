@@ -252,6 +252,8 @@ class InspectionRunner {
   }
 
   private validateReputation(result: ReputationResult): SafeReputation | Result {
+    if (!result || typeof result !== 'object') return this.reputationUnknown()
+    const checkedAt = typeof result.checkedAt === 'string' ? result.checkedAt : undefined
     if (result.status === 'unsafe') {
       return safeFailure(
         'reputation_match',
@@ -264,18 +266,21 @@ class InspectionRunner {
         }
       )
     }
-    if (result.status === 'unknown') return this.reputationUnknown(result.checkedAt)
+    if (result.status !== 'safe') return this.reputationUnknown(checkedAt)
     const now = this.dependencies.now().getTime()
-    const checked = Date.parse(result.checkedAt)
-    const expires = result.expiresAt ? Date.parse(result.expiresAt) : undefined
+    const checked = checkedAt ? Date.parse(checkedAt) : Number.NaN
+    const hasExpiry = Object.hasOwn(result, 'expiresAt')
+    const expiresAt: unknown = result.expiresAt
+    const expires =
+      typeof expiresAt === 'string' && expiresAt.length > 0 ? Date.parse(expiresAt) : Number.NaN
     if (
       !Number.isFinite(now) ||
       !Number.isFinite(checked) ||
       checked > now ||
       now - checked > WEB_RISK_FRESHNESS_MS ||
-      (expires !== undefined && (!Number.isFinite(expires) || expires <= now))
+      (hasExpiry && (!Number.isFinite(expires) || expires <= now))
     ) {
-      return this.reputationUnknown(result.checkedAt)
+      return this.reputationUnknown(checkedAt)
     }
     return result
   }
