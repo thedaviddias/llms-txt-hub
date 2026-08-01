@@ -67,9 +67,30 @@ const inspectMarkdown = (body: string): MarkdownEvidence | undefined => {
   try {
     const tree = markdownParser.parse(body)
     const nodes = [...tree.children]
+    const hasDocumentH1 = tree.children.some(node => {
+      if (node.type !== 'heading' || node.depth !== 1) return false
+      const headingNodes = [...node.children]
+      while (headingNodes.length > 0) {
+        const headingNode = headingNodes.pop()
+        if (!headingNode) return false
+        if (headingNode.type === 'text' || headingNode.type === 'inlineCode') {
+          const metrics = printableMetrics(headingNode.value)
+          if (metrics && metrics[0] > 0) return true
+        }
+        if (
+          (headingNode.type === 'image' || headingNode.type === 'imageReference') &&
+          headingNode.alt
+        ) {
+          const metrics = printableMetrics(headingNode.alt)
+          if (metrics && metrics[0] > 0) return true
+        }
+        if ('children' in headingNode) headingNodes.push(...headingNode.children)
+      }
+      return false
+    })
     const evidence: MarkdownEvidence = {
       hasAbsoluteLink: false,
-      hasH1: false,
+      hasH1: hasDocumentH1,
       printable: 0,
       total: 0
     }
@@ -79,7 +100,6 @@ const inspectMarkdown = (body: string): MarkdownEvidence | undefined => {
       const node = nodes.pop()
       if (!node || ++examinedNodes > SUBMISSION_LLMS_MAX_BYTES) return undefined
       if (node.type === 'html') return undefined
-      if (node.type === 'heading' && node.depth === 1) evidence.hasH1 = true
       if ((node.type === 'link' || node.type === 'definition') && /^https?:\/\//i.test(node.url)) {
         evidence.hasAbsoluteLink = true
       }
