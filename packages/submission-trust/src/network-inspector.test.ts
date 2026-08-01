@@ -259,6 +259,7 @@ describe('createNetworkInspector', () => {
     ['not-a-date', undefined, 'invalid'],
     ['2026-08-01T12:00:00.001Z', undefined, 'future'],
     ['2026-08-01T12:00:00.000Z', '2026-08-01T11:59:59.999Z', 'expired'],
+    ['2026-08-01T12:00:00.000Z', '2026-08-01T12:00:00.000Z', 'expires now'],
     ['2026-08-01T12:00:00.000Z', 'not-a-date', 'invalid expiry']
   ])(
     'treats %s safe reputation evidence as unknown when %s',

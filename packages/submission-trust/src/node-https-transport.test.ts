@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { createNodeHttpsTransport } from './node-https-transport.js'
 import type {
   NodeHttpsRequestFactory,
   NodeHttpsRequestHandle,
   NodeHttpsResponseHandle
-} from './types.js'
+} from './node-https-transport.js'
+import { createNodeHttpsTransport } from './node-https-transport.js'
 
 /**
  * Minimal response handle for lifecycle assertions.
