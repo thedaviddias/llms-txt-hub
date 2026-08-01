@@ -1,5 +1,6 @@
 import { lookup } from 'node:dns/promises'
 import { isIP } from 'node:net'
+import { TextDecoder } from 'node:util'
 
 import {
   SUBMISSION_ACCEPT_ENCODING,
@@ -7,8 +8,8 @@ import {
   SUBMISSION_MAX_REDIRECTS,
   SUBMISSION_REQUEST_TIMEOUT_MS,
   WEB_RISK_FRESHNESS_MS
-} from './constants.js'
-import { createNodeHttpsTransport } from './node-https-transport.js'
+} from '#constants'
+import { createNodeHttpsTransport } from '#node-https-transport'
 import type {
   NetworkInspectionOptions,
   NetworkInspector,
@@ -20,8 +21,8 @@ import type {
   ResourceInspectionFailure,
   ResourceInspectionResult,
   ResourceReputationCheck
-} from './types.js'
-import { isPublicIpAddress, validateSubmissionUrl } from './url-policy.js'
+} from '#types'
+import { isPublicIpAddress, validateSubmissionUrl } from '#url-policy'
 
 const USER_AGENT = 'llms-txt-hub-submission-inspector/1.0'
 const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308])
@@ -41,6 +42,8 @@ interface CollectedBody {
   body?: string
   byteCount: number
 }
+
+type BodyCollection = CollectedBody | 'invalid_encoding' | null
 
 type HopResult =
   | { kind: 'failure'; result: Result }
@@ -340,6 +343,17 @@ class InspectionRunner {
     signal.addEventListener('abort', abort, { once: true })
     try {
       const collected = await this.collectBody(response.body, signal)
+      if (collected === 'invalid_encoding') {
+        return {
+          kind: 'failure',
+          result: safeFailure(
+            'invalid_encoding',
+            this.options.optional ? 'invalid_optional_resource' : 'required_resource_missing',
+            'The resource did not contain valid UTF-8 text.',
+            { evidenceId: 'strict-utf8-required' }
+          )
+        }
+      }
       if (!collected) {
         response.discard?.()
         return {
@@ -396,7 +410,7 @@ class InspectionRunner {
   private async collectBody(
     body: AsyncIterable<Uint8Array>,
     signal: AbortSignal
-  ): Promise<CollectedBody | null> {
+  ): Promise<BodyCollection> {
     const iterator = body[Symbol.asyncIterator]()
     const chunks: Uint8Array[] = []
     let byteCount = 0
@@ -416,7 +430,13 @@ class InspectionRunner {
     } finally {
       if (!complete && iterator.return) await iterator.return()
     }
-    return { body: chunks.length ? Buffer.concat(chunks).toString('utf8') : undefined, byteCount }
+    if (!chunks.length) return { byteCount }
+    try {
+      const body = new TextDecoder('utf-8', { fatal: true }).decode(Buffer.concat(chunks))
+      return { body, byteCount }
+    } catch {
+      return 'invalid_encoding'
+    }
   }
 
   private async next<Value>(

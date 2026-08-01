@@ -147,6 +147,7 @@ export type ResourceInspectionFailure =
   | (ResourceInspectionFailureBase & { readonly kind: 'redirect_policy_failure' })
   | (ResourceInspectionFailureBase & { readonly kind: 'oversized_content' })
   | (ResourceInspectionFailureBase & { readonly kind: 'transport_failure' })
+  | (ResourceInspectionFailureBase & { readonly kind: 'invalid_encoding' })
 
 /** Successful resource inspection or a bounded fail-closed inspection result. */
 export type ResourceInspectionResult =
@@ -173,7 +174,10 @@ export interface PublicationAssessmentDependencies {
     name: string
     slug: string
   }[]
-  inspectResource: (url: string) => Promise<ResourceInspectionResult>
+  inspectResource: (
+    url: string,
+    options: NetworkInspectionOptions
+  ) => Promise<ResourceInspectionResult>
   now?: () => Date
 }
 
