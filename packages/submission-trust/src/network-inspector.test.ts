@@ -157,6 +157,26 @@ describe('createNetworkInspector', () => {
     expect(checkReputation).toHaveBeenCalledTimes(1)
   })
 
+  it.each([
+    'https://user:secret@redirect.example.com/final',
+    'https://redirect.example.com:444/final'
+  ])('rejects redirect destination %s before destination-side effects', async location => {
+    const resolve = vi.fn(async () => [{ address: '93.184.216.34', family: 4 }])
+    const checkReputation = vi.fn(async () => SAFE_REPUTATION)
+    const transport = vi.fn(async () => response(302, { location }, chunks()))
+    const inspector = createNetworkInspector(dependencies({ checkReputation, resolve, transport }))
+
+    const result = await inspector.inspect('https://example.com/start', { maxBytes: 100 })
+
+    expect(result).toMatchObject({
+      failure: { kind: 'redirect_policy_failure' },
+      ok: false
+    })
+    expect(resolve).toHaveBeenCalledTimes(1)
+    expect(checkReputation).toHaveBeenCalledTimes(1)
+    expect(transport).toHaveBeenCalledTimes(1)
+  })
+
   it('rejects a fourth redirect', async () => {
     let count = 0
     const inspector = createNetworkInspector(
@@ -261,6 +281,94 @@ describe('createNetworkInspector', () => {
     })
     expect(JSON.stringify(result)).not.toContain('secret')
     expect(JSON.stringify(result)).not.toContain('private')
+  })
+
+  it('never includes arbitrary response headers or bytes in a sanitized failure', async () => {
+    const inspector = createNetworkInspector(
+      dependencies({
+        transport: vi.fn(async () =>
+          response(
+            200,
+            {
+              authorization: 'Bearer response-secret',
+              'content-encoding': 'gzip',
+              'set-cookie': 'session=private-cookie',
+              'x-internal-secret': 'internal-value'
+            },
+            chunks('private response bytes')
+          )
+        )
+      })
+    )
+
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+    const serialized = JSON.stringify(result)
+
+    expect(result).toMatchObject({ failure: { kind: 'transport_failure' }, ok: false })
+    expect(serialized).not.toContain('response-secret')
+    expect(serialized).not.toContain('private-cookie')
+    expect(serialized).not.toContain('internal-value')
+    expect(serialized).not.toContain('private response bytes')
+  })
+
+  it('passes the 5,000 ms request timeout to the transport and timer boundary', async () => {
+    const observedTimeouts: number[] = []
+    const requests: PinnedTransportRequest[] = []
+    const inspector = createNetworkInspector(
+      dependencies({
+        runWithTimeout: vi.fn(async (operation, timeoutMs) => {
+          observedTimeouts.push(timeoutMs)
+          return operation()
+        }),
+        transport: vi.fn(async request => {
+          requests.push(request)
+          return response()
+        })
+      })
+    )
+
+    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+
+    expect(result.ok).toBe(true)
+    expect(observedTimeouts).toEqual([12_000, 5_000])
+    expect(requests[0]?.timeoutMs).toBe(5_000)
+  })
+
+  it('fails closed when the 12,000 ms total deadline is exceeded across hops', async () => {
+    let elapsedMs = 0
+    let requests = 0
+    const now = () => new Date(elapsedMs)
+    const runWithTimeout: NetworkInspectorDependencies['runWithTimeout'] = async (
+      operation,
+      timeoutMs
+    ) => {
+      const startedAt = now().getTime()
+      const result = await operation()
+      if (now().getTime() - startedAt > timeoutMs) {
+        throw new Error('controlled deadline exceeded with private timer detail')
+      }
+      return result
+    }
+    const inspector = createNetworkInspector(
+      dependencies({
+        now,
+        runWithTimeout,
+        transport: vi.fn(async () => {
+          requests += 1
+          elapsedMs += 4_000
+          return requests <= 3
+            ? response(302, { location: `https://example.com/hop-${requests}` }, chunks())
+            : response(200, {}, chunks('late body'))
+        })
+      })
+    )
+
+    const result = await inspector.inspect('https://example.com/start', { maxBytes: 100 })
+
+    expect(requests).toBe(4)
+    expect(result).toMatchObject({ failure: { kind: 'timeout' }, ok: false })
+    expect(JSON.stringify(result)).not.toContain('private timer detail')
+    expect(JSON.stringify(result)).not.toContain('late body')
   })
 
   it('enforces byte limits while streaming and stops reading immediately', async () => {
