@@ -11,7 +11,13 @@ import type {
 
 const NOW = new Date('2026-08-01T12:00:00.000Z')
 const CHECKED_AT = NOW.toISOString()
-const LONG_TEXT = `${'# Example\n\n'}${'A useful documentation index. '.repeat(4)}https://example.com/docs`
+const SUFFICIENT_PROSE_AND_LINK = `${'A useful documentation index. '.repeat(4)}https://example.com/docs`
+const LONG_TEXT = `# Example\n\n${SUFFICIENT_PROSE_AND_LINK}`
+const NON_DOCUMENT_H1_CASES: readonly (readonly [string, string])[] = [
+  ['empty H1', `#\n\n${SUFFICIENT_PROSE_AND_LINK}`],
+  ['blockquote H1', `> # Quoted title\n\n${SUFFICIENT_PROSE_AND_LINK}`],
+  ['nested-list H1', `- Container\n\n  # Nested title\n\n${SUFFICIENT_PROSE_AND_LINK}`]
+]
 const FIELDS: SubmissionFields = {
   category: 'developer-tools',
   description: 'Useful example documentation.',
@@ -170,6 +176,39 @@ describe('assessPublicationFields', () => {
       reasonCode: 'nonstandard_llms_format'
     })
   })
+
+  it.each(NON_DOCUMENT_H1_CASES)(
+    'sends a required llms resource with %s to manual review',
+    async (_case, body) => {
+      const result = await assessPublicationFields(
+        FIELDS,
+        dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+      )
+
+      expect(result).toMatchObject({
+        decision: 'manual_review',
+        reasonCode: 'nonstandard_llms_format'
+      })
+    }
+  )
+
+  it.each(NON_DOCUMENT_H1_CASES)(
+    'rejects an optional llms resource with %s',
+    async (_case, body) => {
+      const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+      const result = await assessPublicationFields(
+        fields,
+        dependencies(async url =>
+          resource(url, url === fields.llmsFullUrl ? { body, contentType: 'text/plain' } : {})
+        )
+      )
+
+      expect(result).toMatchObject({
+        decision: 'reject',
+        reasonCode: 'invalid_optional_resource'
+      })
+    }
+  )
 
   it.each([
     ['missing', { statusCode: 404 }],
