@@ -998,9 +998,15 @@ importers:
 
   packages/submission-trust:
     dependencies:
+      remark-parse:
+        specifier: ^11.0.0
+        version: 11.0.0
       tldts:
         specifier: ^7.0.23
         version: 7.0.23
+      unified:
+        specifier: ^11.0.5
+        version: 11.0.5
     devDependencies:
       '@thedaviddias/config-typescript':
         specifier: workspace:*

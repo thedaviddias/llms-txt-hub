@@ -367,6 +367,61 @@ describe('assessPublicationFields', () => {
     }
   )
 
+  it('rejects active HTML after a longer valid fence closer', async () => {
+    const body = `${LONG_TEXT}\n\n\`\`\`html\n<div>Code example</div>\n\`\`\`\`\n<script>active()</script>`
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'required_resource_missing' })
+  })
+
+  it('rejects active HTML inside a list container', async () => {
+    const body = `${LONG_TEXT}\n\n- Example item\n\n    <script>active()</script>`
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'required_resource_missing' })
+  })
+
+  it('rejects a multiline HTML opening tag longer than the legacy scan ceiling', async () => {
+    const body = `${LONG_TEXT}\n\n<section data-payload="${'x'.repeat(600)}"\n data-extra="active">`
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'required_resource_missing' })
+  })
+
+  it.each([4, 5, 6])(
+    'accepts HTML code in a %s-character fence with a longer closer',
+    async fenceLength => {
+      const opening = '`'.repeat(fenceLength)
+      const closing = '`'.repeat(fenceLength + 1)
+      const body = `${LONG_TEXT}\n\n${opening}html\n<script>exampleOnly()</script>\n${closing}`
+      const result = await assessPublicationFields(
+        FIELDS,
+        dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+      )
+
+      expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+    }
+  )
+
+  it('accepts HTML in a double-backtick inline span containing a single backtick', async () => {
+    const body = `${LONG_TEXT}\n\nUse \`\`<script>example\`only</script>\`\` safely.`
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { body } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+  })
+
   it('sends a different submitted documentation family to manual review', async () => {
     const fields = { ...FIELDS, llmsUrl: 'https://docs-host.example.net/llms.txt' }
     const result = await assessPublicationFields(
