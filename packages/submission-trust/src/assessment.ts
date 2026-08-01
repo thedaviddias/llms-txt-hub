@@ -318,12 +318,13 @@ const evaluateResource = (
   if (!result.ok) return [failureOutcome(target.name, result)]
   const reputation = reputationOutcome(target.name, result.resource, nowMs)
   if (reputation) return [reputation]
+  const family = familyOutcome(target.name, result.resource, website)
+  if (family) return [family]
   const status = statusOutcome(target.name, result.resource)
   if (status) return [status]
-  const outcomes = [
-    familyOutcome(target.name, result.resource, website),
-    contentOutcome(target.name, result.resource)
-  ].filter((value): value is Outcome => value !== undefined)
+  const outcomes = [contentOutcome(target.name, result.resource)].filter(
+    (value): value is Outcome => value !== undefined
+  )
   if (outcomes.length > 0) return outcomes
   return [
     outcome(

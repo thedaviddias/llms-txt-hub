@@ -294,6 +294,92 @@ describe('assessPublicationFields', () => {
     expect(result).toMatchObject({ decision: 'reject', reasonCode: 'unrelated_site_family' })
   })
 
+  it.each([408, 429, 503])(
+    'rejects an unrelated final redirect with transient HTTP %s without body content',
+    async statusCode => {
+      const finalUrl = 'https://attacker.example.net/llms.txt'
+      const result = await assessPublicationFields(
+        FIELDS,
+        dependencies(async url =>
+          resource(
+            url,
+            url === FIELDS.llmsUrl
+              ? {
+                  body: undefined,
+                  byteCount: 0,
+                  contentType: 'application/octet-stream',
+                  finalUrl,
+                  redirectUrls: [finalUrl],
+                  reputationChecks: [
+                    { reputation: { checkedAt: CHECKED_AT, status: 'safe' }, url },
+                    { reputation: { checkedAt: CHECKED_AT, status: 'safe' }, url: finalUrl }
+                  ],
+                  statusCode
+                }
+              : {}
+          )
+        )
+      )
+
+      expect(result).toMatchObject({ decision: 'reject', reasonCode: 'unrelated_site_family' })
+    }
+  )
+
+  it.each([408, 429, 503])(
+    'retries a same-family transient HTTP %s without body content',
+    async statusCode => {
+      const result = await assessPublicationFields(
+        FIELDS,
+        dependencies(async url =>
+          resource(
+            url,
+            url === FIELDS.llmsUrl
+              ? {
+                  body: undefined,
+                  byteCount: 0,
+                  contentType: 'application/octet-stream',
+                  statusCode
+                }
+              : {}
+          )
+        )
+      )
+
+      expect(result).toMatchObject({
+        decision: 'retry_later',
+        reasonCode: 'required_resource_transient_failure'
+      })
+    }
+  )
+
+  it('rejects an unrelated optional transient redirect as an invalid optional resource', async () => {
+    const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+    const finalUrl = 'https://attacker.example.net/llms-full.txt'
+    const result = await assessPublicationFields(
+      fields,
+      dependencies(async url =>
+        resource(
+          url,
+          url === fields.llmsFullUrl
+            ? {
+                body: undefined,
+                byteCount: 0,
+                finalUrl,
+                redirectUrls: [finalUrl],
+                reputationChecks: [
+                  { reputation: { checkedAt: CHECKED_AT, status: 'safe' }, url },
+                  { reputation: { checkedAt: CHECKED_AT, status: 'safe' }, url: finalUrl }
+                ],
+                statusCode: 503
+              }
+            : {}
+        )
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'invalid_optional_resource' })
+  })
+
   it.each([
     [failure('reputation_match', 'reputation_match', { providerStatus: 'unsafe' }), 'reject'],
     [
