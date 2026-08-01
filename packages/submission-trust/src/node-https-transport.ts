@@ -1,13 +1,34 @@
-import { request } from 'node:https'
+import { type RequestOptions, request } from 'node:https'
 
 import type {
   NetworkInspectorDependencies,
-  NodeHttpsRequestFactory,
-  NodeHttpsRequestHandle,
-  NodeHttpsResponseHandle,
   PinnedTransportRequest,
   PinnedTransportResponse
 } from './types.js'
+
+/** Narrow request handle used by the private production HTTPS seam. */
+export interface NodeHttpsRequestHandle {
+  destroy: (error?: Error) => void
+  end: () => void
+  once: (event: 'error', listener: (error: Error) => void) => unknown
+  removeListener: (event: 'error', listener: (error: Error) => void) => unknown
+  setTimeout: (timeoutMs: number, listener: () => void) => unknown
+}
+
+/** Narrow response handle used by the private production HTTPS seam. */
+export interface NodeHttpsResponseHandle extends AsyncIterable<Uint8Array> {
+  readonly headers: Readonly<Record<string, string | readonly string[] | undefined>>
+  readonly statusCode?: number
+  destroy: (error?: Error) => void
+  once: (event: 'close' | 'end', listener: () => void) => unknown
+  removeListener: (event: 'close' | 'end', listener: () => void) => unknown
+}
+
+/** Injectable request factory used only to verify the private production binding. */
+export type NodeHttpsRequestFactory = (
+  options: RequestOptions,
+  onResponse: (response: NodeHttpsResponseHandle) => void
+) => NodeHttpsRequestHandle
 
 const defaultRequestFactory: NodeHttpsRequestFactory = (options, onResponse) =>
   request(options, response => onResponse(response))

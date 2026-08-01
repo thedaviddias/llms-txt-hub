@@ -1,5 +1,3 @@
-import type { RequestOptions } from 'node:https'
-
 /**
  * Available publication outcomes.
  *
@@ -246,30 +244,6 @@ export interface PinnedTransportResponse {
   readonly headers: Readonly<Record<string, string | undefined>>
   readonly statusCode: number
 }
-
-/** Narrow request handle used by the production HTTPS transport. */
-export interface NodeHttpsRequestHandle {
-  destroy: (error?: Error) => void
-  end: () => void
-  once: (event: 'error', listener: (error: Error) => void) => unknown
-  removeListener: (event: 'error', listener: (error: Error) => void) => unknown
-  setTimeout: (timeoutMs: number, listener: () => void) => unknown
-}
-
-/** Narrow response handle used by the production HTTPS transport. */
-export interface NodeHttpsResponseHandle extends AsyncIterable<Uint8Array> {
-  readonly headers: Readonly<Record<string, string | readonly string[] | undefined>>
-  readonly statusCode?: number
-  destroy: (error?: Error) => void
-  once: (event: 'close' | 'end', listener: () => void) => unknown
-  removeListener: (event: 'close' | 'end', listener: () => void) => unknown
-}
-
-/** Injectable Node request factory for production binding verification. */
-export type NodeHttpsRequestFactory = (
-  options: RequestOptions,
-  onResponse: (response: NodeHttpsResponseHandle) => void
-) => NodeHttpsRequestHandle
 
 /** Deterministic boundaries injected into the inspector. */
 export interface NetworkInspectorDependencies {

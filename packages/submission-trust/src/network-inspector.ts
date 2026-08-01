@@ -273,7 +273,7 @@ class InspectionRunner {
       !Number.isFinite(checked) ||
       checked > now ||
       now - checked > WEB_RISK_FRESHNESS_MS ||
-      (expires !== undefined && (!Number.isFinite(expires) || expires < now))
+      (expires !== undefined && (!Number.isFinite(expires) || expires <= now))
     ) {
       return this.reputationUnknown(result.checkedAt)
     }
