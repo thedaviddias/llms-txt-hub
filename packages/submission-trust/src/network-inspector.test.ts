@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest'
-import {
-  createNetworkInspector,
-  type NetworkInspectorDependencies,
-  type PinnedTransportRequest,
-  type PinnedTransportResponse
-} from './network-inspector.js'
-import type { ReputationResult } from './types.js'
+import { createNetworkInspector } from './network-inspector.js'
+import type {
+  NetworkInspectorDependencies,
+  PinnedTransportRequest,
+  PinnedTransportResponse,
+  ReputationResult
+} from './types.js'
 
 const SAFE_REPUTATION: ReputationResult = {
   checkedAt: '2026-08-01T12:00:00.000Z',
@@ -32,7 +32,9 @@ const dependencies = (
   checkReputation: vi.fn(async () => SAFE_REPUTATION),
   now: () => new Date('2026-08-01T12:00:00.000Z'),
   resolve: vi.fn(async () => [{ address: '93.184.216.34', family: 4 }]),
-  runWithTimeout: vi.fn(async operation => operation()),
+  runWithTimeout: vi.fn(async (operation, _timeoutMs, parentSignal) =>
+    operation(parentSignal ?? new AbortController().signal)
+  ),
   transport: vi.fn(async () => response()),
   ...overrides
 })
@@ -114,6 +116,10 @@ describe('createNetworkInspector', () => {
         finalUrl: 'https://cdn.example.com/final',
         redirectUrls: ['https://cdn.example.com/final'],
         reputation: SAFE_REPUTATION,
+        reputationChecks: [
+          { reputation: SAFE_REPUTATION, url: 'https://example.com/start' },
+          { reputation: SAFE_REPUTATION, url: 'https://cdn.example.com/final' }
+        ],
         requestedUrl: 'https://example.com/start',
         statusCode: 200
       }
@@ -248,16 +254,78 @@ describe('createNetworkInspector', () => {
     }
   })
 
-  it('fails closed on timeout without exposing the raw error', async () => {
-    const runWithTimeout = vi.fn(async () => {
-      throw new Error('token=super-secret ETIMEDOUT upstream bytes')
+  it.each([
+    ['2026-08-01T11:49:59.999Z', undefined, 'stale'],
+    ['not-a-date', undefined, 'invalid'],
+    ['2026-08-01T12:00:00.001Z', undefined, 'future'],
+    ['2026-08-01T12:00:00.000Z', '2026-08-01T11:59:59.999Z', 'expired'],
+    ['2026-08-01T12:00:00.000Z', 'not-a-date', 'invalid expiry']
+  ])(
+    'treats %s safe reputation evidence as unknown when %s',
+    async (checkedAt, expiresAt, _reason) => {
+      const transport = vi.fn(async () => response())
+      const inspector = createNetworkInspector(
+        dependencies({
+          checkReputation: vi.fn(
+            async (): Promise<ReputationResult> =>
+              expiresAt ? { checkedAt, expiresAt, status: 'safe' } : { checkedAt, status: 'safe' }
+          ),
+          transport
+        })
+      )
+
+      const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+
+      expect(result).toMatchObject({
+        failure: { kind: 'reputation_unknown' },
+        ok: false,
+        reasonCode: 'reputation_unknown'
+      })
+      expect(transport).not.toHaveBeenCalled()
+    }
+  )
+
+  it('rejects unsafe reputation evidence even when its timestamp is malformed', async () => {
+    const transport = vi.fn(async () => response())
+    const inspector = createNetworkInspector(
+      dependencies({
+        checkReputation: vi.fn(
+          async (): Promise<ReputationResult> => ({
+            checkedAt: 'not-a-date',
+            status: 'unsafe',
+            threatTypes: ['SOCIAL_ENGINEERING']
+          })
+        ),
+        transport
+      })
+    )
+
+    expect(await inspector.inspect('https://example.com', { maxBytes: 100 })).toMatchObject({
+      failure: { kind: 'reputation_match' },
+      ok: false,
+      reasonCode: 'reputation_match'
     })
-    const inspector = createNetworkInspector(dependencies({ runWithTimeout }))
+    expect(transport).not.toHaveBeenCalled()
+  })
 
-    const result = await inspector.inspect('https://example.com', { maxBytes: 100 })
+  it('accepts safe reputation evidence exactly at the freshness limit', async () => {
+    const transport = vi.fn(async () => response())
+    const inspector = createNetworkInspector(
+      dependencies({
+        checkReputation: vi.fn(
+          async (): Promise<ReputationResult> => ({
+            checkedAt: '2026-08-01T11:50:00.000Z',
+            status: 'safe'
+          })
+        ),
+        transport
+      })
+    )
 
-    expect(result).toMatchObject({ failure: { kind: 'timeout' }, ok: false })
-    expect(JSON.stringify(result)).not.toContain('super-secret')
+    expect(await inspector.inspect('https://example.com', { maxBytes: 100 })).toMatchObject({
+      ok: true
+    })
+    expect(transport).toHaveBeenCalledTimes(1)
   })
 
   it('turns raw transport failures into a bounded safe result', async () => {
@@ -316,9 +384,9 @@ describe('createNetworkInspector', () => {
     const requests: PinnedTransportRequest[] = []
     const inspector = createNetworkInspector(
       dependencies({
-        runWithTimeout: vi.fn(async (operation, timeoutMs) => {
+        runWithTimeout: vi.fn(async (operation, timeoutMs, parentSignal) => {
           observedTimeouts.push(timeoutMs)
-          return operation()
+          return operation(parentSignal ?? new AbortController().signal)
         }),
         transport: vi.fn(async request => {
           requests.push(request)
@@ -337,13 +405,17 @@ describe('createNetworkInspector', () => {
   it('fails closed when the 12,000 ms total deadline is exceeded across hops', async () => {
     let elapsedMs = 0
     let requests = 0
-    const now = () => new Date(elapsedMs)
+    const baseTimeMs = Date.parse('2026-08-01T12:00:00.000Z')
+    /**
+     * Returns deterministic time advanced by each simulated hop.
+     */
+    const now = () => new Date(baseTimeMs + elapsedMs)
     const runWithTimeout: NetworkInspectorDependencies['runWithTimeout'] = async (
       operation,
       timeoutMs
     ) => {
       const startedAt = now().getTime()
-      const result = await operation()
+      const result = await operation(new AbortController().signal)
       if (now().getTime() - startedAt > timeoutMs) {
         throw new Error('controlled deadline exceeded with private timer detail')
       }

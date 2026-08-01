@@ -242,6 +242,10 @@ export const validateSubmissionUrl = (value: string): SubmissionUrlValidationRes
     return failure('https_required')
   }
 
+  const trailingRootDots = url.hostname.match(/\.+$/)?.[0].length ?? 0
+  if (trailingRootDots > 1) {
+    return failure('restricted_hostname')
+  }
   const hostname = normalizeIpInput(url.hostname).replace(/\.$/, '')
   if (!hostname) {
     return failure('invalid_url')
@@ -272,6 +276,9 @@ export const validateSubmissionUrl = (value: string): SubmissionUrlValidationRes
 
   url.hostname = hostname
   url.hash = ''
+  if (normalizeIpInput(url.hostname) !== hostname) {
+    return failure('restricted_hostname')
+  }
   return { normalizedUrl: url.href, ok: true, url }
 }
 

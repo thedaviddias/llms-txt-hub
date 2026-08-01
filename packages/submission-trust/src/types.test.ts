@@ -25,6 +25,15 @@ const INSPECTED_RESOURCE = {
     checkedAt: '2026-08-01T12:00:00.000Z',
     status: 'safe'
   },
+  reputationChecks: [
+    {
+      reputation: {
+        checkedAt: '2026-08-01T12:00:00.000Z',
+        status: 'safe'
+      },
+      url: 'https://example.com/llms.txt'
+    }
+  ],
   requestedUrl: 'https://example.com/llms.txt',
   statusCode: 200
 } satisfies InspectedResource

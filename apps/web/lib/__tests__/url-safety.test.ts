@@ -10,6 +10,30 @@ describe('validatePublicHttpUrl', () => {
     })
   })
 
+  it('canonicalizes a single public DNS root dot', () => {
+    expect(validatePublicHttpUrl('https://example.com./docs')).toEqual({
+      ok: true,
+      url: new URL('https://example.com/docs')
+    })
+  })
+
+  it.each([
+    '127.0.0.1..',
+    '2130706433..',
+    '0x7f000001..',
+    'localhost..',
+    'metadata.google.internal..',
+    'printer.local..',
+    'foo.home.arpa..',
+    'foo.onion..',
+    'localhost\u3002\u3002'
+  ])('rejects repeated DNS root dots for %s', hostname => {
+    expect(validatePublicHttpUrl(`https://${hostname}`)).toEqual({
+      error: 'URL points to a restricted network address',
+      ok: false
+    })
+  })
+
   it('rejects invalid URL format with the stable web error', () => {
     const result = validatePublicHttpUrl('not-a-url')
 
