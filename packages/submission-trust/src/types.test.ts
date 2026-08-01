@@ -99,6 +99,24 @@ const RESOURCE_RESULTS = [
   },
   {
     failure: {
+      evidence: { providerStatus: 'unsafe', threatTypes: ['MALWARE'] },
+      kind: 'reputation_match',
+      safeMessage: 'The resource was reported as unsafe.'
+    },
+    ok: false,
+    reasonCode: 'reputation_match'
+  },
+  {
+    failure: {
+      evidence: { providerStatus: 'unknown' },
+      kind: 'reputation_unknown',
+      safeMessage: 'The resource reputation could not be verified.'
+    },
+    ok: false,
+    reasonCode: 'reputation_unknown'
+  },
+  {
+    failure: {
       evidence: { durationBucket: 'over_5s' },
       kind: 'timeout',
       safeMessage: 'The resource inspection timed out.'

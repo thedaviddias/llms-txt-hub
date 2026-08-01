@@ -1,89 +1,52 @@
 import { validatePublicHttpUrl } from '@/lib/url-safety'
 
 describe('validatePublicHttpUrl', () => {
-  it('accepts public http/https URLs', () => {
-    const result = validatePublicHttpUrl('https://example.com/path?q=1')
-    expect(result.ok).toBe(true)
+  it('accepts and normalizes public HTTPS URLs', () => {
+    const result = validatePublicHttpUrl('https://B\u00dcCHER.DE:443/path?q=1#fragment')
 
-    const httpResult = validatePublicHttpUrl('http://example.org')
-    expect(httpResult.ok).toBe(true)
+    expect(result).toEqual({
+      ok: true,
+      url: new URL('https://xn--bcher-kva.de/path?q=1')
+    })
   })
 
-  it('rejects invalid URL format', () => {
+  it('rejects invalid URL format with the stable web error', () => {
     const result = validatePublicHttpUrl('not-a-url')
-    expect(result.ok).toBe(false)
-    if (!result.ok) {
-      expect(result.error).toBe('Invalid URL format')
-    }
+
+    expect(result).toEqual({ error: 'Invalid URL format', ok: false })
   })
 
-  it('rejects non-http protocols', () => {
-    const result = validatePublicHttpUrl('ftp://example.com')
-    expect(result.ok).toBe(false)
-    if (!result.ok) {
-      expect(result.error).toBe('Invalid URL protocol')
-    }
-  })
-
-  it('rejects localhost and loopback addresses', () => {
-    const blocked = ['http://localhost:3000', 'http://127.0.0.1', 'http://[::1]']
-    for (const candidate of blocked) {
+  it.each(['http://example.com', 'ftp://example.com'])(
+    'rejects non-HTTPS URL %s with the stable protocol error',
+    candidate => {
       const result = validatePublicHttpUrl(candidate)
-      expect(result.ok).toBe(false)
-      if (!result.ok) {
-        expect(result.error).toBe('URL points to a restricted network address')
-      }
+
+      expect(result).toEqual({ error: 'Invalid URL protocol', ok: false })
     }
-  })
+  )
 
-  it('rejects private IPv4 ranges', () => {
-    const blocked = ['http://10.1.2.3', 'http://172.16.10.1', 'http://192.168.1.10']
-    for (const candidate of blocked) {
-      const result = validatePublicHttpUrl(candidate)
-      expect(result.ok).toBe(false)
-      if (!result.ok) {
-        expect(result.error).toBe('URL points to a restricted network address')
-      }
-    }
-  })
+  it.each([
+    'https://user:password@example.com',
+    'https://example.com:444',
+    'https://localhost',
+    'https://service.localhost',
+    'https://printer.local',
+    'https://127.0.0.1',
+    'https://[::1]',
+    'https://8.8.8.8',
+    'https://[2606:4700:4700::1111]',
+    'https://2130706433',
+    'https://0x7f000001',
+    'https://0177.0.0.1',
+    'https://127.1',
+    'https://[::ffff:7f00:1]',
+    'https://[::ffff:0808:0808]'
+  ])('rejects restricted submission target %s with the stable safe error', candidate => {
+    const result = validatePublicHttpUrl(candidate)
 
-  it('rejects numeric and shorthand loopback host representations', () => {
-    const blocked = ['http://2130706433', 'http://0x7f000001', 'http://0177.0.0.1', 'http://127.1']
-
-    for (const candidate of blocked) {
-      const result = validatePublicHttpUrl(candidate)
-      expect(result.ok).toBe(false)
-      if (!result.ok) {
-        expect(result.error).toBe('URL points to a restricted network address')
-      }
-    }
-  })
-
-  it('rejects hex-form IPv4-mapped IPv6 loopback addresses', () => {
-    const blocked = [
-      'http://[::ffff:7f00:1]', // 127.0.0.1
-      'http://[::ffff:a00:1]', // 10.0.0.1
-      'http://[::ffff:c0a8:1]', // 192.168.0.1
-      'http://[::ffff:ac10:fe01]' // 172.16.254.1
-    ]
-
-    for (const candidate of blocked) {
-      const result = validatePublicHttpUrl(candidate)
-      expect(result.ok).toBe(false)
-      if (!result.ok) {
-        expect(result.error).toBe('URL points to a restricted network address')
-      }
-    }
-  })
-
-  it('accepts hex-form IPv4-mapped IPv6 public addresses', () => {
-    const allowed = [
-      'http://[::ffff:0808:0808]' // 8.8.8.8
-    ]
-
-    for (const candidate of allowed) {
-      const result = validatePublicHttpUrl(candidate)
-      expect(result.ok).toBe(true)
-    }
+    expect(result).toEqual({
+      error: 'URL points to a restricted network address',
+      ok: false
+    })
   })
 })

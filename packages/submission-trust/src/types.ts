@@ -134,6 +134,8 @@ interface ResourceInspectionFailureBase {
 /** Safe, stable inspection failures that callers can classify without raw transport data. */
 export type ResourceInspectionFailure =
   | (ResourceInspectionFailureBase & { readonly kind: 'dns_rejected' })
+  | (ResourceInspectionFailureBase & { readonly kind: 'reputation_match' })
+  | (ResourceInspectionFailureBase & { readonly kind: 'reputation_unknown' })
   | (ResourceInspectionFailureBase & { readonly kind: 'timeout' })
   | (ResourceInspectionFailureBase & { readonly kind: 'redirect_policy_failure' })
   | (ResourceInspectionFailureBase & { readonly kind: 'oversized_content' })
@@ -150,6 +152,8 @@ export type ResourceInspectionResult =
       readonly ok: false
       readonly reasonCode:
         | 'unsafe_network_target'
+        | 'reputation_match'
+        | 'reputation_unknown'
         | 'required_resource_missing'
         | 'required_resource_transient_failure'
         | 'invalid_optional_resource'
