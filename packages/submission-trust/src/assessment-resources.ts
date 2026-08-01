@@ -1,6 +1,6 @@
 import { getDomain } from 'tldts'
 
-import { WEB_RISK_FRESHNESS_MS } from '#constants'
+import { SUBMISSION_MAX_REDIRECTS, WEB_RISK_FRESHNESS_MS } from '#constants'
 import { sanitizeAssessmentEvidenceDetails } from '#evidence'
 import type { AssessmentEvidenceDetails, InspectedResource, ReputationResult } from '#types'
 
@@ -26,7 +26,7 @@ export const assessmentEvidenceDetails = (resource: InspectedResource): Assessme
     contentType: resource.contentType,
     finalHost: hostname(resource.finalUrl),
     providerStatus: resource.reputation?.status,
-    redirectHosts: resource.redirectUrls.flatMap(url => {
+    redirectHosts: resource.redirectUrls.slice(0, SUBMISSION_MAX_REDIRECTS).flatMap(url => {
       const host = hostname(url)
       return host ? [host] : []
     }),
@@ -44,15 +44,16 @@ export const hasSameSiteFamily = (left: string, right: string): boolean => {
 
 /** Reports whether a response content type is HTML. */
 export const isHtmlContentType = (contentType: string | undefined): boolean =>
-  contentType?.split(';')[0]?.trim().toLowerCase() === 'text/html'
+  !contentType?.includes(',') && contentType?.split(';')[0]?.trim().toLowerCase() === 'text/html'
 
 /** Reports whether a response content type is suitable for an llms text resource. */
 export const isTextContentType = (contentType: string | undefined): boolean => {
+  if (contentType?.includes(',')) return false
   const mediaType = contentType?.split(';')[0]?.trim().toLowerCase()
-  return Boolean(
-    mediaType?.startsWith('text/') ||
-      mediaType === 'application/markdown' ||
-      mediaType === 'text/markdown'
+  return (
+    mediaType === 'text/plain' ||
+    mediaType === 'text/markdown' ||
+    mediaType === 'application/markdown'
   )
 }
 

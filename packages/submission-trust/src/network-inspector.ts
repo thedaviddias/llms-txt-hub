@@ -255,31 +255,37 @@ class InspectionRunner {
       return this.reputationUnknown(this.dependencies.now().toISOString())
     }
   }
-
   private validateReputation(result: ReputationResult): SafeReputation | Result {
     if (!result || typeof result !== 'object') return this.reputationUnknown()
     const checkedAt = typeof result.checkedAt === 'string' ? result.checkedAt : undefined
+    const now = this.dependencies.now().getTime()
+    const checked = checkedAt ? Date.parse(checkedAt) : Number.NaN
     if (result.status === 'unsafe') {
-      const unsafeCheckedAt =
-        typeof result.checkedAt === 'string' &&
-        result.checkedAt.length <= 64 &&
-        Number.isFinite(Date.parse(result.checkedAt))
-          ? result.checkedAt
-          : this.dependencies.now().toISOString()
+      const expiresAt: unknown = result.expiresAt
+      const expires =
+        typeof expiresAt === 'string' && expiresAt.length > 0 ? Date.parse(expiresAt) : Number.NaN
+      if (
+        !Number.isFinite(now) ||
+        !Number.isFinite(checked) ||
+        checked > now ||
+        now - checked > WEB_RISK_FRESHNESS_MS ||
+        !Number.isFinite(expires) ||
+        expires <= now
+      ) {
+        return this.reputationUnknown(checkedAt)
+      }
       return safeFailure(
         'reputation_match',
         'reputation_match',
         'The resource was reported as unsafe.',
         sanitizeAssessmentEvidenceDetails({
-          checkedAt: unsafeCheckedAt,
+          checkedAt,
           providerStatus: 'unsafe',
           threatTypes: result.threatTypes
         })
       )
     }
     if (result.status !== 'safe') return this.reputationUnknown(checkedAt)
-    const now = this.dependencies.now().getTime()
-    const checked = checkedAt ? Date.parse(checkedAt) : Number.NaN
     const hasExpiry = Object.hasOwn(result, 'expiresAt')
     const expiresAt: unknown = result.expiresAt
     const expires =
@@ -474,7 +480,6 @@ class InspectionRunner {
     )
   }
 }
-
 /** Creates an auditable, fail-closed inspector with linked cancellation boundaries. */
 export const createNetworkInspector = (overrides: Partial<Dependencies> = {}): NetworkInspector => {
   const dependencies: Dependencies = { ...DEFAULT_DEPENDENCIES, ...overrides }

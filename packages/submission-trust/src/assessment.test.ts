@@ -206,6 +206,83 @@ describe('assessPublicationFields', () => {
     expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
   })
 
+  it('uses the completion time to reject reputation evidence that expires during inspection', async () => {
+    let currentTime = new Date('2026-08-01T12:00:00.000Z')
+    const result = await assessPublicationFields(FIELDS, {
+      inspectResource: async url => {
+        currentTime = new Date('2026-08-01T12:11:00.000Z')
+        return resource(url)
+      },
+      now: () => currentTime
+    })
+
+    expect(result).toMatchObject({
+      checkedAt: '2026-08-01T12:11:00.000Z',
+      decision: 'retry_later',
+      reasonCode: 'reputation_unknown'
+    })
+  })
+
+  it('fails closed when every inspector result is absent at runtime', async () => {
+    const absentResult: ResourceInspectionResult = JSON.parse('null')
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async () => absentResult)
+    )
+
+    expect(result).toMatchObject({
+      decision: 'retry_later',
+      reasonCode: 'publication_unavailable'
+    })
+  })
+
+  it.each([
+    ['duplicate media type', { contentType: 'text/plain, text/plain' }],
+    [
+      'mislabeled HTML',
+      {
+        body: `<!doctype html><html><body>${LONG_TEXT}</body></html>`,
+        contentType: 'text/plain'
+      }
+    ],
+    ['NUL-bearing text', { body: `${LONG_TEXT}\0binary` }],
+    ['control-heavy text', { body: `${LONG_TEXT}\u0001\u0002\u0003` }]
+  ])('rejects required llms %s', async (_case, override) => {
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? override : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'required_resource_missing' })
+  })
+
+  it('rejects a supplied one-character optional llms resource', async () => {
+    const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+    const result = await assessPublicationFields(
+      fields,
+      dependencies(async url =>
+        resource(url, url === fields.llmsFullUrl ? { body: 'x', contentType: 'text/plain' } : {})
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'reject', reasonCode: 'invalid_optional_resource' })
+  })
+
+  it('accepts a meaningful optional llms resource', async () => {
+    const fields = { ...FIELDS, llmsFullUrl: 'https://example.com/llms-full.txt' }
+    const result = await assessPublicationFields(
+      fields,
+      dependencies(async url =>
+        resource(
+          url,
+          url === fields.llmsFullUrl ? { body: LONG_TEXT, contentType: 'text/plain' } : {}
+        )
+      )
+    )
+
+    expect(result).toMatchObject({ decision: 'auto_publish', reasonCode: 'passed' })
+  })
+
   it('sends a different submitted documentation family to manual review', async () => {
     const fields = { ...FIELDS, llmsUrl: 'https://docs-host.example.net/llms.txt' }
     const result = await assessPublicationFields(
@@ -496,6 +573,23 @@ describe('assessPublicationFields', () => {
     expect(details?.threatTypes).toHaveLength(4)
     expect(details?.threatTypes?.every(value => value.length <= 64)).toBe(true)
     expect(serialized).not.toMatch(/raw-secret-body|object-secret|not-a-date-secret/)
+  })
+
+  it('bounds redirect evidence before traversing a malformed successful result', async () => {
+    const redirectUrls = new Array<string>(1_000)
+    redirectUrls[0] = 'https://example.com/redirect'
+    Object.defineProperty(redirectUrls, 32, {
+      get() {
+        throw new Error('unbounded redirect traversal')
+      }
+    })
+
+    const result = await assessPublicationFields(
+      FIELDS,
+      dependencies(async url => resource(url, url === FIELDS.llmsUrl ? { redirectUrls } : {}))
+    )
+
+    expect(result).toMatchObject({ decision: 'retry_later', reasonCode: 'reputation_unknown' })
   })
 
   it.each([
