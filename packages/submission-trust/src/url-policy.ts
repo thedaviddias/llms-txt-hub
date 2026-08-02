@@ -56,6 +56,7 @@ export type SubmissionUrlValidationResult =
   | {
       readonly normalizedUrl: string
       readonly ok: true
+      readonly registrableDomain: string
       readonly url: URL
     }
   | {
@@ -279,7 +280,7 @@ export const validateSubmissionUrl = (value: string): SubmissionUrlValidationRes
   if (normalizeIpInput(url.hostname) !== hostname) {
     return failure('restricted_hostname')
   }
-  return { normalizedUrl: url.href, ok: true, url }
+  return { normalizedUrl: url.href, ok: true, registrableDomain, url }
 }
 
 /**
@@ -295,8 +296,5 @@ export const areUrlsInSameSiteFamily = (left: string, right: string): boolean =>
     return false
   }
 
-  const options = { allowPrivateDomains: true, extractHostname: false }
-  const leftDomain = getDomain(leftResult.url.hostname, options)
-  const rightDomain = getDomain(rightResult.url.hostname, options)
-  return leftDomain !== null && rightDomain !== null && leftDomain === rightDomain
+  return leftResult.registrableDomain === rightResult.registrableDomain
 }

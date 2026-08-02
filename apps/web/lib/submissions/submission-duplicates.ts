@@ -4,6 +4,10 @@ import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy
 import yaml from 'js-yaml'
 
 import { getWebsitesStrict } from './strict-website-loader'
+import {
+  createSubmissionInspectionBudget,
+  type SubmissionInspectionBudget
+} from './submission-inspection-budget'
 
 const GITHUB_PAGE_SIZE = 50
 const MAX_GITHUB_PAGES = 3
@@ -12,9 +16,13 @@ const MAX_PR_BODY_CHARACTERS = 100_000
 const MAX_MDX_BYTES = 100_000
 const MAX_RAW_BASE64_CHARACTERS = 150_000
 const GITHUB_TIMEOUT_MS = 5_000
+const DUPLICATE_INSPECTION_DEADLINE_MS = 8_000
+const DUPLICATE_INSPECTION_REQUEST_BUDGET = 450
 const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
 
 interface OpenPullRequest {
+  readonly baseRef: string
+  readonly baseRepoFullName: string
   readonly body: string | null
   readonly headOwnerLogin: string
   readonly headRef: string
@@ -42,24 +50,30 @@ interface DuplicateGitHubOperations {
     owner: string,
     repo: string,
     path: string,
-    ref: string
+    ref: string,
+    signal: AbortSignal
   ) => Promise<string>
   readonly listOpenPullRequests: (
     owner: string,
     repo: string,
-    page: number
+    page: number,
+    signal: AbortSignal
   ) => Promise<readonly OpenPullRequest[]>
   readonly listPullRequestFiles: (
     owner: string,
     repo: string,
     pullNumber: number,
-    page: number
+    page: number,
+    signal: AbortSignal
   ) => Promise<readonly PullRequestFile[]>
 }
 
 interface DuplicateDependencies {
+  readonly deadlineMs?: number
   readonly getWebsitesStrict: () => DuplicateCatalogueResult
   readonly github: DuplicateGitHubOperations
+  readonly now?: () => number
+  readonly requestBudget?: number
 }
 
 interface NormalizedDuplicateFields {
@@ -94,10 +108,12 @@ const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
 const parsePullRequest = (value: unknown): OpenPullRequest | null => {
-  if (!isRecord(value) || !isRecord(value.head)) return null
+  if (!isRecord(value) || !isRecord(value.head) || !isRecord(value.base)) return null
   const head = value.head
-  if (!isRecord(head.repo)) return null
+  const base = value.base
+  if (!isRecord(head.repo) || !isRecord(base.repo)) return null
   const headRepo = head.repo
+  const baseRepo = base.repo
   if (
     !Number.isSafeInteger(value.number) ||
     typeof value.number !== 'number' ||
@@ -115,11 +131,19 @@ const parsePullRequest = (value: unknown): OpenPullRequest | null => {
     !isRecord(headRepo.owner) ||
     typeof headRepo.owner.login !== 'string' ||
     headRepo.owner.login.length === 0 ||
-    headRepo.owner.login.length > 100
+    headRepo.owner.login.length > 100 ||
+    typeof base.ref !== 'string' ||
+    base.ref.length === 0 ||
+    base.ref.length > 255 ||
+    typeof baseRepo.full_name !== 'string' ||
+    baseRepo.full_name.length === 0 ||
+    baseRepo.full_name.length > 201
   ) {
     return null
   }
   return {
+    baseRef: base.ref,
+    baseRepoFullName: baseRepo.full_name,
     body: value.body,
     headOwnerLogin: headRepo.owner.login,
     headRef: head.ref,
@@ -145,14 +169,14 @@ const parsePullRequestFile = (value: unknown): PullRequestFile | null => {
 }
 
 const DEFAULT_GITHUB: DuplicateGitHubOperations = {
-  async getFileContent(owner, repo, path, ref) {
+  async getFileContent(owner, repo, path, ref, signal) {
     const octokit = await getOctokit()
     const response = await octokit.repos.getContent({
       owner,
       path,
       ref,
       repo,
-      request: { timeout: GITHUB_TIMEOUT_MS }
+      request: { signal, timeout: GITHUB_TIMEOUT_MS }
     })
     const data: unknown = response.data
     if (
@@ -175,14 +199,14 @@ const DEFAULT_GITHUB: DuplicateGitHubOperations = {
     if (bytes.byteLength > MAX_MDX_BYTES) throw new Error('GitHub content response too large')
     return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
   },
-  async listOpenPullRequests(owner, repo, page) {
+  async listOpenPullRequests(owner, repo, page, signal) {
     const octokit = await getOctokit()
     const response = await octokit.pulls.list({
       owner,
       page,
       per_page: GITHUB_PAGE_SIZE,
       repo,
-      request: { timeout: GITHUB_TIMEOUT_MS },
+      request: { signal, timeout: GITHUB_TIMEOUT_MS },
       state: 'open'
     })
     const data: unknown = response.data
@@ -197,7 +221,7 @@ const DEFAULT_GITHUB: DuplicateGitHubOperations = {
     }
     return pullRequests
   },
-  async listPullRequestFiles(owner, repo, pullNumber, page) {
+  async listPullRequestFiles(owner, repo, pullNumber, page, signal) {
     const octokit = await getOctokit()
     const response = await octokit.pulls.listFiles({
       owner,
@@ -205,7 +229,7 @@ const DEFAULT_GITHUB: DuplicateGitHubOperations = {
       per_page: GITHUB_PAGE_SIZE,
       pull_number: pullNumber,
       repo,
-      request: { timeout: GITHUB_TIMEOUT_MS }
+      request: { signal, timeout: GITHUB_TIMEOUT_MS }
     })
     const data: unknown = response.data
     if (!Array.isArray(data) || data.length > GITHUB_PAGE_SIZE) {
@@ -314,14 +338,16 @@ const markerCount = (body: string | null, marker: string): number => {
 
 const inspectOpenPullRequests = async (
   input: NormalizedDuplicateFields & {
+    readonly expectedBaseRef: string
     readonly owner: string
     readonly repo: string
     readonly submissionId: string
   },
-  github: DuplicateGitHubOperations
+  github: DuplicateGitHubOperations,
+  budget: SubmissionInspectionBudget
 ): Promise<SubmissionDuplicateResult> => {
   const pullRequests = await collectPages(page =>
-    github.listOpenPullRequests(input.owner, input.repo, page)
+    budget.request(signal => github.listOpenPullRequests(input.owner, input.repo, page, signal))
   )
   if (!pullRequests) return retryLater()
 
@@ -338,13 +364,17 @@ const inspectOpenPullRequests = async (
   const trustedCandidate =
     candidate?.headRef === `submit/${input.submissionId}` &&
     candidate.headRepoFullName.toLowerCase() === expectedRepository &&
-    candidate.headOwnerLogin.toLowerCase() === input.owner.toLowerCase()
+    candidate.headOwnerLogin.toLowerCase() === input.owner.toLowerCase() &&
+    candidate.baseRepoFullName.toLowerCase() === expectedRepository &&
+    candidate.baseRef === input.expectedBaseRef
 
   let examinedFileCount = 0
   let exactCandidate = false
   for (const pullRequest of pullRequests) {
     const files = await collectPages(page =>
-      github.listPullRequestFiles(input.owner, input.repo, pullRequest.number, page)
+      budget.request(signal =>
+        github.listPullRequestFiles(input.owner, input.repo, pullRequest.number, page, signal)
+      )
     )
     if (!files) return retryLater()
     examinedFileCount += files.length
@@ -354,11 +384,8 @@ const inspectOpenPullRequests = async (
       return retryLater()
     }
     for (const file of websiteFiles) {
-      const content = await github.getFileContent(
-        input.owner,
-        input.repo,
-        file.path,
-        pullRequest.headSha
+      const content = await budget.request(signal =>
+        github.getFileContent(input.owner, input.repo, file.path, pullRequest.headSha, signal)
       )
       const frontmatter = parseFrontmatterUrls(content)
       if (!frontmatter) return retryLater()
@@ -395,6 +422,7 @@ export async function checkSubmissionDuplicates(
   input: {
     readonly llmsFullUrl?: string
     readonly llmsUrl: string
+    readonly expectedBaseRef?: string
     readonly owner: string
     readonly repo: string
     readonly submissionId: string
@@ -425,11 +453,17 @@ export async function checkSubmissionDuplicates(
     return await inspectOpenPullRequests(
       {
         ...normalizedInput,
+        expectedBaseRef: input.expectedBaseRef ?? 'main',
         owner: input.owner,
         repo: input.repo,
         submissionId: input.submissionId
       },
-      dependencies.github
+      dependencies.github,
+      createSubmissionInspectionBudget({
+        deadlineMs: dependencies.deadlineMs ?? DUPLICATE_INSPECTION_DEADLINE_MS,
+        now: dependencies.now ?? Date.now,
+        requestBudget: dependencies.requestBudget ?? DUPLICATE_INSPECTION_REQUEST_BUDGET
+      })
     )
   } catch (_error) {
     logger.error('Submission duplicate check unavailable', {

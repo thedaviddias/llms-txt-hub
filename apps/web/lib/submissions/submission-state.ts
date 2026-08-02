@@ -1,5 +1,7 @@
 import { randomBytes } from 'node:crypto'
+import { isIP, SocketAddress } from 'node:net'
 
+import { logger } from '@thedaviddias/logging'
 import type { SubmissionFields } from '@thedaviddias/submission-trust/types'
 import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
 
@@ -69,6 +71,27 @@ const DEFAULT_REDIS: RedisOperations = {
   eval: evalRedis,
   get,
   setNx
+}
+
+let signingConfigurationErrorLogged = false
+
+const hasSigningSecret = (secret: string): boolean => {
+  if (submissionStateSecurity.isSecretValid(secret)) return true
+  if (!signingConfigurationErrorLogged) {
+    signingConfigurationErrorLogged = true
+    logger.error('Submission signing configuration unavailable', {
+      data: { status: 'unavailable' },
+      tags: { operation: 'signing_configuration', type: 'submission' }
+    })
+  }
+  return false
+}
+
+const canonicalizeSourceIp = (value: string): string | null => {
+  const version = isIP(value)
+  if (version === 4) return value
+  if (version !== 6) return null
+  return SocketAddress.parse(`[${value}]:0`)?.address ?? null
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -143,13 +166,15 @@ export async function createSubmissionContinuation(
   | { readonly continuationToken: string; readonly ok: true; readonly record: SubmissionRecord }
   | { readonly code: 'invalid_input' | 'publication_unavailable'; readonly ok: false }
 > {
+  if (!hasSigningSecret(dependencies.secret)) {
+    return { code: 'publication_unavailable', ok: false }
+  }
   const fields = normalizeSubmissionFields(input.fields)
   if (
     !fields ||
     !SUBMISSION_ID_PATTERN.test(input.submissionId) ||
     !input.userId ||
-    input.userId.length > 256 ||
-    !submissionStateSecurity.isSecretValid(dependencies.secret)
+    input.userId.length > 256
   ) {
     return { code: 'invalid_input', ok: false }
   }
@@ -215,10 +240,12 @@ export async function consumeSubmissionContinuation(
       readonly ok: false
     }
 > {
+  if (!hasSigningSecret(dependencies.secret)) {
+    return { code: 'publication_unavailable', ok: false }
+  }
   if (
     input.continuationToken.length === 0 ||
-    input.continuationToken.length > MAX_CONTINUATION_CHARACTERS ||
-    !submissionStateSecurity.isSecretValid(dependencies.secret)
+    input.continuationToken.length > MAX_CONTINUATION_CHARACTERS
   ) {
     return { code: 'invalid_continuation', ok: false }
   }
@@ -307,9 +334,9 @@ export async function acquireSubmissionLocks(
  */
 export async function enforceSubmissionRateLimits(
   input: {
-    readonly registrableDomain: string
     readonly sourceIp: string
     readonly userId: string
+    readonly website: string
   },
   dependencies: Pick<StateDependencies, 'redis' | 'secret'> = {
     redis: DEFAULT_REDIS,
@@ -324,12 +351,14 @@ export async function enforceSubmissionRateLimits(
     }
   | { readonly code: 'publication_unavailable'; readonly ok: false }
 > {
+  const sourceIp = canonicalizeSourceIp(input.sourceIp)
+  const website = validateSubmissionUrl(input.website)
+  const registrableDomain = website.ok ? website.registrableDomain : null
   if (
     !input.userId ||
     input.userId.length > 256 ||
-    !input.sourceIp ||
-    input.sourceIp.length > 128 ||
-    !/^[a-z0-9.-]{1,253}$/.test(input.registrableDomain) ||
+    !sourceIp ||
+    !registrableDomain ||
     !submissionStateSecurity.isSecretValid(dependencies.secret)
   ) {
     return { code: 'publication_unavailable', ok: false }
@@ -338,8 +367,8 @@ export async function enforceSubmissionRateLimits(
     SUBMISSION_RATE_LIMIT_SCRIPT,
     [
       `submission-rate:account:${submissionStateSecurity.hashString(input.userId)}`,
-      `submission-rate:source:${submissionStateSecurity.hashIp(input.sourceIp, dependencies.secret)}`,
-      `submission-rate:domain:${submissionStateSecurity.hashString(input.registrableDomain)}`
+      `submission-rate:source:${submissionStateSecurity.hashIp(sourceIp, dependencies.secret)}`,
+      `submission-rate:domain:${submissionStateSecurity.hashString(registrableDomain)}`
     ],
     ['5', '20', '3', '3600', '3600', '86400']
   )

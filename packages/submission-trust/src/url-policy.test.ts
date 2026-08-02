@@ -9,6 +9,7 @@ describe('validateSubmissionUrl', () => {
     expect(result).toEqual({
       normalizedUrl: 'https://xn--bcher-kva.de/docs?q=1',
       ok: true,
+      registrableDomain: 'xn--bcher-kva.de',
       url: new URL('https://xn--bcher-kva.de/docs?q=1')
     })
   })
@@ -19,6 +20,7 @@ describe('validateSubmissionUrl', () => {
     expect(result).toEqual({
       normalizedUrl: 'https://example.com/docs',
       ok: true,
+      registrableDomain: 'example.com',
       url: new URL('https://example.com/docs')
     })
   })

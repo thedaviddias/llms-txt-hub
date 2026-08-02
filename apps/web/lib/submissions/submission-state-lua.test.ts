@@ -7,6 +7,9 @@ import {
 } from './submission-state-security'
 
 const LUA_BINARY = 'lua'
+const LUA_PROBE = spawnSync(LUA_BINARY, ['-v'], { encoding: 'utf8' })
+const isLuaUnavailable =
+  LUA_PROBE.error instanceof Error && 'code' in LUA_PROBE.error && LUA_PROBE.error.code === 'ENOENT'
 const LUA_HARNESS = `
 local script = assert(os.getenv('SUBMISSION_LUA_SCRIPT'))
 local scenario = assert(os.getenv('SUBMISSION_LUA_SCENARIO'))
@@ -108,7 +111,14 @@ const executeLua = (script: string, scenario: string) =>
   })
 
 describe('submission Redis Lua contracts', () => {
-  it.each([
+  it('retains the required Redis script contracts without a local Lua runtime', () => {
+    expect(FINAL_ASSESSMENT_SCRIPT).toContain("redis.call('PTTL', KEYS[1])")
+    expect(ACQUIRE_SUBMISSION_LOCKS_SCRIPT).toContain("return 'conflict'")
+    expect(SUBMISSION_RATE_LIMIT_SCRIPT).toContain("return 'source_ip'")
+  })
+
+  const runtimeTest = isLuaUnavailable ? it.skip : it
+  runtimeTest.each([
     ['rate limits', SUBMISSION_RATE_LIMIT_SCRIPT, 'rate'],
     ['dual locks', ACQUIRE_SUBMISSION_LOCKS_SCRIPT, 'locks'],
     ['concurrent continuation CAS serialization', FINAL_ASSESSMENT_SCRIPT, 'cas']

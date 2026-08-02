@@ -87,6 +87,10 @@ describe('default catalogue availability boundary', () => {
       data: [
         {
           body: '',
+          base: {
+            ref: 'main',
+            repo: { full_name: 'thedaviddias/llms-txt-hub' }
+          },
           head: {
             ref: 'contributor',
             repo: {

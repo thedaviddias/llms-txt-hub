@@ -17,13 +17,34 @@ const missingEnvVars = Object.entries(requiredEnvVars)
   .filter(([_, value]) => !value)
   .map(([key, _]) => key)
 
-// Only log in development, not during build
+const REDIS_OPERATION_TIMEOUT_MS = 1_500
+let redisUnavailableLogged = false
+
+/** Create a fresh deadline signal for one Upstash HTTP operation. */
+const createRedisOperationSignal = (): AbortSignal => {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), REDIS_OPERATION_TIMEOUT_MS)
+  if (typeof timeout === 'object') timeout.unref()
+  return controller.signal
+}
+
+/** Report one safe production diagnostic when Redis cannot initialize. */
+const reportRedisUnavailable = (reason: 'initialization_failed' | 'missing_configuration') => {
+  if (redisUnavailableLogged || process.env.NODE_ENV !== 'production') return
+  redisUnavailableLogged = true
+  logger.error('Redis unavailable', {
+    data: { reason, status: 'unavailable' },
+    tags: { operation: 'initialize', type: 'redis' }
+  })
+}
+
 if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'development') {
   logger.warn('Redis environment variables not configured', {
     data: { missingVars: missingEnvVars },
     tags: { type: 'redis', status: 'disabled' }
   })
 }
+if (missingEnvVars.length > 0) reportRedisUnavailable('missing_configuration')
 
 // Initialize Redis client with lazy loading
 let redis: Redis | null = null
@@ -45,12 +66,13 @@ function getRedisClient(): Redis | null {
         url: requiredEnvVars.KV_REST_API_URL,
         token: requiredEnvVars.KV_REST_API_TOKEN,
         // Keep automatic serialization for convenience
-        automaticDeserialization: true
-        // Note: Request timeout handled per-operation via AbortController if needed
+        automaticDeserialization: true,
+        retry: { retries: 0 },
+        signal: createRedisOperationSignal
       })
     } catch (_error) {
-      // Silently fail - Redis is optional
       redis = null
+      reportRedisUnavailable('initialization_failed')
     }
   }
 
@@ -98,12 +120,9 @@ export async function get<T = string>(key: string): Promise<T | null> {
   try {
     const result: T | null = await client.get<T>(key)
     return result
-  } catch (error) {
+  } catch (_error) {
     logger.error('Redis GET operation failed', {
-      data: {
-        key,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+      data: { status: 'unavailable' },
       tags: { type: 'redis', operation: 'get' }
     })
     return null
