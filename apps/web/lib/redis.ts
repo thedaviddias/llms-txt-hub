@@ -193,6 +193,61 @@ export async function incr(key: string, ttl?: number): Promise<number | null> {
 }
 
 /**
+ * Atomically set a value only when the key does not already exist.
+ *
+ * @param key - Redis key
+ * @param value - Serializable value
+ * @param ttl - Required expiry in seconds
+ * @returns `true` when acquired, `false` when already present, or `null` when Redis is unavailable
+ */
+export async function setNx(key: string, value: unknown, ttl: number): Promise<boolean | null> {
+  const client = getRedisClient()
+  if (!client) return null
+
+  try {
+    const result = await client.set(key, value, { ex: ttl, nx: true })
+    return result === 'OK'
+  } catch (_error) {
+    logger.error('Redis SET NX operation failed', {
+      data: { status: 'unavailable' },
+      tags: { type: 'redis', operation: 'set_nx' }
+    })
+    return null
+  }
+}
+
+/**
+ * Execute a bounded, caller-owned Lua script without exposing raw Redis errors.
+ *
+ * Callers must use fixed scripts and bounded keys/arguments. A `null` result is
+ * reserved for Redis unavailability; scripts used by publication state must
+ * return an explicit non-null value for every application outcome.
+ *
+ * @param script - Fixed Lua source owned by the application
+ * @param keys - Bounded Redis keys supplied to the script
+ * @param args - Bounded string arguments supplied to the script
+ * @returns Script response, or `null` when Redis is unavailable
+ */
+export async function evalRedis<T>(
+  script: string,
+  keys: readonly string[],
+  args: readonly string[]
+): Promise<T | null> {
+  const client = getRedisClient()
+  if (!client) return null
+
+  try {
+    return await client.eval<string[], T>(script, [...keys], [...args])
+  } catch (_error) {
+    logger.error('Redis EVAL operation failed', {
+      data: { status: 'unavailable' },
+      tags: { type: 'redis', operation: 'eval' }
+    })
+    return null
+  }
+}
+
+/**
  * Check if Redis is available
  */
 export function isAvailable(): boolean {
@@ -216,6 +271,8 @@ export const SafeRedis = {
   set,
   del,
   incr,
+  setNx,
+  eval: evalRedis,
   isAvailable,
   getRawClient
 }
