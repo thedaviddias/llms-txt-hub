@@ -1,3 +1,5 @@
+import { getDomainWithoutSuffix } from 'tldts'
+import { canonicalEditorialToken, regulatedEvidence } from './regulated-token-policies.js'
 import type { SubmissionFields } from './types.js'
 
 /** Category metadata projected from the application's canonical category list. */
@@ -126,72 +128,6 @@ const PROHIBITED_POLICIES: readonly PhrasePolicy[] = [
   }
 ]
 
-const REGULATED_POLICIES: readonly PhrasePolicy[] = [
-  {
-    evidenceId: 'editorial:regulated:finance',
-    phrases: [
-      'banking platform',
-      'banking service',
-      'banking services',
-      'financial institution',
-      'crypto exchange',
-      'financial planning',
-      'financial service',
-      'investment platform',
-      'loan provider',
-      'online banking',
-      'trading platform'
-    ]
-  },
-  {
-    evidenceId: 'editorial:regulated:health',
-    phrases: [
-      'health care provider',
-      'healthcare platform',
-      'healthcare provider',
-      'healthcare service',
-      'healthcare services',
-      'hospital network',
-      'hospital service',
-      'hospital services',
-      'medical appointment',
-      'medical clinic',
-      'medical service',
-      'medical services',
-      'online pharmacy',
-      'telehealth platform'
-    ]
-  },
-  {
-    evidenceId: 'editorial:regulated:gambling',
-    phrases: [
-      'casino platform',
-      'casino website',
-      'gambling platform',
-      'online casino',
-      'sports betting'
-    ]
-  },
-  {
-    evidenceId: 'editorial:regulated:gaming',
-    phrases: ['game studio', 'gaming community', 'gaming marketplace', 'video game']
-  },
-  {
-    evidenceId: 'editorial:regulated:dating',
-    phrases: ['dating app', 'dating platform', 'dating service']
-  },
-  {
-    evidenceId: 'editorial:regulated:regulated-products',
-    phrases: [
-      'alcohol delivery',
-      'cannabis dispensary',
-      'firearm marketplace',
-      'regulated product',
-      'vape shop'
-    ]
-  }
-]
-
 const CATEGORY_KEYWORDS: Readonly<Record<string, readonly string[]>> = {
   'agency-services': ['agency', 'consultancy', 'consulting service', 'service provider'],
   'ai-ml': ['ai model', 'artificial intelligence', 'large language model', 'machine learning'],
@@ -278,16 +214,6 @@ const DESCRIPTION_STOP_WORDS = new Set([
   'provide',
   'provides'
 ])
-const TOKEN_ALIASES: Readonly<Record<string, string>> = {
-  applications: 'application',
-  apis: 'api',
-  docs: 'documentation',
-  guides: 'guide',
-  libraries: 'library',
-  sdks: 'sdk',
-  tooling: 'tool',
-  tools: 'tool'
-}
 const MAX_EDITORIAL_TEXT_CHARACTERS = 1_100_000
 
 const normalizeText = (value: string, compactSeparators = false): string => {
@@ -353,13 +279,11 @@ const descriptionEvidence = (description: string): string[] => {
   return matches
 }
 
-const canonicalToken = (token: string): string => TOKEN_ALIASES[token] ?? token
-
 const meaningfulTokens = (text: string, excludedTokens: ReadonlySet<string>): string[] => [
   ...new Set(
     text
       .split(' ')
-      .map(canonicalToken)
+      .map(canonicalEditorialToken)
       .filter(
         token =>
           token.length >= 3 && !DESCRIPTION_STOP_WORDS.has(token) && !excludedTokens.has(token)
@@ -372,7 +296,7 @@ const descriptionMatchesInspectedContent = (
   inspectedText: string,
   name: string
 ): boolean => {
-  const nameTokens = new Set(name.split(' ').map(canonicalToken))
+  const nameTokens = new Set(name.split(' ').map(canonicalEditorialToken))
   const descriptionTokens = meaningfulTokens(description, nameTokens)
   if (descriptionTokens.length === 0) return false
   const inspectedTokens = new Set(meaningfulTokens(inspectedText, new Set<string>()))
@@ -389,19 +313,16 @@ const nameMatchesDomain = (name: string, website: string): boolean => {
   } catch {
     return false
   }
-  const domainLabels = hostname
-    .split('.')
-    .filter(label => label !== 'www')
-    .map(label => normalizeText(label, true))
-    .filter(Boolean)
+  const ownerLabel = getDomainWithoutSuffix(hostname, {
+    allowPrivateDomains: true,
+    extractHostname: false
+  })
   const nameTokens = normalizeText(name)
     .split(' ')
     .filter(token => token.length >= 3 && !NAME_STOP_WORDS.has(token))
-  if (nameTokens.length === 0 || domainLabels.length === 0) return false
+  if (nameTokens.length === 0 || !ownerLabel) return false
   const compactBrand = nameTokens.join('')
-  return domainLabels.some(
-    domainLabel => domainLabel === compactBrand || nameTokens.includes(domainLabel)
-  )
+  return normalizeText(ownerLabel, true) === compactBrand
 }
 
 const categoryEvidence = (
@@ -453,10 +374,7 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
     }
   }
 
-  const manualEvidence = [
-    ...matchingEvidence(combinedText, REGULATED_POLICIES),
-    ...descriptionEvidence(description)
-  ]
+  const manualEvidence = [...regulatedEvidence(combinedText), ...descriptionEvidence(description)]
   if (!descriptionMatchesInspectedContent(description, inspectedText, name)) {
     manualEvidence.push('editorial:quality:description-content-mismatch')
   }
