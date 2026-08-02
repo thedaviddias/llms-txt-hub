@@ -11,7 +11,7 @@ import type {
 
 const NOW = new Date('2026-08-01T12:00:00.000Z')
 const CHECKED_AT = NOW.toISOString()
-const SUFFICIENT_PROSE_AND_LINK = `${'A useful documentation index. '.repeat(4)}https://example.com/docs`
+const SUFFICIENT_PROSE_AND_LINK = `${'A useful developer API documentation index. '.repeat(4)}https://example.com/docs`
 const LONG_TEXT = `# Example\n\n${SUFFICIENT_PROSE_AND_LINK}`
 const CATEGORIES = [
   {
@@ -44,7 +44,7 @@ const resource = (
     resource: {
       body: requestedUrl.endsWith('llms.txt')
         ? LONG_TEXT
-        : `<html><body>${'Meaningful homepage. '.repeat(5)}</body></html>`,
+        : `<html><body>${'Meaningful developer API documentation homepage. '.repeat(5)}</body></html>`,
       byteCount: 128,
       contentType: requestedUrl.endsWith('llms.txt') ? 'text/plain; charset=utf-8' : 'text/html',
       finalUrl: requestedUrl,

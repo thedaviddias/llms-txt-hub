@@ -44,6 +44,11 @@ const PROHIBITED_POLICIES: readonly PhrasePolicy[] = [
     evidenceId: 'editorial:prohibited:adult-services',
     phrases: [
       'adult escort',
+      'adult entertainment',
+      'adult service',
+      'adult services',
+      'escort agency',
+      'escort booking',
       'escort service',
       'escort services',
       'sexual service',
@@ -125,11 +130,16 @@ const REGULATED_POLICIES: readonly PhrasePolicy[] = [
   {
     evidenceId: 'editorial:regulated:finance',
     phrases: [
+      'banking platform',
+      'banking service',
+      'banking services',
+      'financial institution',
       'crypto exchange',
       'financial planning',
       'financial service',
       'investment platform',
       'loan provider',
+      'online banking',
       'trading platform'
     ]
   },
@@ -137,11 +147,29 @@ const REGULATED_POLICIES: readonly PhrasePolicy[] = [
     evidenceId: 'editorial:regulated:health',
     phrases: [
       'health care provider',
+      'healthcare platform',
       'healthcare provider',
+      'healthcare service',
+      'healthcare services',
+      'hospital network',
+      'hospital service',
+      'hospital services',
       'medical appointment',
       'medical clinic',
+      'medical service',
+      'medical services',
       'online pharmacy',
       'telehealth platform'
+    ]
+  },
+  {
+    evidenceId: 'editorial:regulated:gambling',
+    phrases: [
+      'casino platform',
+      'casino website',
+      'gambling platform',
+      'online casino',
+      'sports betting'
     ]
   },
   {
@@ -238,15 +266,44 @@ const KEYWORD_STOP_WORDS = new Set([
   'to',
   'with'
 ])
+const DESCRIPTION_STOP_WORDS = new Set([
+  ...KEYWORD_STOP_WORDS,
+  'build',
+  'building',
+  'help',
+  'helps',
+  'offer',
+  'offering',
+  'offers',
+  'provide',
+  'provides'
+])
+const TOKEN_ALIASES: Readonly<Record<string, string>> = {
+  applications: 'application',
+  apis: 'api',
+  docs: 'documentation',
+  guides: 'guide',
+  libraries: 'library',
+  sdks: 'sdk',
+  tooling: 'tool',
+  tools: 'tool'
+}
+const MAX_EDITORIAL_TEXT_CHARACTERS = 1_100_000
 
-const normalizeText = (value: string): string =>
-  value
+const normalizeText = (value: string, compactSeparators = false): string => {
+  const normalized = value
+    .slice(0, MAX_EDITORIAL_TEXT_CHARACTERS)
     .normalize('NFKC')
     .toLocaleLowerCase('en-US')
-    .replace(/[\u200B-\u200D\u2060\uFEFF]/gu, '')
+    .replace(/\p{Cf}+/gu, '')
+  const canonicalized = compactSeparators
+    ? normalized.replace(/([\p{L}\p{N}])[\p{P}\p{S}]+(?=[\p{L}\p{N}])/gu, '$1')
+    : normalized
+  return canonicalized
     .replace(/[\p{P}\p{S}]+/gu, ' ')
     .replace(/\s+/gu, ' ')
     .trim()
+}
 
 const hasPhrase = (text: string, phrase: string): boolean => ` ${text} `.includes(` ${phrase} `)
 
@@ -296,6 +353,35 @@ const descriptionEvidence = (description: string): string[] => {
   return matches
 }
 
+const canonicalToken = (token: string): string => TOKEN_ALIASES[token] ?? token
+
+const meaningfulTokens = (text: string, excludedTokens: ReadonlySet<string>): string[] => [
+  ...new Set(
+    text
+      .split(' ')
+      .map(canonicalToken)
+      .filter(
+        token =>
+          token.length >= 3 && !DESCRIPTION_STOP_WORDS.has(token) && !excludedTokens.has(token)
+      )
+  )
+]
+
+const descriptionMatchesInspectedContent = (
+  description: string,
+  inspectedText: string,
+  name: string
+): boolean => {
+  const nameTokens = new Set(name.split(' ').map(canonicalToken))
+  const descriptionTokens = meaningfulTokens(description, nameTokens)
+  if (descriptionTokens.length === 0) return false
+  const inspectedTokens = new Set(meaningfulTokens(inspectedText, new Set<string>()))
+  const overlapCount = descriptionTokens.filter(token => inspectedTokens.has(token)).length
+  const requiredOverlap =
+    descriptionTokens.length === 1 ? 1 : Math.max(2, Math.ceil(descriptionTokens.length * 0.25))
+  return overlapCount >= requiredOverlap
+}
+
 const nameMatchesDomain = (name: string, website: string): boolean => {
   let hostname: string
   try {
@@ -303,18 +389,18 @@ const nameMatchesDomain = (name: string, website: string): boolean => {
   } catch {
     return false
   }
-  const domainTokens = normalizeText(hostname).split(' ').filter(Boolean)
+  const domainLabels = hostname
+    .split('.')
+    .filter(label => label !== 'www')
+    .map(label => normalizeText(label, true))
+    .filter(Boolean)
   const nameTokens = normalizeText(name)
     .split(' ')
     .filter(token => token.length >= 3 && !NAME_STOP_WORDS.has(token))
-  if (nameTokens.length === 0 || domainTokens.length === 0) return false
-  return nameTokens.some(nameToken =>
-    domainTokens.some(
-      domainToken =>
-        nameToken === domainToken ||
-        (nameToken.length >= 5 && domainToken.includes(nameToken)) ||
-        (domainToken.length >= 5 && nameToken.includes(domainToken))
-    )
+  if (nameTokens.length === 0 || domainLabels.length === 0) return false
+  const compactBrand = nameTokens.join('')
+  return domainLabels.some(
+    domainLabel => domainLabel === compactBrand || nameTokens.includes(domainLabel)
   )
 }
 
@@ -339,16 +425,26 @@ const categoryEvidence = (
  */
 export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPolicyResult => {
   const description = normalizeText(input.fields.description)
-  const combinedText = normalizeText(
-    [
-      input.fields.name,
-      input.fields.description,
-      input.homepageText,
-      input.llmsText,
-      input.llmsFullText ?? ''
-    ].join(' ')
-  )
-  const prohibitedEvidence = matchingEvidence(combinedText, PROHIBITED_POLICIES)
+  const name = normalizeText(input.fields.name)
+  const inspectedText = [input.homepageText, input.llmsText, input.llmsFullText ?? '']
+    .map(value => normalizeText(value))
+    .join(' ')
+  const combinedText = [name, description, inspectedText].join(' ')
+  const compactCombinedText = [
+    input.fields.name,
+    input.fields.description,
+    input.homepageText,
+    input.llmsText,
+    input.llmsFullText ?? ''
+  ]
+    .map(value => normalizeText(value, true))
+    .join(' ')
+  const prohibitedEvidence = [
+    ...new Set([
+      ...matchingEvidence(combinedText, PROHIBITED_POLICIES),
+      ...matchingEvidence(compactCombinedText, PROHIBITED_POLICIES)
+    ])
+  ]
   if (prohibitedEvidence.length > 0) {
     return {
       decision: 'reject',
@@ -361,10 +457,13 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
     ...matchingEvidence(combinedText, REGULATED_POLICIES),
     ...descriptionEvidence(description)
   ]
+  if (!descriptionMatchesInspectedContent(description, inspectedText, name)) {
+    manualEvidence.push('editorial:quality:description-content-mismatch')
+  }
   if (!nameMatchesDomain(input.fields.name, input.fields.website)) {
     manualEvidence.push('editorial:identity:name-domain-mismatch')
   }
-  const categoryConcern = categoryEvidence(input.categories, input.fields.category, combinedText)
+  const categoryConcern = categoryEvidence(input.categories, input.fields.category, inspectedText)
   if (categoryConcern) manualEvidence.push(categoryConcern)
 
   if (manualEvidence.length > 0) {
