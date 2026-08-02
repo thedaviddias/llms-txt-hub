@@ -1,6 +1,6 @@
 import type { SubmissionReasonCode } from '@thedaviddias/submission-trust/types'
 
-import { evalRedis } from '@/lib/redis'
+import { evalRedis, get } from '@/lib/redis'
 import { normalizeSubmissionFields } from './submission-state'
 import { submissionStateSecurity } from './submission-state-security'
 
@@ -10,8 +10,15 @@ if not raw then return 'missing' end
 local record = cjson.decode(raw)
 local ttl = redis.call('PTTL', KEYS[1])
 if ttl <= 0 then return 'expired' end
-if ARGV[1] == 'branch' then
-  local entering = record.state == 'final_assessing'
+if ARGV[1] == 'attempt' then
+  if record.state ~= 'final_assessing' and record.state ~= 'auto_publish_pending' and record.state ~= 'manual_review' and record.state ~= 'publishing' and record.state ~= 'publish_failed' then return 'state_mismatch' end
+  if record.branch and record.branch ~= ARGV[2] then return 'binding_mismatch' end
+  if record.resultCode and record.resultCode ~= 'publication_unavailable' and record.resultCode ~= ARGV[4] then return 'binding_mismatch' end
+  record.branch = ARGV[2]
+  record.resultCode = ARGV[4]
+  record.publicationAttempted = true
+elseif ARGV[1] == 'branch' then
+  local entering = record.state == 'final_assessing' or record.state == 'publish_failed'
   if entering then
     if ARGV[3] == 'automatic' then
       record.state = 'auto_publish_pending'
@@ -37,7 +44,11 @@ elseif ARGV[1] == 'github' then
   record.prNumber = tonumber(ARGV[3])
   record.headSha = ARGV[4]
 elseif ARGV[1] == 'failed' then
-  if record.state == 'auto_publish_pending' or record.state == 'manual_review' or record.state == 'publishing' then
+  if record.branch ~= ARGV[2] then return 'binding_mismatch' end
+  if record.resultCode and record.resultCode ~= 'publication_unavailable' and record.resultCode ~= ARGV[4] then return 'binding_mismatch' end
+  if record.state == 'final_assessing' and record.publicationAttempted == true then
+    record.state = 'publish_failed'
+  elseif record.state == 'auto_publish_pending' or record.state == 'manual_review' or record.state == 'publishing' then
     record.state = 'publish_failed'
   elseif record.state ~= 'publish_failed' then
     return 'state_mismatch'
@@ -53,7 +64,15 @@ const FINAL_OUTCOME_SCRIPT = `
 local raw = redis.call('GET', KEYS[1])
 if not raw then return 'missing' end
 local record = cjson.decode(raw)
-if record.submissionId ~= ARGV[1] or record.state ~= 'final_assessing' then return 'state_mismatch' end
+if record.submissionId ~= ARGV[1] then return 'state_mismatch' end
+local exactBranch = record.branch == 'submit/' .. ARGV[1]
+local recoveredCandidate = exactBranch and (
+  (record.state == 'auto_publish_pending' and record.resultCode == 'auto_publish') or
+  (record.state == 'manual_review' and record.resultCode ~= 'auto_publish' and record.resultCode ~= 'publication_unavailable') or
+  (record.state == 'publishing' and record.resultCode ~= 'publication_unavailable') or
+  (record.state == 'publish_failed' and record.resultCode == 'publication_unavailable')
+)
+if record.state ~= 'final_assessing' and not recoveredCandidate then return 'state_mismatch' end
 if ARGV[2] ~= 'rejected' and ARGV[2] ~= 'retry_later' then return 'invalid_outcome' end
 local ttl = redis.call('PTTL', KEYS[1])
 if ttl <= 0 then return 'expired' end
@@ -93,23 +112,73 @@ const RETRY_REASONS = new Set<SubmissionReasonCode>([
   'required_resource_transient_failure'
 ])
 
-const update = async (submissionId: string, args: readonly string[]): Promise<boolean> => {
-  if (!ID.test(submissionId)) return false
+interface PublicationBinding {
+  readonly branch: string
+  readonly outcome: 'automatic' | 'manual'
+  readonly resultCode: string
+  readonly submissionId: string
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const mutationIsCommitted = (
+  value: unknown,
+  submissionId: string,
+  args: readonly string[]
+): boolean => {
+  if (!isRecord(value) || value.submissionId !== submissionId || value.branch !== args[1]) {
+    return false
+  }
+  if (args[0] === 'attempt') {
+    return (
+      value.publicationAttempted === true &&
+      value.resultCode === args[3] &&
+      (value.state === 'final_assessing' ||
+        value.state === 'auto_publish_pending' ||
+        value.state === 'manual_review' ||
+        value.state === 'publishing' ||
+        value.state === 'publish_failed')
+    )
+  }
+  if (args[0] === 'branch') {
+    const expectedState = args[2] === 'automatic' ? 'auto_publish_pending' : 'manual_review'
+    return value.state === expectedState && value.resultCode === args[3]
+  }
+  if (args[0] === 'github') {
+    return (
+      value.state === 'publishing' &&
+      value.prNumber === Number(args[2]) &&
+      value.headSha === args[3]
+    )
+  }
   return (
-    (await evalRedis<string>(RECORD_TTL_GUARD_SCRIPT, [`submission:${submissionId}`], args)) ===
-    'updated'
+    args[0] === 'failed' &&
+    value.state === 'publish_failed' &&
+    value.resultCode === 'publication_unavailable'
   )
 }
 
+const update = async (submissionId: string, args: readonly string[]): Promise<boolean> => {
+  if (!ID.test(submissionId)) return false
+  const key = `submission:${submissionId}`
+  const result = await evalRedis<string>(RECORD_TTL_GUARD_SCRIPT, [key], args)
+  if (result === 'updated') return true
+  if (result !== null) return false
+  return mutationIsCommitted(await get(key), submissionId, args)
+}
+
+const validBinding = (input: PublicationBinding): boolean =>
+  BRANCH.test(input.branch) &&
+  RESULT_CODES.has(input.resultCode) &&
+  ((input.outcome === 'automatic' && input.resultCode === 'auto_publish') ||
+    (input.outcome === 'manual' && input.resultCode !== 'auto_publish'))
+
 /** Durable publication-state operations consumed by the GitHub publisher. */
 export interface SubmissionPublicationState {
-  readonly markFailed: (submissionId: string) => Promise<boolean>
-  readonly persistBranch: (input: {
-    readonly branch: string
-    readonly outcome: 'automatic' | 'manual'
-    readonly resultCode: string
-    readonly submissionId: string
-  }) => Promise<boolean>
+  readonly beginAttempt: (input: PublicationBinding) => Promise<boolean>
+  readonly markFailed: (input: PublicationBinding) => Promise<boolean>
+  readonly persistBranch: (input: PublicationBinding) => Promise<boolean>
   readonly persistGithub: (input: {
     readonly branch: string
     readonly headSha: string
@@ -120,25 +189,28 @@ export interface SubmissionPublicationState {
 
 /** Production Redis-backed publication metadata adapter. */
 export const submissionPublicationState: SubmissionPublicationState = {
-  markFailed(submissionId) {
-    return update(submissionId, [
+  beginAttempt(input) {
+    if (!validBinding(input)) return Promise.resolve(false)
+    return update(input.submissionId, [
+      'attempt',
+      input.branch,
+      input.outcome,
+      input.resultCode,
+      new Date().toISOString()
+    ])
+  },
+  markFailed(input) {
+    if (!validBinding(input)) return Promise.resolve(false)
+    return update(input.submissionId, [
       'failed',
-      '',
-      '',
-      'publication_unavailable',
+      input.branch,
+      input.outcome,
+      input.resultCode,
       new Date().toISOString()
     ])
   },
   persistBranch(input) {
-    if (
-      !BRANCH.test(input.branch) ||
-      !RESULT_CODES.has(input.resultCode) ||
-      (input.outcome !== 'automatic' && input.outcome !== 'manual') ||
-      (input.outcome === 'automatic' && input.resultCode !== 'auto_publish') ||
-      (input.outcome === 'manual' && input.resultCode === 'auto_publish')
-    ) {
-      return Promise.resolve(false)
-    }
+    if (!validBinding(input)) return Promise.resolve(false)
     return update(input.submissionId, [
       'branch',
       input.branch,

@@ -17,7 +17,10 @@ import {
   publishSubmission,
   type SubmissionAutopublishMode
 } from '@/lib/submissions/submission-publisher'
-import { consumeSubmissionContinuation } from '@/lib/submissions/submission-state'
+import {
+  acquireSubmissionLocks,
+  consumeSubmissionContinuation
+} from '@/lib/submissions/submission-state'
 
 const OWNER = 'thedaviddias'
 const REPO = 'llms-txt-hub'
@@ -122,6 +125,23 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       return complete(result, consumed.code)
     }
     activeSubmission = { fields: parsed.fields, submissionId: consumed.submissionId }
+
+    const lock = await acquireSubmissionLocks({
+      llmsUrl: parsed.fields.llmsUrl,
+      submissionId: consumed.submissionId,
+      website: parsed.fields.website
+    })
+    if (!lock.ok) {
+      const outcome = lock.code === 'duplicate' ? 'rejected' : 'retry_later'
+      const reasonCode = lock.code === 'duplicate' ? 'duplicate' : 'publication_unavailable'
+      const updated = await finalize(outcome, reasonCode)
+      return complete(
+        updated && outcome === 'rejected'
+          ? rejected('This website or llms.txt URL already has an active directory entry.')
+          : retryLater(),
+        updated ? reasonCode : 'publication_unavailable'
+      )
+    }
 
     const duplicate = await checkSubmissionDuplicates({
       expectedBaseRef: 'main',

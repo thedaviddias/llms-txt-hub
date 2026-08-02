@@ -508,4 +508,40 @@ describe('calculateManagedLabelSync', () => {
       removed: ['area:content', 'guideline:pass', 'lane:mdx-fast', 'risk:low']
     })
   })
+
+  it('preserves publisher-owned manual review and removes automerge from an unsigned PR', () => {
+    const result = calculateManagedLabelSync(
+      ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'needs:manual-review', 'risk:low'],
+      ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low']
+    )
+
+    expect(result).toEqual({
+      added: [],
+      desired: ['area:content', 'lane:mdx-fast', 'needs:manual-review', 'risk:low'],
+      removed: ['automerge:candidate']
+    })
+    expect(
+      deriveMergeAction({
+        desiredLabels: result.desired,
+        dryRun: false,
+        wouldMerge: true,
+        wouldMergeReason: 'Would auto-merge now.'
+      })
+    ).toMatchObject({ status: 'skipped' })
+  })
 })
+
+describe('PR Intake manual-label ownership', () => {
+  it('preserves manual review and suppresses automerge candidate during inline label sync', () => {
+    const workflow = readFileSync('.github/workflows/pr-intake.yml', 'utf8')
+
+    expect(workflow).toContain(
+      "const preserveManualReview = currentNames.includes('needs:manual-review')"
+    )
+    expect(workflow).toContain("labels = labels.filter(label => label !== 'automerge:candidate')")
+    expect(workflow).toContain("labels.push('needs:manual-review')")
+    expect(workflow).toContain("name !== 'needs:manual-review'")
+  })
+})
+
+import { readFileSync } from 'node:fs'

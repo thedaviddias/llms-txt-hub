@@ -237,7 +237,13 @@ export async function consumeSubmissionContinuation(
     secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
   }
 ): Promise<
-  | { readonly ok: true; readonly submissionId: string }
+  | { readonly mode: 'initial'; readonly ok: true; readonly submissionId: string }
+  | {
+      readonly mode: 'recovery'
+      readonly ok: true
+      readonly state: 'auto_publish_pending' | 'manual_review' | 'publish_failed' | 'publishing'
+      readonly submissionId: string
+    }
   | {
       readonly code: 'expired' | 'invalid_continuation' | 'publication_unavailable' | 'replayed'
       readonly ok: false
@@ -290,7 +296,19 @@ export async function consumeSubmissionContinuation(
     [submissionStateSecurity.recordKey(submissionId)],
     [input.userId, fieldsHash, now.toISOString()]
   )
-  if (result === 'transitioned') return { ok: true, submissionId }
+  if (result === 'transitioned') return { mode: 'initial', ok: true, submissionId }
+  if (result === 'recovery:auto_publish_pending') {
+    return { mode: 'recovery', ok: true, state: 'auto_publish_pending', submissionId }
+  }
+  if (result === 'recovery:manual_review') {
+    return { mode: 'recovery', ok: true, state: 'manual_review', submissionId }
+  }
+  if (result === 'recovery:publishing') {
+    return { mode: 'recovery', ok: true, state: 'publishing', submissionId }
+  }
+  if (result === 'recovery:publish_failed') {
+    return { mode: 'recovery', ok: true, state: 'publish_failed', submissionId }
+  }
   if (result === 'state_mismatch') return { code: 'replayed', ok: false }
   if (result === 'expired') return { code: 'expired', ok: false }
   return { code: 'publication_unavailable', ok: false }

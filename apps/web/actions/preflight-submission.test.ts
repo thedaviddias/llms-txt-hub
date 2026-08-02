@@ -7,7 +7,6 @@ import { getStoredCSRFToken } from '@/lib/csrf-protection'
 import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import {
-  acquireSubmissionLocks,
   createSubmissionContinuation,
   enforceSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
@@ -24,7 +23,6 @@ jest.mock('@/lib/submissions/submission-duplicates', () => ({
   checkSubmissionDuplicates: jest.fn()
 }))
 jest.mock('@/lib/submissions/submission-state', () => ({
-  acquireSubmissionLocks: jest.fn(),
   createSubmissionContinuation: jest.fn(),
   enforceSubmissionRateLimits: jest.fn(),
   normalizeSubmissionFields: jest.requireActual('@/lib/submissions/submission-state')
@@ -37,7 +35,6 @@ const mockHeaders = jest.mocked(headers)
 const mockCsrf = jest.mocked(getStoredCSRFToken)
 const mockAssess = jest.mocked(assessSubmission)
 const mockDuplicates = jest.mocked(checkSubmissionDuplicates)
-const mockLocks = jest.mocked(acquireSubmissionLocks)
 const mockContinuation = jest.mocked(createSubmissionContinuation)
 const mockRateLimits = jest.mocked(enforceSubmissionRateLimits)
 
@@ -92,7 +89,6 @@ describe('preflightSubmission', () => {
     mockRateLimits.mockResolvedValue({ ok: true })
     mockDuplicates.mockResolvedValue({ status: 'unique' })
     mockAssess.mockResolvedValue(assessment('auto_publish'))
-    mockLocks.mockResolvedValue({ ok: true })
     mockContinuation.mockResolvedValue({
       continuationToken: 'opaque.continuation.signature',
       ok: true,
@@ -142,7 +138,6 @@ describe('preflightSubmission', () => {
     mockAssess.mockResolvedValue(assessment(decision))
 
     await expect(preflightSubmission(form())).resolves.toMatchObject({ status })
-    expect(mockLocks).not.toHaveBeenCalled()
     expect(mockContinuation).not.toHaveBeenCalled()
     expect(mockLoggerInfo).toHaveBeenLastCalledWith(
       'Submission preflight completed',
@@ -159,7 +154,29 @@ describe('preflightSubmission', () => {
       status: 'support_required'
     })
     expect(mockContinuation).toHaveBeenCalledTimes(1)
-    expect(mockLocks).toHaveBeenCalledTimes(1)
+  })
+
+  it('allows abandoned, lost-response, and concurrent preflights without reserving URLs', async () => {
+    mockContinuation
+      .mockResolvedValueOnce({
+        continuationToken: 'first.signature',
+        ok: true,
+        record: {} as never
+      })
+      .mockResolvedValueOnce({
+        continuationToken: 'second.signature',
+        ok: true,
+        record: {} as never
+      })
+
+    const [first, second] = await Promise.all([
+      preflightSubmission(form()),
+      preflightSubmission(form())
+    ])
+
+    expect(first.status).toBe('support_required')
+    expect(second.status).toBe('support_required')
+    expect(mockContinuation).toHaveBeenCalledTimes(2)
   })
 
   it('rejects an invalid CSRF token before rate limits or network checks', async () => {
