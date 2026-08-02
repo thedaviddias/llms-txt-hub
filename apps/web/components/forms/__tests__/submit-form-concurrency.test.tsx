@@ -22,6 +22,17 @@ jest.mock('@/components/analytics-tracker', () => ({
     trackFormStepStart: mockTrackFormStepStart,
     trackSubmitError: jest.fn(),
     trackSubmitSuccess: jest.fn()
+  }),
+  useSubmissionAnalytics: () => ({
+    failFinal: jest.fn(),
+    failPreflight: jest.fn(),
+    finishFinal: jest.fn(),
+    finishPreflight: jest.fn(),
+    startFinal: jest.fn(() => 0),
+    startPreflight: jest.fn(() => 0),
+    trackSubmissionFollowAttest: jest.fn(),
+    trackSubmissionProfileOpen: jest.fn(),
+    trackSubmissionSupportPlatformSelect: jest.fn()
   })
 }))
 

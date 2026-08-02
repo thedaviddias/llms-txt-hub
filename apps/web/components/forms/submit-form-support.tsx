@@ -2,6 +2,7 @@
 
 import { Button } from '@thedaviddias/design-system/button'
 import { useEffect, useRef, useState } from 'react'
+import { useSubmissionAnalytics } from '@/components/analytics-tracker'
 
 type SupportPlatform = 'x' | 'linkedin'
 
@@ -41,6 +42,7 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
   const [platform, setPlatform] = useState<SupportPlatform>()
   const [profileOpened, setProfileOpened] = useState(false)
   const [followAttested, setFollowAttested] = useState(false)
+  const submissionAnalytics = useSubmissionAnalytics()
 
   useEffect(() => {
     headingRef.current?.focus()
@@ -51,6 +53,10 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
     setPlatform(nextPlatform)
     setProfileOpened(false)
     setFollowAttested(false)
+    submissionAnalytics.trackSubmissionSupportPlatformSelect({
+      platform: nextPlatform,
+      source: 'support_step'
+    })
   }
 
   /** Submit only a complete, locally consistent support attestation. */
@@ -105,7 +111,13 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
                   rel="noopener noreferrer"
                   aria-label={choice.profileLabel}
                   onClick={() => {
-                    if (selected) setProfileOpened(true)
+                    if (selected) {
+                      setProfileOpened(true)
+                      submissionAnalytics.trackSubmissionProfileOpen({
+                        platform: choice.platform,
+                        source: 'support_step'
+                      })
+                    }
                   }}
                   className="inline-flex text-sm font-medium text-primary underline underline-offset-4"
                 >
@@ -123,7 +135,16 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
             checked={followAttested}
             readOnly
             disabled={!platform || !profileOpened || isLoading}
-            onClick={() => setFollowAttested(current => !current)}
+            onClick={() => {
+              const nextFollowAttested = !followAttested
+              setFollowAttested(nextFollowAttested)
+              if (nextFollowAttested && platform) {
+                submissionAnalytics.trackSubmissionFollowAttest({
+                  platform,
+                  source: 'support_step'
+                })
+              }
+            }}
             className="mt-0.5 h-4 w-4"
           />
           <span>

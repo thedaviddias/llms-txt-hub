@@ -1,5 +1,7 @@
 import { ANALYTICS_EVENTS, trackEvent } from './analytics'
 
+export { submissionAnalytics } from './submission-analytics'
+
 /** Convenience functions for common analytics events */
 export const analytics = {
   loadMore: (
@@ -158,17 +160,14 @@ export const analytics = {
     })
   },
 
-  fetchMetadataSuccess: (website: string, source?: string) => {
+  fetchMetadataSuccess: (_website: string, source?: string) => {
     trackEvent(ANALYTICS_EVENTS.FETCH_METADATA_SUCCESS, {
-      value: website,
       source
     })
   },
 
-  fetchMetadataError: (website: string, errorMessage: string, source?: string) => {
+  fetchMetadataError: (_website: string, _errorMessage: string, source?: string) => {
     trackEvent(ANALYTICS_EVENTS.FETCH_METADATA_ERROR, {
-      value: website,
-      section: errorMessage,
       source
     })
   },
