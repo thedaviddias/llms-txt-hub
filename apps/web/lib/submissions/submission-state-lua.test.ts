@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { runInNewContext } from 'node:vm'
 
 import {
   ACQUIRE_SUBMISSION_LOCKS_SCRIPT,
@@ -8,8 +9,9 @@ import {
 
 const LUA_BINARY = 'lua'
 const LUA_PROBE = spawnSync(LUA_BINARY, ['-v'], { encoding: 'utf8' })
-const isLuaUnavailable =
-  LUA_PROBE.error instanceof Error && 'code' in LUA_PROBE.error && LUA_PROBE.error.code === 'ENOENT'
+const hasEnoentCode = (value: unknown): boolean =>
+  typeof value === 'object' && value !== null && 'code' in value && value.code === 'ENOENT'
+const isLuaUnavailable = hasEnoentCode(LUA_PROBE.error)
 const LUA_HARNESS = `
 local script = assert(os.getenv('SUBMISSION_LUA_SCRIPT'))
 local scenario = assert(os.getenv('SUBMISSION_LUA_SCENARIO'))
@@ -112,6 +114,20 @@ const executeLua = (script: string, scenario: string) =>
   })
 
 describe('submission Redis Lua contracts', () => {
+  it('recognizes only structural ENOENT errors across realms and prototypes', () => {
+    const crossRealmError: unknown = runInNewContext(
+      "Object.assign(new Error('missing'), { code: 'ENOENT' })"
+    )
+    const inheritedCode: unknown = Object.create({ code: 'ENOENT' })
+
+    expect(crossRealmError).not.toBeInstanceOf(Error)
+    expect(hasEnoentCode(crossRealmError)).toBe(true)
+    expect(hasEnoentCode(inheritedCode)).toBe(true)
+    expect(hasEnoentCode({ code: 'EACCES' })).toBe(false)
+    expect(hasEnoentCode(null)).toBe(false)
+    expect(hasEnoentCode('ENOENT')).toBe(false)
+  })
+
   it('retains the required Redis script contracts without a local Lua runtime', () => {
     expect(LUA_HARNESS).toContain('local compiler = loadstring or load')
     expect(FINAL_ASSESSMENT_SCRIPT).toContain("redis.call('PTTL', KEYS[1])")
