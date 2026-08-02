@@ -85,6 +85,7 @@ export function SubmitForm() {
   })
 
   const metadata = useSubmitFormMetadata(step2Form, () => {
+    setFocusTarget('details')
     setStep('details')
     trackFormStepStart(2, 'submit-form', 'submit-page')
   })
