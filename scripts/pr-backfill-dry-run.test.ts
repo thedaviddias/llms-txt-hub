@@ -28,6 +28,7 @@ import {
   inspectTrustedBaseDuplicate,
   lookupOpenPullRequestDuplicate,
   parseSubmissionFrontmatter,
+  runFinalMergeSequence,
   runTrustedAssessmentGate,
   selectTrustedReviewConclusion,
   verifyMergeAttestation
@@ -985,6 +986,82 @@ describe('trusted PR Review identity', () => {
         workflowId: 123
       })
     ).toBe('missing')
+  })
+})
+
+describe('final merge orchestration order', () => {
+  it('refreshes expensive evidence before the final PR read and performs no API call before merge', async () => {
+    const calls: string[] = []
+    await expect(
+      runFinalMergeSequence({
+        authorize: prepared => {
+          calls.push('pure-authorization')
+          return prepared === 'ready'
+        },
+        fetchLatest: async () => {
+          calls.push('latest-details')
+          return { body: 'signed', labels: [], sha: 'a'.repeat(40) }
+        },
+        isAuthorized: decision => decision,
+        merge: async () => {
+          calls.push('merge')
+        },
+        prepareExpensive: async () => {
+          calls.push('fresh-open-index')
+          calls.push('current-check')
+          calls.push('current-base-and-manifest')
+          return 'ready'
+        }
+      })
+    ).resolves.toBe(true)
+    expect(calls).toEqual([
+      'fresh-open-index',
+      'current-check',
+      'current-base-and-manifest',
+      'latest-details',
+      'pure-authorization',
+      'merge'
+    ])
+  })
+
+  it.each([
+    [
+      'open set or head changed during the earlier scan',
+      { duplicate: true, latestBody: 'signed', manual: false }
+    ],
+    [
+      'manual label added during the earlier scan',
+      { duplicate: false, latestBody: 'signed', manual: true }
+    ],
+    [
+      'PR body changed during the earlier scan',
+      { duplicate: false, latestBody: 'changed', manual: false }
+    ]
+  ])('does not merge when %s', async (_label, scenario) => {
+    const calls: string[] = []
+    const merge = vi.fn(async () => {
+      calls.push('merge')
+    })
+    await expect(
+      runFinalMergeSequence({
+        authorize: (prepared, latest) => {
+          calls.push('pure-authorization')
+          return !prepared.duplicate && !latest.manual && latest.body === 'signed'
+        },
+        fetchLatest: async () => {
+          calls.push('latest-details')
+          return { body: scenario.latestBody, manual: scenario.manual }
+        },
+        isAuthorized: decision => decision,
+        merge,
+        prepareExpensive: async () => {
+          calls.push('fresh-open-index-check-base')
+          return { duplicate: scenario.duplicate }
+        }
+      })
+    ).resolves.toBe(false)
+    expect(calls).toEqual(['fresh-open-index-check-base', 'latest-details', 'pure-authorization'])
+    expect(merge).not.toHaveBeenCalled()
   })
 })
 
