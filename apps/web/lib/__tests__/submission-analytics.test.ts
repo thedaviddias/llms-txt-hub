@@ -20,7 +20,7 @@ describe('submission analytics', () => {
 
   it('uses a stable event for every trusted-submission lifecycle signal', () => {
     expect(ANALYTICS_EVENTS).toMatchObject({
-      SUBMISSION_ASSESSMENT_DURATION: 'Submission Assessment Duration',
+      SUBMISSION_REQUEST_DURATION: 'Submission Request Duration',
       SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
       SUBMISSION_FOLLOW_ATTEST: 'Submission Follow Attest',
       SUBMISSION_PREFLIGHT_OUTCOME: 'Submission Preflight Outcome',

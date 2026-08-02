@@ -79,6 +79,7 @@ describe('SubmitForm', () => {
       jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
         analytics: {
           publicationAttempted: true,
+          prCreated: true,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },
@@ -121,6 +122,7 @@ describe('SubmitForm', () => {
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: false,
+        prCreated: false,
         reasonCategory:
           testCase.outcome === 'rejected' ? 'network_safety' : 'reputation_unavailable',
         webRiskAvailable: testCase.outcome === 'rejected'
@@ -155,6 +157,7 @@ describe('SubmitForm', () => {
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: true,
+        prCreated: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -253,6 +256,7 @@ describe('SubmitForm', () => {
     resolveFinal?.({
       analytics: {
         publicationAttempted: true,
+        prCreated: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -283,6 +287,7 @@ describe('SubmitForm', () => {
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: false,
+        prCreated: false,
         reasonCategory: testCase.error.includes('expired') ? 'continuation' : 'publication'
       },
       error: testCase.error,

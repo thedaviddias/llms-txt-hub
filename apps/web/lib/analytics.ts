@@ -57,7 +57,7 @@ export const ANALYTICS_EVENTS = {
   SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
   SUBMISSION_PR_CREATED: 'Submission PR Created',
   SUBMISSION_PUBLISH_FAILURE: 'Submission Publish Failure',
-  SUBMISSION_ASSESSMENT_DURATION: 'Submission Assessment Duration',
+  SUBMISSION_REQUEST_DURATION: 'Submission Request Duration',
   SUBMISSION_WEB_RISK_AVAILABLE: 'Submission Web Risk Available',
   SUBMISSION_WEB_RISK_UNAVAILABLE: 'Submission Web Risk Unavailable',
 

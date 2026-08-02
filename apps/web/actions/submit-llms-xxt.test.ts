@@ -98,6 +98,7 @@ describe('submitLlmsTxt final coordinator', () => {
       ok: true,
       outcome: 'automatic',
       publicationAttempted: true,
+      prCreated: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
     mockRecordOutcome.mockResolvedValue(true)
@@ -111,7 +112,7 @@ describe('submitLlmsTxt final coordinator', () => {
   ])('rejects %s before consuming state', async (_label, overrides) => {
     const result = await submitLlmsTxt(form(overrides))
     expect(result).toMatchObject({
-      analytics: { publicationAttempted: false, reasonCategory: 'input' },
+      analytics: { prCreated: false, publicationAttempted: false, reasonCategory: 'input' },
       outcome: 'rejected',
       success: false
     })
@@ -137,7 +138,7 @@ describe('submitLlmsTxt final coordinator', () => {
       const result = await submitLlmsTxt(form())
 
       expect(result).toMatchObject({
-        analytics: { publicationAttempted: false, reasonCategory: category },
+        analytics: { prCreated: false, publicationAttempted: false, reasonCategory: category },
         outcome: 'rejected',
         success: false
       })
@@ -151,6 +152,7 @@ describe('submitLlmsTxt final coordinator', () => {
     await expect(submitLlmsTxt(form())).resolves.toEqual({
       analytics: {
         publicationAttempted: true,
+        prCreated: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -235,6 +237,7 @@ describe('submitLlmsTxt final coordinator', () => {
     await expect(submitLlmsTxt(form())).resolves.toEqual({
       analytics: {
         publicationAttempted: false,
+        prCreated: false,
         reasonCategory: 'reputation_unavailable',
         webRiskAvailable: false
       },
@@ -295,12 +298,14 @@ describe('submitLlmsTxt final coordinator', () => {
       ok: true,
       outcome: 'manual',
       publicationAttempted: true,
+      prCreated: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
 
     await expect(submitLlmsTxt(form({ supportPlatform: 'linkedin' }))).resolves.toEqual({
       analytics: {
         publicationAttempted: true,
+        prCreated: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -365,11 +370,28 @@ describe('submitLlmsTxt final coordinator', () => {
       prNumber: 42,
       status: 'reconcile'
     })
+    mockPublish
+      .mockResolvedValueOnce({
+        ok: true,
+        outcome: 'automatic',
+        publicationAttempted: true,
+        prCreated: true,
+        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        outcome: 'automatic',
+        publicationAttempted: true,
+        prCreated: false,
+        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+      })
 
     const first = await submitLlmsTxt(form())
     const recovered = await submitLlmsTxt(form())
 
-    expect(first).toEqual(recovered)
+    expect(first).toMatchObject({ analytics: { prCreated: true } })
+    expect(recovered).toMatchObject({ analytics: { prCreated: false } })
+    expect(first.prUrl).toBe(recovered.prUrl)
     expect(mockPublish).toHaveBeenCalledTimes(2)
     expect(mockPublish).toHaveBeenNthCalledWith(
       2,
@@ -398,11 +420,12 @@ describe('submitLlmsTxt final coordinator', () => {
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
+      prCreated: false,
       recovery: 'same_submission'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
-      analytics: { publicationAttempted: true, reasonCategory: 'publication' },
+      analytics: { prCreated: false, publicationAttempted: true, reasonCategory: 'publication' },
       outcome: 'retry_later',
       success: false
     })
@@ -414,11 +437,12 @@ describe('submitLlmsTxt final coordinator', () => {
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: false,
+      prCreated: false,
       recovery: 'fresh_preflight'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
-      analytics: { publicationAttempted: false, reasonCategory: 'publication' },
+      analytics: { prCreated: false, publicationAttempted: false, reasonCategory: 'publication' },
       outcome: 'retry_later',
       success: false
     })
