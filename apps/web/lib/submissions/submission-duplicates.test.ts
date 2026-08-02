@@ -22,6 +22,8 @@ publishedAt: 2026-08-01
 Description.`
 
 interface PullRequestFixture {
+  baseRef: string
+  baseRepoFullName: string
   body: string | null
   headOwnerLogin: string
   headRef: string
@@ -31,6 +33,8 @@ interface PullRequestFixture {
 }
 
 const pullRequest = (overrides: Partial<PullRequestFixture> = {}): PullRequestFixture => ({
+  baseRef: 'main',
+  baseRepoFullName: 'thedaviddias/llms-txt-hub',
   body: '',
   headOwnerLogin: 'thedaviddias',
   headRef: 'contributor',
@@ -122,7 +126,9 @@ describe('submission duplicate protection', () => {
     ['fork', { headOwnerLogin: 'attacker', headRepoFullName: 'attacker/fork' }],
     ['owner mismatch', { headOwnerLogin: 'attacker' }],
     ['wrong branch', { headRef: 'attacker-branch' }],
-    ['substring marker', { body: '<!-- llms-hub-submission:sub_1234 -->' }]
+    ['substring marker', { body: '<!-- llms-hub-submission:sub_1234 -->' }],
+    ['wrong base repository', { baseRepoFullName: 'attacker/fork' }],
+    ['wrong base ref', { baseRef: 'release' }]
   ])('never reconciles an attacker-controlled %s candidate', async (_label, overrides) => {
     const github = makeGitHub()
     configureOneMdx(
@@ -297,6 +303,43 @@ describe('submission duplicate protection', () => {
         github
       })
     ).resolves.toEqual({ status: 'unique' })
+  })
+
+  it('fails closed when the global GitHub request budget is exhausted', async () => {
+    const github = makeGitHub()
+    github.listOpenPullRequests.mockResolvedValue(
+      Array.from({ length: 10 }, (_, index) => pullRequest({ number: index + 1 }))
+    )
+    github.listPullRequestFiles.mockResolvedValue([])
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github,
+        requestBudget: 4
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    expect(github.listPullRequestFiles.mock.calls.length).toBeLessThanOrEqual(3)
+  })
+
+  it('aborts a stalled GitHub operation at the total inspection deadline', async () => {
+    const github = makeGitHub()
+    github.listOpenPullRequests.mockImplementation(
+      async (_owner, _repo, _page, signal: AbortSignal) =>
+        new Promise((_resolve, reject) => {
+          signal.addEventListener('abort', () => reject(new Error('aborted')), { once: true })
+        })
+    )
+
+    const startedAt = Date.now()
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        deadlineMs: 20,
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    expect(Date.now() - startedAt).toBeLessThan(500)
   })
 
   it.each([

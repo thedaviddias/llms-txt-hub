@@ -3,6 +3,7 @@ import {
   consumeSubmissionContinuation,
   createSubmissionContinuation,
   enforceSubmissionRateLimits,
+  hashSubmissionFields,
   isAllowedSubmissionTransition,
   normalizeSubmissionFields
 } from './submission-state'
@@ -260,9 +261,9 @@ describe('submission state', () => {
 
     const result = await enforceSubmissionRateLimits(
       {
-        registrableDomain: 'example.com',
         sourceIp,
-        userId: 'user_123'
+        userId: 'user_123',
+        website: 'https://www.example.com/docs'
       },
       { redis, secret: SECRET }
     )
@@ -286,9 +287,9 @@ describe('submission state', () => {
     await expect(
       enforceSubmissionRateLimits(
         {
-          registrableDomain: 'example.com',
           sourceIp: '203.0.113.24',
-          userId: 'user_123'
+          userId: 'user_123',
+          website: 'https://example.com'
         },
         { redis, secret: SECRET }
       )
@@ -302,9 +303,9 @@ describe('submission state', () => {
     await expect(
       enforceSubmissionRateLimits(
         {
-          registrableDomain: 'example.com',
           sourceIp: '203.0.113.24',
-          userId: 'user_123'
+          userId: 'user_123',
+          website: 'https://example.com'
         },
         { redis, secret: SECRET }
       )
@@ -313,5 +314,79 @@ describe('submission state', () => {
 
   it('rejects invalid URL fields during normalization', () => {
     expect(normalizeSubmissionFields({ ...FIELDS, website: 'http://example.com' })).toBeNull()
+  })
+
+  it('canonicalizes empty and null llms-full values to absence', () => {
+    const absent = normalizeSubmissionFields({ ...FIELDS, llmsFullUrl: undefined })
+    const empty = normalizeSubmissionFields({ ...FIELDS, llmsFullUrl: '' })
+    const nullValue = normalizeSubmissionFields({ ...FIELDS, llmsFullUrl: null })
+    expect(empty).toEqual(absent)
+    expect(nullValue).toEqual(absent)
+    if (absent && empty && nullValue) {
+      expect(hashSubmissionFields(empty)).toBe(hashSubmissionFields(absent))
+      expect(hashSubmissionFields(nullValue)).toBe(hashSubmissionFields(absent))
+    }
+    expect(normalizeSubmissionFields({ ...FIELDS, llmsFullUrl: 42 })).toBeNull()
+  })
+
+  it('canonicalizes equivalent IPv6 addresses before deriving the source key', async () => {
+    const redis = makeRedis()
+    redis.eval.mockResolvedValue('allowed')
+    const base = { userId: 'user_123', website: 'https://example.com' }
+    await enforceSubmissionRateLimits(
+      { ...base, sourceIp: '2001:db8::1' },
+      { redis, secret: SECRET }
+    )
+    await enforceSubmissionRateLimits(
+      { ...base, sourceIp: '2001:0db8:0:0:0:0:0:1' },
+      { redis, secret: SECRET }
+    )
+    expect(redis.eval.mock.calls[0]?.[1]?.[1]).toBe(redis.eval.mock.calls[1]?.[1]?.[1])
+  })
+
+  it.each(['203.0.113.1, 198.51.100.1', 'not-an-ip'])(
+    'rejects malformed source IP %s',
+    async sourceIp => {
+      const redis = makeRedis()
+      await expect(
+        enforceSubmissionRateLimits(
+          { sourceIp, userId: 'user_123', website: 'https://example.com' },
+          { redis, secret: SECRET }
+        )
+      ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
+      expect(redis.eval).not.toHaveBeenCalled()
+    }
+  )
+
+  it('derives the private registrable domain from the normalized website', async () => {
+    const redis = makeRedis()
+    redis.eval.mockResolvedValue('allowed')
+    const base = { sourceIp: '203.0.113.24', userId: 'user_123' }
+    await enforceSubmissionRateLimits(
+      { ...base, website: 'https://one.github.io/docs' },
+      { redis, secret: SECRET }
+    )
+    await enforceSubmissionRateLimits(
+      { ...base, website: 'https://one.github.io/other' },
+      { redis, secret: SECRET }
+    )
+    expect(redis.eval.mock.calls[0]?.[1]?.[2]).toBe(redis.eval.mock.calls[1]?.[1]?.[2])
+  })
+
+  it('reports signing configuration failure before parsing create or consume inputs', async () => {
+    const redis = makeRedis()
+    await expect(
+      createSubmissionContinuation(
+        { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
+        { now: () => NOW, redis, secret: 'short' }
+      )
+    ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
+    await expect(
+      consumeSubmissionContinuation(
+        { continuationToken: 'malformed', fields: FIELDS, userId: 'user_123' },
+        { now: () => NOW, redis, secret: '' }
+      )
+    ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
+    expect(redis.get).not.toHaveBeenCalled()
   })
 })

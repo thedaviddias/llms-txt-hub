@@ -134,14 +134,18 @@ export const submissionStateSecurity = {
       !isBoundedString(input.name) ||
       !isBoundedString(input.publishedAt) ||
       !isBoundedString(input.website) ||
-      (input.llmsFullUrl !== undefined && !isBoundedString(input.llmsFullUrl))
+      (input.llmsFullUrl !== undefined &&
+        input.llmsFullUrl !== null &&
+        typeof input.llmsFullUrl !== 'string') ||
+      (typeof input.llmsFullUrl === 'string' && input.llmsFullUrl.length > 10_000)
     ) {
       return null
     }
 
     const website = validateSubmissionUrl(input.website)
     const llmsUrl = validateSubmissionUrl(input.llmsUrl)
-    const llmsFullUrl = input.llmsFullUrl ? validateSubmissionUrl(input.llmsFullUrl) : undefined
+    const fullValue = typeof input.llmsFullUrl === 'string' ? input.llmsFullUrl.trim() : ''
+    const llmsFullUrl = fullValue ? validateSubmissionUrl(fullValue) : undefined
     if (!website.ok || !llmsUrl.ok || (llmsFullUrl && !llmsFullUrl.ok)) return null
 
     const normalized: NormalizedSubmissionFields = {
