@@ -1,6 +1,6 @@
 import { createElement } from 'react'
 import { preflightSubmission } from '@/actions/preflight-submission'
-import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
+import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import {
   finishSubmissionSupport,
   reachSubmissionDetails,
@@ -269,6 +269,48 @@ describe('trusted submission analytics lifecycle', () => {
         source: 'final_submission'
       })
       expect(JSON.stringify(track.mock.calls)).not.toMatch(/secret-api-key|Provider body/)
+    }
+  )
+
+  it.each([
+    [true, ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE],
+    [false, ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_UNAVAILABLE],
+    [undefined, undefined]
+  ] as const)(
+    'tracks final Web Risk availability %s without hostile properties',
+    (webRiskAvailable, expectedEvent) => {
+      const view = renderHook(() => useActualSubmissionAnalytics())
+      const analytics: FinalSubmissionResult['analytics'] =
+        webRiskAvailable === undefined
+          ? { publicationAttempted: false, reasonCategory: 'editorial' }
+          : {
+              publicationAttempted: false,
+              reasonCategory: 'editorial',
+              webRiskAvailable
+            }
+
+      act(() => {
+        view.result.current.finishFinal(
+          {
+            analytics,
+            error: 'Hostile provider body with secret-api-key',
+            outcome: 'rejected',
+            success: false
+          },
+          'linkedin',
+          Date.now()
+        )
+      })
+
+      const webRiskCalls = track.mock.calls.filter(
+        call =>
+          call[0] === ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE ||
+          call[0] === ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_UNAVAILABLE
+      )
+      expect(webRiskCalls).toEqual(
+        expectedEvent ? [[expectedEvent, { source: 'final_submission' }]] : []
+      )
+      expect(JSON.stringify(track.mock.calls)).not.toMatch(/secret-api-key|Hostile provider body/)
     }
   )
 
