@@ -115,6 +115,17 @@ elseif scenario == 'recovery' then
   ttl.submission = 169200123
 
   assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:publishing')
+  assert(ttl.submission == 169200123)
+
+  record.state = 'auto_publish_pending'
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:auto_publish_pending')
+  assert(ttl.submission == 169200123)
+
+  record.state = 'manual_review_pending'
+  record.resultCode = 'manual_review'
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:manual_review_pending')
+  assert(ttl.submission == 169200123)
+
   record.branch = 'submit/sub_other'
   assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'state_mismatch')
 else

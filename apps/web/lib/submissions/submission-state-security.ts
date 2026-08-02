@@ -30,7 +30,7 @@ if record.state == 'support_required' then
 end
 local exactBranch = record.submissionId and record.branch == 'submit/' .. record.submissionId
 if exactBranch and record.state == 'auto_publish_pending' and record.resultCode == 'auto_publish' then return 'recovery:auto_publish_pending' end
-if exactBranch and record.state == 'manual_review' and record.resultCode ~= 'auto_publish' and record.resultCode ~= 'publication_unavailable' then return 'recovery:manual_review' end
+if exactBranch and record.state == 'manual_review_pending' and record.resultCode ~= 'auto_publish' and record.resultCode ~= 'publication_unavailable' then return 'recovery:manual_review_pending' end
 if exactBranch and record.state == 'publishing' and record.resultCode ~= 'publication_unavailable' then return 'recovery:publishing' end
 if exactBranch and record.state == 'publish_failed' and record.resultCode == 'publication_unavailable' then return 'recovery:publish_failed' end
 return 'state_mismatch'
@@ -68,10 +68,10 @@ const TOKEN_PART = /^[A-Za-z0-9_-]+$/
 const STATE_TRANSITIONS: Readonly<Record<SubmissionState, readonly SubmissionState[]>> = {
   auto_publish_pending: ['publishing', 'publish_failed'],
   draft: ['preflight_rejected', 'support_required'],
-  final_assessing: ['rejected', 'retry_later', 'manual_review', 'auto_publish_pending'],
-  manual_review: ['publishing', 'publish_failed'],
+  final_assessing: ['rejected', 'retry_later', 'manual_review_pending', 'auto_publish_pending'],
+  manual_review_pending: ['publishing', 'publish_failed'],
   preflight_rejected: [],
-  publish_failed: ['auto_publish_pending', 'manual_review'],
+  publish_failed: ['auto_publish_pending', 'manual_review_pending'],
   published: [],
   publishing: ['published', 'publish_failed'],
   rejected: [],

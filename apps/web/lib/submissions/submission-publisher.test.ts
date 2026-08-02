@@ -1,3 +1,4 @@
+import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 
 import { logger } from '@thedaviddias/logging'
@@ -10,6 +11,21 @@ jest.mock('@thedaviddias/logging', () => ({
 }))
 
 const mockLoggerInfo = jest.mocked(logger.info)
+
+const parseMarkdownAst = (source: string): string => {
+  const result = spawnSync(
+    process.execPath,
+    [
+      '--input-type=module',
+      '-e',
+      "import remarkParse from 'remark-parse'; import { unified } from 'unified'; process.stdout.write(JSON.stringify(unified().use(remarkParse).parse(process.env.SUBMISSION_MARKDOWN ?? '')))"
+    ],
+    { encoding: 'utf8', env: { ...process.env, SUBMISSION_MARKDOWN: source } }
+  )
+  expect(result.status).toBe(0)
+  expect(result.stderr).toBe('')
+  return result.stdout
+}
 
 const SECRET = 's'.repeat(32)
 const NOW = new Date('2026-08-02T12:04:00.000Z')
@@ -225,14 +241,14 @@ describe('publishSubmission', () => {
     expect(payload.mdxContentSha256).toBe(createHash('sha256').update(file.content).digest('hex'))
   })
 
-  it('serializes submitted markdown, HTML, and MDX as literal text in metadata and body', async () => {
+  it('round-trips raw frontmatter while serializing active body syntax as literal AST text', async () => {
     const github = makeGithub()
     const state = makeState()
     const unsafeFields = {
       ...fields,
       description:
-        '![tracker](https://evil.example/pixel)\n> quote\n- list\n| a | b |\n===\n<script src="https://evil.example/x.js"></script> {alert(1)} **bold** ```js',
-      name: '# [Deceptive](https://evil.example) <img src="https://evil.example/x"> `code`'
+        'Acme (v2.0). ![tracker](https://evil.example/pixel)\n> quote\n- list\n| a | b |\n===\n<script src="https://evil.example/x.js"></script> {alert(1)} **bold** ```js',
+      name: 'Acme.Tools (R&D) [Deceptive](https://evil.example) <Widget value={alert(1)} /> `code`'
     }
 
     await expect(
@@ -244,20 +260,23 @@ describe('publishSubmission', () => {
 
     const content = github.createFile.mock.calls[0]?.[0].content
     const parsed = matter(content)
-    const metadata = JSON.stringify(parsed.data)
-    for (const source of [content, metadata]) {
-      expect(source).not.toMatch(/(?<!\\)!\[/)
-      expect(source).not.toMatch(/(?<!\\)\[Deceptive\]\(/)
-      expect(source).not.toMatch(/(?<!\\)<(?:img|script)\b/)
-      expect(source).not.toMatch(/(?<!\\)\{alert\(/)
-      expect(source).not.toMatch(/(?<!\\)\*\*/)
-      expect(source).not.toMatch(/(?<!\\)`{3}/)
-    }
+    expect(parsed.data.name).toBe(unsafeFields.name)
+    expect(parsed.data.description).toBe(unsafeFields.description)
+
+    const ast = parseMarkdownAst(parsed.content)
+    expect(ast).not.toMatch(
+      /"type":"(?:link|image|html|code|blockquote|list|table|mdxJsxFlowElement|mdxTextExpression)"/
+    )
+    expect(ast).toContain('Acme.Tools (R&D)')
+    expect(ast).toContain('Deceptive')
+    expect(ast).toContain('tracker')
+    expect(ast).toContain('Widget')
+    expect(parsed.content).not.toMatch(/(?<!\\)!\[/)
+    expect(parsed.content).not.toMatch(/(?<!\\)\[Deceptive\]\(/)
+    expect(parsed.content).not.toMatch(/(?<!\\)<(?:Widget|script)\b/)
+    expect(parsed.content).not.toMatch(/(?<!\\)\{alert\(/)
     expect(parsed.content).not.toMatch(/\n(?:>|-|\|)/)
     expect(parsed.content).not.toContain('\n===')
-    expect(parsed.content).toContain('tracker')
-    expect(parsed.content).toContain('Deceptive')
-    expect(parsed.content).toContain('evil\\.example')
   })
 
   it('fails closed before GitHub when automatic signing is unavailable', async () => {
@@ -359,5 +378,56 @@ describe('publishSubmission', () => {
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
     expect(state.markFailed).not.toHaveBeenCalled()
+  })
+
+  it('reconciles concurrent recovery against the same existing PR idempotently', async () => {
+    const github = makeGithub()
+    const state = makeState()
+
+    await publishSubmission(
+      { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+      { github, now: () => NOW, secret: SECRET, state }
+    )
+    const content = github.createFile.mock.calls[0]?.[0].content
+    github.getBranchHead.mockResolvedValue(HEAD)
+    github.getFile.mockResolvedValue({ content, sha: 'c'.repeat(40) })
+    github.listPullRequests.mockResolvedValue([
+      {
+        body: '<!-- llms-hub-submission:sub_123 -->',
+        headSha: HEAD,
+        number: 42,
+        url: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+      }
+    ])
+    github.createBranch.mockClear()
+    github.createFile.mockClear()
+    github.createPullRequest.mockClear()
+
+    const results = await Promise.all([
+      publishSubmission(
+        { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+        { github, now: () => NOW, secret: SECRET, state }
+      ),
+      publishSubmission(
+        { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+        { github, now: () => NOW, secret: SECRET, state }
+      )
+    ])
+
+    expect(results).toEqual([
+      {
+        ok: true,
+        outcome: 'automatic',
+        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+      },
+      {
+        ok: true,
+        outcome: 'automatic',
+        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+      }
+    ])
+    expect(github.createBranch).not.toHaveBeenCalled()
+    expect(github.createFile).not.toHaveBeenCalled()
+    expect(github.createPullRequest).not.toHaveBeenCalled()
   })
 })

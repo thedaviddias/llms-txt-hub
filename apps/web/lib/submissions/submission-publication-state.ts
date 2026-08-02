@@ -11,29 +11,32 @@ local record = cjson.decode(raw)
 local ttl = redis.call('PTTL', KEYS[1])
 if ttl <= 0 then return 'expired' end
 if ARGV[1] == 'attempt' then
-  if record.state ~= 'final_assessing' and record.state ~= 'auto_publish_pending' and record.state ~= 'manual_review' and record.state ~= 'publishing' and record.state ~= 'publish_failed' then return 'state_mismatch' end
+  local entering = record.state == 'final_assessing' or record.state == 'publish_failed'
+  if not entering and record.state ~= 'auto_publish_pending' and record.state ~= 'manual_review_pending' and record.state ~= 'publishing' then return 'state_mismatch' end
   if record.branch and record.branch ~= ARGV[2] then return 'binding_mismatch' end
   if record.resultCode and record.resultCode ~= 'publication_unavailable' and record.resultCode ~= ARGV[4] then return 'binding_mismatch' end
-  record.branch = ARGV[2]
-  record.resultCode = ARGV[4]
-  record.publicationAttempted = true
-elseif ARGV[1] == 'branch' then
-  local entering = record.state == 'final_assessing' or record.state == 'publish_failed'
+  if not entering and record.state == 'auto_publish_pending' and ARGV[3] ~= 'automatic' then return 'binding_mismatch' end
+  if not entering and record.state == 'manual_review_pending' and ARGV[3] ~= 'manual' then return 'binding_mismatch' end
   if entering then
     if ARGV[3] == 'automatic' then
       record.state = 'auto_publish_pending'
     else
-      record.state = 'manual_review'
+      record.state = 'manual_review_pending'
     end
-  elseif record.state ~= 'auto_publish_pending' and record.state ~= 'publishing' and record.state ~= 'manual_review' then
-    return 'state_mismatch'
   end
+  record.branch = ARGV[2]
+  record.resultCode = ARGV[4]
+  record.publicationAttempted = true
+elseif ARGV[1] == 'branch' then
+  if record.state ~= 'auto_publish_pending' and record.state ~= 'manual_review_pending' and record.state ~= 'publishing' then return 'state_mismatch' end
   if record.branch and record.branch ~= ARGV[2] then return 'binding_mismatch' end
-  if not entering and record.resultCode and record.resultCode ~= ARGV[4] then return 'binding_mismatch' end
+  if record.resultCode and record.resultCode ~= ARGV[4] then return 'binding_mismatch' end
+  if record.state == 'auto_publish_pending' and ARGV[3] ~= 'automatic' then return 'binding_mismatch' end
+  if record.state == 'manual_review_pending' and ARGV[3] ~= 'manual' then return 'binding_mismatch' end
   record.branch = ARGV[2]
   record.resultCode = ARGV[4]
 elseif ARGV[1] == 'github' then
-  if record.state == 'auto_publish_pending' or record.state == 'manual_review' then
+  if record.state == 'auto_publish_pending' or record.state == 'manual_review_pending' then
     record.state = 'publishing'
   elseif record.state ~= 'publishing' then
     return 'state_mismatch'
@@ -48,7 +51,7 @@ elseif ARGV[1] == 'failed' then
   if record.resultCode and record.resultCode ~= 'publication_unavailable' and record.resultCode ~= ARGV[4] then return 'binding_mismatch' end
   if record.state == 'final_assessing' and record.publicationAttempted == true then
     record.state = 'publish_failed'
-  elseif record.state == 'auto_publish_pending' or record.state == 'manual_review' or record.state == 'publishing' then
+  elseif record.state == 'auto_publish_pending' or record.state == 'manual_review_pending' or record.state == 'publishing' then
     record.state = 'publish_failed'
   elseif record.state ~= 'publish_failed' then
     return 'state_mismatch'
@@ -68,7 +71,7 @@ if record.submissionId ~= ARGV[1] then return 'state_mismatch' end
 local exactBranch = record.branch == 'submit/' .. ARGV[1]
 local recoveredCandidate = exactBranch and (
   (record.state == 'auto_publish_pending' and record.resultCode == 'auto_publish') or
-  (record.state == 'manual_review' and record.resultCode ~= 'auto_publish' and record.resultCode ~= 'publication_unavailable') or
+  (record.state == 'manual_review_pending' and record.resultCode ~= 'auto_publish' and record.resultCode ~= 'publication_unavailable') or
   (record.state == 'publishing' and record.resultCode ~= 'publication_unavailable') or
   (record.state == 'publish_failed' and record.resultCode == 'publication_unavailable')
 )
@@ -136,13 +139,13 @@ const mutationIsCommitted = (
       value.resultCode === args[3] &&
       (value.state === 'final_assessing' ||
         value.state === 'auto_publish_pending' ||
-        value.state === 'manual_review' ||
+        value.state === 'manual_review_pending' ||
         value.state === 'publishing' ||
         value.state === 'publish_failed')
     )
   }
   if (args[0] === 'branch') {
-    const expectedState = args[2] === 'automatic' ? 'auto_publish_pending' : 'manual_review'
+    const expectedState = args[2] === 'automatic' ? 'auto_publish_pending' : 'manual_review_pending'
     return value.state === expectedState && value.resultCode === args[3]
   }
   if (args[0] === 'github') {

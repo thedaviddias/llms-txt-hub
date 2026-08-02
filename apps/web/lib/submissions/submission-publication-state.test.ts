@@ -34,6 +34,7 @@ describe('submission publication state', () => {
     ).resolves.toBe(true)
 
     expect(mockEval.mock.calls[0]?.[0]).toContain('record.publicationAttempted = true')
+    expect(mockEval.mock.calls[0]?.[0]).toContain("record.state = 'auto_publish_pending'")
     expect(mockEval.mock.calls[0]?.[2]).toEqual([
       'attempt',
       'submit/sub_123',
@@ -41,6 +42,21 @@ describe('submission publication state', () => {
       'auto_publish',
       expect.any(String)
     ])
+  })
+
+  it('binds a manual attempt to manual_review_pending without a lane upgrade', async () => {
+    await expect(
+      submissionPublicationState.beginAttempt({
+        branch: 'submit/sub_123',
+        outcome: 'manual',
+        resultCode: 'manual_review',
+        submissionId: 'sub_123'
+      })
+    ).resolves.toBe(true)
+
+    const script = mockEval.mock.calls[0]?.[0]
+    expect(script).toContain("record.state = 'manual_review_pending'")
+    expect(script).toContain("record.state ~= 'manual_review_pending'")
   })
 
   it('records the deterministic branch before publication without storing submitted URLs', async () => {
@@ -54,10 +70,15 @@ describe('submission publication state', () => {
     ).resolves.toBe(true)
 
     expect(mockEval).toHaveBeenCalledWith(
-      expect.stringContaining("record.state = 'auto_publish_pending'"),
+      expect.any(String),
       ['submission:sub_123'],
       expect.arrayContaining(['branch', 'submit/sub_123', 'automatic'])
     )
+    const branchSection = mockEval.mock.calls[0]?.[0]
+      .split("elseif ARGV[1] == 'branch' then")[1]
+      ?.split("elseif ARGV[1] == 'github' then")[0]
+    expect(branchSection).not.toContain('final_assessing')
+    expect(branchSection).not.toMatch(/record\.state\s*=\s*['"]/)
     expect(JSON.stringify(mockEval.mock.calls[0])).not.toContain('example.com')
   })
 
@@ -93,7 +114,7 @@ describe('submission publication state', () => {
         branch: 'submit/sub_123',
         publicationAttempted: true,
         resultCode: 'auto_publish',
-        state: 'final_assessing'
+        state: 'auto_publish_pending'
       }
     ],
     [
