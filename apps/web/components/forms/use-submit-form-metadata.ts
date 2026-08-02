@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useAnalyticsEvents } from '@/components/analytics-tracker'
@@ -12,7 +12,7 @@ interface SubmitFormMetadata {
   fetchFailed: boolean
   isLoading: boolean
   onFetchMetadata: (data: Step1Data) => Promise<void>
-  resetFetchFailure: () => void
+  reset: () => void
 }
 
 interface MetadataResponse {
@@ -30,8 +30,25 @@ export function useSubmitFormMetadata(
 ): SubmitFormMetadata {
   const [isLoading, setIsLoading] = useState(false)
   const [fetchFailed, setFetchFailed] = useState(false)
+  const activeRequest = useRef<number | undefined>(undefined)
+  const abortController = useRef<AbortController | undefined>(undefined)
+  const generation = useRef(0)
+  const mounted = useRef(true)
   const { trackFetchMetadataError, trackFetchMetadataSuccess, trackFormStepComplete } =
     useAnalyticsEvents()
+
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+      generation.current += 1
+      abortController.current?.abort()
+    }
+  }, [])
+
+  /** Return whether a metadata request still owns the active generation. */
+  const isCurrentRequest = (requestId: number) =>
+    mounted.current && generation.current === requestId && activeRequest.current === requestId
 
   /** Apply fetched or fallback details and advance to the editable step. */
   const applyDetails = (formData: Step2Data, failed: boolean) => {
@@ -42,6 +59,12 @@ export function useSubmitFormMetadata(
 
   /** Fetch safe metadata for the website entered in the first step. */
   const onFetchMetadata = async (data: Step1Data) => {
+    if (activeRequest.current !== undefined) return
+    const requestId = generation.current + 1
+    generation.current = requestId
+    activeRequest.current = requestId
+    const controller = new AbortController()
+    abortController.current = controller
     setIsLoading(true)
     trackFormStepComplete(1, 'submit-form', 'submit-page')
 
@@ -52,11 +75,18 @@ export function useSubmitFormMetadata(
       const response = await fetch('/api/fetch-metadata', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ website: data.website })
+        body: JSON.stringify({ website: data.website }),
+        signal: controller.signal
       })
-      if (!response.ok) throw new Error(await getMetadataErrorMessage(response))
+      if (!isCurrentRequest(requestId)) return
+      if (!response.ok) {
+        const message = await getMetadataErrorMessage(response)
+        if (!isCurrentRequest(requestId)) return
+        throw new Error(message)
+      }
 
       const result: MetadataResponse = await response.json()
+      if (!isCurrentRequest(requestId)) return
       if (result.isDuplicate) {
         trackFetchMetadataError(data.website, 'duplicate_website', 'submit-page')
         toast.warning(
@@ -81,6 +111,7 @@ export function useSubmitFormMetadata(
       )
       toast.success('Website info fetched. Please review and complete the submission.')
     } catch (error) {
+      if (!isCurrentRequest(requestId)) return
       const errorMessage = error instanceof Error ? error.message : FETCH_METADATA_FALLBACK_MESSAGE
       trackFetchMetadataError(data.website, errorMessage, 'submit-page')
       toast.error(errorMessage)
@@ -97,14 +128,28 @@ export function useSubmitFormMetadata(
         true
       )
     } finally {
-      setIsLoading(false)
+      if (isCurrentRequest(requestId)) {
+        activeRequest.current = undefined
+        abortController.current = undefined
+        setIsLoading(false)
+      }
     }
+  }
+
+  /** Invalidate pending metadata work and restore its local state. */
+  const reset = () => {
+    generation.current += 1
+    abortController.current?.abort()
+    abortController.current = undefined
+    activeRequest.current = undefined
+    setIsLoading(false)
+    setFetchFailed(false)
   }
 
   return {
     fetchFailed,
     isLoading,
     onFetchMetadata,
-    resetFetchFailure: () => setFetchFailed(false)
+    reset
   }
 }

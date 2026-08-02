@@ -14,10 +14,13 @@ import { SubmitFormStep2 } from './submit-form-step2'
 import { SubmitFormSuccess } from './submit-form-success'
 import { SubmitFormSupport } from './submit-form-support'
 import { useSubmitFormMetadata } from './use-submit-form-metadata'
+import type { SubmitUrlStatus } from './use-submit-url-check'
 
 type SubmitStep = 'website' | 'details' | 'support' | 'result'
 
 type PreparedSubmission = Step2Data & { readonly publishedAt: string }
+
+type Continuation = { readonly submissionId: string; readonly token: string }
 
 type SubmissionResult =
   | { readonly outcome: 'automatic' | 'manual'; readonly prUrl: string }
@@ -41,34 +44,23 @@ const appendSubmissionFields = (formData: FormData, values: PreparedSubmission) 
 export function SubmitForm() {
   const [step, setStep] = useState<SubmitStep>('website')
   const [isLoading, setIsLoading] = useState(false)
+  const [focusTarget, setFocusTarget] = useState<'details' | 'website'>()
   const [preparedSubmission, setPreparedSubmission] = useState<PreparedSubmission>()
-  const [continuation, setContinuation] = useState<{
-    readonly submissionId: string
-    readonly token: string
-  }>()
+  const [continuation, setContinuation] = useState<Continuation>()
   const [result, setResult] = useState<SubmissionResult>()
-  const requestInProgress = useRef(false)
-  const [llmsUrlStatus, setLlmsUrlStatus] = useState<{
-    checking: boolean
-    accessible: boolean | null
-    error?: string
-  }>({
+  const activeRequest = useRef<number | undefined>(undefined)
+  const flowGeneration = useRef(0)
+  const requestGeneration = useRef(0)
+  const mounted = useRef(true)
+  const [llmsUrlStatus, setLlmsUrlStatus] = useState<SubmitUrlStatus>({
     checking: false,
     accessible: null
   })
-  const [llmsFullUrlStatus, setLlmsFullUrlStatus] = useState<{
-    checking: boolean
-    accessible: boolean | null
-    error?: string
-  }>({
+  const [llmsFullUrlStatus, setLlmsFullUrlStatus] = useState<SubmitUrlStatus>({
     checking: false,
     accessible: null
   })
-  const [websiteUrlStatus] = useState<{
-    checking: boolean
-    accessible: boolean | null
-    error?: string
-  }>({ checking: false, accessible: null })
+  const [websiteUrlStatus] = useState<SubmitUrlStatus>({ checking: false, accessible: null })
   const { trackFormStepStart, trackFormStepComplete, trackSubmitSuccess, trackSubmitError } =
     useAnalyticsEvents()
 
@@ -101,12 +93,40 @@ export function SubmitForm() {
     trackFormStepStart(1, 'submit-form', 'submit-page')
   }, [trackFormStepStart])
 
+  useEffect(() => {
+    mounted.current = true
+    return () => {
+      mounted.current = false
+      flowGeneration.current += 1
+    }
+  }, [])
+
+  /** Return whether a submission request still owns the active flow generation. */
+  const isCurrentRequest = (requestId: number, generation: number) =>
+    mounted.current && activeRequest.current === requestId && flowGeneration.current === generation
+
+  /** Claim the shared preflight/final request guard with a monotonic request ID. */
+  const beginRequest = () => {
+    if (activeRequest.current !== undefined) return
+    const requestId = requestGeneration.current + 1
+    requestGeneration.current = requestId
+    activeRequest.current = requestId
+    return { generation: flowGeneration.current, requestId }
+  }
+
+  /** Release only the exact request that currently owns the shared guard. */
+  const finishRequest = (requestId: number) => {
+    if (activeRequest.current !== requestId) return
+    activeRequest.current = undefined
+    if (mounted.current) setIsLoading(false)
+  }
+
   /**
    * Submits the final form data
    */
   async function onSubmitStep2(values: Step2Data) {
-    if (requestInProgress.current) return
-    requestInProgress.current = true
+    const request = beginRequest()
+    if (!request) return
     setIsLoading(true)
     trackFormStepComplete(2, 'submit-form', 'submit-page')
 
@@ -124,6 +144,7 @@ export function SubmitForm() {
       appendSubmissionFields(formData, prepared)
 
       const preflightResult = await preflightSubmission(formData)
+      if (!isCurrentRequest(request.requestId, request.generation)) return
       if (preflightResult.status === 'support_required') {
         setPreparedSubmission(prepared)
         setContinuation({
@@ -142,14 +163,14 @@ export function SubmitForm() {
         trackFormStepStart(4, 'submit-form', 'submit-page')
       }
     } catch (error) {
+      if (!isCurrentRequest(request.requestId, request.generation)) return
       const errorMessage = error instanceof Error ? error.message : 'Unknown error'
       trackSubmitError(values.website, errorMessage, 'submit-page')
       toast.error(RETRY_MESSAGE)
       setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
       setStep('result')
     } finally {
-      requestInProgress.current = false
-      setIsLoading(false)
+      finishRequest(request.requestId)
     }
   }
 
@@ -157,8 +178,8 @@ export function SubmitForm() {
    * Performs the final reassessment with the exact preflight fields and support attestation.
    */
   async function onSubmitSupport(support: { followAttested: true; platform: 'x' | 'linkedin' }) {
-    if (requestInProgress.current) return
-    requestInProgress.current = true
+    const request = beginRequest()
+    if (!request) return
     setIsLoading(true)
     trackFormStepComplete(3, 'submit-form', 'submit-page')
 
@@ -177,6 +198,7 @@ export function SubmitForm() {
       formData.append('followAttested', String(support.followAttested))
 
       const finalResult: FinalSubmissionResult = await submitLlmsTxt(formData)
+      if (!isCurrentRequest(request.requestId, request.generation)) return
       if (finalResult.success) {
         trackSubmitSuccess(preparedSubmission.website, preparedSubmission.category, 'submit-page')
         toast.success('Your pull request has been created successfully!')
@@ -189,12 +211,12 @@ export function SubmitForm() {
       setStep('result')
       trackFormStepStart(4, 'submit-form', 'submit-page')
     } catch {
+      if (!isCurrentRequest(request.requestId, request.generation)) return
       setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
       setStep('result')
       toast.error(RETRY_MESSAGE)
     } finally {
-      requestInProgress.current = false
-      setIsLoading(false)
+      finishRequest(request.requestId)
     }
   }
 
@@ -202,8 +224,11 @@ export function SubmitForm() {
    * Returns to editable details and discards the single-use continuation.
    */
   function handleBackToDetails() {
+    if (activeRequest.current !== undefined) return
+    flowGeneration.current += 1
     setContinuation(undefined)
     setPreparedSubmission(undefined)
+    setFocusTarget('details')
     setStep('details')
   }
 
@@ -211,13 +236,16 @@ export function SubmitForm() {
    * Resets the form to initial state
    */
   function handleReset() {
+    flowGeneration.current += 1
     step2Form.reset()
     step1Form.reset()
     setContinuation(undefined)
     setPreparedSubmission(undefined)
     setResult(undefined)
-    metadata.resetFetchFailure()
-    requestInProgress.current = false
+    setLlmsUrlStatus({ checking: false, accessible: null })
+    setLlmsFullUrlStatus({ checking: false, accessible: null })
+    metadata.reset()
+    setFocusTarget('website')
     setStep('website')
   }
 
@@ -231,6 +259,8 @@ export function SubmitForm() {
           form={step1Form}
           onSubmit={metadata.onFetchMetadata}
           isLoading={metadata.isLoading}
+          shouldFocus={focusTarget === 'website'}
+          onFocusComplete={() => setFocusTarget(undefined)}
         />
       ) : step === 'details' ? (
         <SubmitFormStep2
@@ -244,6 +274,8 @@ export function SubmitForm() {
           setLlmsUrlStatus={setLlmsUrlStatus}
           setLlmsFullUrlStatus={setLlmsFullUrlStatus}
           onReset={handleReset}
+          shouldFocus={focusTarget === 'details'}
+          onFocusComplete={() => setFocusTarget(undefined)}
         />
       ) : step === 'support' && continuation ? (
         <SubmitFormSupport
