@@ -18,7 +18,7 @@ This Privacy Policy describes how llms.txt hub, operated by David Dias Digital (
 - **Device Information**: Browser type, operating system, device identifiers, and IP address
 - **Analytics Data**: Aggregate submission and support interaction event properties via OpenPanel, including the chosen platform, coarse outcome and reason categories, duration ranges, and whether a pull request was created. These event properties do not include submitted URLs, fetched content, social usernames, continuation tokens, signatures, raw IP addresses, API keys, or provider response bodies. They are associated with the signed-in account identifier, name, and email in OpenPanel, and the client IP is forwarded through our proxy to OpenPanel
 - **Authentication Data**: Login sessions and authentication tokens managed by Clerk
-- **Submission Security Data**: Submitted and redirected URLs are sent to Google Web Risk for security screening. Short-lived submission state and abuse-control hashes are stored in Upstash Redis; raw IP addresses are not included in submission analytics
+- **Submission Security Data**: Submitted and redirected URLs are sent to Google Web Risk for security screening. Short-lived submission state and abuse-control HMAC-hashed source IP values are stored in Upstash Redis. Raw client IP addresses are not stored in this abuse-control state or included in analytics event properties; they are processed by our analytics proxy and forwarded to OpenPanel as described above
 
 ### 1.3 Information from Third Parties
 - **Authentication Providers**: Profile information from GitHub, Google, or other OAuth providers when you sign in
@@ -255,4 +255,4 @@ This Privacy Policy is governed by the laws of Canada and the province of Ontari
 
 **Effective Date**: August 27, 2025
 
-This Privacy Policy was last updated on August 1, 2026. For questions about this policy or our privacy practices, please contact us at [privacy@llmstxthub.com](mailto:privacy@llmstxthub.com).
+This Privacy Policy was last updated on August 2, 2026. For questions about this policy or our privacy practices, please contact us at [privacy@llmstxthub.com](mailto:privacy@llmstxthub.com).

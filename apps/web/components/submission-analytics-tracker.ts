@@ -74,6 +74,11 @@ const trackFinalResult = (
     reasonCategory: result.analytics.reasonCategory,
     source: 'final_submission'
   })
+  if (result.analytics.webRiskAvailable === true) {
+    submissionAnalytics.webRiskAvailable({ source: 'final_submission' })
+  } else if (result.analytics.webRiskAvailable === false) {
+    submissionAnalytics.webRiskUnavailable({ source: 'final_submission' })
+  }
   if (result.success) {
     submissionAnalytics.prCreated({
       decision: result.outcome,
