@@ -105,6 +105,7 @@ describe('publishSubmission', () => {
       outcome: 'automatic',
       publicationAttempted: true,
       prCreated: true,
+      prPresent: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
     expect(state.persistBranch).toHaveBeenCalledWith(
@@ -206,7 +207,7 @@ describe('publishSubmission', () => {
           state
         }
       )
-    ).resolves.toMatchObject({ ok: true, prCreated: false })
+    ).resolves.toMatchObject({ ok: true, prCreated: false, prPresent: true })
     expect(github.createBranch).not.toHaveBeenCalled()
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
@@ -302,6 +303,7 @@ describe('publishSubmission', () => {
       ok: false,
       publicationAttempted: false,
       prCreated: false,
+      prPresent: false,
       recovery: 'fresh_preflight'
     })
     expect(github.getDefaultBranch).not.toHaveBeenCalled()
@@ -342,6 +344,7 @@ describe('publishSubmission', () => {
       ok: false,
       publicationAttempted: true,
       prCreated: true,
+      prPresent: true,
       recovery: 'same_submission'
     })
     expect(state.markFailed).toHaveBeenCalledWith({
@@ -381,7 +384,12 @@ describe('publishSubmission', () => {
         { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
         { github, now: () => NOW, secret: SECRET, state }
       )
-    ).resolves.toMatchObject({ ok: true, outcome: 'automatic', prCreated: false })
+    ).resolves.toMatchObject({
+      ok: true,
+      outcome: 'automatic',
+      prCreated: false,
+      prPresent: true
+    })
     expect(github.createBranch).not.toHaveBeenCalled()
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
@@ -402,10 +410,69 @@ describe('publishSubmission', () => {
       ok: false,
       publicationAttempted: true,
       prCreated: true,
+      prPresent: true,
       recovery: 'same_submission'
     })
     expect(github.createPullRequest).toHaveBeenCalledTimes(1)
     expect(state.markFailed).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not claim an invalid created PR response is present', async () => {
+    const github = makeGithub()
+    const state = makeState()
+    github.createPullRequest.mockResolvedValue({
+      body: 'missing submission marker',
+      headSha: HEAD,
+      number: 42,
+      url: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+    })
+
+    await expect(
+      publishSubmission(
+        { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+        { github, now: () => NOW, secret: SECRET, state }
+      )
+    ).resolves.toMatchObject({
+      ok: false,
+      prCreated: false,
+      prPresent: false,
+      recovery: 'same_submission'
+    })
+  })
+
+  it('preserves a validated existing PR when later state persistence fails', async () => {
+    const github = makeGithub()
+    const state = makeState()
+    await publishSubmission(
+      { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+      { github, now: () => NOW, secret: SECRET, state }
+    )
+    const content = github.createFile.mock.calls[0]?.[0].content
+    github.getBranchHead.mockResolvedValue(HEAD)
+    github.getFile.mockResolvedValue({ content, sha: 'c'.repeat(40) })
+    github.listPullRequests.mockResolvedValue([
+      {
+        body: '<!-- llms-hub-submission:sub_123 -->',
+        headSha: HEAD,
+        number: 42,
+        url: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
+      }
+    ])
+    github.createPullRequest.mockClear()
+    state.persistGithub.mockResolvedValue(false)
+
+    await expect(
+      publishSubmission(
+        { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+        { github, now: () => NOW, secret: SECRET, state }
+      )
+    ).resolves.toMatchObject({
+      ok: false,
+      prCreated: false,
+      prPresent: true,
+      recovery: 'same_submission'
+    })
+    expect(github.createPullRequest).not.toHaveBeenCalled()
   })
 
   it('reconciles concurrent recovery against the same existing PR idempotently', async () => {
@@ -448,6 +515,7 @@ describe('publishSubmission', () => {
         outcome: 'automatic',
         publicationAttempted: true,
         prCreated: false,
+        prPresent: true,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       },
       {
@@ -455,6 +523,7 @@ describe('publishSubmission', () => {
         outcome: 'automatic',
         publicationAttempted: true,
         prCreated: false,
+        prPresent: true,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       }
     ])

@@ -99,6 +99,7 @@ describe('submitLlmsTxt final coordinator', () => {
       outcome: 'automatic',
       publicationAttempted: true,
       prCreated: true,
+      prPresent: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
     mockRecordOutcome.mockResolvedValue(true)
@@ -112,7 +113,12 @@ describe('submitLlmsTxt final coordinator', () => {
   ])('rejects %s before consuming state', async (_label, overrides) => {
     const result = await submitLlmsTxt(form(overrides))
     expect(result).toMatchObject({
-      analytics: { prCreated: false, publicationAttempted: false, reasonCategory: 'input' },
+      analytics: {
+        prCreated: false,
+        prPresent: false,
+        publicationAttempted: false,
+        reasonCategory: 'input'
+      },
       outcome: 'rejected',
       success: false
     })
@@ -138,7 +144,12 @@ describe('submitLlmsTxt final coordinator', () => {
       const result = await submitLlmsTxt(form())
 
       expect(result).toMatchObject({
-        analytics: { prCreated: false, publicationAttempted: false, reasonCategory: category },
+        analytics: {
+          prCreated: false,
+          prPresent: false,
+          publicationAttempted: false,
+          reasonCategory: category
+        },
         outcome: 'rejected',
         success: false
       })
@@ -153,6 +164,7 @@ describe('submitLlmsTxt final coordinator', () => {
       analytics: {
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -238,6 +250,7 @@ describe('submitLlmsTxt final coordinator', () => {
       analytics: {
         publicationAttempted: false,
         prCreated: false,
+        prPresent: false,
         reasonCategory: 'reputation_unavailable',
         webRiskAvailable: false
       },
@@ -299,6 +312,7 @@ describe('submitLlmsTxt final coordinator', () => {
       outcome: 'manual',
       publicationAttempted: true,
       prCreated: true,
+      prPresent: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
 
@@ -306,6 +320,7 @@ describe('submitLlmsTxt final coordinator', () => {
       analytics: {
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -376,6 +391,7 @@ describe('submitLlmsTxt final coordinator', () => {
         outcome: 'automatic',
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       })
       .mockResolvedValueOnce({
@@ -383,6 +399,7 @@ describe('submitLlmsTxt final coordinator', () => {
         outcome: 'automatic',
         publicationAttempted: true,
         prCreated: false,
+        prPresent: true,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       })
 
@@ -421,11 +438,17 @@ describe('submitLlmsTxt final coordinator', () => {
       ok: false,
       publicationAttempted: true,
       prCreated: true,
+      prPresent: true,
       recovery: 'same_submission'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
-      analytics: { prCreated: true, publicationAttempted: true, reasonCategory: 'publication' },
+      analytics: {
+        prCreated: true,
+        prPresent: true,
+        publicationAttempted: true,
+        reasonCategory: 'publication'
+      },
       outcome: 'retry_later',
       success: false
     })
@@ -438,11 +461,17 @@ describe('submitLlmsTxt final coordinator', () => {
       ok: false,
       publicationAttempted: false,
       prCreated: false,
+      prPresent: false,
       recovery: 'fresh_preflight'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
-      analytics: { prCreated: false, publicationAttempted: false, reasonCategory: 'publication' },
+      analytics: {
+        prCreated: false,
+        prPresent: false,
+        publicationAttempted: false,
+        reasonCategory: 'publication'
+      },
       outcome: 'retry_later',
       success: false
     })

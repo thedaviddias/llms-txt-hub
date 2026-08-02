@@ -146,6 +146,7 @@ describe('trusted submission analytics lifecycle', () => {
       analytics: {
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -162,6 +163,7 @@ describe('trusted submission analytics lifecycle', () => {
         analytics: {
           publicationAttempted: true,
           prCreated: true,
+          prPresent: true,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },
@@ -253,6 +255,7 @@ describe('trusted submission analytics lifecycle', () => {
             analytics: {
               publicationAttempted,
               prCreated: false,
+              prPresent: false,
               reasonCategory: 'publication',
               webRiskAvailable: true
             },
@@ -291,6 +294,7 @@ describe('trusted submission analytics lifecycle', () => {
           analytics: {
             publicationAttempted: true,
             prCreated,
+            prPresent: true,
             reasonCategory: 'passed',
             webRiskAvailable: true
           },
@@ -318,6 +322,7 @@ describe('trusted submission analytics lifecycle', () => {
           analytics: {
             publicationAttempted: true,
             prCreated: true,
+            prPresent: true,
             reasonCategory: 'publication',
             webRiskAvailable: true
           },
@@ -336,13 +341,61 @@ describe('trusted submission analytics lifecycle', () => {
       pr_present: true,
       source: 'final_submission'
     })
-    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE, {
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FINAL_OUTCOME, {
       decision: 'retry_later',
       platform: 'linkedin',
-      pr_present: false,
+      pr_present: true,
       reason_category: 'publication',
       source: 'final_submission'
     })
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE, {
+      decision: 'retry_later',
+      platform: 'linkedin',
+      pr_present: true,
+      reason_category: 'publication',
+      source: 'final_submission'
+    })
+  })
+
+  it('tracks an existing PR on failure without claiming it was newly created', () => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      view.result.current.finishFinal(
+        {
+          analytics: {
+            publicationAttempted: true,
+            prCreated: false,
+            prPresent: true,
+            reasonCategory: 'publication',
+            webRiskAvailable: true
+          },
+          error: 'Existing PR recovery failed.',
+          outcome: 'retry_later',
+          success: false
+        },
+        'x',
+        Date.now()
+      )
+    })
+
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FINAL_OUTCOME, {
+      decision: 'retry_later',
+      platform: 'x',
+      pr_present: true,
+      reason_category: 'publication',
+      source: 'final_submission'
+    })
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE, {
+      decision: 'retry_later',
+      platform: 'x',
+      pr_present: true,
+      reason_category: 'publication',
+      source: 'final_submission'
+    })
+    expect(
+      track.mock.calls.filter(call => call[0] === ANALYTICS_EVENTS.SUBMISSION_PR_CREATED)
+    ).toHaveLength(0)
   })
 
   it('uses unknown for client-thrown failures without claiming publication failure', () => {
@@ -381,9 +434,15 @@ describe('trusted submission analytics lifecycle', () => {
       const view = renderHook(() => useActualSubmissionAnalytics())
       const analytics: FinalSubmissionResult['analytics'] =
         webRiskAvailable === undefined
-          ? { prCreated: false, publicationAttempted: false, reasonCategory: 'editorial' }
+          ? {
+              prCreated: false,
+              prPresent: false,
+              publicationAttempted: false,
+              reasonCategory: 'editorial'
+            }
           : {
               prCreated: false,
+              prPresent: false,
               publicationAttempted: false,
               reasonCategory: 'editorial',
               webRiskAvailable
@@ -429,6 +488,7 @@ describe('trusted submission analytics lifecycle', () => {
         analytics: {
           publicationAttempted: true,
           prCreated: false,
+          prPresent: true,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },

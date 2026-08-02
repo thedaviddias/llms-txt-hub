@@ -70,7 +70,7 @@ const trackFinalResult = (
   submissionAnalytics.finalOutcome({
     decision: result.outcome,
     platform,
-    prPresent: result.success,
+    prPresent: result.analytics.prPresent,
     reasonCategory: result.analytics.reasonCategory,
     source: 'final_submission'
   })
@@ -83,7 +83,7 @@ const trackFinalResult = (
     submissionAnalytics.prCreated({
       decision: result.outcome,
       platform,
-      prPresent: true,
+      prPresent: result.analytics.prPresent,
       source: 'final_submission'
     })
   }
@@ -91,7 +91,7 @@ const trackFinalResult = (
     submissionAnalytics.publishFailure({
       decision: result.outcome,
       platform,
-      prPresent: false,
+      prPresent: result.analytics.prPresent,
       reasonCategory: 'publication',
       source: 'final_submission'
     })

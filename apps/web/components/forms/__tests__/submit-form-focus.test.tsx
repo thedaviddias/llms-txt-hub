@@ -28,6 +28,7 @@ describe('SubmitForm return focus', () => {
       analytics: {
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },

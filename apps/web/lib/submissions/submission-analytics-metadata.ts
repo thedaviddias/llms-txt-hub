@@ -12,6 +12,7 @@ export interface SubmissionPreflightAnalytics {
 export interface SubmissionFinalAnalytics extends SubmissionPreflightAnalytics {
   readonly publicationAttempted: boolean
   readonly prCreated: boolean
+  readonly prPresent: boolean
 }
 
 /** Convert internal outcome codes into stable non-identifying analytics groups. */
@@ -97,8 +98,9 @@ export const finalAnalyticsMetadata = (
   reasonCode: unknown,
   publicationAttempted: boolean,
   prCreated: boolean,
+  prPresent: boolean,
   webRiskAvailable?: boolean
 ): SubmissionFinalAnalytics => {
   const preflight = preflightAnalyticsMetadata(reasonCode, webRiskAvailable)
-  return { ...preflight, publicationAttempted, prCreated }
+  return { ...preflight, publicationAttempted, prCreated, prPresent }
 }

@@ -22,7 +22,6 @@ const SHA1 = /^[a-f0-9]{40}$/
 const SUBMISSION_ID = /^[A-Za-z0-9_-]{1,128}$/
 /** Rollout modes for trusted automatic publication. */
 export type SubmissionAutopublishMode = 'disabled' | 'enabled' | 'shadow'
-
 interface PullRequestSnapshot {
   readonly body: string
   readonly headSha: string
@@ -346,14 +345,14 @@ export async function publishSubmission(
     | undefined
   let logOutcome: 'automatic' | 'manual' | 'retry_later' = 'retry_later'
   let reasonCode = 'publication_unavailable'
-  let prCreated = false
+  const provenance = { prCreated: false, prPresent: false }
   const unavailable = async (): Promise<SubmissionPublisherResult> => {
     if (!publicationStarted || !attempt) {
       return {
         code: 'publication_unavailable',
         ok: false,
         publicationAttempted: false,
-        prCreated,
+        ...provenance,
         recovery: 'fresh_preflight'
       }
     }
@@ -373,7 +372,7 @@ export async function publishSubmission(
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
-      prCreated,
+      ...provenance,
       recovery: 'same_submission'
     }
   }
@@ -415,7 +414,6 @@ export async function publishSubmission(
         path: rendered.path
       })
     }
-
     const body = pullRequestBody(input.fields, input.assessment, input.submissionId, input.mode)
     const marker = `<!-- llms-hub-submission:${input.submissionId} -->`
     const existingPullRequests = await dependencies.github.listPullRequests(branch)
@@ -437,7 +435,8 @@ export async function publishSubmission(
     if (pullRequest.body.split(marker).length !== 2 || pullRequest.headSha !== headSha) {
       return unavailable()
     }
-    if (creatingPullRequest) prCreated = true
+    provenance.prPresent = true
+    if (creatingPullRequest) provenance.prCreated = true
     if (
       !(await dependencies.state.persistGithub({
         branch,
@@ -487,7 +486,7 @@ export async function publishSubmission(
     }
     logOutcome = outcome
     reasonCode = resultCode
-    return { ok: true, outcome, publicationAttempted: true, prCreated, prUrl: pullRequest.url }
+    return { ...provenance, ok: true, outcome, publicationAttempted: true, prUrl: pullRequest.url }
   } catch {
     return unavailable()
   } finally {
