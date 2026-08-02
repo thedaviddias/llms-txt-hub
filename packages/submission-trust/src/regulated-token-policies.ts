@@ -14,6 +14,7 @@ const TOKEN_ALIASES: Readonly<Record<string, string>> = {
   hospitals: 'hospital',
   libraries: 'library',
   sdks: 'sdk',
+  services: 'service',
   tooling: 'tool',
   tools: 'tool'
 }
@@ -122,12 +123,28 @@ const hasTokenCombination = (
   )
 }
 
+const POLICY_TOKEN_VOCABULARY = new Set(
+  REGULATED_TOKEN_POLICIES.flatMap(policy => [...policy.contextTokens, ...policy.industryTokens])
+)
+
+const collectPolicyTokens = (texts: readonly string[]): ReadonlySet<string> => {
+  const tokens = new Set<string>()
+  for (const text of texts) {
+    for (const match of text.matchAll(/\S+/gu)) {
+      const token = canonicalEditorialToken(match[0])
+      if (POLICY_TOKEN_VOCABULARY.has(token)) tokens.add(token)
+      if (tokens.size === POLICY_TOKEN_VOCABULARY.size) return tokens
+    }
+  }
+  return tokens
+}
+
 /** Returns the canonical form used for editorial token comparisons. */
 export const canonicalEditorialToken = (token: string): string => TOKEN_ALIASES[token] ?? token
 
 /** Returns stable evidence identifiers for conservative regulated-industry token combinations. */
-export const regulatedEvidence = (text: string): string[] => {
-  const tokens = new Set(text.split(' ').map(canonicalEditorialToken))
+export const regulatedEvidence = (texts: readonly string[]): string[] => {
+  const tokens = collectPolicyTokens(texts)
   return [
     ...new Set(
       REGULATED_TOKEN_POLICIES.filter(policy =>

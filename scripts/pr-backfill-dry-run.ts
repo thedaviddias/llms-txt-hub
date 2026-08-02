@@ -1313,8 +1313,12 @@ function printSummary(summary: DryRunSummary): void {
 function readOptionalString(data: Record<string, unknown>, key: string): string | null {
   const value = data[key]
 
-  if (typeof value !== 'string') {
+  if (value === undefined || value === null) {
     return null
+  }
+
+  if (typeof value !== 'string') {
+    throw new Error(`Invalid optional frontmatter field "${key}". Expected a string.`)
   }
 
   const trimmed = value.trim()

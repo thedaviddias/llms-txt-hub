@@ -380,6 +380,70 @@ describe('assessEditorialPolicy', () => {
     })
   })
 
+  it.each([
+    ['combining mark inside phishing', 'Download a ph\u0301ishing kit for credential theft'],
+    ['combining mark inside backlinks', 'buy back\u0301links from our network'],
+    ['combining mark inside casino bonus', 'Compare casino bon\u0301us offers and reviews']
+  ])(
+    'removes bounded combining-mark evasion before prohibited matching: %s',
+    (_label, description) => {
+      expect(assess({ description })).toMatchObject({
+        decision: 'reject',
+        reasonCode: 'prohibited_content'
+      })
+    }
+  )
+
+  it.each([
+    ['composed', 'Acme provides café API documentation and developer tools.'],
+    ['decomposed', 'Acme provides cafe\u0301 API documentation and developer tools.']
+  ])('does not broadly penalize ordinary %s diacritics', (_label, description) => {
+    expect(assess({ description })).toEqual({
+      decision: 'auto_publish',
+      evidenceIds: ['editorial:passed'],
+      reasonCode: 'passed'
+    })
+  })
+
+  it.each([
+    ['phishing kits', 'Download phishing kits for credential theft.', 'malware'],
+    ['malware downloads', 'Acme provides malware downloads.', 'malware'],
+    ['casino bonuses', 'Compare casino bonuses and reviews.', 'gambling-promotion'],
+    ['backlink packages', 'Buy backlink packages for higher rankings.', 'search-manipulation']
+  ])('rejects controlled prohibited grammatical variant: %s', (_label, description, suffix) => {
+    expect(assess({ description })).toEqual({
+      decision: 'reject',
+      evidenceIds: [`editorial:prohibited:${suffix}`],
+      reasonCode: 'prohibited_content'
+    })
+  })
+
+  it.each([
+    ['financial services', 'Acme provides financial services.', 'finance'],
+    ['healthcare services', 'Acme provides healthcare services.', 'health'],
+    ['dating services', 'Acme provides dating services.', 'dating']
+  ])(
+    'routes controlled regulated grammatical variant to manual review: %s',
+    (_label, description, suffix) => {
+      const result = assess({ description })
+
+      expect(result.decision).toBe('manual_review')
+      expect(result.evidenceIds).toContain(`editorial:regulated:${suffix}`)
+    }
+  )
+
+  it('routes post-normalization expansion overflow to bounded manual review', () => {
+    const expansionBomb = '\uFDFA'.repeat(1_099_000)
+    const result = assess({}, { llmsFullText: expansionBomb })
+
+    expect(result).toMatchObject({
+      decision: 'manual_review',
+      reasonCode: 'editorial_uncertainty'
+    })
+    expect(result.evidenceIds).toContain('editorial:limits:normalized-text-overflow')
+    expect(JSON.stringify(result)).not.toContain(expansionBomb.slice(0, 100))
+  })
+
   it('returns stable evidence identifiers without leaking the matched text', () => {
     const secretPatternText = 'Buy fake ID documents and bypass identity verification.'
     const result = assess({ description: secretPatternText })
