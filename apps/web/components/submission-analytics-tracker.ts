@@ -79,14 +79,15 @@ const trackFinalResult = (
   } else if (result.analytics.webRiskAvailable === false) {
     submissionAnalytics.webRiskUnavailable({ source: 'final_submission' })
   }
-  if (result.success && result.analytics.prCreated) {
+  if (result.analytics.prCreated) {
     submissionAnalytics.prCreated({
       decision: result.outcome,
       platform,
       prPresent: true,
       source: 'final_submission'
     })
-  } else if (result.analytics.publicationAttempted) {
+  }
+  if (!result.success && result.analytics.publicationAttempted) {
     submissionAnalytics.publishFailure({
       decision: result.outcome,
       platform,

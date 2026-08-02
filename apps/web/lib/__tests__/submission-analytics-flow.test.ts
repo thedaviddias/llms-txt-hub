@@ -309,6 +309,42 @@ describe('trusted submission analytics lifecycle', () => {
     expect(JSON.stringify(track.mock.calls)).not.toContain('/pull/123')
   })
 
+  it('tracks both a confirmed PR and the subsequent publication failure', () => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      view.result.current.finishFinal(
+        {
+          analytics: {
+            publicationAttempted: true,
+            prCreated: true,
+            reasonCategory: 'publication',
+            webRiskAvailable: true
+          },
+          error: 'Publication failed after creating the PR.',
+          outcome: 'retry_later',
+          success: false
+        },
+        'linkedin',
+        Date.now()
+      )
+    })
+
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PR_CREATED, {
+      decision: 'retry_later',
+      platform: 'linkedin',
+      pr_present: true,
+      source: 'final_submission'
+    })
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE, {
+      decision: 'retry_later',
+      platform: 'linkedin',
+      pr_present: false,
+      reason_category: 'publication',
+      source: 'final_submission'
+    })
+  })
+
   it('uses unknown for client-thrown failures without claiming publication failure', () => {
     const view = renderHook(() => useActualSubmissionAnalytics())
 

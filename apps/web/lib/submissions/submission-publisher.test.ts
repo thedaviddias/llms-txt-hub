@@ -341,7 +341,7 @@ describe('publishSubmission', () => {
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
-      prCreated: false,
+      prCreated: true,
       recovery: 'same_submission'
     })
     expect(state.markFailed).toHaveBeenCalledWith({
@@ -386,6 +386,26 @@ describe('publishSubmission', () => {
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
     expect(state.markFailed).not.toHaveBeenCalled()
+  })
+
+  it('reports a confirmed new PR when persisting its GitHub facts fails', async () => {
+    const github = makeGithub()
+    const state = makeState()
+    state.persistGithub.mockResolvedValue(false)
+
+    await expect(
+      publishSubmission(
+        { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
+        { github, now: () => NOW, secret: SECRET, state }
+      )
+    ).resolves.toMatchObject({
+      ok: false,
+      publicationAttempted: true,
+      prCreated: true,
+      recovery: 'same_submission'
+    })
+    expect(github.createPullRequest).toHaveBeenCalledTimes(1)
+    expect(state.markFailed).toHaveBeenCalledTimes(1)
   })
 
   it('reconciles concurrent recovery against the same existing PR idempotently', async () => {

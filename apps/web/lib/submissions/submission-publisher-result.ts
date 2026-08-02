@@ -11,6 +11,6 @@ export type SubmissionPublisherResult =
       readonly code: 'publication_unavailable'
       readonly ok: false
       readonly publicationAttempted: boolean
-      readonly prCreated: false
+      readonly prCreated: boolean
       readonly recovery: 'fresh_preflight' | 'same_submission'
     }
