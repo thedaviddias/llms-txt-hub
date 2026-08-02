@@ -21,8 +21,11 @@ const mockFailFinal = jest.fn()
 const mockPlatformSelect = jest.fn()
 const mockProfileOpen = jest.fn()
 const mockFollowAttest = jest.fn()
+const mockSupportBack = jest.fn()
+const mockPageView = jest.fn()
 const track = jest.fn()
 const originalEnvironment = process.env
+const TEST_ATTEMPT_ID = '123e4567-e89b-42d3-a456-426614174000'
 
 jest.mock('@/actions/preflight-submission', () => ({ preflightSubmission: jest.fn() }))
 jest.mock('@/actions/submit-llms-xxt', () => ({ submitLlmsTxt: jest.fn() }))
@@ -38,10 +41,13 @@ jest.mock('@/components/analytics-tracker', () => ({
     failPreflight: mockFailPreflight,
     finishFinal: mockFinishFinal,
     finishPreflight: mockFinishPreflight,
+    getAttemptId: () => TEST_ATTEMPT_ID,
     startFinal: mockStartFinal,
     startPreflight: mockStartPreflight,
+    trackSubmissionPageView: mockPageView,
     trackSubmissionFollowAttest: mockFollowAttest,
     trackSubmissionProfileOpen: mockProfileOpen,
+    trackSubmissionSupportBack: mockSupportBack,
     trackSubmissionSupportPlatformSelect: mockPlatformSelect
   })
 }))
@@ -72,6 +78,7 @@ describe('trusted submission analytics lifecycle', () => {
     submitDetails()
     await screen.findByRole('heading', { name: /support the maintainer/i })
 
+    expect(mockPageView).toHaveBeenCalledTimes(1)
     expect(mockStartPreflight).toHaveBeenCalledTimes(1)
     expect(mockFinishPreflight).toHaveBeenCalledWith(
       {
@@ -115,6 +122,7 @@ describe('trusted submission analytics lifecycle', () => {
     const user = userEvent.setup()
     render(
       createElement(SubmitFormSupport, {
+        attemptId: TEST_ATTEMPT_ID,
         isLoading: false,
         onBack: jest.fn(),
         onSubmit: jest.fn()
@@ -124,17 +132,25 @@ describe('trusted submission analytics lifecycle', () => {
     await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
     await user.click(screen.getByRole('link', { name: /open david's linkedin profile/i }))
     await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
+    await user.click(screen.getByRole('button', { name: /back to details/i }))
 
     expect(mockPlatformSelect).toHaveBeenCalledWith({
+      attemptId: TEST_ATTEMPT_ID,
       platform: 'linkedin',
       source: 'support_step'
     })
     expect(mockProfileOpen).toHaveBeenCalledWith({
+      attemptId: TEST_ATTEMPT_ID,
       platform: 'linkedin',
       source: 'support_step'
     })
     expect(mockFollowAttest).toHaveBeenCalledWith({
+      attemptId: TEST_ATTEMPT_ID,
       platform: 'linkedin',
+      source: 'support_step'
+    })
+    expect(mockSupportBack).toHaveBeenCalledWith({
+      attemptId: TEST_ATTEMPT_ID,
       source: 'support_step'
     })
     expect(JSON.stringify(mockFollowAttest.mock.calls)).not.toMatch(/username|thedaviddias/)
@@ -157,7 +173,7 @@ describe('trusted submission analytics lifecycle', () => {
 
     await finishSubmissionSupport(user)
 
-    expect(mockStartFinal).toHaveBeenCalledTimes(1)
+    expect(mockStartFinal).toHaveBeenCalledWith('x')
     expect(mockFinishFinal).toHaveBeenCalledWith(
       {
         analytics: {
@@ -206,6 +222,46 @@ describe('trusted submission analytics lifecycle', () => {
     expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_REQUEST_DURATION, {
       duration_bucket: 'under_1s',
       source: 'preflight'
+    })
+    expect(JSON.stringify(track.mock.calls)).not.toMatch(/opaque-token|sub_123/)
+  })
+
+  it('correlates each attempt from preflight click through final submission click', () => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      const startedAt = view.result.current.startPreflight()
+      view.result.current.finishPreflight(
+        {
+          analytics: { reasonCategory: 'passed', webRiskAvailable: true },
+          continuationToken: 'opaque-token',
+          status: 'support_required',
+          submissionId: 'sub_123'
+        },
+        startedAt
+      )
+      view.result.current.startFinal('linkedin')
+    })
+
+    const preflightStart = track.mock.calls.find(
+      call => call[0] === ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_START
+    )
+    const attemptId = preflightStart?.[1]?.attempt_id
+    expect(attemptId).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    )
+    for (const event of [
+      ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_START,
+      ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_OUTCOME,
+      ANALYTICS_EVENTS.SUBMISSION_SUPPORT_VIEW,
+      ANALYTICS_EVENTS.SUBMISSION_FINAL_START
+    ]) {
+      expect(track).toHaveBeenCalledWith(event, expect.objectContaining({ attempt_id: attemptId }))
+    }
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FINAL_START, {
+      attempt_id: attemptId,
+      platform: 'linkedin',
+      source: 'final_submission'
     })
     expect(JSON.stringify(track.mock.calls)).not.toMatch(/opaque-token|sub_123/)
   })

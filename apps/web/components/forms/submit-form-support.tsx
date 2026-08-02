@@ -14,6 +14,7 @@ interface SupportChoice {
 }
 
 interface SubmitFormSupportProps {
+  attemptId?: string
   isLoading: boolean
   onBack: () => void
   onSubmit: (support: { followAttested: true; platform: SupportPlatform }) => void
@@ -37,7 +38,12 @@ const SUPPORT_CHOICES: readonly SupportChoice[] = [
 /**
  * Collects the required social-support choice and truthful self-attestation.
  */
-export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSupportProps) {
+export function SubmitFormSupport({
+  attemptId,
+  isLoading,
+  onBack,
+  onSubmit
+}: SubmitFormSupportProps) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const [platform, setPlatform] = useState<SupportPlatform>()
   const [profileOpened, setProfileOpened] = useState(false)
@@ -54,6 +60,7 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
     setProfileOpened(false)
     setFollowAttested(false)
     submissionAnalytics.trackSubmissionSupportPlatformSelect({
+      attemptId,
       platform: nextPlatform,
       source: 'support_step'
     })
@@ -115,6 +122,7 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
                     if (selected) {
                       setProfileOpened(true)
                       submissionAnalytics.trackSubmissionProfileOpen({
+                        attemptId,
                         platform: choice.platform,
                         source: 'support_step'
                       })
@@ -141,6 +149,7 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
               setFollowAttested(nextFollowAttested)
               if (nextFollowAttested && platform) {
                 submissionAnalytics.trackSubmissionFollowAttest({
+                  attemptId,
                   platform,
                   source: 'support_step'
                 })
@@ -158,7 +167,18 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
       </fieldset>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-        <Button type="button" variant="outline" onClick={onBack} disabled={isLoading}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => {
+            submissionAnalytics.trackSubmissionSupportBack({
+              attemptId,
+              source: 'support_step'
+            })
+            onBack()
+          }}
+          disabled={isLoading}
+        >
           Back to details
         </Button>
         <Button

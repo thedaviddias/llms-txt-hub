@@ -48,12 +48,15 @@ export const ANALYTICS_EVENTS = {
   SUBMIT_ERROR: 'Submit Error',
 
   // Trusted Submission Events
+  SUBMISSION_PAGE_VIEW: 'Submission Page View',
   SUBMISSION_PREFLIGHT_START: 'Submission Preflight Start',
   SUBMISSION_PREFLIGHT_OUTCOME: 'Submission Preflight Outcome',
   SUBMISSION_SUPPORT_VIEW: 'Submission Support View',
   SUBMISSION_SUPPORT_PLATFORM_SELECT: 'Submission Support Platform Select',
   SUBMISSION_PROFILE_OPEN: 'Submission Profile Open',
   SUBMISSION_FOLLOW_ATTEST: 'Submission Follow Attest',
+  SUBMISSION_SUPPORT_BACK: 'Submission Support Back',
+  SUBMISSION_FINAL_START: 'Submission Final Start',
   SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
   SUBMISSION_PR_CREATED: 'Submission PR Created',
   SUBMISSION_PUBLISH_FAILURE: 'Submission Publish Failure',
@@ -134,6 +137,7 @@ interface EventProps {
   reason_category?: SubmissionAnalyticsReasonCategory
   duration_bucket?: SubmissionAnalyticsDurationBucket
   pr_present?: boolean
+  attempt_id?: string
 }
 
 /** Aggregate platform values permitted in trusted-submission analytics. */

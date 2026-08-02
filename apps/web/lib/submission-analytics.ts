@@ -10,6 +10,7 @@ import {
 } from './analytics'
 
 interface SafeSubmissionAnalyticsProperties {
+  attempt_id?: string
   decision?: SubmissionAnalyticsDecision
   duration_bucket?: SubmissionAnalyticsDurationBucket
   platform?: SubmissionAnalyticsPlatform
@@ -17,6 +18,9 @@ interface SafeSubmissionAnalyticsProperties {
   reason_category?: SubmissionAnalyticsReasonCategory
   source?: SubmissionAnalyticsSource
 }
+
+const SUBMISSION_ATTEMPT_ID_PATTERN =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -59,6 +63,9 @@ const isSource = (value: unknown): value is SubmissionAnalyticsSource =>
 const safeSubmissionProperties = (input: unknown): SafeSubmissionAnalyticsProperties => {
   if (!isRecord(input)) return {}
   const properties: SafeSubmissionAnalyticsProperties = {}
+  if (typeof input.attemptId === 'string' && SUBMISSION_ATTEMPT_ID_PATTERN.test(input.attemptId)) {
+    properties.attempt_id = input.attemptId
+  }
   if (isSubmissionDecision(input.decision)) properties.decision = input.decision
   if (isDurationBucket(input.durationBucket)) properties.duration_bucket = input.durationBucket
   if (isPlatform(input.platform)) properties.platform = input.platform
@@ -83,6 +90,7 @@ const trackSubmissionEvent = (
 
 /** Privacy-safe helpers for aggregate trusted-submission analytics. */
 export const submissionAnalytics = {
+  pageView: (input?: unknown) => trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_PAGE_VIEW, input),
   preflightStart: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_START, input),
   preflightOutcome: (input?: unknown) =>
@@ -95,6 +103,10 @@ export const submissionAnalytics = {
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_PROFILE_OPEN, input),
   followAttest: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_FOLLOW_ATTEST, input),
+  supportBack: (input?: unknown) =>
+    trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_SUPPORT_BACK, input),
+  finalStart: (input?: unknown) =>
+    trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_FINAL_START, input),
   finalOutcome: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_FINAL_OUTCOME, input),
   prCreated: (input?: unknown) =>
