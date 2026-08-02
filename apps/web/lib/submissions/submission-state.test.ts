@@ -344,19 +344,34 @@ describe('submission state', () => {
     expect(redis.eval.mock.calls[0]?.[1]?.[1]).toBe(redis.eval.mock.calls[1]?.[1]?.[1])
   })
 
-  it.each(['203.0.113.1, 198.51.100.1', 'not-an-ip'])(
-    'rejects malformed source IP %s',
-    async sourceIp => {
-      const redis = makeRedis()
-      await expect(
-        enforceSubmissionRateLimits(
-          { sourceIp, userId: 'user_123', website: 'https://example.com' },
-          { redis, secret: SECRET }
-        )
-      ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
-      expect(redis.eval).not.toHaveBeenCalled()
+  it('collapses IPv4-mapped IPv6 spellings to the plain IPv4 source key', async () => {
+    const redis = makeRedis()
+    redis.eval.mockResolvedValue('allowed')
+    const base = { userId: 'user_123', website: 'https://example.com' }
+    for (const sourceIp of ['8.8.8.8', '::ffff:8.8.8.8', '::ffff:808:808']) {
+      await enforceSubmissionRateLimits({ ...base, sourceIp }, { redis, secret: SECRET })
     }
-  )
+
+    const sourceKeys = redis.eval.mock.calls.map(call => call[1]?.[1])
+    expect(new Set(sourceKeys)).toHaveProperty('size', 1)
+  })
+
+  it.each([
+    '203.0.113.1, 198.51.100.1',
+    'not-an-ip',
+    '::ffff:999.1.1.1',
+    '::ffff:1.2.3',
+    '::ffff:gggg'
+  ])('rejects malformed source IP %s', async sourceIp => {
+    const redis = makeRedis()
+    await expect(
+      enforceSubmissionRateLimits(
+        { sourceIp, userId: 'user_123', website: 'https://example.com' },
+        { redis, secret: SECRET }
+      )
+    ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
+    expect(redis.eval).not.toHaveBeenCalled()
+  })
 
   it('derives the private registrable domain from the normalized website', async () => {
     const redis = makeRedis()
