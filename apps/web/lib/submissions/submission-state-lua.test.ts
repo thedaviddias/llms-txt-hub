@@ -79,11 +79,16 @@ elseif scenario == 'locks' then
   assert(store.website == 'sub_123' and store.llms == 'sub_123')
   assert(ttl.website == 172800000 and ttl.llms == 172800000)
   assert(run({'website', 'llms'}, {'sub_123', '172800'}) == 'acquired')
+
+  store.llms = nil
+  assert(run({'website', 'llms'}, {'sub_123', '172800'}) == 'conflict')
+  assert(store.website == 'sub_123' and store.llms == nil)
 elseif scenario == 'cas' then
   local record = {
     state = 'support_required',
     userId = 'user_123',
     fieldsHash = 'fields-hash',
+    continuationHash = 'continuation-hash',
     expiresAt = '2026-08-03T12:00:00.000Z'
   }
   cjson = {
@@ -93,16 +98,23 @@ elseif scenario == 'cas' then
   store.submission = 'encoded-record'
   ttl.submission = 169200123
 
-  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'transitioned')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z', 'continuation-hash', '2026-08-01T13:01:00.000Z'}) == 'transitioned')
   assert(record.state == 'final_assessing')
+  assert(record.finalAssessmentLeaseExpiresAt == '2026-08-01T13:01:00.000Z')
   assert(ttl.submission == 169200123)
-  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'state_mismatch')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:30.000Z', 'continuation-hash', '2026-08-01T13:01:30.000Z'}) == 'in_progress')
+  assert(record.finalAssessmentLeaseExpiresAt == '2026-08-01T13:01:00.000Z')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:01:00.001Z', 'continuation-hash', '2026-08-01T13:02:00.001Z'}) == 'recovery:final_assessing')
+  assert(record.finalAssessmentLeaseExpiresAt == '2026-08-01T13:02:00.001Z')
+  assert(ttl.submission == 169200123)
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:02:00.002Z', 'foreign-hash', '2026-08-01T13:03:00.002Z'}) == 'binding_mismatch')
 elseif scenario == 'recovery' then
   local record = {
     state = 'publishing',
     submissionId = 'sub_123',
     userId = 'user_123',
     fieldsHash = 'fields-hash',
+    continuationHash = 'continuation-hash',
     expiresAt = '2026-08-03T12:00:00.000Z',
     branch = 'submit/sub_123',
     resultCode = 'auto_publish'
@@ -114,20 +126,20 @@ elseif scenario == 'recovery' then
   store.submission = 'encoded-record'
   ttl.submission = 169200123
 
-  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:publishing')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z', 'continuation-hash', '2026-08-01T13:01:00.000Z'}) == 'recovery:publishing')
   assert(ttl.submission == 169200123)
 
   record.state = 'auto_publish_pending'
-  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:auto_publish_pending')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z', 'continuation-hash', '2026-08-01T13:01:00.000Z'}) == 'recovery:auto_publish_pending')
   assert(ttl.submission == 169200123)
 
   record.state = 'manual_review_pending'
   record.resultCode = 'manual_review'
-  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:manual_review_pending')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z', 'continuation-hash', '2026-08-01T13:01:00.000Z'}) == 'recovery:manual_review_pending')
   assert(ttl.submission == 169200123)
 
   record.branch = 'submit/sub_other'
-  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'state_mismatch')
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z', 'continuation-hash', '2026-08-01T13:01:00.000Z'}) == 'state_mismatch')
 else
   error('Unknown scenario')
 end

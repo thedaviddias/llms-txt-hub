@@ -27,6 +27,7 @@ if ARGV[1] == 'attempt' then
   record.branch = ARGV[2]
   record.resultCode = ARGV[4]
   record.publicationAttempted = true
+  record.finalAssessmentLeaseExpiresAt = nil
 elseif ARGV[1] == 'branch' then
   if record.state ~= 'auto_publish_pending' and record.state ~= 'manual_review_pending' and record.state ~= 'publishing' then return 'state_mismatch' end
   if record.branch and record.branch ~= ARGV[2] then return 'binding_mismatch' end
@@ -81,6 +82,7 @@ local ttl = redis.call('PTTL', KEYS[1])
 if ttl <= 0 then return 'expired' end
 record.state = ARGV[2]
 record.resultCode = ARGV[3]
+record.finalAssessmentLeaseExpiresAt = nil
 record.updatedAt = ARGV[4]
 local website = redis.call('GET', KEYS[2])
 if website == ARGV[1] then redis.call('DEL', KEYS[2]) end
@@ -136,6 +138,7 @@ const mutationIsCommitted = (
   if (args[0] === 'attempt') {
     return (
       value.publicationAttempted === true &&
+      value.finalAssessmentLeaseExpiresAt === undefined &&
       value.resultCode === args[3] &&
       (value.state === 'final_assessing' ||
         value.state === 'auto_publish_pending' ||

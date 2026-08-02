@@ -8,6 +8,7 @@ import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy
 import { evalRedis, get, setNx } from '@/lib/redis'
 import {
   ACQUIRE_SUBMISSION_LOCKS_SCRIPT,
+  FINAL_ASSESSMENT_LEASE_SECONDS,
   FINAL_ASSESSMENT_SCRIPT,
   MAX_CONTINUATION_CHARACTERS,
   SUBMISSION_ID_PATTERN,
@@ -38,10 +39,12 @@ export interface NormalizedSubmissionFields extends SubmissionFields {
 /** Minimal Redis record for an active trusted submission. */
 export interface SubmissionRecord {
   readonly branch?: string
+  readonly continuationHash: string
   readonly createdAt: string
   readonly expiresAt: string
   readonly fields: NormalizedSubmissionFields
   readonly fieldsHash: string
+  readonly finalAssessmentLeaseExpiresAt?: string
   readonly headSha?: string
   readonly prNumber?: number
   readonly resultCode?: string
@@ -105,6 +108,8 @@ const parseSubmissionRecord = (value: unknown): SubmissionRecord | null => {
   if (
     typeof value.submissionId !== 'string' ||
     typeof value.userId !== 'string' ||
+    typeof value.continuationHash !== 'string' ||
+    !/^[a-f0-9]{64}$/.test(value.continuationHash) ||
     typeof value.fieldsHash !== 'string' ||
     typeof value.expiresAt !== 'string' ||
     typeof value.state !== 'string' ||
@@ -127,6 +132,7 @@ const parseSubmissionRecord = (value: unknown): SubmissionRecord | null => {
   }
 
   return {
+    continuationHash: value.continuationHash,
     createdAt,
     expiresAt: value.expiresAt,
     fields,
@@ -199,6 +205,7 @@ export async function createSubmissionContinuation(
     .toString('base64url')
   const continuationToken = `${input.submissionId}.${nonce}.${signature}`
   const record: SubmissionRecord = {
+    continuationHash: submissionStateSecurity.hashString(continuationToken),
     createdAt,
     expiresAt,
     fields,
@@ -242,6 +249,7 @@ export async function consumeSubmissionContinuation(
       readonly mode: 'recovery'
       readonly ok: true
       readonly state:
+        | 'final_assessing'
         | 'auto_publish_pending'
         | 'manual_review_pending'
         | 'publish_failed'
@@ -249,7 +257,12 @@ export async function consumeSubmissionContinuation(
       readonly submissionId: string
     }
   | {
-      readonly code: 'expired' | 'invalid_continuation' | 'publication_unavailable' | 'replayed'
+      readonly code:
+        | 'expired'
+        | 'in_progress'
+        | 'invalid_continuation'
+        | 'publication_unavailable'
+        | 'replayed'
       readonly ok: false
     }
 > {
@@ -288,6 +301,7 @@ export async function consumeSubmissionContinuation(
     record.userId !== input.userId ||
     record.submissionId !== submissionId ||
     record.fieldsHash !== fieldsHash ||
+    record.continuationHash !== submissionStateSecurity.hashString(input.continuationToken) ||
     !submissionStateSecurity.safeEqual(expected, signature)
   ) {
     return { code: 'invalid_continuation', ok: false }
@@ -295,12 +309,19 @@ export async function consumeSubmissionContinuation(
 
   const now = dependencies.now()
   if (Date.parse(record.expiresAt) <= now.getTime()) return { code: 'expired', ok: false }
+  const leaseExpiresAt = new Date(
+    now.getTime() + FINAL_ASSESSMENT_LEASE_SECONDS * 1000
+  ).toISOString()
   const result = await dependencies.redis.eval<string>(
     FINAL_ASSESSMENT_SCRIPT,
     [submissionStateSecurity.recordKey(submissionId)],
-    [input.userId, fieldsHash, now.toISOString()]
+    [input.userId, fieldsHash, now.toISOString(), record.continuationHash, leaseExpiresAt]
   )
   if (result === 'transitioned') return { mode: 'initial', ok: true, submissionId }
+  if (result === 'in_progress') return { code: 'in_progress', ok: false }
+  if (result === 'recovery:final_assessing') {
+    return { mode: 'recovery', ok: true, state: 'final_assessing', submissionId }
+  }
   if (result === 'recovery:auto_publish_pending') {
     return { mode: 'recovery', ok: true, state: 'auto_publish_pending', submissionId }
   }

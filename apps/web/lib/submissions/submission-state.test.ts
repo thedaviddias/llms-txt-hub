@@ -86,10 +86,10 @@ describe('submission state', () => {
     expect(redis.setNx).toHaveBeenCalledWith('submission:sub_123', result.record, 48 * 60 * 60)
   })
 
-  it('atomically consumes a valid support continuation exactly once', async () => {
+  it('atomically leases a valid support continuation and reports concurrent work in progress', async () => {
     const redis = makeRedis()
     redis.setNx.mockResolvedValue(true)
-    redis.eval.mockResolvedValueOnce('transitioned').mockResolvedValueOnce('state_mismatch')
+    redis.eval.mockResolvedValueOnce('transitioned').mockResolvedValueOnce('in_progress')
     const created = await createSubmissionContinuation(
       { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
       { now: () => NOW, redis, secret: SECRET }
@@ -108,10 +108,50 @@ describe('submission state', () => {
     ).resolves.toEqual({ mode: 'initial', ok: true, submissionId: 'sub_123' })
     await expect(
       consumeSubmissionContinuation(input, { now: () => NOW, redis, secret: SECRET })
-    ).resolves.toEqual({ code: 'replayed', ok: false })
+    ).resolves.toEqual({ code: 'in_progress', ok: false })
     expect(redis.eval).toHaveBeenCalledTimes(2)
     expect(redis.eval.mock.calls[0]?.[0]).toContain('support_required')
     expect(redis.eval.mock.calls[0]?.[0]).toContain('final_assessing')
+    expect(redis.eval.mock.calls[0]?.[2]).toEqual([
+      'user_123',
+      created.record.fieldsHash,
+      NOW.toISOString(),
+      expect.any(String),
+      new Date(NOW.getTime() + 60_000).toISOString()
+    ])
+  })
+
+  it('renews an expired exact-token assessment lease for stale crash recovery', async () => {
+    const redis = makeRedis()
+    redis.setNx.mockResolvedValue(true)
+    redis.eval.mockResolvedValue('recovery:final_assessing')
+    const created = await createSubmissionContinuation(
+      { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
+      { now: () => NOW, redis, secret: SECRET }
+    )
+    expect(created.ok).toBe(true)
+    if (!created.ok) return
+    redis.get.mockResolvedValue({
+      ...created.record,
+      finalAssessmentLeaseExpiresAt: new Date(NOW.getTime() - 1).toISOString(),
+      state: 'final_assessing'
+    })
+
+    await expect(
+      consumeSubmissionContinuation(
+        {
+          continuationToken: created.continuationToken,
+          fields: FIELDS,
+          userId: 'user_123'
+        },
+        { now: () => NOW, redis, secret: SECRET }
+      )
+    ).resolves.toEqual({
+      mode: 'recovery',
+      ok: true,
+      state: 'final_assessing',
+      submissionId: 'sub_123'
+    })
   })
 
   it.each([
@@ -279,7 +319,9 @@ describe('submission state', () => {
     expect(redis.eval.mock.calls[0]?.[2]).toEqual([
       'user_123',
       created.record.fieldsHash,
-      new Date(NOW.getTime() + 60 * 60 * 1000).toISOString()
+      new Date(NOW.getTime() + 60 * 60 * 1000).toISOString(),
+      expect.any(String),
+      new Date(NOW.getTime() + 60 * 60 * 1000 + 60_000).toISOString()
     ])
   })
 
@@ -312,6 +354,27 @@ describe('submission state', () => {
     const invocation = JSON.stringify(redis.eval.mock.calls[0])
     expect(invocation).not.toContain('example.com')
     expect(invocation).toContain('sub_123')
+    expect(redis.eval.mock.calls[0]?.[0]).toContain('website == ARGV[1] and llms == ARGV[1]')
+  })
+
+  it('fails closed on a partial own lock without overwriting the missing lock', async () => {
+    const redis = makeRedis()
+    redis.eval.mockResolvedValue('conflict')
+
+    await expect(
+      acquireSubmissionLocks(
+        {
+          llmsUrl: FIELDS.llmsUrl,
+          submissionId: 'sub_123',
+          website: FIELDS.website
+        },
+        { redis }
+      )
+    ).resolves.toEqual({ code: 'duplicate', ok: false })
+
+    const script = redis.eval.mock.calls[0]?.[0]
+    expect(script).toContain('if not website and not llms then')
+    expect(script).toContain("return 'conflict'")
   })
 
   it('reports lock conflict and Redis unavailability without a memory fallback', async () => {
