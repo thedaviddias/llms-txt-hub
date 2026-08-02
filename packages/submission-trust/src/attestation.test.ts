@@ -31,7 +31,6 @@ const PAYLOAD = {
 
 const EXPECTED = {
   repository: PAYLOAD.repository,
-  submissionId: PAYLOAD.submissionId,
   prNumber: PAYLOAD.prNumber,
   headSha: PAYLOAD.headSha,
   mdxPath: PAYLOAD.mdxPath,
@@ -39,9 +38,15 @@ const EXPECTED = {
   website: 'https://xn--bcher-kva.de/docs',
   llmsUrl: 'https://xn--bcher-kva.de/llms.txt',
   llmsFullUrl: 'https://xn--bcher-kva.de/llms-full.txt',
-  policyVersion: PAYLOAD.policyVersion,
-  webRiskCheckedAt: PAYLOAD.webRiskCheckedAt
+  policyVersion: PAYLOAD.policyVersion
 } satisfies AssessmentAttestationExpectation
+
+const NORMALIZED_PAYLOAD = {
+  ...PAYLOAD,
+  website: EXPECTED.website,
+  llmsUrl: EXPECTED.llmsUrl,
+  llmsFullUrl: EXPECTED.llmsFullUrl
+}
 
 const BINDING_MISMATCH_CASES: readonly [
   string,
@@ -49,7 +54,6 @@ const BINDING_MISMATCH_CASES: readonly [
   AssessmentAttestationVerificationFailureCode
 ][] = [
   ['repository', { repository: 'attacker/repository' }, 'repository_mismatch'],
-  ['submission ID', { submissionId: 'submission-other' }, 'submission_id_mismatch'],
   ['PR', { prNumber: 43 }, 'pr_number_mismatch'],
   ['head SHA', { headSha: 'c'.repeat(40) }, 'head_sha_mismatch'],
   ['path', { mdxPath: 'packages/content/data/websites/other.mdx' }, 'mdx_path_mismatch'],
@@ -57,12 +61,7 @@ const BINDING_MISMATCH_CASES: readonly [
   ['website', { website: 'https://other.example.com' }, 'website_mismatch'],
   ['llms URL', { llmsUrl: 'https://other.example.com/llms.txt' }, 'llms_url_mismatch'],
   ['llms-full URL', { llmsFullUrl: undefined }, 'llms_full_url_mismatch'],
-  ['policy', { policyVersion: '2026-08-02.v1' }, 'policy_version_mismatch'],
-  [
-    'Web Risk time',
-    { webRiskCheckedAt: '2026-08-01T12:01:00.000Z' },
-    'web_risk_checked_at_mismatch'
-  ]
+  ['policy', { policyVersion: '2026-08-02.v1' }, 'policy_version_mismatch']
 ]
 
 const { expiresAt: reorderedExpiry, ...payloadWithoutExpiry } = PAYLOAD
@@ -140,6 +139,40 @@ describe('createAssessmentAttestation', () => {
     ).toEqual({ code: 'invalid_payload', ok: false })
   })
 
+  it.each([
+    [
+      'stale Web Risk evidence',
+      { ...NORMALIZED_PAYLOAD, webRiskCheckedAt: '2026-08-01T11:53:59.999Z' }
+    ],
+    ['an excessive lifetime', { ...NORMALIZED_PAYLOAD, expiresAt: '2026-08-01T12:14:00.001Z' }],
+    ['a year-9999 expiry', { ...NORMALIZED_PAYLOAD, expiresAt: '9999-12-31T23:59:59.999Z' }]
+  ])('refuses to create an attestation with %s', (_label, payload) => {
+    expect(createAssessmentAttestation(payload, SECRET)).toEqual({
+      code: 'invalid_payload',
+      ok: false
+    })
+  })
+
+  it('snapshots each runtime payload field exactly once before signing', () => {
+    let repositoryReads = 0
+    const statefulPayload = { ...PAYLOAD }
+    Object.defineProperty(statefulPayload, 'repository', {
+      enumerable: true,
+      get: () => {
+        repositoryReads += 1
+        return repositoryReads === 1 ? PAYLOAD.repository : 'attacker/repository'
+      }
+    })
+
+    const result = createAssessmentAttestation(statefulPayload, SECRET)
+
+    expect(result.ok).toBe(true)
+    expect(repositoryReads).toBe(1)
+    if (!result.ok) return
+    expect(result.payload.repository).toBe(PAYLOAD.repository)
+    expect(verify(result.block, EXPECTED)).toMatchObject({ ok: true })
+  })
+
   it.each([null, undefined, 42, 'payload', []])(
     'returns invalid_payload without throwing for malformed runtime payload %s',
     payload => {
@@ -181,6 +214,49 @@ describe('verifyAssessmentAttestation', () => {
         llmsUrl: EXPECTED.llmsUrl,
         llmsFullUrl: EXPECTED.llmsFullUrl
       }
+    })
+  })
+
+  it('verifies from workflow-known bindings without pre-decoding signed-only fields', () => {
+    const result = verify(signed(), EXPECTED)
+
+    expect(result).toMatchObject({
+      ok: true,
+      payload: {
+        submissionId: PAYLOAD.submissionId,
+        webRiskCheckedAt: PAYLOAD.webRiskCheckedAt
+      }
+    })
+  })
+
+  it('snapshots each runtime expectation field exactly once before comparison', () => {
+    let repositoryReads = 0
+    const statefulExpected = { ...EXPECTED }
+    Object.defineProperty(statefulExpected, 'repository', {
+      enumerable: true,
+      get: () => {
+        repositoryReads += 1
+        return repositoryReads === 1 ? PAYLOAD.repository : 'attacker/repository'
+      }
+    })
+
+    const result = verify(signed(), statefulExpected)
+
+    expect(result).toMatchObject({ ok: true })
+    expect(repositoryReads).toBe(1)
+  })
+
+  it.each([
+    [
+      'stale Web Risk evidence',
+      { ...NORMALIZED_PAYLOAD, webRiskCheckedAt: '2026-08-01T11:53:59.999Z' }
+    ],
+    ['an excessive lifetime', { ...NORMALIZED_PAYLOAD, expiresAt: '2026-08-01T12:14:00.001Z' }],
+    ['a year-9999 expiry', { ...NORMALIZED_PAYLOAD, expiresAt: '9999-12-31T23:59:59.999Z' }]
+  ])('rejects a correctly signed payload with %s', (_label, payload) => {
+    expect(verify(createBlock(JSON.stringify(payload)), EXPECTED)).toEqual({
+      code: 'invalid_payload',
+      ok: false
     })
   })
 

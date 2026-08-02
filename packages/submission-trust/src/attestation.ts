@@ -1,5 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
 
+import { WEB_RISK_FRESHNESS_MS } from '#constants'
 import type { AssessmentAttestationPayload } from '#types'
 import { validateSubmissionUrl } from '#url-policy'
 
@@ -10,7 +11,9 @@ const MAX_PR_BODY_CHARACTERS = 100_000
 const MAX_ENCODED_PAYLOAD_CHARACTERS = 32_768
 const HMAC_BYTES = 32
 const MINIMUM_SECRET_BYTES = 32
+const MAX_SECRET_CHARACTERS = 4096
 const MAX_PR_NUMBER = 2_147_483_647
+const ASSESSMENT_ATTESTATION_MAX_LIFETIME_MS = 10 * 60 * 1000
 const ISO_INSTANT = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
 const BASE64URL = /^[A-Za-z0-9_-]+$/
 const SHA1 = /^[a-f0-9]{40}$/
@@ -36,10 +39,7 @@ const PAYLOAD_KEYS = new Set([
   'expiresAt'
 ])
 
-/** Stable reason returned when an attestation cannot be created. */
 export type AssessmentAttestationCreationFailureCode = 'invalid_payload' | 'secret_too_short'
-
-/** Result of creating an exact-head assessment attestation. */
 export type AssessmentAttestationCreationResult =
   | {
       readonly block: string
@@ -50,8 +50,6 @@ export type AssessmentAttestationCreationResult =
       readonly code: AssessmentAttestationCreationFailureCode
       readonly ok: false
     }
-
-/** Stable machine-readable verification failures safe to retain in logs. */
 export type AssessmentAttestationVerificationFailureCode =
   | 'body_too_large'
   | 'duplicate_block'
@@ -71,11 +69,7 @@ export type AssessmentAttestationVerificationFailureCode =
   | 'pr_number_mismatch'
   | 'repository_mismatch'
   | 'secret_too_short'
-  | 'submission_id_mismatch'
-  | 'web_risk_checked_at_mismatch'
   | 'website_mismatch'
-
-/** Caller-known facts that must match every signed publication binding. */
 export interface AssessmentAttestationExpectation {
   readonly headSha: string
   readonly llmsFullUrl?: string
@@ -85,20 +79,14 @@ export interface AssessmentAttestationExpectation {
   readonly policyVersion: string
   readonly prNumber: number
   readonly repository: string
-  readonly submissionId: string
-  readonly webRiskCheckedAt: string
   readonly website: string
 }
-
-/** Inputs required to verify one PR-body attestation. */
 export interface AssessmentAttestationVerificationInput {
   readonly body: string
   readonly expected: AssessmentAttestationExpectation
   readonly now?: () => Date
   readonly secret: string
 }
-
-/** Result of verifying a signed assessment attestation. */
 export type AssessmentAttestationVerificationResult =
   | {
       readonly ok: true
@@ -108,24 +96,19 @@ export type AssessmentAttestationVerificationResult =
       readonly code: AssessmentAttestationVerificationFailureCode
       readonly ok: false
     }
-
-type PayloadRecord = Record<string, unknown>
-
 interface ParsedBlock {
   readonly encodedPayload: string
   readonly signature: string
 }
-
 interface SignatureVerification {
   readonly canonical: boolean
   readonly matches: boolean
 }
-
-const isRecord = (value: unknown): value is PayloadRecord =>
+const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
 const isCanonicalInstant = (value: unknown): value is string => {
-  if (typeof value !== 'string' || !ISO_INSTANT.test(value)) return false
+  if (typeof value !== 'string' || value.length !== 24 || !ISO_INSTANT.test(value)) return false
   const time = Date.parse(value)
   return Number.isFinite(time) && new Date(time).toISOString() === value
 }
@@ -150,17 +133,32 @@ const isSafeRelativePath = (value: unknown): value is string => {
   const segments = value.split('/')
   return segments.every(segment => segment.length > 0 && segment !== '.' && segment !== '..')
 }
-
 const normalizePayload = (value: unknown): AssessmentAttestationPayload | null => {
   if (!isRecord(value)) return null
-  const record = value
-  const keys = Object.keys(record)
-  const expectedKeyCount = Object.hasOwn(record, 'llmsFullUrl') ? 14 : 13
+  const keys = Object.keys(value)
+  const hasLlmsFullUrl = keys.includes('llmsFullUrl')
+  const expectedKeyCount = hasLlmsFullUrl ? 14 : 13
   if (keys.length !== expectedKeyCount || !keys.every(key => PAYLOAD_KEYS.has(key))) return null
+  const record = {
+    decision: value.decision,
+    expiresAt: value.expiresAt,
+    headSha: value.headSha,
+    issuedAt: value.issuedAt,
+    llmsFullUrl: hasLlmsFullUrl ? value.llmsFullUrl : undefined,
+    llmsUrl: value.llmsUrl,
+    mdxContentSha256: value.mdxContentSha256,
+    mdxPath: value.mdxPath,
+    policyVersion: value.policyVersion,
+    prNumber: value.prNumber,
+    repository: value.repository,
+    submissionId: value.submissionId,
+    webRiskCheckedAt: value.webRiskCheckedAt,
+    website: value.website
+  }
   if (
     typeof record.repository !== 'string' ||
-    !REPOSITORY.test(record.repository) ||
-    record.repository.length > 200
+    record.repository.length > 200 ||
+    !REPOSITORY.test(record.repository)
   ) {
     return null
   }
@@ -180,9 +178,19 @@ const normalizePayload = (value: unknown): AssessmentAttestationPayload | null =
   ) {
     return null
   }
-  if (typeof record.headSha !== 'string' || !SHA1.test(record.headSha)) return null
+  if (
+    typeof record.headSha !== 'string' ||
+    record.headSha.length !== 40 ||
+    !SHA1.test(record.headSha)
+  ) {
+    return null
+  }
   if (!isSafeRelativePath(record.mdxPath)) return null
-  if (typeof record.mdxContentSha256 !== 'string' || !SHA256.test(record.mdxContentSha256)) {
+  if (
+    typeof record.mdxContentSha256 !== 'string' ||
+    record.mdxContentSha256.length !== 64 ||
+    !SHA256.test(record.mdxContentSha256)
+  ) {
     return null
   }
   const website = normalizeUrl(record.website)
@@ -202,9 +210,20 @@ const normalizePayload = (value: unknown): AssessmentAttestationPayload | null =
   if (
     !isCanonicalInstant(record.webRiskCheckedAt) ||
     !isCanonicalInstant(record.issuedAt) ||
-    !isCanonicalInstant(record.expiresAt) ||
-    Date.parse(record.webRiskCheckedAt) > Date.parse(record.issuedAt) ||
-    Date.parse(record.expiresAt) <= Date.parse(record.issuedAt)
+    !isCanonicalInstant(record.expiresAt)
+  ) {
+    return null
+  }
+  const webRiskCheckedAtMs = Date.parse(record.webRiskCheckedAt)
+  const issuedAtMs = Date.parse(record.issuedAt)
+  const expiresAtMs = Date.parse(record.expiresAt)
+  const webRiskAgeMs = issuedAtMs - webRiskCheckedAtMs
+  const lifetimeMs = expiresAtMs - issuedAtMs
+  if (
+    webRiskAgeMs < 0 ||
+    webRiskAgeMs > WEB_RISK_FRESHNESS_MS ||
+    lifetimeMs <= 0 ||
+    lifetimeMs > ASSESSMENT_ATTESTATION_MAX_LIFETIME_MS
   ) {
     return null
   }
@@ -320,50 +339,55 @@ const parseCanonicalPayload = (encoded: string): AssessmentAttestationPayload | 
 
 const normalizeExpectation = (expected: unknown): AssessmentAttestationExpectation | null => {
   if (!isRecord(expected)) return null
-  const website = normalizeUrl(expected.website)
-  const llmsUrl = normalizeUrl(expected.llmsUrl)
-  const llmsFullUrl =
-    expected.llmsFullUrl === undefined ? undefined : normalizeUrl(expected.llmsFullUrl)
-  if (
-    typeof expected.repository !== 'string' ||
-    typeof expected.submissionId !== 'string' ||
-    typeof expected.prNumber !== 'number' ||
-    typeof expected.headSha !== 'string' ||
-    typeof expected.mdxPath !== 'string' ||
-    typeof expected.mdxContentSha256 !== 'string' ||
-    typeof expected.policyVersion !== 'string' ||
-    typeof expected.webRiskCheckedAt !== 'string' ||
-    !REPOSITORY.test(expected.repository) ||
-    expected.repository.length > 200 ||
-    expected.submissionId.length === 0 ||
-    expected.submissionId.length > 128 ||
-    !TOKEN.test(expected.submissionId) ||
-    !Number.isSafeInteger(expected.prNumber) ||
-    expected.prNumber < 1 ||
-    expected.prNumber > MAX_PR_NUMBER ||
-    !SHA1.test(expected.headSha) ||
-    !isSafeRelativePath(expected.mdxPath) ||
-    !SHA256.test(expected.mdxContentSha256) ||
-    !website ||
-    !llmsUrl ||
-    llmsFullUrl === null ||
-    expected.policyVersion.length === 0 ||
-    expected.policyVersion.length > 128 ||
-    !TOKEN.test(expected.policyVersion) ||
-    !isCanonicalInstant(expected.webRiskCheckedAt)
-  ) {
-    return null
-  }
-  const normalized = {
+  const snapshot = {
     headSha: expected.headSha,
-    llmsUrl,
+    llmsFullUrl: expected.llmsFullUrl,
+    llmsUrl: expected.llmsUrl,
     mdxContentSha256: expected.mdxContentSha256,
     mdxPath: expected.mdxPath,
     policyVersion: expected.policyVersion,
     prNumber: expected.prNumber,
     repository: expected.repository,
-    submissionId: expected.submissionId,
-    webRiskCheckedAt: expected.webRiskCheckedAt,
+    website: expected.website
+  }
+  const website = normalizeUrl(snapshot.website)
+  const llmsUrl = normalizeUrl(snapshot.llmsUrl)
+  const llmsFullUrl =
+    snapshot.llmsFullUrl === undefined ? undefined : normalizeUrl(snapshot.llmsFullUrl)
+  if (
+    typeof snapshot.repository !== 'string' ||
+    typeof snapshot.prNumber !== 'number' ||
+    typeof snapshot.headSha !== 'string' ||
+    typeof snapshot.mdxPath !== 'string' ||
+    typeof snapshot.mdxContentSha256 !== 'string' ||
+    typeof snapshot.policyVersion !== 'string' ||
+    snapshot.repository.length > 200 ||
+    !REPOSITORY.test(snapshot.repository) ||
+    !Number.isSafeInteger(snapshot.prNumber) ||
+    snapshot.prNumber < 1 ||
+    snapshot.prNumber > MAX_PR_NUMBER ||
+    snapshot.headSha.length !== 40 ||
+    !SHA1.test(snapshot.headSha) ||
+    !isSafeRelativePath(snapshot.mdxPath) ||
+    snapshot.mdxContentSha256.length !== 64 ||
+    !SHA256.test(snapshot.mdxContentSha256) ||
+    !website ||
+    !llmsUrl ||
+    llmsFullUrl === null ||
+    snapshot.policyVersion.length === 0 ||
+    snapshot.policyVersion.length > 128 ||
+    !TOKEN.test(snapshot.policyVersion)
+  ) {
+    return null
+  }
+  const normalized = {
+    headSha: snapshot.headSha,
+    llmsUrl,
+    mdxContentSha256: snapshot.mdxContentSha256,
+    mdxPath: snapshot.mdxPath,
+    policyVersion: snapshot.policyVersion,
+    prNumber: snapshot.prNumber,
+    repository: snapshot.repository,
     website
   } satisfies AssessmentAttestationExpectation
   return llmsFullUrl === undefined
@@ -377,7 +401,6 @@ const bindingMismatch = (
 ): AssessmentAttestationVerificationFailureCode | null => {
   const checks: readonly [boolean, AssessmentAttestationVerificationFailureCode][] = [
     [payload.repository === expected.repository, 'repository_mismatch'],
-    [payload.submissionId === expected.submissionId, 'submission_id_mismatch'],
     [payload.prNumber === expected.prNumber, 'pr_number_mismatch'],
     [payload.headSha === expected.headSha, 'head_sha_mismatch'],
     [payload.mdxPath === expected.mdxPath, 'mdx_path_mismatch'],
@@ -385,12 +408,10 @@ const bindingMismatch = (
     [payload.website === expected.website, 'website_mismatch'],
     [payload.llmsUrl === expected.llmsUrl, 'llms_url_mismatch'],
     [payload.llmsFullUrl === expected.llmsFullUrl, 'llms_full_url_mismatch'],
-    [payload.policyVersion === expected.policyVersion, 'policy_version_mismatch'],
-    [payload.webRiskCheckedAt === expected.webRiskCheckedAt, 'web_risk_checked_at_mismatch']
+    [payload.policyVersion === expected.policyVersion, 'policy_version_mismatch']
   ]
   return checks.find(([matches]) => !matches)?.[1] ?? null
 }
-
 /**
  * Creates a canonical HMAC-SHA256 PR-body attestation block.
  *
@@ -403,7 +424,11 @@ export const createAssessmentAttestation = (
   secret: string
 ): AssessmentAttestationCreationResult => {
   try {
-    if (typeof secret !== 'string' || Buffer.byteLength(secret, 'utf8') < MINIMUM_SECRET_BYTES) {
+    if (
+      typeof secret !== 'string' ||
+      secret.length > MAX_SECRET_CHARACTERS ||
+      Buffer.byteLength(secret, 'utf8') < MINIMUM_SECRET_BYTES
+    ) {
       return { code: 'secret_too_short', ok: false }
     }
     const normalized = normalizePayload(payload)
@@ -432,28 +457,32 @@ export const verifyAssessmentAttestation = (
 ): AssessmentAttestationVerificationResult => {
   try {
     if (!isRecord(input)) return { code: 'malformed_block', ok: false }
+    const body = input.body
+    const clock = input.now
+    const expectedInput = input.expected
+    const secret = input.secret
     if (
-      typeof input.secret !== 'string' ||
-      Buffer.byteLength(input.secret, 'utf8') < MINIMUM_SECRET_BYTES
+      typeof secret !== 'string' ||
+      secret.length > MAX_SECRET_CHARACTERS ||
+      Buffer.byteLength(secret, 'utf8') < MINIMUM_SECRET_BYTES
     ) {
       return { code: 'secret_too_short', ok: false }
     }
-    if (typeof input.body !== 'string') return { code: 'malformed_block', ok: false }
-    const block = parseBlock(input.body)
+    if (typeof body !== 'string') return { code: 'malformed_block', ok: false }
+    const block = parseBlock(body)
     if (typeof block === 'string') return { code: block, ok: false }
     const payloadBytes = decodeCanonicalBase64Url(block.encodedPayload)
     if (!payloadBytes) return { code: 'malformed_block', ok: false }
-    const signature = verifySignature(payloadBytes, block.signature, input.secret)
+    const signature = verifySignature(payloadBytes, block.signature, secret)
     if (!signature.canonical) return { code: 'malformed_block', ok: false }
     if (!signature.matches) return { code: 'invalid_signature', ok: false }
     const payload = parseCanonicalPayload(block.encodedPayload)
     if (!payload) return { code: 'invalid_payload', ok: false }
-    const expected = normalizeExpectation(input.expected)
+    const expected = normalizeExpectation(expectedInput)
     if (!expected) return { code: 'invalid_expectation', ok: false }
     const mismatch = bindingMismatch(payload, expected)
     if (mismatch) return { code: mismatch, ok: false }
 
-    const clock = input.now
     if (clock !== undefined && typeof clock !== 'function') {
       return { code: 'invalid_expectation', ok: false }
     }
