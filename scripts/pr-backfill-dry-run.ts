@@ -344,10 +344,11 @@ interface MergeAction {
 
 interface MergeRevalidationContext {
   baseDuplicateStatus: DuplicateStatus
+  baseSha: string
   duplicateFields: DuplicateCandidate
   file: ModeratedSubmissionFile
   freshAssessment: SubmissionAssessment
-  openPullRequestDuplicateStatus: DuplicateStatus
+  headRepository: string
   trustedBaseSha: string
 }
 
@@ -444,6 +445,21 @@ export async function runTrustedAssessmentGate<T>(
 ): Promise<T | null> {
   if (input.addedMdxCount !== 1 || !input.attestationVerified) return null
   return assess()
+}
+
+/** Enforce expensive refresh, final mutable read, pure authorization, then merge ordering. */
+export async function runFinalMergeSequence<TPrepared, TLatest, TDecision>(input: {
+  readonly authorize: (prepared: TPrepared, latest: TLatest) => TDecision
+  readonly fetchLatest: () => Promise<TLatest>
+  readonly isAuthorized: (decision: TDecision) => boolean
+  readonly merge: (decision: TDecision) => Promise<void>
+  readonly prepareExpensive: () => Promise<TPrepared>
+}): Promise<TDecision> {
+  const prepared = await input.prepareExpensive()
+  const latest = await input.fetchLatest()
+  const decision = input.authorize(prepared, latest)
+  if (input.isAuthorized(decision)) await input.merge(decision)
+  return decision
 }
 
 /** Select a required check only when its immutable workflow and PR scope match exactly. */
@@ -1680,10 +1696,11 @@ async function analyzePullRequest(
         moderatedFile && duplicateFields
           ? {
               baseDuplicateStatus,
+              baseSha,
               duplicateFields,
               file: moderatedFile,
               freshAssessment: moderatedFile.assessment,
-              openPullRequestDuplicateStatus,
+              headRepository: details.head.repo?.full_name ?? '',
               trustedBaseSha
             }
           : undefined,
@@ -1886,68 +1903,111 @@ async function executeMergeAction(input: {
   }
 
   try {
-    if (!input.revalidation) throw new Error('Missing trusted revalidation context.')
-    const latest = await fetchPullRequestDetails(input.repo, input.prNumber)
-    const [baseSnapshotStatus, reviewStatus] = await Promise.all([
-      fetchTrustedBaseStatus(input.repo, latest, input.revalidation.trustedBaseSha),
-      fetchReviewStatus(input.repo, latest)
-    ])
-    const latestAttestation = verifyMergeAttestation({
-      addedMdxBytes: input.revalidation.file.bytes,
-      addedMdxPath: input.revalidation.file.path,
-      body: typeof latest.body === 'string' ? latest.body : '',
-      currentHeadSha: latest.head.sha,
-      prNumber: latest.number,
-      repository: input.repo,
-      secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+    const revalidation = input.revalidation
+    if (!revalidation) throw new Error('Missing trusted revalidation context.')
+    const decision = await runFinalMergeSequence({
+      authorize: (prepared, latest) => {
+        const manifestMatches =
+          prepared.manifest.status === 'complete' &&
+          prepared.manifest.files.length === 1 &&
+          prepared.manifest.files[0]?.status === 'added' &&
+          prepared.manifest.files[0]?.filename === revalidation.file.path
+        const snapshotMatches =
+          latest.number === input.prNumber &&
+          latest.head.sha === input.headSha &&
+          latest.head.repo?.full_name === revalidation.headRepository &&
+          latest.base?.ref === 'main' &&
+          latest.base.repo?.full_name === input.repo &&
+          latest.base.sha === revalidation.baseSha
+        const latestAttestation =
+          manifestMatches && snapshotMatches
+            ? verifyMergeAttestation({
+                addedMdxBytes: revalidation.file.bytes,
+                addedMdxPath: revalidation.file.path,
+                body: typeof latest.body === 'string' ? latest.body : '',
+                currentHeadSha: latest.head.sha,
+                prNumber: latest.number,
+                repository: input.repo,
+                secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+              })
+            : invalidAttestation()
+        const authorization = deriveMergeAuthorization({
+          attestation: latestAttestation,
+          baseDuplicateStatus: revalidation.baseDuplicateStatus,
+          baseSnapshotStatus: prepared.baseSnapshotStatus,
+          freshAssessment: revalidation.freshAssessment,
+          hasManualReviewLabel: pullRequestHasManualReviewVeto(latest),
+          openPullRequestDuplicateStatus: prepared.openPullRequestDuplicateStatus,
+          requiredCheckStatus: prepared.reviewStatus
+        })
+        const exact = deriveExactHeadMergeDecision({
+          authorization,
+          baseSnapshotStatus: prepared.baseSnapshotStatus,
+          currentHeadSha: latest.head.sha,
+          expectedHeadSha: input.headSha,
+          requiredCheckStatus: prepared.reviewStatus
+        })
+        return {
+          authorization: exact,
+          mergeAllowed:
+            input.authorization.authorized &&
+            exact.authorized &&
+            snapshotMatches &&
+            latest.state === 'open' &&
+            !latest.draft &&
+            latest.mergeable === true
+        }
+      },
+      fetchLatest: () => fetchFinalPullRequestDetails(input.repo, input.prNumber),
+      isAuthorized: value => value.mergeAllowed,
+      merge: async () => {
+        await execGh([
+          'api',
+          `repos/${input.repo}/pulls/${input.prNumber}/merge`,
+          '--method',
+          'PUT',
+          '-f',
+          `sha=${input.headSha}`,
+          '-f',
+          'merge_method=squash'
+        ])
+      },
+      prepareExpensive: async () => {
+        const [baseSnapshotStatus, reviewStatus, manifest, openIndex] = await Promise.all([
+          fetchCurrentBaseStatusForSnapshot(
+            input.repo,
+            revalidation.baseSha,
+            revalidation.trustedBaseSha
+          ),
+          fetchReviewStatusForSnapshot(input.repo, {
+            baseSha: revalidation.baseSha,
+            headSha: input.headSha,
+            prNumber: input.prNumber
+          }),
+          fetchImmutablePullRequestManifest(input.repo, revalidation.baseSha, input.headSha),
+          buildDefaultOpenPullRequestDuplicateIndex(input.repo)
+        ])
+        return {
+          baseSnapshotStatus,
+          manifest,
+          openPullRequestDuplicateStatus: lookupOpenPullRequestDuplicate(openIndex, {
+            candidate: revalidation.duplicateFields,
+            currentPrNumber: input.prNumber
+          }),
+          reviewStatus
+        }
+      }
     })
-    const latestAuthorization = deriveMergeAuthorization({
-      attestation: latestAttestation,
-      baseDuplicateStatus: input.revalidation.baseDuplicateStatus,
-      baseSnapshotStatus,
-      freshAssessment: input.revalidation.freshAssessment,
-      hasManualReviewLabel: pullRequestHasManualReviewVeto(latest),
-      openPullRequestDuplicateStatus: input.revalidation.openPullRequestDuplicateStatus,
-      requiredCheckStatus: reviewStatus
-    })
-    const exactHeadDecision = deriveExactHeadMergeDecision({
-      authorization: latestAuthorization,
-      baseSnapshotStatus,
-      currentHeadSha: latest.head.sha,
-      expectedHeadSha: input.headSha,
-      requiredCheckStatus: reviewStatus
-    })
-    if (
-      !input.authorization.authorized ||
-      !exactHeadDecision.authorized ||
-      latest.state !== 'open' ||
-      latest.draft ||
-      latest.mergeable !== true
-    ) {
-      await syncAuthorizationFailureLabels(
-        input.repo,
-        input.prNumber,
-        exactHeadDecision.authorized ? 'manual_review' : exactHeadDecision.disposition
-      )
+    if (!decision.mergeAllowed) {
       return {
         attempted: false,
         mode: 'applied',
-        reason: exactHeadDecision.authorized
+        reason: decision.authorization.authorized
           ? 'Pull request state changed before merge.'
-          : exactHeadDecision.reason,
+          : decision.authorization.reason,
         status: 'skipped'
       }
     }
-    await execGh([
-      'api',
-      `repos/${input.repo}/pulls/${input.prNumber}/merge`,
-      '--method',
-      'PUT',
-      '-f',
-      `sha=${input.headSha}`,
-      '-f',
-      'merge_method=squash'
-    ])
 
     return {
       attempted: true,
@@ -2027,6 +2087,14 @@ async function fetchPullRequestDetails(
   return details
 }
 
+/** Fetch exactly one final mutable PR snapshot without retries or follow-up reads. */
+async function fetchFinalPullRequestDetails(
+  repo: string,
+  pullRequestNumber: number
+): Promise<GitHubPullRequestDetails> {
+  return ghApiJson<GitHubPullRequestDetails>([`repos/${repo}/pulls/${pullRequestNumber}`])
+}
+
 /** Fetch a bounded immutable changed-file manifest for exact Git object SHAs. */
 async function fetchImmutablePullRequestManifest(
   repo: string,
@@ -2058,10 +2126,17 @@ async function fetchTrustedBaseStatus(
   if (baseRef !== 'main' || typeof pullRequestBaseSha !== 'string' || baseRepository !== repo) {
     return 'unavailable'
   }
+  return fetchCurrentBaseStatusForSnapshot(repo, pullRequestBaseSha, checkedOutSha)
+}
+
+/** Compare live canonical main to one immutable PR base and trusted checkout SHA. */
+async function fetchCurrentBaseStatusForSnapshot(
+  repo: string,
+  pullRequestBaseSha: string,
+  checkedOutSha: string
+): Promise<TrustedBaseStatus> {
   try {
-    const branch = await ghApiJson<{ commit?: { sha?: string } }>([
-      `repos/${repo}/branches/${encodeURIComponent(baseRef)}`
-    ])
+    const branch = await ghApiJson<{ commit?: { sha?: string } }>([`repos/${repo}/branches/main`])
     return deriveTrustedBaseStatus({
       checkedOutSha,
       currentBaseSha: branch.commit?.sha ?? '',
@@ -2081,11 +2156,24 @@ async function fetchReviewStatus(
 ): Promise<ReviewConclusion> {
   if (
     details.base?.ref !== 'main' ||
+    details.base.repo?.full_name !== repo ||
     !/^[a-f0-9]{40}$/.test(details.base.sha ?? '') ||
     !/^[a-f0-9]{40}$/.test(details.head.sha)
   ) {
     return 'missing'
   }
+  return fetchReviewStatusForSnapshot(repo, {
+    baseSha: details.base.sha ?? '',
+    headSha: details.head.sha,
+    prNumber: details.number
+  })
+}
+
+/** Fetch the trusted check for one immutable PR/base/head snapshot. */
+async function fetchReviewStatusForSnapshot(
+  repo: string,
+  snapshot: { readonly baseSha: string; readonly headSha: string; readonly prNumber: number }
+): Promise<ReviewConclusion> {
   try {
     const workflow = await ghApiJson<{ id?: number; path?: string }>([
       `repos/${repo}/actions/workflows/pr-review.yml`
@@ -2099,13 +2187,13 @@ async function fetchReviewStatus(
       return 'missing'
     }
     const workflowRuns = await ghApiJson<GitHubWorkflowRunsResponse>([
-      `repos/${repo}/actions/workflows/${workflow.id}/runs?head_sha=${details.head.sha}&event=pull_request&per_page=100`
+      `repos/${repo}/actions/workflows/${workflow.id}/runs?head_sha=${snapshot.headSha}&event=pull_request&per_page=100`
     ])
     return selectTrustedReviewConclusion(workflowRuns.workflow_runs, {
       baseRef: 'main',
-      baseSha: details.base.sha ?? '',
-      headSha: details.head.sha,
-      prNumber: details.number,
+      baseSha: snapshot.baseSha,
+      headSha: snapshot.headSha,
+      prNumber: snapshot.prNumber,
       workflowId: workflow.id
     })
   } catch {
