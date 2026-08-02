@@ -40,7 +40,8 @@ redis = {
   end
 }
 
-local compiled = assert(load(script))
+local compiler = loadstring or load
+local compiled = assert(compiler(script))
 local function run(keys, arguments)
   KEYS = keys
   ARGV = arguments
@@ -112,6 +113,7 @@ const executeLua = (script: string, scenario: string) =>
 
 describe('submission Redis Lua contracts', () => {
   it('retains the required Redis script contracts without a local Lua runtime', () => {
+    expect(LUA_HARNESS).toContain('local compiler = loadstring or load')
     expect(FINAL_ASSESSMENT_SCRIPT).toContain("redis.call('PTTL', KEYS[1])")
     expect(ACQUIRE_SUBMISSION_LOCKS_SCRIPT).toContain("return 'conflict'")
     expect(SUBMISSION_RATE_LIMIT_SCRIPT).toContain("return 'source_ip'")

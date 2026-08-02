@@ -91,7 +91,10 @@ const canonicalizeSourceIp = (value: string): string | null => {
   const version = isIP(value)
   if (version === 4) return value
   if (version !== 6) return null
-  return SocketAddress.parse(`[${value}]:0`)?.address ?? null
+  const canonical = SocketAddress.parse(`[${value}]:0`)?.address
+  if (!canonical) return null
+  const mappedIpv4 = canonical.startsWith('::ffff:') ? canonical.slice('::ffff:'.length) : ''
+  return isIP(mappedIpv4) === 4 ? mappedIpv4 : canonical
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
