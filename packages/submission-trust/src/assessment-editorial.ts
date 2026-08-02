@@ -1,6 +1,6 @@
+import type { EditorialPolicyResult } from '#editorial-policy'
 import { sanitizeAssessmentEvidenceDetails } from '#evidence'
 import type { AssessmentEvidence } from '#types'
-import type { EditorialPolicyResult } from './editorial-policy.js'
 
 const MANUAL_MESSAGE =
   'Your submission is safe to review, but one or more directory guidelines need a maintainer decision.'
