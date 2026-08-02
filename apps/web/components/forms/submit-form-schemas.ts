@@ -21,6 +21,16 @@ export const step1Schema = z.object({
 })
 
 const validCategorySlugs = categories.map(category => category.slug) as [string, ...string[]]
+const publicationDateSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, { message: 'Publication date must use YYYY-MM-DD' })
+  .refine(
+    value => {
+      const parsed = new Date(`${value}T00:00:00.000Z`)
+      return Number.isFinite(parsed.getTime()) && parsed.toISOString().startsWith(value)
+    },
+    { message: 'Publication date is invalid' }
+  )
 
 /**
  * Validation schema for Step 2 of the submit form
@@ -67,7 +77,7 @@ export const step2Schema = z.object({
     .url({
       message: 'Please enter a valid URL.'
     })
-    .refine(value => /llms\.txt(?:$|\?)/i.test(value), {
+    .refine(value => /llms\.txt(?:$|[?#])/i.test(value), {
       message: 'URL must end with llms.txt'
     }),
   llmsFullUrl: z
@@ -78,7 +88,7 @@ export const step2Schema = z.object({
         .url({
           message: 'Please enter a valid URL.'
         })
-        .refine(value => /llms-full\.txt(?:$|\?)/i.test(value), {
+        .refine(value => /llms-full\.txt(?:$|[?#])/i.test(value), {
           message: 'URL must end with llms-full.txt'
         }),
       z.null()
@@ -120,14 +130,14 @@ export const submitActionSchema = z.object({
   llmsUrl: z
     .string()
     .url({ message: 'Please enter a valid URL.' })
-    .refine(value => /llms\.txt(?:$|\?)/i.test(value), { message: 'URL must end with llms.txt' }),
+    .refine(value => /llms\.txt(?:$|[?#])/i.test(value), { message: 'URL must end with llms.txt' }),
   llmsFullUrl: z
     .union([
       z.literal(''),
       z
         .string()
         .url({ message: 'Please enter a valid URL.' })
-        .refine(value => /llms-full\.txt(?:$|\?)/i.test(value), {
+        .refine(value => /llms-full\.txt(?:$|[?#])/i.test(value), {
           message: 'URL must end with llms-full.txt'
         }),
       z.null()
@@ -136,7 +146,16 @@ export const submitActionSchema = z.object({
   category: z.enum(validCategorySlugs, {
     errorMap: () => ({ message: 'Please select a valid category' })
   }),
-  publishedAt: z.string().min(1, { message: 'Publication date is required' })
+  publishedAt: publicationDateSchema
 })
 
 export type SubmitActionData = z.infer<typeof submitActionSchema>
+
+/** Server-side schema for the support-gated final submission action. */
+export const finalSubmitActionSchema = submitActionSchema.extend({
+  continuationToken: z.string().min(1).max(512),
+  followAttested: z.literal('true'),
+  supportPlatform: z.enum(['x', 'linkedin'])
+})
+
+export type FinalSubmitActionData = z.infer<typeof finalSubmitActionSchema>

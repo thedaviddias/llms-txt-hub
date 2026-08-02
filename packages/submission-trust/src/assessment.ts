@@ -1,3 +1,4 @@
+import { createEditorialOutcome } from '#assessment-editorial'
 import {
   assessmentEvidenceDetails,
   hasSameSiteFamily,
@@ -12,6 +13,7 @@ import {
   SUBMISSION_MAX_REDIRECTS,
   SUBMISSION_POLICY_VERSION
 } from '#constants'
+import { assessEditorialPolicy } from '#editorial-policy'
 import { sanitizeAssessmentEvidenceDetails } from '#evidence'
 import { classifyLlmsTextBody } from '#llms-content-classifier'
 import type {
@@ -26,8 +28,6 @@ import type {
   SubmissionFields
 } from '#types'
 import { mergeSubmissionDecisions } from '#types'
-import { createEditorialOutcome } from './assessment-editorial.js'
-import { assessEditorialPolicy } from './editorial-policy.js'
 
 const RETRY_MESSAGE =
   'We could not safely verify this site right now. Nothing was published. Please try again later.'

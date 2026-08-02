@@ -4,11 +4,16 @@
   "private": true,
   "type": "module",
   "imports": {
+    "#assessment-editorial": "./src/assessment-editorial.ts",
     "#assessment-resources": "./src/assessment-resources.ts",
     "#constants": "./src/constants.ts",
+    "#editorial-normalization": "./src/editorial-normalization.ts",
+    "#editorial-policy": "./src/editorial-policy.ts",
+    "#editorial-token-aliases": "./src/editorial-token-aliases.ts",
     "#evidence": "./src/evidence.ts",
     "#llms-content-classifier": "./src/llms-content-classifier.ts",
     "#node-https-transport": "./src/node-https-transport.ts",
+    "#regulated-token-policies": "./src/regulated-token-policies.ts",
     "#types": "./src/types.ts",
     "#url-policy": "./src/url-policy.ts"
   },

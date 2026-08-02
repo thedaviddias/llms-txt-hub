@@ -1,4 +1,4 @@
-import { canonicalizeEditorialTokens } from './editorial-token-aliases.js'
+import { canonicalizeEditorialTokens } from '#editorial-token-aliases'
 
 /** Result of a bounded editorial normalization operation. */
 export interface BoundedNormalizedText {

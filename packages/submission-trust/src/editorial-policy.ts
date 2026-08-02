@@ -1,9 +1,9 @@
 import { getDomainWithoutSuffix } from 'tldts'
 import { SUBMISSION_HOMEPAGE_MAX_BYTES, SUBMISSION_LLMS_MAX_BYTES } from '#constants'
-import { normalizeEditorialInputs } from './editorial-normalization.js'
-import { canonicalEditorialToken, canonicalizeEditorialTokens } from './editorial-token-aliases.js'
-import { regulatedEvidence } from './regulated-token-policies.js'
-import type { SubmissionFields } from './types.js'
+import { normalizeEditorialInputs } from '#editorial-normalization'
+import { canonicalEditorialToken, canonicalizeEditorialTokens } from '#editorial-token-aliases'
+import { regulatedEvidence } from '#regulated-token-policies'
+import type { SubmissionFields } from '#types'
 
 /** Category metadata projected from the application's canonical category list. */
 export interface EditorialCategoryDescriptor {

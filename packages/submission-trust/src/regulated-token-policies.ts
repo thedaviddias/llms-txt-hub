@@ -1,4 +1,4 @@
-import { canonicalEditorialToken } from './editorial-token-aliases.js'
+import { canonicalEditorialToken } from '#editorial-token-aliases'
 
 interface TokenCombinationPolicy {
   readonly contextTokens: readonly string[]
