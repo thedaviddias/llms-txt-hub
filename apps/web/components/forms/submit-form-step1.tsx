@@ -10,6 +10,7 @@ import {
   FormMessage
 } from '@thedaviddias/design-system/form'
 import { Input } from '@thedaviddias/design-system/input'
+import { useEffect } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 import type { Step1Data } from './submit-form-schemas'
 
@@ -17,12 +18,26 @@ interface SubmitFormStep1Props {
   form: UseFormReturn<Step1Data>
   onSubmit: (data: Step1Data) => void
   isLoading: boolean
+  shouldFocus?: boolean
+  onFocusComplete?: () => void
 }
 
 /**
  * Step 1 of the submit form - Website URL input
  */
-export function SubmitFormStep1({ form, onSubmit, isLoading }: SubmitFormStep1Props) {
+export function SubmitFormStep1({
+  form,
+  onSubmit,
+  isLoading,
+  shouldFocus,
+  onFocusComplete
+}: SubmitFormStep1Props) {
+  useEffect(() => {
+    if (!shouldFocus) return
+    form.setFocus('website')
+    onFocusComplete?.()
+  }, [form, onFocusComplete, shouldFocus])
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

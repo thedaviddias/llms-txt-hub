@@ -72,16 +72,10 @@ export function generateLlmsFullUrl(websiteUrl: string): string {
 /**
  * Checks if a URL is accessible
  */
-export async function checkUrl(
-  url: string,
-  setStatus: (status: { checking: boolean; accessible: boolean | null; error?: string }) => void
-) {
+export async function checkUrl(url: string, signal?: AbortSignal) {
   if (!url) {
-    setStatus({ checking: false, accessible: null })
-    return false
+    return { checking: false, accessible: null }
   }
-
-  setStatus({ checking: true, accessible: null })
 
   try {
     const response = await fetch('/api/check-url', {
@@ -89,20 +83,21 @@ export async function checkUrl(
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ url })
+      body: JSON.stringify({ url }),
+      signal
     })
 
     const result = await response.json()
-    setStatus({
+    return {
       checking: false,
       accessible: result.accessible,
       error: result.error
-    })
+    }
   } catch (_error) {
-    setStatus({
+    return {
       checking: false,
       accessible: false,
       error: 'Failed to check URL'
-    })
+    }
   }
 }

@@ -43,6 +43,8 @@ interface UrlFieldsProps {
   validateDomains: () => void
   checkLlmsUrl: (url: string) => void
   checkLlmsFullUrl: (url: string) => void
+  invalidateLlmsUrl: () => void
+  invalidateLlmsFullUrl: () => void
 }
 
 /**
@@ -57,7 +59,9 @@ export function UrlFields({
   setLlmsFullUrlStatus,
   validateDomains,
   checkLlmsUrl,
-  checkLlmsFullUrl
+  checkLlmsFullUrl,
+  invalidateLlmsUrl,
+  invalidateLlmsFullUrl
 }: UrlFieldsProps) {
   return (
     <>
@@ -118,12 +122,15 @@ export function UrlFields({
                   className="px-4 py-2 rounded-lg"
                   {...field}
                   onChange={e => {
+                    const nextUrl = e.target.value
                     field.onChange(e)
+                    invalidateLlmsUrl()
                     // Validate domain and check URL accessibility when it changes
                     setTimeout(() => {
                       validateDomains()
-                      if (e.target.value) {
-                        checkLlmsUrl(e.target.value)
+                      if (form.getValues('llmsUrl') !== nextUrl) return
+                      if (nextUrl) {
+                        checkLlmsUrl(nextUrl)
                       } else {
                         setLlmsUrlStatus({ checking: false, accessible: null })
                       }
@@ -133,7 +140,11 @@ export function UrlFields({
                 {/* Status Indicator */}
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                   {llmsUrlStatus.checking && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500" />
+                    <div
+                      aria-label="Checking llms.txt URL"
+                      className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"
+                      role="status"
+                    />
                   )}
                   {!llmsUrlStatus.checking && llmsUrlStatus.accessible === true && (
                     <div className="text-green-500" title="URL is accessible">
@@ -177,7 +188,9 @@ export function UrlFields({
                     if (websiteUrl) {
                       const autoUrl = generateLlmsFullUrl(websiteUrl)
                       field.onChange(autoUrl)
+                      invalidateLlmsFullUrl()
                       setTimeout(() => {
+                        if (form.getValues('llmsFullUrl') !== autoUrl) return
                         validateDomains()
                         checkLlmsFullUrl(autoUrl)
                       }, 100)
@@ -197,12 +210,15 @@ export function UrlFields({
                   {...field}
                   value={field.value ?? ''}
                   onChange={e => {
+                    const nextUrl = e.target.value
                     field.onChange(e)
+                    invalidateLlmsFullUrl()
                     // Validate domain and check URL accessibility when it changes
                     setTimeout(() => {
                       validateDomains()
-                      if (e.target.value) {
-                        checkLlmsFullUrl(e.target.value)
+                      if (form.getValues('llmsFullUrl') !== nextUrl) return
+                      if (nextUrl) {
+                        checkLlmsFullUrl(nextUrl)
                       } else {
                         setLlmsFullUrlStatus({ checking: false, accessible: null })
                       }
@@ -212,7 +228,11 @@ export function UrlFields({
                 {/* Status Indicator */}
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                   {llmsFullUrlStatus.checking && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500" />
+                    <div
+                      aria-label="Checking llms-full.txt URL"
+                      className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"
+                      role="status"
+                    />
                   )}
                   {!llmsFullUrlStatus.checking && llmsFullUrlStatus.accessible === true && (
                     <div className="text-green-500" title="URL is accessible">

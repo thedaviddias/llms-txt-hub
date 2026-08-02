@@ -4,11 +4,13 @@ import { Alert, AlertDescription, AlertTitle } from '@thedaviddias/design-system
 import { Button } from '@thedaviddias/design-system/button'
 import { Form } from '@thedaviddias/design-system/form'
 import { AlertTriangle } from 'lucide-react'
+import { useEffect } from 'react'
 import type { UseFormReturn } from 'react-hook-form'
 import type { Step2Data } from './submit-form-schemas'
 import { ContentFields } from './submit-form-step2-content-fields'
 import { UrlFields } from './submit-form-step2-url-fields'
-import { checkUrl, isSameDomain, normalizeDomain } from './submit-form-utils'
+import { isSameDomain, normalizeDomain } from './submit-form-utils'
+import { useSubmitUrlCheck } from './use-submit-url-check'
 
 interface SubmitFormStep2Props {
   form: UseFormReturn<Step2Data>
@@ -41,6 +43,8 @@ interface SubmitFormStep2Props {
     error?: string
   }) => void
   onReset: () => void
+  shouldFocus?: boolean
+  onFocusComplete?: () => void
 }
 
 /**
@@ -56,8 +60,22 @@ export function SubmitFormStep2({
   llmsFullUrlStatus,
   setLlmsUrlStatus,
   setLlmsFullUrlStatus,
-  onReset
+  onReset,
+  shouldFocus,
+  onFocusComplete
 }: SubmitFormStep2Props) {
+  const llmsUrlCheck = useSubmitUrlCheck(() => form.getValues('llmsUrl'), setLlmsUrlStatus)
+  const llmsFullUrlCheck = useSubmitUrlCheck(
+    () => form.getValues('llmsFullUrl') ?? '',
+    setLlmsFullUrlStatus
+  )
+
+  useEffect(() => {
+    if (!shouldFocus) return
+    form.setFocus('name')
+    onFocusComplete?.()
+  }, [form, onFocusComplete, shouldFocus])
+
   /**
    * Validates domains with comprehensive error handling
    */
@@ -144,57 +162,62 @@ export function SubmitFormStep2({
   /**
    * Checks llms URL accessibility
    */
-  const checkLlmsUrl = (url: string) => checkUrl(url, setLlmsUrlStatus)
+  const checkLlmsUrl = (url: string) => llmsUrlCheck.check(url)
   /**
    * Checks llms-full URL accessibility
    */
-  const checkLlmsFullUrl = (url: string) => checkUrl(url, setLlmsFullUrlStatus)
+  const checkLlmsFullUrl = (url: string) => llmsFullUrlCheck.check(url)
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        {fetchFailed && (
-          <Alert variant="destructive">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>Could not fetch website information</AlertTitle>
-            <AlertDescription>
-              We were unable to automatically retrieve details for this website. Please fill in the
-              fields below manually.
-            </AlertDescription>
-          </Alert>
-        )}
+        <fieldset aria-label="Website details" className="contents" disabled={isLoading}>
+          {fetchFailed && (
+            <Alert variant="destructive">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>Could not fetch website information</AlertTitle>
+              <AlertDescription>
+                We were unable to automatically retrieve details for this website. Please fill in
+                the fields below manually.
+              </AlertDescription>
+            </Alert>
+          )}
 
-        <UrlFields
-          form={form}
-          websiteUrlStatus={websiteUrlStatus}
-          llmsUrlStatus={llmsUrlStatus}
-          llmsFullUrlStatus={llmsFullUrlStatus}
-          setLlmsUrlStatus={setLlmsUrlStatus}
-          setLlmsFullUrlStatus={setLlmsFullUrlStatus}
-          validateDomains={validateDomains}
-          checkLlmsUrl={checkLlmsUrl}
-          checkLlmsFullUrl={checkLlmsFullUrl}
-        />
+          <UrlFields
+            form={form}
+            websiteUrlStatus={websiteUrlStatus}
+            llmsUrlStatus={llmsUrlStatus}
+            llmsFullUrlStatus={llmsFullUrlStatus}
+            setLlmsUrlStatus={setLlmsUrlStatus}
+            setLlmsFullUrlStatus={setLlmsFullUrlStatus}
+            validateDomains={validateDomains}
+            checkLlmsUrl={checkLlmsUrl}
+            checkLlmsFullUrl={checkLlmsFullUrl}
+            invalidateLlmsUrl={llmsUrlCheck.invalidate}
+            invalidateLlmsFullUrl={llmsFullUrlCheck.invalidate}
+          />
 
-        <ContentFields form={form} />
+          <ContentFields form={form} />
 
-        <div className="flex gap-4 justify-end">
-          <Button
-            type="button"
-            onClick={onReset}
-            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
-          >
-            Reset
-          </Button>
+          <div className="flex gap-4 justify-end">
+            <Button
+              type="button"
+              onClick={onReset}
+              disabled={isLoading}
+              className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
+            >
+              Reset
+            </Button>
 
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
-          >
-            {isLoading ? 'Checking...' : 'Continue to support'}
-          </Button>
-        </div>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
+            >
+              {isLoading ? 'Checking...' : 'Continue to support'}
+            </Button>
+          </div>
+        </fieldset>
       </form>
     </Form>
   )
