@@ -35,8 +35,8 @@ describe('submission state', () => {
     ['final_assessing', 'manual_review'],
     ['final_assessing', 'auto_publish_pending'],
     ['auto_publish_pending', 'publishing'],
-    ['auto_publish_pending', 'published'],
-    ['auto_publish_pending', 'publish_failed']
+    ['publishing', 'published'],
+    ['publishing', 'publish_failed']
   ])('allows %s -> %s', (from, to) => {
     expect(isAllowedSubmissionTransition(from, to)).toBe(true)
   })
@@ -45,6 +45,8 @@ describe('submission state', () => {
     ['draft', 'publishing'],
     ['support_required', 'published'],
     ['final_assessing', 'support_required'],
+    ['auto_publish_pending', 'published'],
+    ['auto_publish_pending', 'publish_failed'],
     ['manual_review', 'publishing'],
     ['published', 'draft'],
     ['publish_failed', 'publishing']
@@ -167,7 +169,7 @@ describe('submission state', () => {
     expect(redis.eval).not.toHaveBeenCalled()
   })
 
-  it('preserves the original 48-hour expiry when final assessment starts later', async () => {
+  it('preserves the physical Redis TTL atomically when final assessment starts later', async () => {
     const redis = makeRedis()
     redis.setNx.mockResolvedValue(true)
     redis.eval.mockResolvedValue('transitioned')
@@ -192,7 +194,13 @@ describe('submission state', () => {
       }
     )
 
-    expect(redis.eval.mock.calls[0]?.[2]?.at(-1)).toBe(String(47 * 60 * 60))
+    expect(redis.eval.mock.calls[0]?.[0]).toContain("redis.call('PTTL', KEYS[1])")
+    expect(redis.eval.mock.calls[0]?.[0]).toContain("'PX', ttl")
+    expect(redis.eval.mock.calls[0]?.[2]).toEqual([
+      'user_123',
+      created.record.fieldsHash,
+      new Date(NOW.getTime() + 60 * 60 * 1000).toISOString()
+    ])
   })
 
   it('fails closed when Redis cannot create or consume state', async () => {

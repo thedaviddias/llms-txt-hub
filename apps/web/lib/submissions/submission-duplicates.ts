@@ -3,24 +3,22 @@ import { logger } from '@thedaviddias/logging'
 import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
 import yaml from 'js-yaml'
 
-import { getWebsites } from '@/lib/content-loader'
+import { getWebsitesStrict } from './strict-website-loader'
 
-const MAX_OPEN_PULL_REQUESTS = 100
-const MAX_PULL_REQUEST_FILES = 100
+const GITHUB_PAGE_SIZE = 50
+const MAX_GITHUB_PAGES = 3
 const MAX_AGGREGATE_PULL_REQUEST_FILES = 250
 const MAX_PR_BODY_CHARACTERS = 100_000
 const MAX_MDX_BYTES = 100_000
+const MAX_RAW_BASE64_CHARACTERS = 150_000
 const GITHUB_TIMEOUT_MS = 5_000
 const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
 
-interface CatalogueWebsite {
-  readonly llmsUrl: string
-  readonly website: string
-}
-
 interface OpenPullRequest {
   readonly body: string | null
+  readonly headOwnerLogin: string
   readonly headRef: string
+  readonly headRepoFullName: string
   readonly headSha: string
   readonly number: number
 }
@@ -29,6 +27,15 @@ interface PullRequestFile {
   readonly path: string
   readonly status: string
 }
+
+interface CatalogueWebsite {
+  readonly llmsUrl: string
+  readonly website: string
+}
+
+type DuplicateCatalogueResult =
+  | { readonly status: 'available'; readonly websites: readonly CatalogueWebsite[] }
+  | { readonly status: 'unavailable' }
 
 interface DuplicateGitHubOperations {
   readonly getFileContent: (
@@ -39,18 +46,26 @@ interface DuplicateGitHubOperations {
   ) => Promise<string>
   readonly listOpenPullRequests: (
     owner: string,
-    repo: string
+    repo: string,
+    page: number
   ) => Promise<readonly OpenPullRequest[]>
   readonly listPullRequestFiles: (
     owner: string,
     repo: string,
-    pullNumber: number
+    pullNumber: number,
+    page: number
   ) => Promise<readonly PullRequestFile[]>
 }
 
 interface DuplicateDependencies {
-  readonly getWebsites: () => readonly CatalogueWebsite[]
+  readonly getWebsitesStrict: () => DuplicateCatalogueResult
   readonly github: DuplicateGitHubOperations
+}
+
+interface NormalizedDuplicateFields {
+  readonly llmsFullUrl?: string
+  readonly llmsUrl: string
+  readonly website: string
 }
 
 /** Fail-closed result of catalogue and open-PR duplicate inspection. */
@@ -75,6 +90,60 @@ const getOctokit = (): Promise<Octokit> => {
   return octokitPromise
 }
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const parsePullRequest = (value: unknown): OpenPullRequest | null => {
+  if (!isRecord(value) || !isRecord(value.head)) return null
+  const head = value.head
+  if (!isRecord(head.repo)) return null
+  const headRepo = head.repo
+  if (
+    !Number.isSafeInteger(value.number) ||
+    typeof value.number !== 'number' ||
+    value.number <= 0 ||
+    (value.body !== null && typeof value.body !== 'string') ||
+    (typeof value.body === 'string' && value.body.length > MAX_PR_BODY_CHARACTERS) ||
+    typeof head.ref !== 'string' ||
+    head.ref.length === 0 ||
+    head.ref.length > 255 ||
+    typeof head.sha !== 'string' ||
+    !/^[a-f0-9]{40}$/.test(head.sha) ||
+    typeof headRepo.full_name !== 'string' ||
+    headRepo.full_name.length === 0 ||
+    headRepo.full_name.length > 201 ||
+    !isRecord(headRepo.owner) ||
+    typeof headRepo.owner.login !== 'string' ||
+    headRepo.owner.login.length === 0 ||
+    headRepo.owner.login.length > 100
+  ) {
+    return null
+  }
+  return {
+    body: value.body,
+    headOwnerLogin: headRepo.owner.login,
+    headRef: head.ref,
+    headRepoFullName: headRepo.full_name,
+    headSha: head.sha,
+    number: value.number
+  }
+}
+
+const parsePullRequestFile = (value: unknown): PullRequestFile | null => {
+  if (
+    !isRecord(value) ||
+    typeof value.filename !== 'string' ||
+    value.filename.length === 0 ||
+    value.filename.length > 1024 ||
+    typeof value.status !== 'string' ||
+    value.status.length === 0 ||
+    value.status.length > 32
+  ) {
+    return null
+  }
+  return { path: value.filename, status: value.status }
+}
+
 const DEFAULT_GITHUB: DuplicateGitHubOperations = {
   async getFileContent(owner, repo, path, ref) {
     const octokit = await getOctokit()
@@ -85,8 +154,14 @@ const DEFAULT_GITHUB: DuplicateGitHubOperations = {
       repo,
       request: { timeout: GITHUB_TIMEOUT_MS }
     })
-    const data = response.data
-    if (Array.isArray(data) || data.type !== 'file' || data.encoding !== 'base64') {
+    const data: unknown = response.data
+    if (
+      !isRecord(data) ||
+      data.type !== 'file' ||
+      data.encoding !== 'base64' ||
+      typeof data.content !== 'string' ||
+      data.content.length > MAX_RAW_BASE64_CHARACTERS
+    ) {
       throw new Error('Unsupported GitHub content response')
     }
     const encoded = data.content.replace(/\s/g, '')
@@ -100,37 +175,54 @@ const DEFAULT_GITHUB: DuplicateGitHubOperations = {
     if (bytes.byteLength > MAX_MDX_BYTES) throw new Error('GitHub content response too large')
     return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
   },
-  async listOpenPullRequests(owner, repo) {
+  async listOpenPullRequests(owner, repo, page) {
     const octokit = await getOctokit()
     const response = await octokit.pulls.list({
       owner,
-      per_page: MAX_OPEN_PULL_REQUESTS,
+      page,
+      per_page: GITHUB_PAGE_SIZE,
       repo,
       request: { timeout: GITHUB_TIMEOUT_MS },
       state: 'open'
     })
-    return response.data.map(pullRequest => ({
-      body: pullRequest.body,
-      headRef: pullRequest.head.ref,
-      headSha: pullRequest.head.sha,
-      number: pullRequest.number
-    }))
+    const data: unknown = response.data
+    if (!Array.isArray(data) || data.length > GITHUB_PAGE_SIZE) {
+      throw new Error('Malformed GitHub pull request page')
+    }
+    const pullRequests: OpenPullRequest[] = []
+    for (const value of data) {
+      const pullRequest = parsePullRequest(value)
+      if (!pullRequest) throw new Error('Malformed GitHub pull request')
+      pullRequests.push(pullRequest)
+    }
+    return pullRequests
   },
-  async listPullRequestFiles(owner, repo, pullNumber) {
+  async listPullRequestFiles(owner, repo, pullNumber, page) {
     const octokit = await getOctokit()
     const response = await octokit.pulls.listFiles({
       owner,
-      per_page: MAX_PULL_REQUEST_FILES,
+      page,
+      per_page: GITHUB_PAGE_SIZE,
       pull_number: pullNumber,
       repo,
       request: { timeout: GITHUB_TIMEOUT_MS }
     })
-    return response.data.map(file => ({ path: file.filename, status: file.status }))
+    const data: unknown = response.data
+    if (!Array.isArray(data) || data.length > GITHUB_PAGE_SIZE) {
+      throw new Error('Malformed GitHub pull request files page')
+    }
+    const files: PullRequestFile[] = []
+    for (const value of data) {
+      const file = parsePullRequestFile(value)
+      if (!file) throw new Error('Malformed GitHub pull request file')
+      files.push(file)
+    }
+    return files
   }
 }
 
 const DEFAULT_DEPENDENCIES: DuplicateDependencies = {
-  getWebsites,
+  getWebsitesStrict,
   github: DEFAULT_GITHUB
 }
 
@@ -139,113 +231,129 @@ const retryLater = (): SubmissionDuplicateResult => ({
   status: 'retry_later'
 })
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value)
-
-const parseFrontmatterUrls = (
-  content: string
-): { readonly llmsUrl: string; readonly website: string } | null => {
+const parseFrontmatterUrls = (content: string): NormalizedDuplicateFields | null => {
   if (content.length === 0 || content.length > MAX_MDX_BYTES || !content.startsWith('---\n')) {
     return null
   }
   const closingIndex = content.indexOf('\n---\n', 4)
   if (closingIndex < 0) return null
-  const frontmatter = content.slice(4, closingIndex)
   let parsed: unknown
   try {
-    parsed = yaml.load(frontmatter, { schema: yaml.JSON_SCHEMA })
+    parsed = yaml.load(content.slice(4, closingIndex), { schema: yaml.JSON_SCHEMA })
   } catch {
     return null
   }
   if (
     !isRecord(parsed) ||
     typeof parsed.website !== 'string' ||
-    typeof parsed.llmsUrl !== 'string'
+    typeof parsed.llmsUrl !== 'string' ||
+    (parsed.llmsFullUrl !== undefined &&
+      parsed.llmsFullUrl !== null &&
+      typeof parsed.llmsFullUrl !== 'string')
   ) {
     return null
   }
-  return { llmsUrl: parsed.llmsUrl, website: parsed.website }
+  return normalizeFields(parsed.website, parsed.llmsUrl, parsed.llmsFullUrl ?? undefined)
 }
 
-const normalizePair = (
+const normalizeFields = (
   website: string,
-  llmsUrl: string
-): { readonly llmsUrl: string; readonly website: string } | null => {
+  llmsUrl: string,
+  llmsFullUrl?: string
+): NormalizedDuplicateFields | null => {
   const websiteResult = validateSubmissionUrl(website)
   const llmsResult = validateSubmissionUrl(llmsUrl)
-  if (!websiteResult.ok || !llmsResult.ok) return null
-  return { llmsUrl: llmsResult.normalizedUrl, website: websiteResult.normalizedUrl }
+  const fullResult = llmsFullUrl ? validateSubmissionUrl(llmsFullUrl) : undefined
+  if (!websiteResult.ok || !llmsResult.ok || (fullResult && !fullResult.ok)) return null
+  return fullResult?.ok
+    ? {
+        llmsFullUrl: fullResult.normalizedUrl,
+        llmsUrl: llmsResult.normalizedUrl,
+        website: websiteResult.normalizedUrl
+      }
+    : { llmsUrl: llmsResult.normalizedUrl, website: websiteResult.normalizedUrl }
 }
 
-const matchesInput = (
-  candidate: { readonly llmsUrl: string; readonly website: string },
-  input: { readonly llmsUrl: string; readonly website: string }
+const matchesDuplicate = (
+  candidate: NormalizedDuplicateFields,
+  input: NormalizedDuplicateFields
 ): boolean => candidate.website === input.website || candidate.llmsUrl === input.llmsUrl
 
-const inspectCatalogue = (
-  entries: readonly CatalogueWebsite[],
-  input: { readonly llmsUrl: string; readonly website: string }
-): SubmissionDuplicateResult | null => {
-  for (const entry of entries) {
-    const normalized = normalizePair(entry.website, entry.llmsUrl)
-    if (!normalized) return retryLater()
-    if (matchesInput(normalized, input)) return { source: 'catalogue', status: 'duplicate' }
-  }
-  return null
-}
-
-const validPullRequest = (pullRequest: OpenPullRequest): boolean =>
-  Number.isSafeInteger(pullRequest.number) &&
-  pullRequest.number > 0 &&
-  typeof pullRequest.body !== 'undefined' &&
-  (pullRequest.body === null || typeof pullRequest.body === 'string') &&
-  typeof pullRequest.headRef === 'string' &&
-  pullRequest.headRef.length <= 255 &&
-  /^[a-f0-9]{40}$/.test(pullRequest.headSha)
+const matchesExactly = (
+  candidate: NormalizedDuplicateFields,
+  input: NormalizedDuplicateFields
+): boolean =>
+  candidate.website === input.website &&
+  candidate.llmsUrl === input.llmsUrl &&
+  (candidate.llmsFullUrl ?? '') === (input.llmsFullUrl ?? '')
 
 const isWebsiteMdx = (file: PullRequestFile): boolean =>
   (file.status === 'added' || file.status === 'modified' || file.status === 'renamed') &&
   file.path.startsWith(WEBSITE_PATH_PREFIX) &&
   file.path.endsWith('.mdx')
 
+const collectPages = async <T>(
+  loadPage: (page: number) => Promise<readonly T[]>
+): Promise<readonly T[] | null> => {
+  const collected: T[] = []
+  for (let page = 1; page <= MAX_GITHUB_PAGES; page += 1) {
+    const values = await loadPage(page)
+    if (!Array.isArray(values) || values.length > GITHUB_PAGE_SIZE) return null
+    for (const value of values) collected.push(value)
+    if (values.length < GITHUB_PAGE_SIZE) return collected
+  }
+  return null
+}
+
+const markerCount = (body: string | null, marker: string): number => {
+  if (body === null || body.length > MAX_PR_BODY_CHARACTERS) return body === null ? 0 : 2
+  const first = body.indexOf(marker)
+  if (first < 0) return 0
+  return body.indexOf(marker, first + marker.length) < 0 ? 1 : 2
+}
+
 const inspectOpenPullRequests = async (
-  input: {
-    readonly llmsUrl: string
+  input: NormalizedDuplicateFields & {
     readonly owner: string
     readonly repo: string
     readonly submissionId: string
-    readonly website: string
   },
   github: DuplicateGitHubOperations
 ): Promise<SubmissionDuplicateResult> => {
-  const pullRequests = await github.listOpenPullRequests(input.owner, input.repo)
-  const marker = `<!-- llms-hub-submission:${input.submissionId} -->`
+  const pullRequests = await collectPages(page =>
+    github.listOpenPullRequests(input.owner, input.repo, page)
+  )
+  if (!pullRequests) return retryLater()
 
+  const marker = `<!-- llms-hub-submission:${input.submissionId} -->`
+  const candidates: OpenPullRequest[] = []
   for (const pullRequest of pullRequests) {
-    if (!validPullRequest(pullRequest)) return retryLater()
-    if (pullRequest.body !== null && pullRequest.body.length > MAX_PR_BODY_CHARACTERS) {
-      return retryLater()
-    }
-    if (pullRequest.body?.includes(marker)) {
-      return {
-        branch: pullRequest.headRef,
-        headSha: pullRequest.headSha,
-        prNumber: pullRequest.number,
-        status: 'reconcile'
-      }
-    }
+    const count = markerCount(pullRequest.body, marker)
+    if (count > 1) return retryLater()
+    if (count === 1) candidates.push(pullRequest)
   }
-  if (pullRequests.length >= MAX_OPEN_PULL_REQUESTS) return retryLater()
+  if (candidates.length > 1) return retryLater()
+  const candidate = candidates[0]
+  const expectedRepository = `${input.owner}/${input.repo}`.toLowerCase()
+  const trustedCandidate =
+    candidate?.headRef === `submit/${input.submissionId}` &&
+    candidate.headRepoFullName.toLowerCase() === expectedRepository &&
+    candidate.headOwnerLogin.toLowerCase() === input.owner.toLowerCase()
 
   let examinedFileCount = 0
+  let exactCandidate = false
   for (const pullRequest of pullRequests) {
-    const files = await github.listPullRequestFiles(input.owner, input.repo, pullRequest.number)
-    if (files.length >= MAX_PULL_REQUEST_FILES) return retryLater()
+    const files = await collectPages(page =>
+      github.listPullRequestFiles(input.owner, input.repo, pullRequest.number, page)
+    )
+    if (!files) return retryLater()
     examinedFileCount += files.length
     if (examinedFileCount > MAX_AGGREGATE_PULL_REQUEST_FILES) return retryLater()
-    for (const file of files) {
-      if (file.path.length > 1024 || file.status.length > 32) return retryLater()
-      if (!isWebsiteMdx(file)) continue
+    const websiteFiles = files.filter(isWebsiteMdx)
+    if (pullRequest === candidate && trustedCandidate && websiteFiles.length > 1) {
+      return retryLater()
+    }
+    for (const file of websiteFiles) {
       const content = await github.getFileContent(
         input.owner,
         input.repo,
@@ -254,28 +362,38 @@ const inspectOpenPullRequests = async (
       )
       const frontmatter = parseFrontmatterUrls(content)
       if (!frontmatter) return retryLater()
-      const normalized = normalizePair(frontmatter.website, frontmatter.llmsUrl)
-      if (!normalized) return retryLater()
-      if (matchesInput(normalized, input)) {
+      const exact =
+        pullRequest === candidate && trustedCandidate && matchesExactly(frontmatter, input)
+      if (exact) {
+        exactCandidate = true
+      } else if (matchesDuplicate(frontmatter, input)) {
         return { prNumber: pullRequest.number, source: 'open_pr', status: 'duplicate' }
       }
     }
   }
+
+  if (candidate && trustedCandidate && exactCandidate) {
+    return {
+      branch: candidate.headRef,
+      headSha: candidate.headSha,
+      prNumber: candidate.number,
+      status: 'reconcile'
+    }
+  }
+  if (candidate && trustedCandidate) return retryLater()
   return { status: 'unique' }
 }
 
 /**
  * Check normalized catalogue data and every bounded open submission PR.
  *
- * The check never assumes uniqueness after malformed local data, truncated
- * GitHub results, malformed frontmatter, or an upstream failure.
- *
  * @param input - Canonical duplicate dimensions and repository identity
- * @param dependencies - Catalogue and GitHub readers
+ * @param dependencies - Availability-aware catalogue and bounded GitHub readers
  * @returns Unique, duplicate, reconciliation, or fail-closed retry outcome
  */
 export async function checkSubmissionDuplicates(
   input: {
+    readonly llmsFullUrl?: string
     readonly llmsUrl: string
     readonly owner: string
     readonly repo: string
@@ -284,7 +402,7 @@ export async function checkSubmissionDuplicates(
   },
   dependencies: DuplicateDependencies = DEFAULT_DEPENDENCIES
 ): Promise<SubmissionDuplicateResult> {
-  const normalizedInput = normalizePair(input.website, input.llmsUrl)
+  const normalizedInput = normalizeFields(input.website, input.llmsUrl, input.llmsFullUrl)
   if (
     !normalizedInput ||
     !/^[A-Za-z0-9_.-]{1,100}$/.test(input.owner) ||
@@ -295,9 +413,24 @@ export async function checkSubmissionDuplicates(
   }
 
   try {
-    const catalogueResult = inspectCatalogue(dependencies.getWebsites(), normalizedInput)
-    if (catalogueResult) return catalogueResult
-    return await inspectOpenPullRequests({ ...input, ...normalizedInput }, dependencies.github)
+    const catalogue = dependencies.getWebsitesStrict()
+    if (catalogue.status !== 'available') return retryLater()
+    for (const entry of catalogue.websites) {
+      const normalized = normalizeFields(entry.website, entry.llmsUrl)
+      if (!normalized) return retryLater()
+      if (matchesDuplicate(normalized, normalizedInput)) {
+        return { source: 'catalogue', status: 'duplicate' }
+      }
+    }
+    return await inspectOpenPullRequests(
+      {
+        ...normalizedInput,
+        owner: input.owner,
+        repo: input.repo,
+        submissionId: input.submissionId
+      },
+      dependencies.github
+    )
   } catch (_error) {
     logger.error('Submission duplicate check unavailable', {
       data: { status: 'unavailable' },

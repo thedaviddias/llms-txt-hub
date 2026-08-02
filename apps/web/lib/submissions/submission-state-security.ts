@@ -21,9 +21,11 @@ local record = cjson.decode(raw)
 if record.state ~= 'support_required' then return 'state_mismatch' end
 if record.userId ~= ARGV[1] or record.fieldsHash ~= ARGV[2] then return 'binding_mismatch' end
 if record.expiresAt <= ARGV[3] then return 'expired' end
+local ttl = redis.call('PTTL', KEYS[1])
+if ttl <= 0 then return 'expired' end
 record.state = 'final_assessing'
 record.updatedAt = ARGV[3]
-redis.call('SET', KEYS[1], cjson.encode(record), 'EX', ARGV[4])
+redis.call('SET', KEYS[1], cjson.encode(record), 'PX', ttl)
 return 'transitioned'
 `.trim()
 
@@ -57,14 +59,14 @@ return 'allowed'
 const MINIMUM_SECRET_BYTES = 32
 const TOKEN_PART = /^[A-Za-z0-9_-]+$/
 const STATE_TRANSITIONS: Readonly<Record<SubmissionState, readonly SubmissionState[]>> = {
-  auto_publish_pending: ['publishing', 'published', 'publish_failed'],
+  auto_publish_pending: ['publishing'],
   draft: ['preflight_rejected', 'support_required'],
   final_assessing: ['rejected', 'retry_later', 'manual_review', 'auto_publish_pending'],
   manual_review: [],
   preflight_rejected: [],
   publish_failed: [],
   published: [],
-  publishing: [],
+  publishing: ['published', 'publish_failed'],
   rejected: [],
   retry_later: [],
   support_required: ['final_assessing']

@@ -255,11 +255,10 @@ export async function consumeSubmissionContinuation(
 
   const now = dependencies.now()
   if (Date.parse(record.expiresAt) <= now.getTime()) return { code: 'expired', ok: false }
-  const remainingTtlSeconds = Math.ceil((Date.parse(record.expiresAt) - now.getTime()) / 1000)
   const result = await dependencies.redis.eval<string>(
     FINAL_ASSESSMENT_SCRIPT,
     [submissionStateSecurity.recordKey(submissionId)],
-    [input.userId, fieldsHash, now.toISOString(), String(remainingTtlSeconds)]
+    [input.userId, fieldsHash, now.toISOString()]
   )
   if (result === 'transitioned') return { ok: true, submissionId }
   if (result === 'state_mismatch') return { code: 'replayed', ok: false }
