@@ -14,6 +14,12 @@ describe('SubmitForm return focus', () => {
     jest.clearAllMocks()
   })
 
+  it('focuses the first details field after website metadata loads', async () => {
+    await reachSubmissionDetails()
+
+    expect(screen.getByLabelText(/^name/i)).toHaveFocus()
+  })
+
   it('focuses the first details field after returning from support', async () => {
     const user = await reachSubmissionSupport()
 
