@@ -110,6 +110,38 @@ describe('assessEditorialPolicy', () => {
 
   it.each([
     [
+      'healthcare workflow automation for hospitals',
+      'healthcare workflow automation for hospitals',
+      'health'
+    ],
+    [
+      'banking workflow automation for retail banks',
+      'banking workflow automation for retail banks',
+      'finance'
+    ],
+    [
+      'gambling workflow automation for online casinos',
+      'gambling workflow automation for online casinos',
+      'gambling'
+    ]
+  ])(
+    'routes non-adjacent regulated token combinations to manual review: %s',
+    (_label, inspected, suffix) => {
+      const result = assess(
+        { description: `Acme provides ${inspected}.` },
+        {
+          homepageText: `Acme provides ${inspected}.`,
+          llmsText: `# Acme\n\nAcme provides ${inspected}. https://acme.dev/about`
+        }
+      )
+
+      expect(result.decision).toBe('manual_review')
+      expect(result.evidenceIds).toContain(`editorial:regulated:${suffix}`)
+    }
+  )
+
+  it.each([
+    [
       'hospital healthcare',
       'Acme operates a hospital network offering healthcare services.',
       'Acme hospital network and healthcare services for patients.',
@@ -235,8 +267,29 @@ describe('assessEditorialPolicy', () => {
     expect(result.decision).toBe('manual_review')
   })
 
+  it.each([
+    ['Dev', 'https://unrelated.dev'],
+    ['Cloud', 'https://unrelated.cloud'],
+    ['Com', 'https://unrelated.com']
+  ])('does not treat public suffix text as brand ownership: %s', (name, website) => {
+    const result = assess({ name, website })
+
+    expect(result.evidenceIds).toContain('editorial:identity:name-domain-mismatch')
+    expect(result.decision).toBe('manual_review')
+  })
+
   it('accepts a defensible multi-token brand and hyphenated domain label', () => {
     const result = assess({ name: 'Acme Cloud', website: 'https://acme-cloud.com' })
+
+    expect(result).toEqual({
+      decision: 'auto_publish',
+      evidenceIds: ['editorial:passed'],
+      reasonCode: 'passed'
+    })
+  })
+
+  it('accepts the owner label of a private-suffix tenant', () => {
+    const result = assess({ name: 'Acme Project', website: 'https://acme-project.github.io' })
 
     expect(result).toEqual({
       decision: 'auto_publish',
