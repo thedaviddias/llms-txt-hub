@@ -33,16 +33,16 @@ describe('submission state', () => {
     ['support_required', 'final_assessing'],
     ['final_assessing', 'rejected'],
     ['final_assessing', 'retry_later'],
-    ['final_assessing', 'manual_review'],
+    ['final_assessing', 'manual_review_pending'],
     ['final_assessing', 'auto_publish_pending'],
     ['auto_publish_pending', 'publishing'],
     ['auto_publish_pending', 'publish_failed'],
-    ['manual_review', 'publishing'],
-    ['manual_review', 'publish_failed'],
+    ['manual_review_pending', 'publishing'],
+    ['manual_review_pending', 'publish_failed'],
     ['publishing', 'published'],
     ['publishing', 'publish_failed'],
     ['publish_failed', 'auto_publish_pending'],
-    ['publish_failed', 'manual_review']
+    ['publish_failed', 'manual_review_pending']
   ])('allows %s -> %s', (from, to) => {
     expect(isAllowedSubmissionTransition(from, to)).toBe(true)
   })
@@ -114,43 +114,45 @@ describe('submission state', () => {
     expect(redis.eval.mock.calls[0]?.[0]).toContain('final_assessing')
   })
 
-  it.each(['auto_publish_pending', 'manual_review', 'publishing', 'publish_failed'] as const)(
-    'returns explicit same-ID recovery from bound %s state',
-    async state => {
-      const redis = makeRedis()
-      redis.setNx.mockResolvedValue(true)
-      redis.eval.mockResolvedValue(`recovery:${state}`)
-      const created = await createSubmissionContinuation(
-        { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
+  it.each([
+    'auto_publish_pending',
+    'manual_review_pending',
+    'publishing',
+    'publish_failed'
+  ] as const)('returns explicit same-ID recovery from bound %s state', async state => {
+    const redis = makeRedis()
+    redis.setNx.mockResolvedValue(true)
+    redis.eval.mockResolvedValue(`recovery:${state}`)
+    const created = await createSubmissionContinuation(
+      { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
+      { now: () => NOW, redis, secret: SECRET }
+    )
+    expect(created.ok).toBe(true)
+    if (!created.ok) return
+    redis.get.mockResolvedValue({
+      ...created.record,
+      branch: 'submit/sub_123',
+      resultCode:
+        state === 'publish_failed'
+          ? 'publication_unavailable'
+          : state === 'manual_review_pending'
+            ? 'manual_review'
+            : 'auto_publish',
+      state
+    })
+
+    await expect(
+      consumeSubmissionContinuation(
+        {
+          continuationToken: created.continuationToken,
+          fields: FIELDS,
+          userId: 'user_123'
+        },
         { now: () => NOW, redis, secret: SECRET }
       )
-      expect(created.ok).toBe(true)
-      if (!created.ok) return
-      redis.get.mockResolvedValue({
-        ...created.record,
-        branch: 'submit/sub_123',
-        resultCode:
-          state === 'publish_failed'
-            ? 'publication_unavailable'
-            : state === 'manual_review'
-              ? 'manual_review'
-              : 'auto_publish',
-        state
-      })
-
-      await expect(
-        consumeSubmissionContinuation(
-          {
-            continuationToken: created.continuationToken,
-            fields: FIELDS,
-            userId: 'user_123'
-          },
-          { now: () => NOW, redis, secret: SECRET }
-        )
-      ).resolves.toEqual({ mode: 'recovery', ok: true, state, submissionId: 'sub_123' })
-      expect(redis.eval.mock.calls[0]?.[0]).toContain("record.state == 'publishing'")
-    }
-  )
+    ).resolves.toEqual({ mode: 'recovery', ok: true, state, submissionId: 'sub_123' })
+    expect(redis.eval.mock.calls[0]?.[0]).toContain("record.state == 'publishing'")
+  })
 
   it.each([
     [
@@ -181,6 +183,36 @@ describe('submission state', () => {
     )
 
     expect(result).toEqual({ code: 'invalid_continuation', ok: false })
+    expect(redis.eval).not.toHaveBeenCalled()
+  })
+
+  it('denies a foreign signature from a crash-recoverable pending state', async () => {
+    const redis = makeRedis()
+    redis.setNx.mockResolvedValue(true)
+    const created = await createSubmissionContinuation(
+      { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
+      { now: () => NOW, redis, secret: SECRET }
+    )
+    expect(created.ok).toBe(true)
+    if (!created.ok) return
+    redis.get.mockResolvedValue({
+      ...created.record,
+      branch: 'submit/sub_123',
+      publicationAttempted: true,
+      resultCode: 'auto_publish',
+      state: 'auto_publish_pending'
+    })
+
+    await expect(
+      consumeSubmissionContinuation(
+        {
+          continuationToken: `${created.continuationToken}tampered`,
+          fields: FIELDS,
+          userId: 'user_123'
+        },
+        { now: () => NOW, redis, secret: SECRET }
+      )
+    ).resolves.toEqual({ code: 'invalid_continuation', ok: false })
     expect(redis.eval).not.toHaveBeenCalled()
   })
 

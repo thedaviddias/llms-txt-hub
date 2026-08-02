@@ -24,7 +24,7 @@ export type SubmissionState =
   | 'final_assessing'
   | 'rejected'
   | 'retry_later'
-  | 'manual_review'
+  | 'manual_review_pending'
   | 'auto_publish_pending'
   | 'publishing'
   | 'published'
@@ -241,7 +241,11 @@ export async function consumeSubmissionContinuation(
   | {
       readonly mode: 'recovery'
       readonly ok: true
-      readonly state: 'auto_publish_pending' | 'manual_review' | 'publish_failed' | 'publishing'
+      readonly state:
+        | 'auto_publish_pending'
+        | 'manual_review_pending'
+        | 'publish_failed'
+        | 'publishing'
       readonly submissionId: string
     }
   | {
@@ -300,8 +304,8 @@ export async function consumeSubmissionContinuation(
   if (result === 'recovery:auto_publish_pending') {
     return { mode: 'recovery', ok: true, state: 'auto_publish_pending', submissionId }
   }
-  if (result === 'recovery:manual_review') {
-    return { mode: 'recovery', ok: true, state: 'manual_review', submissionId }
+  if (result === 'recovery:manual_review_pending') {
+    return { mode: 'recovery', ok: true, state: 'manual_review_pending', submissionId }
   }
   if (result === 'recovery:publishing') {
     return { mode: 'recovery', ok: true, state: 'publishing', submissionId }

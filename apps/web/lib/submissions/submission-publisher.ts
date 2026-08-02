@@ -5,7 +5,7 @@ import { logger } from '@thedaviddias/logging'
 import { createAssessmentAttestation } from '@thedaviddias/submission-trust/attestation'
 import type { SubmissionAssessment, SubmissionFields } from '@thedaviddias/submission-trust/types'
 import yaml from 'js-yaml'
-import { serializeSubmissionMdxText, serializeSubmissionMetadata } from './submission-plain-text'
+import { serializeSubmissionMdxText } from './submission-plain-text'
 import {
   type SubmissionPublicationState,
   submissionPublicationState
@@ -266,15 +266,13 @@ const renderMdx = (
 ): { readonly content: string; readonly path: string } | null => {
   const slug = slugify(fields.name)
   if (!slug) return null
-  const name = serializeSubmissionMetadata(fields.name)
-  const description = serializeSubmissionMetadata(fields.description)
   const frontmatter = yaml.dump(
     {
       category: fields.category,
-      description,
+      description: fields.description,
       llmsFullUrl: fields.llmsFullUrl ?? '',
       llmsUrl: fields.llmsUrl,
-      name,
+      name: fields.name,
       publishedAt: fields.publishedAt,
       website: fields.website
     },
