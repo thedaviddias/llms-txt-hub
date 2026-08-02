@@ -1,22 +1,9 @@
+import { canonicalEditorialToken } from './editorial-token-aliases.js'
+
 interface TokenCombinationPolicy {
   readonly contextTokens: readonly string[]
   readonly evidenceId: string
   readonly industryTokens: readonly string[]
-}
-
-const TOKEN_ALIASES: Readonly<Record<string, string>> = {
-  applications: 'application',
-  apis: 'api',
-  banks: 'bank',
-  casinos: 'casino',
-  docs: 'documentation',
-  guides: 'guide',
-  hospitals: 'hospital',
-  libraries: 'library',
-  sdks: 'sdk',
-  services: 'service',
-  tooling: 'tool',
-  tools: 'tool'
 }
 
 const REGULATED_TOKEN_POLICIES: readonly TokenCombinationPolicy[] = [
@@ -138,9 +125,6 @@ const collectPolicyTokens = (texts: readonly string[]): ReadonlySet<string> => {
   }
   return tokens
 }
-
-/** Returns the canonical form used for editorial token comparisons. */
-export const canonicalEditorialToken = (token: string): string => TOKEN_ALIASES[token] ?? token
 
 /** Returns stable evidence identifiers for conservative regulated-industry token combinations. */
 export const regulatedEvidence = (texts: readonly string[]): string[] => {

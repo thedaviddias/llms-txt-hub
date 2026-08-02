@@ -419,6 +419,33 @@ describe('assessEditorialPolicy', () => {
   })
 
   it.each([
+    ['phishing-kits', 'Download phishing-kits for credential theft.', 'malware'],
+    ['malware-downloads', 'Acme provides malware-downloads.', 'malware'],
+    ['casino-bonuses', 'Compare casino-bonuses and reviews.', 'gambling-promotion'],
+    ['backlink-packages', 'Buy backlink-packages for higher rankings.', 'search-manipulation']
+  ])('rejects crossed punctuation and plural evasion: %s', (_label, description, suffix) => {
+    expect(assess({ description })).toEqual({
+      decision: 'reject',
+      evidenceIds: [`editorial:prohibited:${suffix}`],
+      reasonCode: 'prohibited_content'
+    })
+  })
+
+  it.each([
+    ['gambling affiliates', 'Compare gambling affiliates and reviews.', 'gambling-promotion'],
+    ['ransomware services', 'Acme provides ransomware services.', 'malware'],
+    ['credential stealers', 'Download credential stealers.', 'malware'],
+    ['essay writing services', 'Buy access to essay writing services.', 'academic-cheating'],
+    ['fake ID services', 'Buy fake ID services.', 'illegal-deceptive-services']
+  ])('rejects natural prohibited noun or agent variant: %s', (_label, description, suffix) => {
+    expect(assess({ description })).toEqual({
+      decision: 'reject',
+      evidenceIds: [`editorial:prohibited:${suffix}`],
+      reasonCode: 'prohibited_content'
+    })
+  })
+
+  it.each([
     ['financial services', 'Acme provides financial services.', 'finance'],
     ['healthcare services', 'Acme provides healthcare services.', 'health'],
     ['dating services', 'Acme provides dating services.', 'dating']
@@ -431,6 +458,51 @@ describe('assessEditorialPolicy', () => {
       expect(result.evidenceIds).toContain(`editorial:regulated:${suffix}`)
     }
   )
+
+  it.each([
+    ['investment platforms', 'Acme provides investment platforms.', 'finance'],
+    ['medical clinics', 'Acme provides medical clinics.', 'health'],
+    ['dating apps', 'Acme provides dating apps.', 'dating'],
+    ['cannabis products', 'Acme provides cannabis products.', 'regulated-products'],
+    ['vape stores', 'Acme provides vape stores.', 'regulated-products']
+  ])(
+    'routes natural regulated noun variant to manual review: %s',
+    (_label, description, suffix) => {
+      const result = assess({ description })
+
+      expect(result.decision).toBe('manual_review')
+      expect(result.evidenceIds).toContain(`editorial:regulated:${suffix}`)
+    }
+  )
+
+  it('keeps independently valid homepage and llms resource budgets', () => {
+    const homepageText = 'Acme developer API documentation SDK library tooling. '
+      .repeat(10_000)
+      .slice(0, 500_000)
+    const llmsText = 'Acme developer API documentation SDK library tooling. '
+      .repeat(14_000)
+      .slice(0, 700_000)
+
+    expect(assess({}, { homepageText, llmsText })).toEqual({
+      decision: 'auto_publish',
+      evidenceIds: ['editorial:passed'],
+      reasonCode: 'passed'
+    })
+  })
+
+  it.each([
+    ['homepage', { homepageText: '\uFDFA'.repeat(30_000) }],
+    ['llms', { llmsText: '\uFDFA'.repeat(60_000) }],
+    ['optional llms', { llmsFullText: '\uFDFA'.repeat(60_000) }]
+  ])('routes per-resource post-normalization overflow to manual review: %s', (_label, content) => {
+    const result = assess({}, content)
+
+    expect(result).toMatchObject({
+      decision: 'manual_review',
+      reasonCode: 'editorial_uncertainty'
+    })
+    expect(result.evidenceIds).toContain('editorial:limits:normalized-text-overflow')
+  })
 
   it('routes post-normalization expansion overflow to bounded manual review', () => {
     const expansionBomb = '\uFDFA'.repeat(1_099_000)

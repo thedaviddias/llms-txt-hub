@@ -1,6 +1,8 @@
 import { getDomainWithoutSuffix } from 'tldts'
+import { SUBMISSION_HOMEPAGE_MAX_BYTES, SUBMISSION_LLMS_MAX_BYTES } from '#constants'
 import { normalizeEditorialInputs } from './editorial-normalization.js'
-import { canonicalEditorialToken, regulatedEvidence } from './regulated-token-policies.js'
+import { canonicalEditorialToken, canonicalizeEditorialTokens } from './editorial-token-aliases.js'
+import { regulatedEvidence } from './regulated-token-policies.js'
 import type { SubmissionFields } from './types.js'
 
 /** Category metadata projected from the application's canonical category list. */
@@ -216,13 +218,18 @@ const DESCRIPTION_STOP_WORDS = new Set([
   'provides'
 ])
 const MAX_BRAND_TOKENS = 16
+const MAX_CATEGORY_CHARACTERS = 256
+const MAX_DESCRIPTION_CHARACTERS = 4096
 const MAX_DESCRIPTION_TOKENS = 128
 const MAX_KEYWORD_STUFFING_TOKENS = 256
+const MAX_NAME_CHARACTERS = 512
 
 const hasPhrase = (text: string, phrase: string): boolean => ` ${text} `.includes(` ${phrase} `)
 
-const hasSecurityPhrase = (text: string, phrase: string): boolean =>
-  hasPhrase(text, phrase) || hasPhrase(text, phrase.replaceAll(' ', ''))
+const hasSecurityPhrase = (text: string, phrase: string): boolean => {
+  const canonicalPhrase = canonicalizeEditorialTokens(phrase)
+  return hasPhrase(text, canonicalPhrase) || hasPhrase(text, canonicalPhrase.replaceAll(' ', ''))
+}
 
 const matchingEvidence = (text: string, policies: readonly PhrasePolicy[]): string[] => {
   const matches: string[] = []
@@ -298,7 +305,7 @@ const meaningfulTokens = (
 
 const descriptionMatchesInspectedContent = (
   description: string,
-  inspectedText: string,
+  inspectedTexts: readonly string[],
   name: string
 ): boolean => {
   const nameTokens = new Set(
@@ -313,14 +320,16 @@ const descriptionMatchesInspectedContent = (
   if (descriptionTokens.length === 0) return false
   const descriptionTokenSet = new Set(descriptionTokens)
   const overlappingTokens = new Set<string>()
-  for (const match of inspectedText.matchAll(/\S+/gu)) {
-    const token = canonicalEditorialToken(match[0])
-    if (descriptionTokenSet.has(token)) overlappingTokens.add(token)
-    if (overlappingTokens.size === descriptionTokenSet.size) break
-  }
   const requiredOverlap =
     descriptionTokens.length === 1 ? 1 : Math.max(2, Math.ceil(descriptionTokens.length * 0.25))
-  return overlappingTokens.size >= requiredOverlap
+  for (const inspectedText of inspectedTexts) {
+    for (const match of inspectedText.matchAll(/\S+/gu)) {
+      const token = canonicalEditorialToken(match[0])
+      if (descriptionTokenSet.has(token)) overlappingTokens.add(token)
+      if (overlappingTokens.size >= requiredOverlap) return true
+    }
+  }
+  return false
 }
 
 const nameMatchesDomain = (name: string, website: string): boolean => {
@@ -338,7 +347,8 @@ const nameMatchesDomain = (name: string, website: string): boolean => {
   if (nameTokens.length === 0 || !ownerLabel) return false
   const compactBrand = nameTokens.join('')
   const normalizedOwnerLabel = normalizeEditorialInputs([ownerLabel], {
-    compactSeparators: true
+    compactSeparators: true,
+    maximumCharacters: MAX_NAME_CHARACTERS
   })
   return !normalizedOwnerLabel.overflow && normalizedOwnerLabel.text === compactBrand
 }
@@ -352,13 +362,13 @@ const normalizedOverflowResult = (): EditorialPolicyResult => ({
 const categoryEvidence = (
   categories: readonly EditorialCategoryDescriptor[],
   category: string,
-  text: string
+  texts: readonly string[]
 ): string | undefined => {
   if (!categories.some(descriptor => descriptor.slug === category)) {
     return 'editorial:category:unknown'
   }
   const keywords = CATEGORY_KEYWORDS[category]
-  if (!keywords?.some(keyword => hasPhrase(text, keyword))) {
+  if (!keywords?.some(keyword => texts.some(text => hasPhrase(text, keyword)))) {
     return 'editorial:category:implausible'
   }
   return undefined
@@ -369,36 +379,65 @@ const categoryEvidence = (
  * exposing the underlying pattern table or promoting any technical decision.
  */
 export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPolicyResult => {
-  const normalizedDescription = normalizeEditorialInputs([input.fields.description])
-  const normalizedName = normalizeEditorialInputs([input.fields.name])
-  const normalizedInspectedText = normalizeEditorialInputs([
-    input.homepageText,
-    input.llmsText,
-    input.llmsFullText ?? ''
-  ])
-  if (
-    normalizedDescription.overflow ||
-    normalizedName.overflow ||
-    normalizedInspectedText.overflow
-  ) {
+  const normalizedDescription = normalizeEditorialInputs([input.fields.description], {
+    maximumCharacters: MAX_DESCRIPTION_CHARACTERS
+  })
+  const normalizedName = normalizeEditorialInputs([input.fields.name], {
+    maximumCharacters: MAX_NAME_CHARACTERS
+  })
+  const normalizedCategory = normalizeEditorialInputs([input.fields.category], {
+    maximumCharacters: MAX_CATEGORY_CHARACTERS
+  })
+  const normalizedHomepage = normalizeEditorialInputs([input.homepageText], {
+    maximumCharacters: SUBMISSION_HOMEPAGE_MAX_BYTES
+  })
+  const normalizedLlms = normalizeEditorialInputs([input.llmsText], {
+    maximumCharacters: SUBMISSION_LLMS_MAX_BYTES
+  })
+  const normalizedLlmsFull = normalizeEditorialInputs([input.llmsFullText ?? ''], {
+    maximumCharacters: SUBMISSION_LLMS_MAX_BYTES
+  })
+  const normalizedInputs = [
+    normalizedDescription,
+    normalizedName,
+    normalizedCategory,
+    normalizedHomepage,
+    normalizedLlms,
+    normalizedLlmsFull
+  ]
+  if (normalizedInputs.some(result => result.overflow)) {
     return normalizedOverflowResult()
   }
-  const securityText = normalizeEditorialInputs(
-    [
-      input.fields.name,
-      input.fields.description,
-      input.homepageText,
-      input.llmsText,
-      input.llmsFullText ?? ''
-    ],
-    { securityMatch: true }
-  )
-  if (securityText.overflow) return normalizedOverflowResult()
+  const securityInputs = [
+    normalizeEditorialInputs([input.fields.name], {
+      maximumCharacters: MAX_NAME_CHARACTERS,
+      securityMatch: true
+    }),
+    normalizeEditorialInputs([input.fields.description], {
+      maximumCharacters: MAX_DESCRIPTION_CHARACTERS,
+      securityMatch: true
+    }),
+    normalizeEditorialInputs([input.homepageText], {
+      maximumCharacters: SUBMISSION_HOMEPAGE_MAX_BYTES,
+      securityMatch: true
+    }),
+    normalizeEditorialInputs([input.llmsText], {
+      maximumCharacters: SUBMISSION_LLMS_MAX_BYTES,
+      securityMatch: true
+    }),
+    normalizeEditorialInputs([input.llmsFullText ?? ''], {
+      maximumCharacters: SUBMISSION_LLMS_MAX_BYTES,
+      securityMatch: true
+    })
+  ]
+  if (securityInputs.some(result => result.overflow)) return normalizedOverflowResult()
 
   const description = normalizedDescription.text
   const name = normalizedName.text
-  const inspectedText = normalizedInspectedText.text
-  const prohibitedEvidence = matchingEvidence(securityText.text, PROHIBITED_POLICIES)
+  const inspectedTexts = [normalizedHomepage.text, normalizedLlms.text, normalizedLlmsFull.text]
+  const prohibitedEvidence = [
+    ...new Set(securityInputs.flatMap(result => matchingEvidence(result.text, PROHIBITED_POLICIES)))
+  ]
   if (prohibitedEvidence.length > 0) {
     return {
       decision: 'reject',
@@ -408,16 +447,16 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
   }
 
   const manualEvidence = [
-    ...regulatedEvidence([name, description, inspectedText]),
+    ...regulatedEvidence([name, description, ...inspectedTexts]),
     ...descriptionEvidence(description)
   ]
-  if (!descriptionMatchesInspectedContent(description, inspectedText, name)) {
+  if (!descriptionMatchesInspectedContent(description, inspectedTexts, name)) {
     manualEvidence.push('editorial:quality:description-content-mismatch')
   }
   if (!nameMatchesDomain(name, input.fields.website)) {
     manualEvidence.push('editorial:identity:name-domain-mismatch')
   }
-  const categoryConcern = categoryEvidence(input.categories, input.fields.category, inspectedText)
+  const categoryConcern = categoryEvidence(input.categories, input.fields.category, inspectedTexts)
   if (categoryConcern) manualEvidence.push(categoryConcern)
 
   if (manualEvidence.length > 0) {
