@@ -1,19 +1,27 @@
 import { auth } from '@thedaviddias/auth'
+import { logger } from '@thedaviddias/logging'
 
 import { getStoredCSRFToken } from '@/lib/csrf-protection'
 import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
+import { recordFinalSubmissionOutcome } from '@/lib/submissions/submission-publication-state'
 import { publishSubmission } from '@/lib/submissions/submission-publisher'
 import { consumeSubmissionContinuation } from '@/lib/submissions/submission-state'
 import { submitLlmsTxt } from './submit-llms-xxt'
 
 jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
+jest.mock('@thedaviddias/logging', () => ({
+  logger: { error: jest.fn(), info: jest.fn(), warn: jest.fn() }
+}))
 jest.mock('@/lib/csrf-protection', () => ({ getStoredCSRFToken: jest.fn() }))
 jest.mock('@/lib/submissions/submission-assessment', () => ({ assessSubmission: jest.fn() }))
 jest.mock('@/lib/submissions/submission-duplicates', () => ({
   checkSubmissionDuplicates: jest.fn()
 }))
 jest.mock('@/lib/submissions/submission-publisher', () => ({ publishSubmission: jest.fn() }))
+jest.mock('@/lib/submissions/submission-publication-state', () => ({
+  recordFinalSubmissionOutcome: jest.fn()
+}))
 jest.mock('@/lib/submissions/submission-state', () => ({
   consumeSubmissionContinuation: jest.fn(),
   normalizeSubmissionFields: jest.requireActual('@/lib/submissions/submission-state')
@@ -21,11 +29,13 @@ jest.mock('@/lib/submissions/submission-state', () => ({
 }))
 
 const mockAuth = jest.mocked(auth)
+const mockLoggerInfo = jest.mocked(logger.info)
 const mockCsrf = jest.mocked(getStoredCSRFToken)
 const mockConsume = jest.mocked(consumeSubmissionContinuation)
 const mockDuplicates = jest.mocked(checkSubmissionDuplicates)
 const mockAssess = jest.mocked(assessSubmission)
 const mockPublish = jest.mocked(publishSubmission)
+const mockRecordOutcome = jest.mocked(recordFinalSubmissionOutcome)
 
 const form = (overrides: Record<string, string> = {}) => {
   const value = new FormData()
@@ -58,6 +68,7 @@ const autoAssessment = {
 
 describe('submitLlmsTxt final coordinator', () => {
   beforeEach(() => {
+    mockLoggerInfo.mockClear()
     mockAuth.mockResolvedValue({
       user: {
         email: 'person@example.com',
@@ -74,6 +85,7 @@ describe('submitLlmsTxt final coordinator', () => {
       outcome: 'automatic',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
+    mockRecordOutcome.mockResolvedValue(true)
   })
 
   it.each([
@@ -87,6 +99,13 @@ describe('submitLlmsTxt final coordinator', () => {
       success: false
     })
     expect(mockConsume).not.toHaveBeenCalled()
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Final submission completed',
+      expect.objectContaining({
+        data: expect.objectContaining({ outcome: 'rejected', reasonCode: 'invalid_input' })
+      })
+    )
+    expect(JSON.stringify(mockLoggerInfo.mock.calls)).not.toContain('opaque.continuation.signature')
   })
 
   it('atomically consumes unchanged fields, then reruns duplicates and assessment', async () => {
@@ -117,6 +136,21 @@ describe('submitLlmsTxt final coordinator', () => {
       success: false
     })
     expect(mockPublish).not.toHaveBeenCalled()
+    expect(mockRecordOutcome).toHaveBeenCalledWith({
+      fields: expect.any(Object),
+      outcome: 'retry_later',
+      reasonCode: 'reputation_unknown',
+      submissionId: 'sub_123'
+    })
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Final submission completed',
+      expect.objectContaining({
+        data: expect.objectContaining({
+          outcome: 'retry_later',
+          reasonCode: 'reputation_unknown'
+        })
+      })
+    )
   })
 
   it('fails closed when continuation consumption or duplicate status is unavailable', async () => {
@@ -151,5 +185,83 @@ describe('submitLlmsTxt final coordinator', () => {
     })
     expect(mockAssess).not.toHaveBeenCalled()
     expect(mockPublish).not.toHaveBeenCalled()
+    expect(mockRecordOutcome).toHaveBeenCalledWith({
+      fields: expect.any(Object),
+      outcome: 'rejected',
+      reasonCode: 'duplicate',
+      submissionId: 'sub_123'
+    })
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Final submission completed',
+      expect.objectContaining({
+        data: expect.objectContaining({ outcome: 'rejected', reasonCode: 'duplicate' })
+      })
+    )
+  })
+
+  it('continues same-ID reconciliation when the deterministic PR already exists', async () => {
+    mockDuplicates.mockResolvedValue({
+      branch: 'submit/sub_123',
+      headSha: 'a'.repeat(40),
+      prNumber: 42,
+      status: 'reconcile'
+    })
+
+    await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+      outcome: 'automatic',
+      success: true
+    })
+    expect(mockAssess).toHaveBeenCalledTimes(1)
+    expect(mockPublish).toHaveBeenCalledTimes(1)
+    expect(mockRecordOutcome).not.toHaveBeenCalled()
+  })
+
+  it('fails closed before publishing when the terminal state transition is unavailable', async () => {
+    mockAssess.mockResolvedValue({
+      ...autoAssessment,
+      decision: 'reject',
+      publicMessage: 'Rejected.',
+      reasonCode: 'prohibited_content'
+    })
+    mockRecordOutcome.mockResolvedValue(false)
+
+    await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+      outcome: 'retry_later',
+      success: false
+    })
+    expect(mockPublish).not.toHaveBeenCalled()
+  })
+
+  it('preserves recovery locks after a started publisher failure', async () => {
+    mockPublish.mockResolvedValue({
+      code: 'publication_unavailable',
+      ok: false,
+      recovery: 'same_submission'
+    })
+
+    await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+      outcome: 'retry_later',
+      success: false
+    })
+    expect(mockRecordOutcome).not.toHaveBeenCalled()
+  })
+
+  it('releases owned locks when publication cannot start', async () => {
+    mockPublish.mockResolvedValue({
+      code: 'publication_unavailable',
+      ok: false,
+      recovery: 'fresh_preflight'
+    })
+
+    await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+      outcome: 'retry_later',
+      success: false
+    })
+    expect(mockRecordOutcome).toHaveBeenCalledWith({
+      fields: expect.any(Object),
+      outcome: 'retry_later',
+      reasonCode: 'publication_unavailable',
+      submissionId: 'sub_123'
+    })
   })
 })

@@ -65,21 +65,37 @@ const retryLater = (reasonCode: SubmissionReasonCode): PreflightResult => ({
  */
 export async function preflightSubmission(formData: FormData): Promise<PreflightResult> {
   const startedAt = Date.now()
-  let reasonCode: SubmissionReasonCode = 'publication_unavailable'
+  let logOutcome: PreflightResult['status'] = 'retry_later'
+  let logReasonCode = 'publication_unavailable'
+  const complete = (
+    result: PreflightResult,
+    reasonCode: string = result.status
+  ): PreflightResult => {
+    logOutcome = result.status
+    logReasonCode = reasonCode
+    return result
+  }
   try {
     const session = await auth()
-    if (!session?.user?.id) return retryLater('publication_unavailable')
+    if (!session?.user?.id) {
+      return complete(retryLater('publication_unavailable'), 'authentication_required')
+    }
     const storedCsrf = await getStoredCSRFToken()
     if (!isValidSubmissionCsrf(formData.get('_csrf'), storedCsrf?.token)) {
-      return rejected(
-        'Security validation failed. Refresh the page and try again.',
-        'prohibited_content'
+      return complete(
+        rejected(
+          'Security validation failed. Refresh the page and try again.',
+          'prohibited_content'
+        ),
+        'csrf_invalid'
       )
     }
     const parsed = parseSubmissionActionInput(formData)
-    if (!parsed.ok) return rejected(parsed.message, 'required_resource_missing')
+    if (!parsed.ok) {
+      return complete(rejected(parsed.message, 'required_resource_missing'), 'invalid_input')
+    }
     const sourceIp = submissionSourceIp(await headers())
-    if (!sourceIp) return retryLater('publication_unavailable')
+    if (!sourceIp) return complete(retryLater('publication_unavailable'), 'source_ip_unavailable')
 
     const rateLimit = await enforceSubmissionRateLimits({
       sourceIp,
@@ -87,10 +103,11 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       website: parsed.fields.website
     })
     if (!rateLimit.ok) {
-      reasonCode = rateLimit.code
-      return rateLimit.code === 'rate_limited'
-        ? retryLater('rate_limited')
-        : retryLater('publication_unavailable')
+      const result =
+        rateLimit.code === 'rate_limited'
+          ? retryLater('rate_limited')
+          : retryLater('publication_unavailable')
+      return complete(result, rateLimit.code)
     }
 
     const submissionId = `sub_${randomUUID().replace(/-/g, '')}`
@@ -103,44 +120,61 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       submissionId,
       website: parsed.fields.website
     })
-    if (duplicate.status === 'retry_later') return retryLater(duplicate.reasonCode)
+    if (duplicate.status === 'retry_later') {
+      return complete(retryLater(duplicate.reasonCode), duplicate.reasonCode)
+    }
     if (duplicate.status === 'duplicate' || duplicate.status === 'reconcile') {
-      return rejected(DUPLICATE_MESSAGE, 'duplicate')
+      return complete(rejected(DUPLICATE_MESSAGE, 'duplicate'), 'duplicate')
     }
 
     const assessment = await assessSubmission(parsed.fields)
-    reasonCode = assessment.reasonCode
     if (assessment.decision === 'reject') {
-      return rejected(assessment.publicMessage, assessment.reasonCode)
+      return complete(
+        rejected(assessment.publicMessage, assessment.reasonCode),
+        assessment.reasonCode
+      )
     }
-    if (assessment.decision === 'retry_later') return retryLater(assessment.reasonCode)
+    if (assessment.decision === 'retry_later') {
+      return complete(retryLater(assessment.reasonCode), assessment.reasonCode)
+    }
 
     const continuation = await createSubmissionContinuation({
       fields: parsed.fields,
       submissionId,
       userId: session.user.id
     })
-    if (!continuation.ok) return retryLater('publication_unavailable')
+    if (!continuation.ok) {
+      return complete(retryLater('publication_unavailable'), 'publication_unavailable')
+    }
     const lock = await acquireSubmissionLocks({
       llmsUrl: parsed.fields.llmsUrl,
       submissionId,
       website: parsed.fields.website
     })
     if (!lock.ok) {
-      return lock.code === 'duplicate'
-        ? rejected(DUPLICATE_MESSAGE, 'duplicate')
-        : retryLater('publication_unavailable')
+      const result =
+        lock.code === 'duplicate'
+          ? rejected(DUPLICATE_MESSAGE, 'duplicate')
+          : retryLater('publication_unavailable')
+      return complete(result, lock.code)
     }
-    return {
-      continuationToken: continuation.continuationToken,
-      status: 'support_required',
-      submissionId
-    }
+    return complete(
+      {
+        continuationToken: continuation.continuationToken,
+        status: 'support_required',
+        submissionId
+      },
+      assessment.reasonCode
+    )
   } catch {
-    return retryLater('publication_unavailable')
+    return complete(retryLater('publication_unavailable'), 'publication_unavailable')
   } finally {
     logger.info('Submission preflight completed', {
-      data: { durationMs: Date.now() - startedAt, reasonCode },
+      data: {
+        durationMs: Date.now() - startedAt,
+        outcome: logOutcome,
+        reasonCode: logReasonCode
+      },
       tags: { operation: 'preflight', type: 'submission' }
     })
   }
