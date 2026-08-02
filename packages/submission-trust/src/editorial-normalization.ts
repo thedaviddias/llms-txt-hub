@@ -18,19 +18,19 @@ interface NormalizationAccumulator {
 }
 
 const DEFAULT_MAXIMUM_CHARACTERS = 1_100_000
-const NORMALIZATION_CHUNK_CHARACTERS = 4096
+const ABSOLUTE_MAXIMUM_INPUT_CHARACTERS = 1_100_000
 const TOKEN_SEPARATOR = '\uE000'
-const TRAILING_NORMALIZATION_SEQUENCE = /[^\p{M}\p{Cf}][\p{M}\p{Cf}]*$/u
+const SECURITY_UNSAFE_CATEGORY = /[\p{Cc}\p{Cs}\p{Co}\p{Cn}]/gu
+const CONTROL_CHARACTER = /\p{Cc}/u
+const WHITESPACE_CHARACTER = /\s/u
 
-const chunkEnd = (value: string, offset: number): number => {
-  const proposedEnd = Math.min(offset + NORMALIZATION_CHUNK_CHARACTERS, value.length)
-  if (proposedEnd === value.length) return proposedEnd
-  const lastCodeUnit = value.charCodeAt(proposedEnd - 1)
-  return lastCodeUnit >= 0xd800 && lastCodeUnit <= 0xdbff ? proposedEnd - 1 : proposedEnd
+const hasUnsafeSecurityCharacter = (value: string): boolean => {
+  for (const match of value.matchAll(SECURITY_UNSAFE_CATEGORY)) {
+    const character = match[0]
+    if (!CONTROL_CHARACTER.test(character) || !WHITESPACE_CHARACTER.test(character)) return true
+  }
+  return false
 }
-
-const trailingNormalizationSequenceStart = (value: string): number =>
-  value.match(TRAILING_NORMALIZATION_SEQUENCE)?.index ?? 0
 
 const appendNormalizedSequence = (
   accumulator: NormalizationAccumulator,
@@ -56,7 +56,7 @@ export const normalizeEditorialInputs = (
 ): BoundedNormalizedText => {
   const maximumCharacters = options.maximumCharacters ?? DEFAULT_MAXIMUM_CHARACTERS
   const inputCharacters = values.reduce((total, value) => total + value.length, 0)
-  if (inputCharacters > maximumCharacters) {
+  if (inputCharacters > maximumCharacters || inputCharacters > ABSOLUTE_MAXIMUM_INPUT_CHARACTERS) {
     return { overflow: true, text: '' }
   }
 
@@ -64,6 +64,9 @@ export const normalizeEditorialInputs = (
   const normalizationForm = options.securityMatch ? 'NFKD' : 'NFKC'
 
   for (const value of values) {
+    if (options.securityMatch && hasUnsafeSecurityCharacter(value)) {
+      return { overflow: true, text: '' }
+    }
     if (accumulator.characters > 0) {
       if (accumulator.characters + 1 > maximumCharacters) {
         return { overflow: true, text: '' }
@@ -71,18 +74,11 @@ export const normalizeEditorialInputs = (
       accumulator.chunks.push(' ')
       accumulator.characters += 1
     }
-    let carry = ''
-    for (let offset = 0; offset < value.length; ) {
-      const end = chunkEnd(value, offset)
-      const combined = carry + value.slice(offset, end)
-      const finalChunk = end === value.length
-      const carryStart = finalChunk ? combined.length : trailingNormalizationSequenceStart(combined)
-      const sequence = finalChunk ? combined : combined.slice(0, carryStart)
-      carry = finalChunk ? '' : combined.slice(carryStart)
-      if (!appendNormalizedSequence(accumulator, sequence, normalizationForm, maximumCharacters)) {
-        return { overflow: true, text: '' }
-      }
-      offset = end
+    // Native whole-value normalization is exact for every Unicode boundary.
+    // The absolute raw-input cap fixes temporary memory, and the normalized
+    // value is retained only when it remains inside the caller's output cap.
+    if (!appendNormalizedSequence(accumulator, value, normalizationForm, maximumCharacters)) {
+      return { overflow: true, text: '' }
     }
   }
 

@@ -223,6 +223,7 @@ const MAX_DESCRIPTION_CHARACTERS = 4096
 const MAX_DESCRIPTION_TOKENS = 128
 const MAX_KEYWORD_STUFFING_TOKENS = 256
 const MAX_NAME_CHARACTERS = 512
+const MAX_METADATA_SECURITY_CHARACTERS = MAX_NAME_CHARACTERS + MAX_DESCRIPTION_CHARACTERS + 1
 
 const hasPhrase = (text: string, phrase: string): boolean => ` ${text} `.includes(` ${phrase} `)
 
@@ -409,6 +410,10 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
     return normalizedOverflowResult()
   }
   const securityInputs = [
+    normalizeEditorialInputs([input.fields.name, input.fields.description], {
+      maximumCharacters: MAX_METADATA_SECURITY_CHARACTERS,
+      securityMatch: true
+    }),
     normalizeEditorialInputs([input.fields.name], {
       maximumCharacters: MAX_NAME_CHARACTERS,
       securityMatch: true
