@@ -90,6 +90,12 @@ const verify = (
   now = NOW
 ) => verifyAssessmentAttestation({ body, expected, now: () => now, secret })
 
+const runtimeCreate = (payload: unknown, secret: unknown): unknown =>
+  Reflect.apply(createAssessmentAttestation, undefined, [payload, secret])
+
+const runtimeVerify = (input: unknown): unknown =>
+  Reflect.apply(verifyAssessmentAttestation, undefined, [input])
+
 describe('createAssessmentAttestation', () => {
   it('uses exact fixed payload ordering, URL normalization, and canonical base64url', () => {
     const result = createAssessmentAttestation(PAYLOAD, SECRET)
@@ -132,6 +138,36 @@ describe('createAssessmentAttestation', () => {
         SECRET
       )
     ).toEqual({ code: 'invalid_payload', ok: false })
+  })
+
+  it.each([null, undefined, 42, 'payload', []])(
+    'returns invalid_payload without throwing for malformed runtime payload %s',
+    payload => {
+      expect(() => runtimeCreate(payload, SECRET)).not.toThrow()
+      expect(runtimeCreate(payload, SECRET)).toEqual({ code: 'invalid_payload', ok: false })
+    }
+  )
+
+  it.each([null, undefined, 42, {}, []])(
+    'returns secret_too_short without throwing for malformed runtime secret %s',
+    secret => {
+      expect(() => runtimeCreate(PAYLOAD, secret)).not.toThrow()
+      expect(runtimeCreate(PAYLOAD, secret)).toEqual({ code: 'secret_too_short', ok: false })
+    }
+  )
+
+  it('contains hostile payload access behind the typed failure boundary', () => {
+    const hostilePayload = new Proxy(
+      {},
+      {
+        ownKeys: () => {
+          throw new Error('attacker-controlled trap')
+        }
+      }
+    )
+
+    expect(() => runtimeCreate(hostilePayload, SECRET)).not.toThrow()
+    expect(runtimeCreate(hostilePayload, SECRET)).toEqual({ code: 'invalid_payload', ok: false })
   })
 })
 
@@ -200,6 +236,66 @@ describe('verifyAssessmentAttestation', () => {
       code: 'invalid_expectation',
       ok: false
     })
+  })
+
+  it.each([null, undefined, 42, 'input', []])(
+    'returns malformed_block without throwing for malformed top-level input %s',
+    input => {
+      expect(() => runtimeVerify(input)).not.toThrow()
+      expect(runtimeVerify(input)).toEqual({ code: 'malformed_block', ok: false })
+    }
+  )
+
+  it('contains hostile top-level input access behind the typed failure boundary', () => {
+    const { proxy, revoke } = Proxy.revocable({}, {})
+    revoke()
+
+    expect(() => runtimeVerify(proxy)).not.toThrow()
+    expect(runtimeVerify(proxy)).toEqual({ code: 'invalid_expectation', ok: false })
+  })
+
+  it.each([null, undefined, 42, {}, []])(
+    'returns malformed_block without throwing for malformed body %s',
+    body => {
+      const input = { body, expected: EXPECTED, now: () => NOW, secret: SECRET }
+      expect(() => runtimeVerify(input)).not.toThrow()
+      expect(runtimeVerify(input)).toEqual({ code: 'malformed_block', ok: false })
+    }
+  )
+
+  it.each([null, undefined, 42, {}, []])(
+    'returns secret_too_short without throwing for malformed verification secret %s',
+    secret => {
+      const input = { body: signed(), expected: EXPECTED, now: () => NOW, secret }
+      expect(() => runtimeVerify(input)).not.toThrow()
+      expect(runtimeVerify(input)).toEqual({ code: 'secret_too_short', ok: false })
+    }
+  )
+
+  it.each([null, undefined, 42, 'expected', []])(
+    'returns invalid_expectation without throwing for malformed expectation %s',
+    expected => {
+      const input = { body: signed(), expected, now: () => NOW, secret: SECRET }
+      expect(() => runtimeVerify(input)).not.toThrow()
+      expect(runtimeVerify(input)).toEqual({ code: 'invalid_expectation', ok: false })
+    }
+  )
+
+  it.each([
+    ['non-function', 'now'],
+    ['null', null],
+    [
+      'throwing function',
+      () => {
+        throw new Error('clock unavailable')
+      }
+    ],
+    ['invalid Date', () => new Date(Number.NaN)],
+    ['non-Date result', () => '2026-08-01T12:05:00.000Z']
+  ])('returns invalid_expectation without throwing for a %s clock', (_label, now) => {
+    const input = { body: signed(), expected: EXPECTED, now, secret: SECRET }
+    expect(() => runtimeVerify(input)).not.toThrow()
+    expect(runtimeVerify(input)).toEqual({ code: 'invalid_expectation', ok: false })
   })
 
   it.each([

@@ -318,9 +318,8 @@ const parseCanonicalPayload = (encoded: string): AssessmentAttestationPayload | 
   return normalized
 }
 
-const normalizeExpectation = (
-  expected: AssessmentAttestationExpectation
-): AssessmentAttestationExpectation | null => {
+const normalizeExpectation = (expected: unknown): AssessmentAttestationExpectation | null => {
+  if (!isRecord(expected)) return null
   const website = normalizeUrl(expected.website)
   const llmsUrl = normalizeUrl(expected.llmsUrl)
   const llmsFullUrl =
@@ -355,7 +354,18 @@ const normalizeExpectation = (
   ) {
     return null
   }
-  const normalized = { ...expected, website, llmsUrl }
+  const normalized = {
+    headSha: expected.headSha,
+    llmsUrl,
+    mdxContentSha256: expected.mdxContentSha256,
+    mdxPath: expected.mdxPath,
+    policyVersion: expected.policyVersion,
+    prNumber: expected.prNumber,
+    repository: expected.repository,
+    submissionId: expected.submissionId,
+    webRiskCheckedAt: expected.webRiskCheckedAt,
+    website
+  } satisfies AssessmentAttestationExpectation
   return llmsFullUrl === undefined
     ? { ...normalized, llmsFullUrl: undefined }
     : { ...normalized, llmsFullUrl }
@@ -365,22 +375,20 @@ const bindingMismatch = (
   payload: AssessmentAttestationPayload,
   expected: AssessmentAttestationExpectation
 ): AssessmentAttestationVerificationFailureCode | null => {
-  if (payload.repository !== expected.repository) return 'repository_mismatch'
-  if (payload.submissionId !== expected.submissionId) return 'submission_id_mismatch'
-  if (payload.prNumber !== expected.prNumber) return 'pr_number_mismatch'
-  if (payload.headSha !== expected.headSha) return 'head_sha_mismatch'
-  if (payload.mdxPath !== expected.mdxPath) return 'mdx_path_mismatch'
-  if (payload.mdxContentSha256 !== expected.mdxContentSha256) {
-    return 'mdx_content_hash_mismatch'
-  }
-  if (payload.website !== expected.website) return 'website_mismatch'
-  if (payload.llmsUrl !== expected.llmsUrl) return 'llms_url_mismatch'
-  if (payload.llmsFullUrl !== expected.llmsFullUrl) return 'llms_full_url_mismatch'
-  if (payload.policyVersion !== expected.policyVersion) return 'policy_version_mismatch'
-  if (payload.webRiskCheckedAt !== expected.webRiskCheckedAt) {
-    return 'web_risk_checked_at_mismatch'
-  }
-  return null
+  const checks: readonly [boolean, AssessmentAttestationVerificationFailureCode][] = [
+    [payload.repository === expected.repository, 'repository_mismatch'],
+    [payload.submissionId === expected.submissionId, 'submission_id_mismatch'],
+    [payload.prNumber === expected.prNumber, 'pr_number_mismatch'],
+    [payload.headSha === expected.headSha, 'head_sha_mismatch'],
+    [payload.mdxPath === expected.mdxPath, 'mdx_path_mismatch'],
+    [payload.mdxContentSha256 === expected.mdxContentSha256, 'mdx_content_hash_mismatch'],
+    [payload.website === expected.website, 'website_mismatch'],
+    [payload.llmsUrl === expected.llmsUrl, 'llms_url_mismatch'],
+    [payload.llmsFullUrl === expected.llmsFullUrl, 'llms_full_url_mismatch'],
+    [payload.policyVersion === expected.policyVersion, 'policy_version_mismatch'],
+    [payload.webRiskCheckedAt === expected.webRiskCheckedAt, 'web_risk_checked_at_mismatch']
+  ]
+  return checks.find(([matches]) => !matches)?.[1] ?? null
 }
 
 /**
@@ -394,18 +402,22 @@ export const createAssessmentAttestation = (
   payload: AssessmentAttestationPayload,
   secret: string
 ): AssessmentAttestationCreationResult => {
-  if (Buffer.byteLength(secret, 'utf8') < MINIMUM_SECRET_BYTES) {
-    return { code: 'secret_too_short', ok: false }
-  }
-  const normalized = normalizePayload(payload)
-  if (!normalized) return { code: 'invalid_payload', ok: false }
-  const serialized = canonicalPayload(normalized)
-  const encodedPayload = Buffer.from(serialized).toString('base64url')
-  const signature = createHmac('sha256', secret).update(serialized).digest('base64url')
-  return {
-    block: `${BLOCK_PREFIX}${encodedPayload}\n${signature}${BLOCK_SUFFIX}`,
-    ok: true,
-    payload: normalized
+  try {
+    if (typeof secret !== 'string' || Buffer.byteLength(secret, 'utf8') < MINIMUM_SECRET_BYTES) {
+      return { code: 'secret_too_short', ok: false }
+    }
+    const normalized = normalizePayload(payload)
+    if (!normalized) return { code: 'invalid_payload', ok: false }
+    const serialized = canonicalPayload(normalized)
+    const encodedPayload = Buffer.from(serialized).toString('base64url')
+    const signature = createHmac('sha256', secret).update(serialized).digest('base64url')
+    return {
+      block: `${BLOCK_PREFIX}${encodedPayload}\n${signature}${BLOCK_SUFFIX}`,
+      ok: true,
+      payload: normalized
+    }
+  } catch {
+    return { code: 'invalid_payload', ok: false }
   }
 }
 
@@ -418,27 +430,41 @@ export const createAssessmentAttestation = (
 export const verifyAssessmentAttestation = (
   input: AssessmentAttestationVerificationInput
 ): AssessmentAttestationVerificationResult => {
-  if (Buffer.byteLength(input.secret, 'utf8') < MINIMUM_SECRET_BYTES) {
-    return { code: 'secret_too_short', ok: false }
+  try {
+    if (!isRecord(input)) return { code: 'malformed_block', ok: false }
+    if (
+      typeof input.secret !== 'string' ||
+      Buffer.byteLength(input.secret, 'utf8') < MINIMUM_SECRET_BYTES
+    ) {
+      return { code: 'secret_too_short', ok: false }
+    }
+    if (typeof input.body !== 'string') return { code: 'malformed_block', ok: false }
+    const block = parseBlock(input.body)
+    if (typeof block === 'string') return { code: block, ok: false }
+    const payloadBytes = decodeCanonicalBase64Url(block.encodedPayload)
+    if (!payloadBytes) return { code: 'malformed_block', ok: false }
+    const signature = verifySignature(payloadBytes, block.signature, input.secret)
+    if (!signature.canonical) return { code: 'malformed_block', ok: false }
+    if (!signature.matches) return { code: 'invalid_signature', ok: false }
+    const payload = parseCanonicalPayload(block.encodedPayload)
+    if (!payload) return { code: 'invalid_payload', ok: false }
+    const expected = normalizeExpectation(input.expected)
+    if (!expected) return { code: 'invalid_expectation', ok: false }
+    const mismatch = bindingMismatch(payload, expected)
+    if (mismatch) return { code: mismatch, ok: false }
+
+    const clock = input.now
+    if (clock !== undefined && typeof clock !== 'function') {
+      return { code: 'invalid_expectation', ok: false }
+    }
+    const currentTime = clock?.() ?? new Date()
+    if (!(currentTime instanceof Date)) return { code: 'invalid_expectation', ok: false }
+    const nowMs = currentTime.getTime()
+    if (!Number.isFinite(nowMs)) return { code: 'invalid_expectation', ok: false }
+    if (nowMs < Date.parse(payload.issuedAt)) return { code: 'not_yet_valid', ok: false }
+    if (nowMs >= Date.parse(payload.expiresAt)) return { code: 'expired', ok: false }
+    return { ok: true, payload }
+  } catch {
+    return { code: 'invalid_expectation', ok: false }
   }
-  const block = parseBlock(input.body)
-  if (typeof block === 'string') return { code: block, ok: false }
-  const payloadBytes = decodeCanonicalBase64Url(block.encodedPayload)
-  if (!payloadBytes) return { code: 'malformed_block', ok: false }
-  const signature = verifySignature(payloadBytes, block.signature, input.secret)
-  if (!signature.canonical) return { code: 'malformed_block', ok: false }
-  if (!signature.matches) {
-    return { code: 'invalid_signature', ok: false }
-  }
-  const payload = parseCanonicalPayload(block.encodedPayload)
-  if (!payload) return { code: 'invalid_payload', ok: false }
-  const expected = normalizeExpectation(input.expected)
-  if (!expected) return { code: 'invalid_expectation', ok: false }
-  const mismatch = bindingMismatch(payload, expected)
-  if (mismatch) return { code: mismatch, ok: false }
-  const nowMs = input.now?.().getTime() ?? Date.now()
-  if (!Number.isFinite(nowMs)) return { code: 'invalid_expectation', ok: false }
-  if (nowMs < Date.parse(payload.issuedAt)) return { code: 'not_yet_valid', ok: false }
-  if (nowMs >= Date.parse(payload.expiresAt)) return { code: 'expired', ok: false }
-  return { ok: true, payload }
 }
