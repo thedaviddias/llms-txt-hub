@@ -20,9 +20,12 @@ describe('submission analytics', () => {
 
   it('uses a stable event for every trusted-submission lifecycle signal', () => {
     expect(ANALYTICS_EVENTS).toMatchObject({
+      SUBMISSION_PAGE_VIEW: 'Submission Page View',
       SUBMISSION_REQUEST_DURATION: 'Submission Request Duration',
       SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
       SUBMISSION_FOLLOW_ATTEST: 'Submission Follow Attest',
+      SUBMISSION_SUPPORT_BACK: 'Submission Support Back',
+      SUBMISSION_FINAL_START: 'Submission Final Start',
       SUBMISSION_PREFLIGHT_OUTCOME: 'Submission Preflight Outcome',
       SUBMISSION_PREFLIGHT_START: 'Submission Preflight Start',
       SUBMISSION_PROFILE_OPEN: 'Submission Profile Open',
@@ -38,6 +41,7 @@ describe('submission analytics', () => {
   it('retains only allowlisted aggregate properties from hostile caller input', () => {
     submissionAnalytics.finalOutcome({
       apiKey: 'secret-api-key',
+      attemptId: '123e4567-e89b-42d3-a456-426614174000',
       continuationToken: 'opaque-token',
       decision: 'automatic',
       durationBucket: '1s_to_5s',
@@ -54,6 +58,7 @@ describe('submission analytics', () => {
     })
 
     expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FINAL_OUTCOME, {
+      attempt_id: '123e4567-e89b-42d3-a456-426614174000',
       decision: 'automatic',
       duration_bucket: '1s_to_5s',
       platform: 'x',
@@ -73,7 +78,8 @@ describe('submission analytics', () => {
       platform: 'threads',
       prPresent: 'yes',
       reasonCategory: 'secret_reason',
-      source: 'user-controlled-source'
+      source: 'user-controlled-source',
+      attemptId: 'not-a-valid-attempt-id'
     })
 
     expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_OUTCOME, {})

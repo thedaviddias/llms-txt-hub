@@ -1,17 +1,36 @@
 'use client'
 
+import { useRef } from 'react'
 import type { PreflightResult } from '@/actions/preflight-submission'
 import type { FinalSubmissionResult } from '@/actions/submit-llms-xxt'
 import { submissionAnalytics } from '@/lib/submission-analytics'
 
 type SupportPlatform = 'x' | 'linkedin'
 
+/**
+ * Create a privacy-safe UUID that correlates one submission attempt across funnel events.
+ *
+ * @returns A UUIDv4 when the browser provides cryptographic randomness.
+ */
+const createSubmissionAttemptId = () => {
+  if (typeof globalThis.crypto?.randomUUID === 'function') return globalThis.crypto.randomUUID()
+  if (typeof globalThis.crypto?.getRandomValues !== 'function') return
+
+  const bytes = globalThis.crypto.getRandomValues(new Uint8Array(16))
+  bytes[6] = ((bytes[6] ?? 0) & 0x0f) | 0x40
+  bytes[8] = ((bytes[8] ?? 0) & 0x3f) | 0x80
+  const hex = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('')
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`
+}
+
 const trackRequestDuration = (
   startedAt: number,
   source: 'preflight' | 'final_submission',
-  platform?: SupportPlatform
+  platform?: SupportPlatform,
+  attemptId?: string
 ) => {
   submissionAnalytics.requestDuration({
+    attemptId,
     durationBucket: submissionAnalytics.durationBucket(Date.now() - startedAt),
     platform,
     source
@@ -21,37 +40,40 @@ const trackRequestDuration = (
 /**
  * Track aggregate outcome, latency, support view, and Web Risk availability for a preflight.
  */
-const trackPreflightResult = (result: PreflightResult, startedAt: number) => {
+const trackPreflightResult = (result: PreflightResult, startedAt: number, attemptId?: string) => {
   submissionAnalytics.preflightOutcome({
+    attemptId,
     decision: result.status,
     reasonCategory: result.analytics.reasonCategory,
     source: 'preflight'
   })
-  trackRequestDuration(startedAt, 'preflight')
+  trackRequestDuration(startedAt, 'preflight', undefined, attemptId)
   if (result.analytics.webRiskAvailable === true) {
-    submissionAnalytics.webRiskAvailable({ source: 'preflight' })
+    submissionAnalytics.webRiskAvailable({ attemptId, source: 'preflight' })
   } else if (result.analytics.webRiskAvailable === false) {
-    submissionAnalytics.webRiskUnavailable({ source: 'preflight' })
+    submissionAnalytics.webRiskUnavailable({ attemptId, source: 'preflight' })
   }
   if (result.status === 'support_required') {
-    submissionAnalytics.supportView({ source: 'support_step' })
+    submissionAnalytics.supportView({ attemptId, source: 'support_step' })
   }
 }
 
 /** Track a client-side preflight failure without forwarding the thrown value. */
-const trackPreflightFailure = (startedAt: number) => {
+const trackPreflightFailure = (startedAt: number, attemptId?: string) => {
   submissionAnalytics.preflightOutcome({
+    attemptId,
     decision: 'retry_later',
     reasonCategory: 'unknown',
     source: 'preflight'
   })
-  trackRequestDuration(startedAt, 'preflight')
+  trackRequestDuration(startedAt, 'preflight', undefined, attemptId)
 }
 
 /** Track a final submission failure without submitted fields or server error text. */
-const trackFinalFailure = (platform: SupportPlatform, startedAt: number) => {
-  trackRequestDuration(startedAt, 'final_submission', platform)
+const trackFinalFailure = (platform: SupportPlatform, startedAt: number, attemptId?: string) => {
+  trackRequestDuration(startedAt, 'final_submission', platform, attemptId)
   const properties = {
+    attemptId,
     decision: 'retry_later',
     platform,
     prPresent: false,
@@ -64,10 +86,12 @@ const trackFinalFailure = (platform: SupportPlatform, startedAt: number) => {
 const trackFinalResult = (
   result: FinalSubmissionResult,
   platform: SupportPlatform,
-  startedAt: number
+  startedAt: number,
+  attemptId?: string
 ) => {
-  trackRequestDuration(startedAt, 'final_submission', platform)
+  trackRequestDuration(startedAt, 'final_submission', platform, attemptId)
   submissionAnalytics.finalOutcome({
+    attemptId,
     decision: result.outcome,
     platform,
     prPresent: result.analytics.prPresent,
@@ -75,12 +99,13 @@ const trackFinalResult = (
     source: 'final_submission'
   })
   if (result.analytics.webRiskAvailable === true) {
-    submissionAnalytics.webRiskAvailable({ source: 'final_submission' })
+    submissionAnalytics.webRiskAvailable({ attemptId, source: 'final_submission' })
   } else if (result.analytics.webRiskAvailable === false) {
-    submissionAnalytics.webRiskUnavailable({ source: 'final_submission' })
+    submissionAnalytics.webRiskUnavailable({ attemptId, source: 'final_submission' })
   }
   if (result.analytics.prCreated) {
     submissionAnalytics.prCreated({
+      attemptId,
       decision: result.outcome,
       platform,
       prPresent: result.analytics.prPresent,
@@ -89,6 +114,7 @@ const trackFinalResult = (
   }
   if (!result.success && result.analytics.publicationAttempted) {
     submissionAnalytics.publishFailure({
+      attemptId,
       decision: result.outcome,
       platform,
       prPresent: result.analytics.prPresent,
@@ -102,19 +128,38 @@ const trackFinalResult = (
  * Coordinates privacy-safe analytics at trusted-submission lifecycle boundaries.
  */
 export function useSubmissionAnalytics() {
+  const attemptId = useRef<string | undefined>(undefined)
+
   return {
+    getAttemptId: () => attemptId.current,
+    trackSubmissionPageView: () => submissionAnalytics.pageView({ source: 'submit_page' }),
     startPreflight: () => {
-      submissionAnalytics.preflightStart({ source: 'submit_page' })
+      attemptId.current = createSubmissionAttemptId()
+      submissionAnalytics.preflightStart({
+        attemptId: attemptId.current,
+        source: 'submit_page'
+      })
       return Date.now()
     },
-    finishPreflight: trackPreflightResult,
-    failPreflight: trackPreflightFailure,
-    startFinal: () => Date.now(),
-    finishFinal: trackFinalResult,
-    failFinal: trackFinalFailure,
+    finishPreflight: (result: PreflightResult, startedAt: number) =>
+      trackPreflightResult(result, startedAt, attemptId.current),
+    failPreflight: (startedAt: number) => trackPreflightFailure(startedAt, attemptId.current),
+    startFinal: (platform: SupportPlatform) => {
+      submissionAnalytics.finalStart({
+        attemptId: attemptId.current,
+        platform,
+        source: 'final_submission'
+      })
+      return Date.now()
+    },
+    finishFinal: (result: FinalSubmissionResult, platform: SupportPlatform, startedAt: number) =>
+      trackFinalResult(result, platform, startedAt, attemptId.current),
+    failFinal: (platform: SupportPlatform, startedAt: number) =>
+      trackFinalFailure(platform, startedAt, attemptId.current),
     trackSubmissionSupportPlatformSelect: (input?: unknown) =>
       submissionAnalytics.supportPlatformSelect(input),
     trackSubmissionProfileOpen: (input?: unknown) => submissionAnalytics.profileOpen(input),
-    trackSubmissionFollowAttest: (input?: unknown) => submissionAnalytics.followAttest(input)
+    trackSubmissionFollowAttest: (input?: unknown) => submissionAnalytics.followAttest(input),
+    trackSubmissionSupportBack: (input?: unknown) => submissionAnalytics.supportBack(input)
   }
 }

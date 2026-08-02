@@ -63,6 +63,8 @@ export function SubmitForm() {
   const [websiteUrlStatus] = useState<SubmitUrlStatus>({ checking: false, accessible: null })
   const { trackFormStepStart, trackFormStepComplete } = useAnalyticsEvents()
   const submissionAnalytics = useSubmissionAnalytics()
+  const trackInitialStep = useRef(trackFormStepStart)
+  const trackPageView = useRef(submissionAnalytics.trackSubmissionPageView)
 
   const step1Form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -91,11 +93,9 @@ export function SubmitForm() {
   })
 
   useEffect(() => {
-    trackFormStepStart(1, 'submit-form', 'submit-page')
-  }, [trackFormStepStart])
-
-  useEffect(() => {
     mounted.current = true
+    trackPageView.current()
+    trackInitialStep.current(1, 'submit-form', 'submit-page')
     return () => {
       mounted.current = false
       flowGeneration.current += 1
@@ -182,7 +182,7 @@ export function SubmitForm() {
   async function onSubmitSupport(support: { followAttested: true; platform: 'x' | 'linkedin' }) {
     const request = beginRequest()
     if (!request) return
-    const startedAt = submissionAnalytics.startFinal()
+    const startedAt = submissionAnalytics.startFinal(support.platform)
     setIsLoading(true)
     trackFormStepComplete(3, 'submit-form', 'submit-page')
 
@@ -283,6 +283,7 @@ export function SubmitForm() {
         />
       ) : step === 'support' && continuation ? (
         <SubmitFormSupport
+          attemptId={submissionAnalytics.getAttemptId()}
           key={continuation.submissionId}
           isLoading={isLoading}
           onBack={handleBackToDetails}
