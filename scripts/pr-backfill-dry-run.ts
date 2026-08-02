@@ -475,7 +475,12 @@ export function calculateManagedLabelSync(
   desiredLabels: string[]
 ): LabelSyncPlan {
   const currentManaged = currentLabels.filter(label => isManagedLabel(label)).sort()
-  const desired = [...new Set(desiredLabels)].sort()
+  const desiredSet = new Set(desiredLabels)
+  if (currentLabels.includes('needs:manual-review')) {
+    desiredSet.add('needs:manual-review')
+    desiredSet.delete('automerge:candidate')
+  }
+  const desired = [...desiredSet].sort()
   const added = desired.filter(label => !currentManaged.includes(label))
   const removed = currentManaged.filter(label => !desired.includes(label))
 
@@ -763,7 +768,7 @@ async function analyzePullRequest(
       repo
     })
     const mergePlan = deriveMergeAction({
-      desiredLabels,
+      desiredLabels: labelSync.desired,
       dryRun: options.dryRun,
       wouldMerge: decision.wouldMerge,
       wouldMergeReason: decision.reason

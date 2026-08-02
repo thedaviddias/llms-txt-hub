@@ -180,7 +180,7 @@ jobs:
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
         with:
           script: |
-            const labels = JSON.parse(process.env.CLASSIFICATION_LABELS ?? '[]')
+            let labels = JSON.parse(process.env.CLASSIFICATION_LABELS ?? '[]')
             const prNumber = Number(process.env.PR_NUMBER)
             const managedPrefixes = ['lane:', 'risk:', 'status:', 'needs:']
             const managedExact = ['automerge:candidate']
@@ -193,10 +193,15 @@ jobs:
             })
 
             const currentNames = currentLabels.map(label => label.name)
+            const preserveManualReview = currentNames.includes('needs:manual-review')
+            if (preserveManualReview) {
+              labels = labels.filter(label => label !== 'automerge:candidate')
+              if (!labels.includes('needs:manual-review')) labels.push('needs:manual-review')
+            }
             const labelsToRemove = currentNames.filter(name =>
               managedPrefixes.some(prefix => name.startsWith(prefix)) ||
               managedExact.includes(name)
-            ).filter(name => !labels.includes(name))
+            ).filter(name => name !== 'needs:manual-review' && !labels.includes(name))
 
             for (const name of labelsToRemove) {
               await github.rest.issues.removeLabel({

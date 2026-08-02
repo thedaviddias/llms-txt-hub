@@ -97,6 +97,26 @@ elseif scenario == 'cas' then
   assert(record.state == 'final_assessing')
   assert(ttl.submission == 169200123)
   assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'state_mismatch')
+elseif scenario == 'recovery' then
+  local record = {
+    state = 'publishing',
+    submissionId = 'sub_123',
+    userId = 'user_123',
+    fieldsHash = 'fields-hash',
+    expiresAt = '2026-08-03T12:00:00.000Z',
+    branch = 'submit/sub_123',
+    resultCode = 'auto_publish'
+  }
+  cjson = {
+    decode = function(_) return record end,
+    encode = function(value) record = value return 'encoded-record' end
+  }
+  store.submission = 'encoded-record'
+  ttl.submission = 169200123
+
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'recovery:publishing')
+  record.branch = 'submit/sub_other'
+  assert(run({'submission'}, {'user_123', 'fields-hash', '2026-08-01T13:00:00.000Z'}) == 'state_mismatch')
 else
   error('Unknown scenario')
 end
@@ -139,7 +159,8 @@ describe('submission Redis Lua contracts', () => {
   runtimeTest.each([
     ['rate limits', SUBMISSION_RATE_LIMIT_SCRIPT, 'rate'],
     ['dual locks', ACQUIRE_SUBMISSION_LOCKS_SCRIPT, 'locks'],
-    ['concurrent continuation CAS serialization', FINAL_ASSESSMENT_SCRIPT, 'cas']
+    ['concurrent continuation CAS serialization', FINAL_ASSESSMENT_SCRIPT, 'cas'],
+    ['exact bound recovery', FINAL_ASSESSMENT_SCRIPT, 'recovery']
   ])('executes valid Lua for %s with the required atomic semantics', (_label, script, scenario) => {
     const result = executeLua(script, scenario)
 

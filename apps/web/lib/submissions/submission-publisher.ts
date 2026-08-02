@@ -5,7 +5,7 @@ import { logger } from '@thedaviddias/logging'
 import { createAssessmentAttestation } from '@thedaviddias/submission-trust/attestation'
 import type { SubmissionAssessment, SubmissionFields } from '@thedaviddias/submission-trust/types'
 import yaml from 'js-yaml'
-
+import { serializeSubmissionMdxText, serializeSubmissionMetadata } from './submission-plain-text'
 import {
   type SubmissionPublicationState,
   submissionPublicationState
@@ -261,33 +261,27 @@ const slugify = (name: string): string =>
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
 
-const escapeMdxText = (value: string): string =>
-  value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/{/g, '&#123;')
-    .replace(/}/g, '&#125;')
-
 const renderMdx = (
   fields: SubmissionFields
 ): { readonly content: string; readonly path: string } | null => {
   const slug = slugify(fields.name)
   if (!slug) return null
+  const name = serializeSubmissionMetadata(fields.name)
+  const description = serializeSubmissionMetadata(fields.description)
   const frontmatter = yaml.dump(
     {
       category: fields.category,
-      description: fields.description,
+      description,
       llmsFullUrl: fields.llmsFullUrl ?? '',
       llmsUrl: fields.llmsUrl,
-      name: fields.name,
+      name,
       publishedAt: fields.publishedAt,
       website: fields.website
     },
     { forceQuotes: true, indent: 2, lineWidth: -1, quotingType: "'", sortKeys: true }
   )
   return {
-    content: `---\n${frontmatter}---\n\n# ${escapeMdxText(fields.name)}\n\n${escapeMdxText(fields.description)}\n`,
+    content: `---\n${frontmatter}---\n\n# ${serializeSubmissionMdxText(fields.name)}\n\n${serializeSubmissionMdxText(fields.description)}\n`,
     path: `${FILE_PREFIX}${slug}-llms-txt.mdx`
   }
 }
@@ -305,7 +299,7 @@ const pullRequestBody = (
       : shadow
         ? 'would_auto_publish'
         : assessment.decision
-  return `<!-- llms-hub-submission:${submissionId} -->\n\nThis PR adds ${escapeMdxText(fields.name)} to the llms.txt hub.\n\n**Assessment:** ${assessmentLabel}\n**Policy:** ${assessment.policyVersion}\n**Website:** ${fields.website}\n**llms.txt:** ${fields.llmsUrl}\n${fields.llmsFullUrl ? `**llms-full.txt:** ${fields.llmsFullUrl}\n` : ''}`
+  return `<!-- llms-hub-submission:${submissionId} -->\n\nThis PR adds ${serializeSubmissionMdxText(fields.name)} to the llms.txt hub.\n\n**Assessment:** ${assessmentLabel}\n**Policy:** ${assessment.policyVersion}\n**Website:** ${fields.website}\n**llms.txt:** ${fields.llmsUrl}\n${fields.llmsFullUrl ? `**llms-full.txt:** ${fields.llmsFullUrl}\n` : ''}`
 }
 
 const webRiskCheckedAt = (assessment: SubmissionAssessment): string | null => {
@@ -352,15 +346,23 @@ export async function publishSubmission(
   const startedAt = Date.now()
   const outcome = publicationOutcome(input.assessment, input.mode)
   let publicationStarted = false
+  let attempt:
+    | {
+        readonly branch: string
+        readonly outcome: 'automatic' | 'manual'
+        readonly resultCode: string
+        readonly submissionId: string
+      }
+    | undefined
   let logOutcome: 'automatic' | 'manual' | 'retry_later' = 'retry_later'
   let reasonCode = 'publication_unavailable'
   const unavailable = async (): Promise<SubmissionPublisherResult> => {
-    if (!publicationStarted) {
+    if (!publicationStarted || !attempt) {
       return { code: 'publication_unavailable', ok: false, recovery: 'fresh_preflight' }
     }
     let stateUpdated = false
     try {
-      stateUpdated = await dependencies.state.markFailed(input.submissionId)
+      stateUpdated = await dependencies.state.markFailed(attempt)
     } catch {
       stateUpdated = false
     }
@@ -386,17 +388,12 @@ export async function publishSubmission(
     if (!rendered) return unavailable()
     const branch = `submit/${input.submissionId}`
     const resultCode = publicationResultCode(input.assessment, input.mode)
-    if (
-      !(await dependencies.state.persistBranch({
-        branch,
-        outcome,
-        resultCode,
-        submissionId: input.submissionId
-      }))
-    ) {
+    attempt = { branch, outcome, resultCode, submissionId: input.submissionId }
+    if (!(await dependencies.state.beginAttempt(attempt))) return unavailable()
+    publicationStarted = true
+    if (!(await dependencies.state.persistBranch(attempt))) {
       return unavailable()
     }
-    publicationStarted = true
 
     const base = await dependencies.github.getDefaultBranch()
     let headSha = await dependencies.github.getBranchHead(branch)

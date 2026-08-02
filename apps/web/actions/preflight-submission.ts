@@ -16,7 +16,6 @@ import {
 import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import {
-  acquireSubmissionLocks,
   createSubmissionContinuation,
   enforceSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
@@ -145,18 +144,6 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
     })
     if (!continuation.ok) {
       return complete(retryLater('publication_unavailable'), 'publication_unavailable')
-    }
-    const lock = await acquireSubmissionLocks({
-      llmsUrl: parsed.fields.llmsUrl,
-      submissionId,
-      website: parsed.fields.website
-    })
-    if (!lock.ok) {
-      const result =
-        lock.code === 'duplicate'
-          ? rejected(DUPLICATE_MESSAGE, 'duplicate')
-          : retryLater('publication_unavailable')
-      return complete(result, lock.code)
     }
     return complete(
       {

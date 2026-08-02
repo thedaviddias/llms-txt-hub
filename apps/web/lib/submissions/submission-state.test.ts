@@ -41,7 +41,8 @@ describe('submission state', () => {
     ['manual_review', 'publish_failed'],
     ['publishing', 'published'],
     ['publishing', 'publish_failed'],
-    ['publish_failed', 'final_assessing']
+    ['publish_failed', 'auto_publish_pending'],
+    ['publish_failed', 'manual_review']
   ])('allows %s -> %s', (from, to) => {
     expect(isAllowedSubmissionTransition(from, to)).toBe(true)
   })
@@ -52,7 +53,8 @@ describe('submission state', () => {
     ['final_assessing', 'support_required'],
     ['auto_publish_pending', 'published'],
     ['published', 'draft'],
-    ['publish_failed', 'publishing']
+    ['publish_failed', 'publishing'],
+    ['publish_failed', 'final_assessing']
   ])('rejects %s -> %s', (from, to) => {
     expect(isAllowedSubmissionTransition(from, to)).toBe(false)
   })
@@ -103,7 +105,7 @@ describe('submission state', () => {
     }
     await expect(
       consumeSubmissionContinuation(input, { now: () => NOW, redis, secret: SECRET })
-    ).resolves.toEqual({ ok: true, submissionId: 'sub_123' })
+    ).resolves.toEqual({ mode: 'initial', ok: true, submissionId: 'sub_123' })
     await expect(
       consumeSubmissionContinuation(input, { now: () => NOW, redis, secret: SECRET })
     ).resolves.toEqual({ code: 'replayed', ok: false })
@@ -112,34 +114,43 @@ describe('submission state', () => {
     expect(redis.eval.mock.calls[0]?.[0]).toContain('final_assessing')
   })
 
-  it('allows same-ID recovery only from publish_failed with unchanged user and fields', async () => {
-    const redis = makeRedis()
-    redis.setNx.mockResolvedValue(true)
-    redis.eval.mockResolvedValue('transitioned')
-    const created = await createSubmissionContinuation(
-      { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
-      { now: () => NOW, redis, secret: SECRET }
-    )
-    expect(created.ok).toBe(true)
-    if (!created.ok) return
-    redis.get.mockResolvedValue({
-      ...created.record,
-      resultCode: 'publication_unavailable',
-      state: 'publish_failed'
-    })
-
-    await expect(
-      consumeSubmissionContinuation(
-        {
-          continuationToken: created.continuationToken,
-          fields: FIELDS,
-          userId: 'user_123'
-        },
+  it.each(['auto_publish_pending', 'manual_review', 'publishing', 'publish_failed'] as const)(
+    'returns explicit same-ID recovery from bound %s state',
+    async state => {
+      const redis = makeRedis()
+      redis.setNx.mockResolvedValue(true)
+      redis.eval.mockResolvedValue(`recovery:${state}`)
+      const created = await createSubmissionContinuation(
+        { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
         { now: () => NOW, redis, secret: SECRET }
       )
-    ).resolves.toEqual({ ok: true, submissionId: 'sub_123' })
-    expect(redis.eval.mock.calls[0]?.[0]).toContain("record.state ~= 'publish_failed'")
-  })
+      expect(created.ok).toBe(true)
+      if (!created.ok) return
+      redis.get.mockResolvedValue({
+        ...created.record,
+        branch: 'submit/sub_123',
+        resultCode:
+          state === 'publish_failed'
+            ? 'publication_unavailable'
+            : state === 'manual_review'
+              ? 'manual_review'
+              : 'auto_publish',
+        state
+      })
+
+      await expect(
+        consumeSubmissionContinuation(
+          {
+            continuationToken: created.continuationToken,
+            fields: FIELDS,
+            userId: 'user_123'
+          },
+          { now: () => NOW, redis, secret: SECRET }
+        )
+      ).resolves.toEqual({ mode: 'recovery', ok: true, state, submissionId: 'sub_123' })
+      expect(redis.eval.mock.calls[0]?.[0]).toContain("record.state == 'publishing'")
+    }
+  )
 
   it.each([
     [
@@ -182,7 +193,12 @@ describe('submission state', () => {
     )
     expect(created.ok).toBe(true)
     if (!created.ok) return
-    redis.get.mockResolvedValue(created.record)
+    redis.get.mockResolvedValue({
+      ...created.record,
+      branch: 'submit/sub_123',
+      resultCode: 'auto_publish',
+      state: 'publishing'
+    })
 
     const result = await consumeSubmissionContinuation(
       {

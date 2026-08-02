@@ -18,16 +18,22 @@ export const FINAL_ASSESSMENT_SCRIPT = `
 local raw = redis.call('GET', KEYS[1])
 if not raw then return 'missing' end
 local record = cjson.decode(raw)
-if record.state ~= 'support_required' and record.state ~= 'publish_failed' then return 'state_mismatch' end
-if record.state == 'publish_failed' and record.resultCode ~= 'publication_unavailable' then return 'state_mismatch' end
 if record.userId ~= ARGV[1] or record.fieldsHash ~= ARGV[2] then return 'binding_mismatch' end
 if record.expiresAt <= ARGV[3] then return 'expired' end
 local ttl = redis.call('PTTL', KEYS[1])
 if ttl <= 0 then return 'expired' end
-record.state = 'final_assessing'
-record.updatedAt = ARGV[3]
-redis.call('SET', KEYS[1], cjson.encode(record), 'PX', ttl)
-return 'transitioned'
+if record.state == 'support_required' then
+  record.state = 'final_assessing'
+  record.updatedAt = ARGV[3]
+  redis.call('SET', KEYS[1], cjson.encode(record), 'PX', ttl)
+  return 'transitioned'
+end
+local exactBranch = record.submissionId and record.branch == 'submit/' .. record.submissionId
+if exactBranch and record.state == 'auto_publish_pending' and record.resultCode == 'auto_publish' then return 'recovery:auto_publish_pending' end
+if exactBranch and record.state == 'manual_review' and record.resultCode ~= 'auto_publish' and record.resultCode ~= 'publication_unavailable' then return 'recovery:manual_review' end
+if exactBranch and record.state == 'publishing' and record.resultCode ~= 'publication_unavailable' then return 'recovery:publishing' end
+if exactBranch and record.state == 'publish_failed' and record.resultCode == 'publication_unavailable' then return 'recovery:publish_failed' end
+return 'state_mismatch'
 `.trim()
 
 /** Atomic, idempotent dual-URL lock acquisition script. */
@@ -65,7 +71,7 @@ const STATE_TRANSITIONS: Readonly<Record<SubmissionState, readonly SubmissionSta
   final_assessing: ['rejected', 'retry_later', 'manual_review', 'auto_publish_pending'],
   manual_review: ['publishing', 'publish_failed'],
   preflight_rejected: [],
-  publish_failed: ['final_assessing'],
+  publish_failed: ['auto_publish_pending', 'manual_review'],
   published: [],
   publishing: ['published', 'publish_failed'],
   rejected: [],
