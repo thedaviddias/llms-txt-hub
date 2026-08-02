@@ -44,6 +44,12 @@ const BASE_SCAN_DEADLINE_MS = 20_000
 const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
 const MAX_OPEN_PULL_REQUESTS = 300
 const MAX_OPEN_PULL_REQUEST_FILES = 300
+const MAX_COMPARE_FILES = 300
+const MAX_COMPARE_COMMITS = 250
+const MAX_GH_RESPONSE_BYTES = 2 * 1024 * 1024
+const GH_EXEC_TIMEOUT_MS = 20_000
+const PAGINATION_DEADLINE_MS = 20_000
+const MAX_PAGINATION_ITEMS = 500
 const EXACT_MANAGED_LABELS = [
   'area:content',
   'automerge:candidate',
@@ -163,6 +169,7 @@ interface DryRunOptions {
   dryRun: boolean
   json: boolean
   limit?: number
+  openPullRequestDuplicateIndex?: OpenPullRequestDuplicateIndex
   pullRequestNumber?: number
   repo: string
 }
@@ -193,6 +200,9 @@ interface GitHubPullRequestDetails {
   draft: boolean
   head: {
     ref: string
+    repo?: {
+      full_name?: string
+    } | null
     sha: string
     user?: {
       login?: string
@@ -220,6 +230,9 @@ interface GitHubPullRequestFile {
 }
 
 interface GitHubPullRequestListItem {
+  base?: {
+    sha?: string
+  }
   head?: {
     repo?: {
       full_name?: string
@@ -232,12 +245,26 @@ interface GitHubPullRequestListItem {
 interface GitHubWorkflowRun {
   conclusion: string | null
   created_at: string
-  name: string
+  head_sha?: string
+  pull_requests?: {
+    base?: { ref?: string; sha?: string }
+    number?: number
+  }[]
   status: string
+  workflow_id?: number
 }
 
 interface GitHubWorkflowRunsResponse {
   workflow_runs: GitHubWorkflowRun[]
+}
+
+interface GitHubCompareResponse {
+  ahead_by?: number
+  base_commit?: { sha?: string }
+  commits?: { sha?: string }[]
+  files?: GitHubPullRequestFile[]
+  status?: string
+  total_commits?: number
 }
 
 export interface SubmissionFrontmatter {
@@ -264,6 +291,7 @@ interface ModeratedSubmissionFile {
 }
 
 interface ModerationResult extends GuidelineAssessment {
+  attestation: AssessmentAttestationVerificationResult
   files: ModeratedSubmissionFile[]
 }
 
@@ -319,6 +347,7 @@ interface MergeRevalidationContext {
   duplicateFields: DuplicateCandidate
   file: ModeratedSubmissionFile
   freshAssessment: SubmissionAssessment
+  openPullRequestDuplicateStatus: DuplicateStatus
   trustedBaseSha: string
 }
 
@@ -364,6 +393,84 @@ export type AutomergeEventContext =
   | { readonly mode: 'single'; readonly prNumber: number }
   | { readonly mode: 'scan_all' }
   | { readonly mode: 'skip' }
+
+/** A complete file manifest derived from immutable Git object SHAs. */
+export type ImmutablePullRequestManifest =
+  | { readonly files: GitHubPullRequestFile[]; readonly status: 'complete' }
+  | { readonly status: 'unavailable' }
+
+/** Validate a bounded compare response against exact immutable base and head SHAs. */
+export function deriveImmutablePullRequestManifest(
+  response: GitHubCompareResponse,
+  expected: { readonly baseSha: string; readonly headSha: string }
+): ImmutablePullRequestManifest {
+  const commits = response.commits
+  const files = response.files
+  if (
+    !/^[a-f0-9]{40}$/.test(expected.baseSha) ||
+    !/^[a-f0-9]{40}$/.test(expected.headSha) ||
+    response.base_commit?.sha !== expected.baseSha ||
+    response.status !== 'ahead' ||
+    !Number.isSafeInteger(response.ahead_by) ||
+    !Number.isSafeInteger(response.total_commits) ||
+    typeof response.ahead_by !== 'number' ||
+    typeof response.total_commits !== 'number' ||
+    response.ahead_by <= 0 ||
+    response.ahead_by !== response.total_commits ||
+    response.total_commits > MAX_COMPARE_COMMITS ||
+    !Array.isArray(commits) ||
+    commits.length !== response.total_commits ||
+    commits.at(-1)?.sha !== expected.headSha ||
+    !Array.isArray(files) ||
+    files.length === 0 ||
+    files.length >= MAX_COMPARE_FILES ||
+    files.some(
+      file =>
+        typeof file?.filename !== 'string' ||
+        file.filename.length === 0 ||
+        file.filename.length > 1024 ||
+        typeof file.status !== 'string'
+    )
+  ) {
+    return { status: 'unavailable' }
+  }
+  return { files, status: 'complete' }
+}
+
+/** Run outbound assessment only after the exact structural and signature gates pass. */
+export async function runTrustedAssessmentGate<T>(
+  input: { readonly addedMdxCount: number; readonly attestationVerified: boolean },
+  assess: () => Promise<T>
+): Promise<T | null> {
+  if (input.addedMdxCount !== 1 || !input.attestationVerified) return null
+  return assess()
+}
+
+/** Select a required check only when its immutable workflow and PR scope match exactly. */
+export function selectTrustedReviewConclusion(
+  runs: readonly GitHubWorkflowRun[],
+  expected: {
+    readonly baseRef: 'main'
+    readonly baseSha: string
+    readonly headSha: string
+    readonly prNumber: number
+    readonly workflowId: number
+  }
+): ReviewConclusion {
+  const matching = runs
+    .filter(run => {
+      if (run.workflow_id !== expected.workflowId || run.head_sha !== expected.headSha) return false
+      return run.pull_requests?.some(
+        pullRequest =>
+          pullRequest.number === expected.prNumber &&
+          pullRequest.base?.ref === expected.baseRef &&
+          pullRequest.base.sha === expected.baseSha
+      )
+    })
+    .sort((left, right) => right.created_at.localeCompare(left.created_at))[0]
+  if (!matching) return 'missing'
+  return matching.status === 'completed' ? normalizeConclusion(matching.conclusion) : 'in_progress'
+}
 
 const invalidAttestation = (): AssessmentAttestationVerificationResult => ({
   code: 'invalid_expectation',
@@ -952,6 +1059,7 @@ export interface TrustedBaseInspectionDependencies {
 
 /** A normalized open pull request head used by duplicate inspection. */
 export interface OpenPullRequestSnapshot {
+  readonly baseSha: string
   readonly headRepository: string
   readonly headSha: string
   readonly number: number
@@ -967,11 +1075,18 @@ export interface OpenPullRequestFileSnapshot {
 export interface OpenPullRequestInspectionDependencies {
   readonly getFileContent: (repo: string, path: string, sha: string) => Promise<string>
   readonly listOpenPullRequests: (page: number) => Promise<OpenPullRequestSnapshot[]>
-  readonly listPullRequestFiles: (
-    pullRequestNumber: number,
-    page: number
-  ) => Promise<OpenPullRequestFileSnapshot[]>
+  readonly loadImmutableManifest: (
+    pullRequest: OpenPullRequestSnapshot
+  ) => Promise<
+    | { readonly files: OpenPullRequestFileSnapshot[]; readonly status: 'complete' }
+    | { readonly status: 'unavailable' }
+  >
 }
+
+/** A reusable duplicate index built once from immutable open-PR manifests. */
+export type OpenPullRequestDuplicateIndex =
+  | { readonly ownersByUrl: Map<string, Set<number>>; readonly status: 'complete' }
+  | { readonly status: 'unavailable' }
 
 const normalizeDuplicateFields = (
   frontmatter: SubmissionFrontmatter
@@ -1106,7 +1221,9 @@ const collectBoundedPages = async <T>(
   maxItems: number
 ): Promise<T[] | null> => {
   const items: T[] = []
+  const startedAt = Date.now()
   for (let page = 1; ; page += 1) {
+    if (Date.now() - startedAt > PAGINATION_DEADLINE_MS) return null
     const batch = await loader(page)
     if (
       !Array.isArray(batch) ||
@@ -1129,18 +1246,88 @@ const defaultOpenPullRequestDependencies = (
       `repos/${repo}/pulls?state=open&page=${page}&per_page=${PAGE_SIZE}`
     ])
     return values.map(value => ({
+      baseSha: value.base?.sha ?? '',
       headRepository: value.head?.repo?.full_name ?? '',
       headSha: value.head?.sha ?? '',
       number: value.number
     }))
   },
-  listPullRequestFiles: async (pullRequestNumber, page) => {
-    const values = await ghApiJson<GitHubPullRequestFile[]>([
-      `repos/${repo}/pulls/${pullRequestNumber}/files?page=${page}&per_page=${PAGE_SIZE}`
-    ])
-    return values.map(value => ({ path: value.filename, status: value.status }))
+  loadImmutableManifest: async pullRequest => {
+    const manifest = await fetchImmutablePullRequestManifest(
+      repo,
+      pullRequest.baseSha,
+      pullRequest.headSha
+    )
+    return manifest.status === 'complete'
+      ? {
+          files: manifest.files.map(file => ({ path: file.filename, status: file.status })),
+          status: 'complete'
+        }
+      : manifest
   }
 })
+
+/** Build one bounded immutable duplicate index for all candidates in a run. */
+export async function buildOpenPullRequestDuplicateIndex(
+  pullRequests: readonly OpenPullRequestSnapshot[],
+  dependencies: Pick<
+    OpenPullRequestInspectionDependencies,
+    'getFileContent' | 'loadImmutableManifest'
+  >
+): Promise<OpenPullRequestDuplicateIndex> {
+  if (pullRequests.length > MAX_OPEN_PULL_REQUESTS) return { status: 'unavailable' }
+  const ownersByUrl = new Map<string, Set<number>>()
+  let fileCount = 0
+  try {
+    for (const pullRequest of pullRequests) {
+      if (
+        !Number.isSafeInteger(pullRequest.number) ||
+        pullRequest.number <= 0 ||
+        !/^[a-f0-9]{40}$/.test(pullRequest.baseSha) ||
+        !/^[a-f0-9]{40}$/.test(pullRequest.headSha) ||
+        !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(pullRequest.headRepository)
+      ) {
+        return { status: 'unavailable' }
+      }
+      const manifest = await dependencies.loadImmutableManifest(pullRequest)
+      if (manifest.status !== 'complete') return { status: 'unavailable' }
+      fileCount += manifest.files.length
+      if (fileCount > MAX_OPEN_PULL_REQUEST_FILES) return { status: 'unavailable' }
+      for (const file of manifest.files) {
+        if (!isOpenPullRequestWebsiteFile(file)) continue
+        const content = await dependencies.getFileContent(
+          pullRequest.headRepository,
+          file.path,
+          pullRequest.headSha
+        )
+        const normalized = parseDuplicateFields(content)
+        if (!normalized) return { status: 'unavailable' }
+        for (const value of [normalized.website, normalized.llmsUrl]) {
+          if (!value) continue
+          const owners = ownersByUrl.get(value) ?? new Set<number>()
+          owners.add(pullRequest.number)
+          ownersByUrl.set(value, owners)
+        }
+      }
+    }
+    return { ownersByUrl, status: 'complete' }
+  } catch {
+    return { status: 'unavailable' }
+  }
+}
+
+/** Look up one candidate without rebuilding the immutable open-PR index. */
+export function lookupOpenPullRequestDuplicate(
+  index: OpenPullRequestDuplicateIndex,
+  input: { readonly candidate: DuplicateCandidate; readonly currentPrNumber: number }
+): DuplicateStatus {
+  if (index.status !== 'complete') return 'unavailable'
+  for (const value of [input.candidate.website, input.candidate.llmsUrl]) {
+    const owners = index.ownersByUrl.get(value)
+    if (owners && [...owners].some(number => number !== input.currentPrNumber)) return 'duplicate'
+  }
+  return 'unique'
+}
 
 /** Inspect all bounded open PR heads, including forks, for duplicate entries. */
 export async function inspectOpenPullRequestDuplicates(
@@ -1156,45 +1343,26 @@ export async function inspectOpenPullRequestDuplicates(
       MAX_OPEN_PULL_REQUESTS
     )
     if (!pullRequests) return 'unavailable'
-    let fileCount = 0
-    for (const pullRequest of pullRequests) {
-      if (pullRequest.number === input.currentPrNumber) continue
-      const headSha = pullRequest.headSha
-      const headRepository = pullRequest.headRepository
-      if (
-        !headSha ||
-        !/^[a-f0-9]{40}$/.test(headSha) ||
-        !headRepository ||
-        !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(headRepository)
-      ) {
-        return 'unavailable'
-      }
-      const files = await collectBoundedPages(
-        page => dependencies.listPullRequestFiles(pullRequest.number, page),
-        MAX_OPEN_PULL_REQUEST_FILES - fileCount
-      )
-      if (!files) return 'unavailable'
-      fileCount += files.length
-      for (const file of files) {
-        if (!isOpenPullRequestWebsiteFile(file)) continue
-        const content = await dependencies.getFileContent(headRepository, file.path, headSha)
-        const normalized = parseDuplicateFields(content)
-        if (!normalized) return 'unavailable'
-        if (isDuplicate(input.candidate, normalized)) return 'duplicate'
-      }
-    }
-    return 'unique'
+    const index = await buildOpenPullRequestDuplicateIndex(pullRequests, dependencies)
+    return lookupOpenPullRequestDuplicate(index, input)
   } catch {
     return 'unavailable'
   }
 }
 
-const inspectOpenPullRequestDuplicate = async (input: {
-  candidate: DuplicateCandidate
-  currentPrNumber: number
+/** Build the default immutable open-PR index once for an entire command run. */
+async function buildDefaultOpenPullRequestDuplicateIndex(
   repo: string
-}): Promise<DuplicateStatus> =>
-  inspectOpenPullRequestDuplicates(input, defaultOpenPullRequestDependencies(input.repo))
+): Promise<OpenPullRequestDuplicateIndex> {
+  const dependencies = defaultOpenPullRequestDependencies(repo)
+  const pullRequests = await collectBoundedPages(
+    dependencies.listOpenPullRequests,
+    MAX_OPEN_PULL_REQUESTS
+  )
+  return pullRequests
+    ? buildOpenPullRequestDuplicateIndex(pullRequests, dependencies)
+    : { status: 'unavailable' }
+}
 
 /**
  * CLI entrypoint for the local PR review dry-run.
@@ -1214,6 +1382,9 @@ async function main(): Promise<void> {
   }
 
   const openPullRequests = await fetchOpenPullRequests(options)
+  options.openPullRequestDuplicateIndex = await buildDefaultOpenPullRequestDuplicateIndex(
+    options.repo
+  )
   const total = openPullRequests.length
 
   if (!options.json) {
@@ -1416,19 +1587,20 @@ async function analyzePullRequest(
 ): Promise<PullRequestReviewSnapshot> {
   try {
     const details = await fetchPullRequestDetails(repo, pullRequestNumber)
-    const files = await paginateGhApi<GitHubPullRequestFile>(
-      `repos/${repo}/pulls/${pullRequestNumber}/files`
-    )
-    const commits = await paginateGhApi<GitHubPullRequestCommit>(
-      `repos/${repo}/pulls/${pullRequestNumber}/commits`
-    )
+    const baseSha = details.base?.sha ?? ''
+    const manifest =
+      details.base?.ref === 'main' && details.base.repo?.full_name === repo
+        ? await fetchImmutablePullRequestManifest(repo, baseSha, details.head.sha)
+        : ({ status: 'unavailable' } satisfies ImmutablePullRequestManifest)
+    const files = manifest.status === 'complete' ? manifest.files : []
+    const commits: GitHubPullRequestCommit[] = []
     const classifierContext = buildClassifierContext({
       commits,
       details,
       files
     })
     const classification = classifyPullRequest(classifierContext)
-    const reviewStatus = await fetchReviewStatus(repo, details.head.sha)
+    const reviewStatus = await fetchReviewStatus(repo, details)
     const structuralDecision = deriveStructuralDecision({
       classification,
       isDraft: details.draft,
@@ -1436,25 +1608,19 @@ async function analyzePullRequest(
       state: details.state
     })
     const moderation = await moderatePullRequest({
+      body: typeof details.body === 'string' ? details.body : '',
       classification,
+      contentRepo: details.head.repo?.full_name ?? '',
       files,
+      prNumber: details.number,
       repo,
+      secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? '',
       sha: details.head.sha
     })
     const moderatedFile = moderation.files.length === 1 ? moderation.files[0] : undefined
     const trustedBaseSha = process.env.TRUSTED_BASE_SHA ?? ''
     const baseSnapshotStatus = await fetchTrustedBaseStatus(repo, details, trustedBaseSha)
-    const attestation = moderatedFile
-      ? verifyMergeAttestation({
-          addedMdxBytes: moderatedFile.bytes,
-          addedMdxPath: moderatedFile.path,
-          body: typeof details.body === 'string' ? details.body : '',
-          currentHeadSha: details.head.sha,
-          prNumber: details.number,
-          repository: repo,
-          secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
-        })
-      : invalidAttestation()
+    const attestation = moderation.attestation
     const duplicateFields = moderatedFile
       ? normalizeDuplicateFields(moderatedFile.frontmatter)
       : null
@@ -1463,11 +1629,12 @@ async function analyzePullRequest(
           baseSnapshotStatus === 'current'
             ? inspectTrustedBaseDuplicate(duplicateFields)
             : Promise.resolve<DuplicateStatus>('unavailable'),
-          inspectOpenPullRequestDuplicate({
-            candidate: duplicateFields,
-            currentPrNumber: details.number,
-            repo
-          })
+          Promise.resolve(
+            lookupOpenPullRequestDuplicate(
+              options.openPullRequestDuplicateIndex ?? { status: 'unavailable' },
+              { candidate: duplicateFields, currentPrNumber: details.number }
+            )
+          )
         ])
       : (['unavailable', 'unavailable'] satisfies [DuplicateStatus, DuplicateStatus])
     const authorization = deriveMergeAuthorization({
@@ -1516,6 +1683,7 @@ async function analyzePullRequest(
               duplicateFields,
               file: moderatedFile,
               freshAssessment: moderatedFile.assessment,
+              openPullRequestDuplicateStatus,
               trustedBaseSha
             }
           : undefined,
@@ -1720,14 +1888,9 @@ async function executeMergeAction(input: {
   try {
     if (!input.revalidation) throw new Error('Missing trusted revalidation context.')
     const latest = await fetchPullRequestDetails(input.repo, input.prNumber)
-    const [baseSnapshotStatus, openPullRequestDuplicateStatus, reviewStatus] = await Promise.all([
+    const [baseSnapshotStatus, reviewStatus] = await Promise.all([
       fetchTrustedBaseStatus(input.repo, latest, input.revalidation.trustedBaseSha),
-      inspectOpenPullRequestDuplicate({
-        candidate: input.revalidation.duplicateFields,
-        currentPrNumber: input.prNumber,
-        repo: input.repo
-      }),
-      fetchReviewStatus(input.repo, latest.head.sha)
+      fetchReviewStatus(input.repo, latest)
     ])
     const latestAttestation = verifyMergeAttestation({
       addedMdxBytes: input.revalidation.file.bytes,
@@ -1744,7 +1907,7 @@ async function executeMergeAction(input: {
       baseSnapshotStatus,
       freshAssessment: input.revalidation.freshAssessment,
       hasManualReviewLabel: pullRequestHasManualReviewVeto(latest),
-      openPullRequestDuplicateStatus,
+      openPullRequestDuplicateStatus: input.revalidation.openPullRequestDuplicateStatus,
       requiredCheckStatus: reviewStatus
     })
     const exactHeadDecision = deriveExactHeadMergeDecision({
@@ -1814,8 +1977,12 @@ async function fetchOpenPullRequests(options: DryRunOptions): Promise<GitHubPull
 
   const pullRequests: GitHubPullRequestListItem[] = []
   let page = 1
+  const startedAt = Date.now()
 
   while (true) {
+    if (Date.now() - startedAt > PAGINATION_DEADLINE_MS) {
+      throw new Error('Open pull request pagination exceeded its deadline.')
+    }
     const batch = await ghApiJson<GitHubPullRequestListItem[]>([
       `repos/${options.repo}/pulls?state=open&page=${page}&per_page=${PAGE_SIZE}`
     ])
@@ -1825,6 +1992,9 @@ async function fetchOpenPullRequests(options: DryRunOptions): Promise<GitHubPull
     }
 
     pullRequests.push(...batch)
+    if (pullRequests.length > MAX_OPEN_PULL_REQUESTS) {
+      throw new Error('Open pull request scan exceeded its item budget.')
+    }
 
     if ((options.limit && pullRequests.length >= options.limit) || batch.length < PAGE_SIZE) {
       break
@@ -1857,6 +2027,25 @@ async function fetchPullRequestDetails(
   return details
 }
 
+/** Fetch a bounded immutable changed-file manifest for exact Git object SHAs. */
+async function fetchImmutablePullRequestManifest(
+  repo: string,
+  baseSha: string,
+  headSha: string
+): Promise<ImmutablePullRequestManifest> {
+  if (!/^[a-f0-9]{40}$/.test(baseSha) || !/^[a-f0-9]{40}$/.test(headSha)) {
+    return { status: 'unavailable' }
+  }
+  try {
+    const response = await ghApiJson<GitHubCompareResponse>([
+      `repos/${repo}/compare/${baseSha}...${headSha}`
+    ])
+    return deriveImmutablePullRequestManifest(response, { baseSha, headSha })
+  } catch {
+    return { status: 'unavailable' }
+  }
+}
+
 /** Fetch and compare the live base branch to the trusted checkout and PR base snapshot. */
 async function fetchTrustedBaseStatus(
   repo: string,
@@ -1866,13 +2055,7 @@ async function fetchTrustedBaseStatus(
   const baseRef = details.base?.ref
   const pullRequestBaseSha = details.base?.sha
   const baseRepository = details.base?.repo?.full_name
-  if (
-    typeof baseRef !== 'string' ||
-    baseRef.length === 0 ||
-    baseRef.length > 255 ||
-    typeof pullRequestBaseSha !== 'string' ||
-    baseRepository !== repo
-  ) {
+  if (baseRef !== 'main' || typeof pullRequestBaseSha !== 'string' || baseRepository !== repo) {
     return 'unavailable'
   }
   try {
@@ -1892,24 +2075,42 @@ async function fetchTrustedBaseStatus(
 /**
  * Fetch the latest PR Review workflow conclusion for a head SHA.
  */
-async function fetchReviewStatus(repo: string, headSha: string): Promise<ReviewConclusion> {
-  const workflowRuns = await ghApiJson<GitHubWorkflowRunsResponse>([
-    `repos/${repo}/actions/runs?head_sha=${headSha}&event=pull_request&per_page=100`
-  ])
-
-  const latestReviewRun = workflowRuns.workflow_runs
-    .filter(run => run.name === PR_REVIEW_WORKFLOW_NAME)
-    .sort((left, right) => right.created_at.localeCompare(left.created_at))[0]
-
-  if (!latestReviewRun) {
+async function fetchReviewStatus(
+  repo: string,
+  details: GitHubPullRequestDetails
+): Promise<ReviewConclusion> {
+  if (
+    details.base?.ref !== 'main' ||
+    !/^[a-f0-9]{40}$/.test(details.base.sha ?? '') ||
+    !/^[a-f0-9]{40}$/.test(details.head.sha)
+  ) {
     return 'missing'
   }
-
-  if (latestReviewRun.status !== 'completed') {
-    return 'in_progress'
+  try {
+    const workflow = await ghApiJson<{ id?: number; path?: string }>([
+      `repos/${repo}/actions/workflows/pr-review.yml`
+    ])
+    if (
+      !Number.isSafeInteger(workflow.id) ||
+      typeof workflow.id !== 'number' ||
+      workflow.id <= 0 ||
+      workflow.path !== '.github/workflows/pr-review.yml'
+    ) {
+      return 'missing'
+    }
+    const workflowRuns = await ghApiJson<GitHubWorkflowRunsResponse>([
+      `repos/${repo}/actions/workflows/${workflow.id}/runs?head_sha=${details.head.sha}&event=pull_request&per_page=100`
+    ])
+    return selectTrustedReviewConclusion(workflowRuns.workflow_runs, {
+      baseRef: 'main',
+      baseSha: details.base.sha ?? '',
+      headSha: details.head.sha,
+      prNumber: details.number,
+      workflowId: workflow.id
+    })
+  } catch {
+    return 'missing'
   }
-
-  return normalizeConclusion(latestReviewRun.conclusion)
 }
 
 /**
@@ -1936,16 +2137,31 @@ function normalizeConclusion(conclusion: string | null): ReviewConclusion {
  * Run guideline moderation for each added MDX file in a structurally safe PR.
  */
 async function moderatePullRequest(input: {
+  body: string
   classification: PullRequestClassification
+  contentRepo: string
   files: GitHubPullRequestFile[]
+  prNumber: number
   repo: string
+  secret: string
   sha: string
 }): Promise<ModerationResult> {
   if (input.classification.lane !== 'mdx-fast') {
     return {
+      attestation: invalidAttestation(),
       files: [],
       guidelineReasons: ['Guideline checks skipped because the PR is not structurally eligible.'],
       guidelineStatus: 'skipped',
+      policyEligible: false
+    }
+  }
+
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(input.contentRepo)) {
+    return {
+      attestation: invalidAttestation(),
+      files: [],
+      guidelineReasons: ['The immutable pull request head repository is unavailable.'],
+      guidelineStatus: 'warn',
       policyEligible: false
     }
   }
@@ -1954,39 +2170,51 @@ async function moderatePullRequest(input: {
     return file.status === 'added' && file.filename.endsWith('.mdx')
   })
 
-  if (mdxFiles.length === 0) {
+  if (mdxFiles.length !== 1 || input.files.length !== 1) {
     return {
+      attestation: invalidAttestation(),
       files: [],
-      guidelineReasons: ['No added MDX files were available for guideline review.'],
+      guidelineReasons: ['Exactly one added MDX file is required for trusted publication.'],
       guidelineStatus: 'warn',
       policyEligible: false
     }
   }
 
-  let mergedStatus: GuidelineStatus = 'pass'
-  const mergedReasons = new Set<string>()
-  const moderatedFiles: ModeratedSubmissionFile[] = []
-
-  for (const file of mdxFiles) {
-    const bytes = await fetchRepositoryFileBytes(input.repo, file.filename, input.sha)
-    const fileContent = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
-    const frontmatter = parseSubmissionFrontmatter(fileContent)
-    const fullAssessment = await assessSubmission({ frontmatter })
-    const assessment = toGuidelineAssessment(fullAssessment)
-    moderatedFiles.push({ assessment: fullAssessment, bytes, frontmatter, path: file.filename })
-
-    mergedStatus = mergeGuidelineStatus(mergedStatus, assessment.guidelineStatus)
-    for (const reason of assessment.guidelineReasons) {
-      mergedReasons.add(reason)
+  const file = mdxFiles[0]
+  if (!file) throw new Error('Trusted MDX manifest is unavailable.')
+  const bytes = await fetchRepositoryFileBytes(input.contentRepo, file.filename, input.sha)
+  const fileContent = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+  const frontmatter = parseSubmissionFrontmatter(fileContent)
+  const attestation = verifyMergeAttestation({
+    addedMdxBytes: bytes,
+    addedMdxPath: file.filename,
+    body: input.body,
+    currentHeadSha: input.sha,
+    prNumber: input.prNumber,
+    repository: input.repo,
+    secret: input.secret
+  })
+  const fullAssessment = await runTrustedAssessmentGate(
+    { addedMdxCount: mdxFiles.length, attestationVerified: attestation.ok },
+    () => assessSubmission({ frontmatter })
+  )
+  if (!fullAssessment) {
+    return {
+      attestation,
+      files: [],
+      guidelineReasons: ['A valid signed exact-byte assessment is required.'],
+      guidelineStatus: 'warn',
+      policyEligible: false
     }
   }
+  const assessment = toGuidelineAssessment(fullAssessment)
 
   return {
-    files: moderatedFiles,
-    guidelineReasons:
-      mergedReasons.size > 0 ? [...mergedReasons] : ['No guideline concerns detected.'],
-    guidelineStatus: mergedStatus,
-    policyEligible: mergedStatus === 'pass'
+    attestation,
+    files: [{ assessment: fullAssessment, bytes, frontmatter, path: file.filename }],
+    guidelineReasons: assessment.guidelineReasons,
+    guidelineStatus: assessment.guidelineStatus,
+    policyEligible: assessment.policyEligible
   }
 }
 
@@ -2041,14 +2269,21 @@ async function fetchRepositoryFileBytes(
 async function paginateGhApi<T>(endpoint: string): Promise<T[]> {
   const items: T[] = []
   let page = 1
+  const startedAt = Date.now()
 
   while (true) {
+    if (Date.now() - startedAt > PAGINATION_DEADLINE_MS) {
+      throw new Error('GitHub pagination exceeded its deadline.')
+    }
     const separator = endpoint.includes('?') ? '&' : '?'
     const batch = await ghApiJson<T[]>([
       `${endpoint}${separator}page=${page}&per_page=${PAGE_SIZE}`
     ])
 
     items.push(...batch)
+    if (items.length > MAX_PAGINATION_ITEMS) {
+      throw new Error('GitHub pagination exceeded its item budget.')
+    }
 
     if (batch.length < PAGE_SIZE) {
       return items
@@ -2073,7 +2308,9 @@ async function ghApiJson<T>(args: string[]): Promise<T> {
 async function execGh(args: string[]): Promise<{ stdout: string }> {
   try {
     const result = await execFileAsync('gh', args, {
-      maxBuffer: 10 * 1024 * 1024
+      killSignal: 'SIGKILL',
+      maxBuffer: MAX_GH_RESPONSE_BYTES,
+      timeout: GH_EXEC_TIMEOUT_MS
     })
 
     return {
@@ -2240,20 +2477,6 @@ function readRequiredString(data: Record<string, unknown>, key: string): string 
   }
 
   return value
-}
-
-/**
- * Return the highest-severity guideline status between two states.
- */
-function mergeGuidelineStatus(current: GuidelineStatus, next: GuidelineStatus): GuidelineStatus {
-  const priority: Record<GuidelineStatus, number> = {
-    fail: 3,
-    pass: 0,
-    skipped: -1,
-    warn: 2
-  }
-
-  return priority[next] > priority[current] ? next : current
 }
 
 /**

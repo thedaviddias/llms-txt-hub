@@ -12,10 +12,12 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   assessSubmissionGuidelines,
   buildClassifierContext,
+  buildOpenPullRequestDuplicateIndex,
   calculateManagedLabelSync,
   deriveAuthorizationManagedLabels,
   deriveAutomergeEventContext,
   deriveExactHeadMergeDecision,
+  deriveImmutablePullRequestManifest,
   deriveManagedLabels,
   deriveMergeAction,
   deriveMergeAuthorization,
@@ -24,7 +26,10 @@ import {
   deriveWouldMergeDecision,
   inspectOpenPullRequestDuplicates,
   inspectTrustedBaseDuplicate,
+  lookupOpenPullRequestDuplicate,
   parseSubmissionFrontmatter,
+  runTrustedAssessmentGate,
+  selectTrustedReviewConclusion,
   verifyMergeAttestation
 } from './pr-backfill-dry-run.ts'
 
@@ -757,21 +762,22 @@ llmsUrl: 'https://example.com/llms.txt'
           page === 1
             ? [
                 {
+                  baseSha: 'b'.repeat(40),
                   headRepository: 'contributor/llms-txt-hub',
                   headSha: 'c'.repeat(40),
                   number: 43
                 }
               ]
             : [],
-        listPullRequestFiles: async (_number, page) =>
-          page === 1
-            ? [
-                {
-                  path: 'packages/content/data/websites/nested/example-llms-txt.mdx',
-                  status: 'added'
-                }
-              ]
-            : []
+        loadImmutableManifest: async () => ({
+          files: [
+            {
+              path: 'packages/content/data/websites/nested/example-llms-txt.mdx',
+              status: 'added'
+            }
+          ],
+          status: 'complete'
+        })
       }
     )
 
@@ -797,14 +803,188 @@ llmsUrl: 'https://example.com/llms.txt'
           getFileContent: async () => '',
           listOpenPullRequests: async () =>
             Array.from({ length: 100 }, (_, index) => ({
+              baseSha: 'b'.repeat(40),
               headRepository: 'contributor/llms-txt-hub',
               headSha: 'c'.repeat(40),
               number: index + 100
             })),
-          listPullRequestFiles: async () => []
+          loadImmutableManifest: async () => ({ files: [], status: 'complete' })
         }
       )
     ).resolves.toBe('unavailable')
+  })
+
+  it('builds one immutable duplicate index and reuses it across candidates', async () => {
+    const loadImmutableManifest = vi.fn(async () => ({
+      files: [
+        {
+          path: 'packages/content/data/websites/example-llms-txt.mdx',
+          status: 'added'
+        }
+      ],
+      status: 'complete' satisfies 'complete'
+    }))
+    const index = await buildOpenPullRequestDuplicateIndex(
+      [
+        {
+          baseSha: 'b'.repeat(40),
+          headRepository: 'contributor/llms-txt-hub',
+          headSha: 'c'.repeat(40),
+          number: 43
+        }
+      ],
+      {
+        getFileContent: async () => `---
+website: 'https://example.com/'
+llmsUrl: 'https://example.com/llms.txt'
+---
+`,
+        loadImmutableManifest
+      }
+    )
+
+    expect(
+      lookupOpenPullRequestDuplicate(index, {
+        candidate: {
+          llmsUrl: 'https://example.com/llms.txt',
+          website: 'https://example.com/'
+        },
+        currentPrNumber: 42
+      })
+    ).toBe('duplicate')
+    expect(
+      lookupOpenPullRequestDuplicate(index, {
+        candidate: {
+          llmsUrl: 'https://other.example/llms.txt',
+          website: 'https://other.example/'
+        },
+        currentPrNumber: 42
+      })
+    ).toBe('unique')
+    expect(loadImmutableManifest).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('immutable pull request manifests', () => {
+  const baseSha = 'b'.repeat(40)
+  const headSha = 'c'.repeat(40)
+  const response = {
+    ahead_by: 1,
+    base_commit: { sha: baseSha },
+    commits: [{ sha: headSha }],
+    files: [
+      {
+        additions: 10,
+        changes: 10,
+        deletions: 0,
+        filename: 'packages/content/data/websites/example-llms-txt.mdx',
+        status: 'added'
+      }
+    ],
+    status: 'ahead',
+    total_commits: 1
+  }
+
+  it('binds a complete manifest to exact immutable base and head SHAs', () => {
+    expect(deriveImmutablePullRequestManifest(response, { baseSha, headSha })).toEqual({
+      files: response.files,
+      status: 'complete'
+    })
+  })
+
+  it.each([
+    ['head changed A to B to A during mutable inspection', { commits: [{ sha: 'd'.repeat(40) }] }],
+    ['base changed', { base_commit: { sha: 'd'.repeat(40) } }],
+    ['commit list truncated', { total_commits: 2 }],
+    [
+      'file list may be truncated',
+      {
+        files: Array.from({ length: 300 }, (_, index) => ({
+          filename: `file-${index}.mdx`,
+          status: 'added'
+        }))
+      }
+    ]
+  ])('fails closed when %s', (_label, overrides) => {
+    expect(
+      deriveImmutablePullRequestManifest({ ...response, ...overrides }, { baseSha, headSha })
+    ).toEqual({ status: 'unavailable' })
+  })
+
+  it('never uses mutable PR files or commits endpoints in production authorization', () => {
+    const source = readFileSync('scripts/pr-backfill-dry-run.ts', 'utf8')
+    expect(source).not.toContain('/files`')
+    expect(source).not.toContain('/commits`')
+  })
+})
+
+describe('cheap attestation gate', () => {
+  it.each([
+    ['invalid attestation', { addedMdxCount: 1, attestationVerified: false }],
+    ['multiple changed files', { addedMdxCount: 2, attestationVerified: true }]
+  ])('never calls outbound assessment for %s', async (_label, input) => {
+    const assess = vi.fn(async () => 'assessed')
+    await expect(runTrustedAssessmentGate(input, assess)).resolves.toBeNull()
+    expect(assess).not.toHaveBeenCalled()
+  })
+
+  it('assesses only one exact attested MDX entry', async () => {
+    const assess = vi.fn(async () => 'assessed')
+    await expect(
+      runTrustedAssessmentGate({ addedMdxCount: 1, attestationVerified: true }, assess)
+    ).resolves.toBe('assessed')
+    expect(assess).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('trusted PR Review identity', () => {
+  const baseSha = 'b'.repeat(40)
+  const headSha = 'c'.repeat(40)
+  const run = {
+    conclusion: 'success',
+    created_at: '2026-08-02T12:00:00.000Z',
+    head_sha: headSha,
+    pull_requests: [{ base: { ref: 'main', sha: baseSha }, number: 42 }],
+    status: 'completed',
+    workflow_id: 123
+  }
+
+  it('accepts only the trusted workflow bound to PR, head, and canonical base', () => {
+    expect(
+      selectTrustedReviewConclusion([run], {
+        baseRef: 'main',
+        baseSha,
+        headSha,
+        prNumber: 42,
+        workflowId: 123
+      })
+    ).toBe('success')
+  })
+
+  it.each([
+    [
+      'same head on another PR',
+      { pull_requests: [{ base: { ref: 'main', sha: baseSha }, number: 43 }] }
+    ],
+    ['different workflow identity', { workflow_id: 456 }],
+    [
+      'stale base run',
+      { pull_requests: [{ base: { ref: 'main', sha: 'd'.repeat(40) }, number: 42 }] }
+    ],
+    [
+      'non-canonical base',
+      { pull_requests: [{ base: { ref: 'develop', sha: baseSha }, number: 42 }] }
+    ]
+  ])('rejects %s', (_label, overrides) => {
+    expect(
+      selectTrustedReviewConclusion([{ ...run, ...overrides }], {
+        baseRef: 'main',
+        baseSha,
+        headSha,
+        prNumber: 42,
+        workflowId: 123
+      })
+    ).toBe('missing')
   })
 })
 
@@ -1273,13 +1453,25 @@ describe('trusted workflow wiring', () => {
     )
   })
 
-  it('grants check-read access, captures the trusted base, and keeps the token fallback', () => {
+  it('uses only the scoped workflow token and pins the credential-free trusted checkout', () => {
     const workflow = readFileSync('.github/workflows/pr-automerge.yml', 'utf8')
 
     expect(workflow).toContain('actions: read')
     expect(workflow).toContain('Capture trusted base SHA')
     expect(workflow).toContain('TRUSTED_BASE_SHA:')
-    expect(workflow).toContain('secrets.PAT_TOKEN || secrets.GITHUB_TOKEN')
+    expect(workflow).toContain('github.token')
+    expect(workflow).not.toContain('PAT_TOKEN')
+    expect(workflow).toContain('actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd')
+    expect(workflow).toContain('actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd')
+    expect(workflow).toContain('persist-credentials: false')
     expect(workflow).toContain('derive-event-context')
+  })
+
+  it('bounds each run and cancels stale work with per-PR concurrency', () => {
+    const workflow = readFileSync('.github/workflows/pr-automerge.yml', 'utf8')
+
+    expect(workflow).toContain('cancel-in-progress: true')
+    expect(workflow).toContain('github.event.workflow_run.pull_requests[0].number')
+    expect(workflow).toContain('timeout-minutes:')
   })
 })
