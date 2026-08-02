@@ -192,7 +192,7 @@ export function SubmitFormStep2({
             disabled={isLoading}
             className="inline-flex justify-center rounded-lg text-sm font-semibold py-3 px-4 text-slate-900 bg-slate-900 dark:bg-white text-white dark:text-slate-900"
           >
-            {isLoading ? 'Submitting...' : 'Submit for Review'}
+            {isLoading ? 'Checking...' : 'Continue to support'}
           </Button>
         </div>
       </form>
