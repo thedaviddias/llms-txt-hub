@@ -453,12 +453,14 @@ export async function runFinalMergeSequence<TPrepared, TLatest, TDecision>(input
   readonly fetchLatest: () => Promise<TLatest>
   readonly isAuthorized: (decision: TDecision) => boolean
   readonly merge: (decision: TDecision) => Promise<void>
+  readonly onDenied: (decision: TDecision) => Promise<void>
   readonly prepareExpensive: () => Promise<TPrepared>
 }): Promise<TDecision> {
   const prepared = await input.prepareExpensive()
   const latest = await input.fetchLatest()
   const decision = input.authorize(prepared, latest)
   if (input.isAuthorized(decision)) await input.merge(decision)
+  else await input.onDenied(decision)
   return decision
 }
 
@@ -1971,6 +1973,13 @@ async function executeMergeAction(input: {
           '-f',
           'merge_method=squash'
         ])
+      },
+      onDenied: async value => {
+        await syncAuthorizationFailureLabels(
+          input.repo,
+          input.prNumber,
+          value.authorization.authorized ? 'manual_review' : value.authorization.disposition
+        )
       },
       prepareExpensive: async () => {
         const [baseSnapshotStatus, reviewStatus, manifest, openIndex] = await Promise.all([

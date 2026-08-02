@@ -1006,6 +1006,9 @@ describe('final merge orchestration order', () => {
         merge: async () => {
           calls.push('merge')
         },
+        onDenied: async () => {
+          calls.push('label-sync')
+        },
         prepareExpensive: async () => {
           calls.push('fresh-open-index')
           calls.push('current-check')
@@ -1024,20 +1027,63 @@ describe('final merge orchestration order', () => {
     ])
   })
 
-  it.each([
-    [
-      'open set or head changed during the earlier scan',
-      { duplicate: true, latestBody: 'signed', manual: false }
-    ],
-    [
-      'manual label added during the earlier scan',
-      { duplicate: false, latestBody: 'signed', manual: true }
-    ],
-    [
-      'PR body changed during the earlier scan',
-      { duplicate: false, latestBody: 'changed', manual: false }
-    ]
-  ])('does not merge when %s', async (_label, scenario) => {
+  const deniedScenarios: ReadonlyArray<{
+    disposition: 'manual_review' | 'wait'
+    duplicate: boolean
+    label: string
+    latestBody: string
+    manual: boolean
+    openIndexAvailable: boolean
+    reviewReady: boolean
+  }> = [
+    {
+      disposition: 'manual_review',
+      duplicate: true,
+      label: 'a fresh duplicate appears',
+      latestBody: 'signed',
+      manual: false,
+      openIndexAvailable: true,
+      reviewReady: true
+    },
+    {
+      disposition: 'manual_review',
+      duplicate: false,
+      label: 'the fresh open-PR index is unavailable',
+      latestBody: 'signed',
+      manual: false,
+      openIndexAvailable: false,
+      reviewReady: true
+    },
+    {
+      disposition: 'manual_review',
+      duplicate: false,
+      label: 'the latest body invalidates the attestation',
+      latestBody: 'changed',
+      manual: false,
+      openIndexAvailable: true,
+      reviewReady: true
+    },
+    {
+      disposition: 'manual_review',
+      duplicate: false,
+      label: 'a manual-review label is added late',
+      latestBody: 'signed',
+      manual: true,
+      openIndexAvailable: true,
+      reviewReady: true
+    },
+    {
+      disposition: 'wait',
+      duplicate: false,
+      label: 'the required check is pending',
+      latestBody: 'signed',
+      manual: false,
+      openIndexAvailable: true,
+      reviewReady: false
+    }
+  ]
+
+  it.each(deniedScenarios)('does not merge when $label', async scenario => {
     const calls: string[] = []
     const merge = vi.fn(async () => {
       calls.push('merge')
@@ -1046,21 +1092,41 @@ describe('final merge orchestration order', () => {
       runFinalMergeSequence({
         authorize: (prepared, latest) => {
           calls.push('pure-authorization')
-          return !prepared.duplicate && !latest.manual && latest.body === 'signed'
+          return {
+            authorized:
+              !prepared.duplicate &&
+              prepared.openIndexAvailable &&
+              prepared.reviewReady &&
+              !latest.manual &&
+              latest.body === 'signed',
+            disposition: scenario.disposition
+          }
         },
         fetchLatest: async () => {
           calls.push('latest-details')
           return { body: scenario.latestBody, manual: scenario.manual }
         },
-        isAuthorized: decision => decision,
+        isAuthorized: decision => decision.authorized,
         merge,
+        onDenied: async decision => {
+          calls.push(`label-sync:${decision.disposition}`)
+        },
         prepareExpensive: async () => {
           calls.push('fresh-open-index-check-base')
-          return { duplicate: scenario.duplicate }
+          return {
+            duplicate: scenario.duplicate,
+            openIndexAvailable: scenario.openIndexAvailable,
+            reviewReady: scenario.reviewReady
+          }
         }
       })
-    ).resolves.toBe(false)
-    expect(calls).toEqual(['fresh-open-index-check-base', 'latest-details', 'pure-authorization'])
+    ).resolves.toEqual({ authorized: false, disposition: scenario.disposition })
+    expect(calls).toEqual([
+      'fresh-open-index-check-base',
+      'latest-details',
+      'pure-authorization',
+      `label-sync:${scenario.disposition}`
+    ])
     expect(merge).not.toHaveBeenCalled()
   })
 })
