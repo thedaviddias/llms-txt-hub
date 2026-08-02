@@ -222,12 +222,12 @@ const normalizePayload = (value: unknown): AssessmentAttestationPayload | null =
   if (
     webRiskAgeMs < 0 ||
     webRiskAgeMs > WEB_RISK_FRESHNESS_MS ||
+    expiresAtMs > webRiskCheckedAtMs + WEB_RISK_FRESHNESS_MS ||
     lifetimeMs <= 0 ||
     lifetimeMs > ASSESSMENT_ATTESTATION_MAX_LIFETIME_MS
   ) {
     return null
   }
-
   const normalizedBase = {
     repository: record.repository,
     submissionId: record.submissionId,

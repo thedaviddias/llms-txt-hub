@@ -48,6 +48,17 @@ const NORMALIZED_PAYLOAD = {
   llmsFullUrl: EXPECTED.llmsFullUrl
 }
 
+const WEB_RISK_EXPIRY_BOUNDARY_PAYLOAD = {
+  ...NORMALIZED_PAYLOAD,
+  issuedAt: '2026-08-01T12:09:00.000Z',
+  expiresAt: '2026-08-01T12:10:00.000Z'
+}
+
+const WEB_RISK_EXPIRY_OVERFLOW_PAYLOAD = {
+  ...WEB_RISK_EXPIRY_BOUNDARY_PAYLOAD,
+  expiresAt: '2026-08-01T12:19:00.000Z'
+}
+
 const BINDING_MISMATCH_CASES: readonly [
   string,
   Partial<AssessmentAttestationExpectation>,
@@ -150,6 +161,19 @@ describe('createAssessmentAttestation', () => {
     expect(createAssessmentAttestation(payload, SECRET)).toEqual({
       code: 'invalid_payload',
       ok: false
+    })
+  })
+
+  it('refuses expiry beyond the signed Web Risk freshness deadline', () => {
+    expect(createAssessmentAttestation(WEB_RISK_EXPIRY_OVERFLOW_PAYLOAD, SECRET)).toEqual({
+      code: 'invalid_payload',
+      ok: false
+    })
+  })
+
+  it('accepts expiry exactly at the signed Web Risk freshness deadline', () => {
+    expect(createAssessmentAttestation(WEB_RISK_EXPIRY_BOUNDARY_PAYLOAD, SECRET)).toMatchObject({
+      ok: true
     })
   })
 
@@ -256,6 +280,29 @@ describe('verifyAssessmentAttestation', () => {
   ])('rejects a correctly signed payload with %s', (_label, payload) => {
     expect(verify(createBlock(JSON.stringify(payload)), EXPECTED)).toEqual({
       code: 'invalid_payload',
+      ok: false
+    })
+  })
+
+  it('rejects a correctly signed expiry beyond the Web Risk freshness deadline', () => {
+    expect(
+      verify(
+        createBlock(JSON.stringify(WEB_RISK_EXPIRY_OVERFLOW_PAYLOAD)),
+        EXPECTED,
+        SECRET,
+        new Date('2026-08-01T12:09:30.000Z')
+      )
+    ).toEqual({ code: 'invalid_payload', ok: false })
+  })
+
+  it('treats the exact Web Risk freshness boundary as an exclusive expiry', () => {
+    const block = createBlock(JSON.stringify(WEB_RISK_EXPIRY_BOUNDARY_PAYLOAD))
+
+    expect(verify(block, EXPECTED, SECRET, new Date('2026-08-01T12:09:59.999Z'))).toMatchObject({
+      ok: true
+    })
+    expect(verify(block, EXPECTED, SECRET, new Date('2026-08-01T12:10:00.000Z'))).toEqual({
+      code: 'expired',
       ok: false
     })
   })
