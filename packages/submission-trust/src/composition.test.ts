@@ -14,8 +14,8 @@ const FIELDS: SubmissionFields = {
   publishedAt: '2026-08-01',
   website: 'https://example.com'
 }
-const LLMS_BODY = `# Example\n\n${'A useful documentation index. '.repeat(4)}https://example.com/docs`
-const HOMEPAGE_BODY = `<html><body>${'Meaningful homepage content. '.repeat(4)}</body></html>`
+const LLMS_BODY = `# Example\n\n${'A useful developer API documentation index. '.repeat(4)}https://example.com/docs`
+const HOMEPAGE_BODY = `<html><body>${'Meaningful developer API documentation homepage. '.repeat(4)}</body></html>`
 
 const response = (body: string, contentType: string): PinnedTransportResponse => ({
   body: {

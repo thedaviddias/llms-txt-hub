@@ -109,6 +109,76 @@ describe('assessEditorialPolicy', () => {
   )
 
   it.each([
+    [
+      'hospital healthcare',
+      'Acme operates a hospital network offering healthcare services.',
+      'Acme hospital network and healthcare services for patients.',
+      'health'
+    ],
+    [
+      'banking and finance',
+      'Acme is an online banking platform for financial services.',
+      'Acme online banking platform and financial services.',
+      'finance'
+    ],
+    [
+      'ordinary casino',
+      'Acme is an online casino platform for table games.',
+      'Acme online casino platform with table games.',
+      'gambling'
+    ],
+    [
+      'gaming',
+      'Acme is a video gaming community and game marketplace.',
+      'Acme video gaming community and game marketplace.',
+      'gaming'
+    ],
+    [
+      'dating',
+      'Acme is a dating platform for meeting compatible people.',
+      'Acme dating platform for compatible people.',
+      'dating'
+    ],
+    [
+      'regulated products',
+      'Acme is an alcohol delivery marketplace for licensed products.',
+      'Acme alcohol delivery marketplace for licensed products.',
+      'regulated-products'
+    ]
+  ])(
+    'routes inspected ordinary industry content to manual review: %s',
+    (_label, description, inspected, suffix) => {
+      const result = assess(
+        { description },
+        {
+          homepageText: inspected,
+          llmsText: `# Acme\n\n${inspected} https://acme.dev/about`
+        }
+      )
+
+      expect(result.decision).toBe('manual_review')
+      expect(result.evidenceIds).toContain(`editorial:regulated:${suffix}`)
+    }
+  )
+
+  it('rejects an established inspected adult escort service', () => {
+    const inspected = 'Acme is an escort agency offering adult services and booking.'
+    const result = assess(
+      { description: inspected },
+      {
+        homepageText: inspected,
+        llmsText: `# Acme\n\n${inspected} https://acme.dev/about`
+      }
+    )
+
+    expect(result).toEqual({
+      decision: 'reject',
+      evidenceIds: ['editorial:prohibited:adult-services'],
+      reasonCode: 'prohibited_content'
+    })
+  })
+
+  it.each([
     'Casino database schema for a game developer API.',
     'Medical type definitions for a developer SDK.',
     'Finance enum examples for an API documentation generator.'
@@ -156,6 +226,23 @@ describe('assessEditorialPolicy', () => {
 
     expect(result.evidenceIds).toContain('editorial:identity:name-domain-mismatch')
     expect(result.decision).toBe('manual_review')
+  })
+
+  it('does not accept a brand that is only a substring of a domain label', () => {
+    const result = assess({ name: 'Press', website: 'https://wordpress.com' })
+
+    expect(result.evidenceIds).toContain('editorial:identity:name-domain-mismatch')
+    expect(result.decision).toBe('manual_review')
+  })
+
+  it('accepts a defensible multi-token brand and hyphenated domain label', () => {
+    const result = assess({ name: 'Acme Cloud', website: 'https://acme-cloud.com' })
+
+    expect(result).toEqual({
+      decision: 'auto_publish',
+      evidenceIds: ['editorial:passed'],
+      reasonCode: 'passed'
+    })
   })
 
   it('routes an implausible category to manual review without rejecting', () => {
@@ -207,10 +294,32 @@ describe('assessEditorialPolicy', () => {
     expect(result.decision).toBe('manual_review')
   })
 
+  it('does not let submitter description claims self-validate category plausibility', () => {
+    const result = assess(
+      { description: 'Acme provides developer APIs and SDK documentation.' },
+      {
+        homepageText: 'Acme is an online clothing store for jackets and shoes.',
+        llmsText:
+          '# Acme\n\nBrowse clothing, jackets, shoes, and seasonal apparel. https://acme.dev/shop'
+      }
+    )
+
+    expect(result.decision).toBe('manual_review')
+    expect(result.evidenceIds).toContain('editorial:category:implausible')
+    expect(result.evidenceIds).toContain('editorial:quality:description-content-mismatch')
+  })
+
   it.each([
     ['full-width Unicode', 'ｂｕｙ　ｂａｃｋｌｉｎｋｓ for higher rankings'],
     ['split whitespace', 'Download a phishing\n\tkit for credential theft'],
-    ['zero-width formatting', 'buy back\u200Blinks from our network']
+    ['zero-width formatting', 'buy back\u200Blinks from our network'],
+    ['soft hyphen', 'buy back\u00ADlinks from our network'],
+    ['invisible separator', 'buy back\u2063links from our network'],
+    ['bidi control', 'Download a phi\u202Eshing kit for credential theft'],
+    ['visible hyphen', 'buy back-links from our network'],
+    ['split prohibited token', 'Download a phish-ing kit for credential theft'],
+    ['underscore separator', 'buy back_links from our network'],
+    ['hyphenated prohibited phrase', 'Compare casino-bonus offers and reviews']
   ])('normalizes %s before prohibited matching', (_label, description) => {
     expect(assess({ description })).toMatchObject({
       decision: 'reject',

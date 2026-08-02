@@ -139,6 +139,14 @@ describe('assessSubmissionGuidelines', () => {
 
   const inspectResource: PublicationAssessmentDependencies['inspectResource'] = async url =>
     resource(url)
+  const inspectText =
+    (text: string): PublicationAssessmentDependencies['inspectResource'] =>
+    async url =>
+      resource(url, {
+        body: url.endsWith('.txt')
+          ? `# Example\n\n${`${text} `.repeat(3)}https://example.com/about`
+          : `<html><body>${`${text} `.repeat(3)}</body></html>`
+      })
 
   it('passes a structurally safe tool submission with matching signals', async () => {
     const result = await assessSubmissionGuidelines({
@@ -161,7 +169,7 @@ describe('assessSubmissionGuidelines', () => {
         category: 'personal',
         description: 'Example is a personal website, portfolio, and developer blog.'
       },
-      inspectResource,
+      inspectResource: inspectText('Example is a personal website, portfolio, and developer blog.'),
       now: () => new Date(checkedAt)
     })
 
@@ -207,7 +215,9 @@ describe('assessSubmissionGuidelines', () => {
         ...baseFrontmatter,
         description: 'Example provides developer tools for adult education programs.'
       },
-      inspectResource,
+      inspectResource: inspectText(
+        'Example provides developer tools for adult education programs and API documentation.'
+      ),
       now: () => new Date(checkedAt)
     })
 
