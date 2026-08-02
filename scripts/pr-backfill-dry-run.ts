@@ -1,6 +1,6 @@
 import { execFile } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { readFile } from 'node:fs/promises'
+import { readFile, stat } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import { assessPublicationFields } from '@thedaviddias/submission-trust/assessment'
@@ -38,6 +38,9 @@ const DEFAULT_CONCURRENCY = 8
 const PAGE_SIZE = 100
 const PR_REVIEW_WORKFLOW_NAME = 'PR Review'
 const MAX_MDX_BYTES = 100_000
+const MAX_BASE_MDX_FILES = 5000
+const MAX_BASE_MDX_AGGREGATE_BYTES = 256 * 1024 * 1024
+const BASE_SCAN_DEADLINE_MS = 20_000
 const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
 const MAX_OPEN_PULL_REQUESTS = 300
 const MAX_OPEN_PULL_REQUEST_FILES = 300
@@ -142,7 +145,8 @@ const LABEL_DEFINITIONS = [
 ] as const
 
 type GuidelineStatus = 'pass' | 'warn' | 'fail' | 'skipped'
-type ReviewConclusion =
+/** Normalized conclusion of the required PR Review workflow. */
+export type ReviewConclusion =
   | 'success'
   | 'failure'
   | 'cancelled'
@@ -178,6 +182,13 @@ interface GitHubPullRequestCommit {
 }
 
 interface GitHubPullRequestDetails {
+  base?: {
+    ref?: string
+    repo?: {
+      full_name?: string
+    } | null
+    sha?: string
+  }
   body?: string | null
   draft: boolean
   head: {
@@ -304,17 +315,25 @@ interface MergeAction {
 }
 
 interface MergeRevalidationContext {
-  duplicateFields: NormalizedDuplicateFields
+  baseDuplicateStatus: DuplicateStatus
+  duplicateFields: DuplicateCandidate
   file: ModeratedSubmissionFile
   freshAssessment: SubmissionAssessment
+  trustedBaseSha: string
 }
 
 type DuplicateStatus = 'unique' | 'duplicate' | 'unavailable'
+type TrustedBaseStatus = 'current' | 'moved' | 'unavailable'
+type AuthorizationDisposition = 'manual_review' | 'wait'
 
 /** A fail-closed decision produced from all trusted merge gates. */
 export type MergeAuthorization =
   | { readonly authorized: true; readonly reason: 'Signed exact-head assessment passed.' }
-  | { readonly authorized: false; readonly reason: string }
+  | {
+      readonly authorized: false
+      readonly disposition: AuthorizationDisposition
+      readonly reason: string
+    }
 
 /** Inputs required to verify the PR-body attestation against exact GitHub bytes. */
 export interface MergeAttestationVerificationInput {
@@ -332,12 +351,18 @@ export interface MergeAttestationVerificationInput {
 export interface MergeAuthorizationInput {
   readonly attestation: AssessmentAttestationVerificationResult
   readonly baseDuplicateStatus: DuplicateStatus
+  readonly baseSnapshotStatus: TrustedBaseStatus
   readonly freshAssessment: SubmissionAssessment
-  readonly hasManualReviewLabel: boolean
   readonly now?: () => Date
   readonly openPullRequestDuplicateStatus: DuplicateStatus
-  readonly requiredChecksPassed: boolean
+  readonly requiredCheckStatus: ReviewConclusion
 }
+
+/** Trusted workflow event context derived from a bounded GitHub event payload. */
+export type AutomergeEventContext =
+  | { readonly mode: 'single'; readonly prNumber: number }
+  | { readonly mode: 'scan_all' }
+  | { readonly mode: 'skip' }
 
 const invalidAttestation = (): AssessmentAttestationVerificationResult => ({
   code: 'invalid_expectation',
@@ -351,6 +376,69 @@ const unavailableAssessment = (): SubmissionAssessment => ({
   policyVersion: SUBMISSION_POLICY_VERSION,
   publicMessage: 'Trusted reassessment is unavailable.',
   reasonCode: 'publication_unavailable'
+})
+
+const isUnknownRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const readEventPrNumber = (value: unknown): number | null =>
+  typeof value === 'number' && Number.isSafeInteger(value) && value > 0 ? value : null
+
+/** Derive a safe processing scope from a trusted GitHub Actions event payload. */
+export function deriveAutomergeEventContext(
+  eventName: string,
+  payload: unknown
+): AutomergeEventContext {
+  if (!isUnknownRecord(payload)) return { mode: 'skip' }
+  if (eventName === 'pull_request_target') {
+    const pullRequest = payload.pull_request
+    const prNumber = isUnknownRecord(pullRequest) ? readEventPrNumber(pullRequest.number) : null
+    return prNumber ? { mode: 'single', prNumber } : { mode: 'skip' }
+  }
+  if (eventName === 'workflow_run') {
+    const workflowRun = payload.workflow_run
+    if (!isUnknownRecord(workflowRun) || workflowRun.name !== PR_REVIEW_WORKFLOW_NAME) {
+      return { mode: 'skip' }
+    }
+    const pullRequests = workflowRun.pull_requests
+    if (!Array.isArray(pullRequests) || pullRequests.length !== 1) return { mode: 'skip' }
+    const pullRequest = pullRequests[0]
+    const prNumber = isUnknownRecord(pullRequest) ? readEventPrNumber(pullRequest.number) : null
+    return prNumber ? { mode: 'single', prNumber } : { mode: 'skip' }
+  }
+  if (eventName === 'workflow_dispatch') {
+    const inputs = payload.inputs
+    if (!isUnknownRecord(inputs) || typeof inputs.pr_number !== 'string') return { mode: 'skip' }
+    const value = inputs.pr_number.trim()
+    if (value === '') return { mode: 'scan_all' }
+    if (!/^[1-9][0-9]*$/.test(value)) return { mode: 'skip' }
+    const prNumber = Number(value)
+    return readEventPrNumber(prNumber) ? { mode: 'single', prNumber } : { mode: 'skip' }
+  }
+  return { mode: 'skip' }
+}
+
+/** Prove that the checked-out base is the exact current base used by the pull request. */
+export function deriveTrustedBaseStatus(input: {
+  readonly checkedOutSha: string
+  readonly currentBaseSha: string
+  readonly pullRequestBaseSha: string
+}): TrustedBaseStatus {
+  const shas = [input.checkedOutSha, input.currentBaseSha, input.pullRequestBaseSha]
+  if (!shas.every(sha => /^[a-f0-9]{40}$/.test(sha))) return 'unavailable'
+  return shas.every(sha => sha === input.checkedOutSha) ? 'current' : 'moved'
+}
+
+const manualReviewAuthorization = (reason: string): MergeAuthorization => ({
+  authorized: false,
+  disposition: 'manual_review',
+  reason
+})
+
+const waitAuthorization = (reason: string): MergeAuthorization => ({
+  authorized: false,
+  disposition: 'wait',
+  reason
 })
 
 /** Read a caller-provided clock without allowing exceptions or invalid dates to authorize. */
@@ -444,10 +532,16 @@ export function verifyMergeAttestation(
  * Derive merge authorization only from verified provenance and fresh trusted evidence.
  */
 export function deriveMergeAuthorization(input: MergeAuthorizationInput): MergeAuthorization {
+  if (input.requiredCheckStatus === 'missing' || input.requiredCheckStatus === 'in_progress') {
+    return waitAuthorization('PR Review is still pending for the exact head.')
+  }
+  if (input.baseSnapshotStatus !== 'current') {
+    return waitAuthorization('The trusted base snapshot is no longer current.')
+  }
   const now = safeClock(input.now)
-  if (!now) return { authorized: false, reason: 'Trusted assessment clock is unavailable.' }
+  if (!now) return manualReviewAuthorization('Trusted assessment clock is unavailable.')
   if (!input.attestation.ok) {
-    return { authorized: false, reason: 'A valid signed assessment is required.' }
+    return manualReviewAuthorization('A valid signed assessment is required.')
   }
 
   const payload = input.attestation.payload
@@ -459,22 +553,16 @@ export function deriveMergeAuthorization(input: MergeAuthorizationInput): MergeA
     nowMs < Date.parse(payload.issuedAt) ||
     nowMs >= Date.parse(payload.expiresAt)
   ) {
-    return { authorized: false, reason: 'The signed assessment is no longer fresh.' }
-  }
-  if (input.hasManualReviewLabel) {
-    return { authorized: false, reason: 'Manual review is required.' }
+    return manualReviewAuthorization('The signed assessment is no longer fresh.')
   }
   if (input.baseDuplicateStatus !== 'unique' || input.openPullRequestDuplicateStatus !== 'unique') {
-    return { authorized: false, reason: 'Unique publication could not be confirmed.' }
+    return manualReviewAuthorization('Unique publication could not be confirmed.')
   }
   if (!hasFreshSafeAssessmentEvidence(input.freshAssessment, Boolean(payload.llmsFullUrl), nowMs)) {
-    return {
-      authorized: false,
-      reason: 'Fresh trusted reassessment did not authorize publication.'
-    }
+    return manualReviewAuthorization('Fresh trusted reassessment did not authorize publication.')
   }
-  if (!input.requiredChecksPassed) {
-    return { authorized: false, reason: 'PR Review has not succeeded for the exact head.' }
+  if (input.requiredCheckStatus !== 'success') {
+    return manualReviewAuthorization('PR Review did not succeed for the exact head.')
   }
   return { authorized: true, reason: 'Signed exact-head assessment passed.' }
 }
@@ -484,16 +572,23 @@ export function deriveMergeAuthorization(input: MergeAuthorizationInput): MergeA
  */
 export function deriveExactHeadMergeDecision(input: {
   readonly authorization: MergeAuthorization
+  readonly baseSnapshotStatus: TrustedBaseStatus
   readonly currentHeadSha: string
   readonly expectedHeadSha: string
-  readonly requiredChecksPassed: boolean
+  readonly requiredCheckStatus: ReviewConclusion
 }): MergeAuthorization {
   if (!input.authorization.authorized) return input.authorization
-  if (input.currentHeadSha !== input.expectedHeadSha) {
-    return { authorized: false, reason: 'The pull request head changed before merge.' }
+  if (input.baseSnapshotStatus !== 'current') {
+    return waitAuthorization('The trusted base moved before merge.')
   }
-  if (!input.requiredChecksPassed) {
-    return { authorized: false, reason: 'PR Review changed before merge.' }
+  if (input.currentHeadSha !== input.expectedHeadSha) {
+    return waitAuthorization('The pull request head changed before merge.')
+  }
+  if (input.requiredCheckStatus === 'missing' || input.requiredCheckStatus === 'in_progress') {
+    return waitAuthorization('PR Review is still pending before merge.')
+  }
+  if (input.requiredCheckStatus !== 'success') {
+    return manualReviewAuthorization('PR Review changed before merge.')
   }
   return input.authorization
 }
@@ -730,16 +825,37 @@ export function deriveManagedLabels(snapshot: {
   return [...labels].sort()
 }
 
+/** Apply the authorization outcome to policy labels without trusting existing labels. */
+export function deriveAuthorizationManagedLabels(input: {
+  readonly authorization: MergeAuthorization
+  readonly policyLabels: readonly string[]
+}): string[] {
+  const labels = new Set(input.policyLabels)
+  if (input.authorization.authorized) {
+    labels.add('automerge:candidate')
+    labels.delete('needs:manual-review')
+  } else {
+    labels.delete('automerge:candidate')
+    if (input.authorization.disposition === 'manual_review') {
+      labels.add('needs:manual-review')
+    } else {
+      labels.delete('needs:manual-review')
+    }
+  }
+  return [...labels].sort()
+}
+
 /**
  * Calculate the add/remove delta between current and desired managed labels.
  */
 export function calculateManagedLabelSync(
   currentLabels: string[],
-  desiredLabels: string[]
+  desiredLabels: string[],
+  options: { readonly allowManualReviewRemoval?: boolean } = {}
 ): LabelSyncPlan {
   const currentManaged = currentLabels.filter(label => isManagedLabel(label)).sort()
   const desiredSet = new Set(desiredLabels)
-  if (currentLabels.includes('needs:manual-review')) {
+  if (currentLabels.includes('needs:manual-review') && !options.allowManualReviewRemoval) {
     desiredSet.add('needs:manual-review')
     desiredSet.delete('automerge:candidate')
   }
@@ -812,9 +928,45 @@ interface NormalizedDuplicateFields {
   readonly website?: string
 }
 
+interface DuplicateCandidate {
+  readonly llmsUrl: string
+  readonly website: string
+}
+
+/** Injectable local-base seams used to enforce complete bounded duplicate scans. */
+export interface TrustedBaseInspectionDependencies {
+  readonly listFiles: () => Promise<{ complete: boolean; paths: string[] }>
+  readonly now: () => number
+  readonly readFile: (path: string) => Promise<Uint8Array>
+  readonly statFile: (path: string) => Promise<{ size: number }>
+}
+
+/** A normalized open pull request head used by duplicate inspection. */
+export interface OpenPullRequestSnapshot {
+  readonly headRepository: string
+  readonly headSha: string
+  readonly number: number
+}
+
+/** A normalized open pull request file used by duplicate inspection. */
+export interface OpenPullRequestFileSnapshot {
+  readonly path: string
+  readonly status: string
+}
+
+/** Injectable GitHub seams used for bounded open-PR duplicate inspection. */
+export interface OpenPullRequestInspectionDependencies {
+  readonly getFileContent: (repo: string, path: string, sha: string) => Promise<string>
+  readonly listOpenPullRequests: (page: number) => Promise<OpenPullRequestSnapshot[]>
+  readonly listPullRequestFiles: (
+    pullRequestNumber: number,
+    page: number
+  ) => Promise<OpenPullRequestFileSnapshot[]>
+}
+
 const normalizeDuplicateFields = (
   frontmatter: SubmissionFrontmatter
-): NormalizedDuplicateFields | null => {
+): DuplicateCandidate | null => {
   const website = validateSubmissionUrl(frontmatter.website)
   const llmsUrl = validateSubmissionUrl(frontmatter.llmsUrl)
   if (!website.ok || !llmsUrl.ok) return null
@@ -865,14 +1017,66 @@ const isDuplicate = (
       (candidate.llmsUrl && existing.llmsUrl && candidate.llmsUrl === existing.llmsUrl)
   )
 
-const inspectBaseDuplicate = async (
-  candidate: NormalizedDuplicateFields
-): Promise<DuplicateStatus> => {
+const defaultTrustedBaseDependencies: TrustedBaseInspectionDependencies = {
+  listFiles: async () => ({
+    complete: true,
+    paths: await glob(`${WEBSITE_PATH_PREFIX}**/*.mdx`, { nodir: true })
+  }),
+  now: () => Date.now(),
+  readFile: async path => readFile(path),
+  statFile: async path => stat(path)
+}
+
+/** Inspect the proven trusted base with file, byte, completeness, and time bounds. */
+export async function inspectTrustedBaseDuplicate(
+  candidate: DuplicateCandidate,
+  dependencies: TrustedBaseInspectionDependencies = defaultTrustedBaseDependencies
+): Promise<DuplicateStatus> {
   try {
-    const paths = await glob(`${WEBSITE_PATH_PREFIX}**/*.mdx`, { nodir: true })
-    if (paths.length === 0) return 'unavailable'
-    for (const path of paths) {
-      const content = await readFile(path, 'utf8')
+    const startedAt = dependencies.now()
+    const withinDeadline = (): boolean => {
+      const elapsed = dependencies.now() - startedAt
+      return Number.isFinite(elapsed) && elapsed >= 0 && elapsed <= BASE_SCAN_DEADLINE_MS
+    }
+    const listing = await dependencies.listFiles()
+    if (
+      !withinDeadline() ||
+      !listing.complete ||
+      listing.paths.length === 0 ||
+      listing.paths.length > MAX_BASE_MDX_FILES ||
+      new Set(listing.paths).size !== listing.paths.length ||
+      listing.paths.some(path => !path.startsWith(WEBSITE_PATH_PREFIX) || !path.endsWith('.mdx'))
+    ) {
+      return 'unavailable'
+    }
+    let aggregateBytes = 0
+    const sizes = new Map<string, number>()
+    for (const path of listing.paths) {
+      if (!withinDeadline()) return 'unavailable'
+      const metadata = await dependencies.statFile(path)
+      if (
+        !withinDeadline() ||
+        !Number.isSafeInteger(metadata.size) ||
+        metadata.size <= 0 ||
+        metadata.size > MAX_MDX_BYTES
+      ) {
+        return 'unavailable'
+      }
+      aggregateBytes += metadata.size
+      if (aggregateBytes > MAX_BASE_MDX_AGGREGATE_BYTES) return 'unavailable'
+      sizes.set(path, metadata.size)
+    }
+    for (const path of listing.paths) {
+      if (!withinDeadline()) return 'unavailable'
+      const bytes = await dependencies.readFile(path)
+      if (
+        !withinDeadline() ||
+        !(bytes instanceof Uint8Array) ||
+        bytes.byteLength !== sizes.get(path)
+      ) {
+        return 'unavailable'
+      }
+      const content = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
       const normalized = parseDuplicateFields(content)
       if (!normalized) return 'unavailable'
       if (isDuplicate(candidate, normalized)) return 'duplicate'
@@ -883,27 +1087,71 @@ const inspectBaseDuplicate = async (
   }
 }
 
-const isOpenPullRequestWebsiteFile = (file: GitHubPullRequestFile): boolean =>
+const isOpenPullRequestWebsiteFile = (file: OpenPullRequestFileSnapshot): boolean =>
   (file.status === 'added' || file.status === 'modified' || file.status === 'renamed') &&
-  file.filename.startsWith(WEBSITE_PATH_PREFIX) &&
-  file.filename.endsWith('.mdx')
+  file.path.startsWith(WEBSITE_PATH_PREFIX) &&
+  file.path.endsWith('.mdx')
 
-const inspectOpenPullRequestDuplicate = async (input: {
-  candidate: NormalizedDuplicateFields
-  currentPrNumber: number
+const collectBoundedPages = async <T>(
+  loader: (page: number) => Promise<T[]>,
+  maxItems: number
+): Promise<T[] | null> => {
+  const items: T[] = []
+  for (let page = 1; ; page += 1) {
+    const batch = await loader(page)
+    if (
+      !Array.isArray(batch) ||
+      batch.length > PAGE_SIZE ||
+      items.length + batch.length > maxItems
+    ) {
+      return null
+    }
+    items.push(...batch)
+    if (batch.length < PAGE_SIZE) return items
+  }
+}
+
+const defaultOpenPullRequestDependencies = (
   repo: string
-}): Promise<DuplicateStatus> => {
+): OpenPullRequestInspectionDependencies => ({
+  getFileContent: fetchRepositoryFileContent,
+  listOpenPullRequests: async page => {
+    const values = await ghApiJson<GitHubPullRequestListItem[]>([
+      `repos/${repo}/pulls?state=open&page=${page}&per_page=${PAGE_SIZE}`
+    ])
+    return values.map(value => ({
+      headRepository: value.head?.repo?.full_name ?? '',
+      headSha: value.head?.sha ?? '',
+      number: value.number
+    }))
+  },
+  listPullRequestFiles: async (pullRequestNumber, page) => {
+    const values = await ghApiJson<GitHubPullRequestFile[]>([
+      `repos/${repo}/pulls/${pullRequestNumber}/files?page=${page}&per_page=${PAGE_SIZE}`
+    ])
+    return values.map(value => ({ path: value.filename, status: value.status }))
+  }
+})
+
+/** Inspect all bounded open PR heads, including forks, for duplicate entries. */
+export async function inspectOpenPullRequestDuplicates(
+  input: {
+    candidate: DuplicateCandidate
+    currentPrNumber: number
+  },
+  dependencies: OpenPullRequestInspectionDependencies
+): Promise<DuplicateStatus> {
   try {
-    const pullRequests = await paginateGhApiBounded<GitHubPullRequestListItem>(
-      `repos/${input.repo}/pulls?state=open`,
+    const pullRequests = await collectBoundedPages(
+      dependencies.listOpenPullRequests,
       MAX_OPEN_PULL_REQUESTS
     )
     if (!pullRequests) return 'unavailable'
     let fileCount = 0
     for (const pullRequest of pullRequests) {
       if (pullRequest.number === input.currentPrNumber) continue
-      const headSha = pullRequest.head?.sha
-      const headRepository = pullRequest.head?.repo?.full_name
+      const headSha = pullRequest.headSha
+      const headRepository = pullRequest.headRepository
       if (
         !headSha ||
         !/^[a-f0-9]{40}$/.test(headSha) ||
@@ -912,15 +1160,15 @@ const inspectOpenPullRequestDuplicate = async (input: {
       ) {
         return 'unavailable'
       }
-      const files = await paginateGhApiBounded<GitHubPullRequestFile>(
-        `repos/${input.repo}/pulls/${pullRequest.number}/files`,
+      const files = await collectBoundedPages(
+        page => dependencies.listPullRequestFiles(pullRequest.number, page),
         MAX_OPEN_PULL_REQUEST_FILES - fileCount
       )
       if (!files) return 'unavailable'
       fileCount += files.length
       for (const file of files) {
         if (!isOpenPullRequestWebsiteFile(file)) continue
-        const content = await fetchRepositoryFileContent(headRepository, file.filename, headSha)
+        const content = await dependencies.getFileContent(headRepository, file.path, headSha)
         const normalized = parseDuplicateFields(content)
         if (!normalized) return 'unavailable'
         if (isDuplicate(input.candidate, normalized)) return 'duplicate'
@@ -932,11 +1180,23 @@ const inspectOpenPullRequestDuplicate = async (input: {
   }
 }
 
+const inspectOpenPullRequestDuplicate = async (input: {
+  candidate: DuplicateCandidate
+  currentPrNumber: number
+  repo: string
+}): Promise<DuplicateStatus> =>
+  inspectOpenPullRequestDuplicates(input, defaultOpenPullRequestDependencies(input.repo))
+
 /**
  * CLI entrypoint for the local PR review dry-run.
  */
 async function main(): Promise<void> {
-  const options = parseArgs(process.argv.slice(2))
+  const args = process.argv.slice(2)
+  if (args[0] === '--derive-event-context') {
+    await printAutomergeEventContext(args[1], args[2] ?? process.env.GITHUB_EVENT_NAME)
+    return
+  }
+  const options = parseArgs(args)
 
   await ensureGitHubAuth()
 
@@ -981,6 +1241,29 @@ async function main(): Promise<void> {
   }
 
   printSummary(summarizeSnapshots(snapshots))
+}
+
+/** Read a bounded event payload and print GitHub step outputs. */
+async function printAutomergeEventContext(
+  eventPath: string | undefined,
+  eventName: string | undefined
+): Promise<void> {
+  if (!eventPath || !eventName) throw new Error('Missing GitHub event context.')
+  const metadata = await stat(eventPath)
+  if (!metadata.isFile() || metadata.size <= 0 || metadata.size > 1024 * 1024) {
+    throw new Error('GitHub event payload is unavailable or too large.')
+  }
+  const payload: unknown = JSON.parse(await readFile(eventPath, 'utf8'))
+  const context = deriveAutomergeEventContext(eventName, payload)
+  const outputs =
+    context.mode === 'single'
+      ? { prNumber: String(context.prNumber), scanAll: 'false', shouldProcess: 'true' }
+      : context.mode === 'scan_all'
+        ? { prNumber: '', scanAll: 'true', shouldProcess: 'true' }
+        : { prNumber: '', scanAll: 'false', shouldProcess: 'false' }
+  process.stdout.write(
+    `pr_number=${outputs.prNumber}\nscan_all=${outputs.scanAll}\nshould_process=${outputs.shouldProcess}\n`
+  )
 }
 
 /**
@@ -1150,9 +1433,8 @@ async function analyzePullRequest(
       sha: details.head.sha
     })
     const moderatedFile = moderation.files.length === 1 ? moderation.files[0] : undefined
-    const labelNames = Array.isArray(details.labels)
-      ? details.labels.flatMap(label => (typeof label?.name === 'string' ? [label.name] : []))
-      : []
+    const trustedBaseSha = process.env.TRUSTED_BASE_SHA ?? ''
+    const baseSnapshotStatus = await fetchTrustedBaseStatus(repo, details, trustedBaseSha)
     const attestation = moderatedFile
       ? verifyMergeAttestation({
           addedMdxBytes: moderatedFile.bytes,
@@ -1169,7 +1451,9 @@ async function analyzePullRequest(
       : null
     const [baseDuplicateStatus, openPullRequestDuplicateStatus] = duplicateFields
       ? await Promise.all([
-          inspectBaseDuplicate(duplicateFields),
+          baseSnapshotStatus === 'current'
+            ? inspectTrustedBaseDuplicate(duplicateFields)
+            : Promise.resolve<DuplicateStatus>('unavailable'),
           inspectOpenPullRequestDuplicate({
             candidate: duplicateFields,
             currentPrNumber: details.number,
@@ -1180,11 +1464,10 @@ async function analyzePullRequest(
     const authorization = deriveMergeAuthorization({
       attestation,
       baseDuplicateStatus,
+      baseSnapshotStatus,
       freshAssessment: moderatedFile?.assessment ?? unavailableAssessment(),
-      hasManualReviewLabel:
-        !Array.isArray(details.labels) || labelNames.includes('needs:manual-review'),
       openPullRequestDuplicateStatus,
-      requiredChecksPassed: reviewStatus === 'success'
+      requiredCheckStatus: reviewStatus
     })
     const decision = deriveWouldMergeDecision({
       guidelineReasons: moderation.guidelineReasons,
@@ -1197,15 +1480,9 @@ async function analyzePullRequest(
       policyEligible: decision.policyEligible,
       structurallyEligible: structuralDecision.structurallyEligible
     })
-    const desiredLabels = authorization.authorized
-      ? policyLabels
-      : [
-          ...new Set([
-            ...policyLabels.filter(label => label !== 'automerge:candidate'),
-            'needs:manual-review'
-          ])
-        ]
+    const desiredLabels = deriveAuthorizationManagedLabels({ authorization, policyLabels })
     const labelSync = await syncManagedLabels({
+      allowManualReviewRemoval: authorization.authorized,
       desiredLabels,
       dryRun: options.dryRun,
       prNumber: details.number,
@@ -1226,9 +1503,11 @@ async function analyzePullRequest(
       revalidation:
         moderatedFile && duplicateFields
           ? {
+              baseDuplicateStatus,
               duplicateFields,
               file: moderatedFile,
-              freshAssessment: moderatedFile.assessment
+              freshAssessment: moderatedFile.assessment,
+              trustedBaseSha
             }
           : undefined,
       repo
@@ -1339,6 +1618,7 @@ async function analyzePullRequests(
  * Sync the managed label set for a pull request, optionally in read-only mode.
  */
 async function syncManagedLabels(input: {
+  allowManualReviewRemoval?: boolean
   desiredLabels: string[]
   dryRun: boolean
   prNumber: number
@@ -1349,7 +1629,8 @@ async function syncManagedLabels(input: {
   )
   const plan = calculateManagedLabelSync(
     currentLabels.map(label => label.name),
-    input.desiredLabels
+    input.desiredLabels,
+    { allowManualReviewRemoval: input.allowManualReviewRemoval }
   )
 
   if (input.dryRun) {
@@ -1387,7 +1668,11 @@ async function syncManagedLabels(input: {
 /**
  * Apply only the fail-closed authorization labels while preserving all other labels.
  */
-async function syncAuthorizationFailureLabels(repo: string, prNumber: number): Promise<void> {
+async function syncAuthorizationFailureLabels(
+  repo: string,
+  prNumber: number,
+  disposition: AuthorizationDisposition = 'manual_review'
+): Promise<void> {
   const labels = await paginateGhApi<{ name: string }>(`repos/${repo}/issues/${prNumber}/labels`)
   const names = labels.map(label => label.name)
   if (names.includes('automerge:candidate')) {
@@ -1398,7 +1683,7 @@ async function syncAuthorizationFailureLabels(repo: string, prNumber: number): P
       'DELETE'
     ])
   }
-  if (!names.includes('needs:manual-review')) {
+  if (disposition === 'manual_review' && !names.includes('needs:manual-review')) {
     await execGh([
       'api',
       `repos/${repo}/issues/${prNumber}/labels`,
@@ -1428,11 +1713,8 @@ async function executeMergeAction(input: {
   try {
     if (!input.revalidation) throw new Error('Missing trusted revalidation context.')
     const latest = await fetchPullRequestDetails(input.repo, input.prNumber)
-    const latestLabels = Array.isArray(latest.labels)
-      ? latest.labels.flatMap(label => (typeof label?.name === 'string' ? [label.name] : []))
-      : []
-    const [baseDuplicateStatus, openPullRequestDuplicateStatus, reviewStatus] = await Promise.all([
-      inspectBaseDuplicate(input.revalidation.duplicateFields),
+    const [baseSnapshotStatus, openPullRequestDuplicateStatus, reviewStatus] = await Promise.all([
+      fetchTrustedBaseStatus(input.repo, latest, input.revalidation.trustedBaseSha),
       inspectOpenPullRequestDuplicate({
         candidate: input.revalidation.duplicateFields,
         currentPrNumber: input.prNumber,
@@ -1451,18 +1733,18 @@ async function executeMergeAction(input: {
     })
     const latestAuthorization = deriveMergeAuthorization({
       attestation: latestAttestation,
-      baseDuplicateStatus,
+      baseDuplicateStatus: input.revalidation.baseDuplicateStatus,
+      baseSnapshotStatus,
       freshAssessment: input.revalidation.freshAssessment,
-      hasManualReviewLabel:
-        !Array.isArray(latest.labels) || latestLabels.includes('needs:manual-review'),
       openPullRequestDuplicateStatus,
-      requiredChecksPassed: reviewStatus === 'success'
+      requiredCheckStatus: reviewStatus
     })
     const exactHeadDecision = deriveExactHeadMergeDecision({
       authorization: latestAuthorization,
+      baseSnapshotStatus,
       currentHeadSha: latest.head.sha,
       expectedHeadSha: input.headSha,
-      requiredChecksPassed: reviewStatus === 'success'
+      requiredCheckStatus: reviewStatus
     })
     if (
       !input.authorization.authorized ||
@@ -1471,7 +1753,11 @@ async function executeMergeAction(input: {
       latest.draft ||
       latest.mergeable !== true
     ) {
-      await syncAuthorizationFailureLabels(input.repo, input.prNumber)
+      await syncAuthorizationFailureLabels(
+        input.repo,
+        input.prNumber,
+        exactHeadDecision.authorized ? 'manual_review' : exactHeadDecision.disposition
+      )
       return {
         attempted: false,
         mode: 'applied',
@@ -1561,6 +1847,38 @@ async function fetchPullRequestDetails(
   }
 
   return details
+}
+
+/** Fetch and compare the live base branch to the trusted checkout and PR base snapshot. */
+async function fetchTrustedBaseStatus(
+  repo: string,
+  details: GitHubPullRequestDetails,
+  checkedOutSha: string
+): Promise<TrustedBaseStatus> {
+  const baseRef = details.base?.ref
+  const pullRequestBaseSha = details.base?.sha
+  const baseRepository = details.base?.repo?.full_name
+  if (
+    typeof baseRef !== 'string' ||
+    baseRef.length === 0 ||
+    baseRef.length > 255 ||
+    typeof pullRequestBaseSha !== 'string' ||
+    baseRepository !== repo
+  ) {
+    return 'unavailable'
+  }
+  try {
+    const branch = await ghApiJson<{ commit?: { sha?: string } }>([
+      `repos/${repo}/branches/${encodeURIComponent(baseRef)}`
+    ])
+    return deriveTrustedBaseStatus({
+      checkedOutSha,
+      currentBaseSha: branch.commit?.sha ?? '',
+      pullRequestBaseSha
+    })
+  } catch {
+    return 'unavailable'
+  }
 }
 
 /**
@@ -1728,31 +2046,6 @@ async function paginateGhApi<T>(endpoint: string): Promise<T[]> {
       return items
     }
 
-    page += 1
-  }
-}
-
-/**
- * Paginate a GitHub REST array without reading beyond a caller-owned item budget.
- */
-async function paginateGhApiBounded<T>(endpoint: string, maxItems: number): Promise<T[] | null> {
-  if (!Number.isSafeInteger(maxItems) || maxItems < 0) return null
-  const items: T[] = []
-  let page = 1
-  while (true) {
-    const separator = endpoint.includes('?') ? '&' : '?'
-    const batch = await ghApiJson<T[]>([
-      `${endpoint}${separator}page=${page}&per_page=${PAGE_SIZE}`
-    ])
-    if (
-      !Array.isArray(batch) ||
-      batch.length > PAGE_SIZE ||
-      items.length + batch.length > maxItems
-    ) {
-      return null
-    }
-    items.push(...batch)
-    if (batch.length < PAGE_SIZE) return items
     page += 1
   }
 }

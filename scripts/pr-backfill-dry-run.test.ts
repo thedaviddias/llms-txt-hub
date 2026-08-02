@@ -8,17 +8,22 @@ import type {
   ResourceInspectionResult,
   SubmissionAssessment
 } from '@thedaviddias/submission-trust/types'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   assessSubmissionGuidelines,
   buildClassifierContext,
   calculateManagedLabelSync,
+  deriveAuthorizationManagedLabels,
+  deriveAutomergeEventContext,
   deriveExactHeadMergeDecision,
   deriveManagedLabels,
   deriveMergeAction,
   deriveMergeAuthorization,
   deriveStructuralDecision,
+  deriveTrustedBaseStatus,
   deriveWouldMergeDecision,
+  inspectOpenPullRequestDuplicates,
+  inspectTrustedBaseDuplicate,
   parseSubmissionFrontmatter,
   verifyMergeAttestation
 } from './pr-backfill-dry-run.ts'
@@ -539,6 +544,270 @@ describe('calculateManagedLabelSync', () => {
   })
 })
 
+describe('deriveAutomergeEventContext', () => {
+  it('resolves pull_request_target and completed PR Review workflow_run events', () => {
+    expect(
+      deriveAutomergeEventContext('pull_request_target', { pull_request: { number: 42 } })
+    ).toEqual({ mode: 'single', prNumber: 42 })
+    expect(
+      deriveAutomergeEventContext('workflow_run', {
+        workflow_run: {
+          conclusion: 'success',
+          name: 'PR Review',
+          pull_requests: [{ number: 42 }]
+        }
+      })
+    ).toEqual({ mode: 'single', prNumber: 42 })
+  })
+
+  it('fails closed for unrelated, ambiguous, or unbound workflow runs', () => {
+    expect(
+      deriveAutomergeEventContext('workflow_run', {
+        workflow_run: { conclusion: 'success', name: 'Other', pull_requests: [{ number: 42 }] }
+      })
+    ).toEqual({ mode: 'skip' })
+    expect(
+      deriveAutomergeEventContext('workflow_run', {
+        workflow_run: {
+          conclusion: 'success',
+          name: 'PR Review',
+          pull_requests: [{ number: 42 }, { number: 43 }]
+        }
+      })
+    ).toEqual({ mode: 'skip' })
+    expect(
+      deriveAutomergeEventContext('workflow_run', {
+        workflow_run: { conclusion: 'success', name: 'PR Review', pull_requests: [] }
+      })
+    ).toEqual({ mode: 'skip' })
+  })
+
+  it('supports explicit dispatch PRs and deliberate all-open scans only', () => {
+    expect(
+      deriveAutomergeEventContext('workflow_dispatch', { inputs: { pr_number: '42' } })
+    ).toEqual({ mode: 'single', prNumber: 42 })
+    expect(deriveAutomergeEventContext('workflow_dispatch', { inputs: { pr_number: '' } })).toEqual(
+      {
+        mode: 'scan_all'
+      }
+    )
+    expect(deriveAutomergeEventContext('workflow_run', {})).toEqual({ mode: 'skip' })
+  })
+})
+
+describe('trusted base snapshot proof', () => {
+  const baseSha = 'b'.repeat(40)
+
+  it('accepts only equality between checkout, PR base, and live base branch', () => {
+    expect(
+      deriveTrustedBaseStatus({
+        checkedOutSha: baseSha,
+        currentBaseSha: baseSha,
+        pullRequestBaseSha: baseSha
+      })
+    ).toBe('current')
+  })
+
+  it.each([
+    ['base moved after checkout', { currentBaseSha: 'c'.repeat(40) }],
+    ['PR base snapshot differs', { pullRequestBaseSha: 'c'.repeat(40) }],
+    ['missing checkout proof', { checkedOutSha: '' }]
+  ])('fails closed when %s', (_label, overrides) => {
+    expect(
+      deriveTrustedBaseStatus({
+        checkedOutSha: baseSha,
+        currentBaseSha: baseSha,
+        pullRequestBaseSha: baseSha,
+        ...overrides
+      })
+    ).not.toBe('current')
+  })
+})
+
+describe('inspectTrustedBaseDuplicate', () => {
+  const candidate = {
+    llmsUrl: 'https://example.com/llms.txt',
+    website: 'https://example.com/'
+  }
+  const entry = (website = 'https://other.example/'): Uint8Array =>
+    new TextEncoder().encode(`---
+website: '${website}'
+llmsUrl: '${website}llms.txt'
+---
+`)
+  const dependencies = (input: {
+    complete?: boolean
+    files?: readonly { path: string; bytes: Uint8Array; size?: number }[]
+    now?: () => number
+  }) => {
+    const files = input.files ?? [
+      { bytes: entry(), path: 'packages/content/data/websites/other-llms-txt.mdx' }
+    ]
+    return {
+      listFiles: vi.fn(async () => ({
+        complete: input.complete ?? true,
+        paths: files.map(file => file.path)
+      })),
+      now: input.now ?? (() => 0),
+      readFile: vi.fn(async (path: string) => {
+        const file = files.find(value => value.path === path)
+        if (!file) throw new Error('missing test file')
+        return file.bytes
+      }),
+      statFile: vi.fn(async (path: string) => {
+        const file = files.find(value => value.path === path)
+        if (!file) throw new Error('missing test file')
+        return { size: file.size ?? file.bytes.byteLength }
+      })
+    }
+  }
+
+  it('recursively inspects a nested base entry and detects a duplicate', async () => {
+    const nested = {
+      bytes: entry('https://example.com/'),
+      path: 'packages/content/data/websites/nested/example-llms-txt.mdx'
+    }
+    const seams = dependencies({ files: [nested] })
+
+    await expect(inspectTrustedBaseDuplicate(candidate, seams)).resolves.toBe('duplicate')
+    expect(seams.readFile).toHaveBeenCalledWith(nested.path)
+  })
+
+  it('rejects truncated listings before stat or read', async () => {
+    const seams = dependencies({ complete: false })
+
+    await expect(inspectTrustedBaseDuplicate(candidate, seams)).resolves.toBe('unavailable')
+    expect(seams.statFile).not.toHaveBeenCalled()
+    expect(seams.readFile).not.toHaveBeenCalled()
+  })
+
+  it('rejects file-count overflow before stat or read', async () => {
+    const files = Array.from({ length: 5001 }, (_, index) => ({
+      bytes: entry(),
+      path: `packages/content/data/websites/site-${index}-llms-txt.mdx`
+    }))
+    const seams = dependencies({ files })
+
+    await expect(inspectTrustedBaseDuplicate(candidate, seams)).resolves.toBe('unavailable')
+    expect(seams.statFile).not.toHaveBeenCalled()
+    expect(seams.readFile).not.toHaveBeenCalled()
+  })
+
+  it('rejects oversized individual files before reading', async () => {
+    const seams = dependencies({
+      files: [
+        {
+          bytes: entry(),
+          path: 'packages/content/data/websites/large-llms-txt.mdx',
+          size: 100_001
+        }
+      ]
+    })
+
+    await expect(inspectTrustedBaseDuplicate(candidate, seams)).resolves.toBe('unavailable')
+    expect(seams.readFile).not.toHaveBeenCalled()
+  })
+
+  it('rejects aggregate-byte overflow before reading', async () => {
+    const files = Array.from({ length: 3000 }, (_, index) => ({
+      bytes: entry(),
+      path: `packages/content/data/websites/site-${index}-llms-txt.mdx`,
+      size: 100_000
+    }))
+    const seams = dependencies({ files })
+
+    await expect(inspectTrustedBaseDuplicate(candidate, seams)).resolves.toBe('unavailable')
+    expect(seams.readFile).not.toHaveBeenCalled()
+  })
+
+  it('rejects a scan that exceeds its total deadline', async () => {
+    let calls = 0
+    const seams = dependencies({
+      now: () => {
+        calls += 1
+        return calls === 1 ? 0 : 20_001
+      }
+    })
+
+    await expect(inspectTrustedBaseDuplicate(candidate, seams)).resolves.toBe('unavailable')
+    expect(seams.readFile).not.toHaveBeenCalled()
+  })
+})
+
+describe('inspectOpenPullRequestDuplicates', () => {
+  it('retrieves exact MDX bytes from a fork repository and detects the duplicate', async () => {
+    const getFileContent = vi.fn(
+      async () => `---
+website: 'https://example.com/'
+llmsUrl: 'https://example.com/llms.txt'
+---
+`
+    )
+    const result = await inspectOpenPullRequestDuplicates(
+      {
+        candidate: {
+          llmsUrl: 'https://example.com/llms.txt',
+          website: 'https://example.com/'
+        },
+        currentPrNumber: 42
+      },
+      {
+        getFileContent,
+        listOpenPullRequests: async page =>
+          page === 1
+            ? [
+                {
+                  headRepository: 'contributor/llms-txt-hub',
+                  headSha: 'c'.repeat(40),
+                  number: 43
+                }
+              ]
+            : [],
+        listPullRequestFiles: async (_number, page) =>
+          page === 1
+            ? [
+                {
+                  path: 'packages/content/data/websites/nested/example-llms-txt.mdx',
+                  status: 'added'
+                }
+              ]
+            : []
+      }
+    )
+
+    expect(result).toBe('duplicate')
+    expect(getFileContent).toHaveBeenCalledWith(
+      'contributor/llms-txt-hub',
+      'packages/content/data/websites/nested/example-llms-txt.mdx',
+      'c'.repeat(40)
+    )
+  })
+
+  it('fails closed when an open-PR page budget is exhausted', async () => {
+    await expect(
+      inspectOpenPullRequestDuplicates(
+        {
+          candidate: {
+            llmsUrl: 'https://example.com/llms.txt',
+            website: 'https://example.com/'
+          },
+          currentPrNumber: 42
+        },
+        {
+          getFileContent: async () => '',
+          listOpenPullRequests: async () =>
+            Array.from({ length: 100 }, (_, index) => ({
+              headRepository: 'contributor/llms-txt-hub',
+              headSha: 'c'.repeat(40),
+              number: index + 100
+            })),
+          listPullRequestFiles: async () => []
+        }
+      )
+    ).resolves.toBe('unavailable')
+  })
+})
+
 describe('trusted merge authorization', () => {
   const repository = 'thedaviddias/llms-txt-hub'
   const prNumber = 42
@@ -690,11 +959,10 @@ Example is a developer platform with API documentation for AI agents.
   it.each([
     ['missing attestation', { attestation: { code: 'missing_block', ok: false } }],
     ['stale signed Web Risk evidence', { attestation: staleVerified() }],
-    ['manual-review label', { hasManualReviewLabel: true }],
     ['base duplicate', { baseDuplicateStatus: 'duplicate' }],
     ['open PR duplicate', { openPullRequestDuplicateStatus: 'duplicate' }],
     ['unavailable duplicate evidence', { openPullRequestDuplicateStatus: 'unavailable' }],
-    ['missing PR Review', { requiredChecksPassed: false }],
+    ['failed PR Review', { requiredCheckStatus: 'failure' }],
     [
       'manual fresh assessment',
       {
@@ -735,14 +1003,14 @@ Example is a developer platform with API documentation for AI agents.
       deriveMergeAuthorization({
         attestation: verified(),
         baseDuplicateStatus: 'unique',
+        baseSnapshotStatus: 'current',
         freshAssessment: freshAssessment(),
-        hasManualReviewLabel: false,
         now: () => now,
         openPullRequestDuplicateStatus: 'unique',
-        requiredChecksPassed: true,
+        requiredCheckStatus: 'success',
         ...overrides
       })
-    ).toMatchObject({ authorized: false })
+    ).toMatchObject({ authorized: false, disposition: 'manual_review' })
   })
 
   it('authorizes only a signed exact-head submission with fresh unique evidence and checks', () => {
@@ -750,11 +1018,11 @@ Example is a developer platform with API documentation for AI agents.
       deriveMergeAuthorization({
         attestation: verified(),
         baseDuplicateStatus: 'unique',
+        baseSnapshotStatus: 'current',
         freshAssessment: freshAssessment(),
-        hasManualReviewLabel: false,
         now: () => now,
         openPullRequestDuplicateStatus: 'unique',
-        requiredChecksPassed: true
+        requiredCheckStatus: 'success'
       })
     ).toEqual({ authorized: true, reason: 'Signed exact-head assessment passed.' })
   })
@@ -763,11 +1031,11 @@ Example is a developer platform with API documentation for AI agents.
     const authorization = deriveMergeAuthorization({
       attestation: verified(),
       baseDuplicateStatus: 'unique',
+      baseSnapshotStatus: 'current',
       freshAssessment: freshAssessment(),
-      hasManualReviewLabel: false,
       now: () => now,
       openPullRequestDuplicateStatus: 'unique',
-      requiredChecksPassed: true
+      requiredCheckStatus: 'success'
     })
 
     expect(
@@ -786,23 +1054,117 @@ Example is a developer platform with API documentation for AI agents.
     })
   })
 
+  it('waits without a sticky manual label, then recovers on completed PR Review success', () => {
+    const pending = deriveMergeAuthorization({
+      attestation: verified(),
+      baseDuplicateStatus: 'unique',
+      baseSnapshotStatus: 'current',
+      freshAssessment: freshAssessment(),
+      now: () => now,
+      openPullRequestDuplicateStatus: 'unique',
+      requiredCheckStatus: 'in_progress'
+    })
+    expect(pending).toMatchObject({ authorized: false, disposition: 'wait' })
+    const waitingLabels = deriveAuthorizationManagedLabels({
+      authorization: pending,
+      policyLabels: ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low']
+    })
+    expect(waitingLabels).toEqual(['area:content', 'lane:mdx-fast', 'risk:low'])
+    expect(
+      calculateManagedLabelSync(
+        ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low'],
+        waitingLabels
+      )
+    ).toMatchObject({ added: [], removed: ['automerge:candidate'] })
+
+    const recovered = deriveMergeAuthorization({
+      attestation: verified(),
+      baseDuplicateStatus: 'unique',
+      baseSnapshotStatus: 'current',
+      freshAssessment: freshAssessment(),
+      now: () => now,
+      openPullRequestDuplicateStatus: 'unique',
+      requiredCheckStatus: 'success'
+    })
+    const recoveredLabels = deriveAuthorizationManagedLabels({
+      authorization: recovered,
+      policyLabels: ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low']
+    })
+    expect(
+      calculateManagedLabelSync(
+        ['area:content', 'lane:mdx-fast', 'needs:manual-review', 'risk:low'],
+        recoveredLabels,
+        { allowManualReviewRemoval: recovered.authorized }
+      )
+    ).toEqual({
+      added: ['automerge:candidate'],
+      desired: ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low'],
+      removed: ['needs:manual-review']
+    })
+  })
+
+  it.each(['missing', 'in_progress'] as const)(
+    'returns a wait outcome while PR Review is %s',
+    requiredCheckStatus => {
+      expect(
+        deriveMergeAuthorization({
+          attestation: verified(),
+          baseDuplicateStatus: 'unique',
+          baseSnapshotStatus: 'current',
+          freshAssessment: freshAssessment(),
+          now: () => now,
+          openPullRequestDuplicateStatus: 'unique',
+          requiredCheckStatus
+        })
+      ).toMatchObject({ authorized: false, disposition: 'wait' })
+    }
+  )
+
+  it('waits when the trusted base moved after checkout', () => {
+    expect(
+      deriveMergeAuthorization({
+        attestation: verified(),
+        baseDuplicateStatus: 'unique',
+        baseSnapshotStatus: 'moved',
+        freshAssessment: freshAssessment(),
+        now: () => now,
+        openPullRequestDuplicateStatus: 'unique',
+        requiredCheckStatus: 'success'
+      })
+    ).toMatchObject({ authorized: false, disposition: 'wait' })
+  })
+
   it('blocks the merge when the head or PR Review changes after authorization', () => {
     expect(
       deriveExactHeadMergeDecision({
         authorization: { authorized: true, reason: 'Signed exact-head assessment passed.' },
+        baseSnapshotStatus: 'current',
         currentHeadSha: 'b'.repeat(40),
         expectedHeadSha: headSha,
-        requiredChecksPassed: true
+        requiredCheckStatus: 'success'
       })
     ).toMatchObject({ authorized: false })
     expect(
       deriveExactHeadMergeDecision({
         authorization: { authorized: true, reason: 'Signed exact-head assessment passed.' },
+        baseSnapshotStatus: 'current',
         currentHeadSha: headSha,
         expectedHeadSha: headSha,
-        requiredChecksPassed: false
+        requiredCheckStatus: 'failure'
       })
     ).toMatchObject({ authorized: false })
+  })
+
+  it('aborts when the base moves between authorization and merge', () => {
+    expect(
+      deriveExactHeadMergeDecision({
+        authorization: { authorized: true, reason: 'Signed exact-head assessment passed.' },
+        baseSnapshotStatus: 'moved',
+        currentHeadSha: headSha,
+        expectedHeadSha: headSha,
+        requiredCheckStatus: 'success'
+      })
+    ).toMatchObject({ authorized: false, disposition: 'wait' })
   })
 })
 
@@ -826,6 +1188,9 @@ describe('trusted workflow wiring', () => {
     expect(workflow).toContain('labeled')
     expect(workflow).toContain('unlabeled')
     expect(workflow).toContain('edited')
+    expect(workflow).toContain('workflow_run:')
+    expect(workflow).toContain("workflows: ['PR Review']")
+    expect(workflow).toContain('types: [completed]')
     expect(workflow).toContain('Checkout trusted base')
     expect(workflow).not.toContain('github.event.pull_request.head.sha')
     expect(workflow).not.toContain('github.event.pull_request.head.repo')
@@ -840,5 +1205,15 @@ describe('trusted workflow wiring', () => {
     expect(workflow.slice(0, workflow.indexOf('- name: Validate, label'))).not.toContain(
       'SUBMISSION_ASSESSMENT_SIGNING_SECRET:'
     )
+  })
+
+  it('grants check-read access, captures the trusted base, and keeps the token fallback', () => {
+    const workflow = readFileSync('.github/workflows/pr-automerge.yml', 'utf8')
+
+    expect(workflow).toContain('actions: read')
+    expect(workflow).toContain('Capture trusted base SHA')
+    expect(workflow).toContain('TRUSTED_BASE_SHA:')
+    expect(workflow).toContain('secrets.PAT_TOKEN || secrets.GITHUB_TOKEN')
+    expect(workflow).toContain('derive-event-context')
   })
 })
