@@ -47,6 +47,20 @@ export const ANALYTICS_EVENTS = {
   SUBMIT_SUCCESS: 'Submit Success',
   SUBMIT_ERROR: 'Submit Error',
 
+  // Trusted Submission Events
+  SUBMISSION_PREFLIGHT_START: 'Submission Preflight Start',
+  SUBMISSION_PREFLIGHT_OUTCOME: 'Submission Preflight Outcome',
+  SUBMISSION_SUPPORT_VIEW: 'Submission Support View',
+  SUBMISSION_SUPPORT_PLATFORM_SELECT: 'Submission Support Platform Select',
+  SUBMISSION_PROFILE_OPEN: 'Submission Profile Open',
+  SUBMISSION_FOLLOW_ATTEST: 'Submission Follow Attest',
+  SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
+  SUBMISSION_PR_CREATED: 'Submission PR Created',
+  SUBMISSION_PUBLISH_FAILURE: 'Submission Publish Failure',
+  SUBMISSION_ASSESSMENT_DURATION: 'Submission Assessment Duration',
+  SUBMISSION_WEB_RISK_AVAILABLE: 'Submission Web Risk Available',
+  SUBMISSION_WEB_RISK_UNAVAILABLE: 'Submission Web Risk Unavailable',
+
   // Profile Events
   PROFILE_MODAL_OPEN: 'Profile Modal Open',
   PROFILE_UPDATE_SUCCESS: 'Profile Update Success',
@@ -113,7 +127,52 @@ interface EventProps {
   // Content specific
   content_type?: 'website' | 'member' | 'guide' | 'project' | 'tool'
   content_slug?: string
+
+  // Privacy-safe trusted submission properties
+  platform?: SubmissionAnalyticsPlatform
+  decision?: SubmissionAnalyticsDecision
+  reason_category?: SubmissionAnalyticsReasonCategory
+  duration_bucket?: SubmissionAnalyticsDurationBucket
+  pr_present?: boolean
 }
+
+/** Aggregate platform values permitted in trusted-submission analytics. */
+export type SubmissionAnalyticsPlatform = 'x' | 'linkedin'
+
+/** Aggregate lifecycle outcomes permitted in trusted-submission analytics. */
+export type SubmissionAnalyticsDecision =
+  | 'support_required'
+  | 'automatic'
+  | 'manual'
+  | 'rejected'
+  | 'retry_later'
+
+/** Stable, non-identifying reason groups permitted in trusted-submission analytics. */
+export type SubmissionAnalyticsReasonCategory =
+  | 'passed'
+  | 'duplicate'
+  | 'rate_limit'
+  | 'network_safety'
+  | 'reputation_unavailable'
+  | 'resource'
+  | 'site_ownership'
+  | 'editorial'
+  | 'publication'
+  | 'identity'
+  | 'request_security'
+  | 'continuation'
+  | 'input'
+  | 'unknown'
+
+/** Coarse latency groups permitted in trusted-submission analytics. */
+export type SubmissionAnalyticsDurationBucket = 'under_1s' | '1s_to_5s' | 'over_5s'
+
+/** Fixed lifecycle sources permitted in trusted-submission analytics. */
+export type SubmissionAnalyticsSource =
+  | 'submit_page'
+  | 'support_step'
+  | 'preflight'
+  | 'final_submission'
 
 /**
  * Track an event with OpenPanel analytics
@@ -140,4 +199,4 @@ export function trackEvent(event: AnalyticsEvent, props?: EventProps) {
 }
 
 // Re-export convenience functions from helpers (split for file complexity limits)
-export { analytics } from './analytics-helpers'
+export { analytics, submissionAnalytics } from './analytics-helpers'

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { preflightSubmission } from '@/actions/preflight-submission'
 import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { useAnalyticsEvents, useSubmissionAnalytics } from '@/components/analytics-tracker'
 import { SubmitFormChrome } from './submit-form-chrome'
 import { type Step1Data, type Step2Data, step1Schema, step2Schema } from './submit-form-schemas'
 import { SubmitFormStep1 } from './submit-form-step1'
@@ -61,8 +61,8 @@ export function SubmitForm() {
     accessible: null
   })
   const [websiteUrlStatus] = useState<SubmitUrlStatus>({ checking: false, accessible: null })
-  const { trackFormStepStart, trackFormStepComplete, trackSubmitSuccess, trackSubmitError } =
-    useAnalyticsEvents()
+  const { trackFormStepStart, trackFormStepComplete } = useAnalyticsEvents()
+  const submissionAnalytics = useSubmissionAnalytics()
 
   const step1Form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -127,6 +127,7 @@ export function SubmitForm() {
   async function onSubmitStep2(values: Step2Data) {
     const request = beginRequest()
     if (!request) return
+    const startedAt = submissionAnalytics.startPreflight()
     setIsLoading(true)
     trackFormStepComplete(2, 'submit-form', 'submit-page')
 
@@ -145,6 +146,7 @@ export function SubmitForm() {
 
       const preflightResult = await preflightSubmission(formData)
       if (!isCurrentRequest(request.requestId, request.generation)) return
+      submissionAnalytics.finishPreflight(preflightResult, startedAt)
       if (preflightResult.status === 'support_required') {
         setPreparedSubmission(prepared)
         setContinuation({
@@ -162,10 +164,9 @@ export function SubmitForm() {
         setStep('result')
         trackFormStepStart(4, 'submit-form', 'submit-page')
       }
-    } catch (error) {
+    } catch {
       if (!isCurrentRequest(request.requestId, request.generation)) return
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-      trackSubmitError(values.website, errorMessage, 'submit-page')
+      submissionAnalytics.failPreflight(startedAt)
       toast.error(RETRY_MESSAGE)
       setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
       setStep('result')
@@ -180,11 +181,13 @@ export function SubmitForm() {
   async function onSubmitSupport(support: { followAttested: true; platform: 'x' | 'linkedin' }) {
     const request = beginRequest()
     if (!request) return
+    const startedAt = submissionAnalytics.startFinal()
     setIsLoading(true)
     trackFormStepComplete(3, 'submit-form', 'submit-page')
 
     try {
       if (!(preparedSubmission && continuation)) {
+        submissionAnalytics.failFinal(support.platform, startedAt)
         setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
         setStep('result')
         return
@@ -199,19 +202,19 @@ export function SubmitForm() {
 
       const finalResult: FinalSubmissionResult = await submitLlmsTxt(formData)
       if (!isCurrentRequest(request.requestId, request.generation)) return
+      submissionAnalytics.finishFinal(finalResult, support.platform, startedAt)
       if (finalResult.success) {
-        trackSubmitSuccess(preparedSubmission.website, preparedSubmission.category, 'submit-page')
         toast.success('Your pull request has been created successfully!')
         setResult({ outcome: finalResult.outcome, prUrl: finalResult.prUrl })
       } else {
         const message = finalResult.outcome === 'retry_later' ? RETRY_MESSAGE : finalResult.error
-        trackSubmitError(preparedSubmission.website, message, 'submit-page')
         setResult({ message, outcome: finalResult.outcome })
       }
       setStep('result')
       trackFormStepStart(4, 'submit-form', 'submit-page')
     } catch {
       if (!isCurrentRequest(request.requestId, request.generation)) return
+      submissionAnalytics.failFinal(support.platform, startedAt)
       setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
       setStep('result')
       toast.error(RETRY_MESSAGE)
