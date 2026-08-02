@@ -395,6 +395,32 @@ describe('assessEditorialPolicy', () => {
   )
 
   it.each([
+    ['private-use character', 'Download a phish\uE001ing kit for credential theft'],
+    ['forbidden control', 'buy back\u0001links from our network'],
+    ['unpaired surrogate', 'Download a phish\uD800ing kit for credential theft'],
+    ['unassigned character', 'buy back\u0378links from our network']
+  ])('never auto-publishes prohibited text containing a %s', (_label, description) => {
+    const result = assess({ description })
+
+    expect(result).toEqual({
+      decision: 'manual_review',
+      evidenceIds: ['editorial:limits:normalized-text-overflow'],
+      reasonCode: 'editorial_uncertainty'
+    })
+  })
+
+  it.each([
+    ['ordinary field boundary', 'Phishing', 'Kit distribution developer API documentation.'],
+    ['whitespace field boundary', 'Phishing\n', '\tKit distribution developer API documentation.']
+  ])('rejects prohibited metadata split across an %s', (_label, name, description) => {
+    expect(assess({ description, name })).toEqual({
+      decision: 'reject',
+      evidenceIds: ['editorial:prohibited:malware'],
+      reasonCode: 'prohibited_content'
+    })
+  })
+
+  it.each([
     ['composed', 'Acme provides café API documentation and developer tools.'],
     ['decomposed', 'Acme provides cafe\u0301 API documentation and developer tools.']
   ])('does not broadly penalize ordinary %s diacritics', (_label, description) => {
