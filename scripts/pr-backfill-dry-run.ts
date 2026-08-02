@@ -869,7 +869,7 @@ const inspectBaseDuplicate = async (
   candidate: NormalizedDuplicateFields
 ): Promise<DuplicateStatus> => {
   try {
-    const paths = await glob(`${WEBSITE_PATH_PREFIX}*.mdx`, { nodir: true })
+    const paths = await glob(`${WEBSITE_PATH_PREFIX}**/*.mdx`, { nodir: true })
     if (paths.length === 0) return 'unavailable'
     for (const path of paths) {
       const content = await readFile(path, 'utf8')
@@ -894,10 +894,11 @@ const inspectOpenPullRequestDuplicate = async (input: {
   repo: string
 }): Promise<DuplicateStatus> => {
   try {
-    const pullRequests = await paginateGhApi<GitHubPullRequestListItem>(
-      `repos/${input.repo}/pulls?state=open`
+    const pullRequests = await paginateGhApiBounded<GitHubPullRequestListItem>(
+      `repos/${input.repo}/pulls?state=open`,
+      MAX_OPEN_PULL_REQUESTS
     )
-    if (pullRequests.length > MAX_OPEN_PULL_REQUESTS) return 'unavailable'
+    if (!pullRequests) return 'unavailable'
     let fileCount = 0
     for (const pullRequest of pullRequests) {
       if (pullRequest.number === input.currentPrNumber) continue
@@ -911,11 +912,12 @@ const inspectOpenPullRequestDuplicate = async (input: {
       ) {
         return 'unavailable'
       }
-      const files = await paginateGhApi<GitHubPullRequestFile>(
-        `repos/${input.repo}/pulls/${pullRequest.number}/files`
+      const files = await paginateGhApiBounded<GitHubPullRequestFile>(
+        `repos/${input.repo}/pulls/${pullRequest.number}/files`,
+        MAX_OPEN_PULL_REQUEST_FILES - fileCount
       )
+      if (!files) return 'unavailable'
       fileCount += files.length
-      if (fileCount > MAX_OPEN_PULL_REQUEST_FILES) return 'unavailable'
       for (const file of files) {
         if (!isOpenPullRequestWebsiteFile(file)) continue
         const content = await fetchRepositoryFileContent(headRepository, file.filename, headSha)
@@ -1726,6 +1728,31 @@ async function paginateGhApi<T>(endpoint: string): Promise<T[]> {
       return items
     }
 
+    page += 1
+  }
+}
+
+/**
+ * Paginate a GitHub REST array without reading beyond a caller-owned item budget.
+ */
+async function paginateGhApiBounded<T>(endpoint: string, maxItems: number): Promise<T[] | null> {
+  if (!Number.isSafeInteger(maxItems) || maxItems < 0) return null
+  const items: T[] = []
+  let page = 1
+  while (true) {
+    const separator = endpoint.includes('?') ? '&' : '?'
+    const batch = await ghApiJson<T[]>([
+      `${endpoint}${separator}page=${page}&per_page=${PAGE_SIZE}`
+    ])
+    if (
+      !Array.isArray(batch) ||
+      batch.length > PAGE_SIZE ||
+      items.length + batch.length > maxItems
+    ) {
+      return null
+    }
+    items.push(...batch)
+    if (batch.length < PAGE_SIZE) return items
     page += 1
   }
 }
