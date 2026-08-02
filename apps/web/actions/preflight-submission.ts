@@ -13,6 +13,11 @@ import {
   parseSubmissionActionInput,
   submissionSourceIp
 } from '@/lib/submissions/submission-action-input'
+import {
+  assessmentWebRiskAvailable,
+  preflightAnalyticsMetadata,
+  type SubmissionPreflightAnalytics
+} from '@/lib/submissions/submission-analytics-metadata'
 import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import {
@@ -26,8 +31,7 @@ const RETRY_MESSAGE =
   'We could not safely verify this site right now. Nothing was published. Please try again later.'
 const DUPLICATE_MESSAGE = 'This website or llms.txt URL already has an active directory entry.'
 
-/** Client-safe result of the security and editorial preflight. */
-export type PreflightResult =
+type PreflightOutcome =
   | {
       readonly continuationToken: string
       readonly status: 'support_required'
@@ -44,13 +48,18 @@ export type PreflightResult =
       readonly status: 'retry_later'
     }
 
-const rejected = (message: string, reasonCode: SubmissionReasonCode): PreflightResult => ({
+/** Client-safe result of the security and editorial preflight. */
+export type PreflightResult = PreflightOutcome & {
+  readonly analytics: SubmissionPreflightAnalytics
+}
+
+const rejected = (message: string, reasonCode: SubmissionReasonCode): PreflightOutcome => ({
   message,
   reasonCode,
   status: 'rejected'
 })
 
-const retryLater = (reasonCode: SubmissionReasonCode): PreflightResult => ({
+const retryLater = (reasonCode: SubmissionReasonCode): PreflightOutcome => ({
   message: RETRY_MESSAGE,
   reasonCode,
   status: 'retry_later'
@@ -66,13 +75,14 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
   const startedAt = Date.now()
   let logOutcome: PreflightResult['status'] = 'retry_later'
   let logReasonCode = 'publication_unavailable'
-  const complete = (
-    result: PreflightResult,
-    reasonCode: string = result.status
-  ): PreflightResult => {
+  let webRiskAvailable: boolean | undefined
+  const complete = (result: PreflightOutcome, reasonCode: string): PreflightResult => {
     logOutcome = result.status
     logReasonCode = reasonCode
-    return result
+    return {
+      ...result,
+      analytics: preflightAnalyticsMetadata(reasonCode, webRiskAvailable)
+    }
   }
   try {
     const session = await auth()
@@ -127,6 +137,7 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
     }
 
     const assessment = await assessSubmission(parsed.fields)
+    webRiskAvailable = assessmentWebRiskAvailable(assessment)
     if (assessment.decision === 'reject') {
       return complete(
         rejected(assessment.publicMessage, assessment.reasonCode),

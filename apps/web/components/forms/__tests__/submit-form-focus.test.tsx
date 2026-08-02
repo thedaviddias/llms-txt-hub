@@ -25,6 +25,11 @@ describe('SubmitForm return focus', () => {
   it('focuses the website field after submitting another website', async () => {
     const user = await reachSubmissionSupport()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
+      analytics: {
+        publicationAttempted: true,
+        reasonCategory: 'passed',
+        webRiskAvailable: true
+      },
       outcome: 'manual',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
       success: true

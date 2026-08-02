@@ -65,7 +65,15 @@ const form = (overrides: Record<string, string> = {}) => {
 const autoAssessment = {
   checkedAt: '2026-08-02T12:00:00.000Z',
   decision: 'auto_publish' as const,
-  evidence: [],
+  evidence: [
+    {
+      check: 'reputation' as const,
+      decision: 'auto_publish' as const,
+      details: { providerStatus: 'safe' as const },
+      reasonCode: 'passed' as const,
+      resource: 'homepage' as const
+    }
+  ],
   policyVersion: '2026-08-01.v1',
   publicMessage: 'Passed.',
   reasonCode: 'passed' as const
@@ -89,6 +97,7 @@ describe('submitLlmsTxt final coordinator', () => {
     mockPublish.mockResolvedValue({
       ok: true,
       outcome: 'automatic',
+      publicationAttempted: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
     mockRecordOutcome.mockResolvedValue(true)
@@ -100,10 +109,13 @@ describe('submitLlmsTxt final coordinator', () => {
     ['missing attestation', { followAttested: 'false' }],
     ['missing continuation', { continuationToken: '' }]
   ])('rejects %s before consuming state', async (_label, overrides) => {
-    await expect(submitLlmsTxt(form(overrides))).resolves.toMatchObject({
+    const result = await submitLlmsTxt(form(overrides))
+    expect(result).toMatchObject({
+      analytics: { publicationAttempted: false, reasonCategory: 'input' },
       outcome: 'rejected',
       success: false
     })
+    expect(result.analytics).not.toHaveProperty('webRiskAvailable')
     expect(mockConsume).not.toHaveBeenCalled()
     expect(mockLoggerInfo).toHaveBeenLastCalledWith(
       'Final submission completed',
@@ -114,8 +126,34 @@ describe('submitLlmsTxt final coordinator', () => {
     expect(JSON.stringify(mockLoggerInfo.mock.calls)).not.toContain('opaque.continuation.signature')
   })
 
+  it.each([
+    ['authentication', () => mockAuth.mockResolvedValueOnce(null), 'identity'],
+    ['CSRF', () => mockCsrf.mockResolvedValueOnce(null), 'request_security']
+  ] as const)(
+    'reports %s without claiming Web Risk was checked',
+    async (_label, setup, category) => {
+      setup()
+
+      const result = await submitLlmsTxt(form())
+
+      expect(result).toMatchObject({
+        analytics: { publicationAttempted: false, reasonCategory: category },
+        outcome: 'rejected',
+        success: false
+      })
+      expect(result.analytics).not.toHaveProperty('webRiskAvailable')
+      expect(mockAssess).not.toHaveBeenCalled()
+      expect(mockPublish).not.toHaveBeenCalled()
+    }
+  )
+
   it('atomically consumes unchanged fields, then reruns duplicates and assessment', async () => {
     await expect(submitLlmsTxt(form())).resolves.toEqual({
+      analytics: {
+        publicationAttempted: true,
+        reasonCategory: 'passed',
+        webRiskAvailable: true
+      },
       outcome: 'automatic',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42',
       success: true
@@ -182,11 +220,24 @@ describe('submitLlmsTxt final coordinator', () => {
     mockAssess.mockResolvedValue({
       ...autoAssessment,
       decision: 'retry_later',
+      evidence: [
+        {
+          check: 'reputation',
+          decision: 'retry_later',
+          details: { providerStatus: 'unknown' },
+          reasonCode: 'reputation_unknown'
+        }
+      ],
       publicMessage: 'Please retry.',
       reasonCode: 'reputation_unknown'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toEqual({
+      analytics: {
+        publicationAttempted: false,
+        reasonCategory: 'reputation_unavailable',
+        webRiskAvailable: false
+      },
       error: 'Please retry.',
       outcome: 'retry_later',
       success: false
@@ -243,10 +294,16 @@ describe('submitLlmsTxt final coordinator', () => {
     mockPublish.mockResolvedValue({
       ok: true,
       outcome: 'manual',
+      publicationAttempted: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
 
     await expect(submitLlmsTxt(form({ supportPlatform: 'linkedin' }))).resolves.toEqual({
+      analytics: {
+        publicationAttempted: true,
+        reasonCategory: 'passed',
+        webRiskAvailable: true
+      },
       outcome: 'manual',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42',
       success: true
@@ -340,10 +397,12 @@ describe('submitLlmsTxt final coordinator', () => {
     mockPublish.mockResolvedValue({
       code: 'publication_unavailable',
       ok: false,
+      publicationAttempted: true,
       recovery: 'same_submission'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+      analytics: { publicationAttempted: true, reasonCategory: 'publication' },
       outcome: 'retry_later',
       success: false
     })
@@ -354,10 +413,12 @@ describe('submitLlmsTxt final coordinator', () => {
     mockPublish.mockResolvedValue({
       code: 'publication_unavailable',
       ok: false,
+      publicationAttempted: false,
       recovery: 'fresh_preflight'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+      analytics: { publicationAttempted: false, reasonCategory: 'publication' },
       outcome: 'retry_later',
       success: false
     })

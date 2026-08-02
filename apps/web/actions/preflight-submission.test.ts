@@ -60,7 +60,15 @@ const form = (overrides: Record<string, string> = {}) => {
 const assessment = (decision: SubmissionDecision): SubmissionAssessment => {
   const base = {
     checkedAt: '2026-08-02T12:00:00.000Z',
-    evidence: [],
+    evidence: [
+      {
+        check: 'reputation' as const,
+        decision: 'auto_publish' as const,
+        details: { providerStatus: 'safe' as const },
+        reasonCode: 'passed' as const,
+        resource: 'homepage' as const
+      }
+    ],
     policyVersion: '2026-08-01.v1',
     publicMessage: decision === 'reject' ? 'This submission cannot be accepted.' : 'Checked.'
   }
@@ -100,6 +108,7 @@ describe('preflightSubmission', () => {
     const result = await preflightSubmission(form())
 
     expect(result).toMatchObject({
+      analytics: { reasonCategory: 'passed', webRiskAvailable: true },
       continuationToken: 'opaque.continuation.signature',
       status: 'support_required'
     })
@@ -180,9 +189,12 @@ describe('preflightSubmission', () => {
   })
 
   it('rejects an invalid CSRF token before rate limits or network checks', async () => {
-    await expect(preflightSubmission(form({ _csrf: 'wrong-token' }))).resolves.toMatchObject({
+    const result = await preflightSubmission(form({ _csrf: 'wrong-token' }))
+    expect(result).toMatchObject({
+      analytics: { reasonCategory: 'request_security' },
       status: 'rejected'
     })
+    expect(result.analytics).not.toHaveProperty('webRiskAvailable')
     expect(mockRateLimits).not.toHaveBeenCalled()
     expect(mockDuplicates).not.toHaveBeenCalled()
     expect(mockAssess).not.toHaveBeenCalled()
@@ -196,6 +208,19 @@ describe('preflightSubmission', () => {
     expect(logged).not.toContain('wrong-token')
     expect(logged).not.toContain('203.0.113.20')
     expect(logged).not.toContain('opaque.continuation.signature')
+  })
+
+  it('reports authentication without claiming Web Risk was checked', async () => {
+    mockAuth.mockResolvedValueOnce(null)
+
+    const result = await preflightSubmission(form())
+
+    expect(result).toMatchObject({
+      analytics: { reasonCategory: 'identity' },
+      status: 'retry_later'
+    })
+    expect(result.analytics).not.toHaveProperty('webRiskAvailable')
+    expect(mockAssess).not.toHaveBeenCalled()
   })
 
   it('fails closed before assessment when identity, CSRF, limits, or duplicates fail', async () => {
@@ -217,5 +242,35 @@ describe('preflightSubmission', () => {
     })
     expect(mockAssess).not.toHaveBeenCalled()
     expect(mockContinuation).not.toHaveBeenCalled()
+  })
+
+  it('reports an editorial rejection after a completed Web Risk check', async () => {
+    mockAssess.mockResolvedValue(assessment('reject'))
+
+    await expect(preflightSubmission(form())).resolves.toMatchObject({
+      analytics: { reasonCategory: 'editorial', webRiskAvailable: true },
+      reasonCode: 'prohibited_content',
+      status: 'rejected'
+    })
+  })
+
+  it('reports hidden reputation uncertainty even when another outcome is selected', async () => {
+    mockAssess.mockResolvedValue({
+      ...assessment('reject'),
+      evidence: [
+        {
+          check: 'reputation',
+          decision: 'retry_later',
+          details: { providerStatus: 'unknown' },
+          reasonCode: 'reputation_unknown',
+          resource: 'llms'
+        }
+      ]
+    })
+
+    await expect(preflightSubmission(form())).resolves.toMatchObject({
+      analytics: { reasonCategory: 'editorial', webRiskAvailable: false },
+      status: 'rejected'
+    })
   })
 })

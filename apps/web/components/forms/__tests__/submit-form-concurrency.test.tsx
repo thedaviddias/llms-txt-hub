@@ -73,6 +73,7 @@ describe('SubmitForm request concurrency', () => {
 
     await act(async () => {
       resolvePreflight({
+        analytics: { reasonCategory: 'passed', webRiskAvailable: true },
         continuationToken: 'opaque-token',
         status: 'support_required',
         submissionId: 'sub_123'
@@ -111,6 +112,7 @@ describe('SubmitForm request concurrency', () => {
 
     await act(async () => {
       resolvePreflight({
+        analytics: { reasonCategory: 'passed', webRiskAvailable: true },
         continuationToken: 'stale-token',
         status: 'support_required',
         submissionId: 'stale-submission'
@@ -135,6 +137,11 @@ describe('SubmitForm request concurrency', () => {
 
     await act(async () => {
       resolveFinal({
+        analytics: {
+          publicationAttempted: true,
+          reasonCategory: 'passed',
+          webRiskAvailable: true
+        },
         outcome: 'manual',
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/stale',
         success: true

@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated: August 1, 2026**
+**Last updated: August 2, 2026**
 
 This Privacy Policy describes how llms.txt hub, operated by David Dias Digital ("we," "us," or "our") collects, uses, processes, and protects your personal information when you use our website (llmstxthub.com) and related services (collectively, the "Service").
 
@@ -16,7 +16,7 @@ This Privacy Policy describes how llms.txt hub, operated by David Dias Digital (
 ### 1.2 Information We Collect Automatically
 - **Usage Information**: Pages visited, time spent, click patterns, and interaction data
 - **Device Information**: Browser type, operating system, device identifiers, and IP address
-- **Analytics Data**: Aggregate submission and support interaction analytics via OpenPanel, including the chosen platform, coarse outcome and reason categories, duration ranges, and whether a pull request was created. These events do not include submitted URLs, fetched content, social usernames, continuation tokens, signatures, raw IP addresses, API keys, or provider response bodies
+- **Analytics Data**: Aggregate submission and support interaction event properties via OpenPanel, including the chosen platform, coarse outcome and reason categories, duration ranges, and whether a pull request was created. These event properties do not include submitted URLs, fetched content, social usernames, continuation tokens, signatures, raw IP addresses, API keys, or provider response bodies. They are associated with the signed-in account identifier, name, and email in OpenPanel, and the client IP is forwarded through our proxy to OpenPanel
 - **Authentication Data**: Login sessions and authentication tokens managed by Clerk
 - **Submission Security Data**: Submitted and redirected URLs are sent to Google Web Risk for security screening. Short-lived submission state and abuse-control hashes are stored in Upstash Redis; raw IP addresses are not included in submission analytics
 
@@ -56,7 +56,7 @@ We process your personal information based on the following legal grounds:
 We share information with trusted service providers who assist us in operating our Service:
 
 - **Clerk**: Authentication and user management services
-- **OpenPanel**: Privacy-focused product analytics (cookieless tracking, no personal data)
+- **[OpenPanel](https://openpanel.dev/privacy)**: Product analytics associated with signed-in account identifiers and profile information; client IP addresses are forwarded through our analytics proxy. Analytics data is retained for up to 24 months
 - **Substack**: Newsletter management and delivery
 - **Vercel**: Website hosting and infrastructure
 - **GitHub**: Code repository and deployment services
@@ -138,7 +138,7 @@ We implement appropriate technical and organizational measures to protect your i
 - Basic website functionality
 
 ### 8.2 Analytics
-- OpenPanel (cookieless tracking, no personal data)
+- OpenPanel (cookieless product analytics that may process account profile identifiers and request IP addresses)
 - Website performance and optimization
 
 ### 8.3 Preference Cookies

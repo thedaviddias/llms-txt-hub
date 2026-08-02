@@ -22,16 +22,15 @@ const trackDuration = (
  * Track aggregate outcome, latency, support view, and Web Risk availability for a preflight.
  */
 const trackPreflightResult = (result: PreflightResult, startedAt: number) => {
-  const reasonCode = result.status === 'support_required' ? 'passed' : result.reasonCode
   submissionAnalytics.preflightOutcome({
     decision: result.status,
-    reasonCategory: submissionAnalytics.reasonCategory(reasonCode),
+    reasonCategory: result.analytics.reasonCategory,
     source: 'preflight'
   })
   trackDuration(startedAt, 'preflight')
-  if (result.status === 'support_required' || reasonCode === 'reputation_match') {
+  if (result.analytics.webRiskAvailable === true) {
     submissionAnalytics.webRiskAvailable({ source: 'preflight' })
-  } else if (reasonCode === 'reputation_unknown') {
+  } else if (result.analytics.webRiskAvailable === false) {
     submissionAnalytics.webRiskUnavailable({ source: 'preflight' })
   }
   if (result.status === 'support_required') {
@@ -60,7 +59,6 @@ const trackFinalFailure = (platform: SupportPlatform, startedAt: number) => {
     source: 'final_submission'
   }
   submissionAnalytics.finalOutcome(properties)
-  submissionAnalytics.publishFailure(properties)
 }
 
 const trackFinalResult = (
@@ -73,7 +71,7 @@ const trackFinalResult = (
     decision: result.outcome,
     platform,
     prPresent: result.success,
-    reasonCategory: result.success && result.outcome === 'automatic' ? 'passed' : undefined,
+    reasonCategory: result.analytics.reasonCategory,
     source: 'final_submission'
   })
   if (result.success) {
@@ -83,7 +81,7 @@ const trackFinalResult = (
       prPresent: true,
       source: 'final_submission'
     })
-  } else if (result.outcome === 'retry_later') {
+  } else if (result.analytics.publicationAttempted) {
     submissionAnalytics.publishFailure({
       decision: result.outcome,
       platform,

@@ -5,6 +5,7 @@ import { logger } from '@thedaviddias/logging'
 import { createAssessmentAttestation } from '@thedaviddias/submission-trust/attestation'
 import type { SubmissionAssessment, SubmissionFields } from '@thedaviddias/submission-trust/types'
 import yaml from 'js-yaml'
+import type { SubmissionPublisherResult } from '@/lib/submissions/submission-publisher-result'
 import { serializeSubmissionMdxText } from './submission-plain-text'
 import {
   type SubmissionPublicationState,
@@ -62,15 +63,6 @@ export interface SubmissionPublisherDependencies {
   readonly secret: string
   readonly state: SubmissionPublicationState
 }
-/** Result of idempotent GitHub publication. */
-export type SubmissionPublisherResult =
-  | { readonly ok: true; readonly outcome: 'automatic' | 'manual'; readonly prUrl: string }
-  | {
-      readonly code: 'publication_unavailable'
-      readonly ok: false
-      readonly recovery: 'fresh_preflight' | 'same_submission'
-    }
-
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
 
@@ -356,7 +348,12 @@ export async function publishSubmission(
   let reasonCode = 'publication_unavailable'
   const unavailable = async (): Promise<SubmissionPublisherResult> => {
     if (!publicationStarted || !attempt) {
-      return { code: 'publication_unavailable', ok: false, recovery: 'fresh_preflight' }
+      return {
+        code: 'publication_unavailable',
+        ok: false,
+        publicationAttempted: false,
+        recovery: 'fresh_preflight'
+      }
     }
     let stateUpdated = false
     try {
@@ -370,7 +367,12 @@ export async function publishSubmission(
         tags: { operation: 'publish_state', type: 'submission' }
       })
     }
-    return { code: 'publication_unavailable', ok: false, recovery: 'same_submission' }
+    return {
+      code: 'publication_unavailable',
+      ok: false,
+      publicationAttempted: true,
+      recovery: 'same_submission'
+    }
   }
   try {
     if (
@@ -482,7 +484,7 @@ export async function publishSubmission(
     }
     logOutcome = outcome
     reasonCode = resultCode
-    return { ok: true, outcome, prUrl: pullRequest.url }
+    return { ok: true, outcome, publicationAttempted: true, prUrl: pullRequest.url }
   } catch {
     return unavailable()
   } finally {
