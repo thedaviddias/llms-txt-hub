@@ -1,13 +1,26 @@
 import { execFile } from 'node:child_process'
+import { createHash } from 'node:crypto'
+import { readFile } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 import { assessPublicationFields } from '@thedaviddias/submission-trust/assessment'
+import {
+  type AssessmentAttestationVerificationResult,
+  verifyAssessmentAttestation
+} from '@thedaviddias/submission-trust/attestation'
+import {
+  SUBMISSION_POLICY_VERSION,
+  WEB_RISK_FRESHNESS_MS
+} from '@thedaviddias/submission-trust/constants'
 import { createNetworkInspector } from '@thedaviddias/submission-trust/network-inspector'
 import type {
   PublicationAssessmentDependencies,
+  SubmissionAssessment,
   SubmissionFields
 } from '@thedaviddias/submission-trust/types'
+import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
 import { checkWebRiskUrl } from '@thedaviddias/submission-trust/web-risk'
+import { glob } from 'glob'
 import matter from 'gray-matter'
 import { categories } from '../apps/web/lib/categories.ts'
 import {
@@ -24,6 +37,10 @@ const DEFAULT_REPO = 'thedaviddias/llms-txt-hub'
 const DEFAULT_CONCURRENCY = 8
 const PAGE_SIZE = 100
 const PR_REVIEW_WORKFLOW_NAME = 'PR Review'
+const MAX_MDX_BYTES = 100_000
+const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
+const MAX_OPEN_PULL_REQUESTS = 300
+const MAX_OPEN_PULL_REQUEST_FILES = 300
 const EXACT_MANAGED_LABELS = [
   'area:content',
   'automerge:candidate',
@@ -161,6 +178,7 @@ interface GitHubPullRequestCommit {
 }
 
 interface GitHubPullRequestDetails {
+  body?: string | null
   draft: boolean
   head: {
     ref: string
@@ -169,6 +187,9 @@ interface GitHubPullRequestDetails {
       login?: string
     }
   }
+  labels?: {
+    name: string
+  }[]
   mergeable: boolean | null
   number: number
   state: string
@@ -188,6 +209,12 @@ interface GitHubPullRequestFile {
 }
 
 interface GitHubPullRequestListItem {
+  head?: {
+    repo?: {
+      full_name?: string
+    } | null
+    sha: string
+  }
   number: number
 }
 
@@ -216,6 +243,17 @@ interface GuidelineAssessment {
   guidelineReasons: string[]
   guidelineStatus: GuidelineStatus
   policyEligible: boolean
+}
+
+interface ModeratedSubmissionFile {
+  assessment: SubmissionAssessment
+  bytes: Uint8Array
+  frontmatter: SubmissionFrontmatter
+  path: string
+}
+
+interface ModerationResult extends GuidelineAssessment {
+  files: ModeratedSubmissionFile[]
 }
 
 interface PullRequestReviewSnapshot {
@@ -265,6 +303,201 @@ interface MergeAction {
   status: 'failed' | 'merged' | 'planned' | 'skipped'
 }
 
+interface MergeRevalidationContext {
+  duplicateFields: NormalizedDuplicateFields
+  file: ModeratedSubmissionFile
+  freshAssessment: SubmissionAssessment
+}
+
+type DuplicateStatus = 'unique' | 'duplicate' | 'unavailable'
+
+/** A fail-closed decision produced from all trusted merge gates. */
+export type MergeAuthorization =
+  | { readonly authorized: true; readonly reason: 'Signed exact-head assessment passed.' }
+  | { readonly authorized: false; readonly reason: string }
+
+/** Inputs required to verify the PR-body attestation against exact GitHub bytes. */
+export interface MergeAttestationVerificationInput {
+  readonly addedMdxBytes: Uint8Array
+  readonly addedMdxPath: string
+  readonly body: string
+  readonly currentHeadSha: string
+  readonly now?: () => Date
+  readonly prNumber: number
+  readonly repository: string
+  readonly secret: string
+}
+
+/** Inputs that cannot be trusted from labels or PR-authored content alone. */
+export interface MergeAuthorizationInput {
+  readonly attestation: AssessmentAttestationVerificationResult
+  readonly baseDuplicateStatus: DuplicateStatus
+  readonly freshAssessment: SubmissionAssessment
+  readonly hasManualReviewLabel: boolean
+  readonly now?: () => Date
+  readonly openPullRequestDuplicateStatus: DuplicateStatus
+  readonly requiredChecksPassed: boolean
+}
+
+const invalidAttestation = (): AssessmentAttestationVerificationResult => ({
+  code: 'invalid_expectation',
+  ok: false
+})
+
+const unavailableAssessment = (): SubmissionAssessment => ({
+  checkedAt: new Date(0).toISOString(),
+  decision: 'retry_later',
+  evidence: [],
+  policyVersion: SUBMISSION_POLICY_VERSION,
+  publicMessage: 'Trusted reassessment is unavailable.',
+  reasonCode: 'publication_unavailable'
+})
+
+/** Read a caller-provided clock without allowing exceptions or invalid dates to authorize. */
+const safeClock = (clock: (() => Date) | undefined): Date | null => {
+  try {
+    const value = clock?.() ?? new Date()
+    return value instanceof Date && Number.isFinite(value.getTime()) ? value : null
+  } catch {
+    return null
+  }
+}
+
+const isFreshTimestamp = (value: string, nowMs: number): boolean => {
+  const timestamp = Date.parse(value)
+  return (
+    Number.isFinite(timestamp) && timestamp <= nowMs && nowMs - timestamp < WEB_RISK_FRESHNESS_MS
+  )
+}
+
+const hasFreshSafeAssessmentEvidence = (
+  assessment: SubmissionAssessment,
+  includesOptionalResource: boolean,
+  nowMs: number
+): boolean => {
+  if (
+    assessment.decision !== 'auto_publish' ||
+    assessment.reasonCode !== 'passed' ||
+    assessment.policyVersion !== SUBMISSION_POLICY_VERSION ||
+    !isFreshTimestamp(assessment.checkedAt, nowMs)
+  ) {
+    return false
+  }
+
+  const requiredResources: readonly ('homepage' | 'llms' | 'llms_full')[] = includesOptionalResource
+    ? ['homepage', 'llms', 'llms_full']
+    : ['homepage', 'llms']
+  return requiredResources.every(resource =>
+    assessment.evidence.some(
+      entry =>
+        entry.check === 'resource' &&
+        entry.resource === resource &&
+        entry.decision === 'auto_publish' &&
+        entry.reasonCode === 'passed' &&
+        entry.details?.providerStatus === 'safe' &&
+        typeof entry.details.checkedAt === 'string' &&
+        isFreshTimestamp(entry.details.checkedAt, nowMs)
+    )
+  )
+}
+
+/**
+ * Verify a signed assessment against the exact current PR head and MDX bytes.
+ */
+export function verifyMergeAttestation(
+  input: MergeAttestationVerificationInput
+): AssessmentAttestationVerificationResult {
+  try {
+    if (
+      !(input.addedMdxBytes instanceof Uint8Array) ||
+      input.addedMdxBytes.byteLength === 0 ||
+      input.addedMdxBytes.byteLength > MAX_MDX_BYTES
+    ) {
+      return invalidAttestation()
+    }
+    const content = new TextDecoder('utf-8', { fatal: true }).decode(input.addedMdxBytes)
+    const frontmatter = parseSubmissionFrontmatter(content)
+    const expected = {
+      headSha: input.currentHeadSha,
+      llmsUrl: frontmatter.llmsUrl,
+      mdxContentSha256: createHash('sha256').update(input.addedMdxBytes).digest('hex'),
+      mdxPath: input.addedMdxPath,
+      policyVersion: SUBMISSION_POLICY_VERSION,
+      prNumber: input.prNumber,
+      repository: input.repository,
+      website: frontmatter.website
+    }
+    return verifyAssessmentAttestation({
+      body: input.body,
+      expected: frontmatter.llmsFullUrl
+        ? { ...expected, llmsFullUrl: frontmatter.llmsFullUrl }
+        : expected,
+      now: input.now,
+      secret: input.secret
+    })
+  } catch {
+    return invalidAttestation()
+  }
+}
+
+/**
+ * Derive merge authorization only from verified provenance and fresh trusted evidence.
+ */
+export function deriveMergeAuthorization(input: MergeAuthorizationInput): MergeAuthorization {
+  const now = safeClock(input.now)
+  if (!now) return { authorized: false, reason: 'Trusted assessment clock is unavailable.' }
+  if (!input.attestation.ok) {
+    return { authorized: false, reason: 'A valid signed assessment is required.' }
+  }
+
+  const payload = input.attestation.payload
+  const nowMs = now.getTime()
+  if (
+    payload.decision !== 'auto_publish' ||
+    payload.policyVersion !== SUBMISSION_POLICY_VERSION ||
+    !isFreshTimestamp(payload.webRiskCheckedAt, nowMs) ||
+    nowMs < Date.parse(payload.issuedAt) ||
+    nowMs >= Date.parse(payload.expiresAt)
+  ) {
+    return { authorized: false, reason: 'The signed assessment is no longer fresh.' }
+  }
+  if (input.hasManualReviewLabel) {
+    return { authorized: false, reason: 'Manual review is required.' }
+  }
+  if (input.baseDuplicateStatus !== 'unique' || input.openPullRequestDuplicateStatus !== 'unique') {
+    return { authorized: false, reason: 'Unique publication could not be confirmed.' }
+  }
+  if (!hasFreshSafeAssessmentEvidence(input.freshAssessment, Boolean(payload.llmsFullUrl), nowMs)) {
+    return {
+      authorized: false,
+      reason: 'Fresh trusted reassessment did not authorize publication.'
+    }
+  }
+  if (!input.requiredChecksPassed) {
+    return { authorized: false, reason: 'PR Review has not succeeded for the exact head.' }
+  }
+  return { authorized: true, reason: 'Signed exact-head assessment passed.' }
+}
+
+/**
+ * Reconfirm the exact head and required check after authorization and immediately before merge.
+ */
+export function deriveExactHeadMergeDecision(input: {
+  readonly authorization: MergeAuthorization
+  readonly currentHeadSha: string
+  readonly expectedHeadSha: string
+  readonly requiredChecksPassed: boolean
+}): MergeAuthorization {
+  if (!input.authorization.authorized) return input.authorization
+  if (input.currentHeadSha !== input.expectedHeadSha) {
+    return { authorized: false, reason: 'The pull request head changed before merge.' }
+  }
+  if (!input.requiredChecksPassed) {
+    return { authorized: false, reason: 'PR Review changed before merge.' }
+  }
+  return input.authorization
+}
+
 /**
  * Build the classifier input from GitHub pull request API payloads.
  */
@@ -296,8 +529,26 @@ export function buildClassifierContext(input: {
  * Parse submission frontmatter from a PR-added MDX file.
  */
 export function parseSubmissionFrontmatter(content: string): SubmissionFrontmatter {
+  if (
+    Buffer.byteLength(content, 'utf8') === 0 ||
+    Buffer.byteLength(content, 'utf8') > MAX_MDX_BYTES
+  ) {
+    throw new Error('Submission MDX is empty or too large.')
+  }
   const parsed = matter(content)
   const data = ensureRecord(parsed.data)
+  const allowedKeys = new Set([
+    'category',
+    'description',
+    'llmsFullUrl',
+    'llmsUrl',
+    'name',
+    'publishedAt',
+    'website'
+  ])
+  if (Object.keys(data).some(key => !allowedKeys.has(key))) {
+    throw new Error('Submission frontmatter contains an unsupported field.')
+  }
   const frontmatter: SubmissionFrontmatter = {
     category: readRequiredString(data, 'category'),
     description: readRequiredString(data, 'description'),
@@ -407,6 +658,7 @@ export function deriveWouldMergeDecision(input: {
  * Determine whether the local operator should attempt a merge.
  */
 export function deriveMergeAction(input: {
+  authorization?: MergeAuthorization
   desiredLabels: string[]
   dryRun: boolean
   wouldMerge: boolean
@@ -433,10 +685,21 @@ export function deriveMergeAction(input: {
     }
   }
 
+  if (input.authorization?.authorized) {
+    return {
+      attempted: !input.dryRun,
+      mode: input.dryRun ? 'dry-run' : 'applied',
+      reason: input.authorization.reason,
+      status: 'planned'
+    }
+  }
+
   return {
     attempted: false,
     mode: input.dryRun ? 'dry-run' : 'applied',
-    reason: 'Automatic merge is disabled until signed attestation verification is available.',
+    reason:
+      input.authorization?.reason ??
+      'Automatic merge is disabled until signed attestation verification is available.',
     status: 'skipped'
   }
 }
@@ -499,6 +762,14 @@ export async function assessSubmissionGuidelines(input: {
   inspectResource?: PublicationAssessmentDependencies['inspectResource']
   now?: () => Date
 }): Promise<GuidelineAssessment> {
+  return toGuidelineAssessment(await assessSubmission(input))
+}
+
+const assessSubmission = async (input: {
+  frontmatter: SubmissionFrontmatter
+  inspectResource?: PublicationAssessmentDependencies['inspectResource']
+  now?: () => Date
+}): Promise<SubmissionAssessment> => {
   const fields: SubmissionFields = {
     category: input.frontmatter.category,
     description: input.frontmatter.description,
@@ -515,7 +786,10 @@ export async function assessSubmissionGuidelines(input: {
     inspectResource: input.inspectResource ?? createReviewInspector().inspect
   }
   if (input.now) dependencies.now = input.now
-  const assessment = await assessPublicationFields(fields, dependencies)
+  return assessPublicationFields(fields, dependencies)
+}
+
+const toGuidelineAssessment = (assessment: SubmissionAssessment): GuidelineAssessment => {
   const guidelineStatus: GuidelineStatus =
     assessment.decision === 'auto_publish'
       ? 'pass'
@@ -530,6 +804,129 @@ export async function assessSubmissionGuidelines(input: {
         : [assessment.publicMessage],
     guidelineStatus,
     policyEligible: assessment.decision === 'auto_publish'
+  }
+}
+
+interface NormalizedDuplicateFields {
+  readonly llmsUrl?: string
+  readonly website?: string
+}
+
+const normalizeDuplicateFields = (
+  frontmatter: SubmissionFrontmatter
+): NormalizedDuplicateFields | null => {
+  const website = validateSubmissionUrl(frontmatter.website)
+  const llmsUrl = validateSubmissionUrl(frontmatter.llmsUrl)
+  if (!website.ok || !llmsUrl.ok) return null
+  return { llmsUrl: llmsUrl.normalizedUrl, website: website.normalizedUrl }
+}
+
+const parseDuplicateFields = (content: string): NormalizedDuplicateFields | null => {
+  try {
+    if (
+      Buffer.byteLength(content, 'utf8') === 0 ||
+      Buffer.byteLength(content, 'utf8') > MAX_MDX_BYTES
+    ) {
+      return null
+    }
+    const data = ensureRecord(matter(content).data)
+    const website = normalizeExistingDuplicateUrl(readRequiredString(data, 'website'))
+    const llmsUrl = normalizeExistingDuplicateUrl(readRequiredString(data, 'llmsUrl'))
+    if (!website && !llmsUrl) return null
+    return {
+      ...(llmsUrl ? { llmsUrl } : {}),
+      ...(website ? { website } : {})
+    }
+  } catch {
+    return null
+  }
+}
+
+const normalizeExistingDuplicateUrl = (value: string): string | null => {
+  const direct = validateSubmissionUrl(value)
+  if (direct.ok) return direct.normalizedUrl
+  try {
+    const url = new URL(value)
+    if (url.protocol !== 'http:') return null
+    url.protocol = 'https:'
+    const upgraded = validateSubmissionUrl(url.toString())
+    return upgraded.ok ? upgraded.normalizedUrl : null
+  } catch {
+    return null
+  }
+}
+
+const isDuplicate = (
+  candidate: NormalizedDuplicateFields,
+  existing: NormalizedDuplicateFields
+): boolean =>
+  Boolean(
+    (candidate.website && existing.website && candidate.website === existing.website) ||
+      (candidate.llmsUrl && existing.llmsUrl && candidate.llmsUrl === existing.llmsUrl)
+  )
+
+const inspectBaseDuplicate = async (
+  candidate: NormalizedDuplicateFields
+): Promise<DuplicateStatus> => {
+  try {
+    const paths = await glob(`${WEBSITE_PATH_PREFIX}*.mdx`, { nodir: true })
+    if (paths.length === 0) return 'unavailable'
+    for (const path of paths) {
+      const content = await readFile(path, 'utf8')
+      const normalized = parseDuplicateFields(content)
+      if (!normalized) return 'unavailable'
+      if (isDuplicate(candidate, normalized)) return 'duplicate'
+    }
+    return 'unique'
+  } catch {
+    return 'unavailable'
+  }
+}
+
+const isOpenPullRequestWebsiteFile = (file: GitHubPullRequestFile): boolean =>
+  (file.status === 'added' || file.status === 'modified' || file.status === 'renamed') &&
+  file.filename.startsWith(WEBSITE_PATH_PREFIX) &&
+  file.filename.endsWith('.mdx')
+
+const inspectOpenPullRequestDuplicate = async (input: {
+  candidate: NormalizedDuplicateFields
+  currentPrNumber: number
+  repo: string
+}): Promise<DuplicateStatus> => {
+  try {
+    const pullRequests = await paginateGhApi<GitHubPullRequestListItem>(
+      `repos/${input.repo}/pulls?state=open`
+    )
+    if (pullRequests.length > MAX_OPEN_PULL_REQUESTS) return 'unavailable'
+    let fileCount = 0
+    for (const pullRequest of pullRequests) {
+      if (pullRequest.number === input.currentPrNumber) continue
+      const headSha = pullRequest.head?.sha
+      const headRepository = pullRequest.head?.repo?.full_name
+      if (
+        !headSha ||
+        !/^[a-f0-9]{40}$/.test(headSha) ||
+        !headRepository ||
+        !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(headRepository)
+      ) {
+        return 'unavailable'
+      }
+      const files = await paginateGhApi<GitHubPullRequestFile>(
+        `repos/${input.repo}/pulls/${pullRequest.number}/files`
+      )
+      fileCount += files.length
+      if (fileCount > MAX_OPEN_PULL_REQUEST_FILES) return 'unavailable'
+      for (const file of files) {
+        if (!isOpenPullRequestWebsiteFile(file)) continue
+        const content = await fetchRepositoryFileContent(headRepository, file.filename, headSha)
+        const normalized = parseDuplicateFields(content)
+        if (!normalized) return 'unavailable'
+        if (isDuplicate(input.candidate, normalized)) return 'duplicate'
+      }
+    }
+    return 'unique'
+  } catch {
+    return 'unavailable'
   }
 }
 
@@ -750,17 +1147,62 @@ async function analyzePullRequest(
       repo,
       sha: details.head.sha
     })
+    const moderatedFile = moderation.files.length === 1 ? moderation.files[0] : undefined
+    const labelNames = Array.isArray(details.labels)
+      ? details.labels.flatMap(label => (typeof label?.name === 'string' ? [label.name] : []))
+      : []
+    const attestation = moderatedFile
+      ? verifyMergeAttestation({
+          addedMdxBytes: moderatedFile.bytes,
+          addedMdxPath: moderatedFile.path,
+          body: typeof details.body === 'string' ? details.body : '',
+          currentHeadSha: details.head.sha,
+          prNumber: details.number,
+          repository: repo,
+          secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+        })
+      : invalidAttestation()
+    const duplicateFields = moderatedFile
+      ? normalizeDuplicateFields(moderatedFile.frontmatter)
+      : null
+    const [baseDuplicateStatus, openPullRequestDuplicateStatus] = duplicateFields
+      ? await Promise.all([
+          inspectBaseDuplicate(duplicateFields),
+          inspectOpenPullRequestDuplicate({
+            candidate: duplicateFields,
+            currentPrNumber: details.number,
+            repo
+          })
+        ])
+      : (['unavailable', 'unavailable'] satisfies [DuplicateStatus, DuplicateStatus])
+    const authorization = deriveMergeAuthorization({
+      attestation,
+      baseDuplicateStatus,
+      freshAssessment: moderatedFile?.assessment ?? unavailableAssessment(),
+      hasManualReviewLabel:
+        !Array.isArray(details.labels) || labelNames.includes('needs:manual-review'),
+      openPullRequestDuplicateStatus,
+      requiredChecksPassed: reviewStatus === 'success'
+    })
     const decision = deriveWouldMergeDecision({
       guidelineReasons: moderation.guidelineReasons,
       guidelineStatus: moderation.guidelineStatus,
       structuralDecision
     })
-    const desiredLabels = deriveManagedLabels({
+    const policyLabels = deriveManagedLabels({
       classification,
       guidelineStatus: moderation.guidelineStatus,
       policyEligible: decision.policyEligible,
       structurallyEligible: structuralDecision.structurallyEligible
     })
+    const desiredLabels = authorization.authorized
+      ? policyLabels
+      : [
+          ...new Set([
+            ...policyLabels.filter(label => label !== 'automerge:candidate'),
+            'needs:manual-review'
+          ])
+        ]
     const labelSync = await syncManagedLabels({
       desiredLabels,
       dryRun: options.dryRun,
@@ -768,15 +1210,25 @@ async function analyzePullRequest(
       repo
     })
     const mergePlan = deriveMergeAction({
+      authorization,
       desiredLabels: labelSync.desired,
       dryRun: options.dryRun,
       wouldMerge: decision.wouldMerge,
       wouldMergeReason: decision.reason
     })
     const mergeAction = await executeMergeAction({
+      authorization,
       headSha: details.head.sha,
       mergePlan,
       prNumber: details.number,
+      revalidation:
+        moderatedFile && duplicateFields
+          ? {
+              duplicateFields,
+              file: moderatedFile,
+              freshAssessment: moderatedFile.assessment
+            }
+          : undefined,
       repo
     })
 
@@ -794,8 +1246,11 @@ async function analyzePullRequest(
       wouldMerge: decision.wouldMerge,
       wouldMergeReason: decision.reason
     }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
+  } catch {
+    const message = 'Trusted merge authorization is unavailable.'
+    if (!options.dryRun) {
+      await syncAuthorizationFailureLabels(repo, pullRequestNumber).catch(() => undefined)
+    }
 
     return {
       classification: {
@@ -928,12 +1383,40 @@ async function syncManagedLabels(input: {
 }
 
 /**
+ * Apply only the fail-closed authorization labels while preserving all other labels.
+ */
+async function syncAuthorizationFailureLabels(repo: string, prNumber: number): Promise<void> {
+  const labels = await paginateGhApi<{ name: string }>(`repos/${repo}/issues/${prNumber}/labels`)
+  const names = labels.map(label => label.name)
+  if (names.includes('automerge:candidate')) {
+    await execGh([
+      'api',
+      `repos/${repo}/issues/${prNumber}/labels/automerge%3Acandidate`,
+      '--method',
+      'DELETE'
+    ])
+  }
+  if (!names.includes('needs:manual-review')) {
+    await execGh([
+      'api',
+      `repos/${repo}/issues/${prNumber}/labels`,
+      '--method',
+      'POST',
+      '-f',
+      'labels[]=needs:manual-review'
+    ])
+  }
+}
+
+/**
  * Execute the planned merge action against GitHub.
  */
 async function executeMergeAction(input: {
+  authorization: MergeAuthorization
   headSha: string
   mergePlan: MergeAction
   prNumber: number
+  revalidation?: MergeRevalidationContext
   repo: string
 }): Promise<MergeAction> {
   if (!input.mergePlan.attempted || input.mergePlan.mode === 'dry-run') {
@@ -941,6 +1424,61 @@ async function executeMergeAction(input: {
   }
 
   try {
+    if (!input.revalidation) throw new Error('Missing trusted revalidation context.')
+    const latest = await fetchPullRequestDetails(input.repo, input.prNumber)
+    const latestLabels = Array.isArray(latest.labels)
+      ? latest.labels.flatMap(label => (typeof label?.name === 'string' ? [label.name] : []))
+      : []
+    const [baseDuplicateStatus, openPullRequestDuplicateStatus, reviewStatus] = await Promise.all([
+      inspectBaseDuplicate(input.revalidation.duplicateFields),
+      inspectOpenPullRequestDuplicate({
+        candidate: input.revalidation.duplicateFields,
+        currentPrNumber: input.prNumber,
+        repo: input.repo
+      }),
+      fetchReviewStatus(input.repo, latest.head.sha)
+    ])
+    const latestAttestation = verifyMergeAttestation({
+      addedMdxBytes: input.revalidation.file.bytes,
+      addedMdxPath: input.revalidation.file.path,
+      body: typeof latest.body === 'string' ? latest.body : '',
+      currentHeadSha: latest.head.sha,
+      prNumber: latest.number,
+      repository: input.repo,
+      secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+    })
+    const latestAuthorization = deriveMergeAuthorization({
+      attestation: latestAttestation,
+      baseDuplicateStatus,
+      freshAssessment: input.revalidation.freshAssessment,
+      hasManualReviewLabel:
+        !Array.isArray(latest.labels) || latestLabels.includes('needs:manual-review'),
+      openPullRequestDuplicateStatus,
+      requiredChecksPassed: reviewStatus === 'success'
+    })
+    const exactHeadDecision = deriveExactHeadMergeDecision({
+      authorization: latestAuthorization,
+      currentHeadSha: latest.head.sha,
+      expectedHeadSha: input.headSha,
+      requiredChecksPassed: reviewStatus === 'success'
+    })
+    if (
+      !input.authorization.authorized ||
+      !exactHeadDecision.authorized ||
+      latest.state !== 'open' ||
+      latest.draft ||
+      latest.mergeable !== true
+    ) {
+      await syncAuthorizationFailureLabels(input.repo, input.prNumber)
+      return {
+        attempted: false,
+        mode: 'applied',
+        reason: exactHeadDecision.authorized
+          ? 'Pull request state changed before merge.'
+          : exactHeadDecision.reason,
+        status: 'skipped'
+      }
+    }
     await execGh([
       'api',
       `repos/${input.repo}/pulls/${input.prNumber}/merge`,
@@ -958,13 +1496,13 @@ async function executeMergeAction(input: {
       reason: 'Merged successfully.',
       status: 'merged'
     }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
+  } catch {
+    await syncAuthorizationFailureLabels(input.repo, input.prNumber).catch(() => undefined)
 
     return {
       attempted: true,
       mode: 'applied',
-      reason: `Merge failed: ${message}`,
+      reason: 'Trusted merge failed closed.',
       status: 'failed'
     }
   }
@@ -1074,9 +1612,10 @@ async function moderatePullRequest(input: {
   files: GitHubPullRequestFile[]
   repo: string
   sha: string
-}): Promise<GuidelineAssessment> {
+}): Promise<ModerationResult> {
   if (input.classification.lane !== 'mdx-fast') {
     return {
+      files: [],
       guidelineReasons: ['Guideline checks skipped because the PR is not structurally eligible.'],
       guidelineStatus: 'skipped',
       policyEligible: false
@@ -1089,6 +1628,7 @@ async function moderatePullRequest(input: {
 
   if (mdxFiles.length === 0) {
     return {
+      files: [],
       guidelineReasons: ['No added MDX files were available for guideline review.'],
       guidelineStatus: 'warn',
       policyEligible: false
@@ -1097,11 +1637,15 @@ async function moderatePullRequest(input: {
 
   let mergedStatus: GuidelineStatus = 'pass'
   const mergedReasons = new Set<string>()
+  const moderatedFiles: ModeratedSubmissionFile[] = []
 
   for (const file of mdxFiles) {
-    const fileContent = await fetchRepositoryFileContent(input.repo, file.filename, input.sha)
+    const bytes = await fetchRepositoryFileBytes(input.repo, file.filename, input.sha)
+    const fileContent = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
     const frontmatter = parseSubmissionFrontmatter(fileContent)
-    const assessment = await assessSubmissionGuidelines({ frontmatter })
+    const fullAssessment = await assessSubmission({ frontmatter })
+    const assessment = toGuidelineAssessment(fullAssessment)
+    moderatedFiles.push({ assessment: fullAssessment, bytes, frontmatter, path: file.filename })
 
     mergedStatus = mergeGuidelineStatus(mergedStatus, assessment.guidelineStatus)
     for (const reason of assessment.guidelineReasons) {
@@ -1110,6 +1654,7 @@ async function moderatePullRequest(input: {
   }
 
   return {
+    files: moderatedFiles,
     guidelineReasons:
       mergedReasons.size > 0 ? [...mergedReasons] : ['No guideline concerns detected.'],
     guidelineStatus: mergedStatus,
@@ -1125,15 +1670,41 @@ async function fetchRepositoryFileContent(
   path: string,
   ref: string
 ): Promise<string> {
+  const bytes = await fetchRepositoryFileBytes(repo, path, ref)
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+}
+
+/**
+ * Fetch exact bounded repository file bytes for a PR head SHA.
+ */
+async function fetchRepositoryFileBytes(
+  repo: string,
+  path: string,
+  ref: string
+): Promise<Uint8Array> {
   const response = await ghApiJson<GitHubContentResponse>([
     `repos/${repo}/contents/${encodePathForGitHub(path)}?ref=${encodeURIComponent(ref)}`
   ])
 
-  if (response.encoding !== 'base64') {
-    throw new Error(`Unsupported content encoding for ${path}: ${response.encoding}`)
+  if (
+    response.encoding !== 'base64' ||
+    typeof response.content !== 'string' ||
+    response.content.length > 150_000
+  ) {
+    throw new Error('Unsupported GitHub content response.')
   }
-
-  return Buffer.from(response.content.replace(/\n/g, ''), 'base64').toString('utf8')
+  const encoded = response.content.replace(/\s/g, '')
+  if (
+    encoded.length > Math.ceil((MAX_MDX_BYTES * 4) / 3) + 4 ||
+    !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded)
+  ) {
+    throw new Error('Malformed GitHub content response.')
+  }
+  const bytes = Buffer.from(encoded, 'base64')
+  if (bytes.byteLength === 0 || bytes.byteLength > MAX_MDX_BYTES) {
+    throw new Error('GitHub content response is empty or too large.')
+  }
+  return bytes
 }
 
 /**
@@ -1429,7 +2000,7 @@ function sleep(milliseconds: number): Promise<void> {
  */
 function ensureRecord(value: unknown): Record<string, unknown> {
   if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-    return value
+    return Object.fromEntries(Object.entries(value))
   }
 
   throw new Error('Frontmatter payload is not an object.')

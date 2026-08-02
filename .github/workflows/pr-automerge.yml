@@ -3,7 +3,7 @@ name: Auto-merge MDX Entry PRs
 on:
   pull_request_target:
     branches: ['main']
-    types: [opened, reopened, synchronize, edited, ready_for_review]
+    types: [opened, reopened, synchronize, edited, labeled, unlabeled, ready_for_review]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -53,7 +53,9 @@ jobs:
       - name: Validate, label, and merge eligible PR
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          GOOGLE_WEB_RISK_API_KEY: ${{ secrets.GOOGLE_WEB_RISK_API_KEY }}
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+          SUBMISSION_ASSESSMENT_SIGNING_SECRET: ${{ secrets.SUBMISSION_ASSESSMENT_SIGNING_SECRET }}
         run: |
           if [ -n "$PR_NUMBER" ]; then
             pnpm exec tsx scripts/pr-backfill-dry-run.ts --pr "$PR_NUMBER"
