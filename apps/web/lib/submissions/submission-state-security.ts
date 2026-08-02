@@ -18,7 +18,8 @@ export const FINAL_ASSESSMENT_SCRIPT = `
 local raw = redis.call('GET', KEYS[1])
 if not raw then return 'missing' end
 local record = cjson.decode(raw)
-if record.state ~= 'support_required' then return 'state_mismatch' end
+if record.state ~= 'support_required' and record.state ~= 'publish_failed' then return 'state_mismatch' end
+if record.state == 'publish_failed' and record.resultCode ~= 'publication_unavailable' then return 'state_mismatch' end
 if record.userId ~= ARGV[1] or record.fieldsHash ~= ARGV[2] then return 'binding_mismatch' end
 if record.expiresAt <= ARGV[3] then return 'expired' end
 local ttl = redis.call('PTTL', KEYS[1])
@@ -59,12 +60,12 @@ return 'allowed'
 const MINIMUM_SECRET_BYTES = 32
 const TOKEN_PART = /^[A-Za-z0-9_-]+$/
 const STATE_TRANSITIONS: Readonly<Record<SubmissionState, readonly SubmissionState[]>> = {
-  auto_publish_pending: ['publishing'],
+  auto_publish_pending: ['publishing', 'publish_failed'],
   draft: ['preflight_rejected', 'support_required'],
   final_assessing: ['rejected', 'retry_later', 'manual_review', 'auto_publish_pending'],
-  manual_review: [],
+  manual_review: ['publishing', 'publish_failed'],
   preflight_rejected: [],
-  publish_failed: [],
+  publish_failed: ['final_assessing'],
   published: [],
   publishing: ['published', 'publish_failed'],
   rejected: [],

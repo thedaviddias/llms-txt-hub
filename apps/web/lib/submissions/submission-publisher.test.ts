@@ -1,6 +1,14 @@
 import { createHash } from 'node:crypto'
 
+import { logger } from '@thedaviddias/logging'
+
 import { publishSubmission } from './submission-publisher'
+
+jest.mock('@thedaviddias/logging', () => ({
+  logger: { error: jest.fn(), info: jest.fn(), warn: jest.fn() }
+}))
+
+const mockLoggerInfo = jest.mocked(logger.info)
 
 const SECRET = 's'.repeat(32)
 const NOW = new Date('2026-08-02T12:04:00.000Z')
@@ -55,12 +63,14 @@ const makeGithub = () => ({
 })
 
 const makeState = () => ({
-  markComplete: jest.fn().mockResolvedValue(true),
+  markFailed: jest.fn().mockResolvedValue(true),
   persistBranch: jest.fn().mockResolvedValue(true),
   persistGithub: jest.fn().mockResolvedValue(true)
 })
 
 describe('publishSubmission', () => {
+  beforeEach(() => mockLoggerInfo.mockClear())
+
   it('creates a deterministic focused branch/file/PR and persists PR facts before signing', async () => {
     const github = makeGithub()
     const state = makeState()
@@ -97,6 +107,14 @@ describe('publishSubmission', () => {
     expect(signedBody).toContain('<!-- llms-hub-assessment:v1')
     expect(signedBody).toContain('<!-- llms-hub-submission:sub_123 -->')
     expect(github.addLabels).not.toHaveBeenCalled()
+    expect(state.markFailed).not.toHaveBeenCalled()
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Submission publication completed',
+      expect.objectContaining({
+        data: expect.objectContaining({ outcome: 'automatic', reasonCode: 'auto_publish' })
+      })
+    )
+    expect(JSON.stringify(mockLoggerInfo.mock.calls)).not.toContain('example.com')
   })
 
   it.each([
@@ -216,21 +234,39 @@ describe('publishSubmission', () => {
           state
         }
       )
-    ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
+    ).resolves.toEqual({
+      code: 'publication_unavailable',
+      ok: false,
+      recovery: 'fresh_preflight'
+    })
     expect(github.getDefaultBranch).not.toHaveBeenCalled()
   })
 
   it('reconciles a retry after the PR exists without creating a second PR', async () => {
     const github = makeGithub()
     const state = makeState()
-    state.markComplete.mockResolvedValueOnce(false).mockResolvedValueOnce(true)
+    github.updatePullRequestBody.mockRejectedValueOnce(new Error('provider unavailable'))
 
     await expect(
       publishSubmission(
         { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
         { github, now: () => NOW, secret: SECRET, state }
       )
-    ).resolves.toEqual({ code: 'publication_unavailable', ok: false })
+    ).resolves.toEqual({
+      code: 'publication_unavailable',
+      ok: false,
+      recovery: 'same_submission'
+    })
+    expect(state.markFailed).toHaveBeenCalledWith('sub_123')
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Submission publication completed',
+      expect.objectContaining({
+        data: expect.objectContaining({
+          outcome: 'retry_later',
+          reasonCode: 'publication_unavailable'
+        })
+      })
+    )
 
     const content = github.createFile.mock.calls[0]?.[0].content
     github.getBranchHead.mockResolvedValue(HEAD)
@@ -246,6 +282,7 @@ describe('publishSubmission', () => {
     github.createBranch.mockClear()
     github.createFile.mockClear()
     github.createPullRequest.mockClear()
+    state.markFailed.mockClear()
 
     await expect(
       publishSubmission(
@@ -256,5 +293,6 @@ describe('publishSubmission', () => {
     expect(github.createBranch).not.toHaveBeenCalled()
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
+    expect(state.markFailed).not.toHaveBeenCalled()
   })
 })

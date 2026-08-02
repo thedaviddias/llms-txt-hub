@@ -19,7 +19,6 @@ const GITHUB_TIMEOUT_MS = 10_000
 const ATTESTATION_LIFETIME_MS = 10 * 60 * 1000
 const SHA1 = /^[a-f0-9]{40}$/
 const SUBMISSION_ID = /^[A-Za-z0-9_-]{1,128}$/
-
 /** Rollout modes for trusted automatic publication. */
 export type SubmissionAutopublishMode = 'disabled' | 'enabled' | 'shadow'
 
@@ -34,7 +33,6 @@ interface StoredFile {
   readonly content: string
   readonly sha: string
 }
-
 /** Narrow GitHub operations required for idempotent publication. */
 export interface SubmissionPublisherGithub {
   readonly addLabels: (prNumber: number, labels: readonly string[]) => Promise<void>
@@ -57,7 +55,6 @@ export interface SubmissionPublisherGithub {
   readonly listPullRequests: (branch: string) => Promise<readonly PullRequestSnapshot[]>
   readonly updatePullRequestBody: (prNumber: number, body: string) => Promise<void>
 }
-
 /** Injectable boundaries used by deterministic publisher tests. */
 export interface SubmissionPublisherDependencies {
   readonly github: SubmissionPublisherGithub
@@ -65,11 +62,14 @@ export interface SubmissionPublisherDependencies {
   readonly secret: string
   readonly state: SubmissionPublicationState
 }
-
 /** Result of idempotent GitHub publication. */
 export type SubmissionPublisherResult =
   | { readonly ok: true; readonly outcome: 'automatic' | 'manual'; readonly prUrl: string }
-  | { readonly code: 'publication_unavailable'; readonly ok: false }
+  | {
+      readonly code: 'publication_unavailable'
+      readonly ok: false
+      readonly recovery: 'fresh_preflight' | 'same_submission'
+    }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -251,7 +251,6 @@ const defaults = (): SubmissionPublisherDependencies => ({
   secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? '',
   state: submissionPublicationState
 })
-
 const slugify = (name: string): string =>
   name
     .toLowerCase()
@@ -352,6 +351,27 @@ export async function publishSubmission(
 ): Promise<SubmissionPublisherResult> {
   const startedAt = Date.now()
   const outcome = publicationOutcome(input.assessment, input.mode)
+  let publicationStarted = false
+  let logOutcome: 'automatic' | 'manual' | 'retry_later' = 'retry_later'
+  let reasonCode = 'publication_unavailable'
+  const unavailable = async (): Promise<SubmissionPublisherResult> => {
+    if (!publicationStarted) {
+      return { code: 'publication_unavailable', ok: false, recovery: 'fresh_preflight' }
+    }
+    let stateUpdated = false
+    try {
+      stateUpdated = await dependencies.state.markFailed(input.submissionId)
+    } catch {
+      stateUpdated = false
+    }
+    if (!stateUpdated) {
+      logger.error('Submission publication state transition unavailable', {
+        data: { reasonCode: 'publication_unavailable' },
+        tags: { operation: 'publish_state', type: 'submission' }
+      })
+    }
+    return { code: 'publication_unavailable', ok: false, recovery: 'same_submission' }
+  }
   try {
     if (
       !SUBMISSION_ID.test(input.submissionId) ||
@@ -360,10 +380,10 @@ export async function publishSubmission(
         input.assessment.decision !== 'manual_review') ||
       (outcome === 'automatic' && Buffer.byteLength(dependencies.secret, 'utf8') < 32)
     ) {
-      return { code: 'publication_unavailable', ok: false }
+      return unavailable()
     }
     const rendered = renderMdx(input.fields)
-    if (!rendered) return { code: 'publication_unavailable', ok: false }
+    if (!rendered) return unavailable()
     const branch = `submit/${input.submissionId}`
     const resultCode = publicationResultCode(input.assessment, input.mode)
     if (
@@ -374,8 +394,9 @@ export async function publishSubmission(
         submissionId: input.submissionId
       }))
     ) {
-      return { code: 'publication_unavailable', ok: false }
+      return unavailable()
     }
+    publicationStarted = true
 
     const base = await dependencies.github.getDefaultBranch()
     let headSha = await dependencies.github.getBranchHead(branch)
@@ -385,7 +406,7 @@ export async function publishSubmission(
     }
     const existingFile = await dependencies.github.getFile(rendered.path, branch)
     if (existingFile && existingFile.content !== rendered.content) {
-      return { code: 'publication_unavailable', ok: false }
+      return unavailable()
     }
     if (!existingFile) {
       headSha = await dependencies.github.createFile({
@@ -399,13 +420,13 @@ export async function publishSubmission(
     const body = pullRequestBody(input.fields, input.assessment, input.submissionId, input.mode)
     const marker = `<!-- llms-hub-submission:${input.submissionId} -->`
     const existingPullRequests = await dependencies.github.listPullRequests(branch)
-    if (existingPullRequests.length > 1) return { code: 'publication_unavailable', ok: false }
+    if (existingPullRequests.length > 1) return unavailable()
     let pullRequest = existingPullRequests[0]
     if (
       pullRequest &&
       (pullRequest.body.split(marker).length !== 2 || pullRequest.headSha !== headSha)
     ) {
-      return { code: 'publication_unavailable', ok: false }
+      return unavailable()
     }
     pullRequest ??= await dependencies.github.createPullRequest({
       base: base.branch,
@@ -414,7 +435,7 @@ export async function publishSubmission(
       title: `feat(community): add ${input.fields.name} to llms.txt hub`
     })
     if (pullRequest.body.split(marker).length !== 2 || pullRequest.headSha !== headSha) {
-      return { code: 'publication_unavailable', ok: false }
+      return unavailable()
     }
     if (
       !(await dependencies.state.persistGithub({
@@ -424,7 +445,7 @@ export async function publishSubmission(
         submissionId: input.submissionId
       }))
     ) {
-      return { code: 'publication_unavailable', ok: false }
+      return unavailable()
     }
 
     if (outcome === 'manual') {
@@ -433,7 +454,7 @@ export async function publishSubmission(
       const checkedAt = webRiskCheckedAt(input.assessment)
       const now = dependencies.now()
       if (!checkedAt || !Number.isFinite(now.getTime())) {
-        return { code: 'publication_unavailable', ok: false }
+        return unavailable()
       }
       const expiry = Math.min(
         now.getTime() + ATTESTATION_LIFETIME_MS,
@@ -458,21 +479,20 @@ export async function publishSubmission(
         },
         dependencies.secret
       )
-      if (!signed.ok) return { code: 'publication_unavailable', ok: false }
+      if (!signed.ok) return unavailable()
       await dependencies.github.updatePullRequestBody(
         pullRequest.number,
         `${body}\n${signed.block}`
       )
     }
-    if (!(await dependencies.state.markComplete(input.submissionId))) {
-      return { code: 'publication_unavailable', ok: false }
-    }
+    logOutcome = outcome
+    reasonCode = resultCode
     return { ok: true, outcome, prUrl: pullRequest.url }
   } catch {
-    return { code: 'publication_unavailable', ok: false }
+    return unavailable()
   } finally {
     logger.info('Submission publication completed', {
-      data: { durationMs: Date.now() - startedAt, outcome },
+      data: { durationMs: Date.now() - startedAt, outcome: logOutcome, reasonCode },
       tags: { operation: 'publish', type: 'submission' }
     })
   }

@@ -1,4 +1,5 @@
 import { auth } from '@thedaviddias/auth'
+import { logger } from '@thedaviddias/logging'
 import type { SubmissionAssessment, SubmissionDecision } from '@thedaviddias/submission-trust/types'
 import { headers } from 'next/headers'
 
@@ -13,6 +14,9 @@ import {
 import { preflightSubmission } from './preflight-submission'
 
 jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
+jest.mock('@thedaviddias/logging', () => ({
+  logger: { error: jest.fn(), info: jest.fn(), warn: jest.fn() }
+}))
 jest.mock('next/headers', () => ({ headers: jest.fn() }))
 jest.mock('@/lib/csrf-protection', () => ({ getStoredCSRFToken: jest.fn() }))
 jest.mock('@/lib/submissions/submission-assessment', () => ({ assessSubmission: jest.fn() }))
@@ -28,6 +32,7 @@ jest.mock('@/lib/submissions/submission-state', () => ({
 }))
 
 const mockAuth = jest.mocked(auth)
+const mockLoggerInfo = jest.mocked(logger.info)
 const mockHeaders = jest.mocked(headers)
 const mockCsrf = jest.mocked(getStoredCSRFToken)
 const mockAssess = jest.mocked(assessSubmission)
@@ -72,6 +77,7 @@ const assessment = (decision: SubmissionDecision): SubmissionAssessment => {
 
 describe('preflightSubmission', () => {
   beforeEach(() => {
+    mockLoggerInfo.mockClear()
     mockAuth.mockResolvedValue({
       user: {
         email: 'person@example.com',
@@ -121,6 +127,12 @@ describe('preflightSubmission', () => {
       website: 'https://example.com/'
     })
     expect(mockContinuation).toHaveBeenCalledWith(expect.objectContaining({ userId: 'user_123' }))
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Submission preflight completed',
+      expect.objectContaining({
+        data: expect.objectContaining({ outcome: 'support_required', reasonCode: 'passed' })
+      })
+    )
   })
 
   it.each([
@@ -132,6 +144,12 @@ describe('preflightSubmission', () => {
     await expect(preflightSubmission(form())).resolves.toMatchObject({ status })
     expect(mockLocks).not.toHaveBeenCalled()
     expect(mockContinuation).not.toHaveBeenCalled()
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Submission preflight completed',
+      expect.objectContaining({
+        data: expect.objectContaining({ outcome: status })
+      })
+    )
   })
 
   it('allows a security-cleared manual assessment to reach support', async () => {
@@ -151,6 +169,16 @@ describe('preflightSubmission', () => {
     expect(mockRateLimits).not.toHaveBeenCalled()
     expect(mockDuplicates).not.toHaveBeenCalled()
     expect(mockAssess).not.toHaveBeenCalled()
+    expect(mockLoggerInfo).toHaveBeenLastCalledWith(
+      'Submission preflight completed',
+      expect.objectContaining({
+        data: expect.objectContaining({ outcome: 'rejected', reasonCode: 'csrf_invalid' })
+      })
+    )
+    const logged = JSON.stringify(mockLoggerInfo.mock.calls)
+    expect(logged).not.toContain('wrong-token')
+    expect(logged).not.toContain('203.0.113.20')
+    expect(logged).not.toContain('opaque.continuation.signature')
   })
 
   it('fails closed before assessment when identity, CSRF, limits, or duplicates fail', async () => {

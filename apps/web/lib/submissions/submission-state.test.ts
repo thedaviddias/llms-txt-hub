@@ -36,8 +36,12 @@ describe('submission state', () => {
     ['final_assessing', 'manual_review'],
     ['final_assessing', 'auto_publish_pending'],
     ['auto_publish_pending', 'publishing'],
+    ['auto_publish_pending', 'publish_failed'],
+    ['manual_review', 'publishing'],
+    ['manual_review', 'publish_failed'],
     ['publishing', 'published'],
-    ['publishing', 'publish_failed']
+    ['publishing', 'publish_failed'],
+    ['publish_failed', 'final_assessing']
   ])('allows %s -> %s', (from, to) => {
     expect(isAllowedSubmissionTransition(from, to)).toBe(true)
   })
@@ -47,8 +51,6 @@ describe('submission state', () => {
     ['support_required', 'published'],
     ['final_assessing', 'support_required'],
     ['auto_publish_pending', 'published'],
-    ['auto_publish_pending', 'publish_failed'],
-    ['manual_review', 'publishing'],
     ['published', 'draft'],
     ['publish_failed', 'publishing']
   ])('rejects %s -> %s', (from, to) => {
@@ -108,6 +110,35 @@ describe('submission state', () => {
     expect(redis.eval).toHaveBeenCalledTimes(2)
     expect(redis.eval.mock.calls[0]?.[0]).toContain('support_required')
     expect(redis.eval.mock.calls[0]?.[0]).toContain('final_assessing')
+  })
+
+  it('allows same-ID recovery only from publish_failed with unchanged user and fields', async () => {
+    const redis = makeRedis()
+    redis.setNx.mockResolvedValue(true)
+    redis.eval.mockResolvedValue('transitioned')
+    const created = await createSubmissionContinuation(
+      { fields: FIELDS, submissionId: 'sub_123', userId: 'user_123' },
+      { now: () => NOW, redis, secret: SECRET }
+    )
+    expect(created.ok).toBe(true)
+    if (!created.ok) return
+    redis.get.mockResolvedValue({
+      ...created.record,
+      resultCode: 'publication_unavailable',
+      state: 'publish_failed'
+    })
+
+    await expect(
+      consumeSubmissionContinuation(
+        {
+          continuationToken: created.continuationToken,
+          fields: FIELDS,
+          userId: 'user_123'
+        },
+        { now: () => NOW, redis, secret: SECRET }
+      )
+    ).resolves.toEqual({ ok: true, submissionId: 'sub_123' })
+    expect(redis.eval.mock.calls[0]?.[0]).toContain("record.state ~= 'publish_failed'")
   })
 
   it.each([
