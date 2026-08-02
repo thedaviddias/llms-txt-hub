@@ -4,6 +4,9 @@ on:
   pull_request_target:
     branches: ['main']
     types: [opened, reopened, synchronize, edited, labeled, unlabeled, ready_for_review]
+  workflow_run:
+    workflows: ['PR Review']
+    types: [completed]
   workflow_dispatch:
     inputs:
       pr_number:
@@ -20,47 +23,55 @@ jobs:
     name: Auto-merge
     if: github.repository_owner == 'thedaviddias'
     permissions:
+      actions: read
       contents: write
       issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Resolve PR number
-        id: context
-        env:
-          DISPATCH_PR_NUMBER: ${{ inputs.pr_number }}
-          EVENT_PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: |
-          pr_number="${EVENT_PR_NUMBER:-${DISPATCH_PR_NUMBER:-}}"
-
-          if [ -n "$pr_number" ]; then
-            case "$pr_number" in
-              *[!0-9]*)
-                echo "Invalid pull request number: $pr_number" >&2
-                exit 1
-                ;;
-            esac
-          fi
-
-          echo "pr_number=$pr_number" >> "$GITHUB_OUTPUT"
-
       - name: Checkout trusted base
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          ref: main
+
+      - name: Capture trusted base SHA
+        id: base
+        run: |
+          trusted_base_sha="$(git rev-parse HEAD)"
+          if [[ ! "$trusted_base_sha" =~ ^[0-9a-f]{40}$ ]]; then
+            exit 1
+          fi
+          echo "sha=$trusted_base_sha" >> "$GITHUB_OUTPUT"
 
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Resolve trusted event context
+        id: context
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_PATH: ${{ github.event_path }}
+        run: |
+          pnpm exec tsx scripts/pr-backfill-dry-run.ts \
+            --derive-event-context "$EVENT_PATH" "$EVENT_NAME" >> "$GITHUB_OUTPUT"
+
       - name: Validate, label, and merge eligible PR
+        if: steps.context.outputs.should_process == 'true'
         env:
           GH_TOKEN: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           GOOGLE_WEB_RISK_API_KEY: ${{ secrets.GOOGLE_WEB_RISK_API_KEY }}
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
+          SCAN_ALL: ${{ steps.context.outputs.scan_all }}
           SUBMISSION_ASSESSMENT_SIGNING_SECRET: ${{ secrets.SUBMISSION_ASSESSMENT_SIGNING_SECRET }}
+          TRUSTED_BASE_SHA: ${{ steps.base.outputs.sha }}
         run: |
           if [ -n "$PR_NUMBER" ]; then
             pnpm exec tsx scripts/pr-backfill-dry-run.ts --pr "$PR_NUMBER"
-          else
+          elif [ "$SCAN_ALL" = 'true' ]; then
             pnpm exec tsx scripts/pr-backfill-dry-run.ts --concurrency 4
+          else
+            exit 1
           fi
 
       - name: Report failed merge
@@ -69,7 +80,7 @@ jobs:
         env:
           PR_NUMBER: ${{ steps.context.outputs.pr_number }}
         with:
-          github-token: ${{ secrets.PAT_TOKEN }}
+          github-token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const prNumber = Number(process.env.PR_NUMBER)
 
