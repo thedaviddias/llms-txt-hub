@@ -63,6 +63,7 @@ describe('trusted submission analytics lifecycle', () => {
   it('tracks a current preflight once and never sends the submitted URL', async () => {
     await reachSubmissionDetails()
     jest.mocked(preflightSubmission).mockResolvedValueOnce({
+      analytics: { reasonCategory: 'passed', webRiskAvailable: true },
       continuationToken: 'opaque-token',
       status: 'support_required',
       submissionId: 'sub_123'
@@ -74,6 +75,7 @@ describe('trusted submission analytics lifecycle', () => {
     expect(mockStartPreflight).toHaveBeenCalledTimes(1)
     expect(mockFinishPreflight).toHaveBeenCalledWith(
       {
+        analytics: { reasonCategory: 'passed', webRiskAvailable: true },
         continuationToken: 'opaque-token',
         status: 'support_required',
         submissionId: 'sub_123'
@@ -96,6 +98,7 @@ describe('trusted submission analytics lifecycle', () => {
 
     await act(async () => {
       resolvePreflight({
+        analytics: { reasonCategory: 'passed', webRiskAvailable: true },
         continuationToken: 'stale-token',
         status: 'support_required',
         submissionId: 'stale-submission'
@@ -140,6 +143,11 @@ describe('trusted submission analytics lifecycle', () => {
   it('tracks a current PR result using only aggregate publication facts', async () => {
     const user = await reachSubmissionSupport()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
+      analytics: {
+        publicationAttempted: true,
+        reasonCategory: 'passed',
+        webRiskAvailable: true
+      },
       outcome: 'automatic',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
       success: true
@@ -150,6 +158,11 @@ describe('trusted submission analytics lifecycle', () => {
     expect(mockStartFinal).toHaveBeenCalledTimes(1)
     expect(mockFinishFinal).toHaveBeenCalledWith(
       {
+        analytics: {
+          publicationAttempted: true,
+          reasonCategory: 'passed',
+          webRiskAvailable: true
+        },
         outcome: 'automatic',
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
         success: true
@@ -166,6 +179,7 @@ describe('trusted submission analytics lifecycle', () => {
     act(() => {
       view.result.current.finishPreflight(
         {
+          analytics: { reasonCategory: 'passed', webRiskAvailable: true },
           continuationToken: 'opaque-token',
           status: 'support_required',
           submissionId: 'sub_123'
@@ -186,5 +200,103 @@ describe('trusted submission analytics lifecycle', () => {
       source: 'preflight'
     })
     expect(JSON.stringify(track.mock.calls)).not.toMatch(/opaque-token|sub_123/)
+  })
+
+  it.each([
+    ['editorial rejection after a safe check', 'editorial', true, 'available'],
+    ['hidden reputation uncertainty', 'editorial', false, 'unavailable']
+  ] as const)('tracks %s from server metadata', (_label, reasonCategory, available, event) => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      view.result.current.finishPreflight(
+        {
+          analytics: { reasonCategory, webRiskAvailable: available },
+          message: 'Safe public message.',
+          reasonCode: 'prohibited_content',
+          status: 'rejected'
+        },
+        Date.now()
+      )
+    })
+
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_OUTCOME, {
+      decision: 'rejected',
+      reason_category: 'editorial',
+      source: 'preflight'
+    })
+    expect(track).toHaveBeenCalledWith(
+      event === 'available'
+        ? ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE
+        : ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_UNAVAILABLE,
+      { source: 'preflight' }
+    )
+  })
+
+  it.each([
+    [true, 1],
+    [false, 0]
+  ] as const)(
+    'emits publish failure only when publicationAttempted is %s',
+    (publicationAttempted, expectedFailures) => {
+      const view = renderHook(() => useActualSubmissionAnalytics())
+
+      act(() => {
+        view.result.current.finishFinal(
+          {
+            analytics: {
+              publicationAttempted,
+              reasonCategory: 'publication',
+              webRiskAvailable: true
+            },
+            error: 'Provider body with secret-api-key',
+            outcome: 'retry_later',
+            success: false
+          },
+          'x',
+          Date.now()
+        )
+      })
+
+      expect(
+        track.mock.calls.filter(call => call[0] === ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE)
+      ).toHaveLength(expectedFailures)
+      expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FINAL_OUTCOME, {
+        decision: 'retry_later',
+        platform: 'x',
+        pr_present: false,
+        reason_category: 'publication',
+        source: 'final_submission'
+      })
+      expect(JSON.stringify(track.mock.calls)).not.toMatch(/secret-api-key|Provider body/)
+    }
+  )
+
+  it('does not track a stale final response after unmount', async () => {
+    const user = await reachSubmissionSupport()
+    let resolveFinal: (result: Awaited<ReturnType<typeof submitLlmsTxt>>) => void = () => undefined
+    const pending = new Promise<Awaited<ReturnType<typeof submitLlmsTxt>>>(resolve => {
+      resolveFinal = resolve
+    })
+    jest.mocked(submitLlmsTxt).mockImplementationOnce(() => pending)
+
+    await finishSubmissionSupport(user)
+    cleanup()
+    await act(async () => {
+      resolveFinal({
+        analytics: {
+          publicationAttempted: true,
+          reasonCategory: 'passed',
+          webRiskAvailable: true
+        },
+        outcome: 'manual',
+        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/stale',
+        success: true
+      })
+      await pending
+    })
+
+    expect(mockFinishFinal).not.toHaveBeenCalled()
+    expect(mockFailFinal).not.toHaveBeenCalled()
   })
 })

@@ -43,6 +43,7 @@ export function submitDetails() {
 export async function reachSubmissionSupport() {
   const user = await reachSubmissionDetails()
   jest.mocked(preflightSubmission).mockResolvedValueOnce({
+    analytics: { reasonCategory: 'passed', webRiskAvailable: true },
     continuationToken: 'opaque-token',
     status: 'support_required',
     submissionId: 'sub_123'

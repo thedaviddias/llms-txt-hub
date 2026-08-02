@@ -10,6 +10,11 @@ import {
   isValidSubmissionCsrf,
   parseFinalSubmissionActionInput
 } from '@/lib/submissions/submission-action-input'
+import {
+  assessmentWebRiskAvailable,
+  finalAnalyticsMetadata,
+  type SubmissionFinalAnalytics
+} from '@/lib/submissions/submission-analytics-metadata'
 import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import { recordFinalSubmissionOutcome } from '@/lib/submissions/submission-publication-state'
@@ -27,8 +32,7 @@ const REPO = 'llms-txt-hub'
 const RETRY_MESSAGE =
   'We could not safely complete this submission right now. Nothing was published. Please try again later.'
 
-/** Client-safe final submission result. */
-export type FinalSubmissionResult =
+type FinalSubmissionOutcome =
   | {
       readonly error?: undefined
       readonly outcome: 'automatic' | 'manual'
@@ -42,13 +46,18 @@ export type FinalSubmissionResult =
       readonly success: false
     }
 
-const retryLater = (error = RETRY_MESSAGE): FinalSubmissionResult => ({
+/** Client-safe final submission result. */
+export type FinalSubmissionResult = FinalSubmissionOutcome & {
+  readonly analytics: SubmissionFinalAnalytics
+}
+
+const retryLater = (error = RETRY_MESSAGE): FinalSubmissionOutcome => ({
   error,
   outcome: 'retry_later',
   success: false
 })
 
-const rejected = (error: string): FinalSubmissionResult => ({
+const rejected = (error: string): FinalSubmissionOutcome => ({
   error,
   outcome: 'rejected',
   success: false
@@ -68,10 +77,15 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
   let logOutcome: FinalSubmissionResult['outcome'] = 'retry_later'
   let logReasonCode = 'publication_unavailable'
   let activeSubmission: { readonly fields: unknown; readonly submissionId: string } | undefined
-  const complete = (result: FinalSubmissionResult, reasonCode: string): FinalSubmissionResult => {
+  let publicationAttempted = false
+  let webRiskAvailable: boolean | undefined
+  const complete = (result: FinalSubmissionOutcome, reasonCode: string): FinalSubmissionResult => {
     logOutcome = result.outcome
     logReasonCode = reasonCode
-    return result
+    return {
+      ...result,
+      analytics: finalAnalyticsMetadata(reasonCode, publicationAttempted, webRiskAvailable)
+    }
   }
   const finalize = async (
     outcome: 'rejected' | 'retry_later',
@@ -167,6 +181,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     }
 
     const assessment = await assessSubmission(parsed.fields)
+    webRiskAvailable = assessmentWebRiskAvailable(assessment)
     if (assessment.decision === 'reject') {
       const updated = await finalize('rejected', assessment.reasonCode)
       return complete(
@@ -188,6 +203,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       mode: publicationMode(),
       submissionId: consumed.submissionId
     })
+    publicationAttempted = publication.publicationAttempted
     if (!publication.ok) {
       if (publication.recovery === 'fresh_preflight') {
         await finalize('retry_later', 'publication_unavailable')

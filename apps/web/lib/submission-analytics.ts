@@ -1,3 +1,4 @@
+import { submissionReasonCategory } from '@/lib/submissions/submission-analytics-metadata'
 import {
   ANALYTICS_EVENTS,
   type SubmissionAnalyticsDecision,
@@ -67,42 +68,6 @@ const safeSubmissionProperties = (input: unknown): SafeSubmissionAnalyticsProper
   return properties
 }
 
-const reasonCategory = (reasonCode: unknown): SubmissionAnalyticsReasonCategory => {
-  if (reasonCode === 'passed') return 'passed'
-  if (reasonCode === 'duplicate') return 'duplicate'
-  if (reasonCode === 'rate_limited') return 'rate_limit'
-  if (reasonCode === 'unsafe_network_target' || reasonCode === 'reputation_match') {
-    return 'network_safety'
-  }
-  if (reasonCode === 'reputation_unknown') return 'reputation_unavailable'
-  if (
-    reasonCode === 'required_resource_missing' ||
-    reasonCode === 'required_resource_transient_failure' ||
-    reasonCode === 'invalid_optional_resource' ||
-    reasonCode === 'nonstandard_llms_format'
-  ) {
-    return 'resource'
-  }
-  if (reasonCode === 'site_family_uncertain' || reasonCode === 'unrelated_site_family') {
-    return 'site_ownership'
-  }
-  if (reasonCode === 'editorial_uncertainty' || reasonCode === 'prohibited_content') {
-    return 'editorial'
-  }
-  if (reasonCode === 'publication_unavailable') return 'publication'
-  if (reasonCode === 'authentication_required') return 'identity'
-  if (reasonCode === 'csrf_invalid') return 'request_security'
-  if (
-    reasonCode === 'invalid_continuation' ||
-    reasonCode === 'expired' ||
-    reasonCode === 'replayed'
-  ) {
-    return 'continuation'
-  }
-  if (reasonCode === 'invalid_input') return 'input'
-  return 'unknown'
-}
-
 const durationBucket = (durationMs: number): SubmissionAnalyticsDurationBucket => {
   if (durationMs < 1000) return 'under_1s'
   if (durationMs <= 5000) return '1s_to_5s'
@@ -143,5 +108,5 @@ export const submissionAnalytics = {
   webRiskUnavailable: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_UNAVAILABLE, input),
   durationBucket,
-  reasonCategory
+  reasonCategory: submissionReasonCategory
 }

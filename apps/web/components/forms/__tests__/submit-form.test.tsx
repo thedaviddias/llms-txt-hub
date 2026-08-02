@@ -25,6 +25,7 @@ describe('SubmitForm', () => {
   it.each([
     {
       result: {
+        analytics: { reasonCategory: 'network_safety', webRiskAvailable: true },
         message: 'This submitted link is not eligible for publication.',
         reasonCode: 'reputation_match',
         status: 'rejected'
@@ -33,6 +34,7 @@ describe('SubmitForm', () => {
     },
     {
       result: {
+        analytics: { reasonCategory: 'publication' },
         message:
           'We could not safely verify this site right now. Nothing was published. Please try again later.',
         reasonCode: 'publication_unavailable',
@@ -75,6 +77,11 @@ describe('SubmitForm', () => {
     async testCase => {
       const user = await reachSubmissionSupport()
       jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
+        analytics: {
+          publicationAttempted: true,
+          reasonCategory: 'passed',
+          webRiskAvailable: true
+        },
         outcome: testCase.outcome,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
         success: true
@@ -112,6 +119,12 @@ describe('SubmitForm', () => {
   }>)('shows the final $outcome without a PR link', async testCase => {
     const user = await reachSubmissionSupport()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
+      analytics: {
+        publicationAttempted: false,
+        reasonCategory:
+          testCase.outcome === 'rejected' ? 'network_safety' : 'reputation_unavailable',
+        webRiskAvailable: testCase.outcome === 'rejected'
+      },
       error: testCase.error,
       outcome: testCase.outcome,
       success: false
@@ -140,6 +153,11 @@ describe('SubmitForm', () => {
   it('submits the unchanged preflight fields with only the opaque continuation and attestation', async () => {
     const user = await reachSubmissionSupport()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
+      analytics: {
+        publicationAttempted: true,
+        reasonCategory: 'passed',
+        webRiskAvailable: true
+      },
       outcome: 'manual',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
       success: true
@@ -168,6 +186,7 @@ describe('SubmitForm', () => {
     await user.clear(screen.getByLabelText(/^name/i))
     await user.type(screen.getByLabelText(/^name/i), 'Changed Example')
     jest.mocked(preflightSubmission).mockResolvedValueOnce({
+      analytics: { reasonCategory: 'passed', webRiskAvailable: true },
       continuationToken: 'new-opaque-token',
       status: 'support_required',
       submissionId: 'sub_456'
@@ -204,6 +223,7 @@ describe('SubmitForm', () => {
       expect(continueButton).toBeDisabled()
     })
     resolvePreflight?.({
+      analytics: { reasonCategory: 'passed', webRiskAvailable: true },
       continuationToken: 'opaque-token',
       status: 'support_required',
       submissionId: 'sub_123'
@@ -231,6 +251,11 @@ describe('SubmitForm', () => {
     expect(submitLlmsTxt).toHaveBeenCalledTimes(1)
     expect(screen.getByRole('button', { name: /finishing/i })).toBeDisabled()
     resolveFinal?.({
+      analytics: {
+        publicationAttempted: true,
+        reasonCategory: 'passed',
+        webRiskAvailable: true
+      },
       outcome: 'manual',
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
       success: true
@@ -256,6 +281,10 @@ describe('SubmitForm', () => {
   ])('recovers safely when $scenario', async testCase => {
     const user = await reachSubmissionSupport()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
+      analytics: {
+        publicationAttempted: false,
+        reasonCategory: testCase.error.includes('expired') ? 'continuation' : 'publication'
+      },
       error: testCase.error,
       outcome: testCase.error.includes('expired') ? 'rejected' : 'retry_later',
       success: false

@@ -103,6 +103,7 @@ describe('publishSubmission', () => {
     expect(result).toEqual({
       ok: true,
       outcome: 'automatic',
+      publicationAttempted: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
     expect(state.persistBranch).toHaveBeenCalledWith(
@@ -298,6 +299,7 @@ describe('publishSubmission', () => {
     ).resolves.toEqual({
       code: 'publication_unavailable',
       ok: false,
+      publicationAttempted: false,
       recovery: 'fresh_preflight'
     })
     expect(github.getDefaultBranch).not.toHaveBeenCalled()
@@ -336,6 +338,7 @@ describe('publishSubmission', () => {
     ).resolves.toEqual({
       code: 'publication_unavailable',
       ok: false,
+      publicationAttempted: true,
       recovery: 'same_submission'
     })
     expect(state.markFailed).toHaveBeenCalledWith({
@@ -420,11 +423,13 @@ describe('publishSubmission', () => {
       {
         ok: true,
         outcome: 'automatic',
+        publicationAttempted: true,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       },
       {
         ok: true,
         outcome: 'automatic',
+        publicationAttempted: true,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       }
     ])
