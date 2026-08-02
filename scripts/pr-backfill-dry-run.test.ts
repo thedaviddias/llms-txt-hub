@@ -963,6 +963,7 @@ Example is a developer platform with API documentation for AI agents.
     ['open PR duplicate', { openPullRequestDuplicateStatus: 'duplicate' }],
     ['unavailable duplicate evidence', { openPullRequestDuplicateStatus: 'unavailable' }],
     ['failed PR Review', { requiredCheckStatus: 'failure' }],
+    ['publisher manual-review veto', { hasManualReviewLabel: true }],
     [
       'manual fresh assessment',
       {
@@ -1005,6 +1006,7 @@ Example is a developer platform with API documentation for AI agents.
         baseDuplicateStatus: 'unique',
         baseSnapshotStatus: 'current',
         freshAssessment: freshAssessment(),
+        hasManualReviewLabel: false,
         now: () => now,
         openPullRequestDuplicateStatus: 'unique',
         requiredCheckStatus: 'success',
@@ -1020,6 +1022,7 @@ Example is a developer platform with API documentation for AI agents.
         baseDuplicateStatus: 'unique',
         baseSnapshotStatus: 'current',
         freshAssessment: freshAssessment(),
+        hasManualReviewLabel: false,
         now: () => now,
         openPullRequestDuplicateStatus: 'unique',
         requiredCheckStatus: 'success'
@@ -1033,6 +1036,7 @@ Example is a developer platform with API documentation for AI agents.
       baseDuplicateStatus: 'unique',
       baseSnapshotStatus: 'current',
       freshAssessment: freshAssessment(),
+      hasManualReviewLabel: false,
       now: () => now,
       openPullRequestDuplicateStatus: 'unique',
       requiredCheckStatus: 'success'
@@ -1054,12 +1058,13 @@ Example is a developer platform with API documentation for AI agents.
     })
   })
 
-  it('waits without a sticky manual label, then recovers on completed PR Review success', () => {
+  it('waits without adding manual review while PR Review is pending', () => {
     const pending = deriveMergeAuthorization({
       attestation: verified(),
       baseDuplicateStatus: 'unique',
       baseSnapshotStatus: 'current',
       freshAssessment: freshAssessment(),
+      hasManualReviewLabel: false,
       now: () => now,
       openPullRequestDuplicateStatus: 'unique',
       requiredCheckStatus: 'in_progress'
@@ -1076,31 +1081,90 @@ Example is a developer platform with API documentation for AI agents.
         waitingLabels
       )
     ).toMatchObject({ added: [], removed: ['automerge:candidate'] })
+  })
 
-    const recovered = deriveMergeAuthorization({
+  it('keeps manual review sticky until a human explicitly removes it', () => {
+    const vetoed = deriveMergeAuthorization({
       attestation: verified(),
       baseDuplicateStatus: 'unique',
       baseSnapshotStatus: 'current',
       freshAssessment: freshAssessment(),
+      hasManualReviewLabel: true,
       now: () => now,
       openPullRequestDuplicateStatus: 'unique',
       requiredCheckStatus: 'success'
     })
-    const recoveredLabels = deriveAuthorizationManagedLabels({
-      authorization: recovered,
+    expect(vetoed).toMatchObject({ authorized: false, disposition: 'manual_review' })
+    const vetoedLabels = deriveAuthorizationManagedLabels({
+      authorization: vetoed,
       policyLabels: ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low']
     })
     expect(
       calculateManagedLabelSync(
         ['area:content', 'lane:mdx-fast', 'needs:manual-review', 'risk:low'],
-        recoveredLabels,
-        { allowManualReviewRemoval: recovered.authorized }
+        vetoedLabels
       )
+    ).toEqual({
+      added: [],
+      desired: ['area:content', 'lane:mdx-fast', 'needs:manual-review', 'risk:low'],
+      removed: []
+    })
+
+    const recoveredAfterExplicitUnlabel = deriveMergeAuthorization({
+      attestation: verified(),
+      baseDuplicateStatus: 'unique',
+      baseSnapshotStatus: 'current',
+      freshAssessment: freshAssessment(),
+      hasManualReviewLabel: false,
+      now: () => now,
+      openPullRequestDuplicateStatus: 'unique',
+      requiredCheckStatus: 'success'
+    })
+    const recoveredLabels = deriveAuthorizationManagedLabels({
+      authorization: recoveredAfterExplicitUnlabel,
+      policyLabels: ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low']
+    })
+    expect(
+      calculateManagedLabelSync(['area:content', 'lane:mdx-fast', 'risk:low'], recoveredLabels)
     ).toEqual({
       added: ['automerge:candidate'],
       desired: ['area:content', 'automerge:candidate', 'lane:mdx-fast', 'risk:low'],
-      removed: ['needs:manual-review']
+      removed: []
     })
+  })
+
+  it('blocks when manual review is added after initial authorization but before merge', () => {
+    const initiallyAuthorized = deriveMergeAuthorization({
+      attestation: verified(),
+      baseDuplicateStatus: 'unique',
+      baseSnapshotStatus: 'current',
+      freshAssessment: freshAssessment(),
+      hasManualReviewLabel: false,
+      now: () => now,
+      openPullRequestDuplicateStatus: 'unique',
+      requiredCheckStatus: 'success'
+    })
+    expect(initiallyAuthorized).toMatchObject({ authorized: true })
+
+    const latestAuthorization = deriveMergeAuthorization({
+      attestation: verified(),
+      baseDuplicateStatus: 'unique',
+      baseSnapshotStatus: 'current',
+      freshAssessment: freshAssessment(),
+      hasManualReviewLabel: true,
+      now: () => now,
+      openPullRequestDuplicateStatus: 'unique',
+      requiredCheckStatus: 'success'
+    })
+    expect(
+      deriveExactHeadMergeDecision({
+        authorization: latestAuthorization,
+        baseSnapshotStatus: 'current',
+        currentHeadSha: headSha,
+        expectedHeadSha: headSha,
+        requiredCheckStatus: 'success'
+      })
+    ).toMatchObject({ authorized: false, disposition: 'manual_review' })
   })
 
   it.each(['missing', 'in_progress'] as const)(
@@ -1112,6 +1176,7 @@ Example is a developer platform with API documentation for AI agents.
           baseDuplicateStatus: 'unique',
           baseSnapshotStatus: 'current',
           freshAssessment: freshAssessment(),
+          hasManualReviewLabel: false,
           now: () => now,
           openPullRequestDuplicateStatus: 'unique',
           requiredCheckStatus
@@ -1127,6 +1192,7 @@ Example is a developer platform with API documentation for AI agents.
         baseDuplicateStatus: 'unique',
         baseSnapshotStatus: 'moved',
         freshAssessment: freshAssessment(),
+        hasManualReviewLabel: false,
         now: () => now,
         openPullRequestDuplicateStatus: 'unique',
         requiredCheckStatus: 'success'

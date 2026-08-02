@@ -353,6 +353,7 @@ export interface MergeAuthorizationInput {
   readonly baseDuplicateStatus: DuplicateStatus
   readonly baseSnapshotStatus: TrustedBaseStatus
   readonly freshAssessment: SubmissionAssessment
+  readonly hasManualReviewLabel: boolean
   readonly now?: () => Date
   readonly openPullRequestDuplicateStatus: DuplicateStatus
   readonly requiredCheckStatus: ReviewConclusion
@@ -532,6 +533,9 @@ export function verifyMergeAttestation(
  * Derive merge authorization only from verified provenance and fresh trusted evidence.
  */
 export function deriveMergeAuthorization(input: MergeAuthorizationInput): MergeAuthorization {
+  if (input.hasManualReviewLabel) {
+    return manualReviewAuthorization('Publisher-owned manual review is required.')
+  }
   if (input.requiredCheckStatus === 'missing' || input.requiredCheckStatus === 'in_progress') {
     return waitAuthorization('PR Review is still pending for the exact head.')
   }
@@ -618,6 +622,12 @@ export function buildClassifierContext(input: {
     headRefName: input.details.head.ref,
     title: input.details.title
   }
+}
+
+/** Treat unavailable label state or an explicit manual label as a publisher-owned veto. */
+function pullRequestHasManualReviewVeto(details: GitHubPullRequestDetails): boolean {
+  if (!Array.isArray(details.labels)) return true
+  return details.labels.some(label => label?.name === 'needs:manual-review')
 }
 
 /**
@@ -850,12 +860,11 @@ export function deriveAuthorizationManagedLabels(input: {
  */
 export function calculateManagedLabelSync(
   currentLabels: string[],
-  desiredLabels: string[],
-  options: { readonly allowManualReviewRemoval?: boolean } = {}
+  desiredLabels: string[]
 ): LabelSyncPlan {
   const currentManaged = currentLabels.filter(label => isManagedLabel(label)).sort()
   const desiredSet = new Set(desiredLabels)
-  if (currentLabels.includes('needs:manual-review') && !options.allowManualReviewRemoval) {
+  if (currentLabels.includes('needs:manual-review')) {
     desiredSet.add('needs:manual-review')
     desiredSet.delete('automerge:candidate')
   }
@@ -1466,6 +1475,7 @@ async function analyzePullRequest(
       baseDuplicateStatus,
       baseSnapshotStatus,
       freshAssessment: moderatedFile?.assessment ?? unavailableAssessment(),
+      hasManualReviewLabel: pullRequestHasManualReviewVeto(details),
       openPullRequestDuplicateStatus,
       requiredCheckStatus: reviewStatus
     })
@@ -1482,7 +1492,6 @@ async function analyzePullRequest(
     })
     const desiredLabels = deriveAuthorizationManagedLabels({ authorization, policyLabels })
     const labelSync = await syncManagedLabels({
-      allowManualReviewRemoval: authorization.authorized,
       desiredLabels,
       dryRun: options.dryRun,
       prNumber: details.number,
@@ -1618,7 +1627,6 @@ async function analyzePullRequests(
  * Sync the managed label set for a pull request, optionally in read-only mode.
  */
 async function syncManagedLabels(input: {
-  allowManualReviewRemoval?: boolean
   desiredLabels: string[]
   dryRun: boolean
   prNumber: number
@@ -1629,8 +1637,7 @@ async function syncManagedLabels(input: {
   )
   const plan = calculateManagedLabelSync(
     currentLabels.map(label => label.name),
-    input.desiredLabels,
-    { allowManualReviewRemoval: input.allowManualReviewRemoval }
+    input.desiredLabels
   )
 
   if (input.dryRun) {
@@ -1736,6 +1743,7 @@ async function executeMergeAction(input: {
       baseDuplicateStatus: input.revalidation.baseDuplicateStatus,
       baseSnapshotStatus,
       freshAssessment: input.revalidation.freshAssessment,
+      hasManualReviewLabel: pullRequestHasManualReviewVeto(latest),
       openPullRequestDuplicateStatus,
       requiredCheckStatus: reviewStatus
     })
