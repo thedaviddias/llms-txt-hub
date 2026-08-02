@@ -80,6 +80,7 @@ describe('SubmitForm', () => {
         analytics: {
           publicationAttempted: true,
           prCreated: true,
+          prPresent: true,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },
@@ -123,6 +124,7 @@ describe('SubmitForm', () => {
       analytics: {
         publicationAttempted: false,
         prCreated: false,
+        prPresent: false,
         reasonCategory:
           testCase.outcome === 'rejected' ? 'network_safety' : 'reputation_unavailable',
         webRiskAvailable: testCase.outcome === 'rejected'
@@ -158,6 +160,7 @@ describe('SubmitForm', () => {
       analytics: {
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -257,6 +260,7 @@ describe('SubmitForm', () => {
       analytics: {
         publicationAttempted: true,
         prCreated: true,
+        prPresent: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -288,6 +292,7 @@ describe('SubmitForm', () => {
       analytics: {
         publicationAttempted: false,
         prCreated: false,
+        prPresent: false,
         reasonCategory: testCase.error.includes('expired') ? 'continuation' : 'publication'
       },
       error: testCase.error,

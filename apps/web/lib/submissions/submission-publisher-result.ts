@@ -5,6 +5,7 @@ export type SubmissionPublisherResult =
       readonly outcome: 'automatic' | 'manual'
       readonly publicationAttempted: true
       readonly prCreated: boolean
+      readonly prPresent: boolean
       readonly prUrl: string
     }
   | {
@@ -12,5 +13,6 @@ export type SubmissionPublisherResult =
       readonly ok: false
       readonly publicationAttempted: boolean
       readonly prCreated: boolean
+      readonly prPresent: boolean
       readonly recovery: 'fresh_preflight' | 'same_submission'
     }

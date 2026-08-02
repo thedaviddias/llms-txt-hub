@@ -79,6 +79,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
   let activeSubmission: { readonly fields: unknown; readonly submissionId: string } | undefined
   let publicationAttempted = false
   let prCreated = false
+  let prPresent = false
   let webRiskAvailable: boolean | undefined
   const complete = (result: FinalSubmissionOutcome, reasonCode: string): FinalSubmissionResult => {
     logOutcome = result.outcome
@@ -89,6 +90,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
         reasonCode,
         publicationAttempted,
         prCreated,
+        prPresent,
         webRiskAvailable
       )
     }
@@ -211,6 +213,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     })
     publicationAttempted = publication.publicationAttempted
     prCreated = publication.prCreated
+    prPresent = publication.prPresent
     if (!publication.ok) {
       if (publication.recovery === 'fresh_preflight') {
         await finalize('retry_later', 'publication_unavailable')
