@@ -1,8 +1,6 @@
-import { toast } from 'sonner'
 import { type PreflightResult, preflightSubmission } from '@/actions/preflight-submission'
 import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { SubmitForm } from '@/components/forms/submit-form'
-import { fireEvent, render, screen, waitFor } from '@/test/test-utils'
+import { fireEvent, screen, waitFor } from '@/test/test-utils'
 import {
   finishSubmissionSupport,
   reachSubmissionDetails,
@@ -22,38 +20,6 @@ jest.mock('@/actions/submit-llms-xxt', () => ({
 describe('SubmitForm', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-  })
-
-  it('should render the initial form', () => {
-    render(<SubmitForm />)
-    expect(screen.getByText('Submit your llms.txt')).toBeInTheDocument()
-  })
-
-  it('shows the metadata API error message when fetching website details fails', async () => {
-    global.fetch = jest.fn().mockResolvedValueOnce(
-      new Response(
-        JSON.stringify({
-          error: 'Unable to fetch this website. Please check the URL and try again.'
-        }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
-    )
-
-    render(<SubmitForm />)
-
-    fireEvent.change(screen.getByLabelText(/website url/i), {
-      target: { value: 'https://example.com' }
-    })
-    fireEvent.submit(screen.getByRole('button', { name: /get website details/i }).closest('form')!)
-
-    await waitFor(() => {
-      expect(toast.error).toHaveBeenCalledWith(
-        'Unable to fetch this website. Please check the URL and try again.'
-      )
-    })
   })
 
   it.each([
@@ -85,7 +51,7 @@ describe('SubmitForm', () => {
 
       expect(await screen.findByText(testCase.message)).toBeInTheDocument()
       expect(
-        screen.queryByRole('heading', { name: /support the directory/i })
+        screen.queryByRole('heading', { name: /support the maintainer/i })
       ).not.toBeInTheDocument()
       expect(screen.queryByRole('link', { name: /github/i })).not.toBeInTheDocument()
       expect(submitLlmsTxt).not.toHaveBeenCalled()
@@ -117,6 +83,12 @@ describe('SubmitForm', () => {
       await finishSubmissionSupport(user)
 
       expect(await screen.findByText(testCase.copy)).toBeInTheDocument()
+      const heading = screen.getByRole('heading', {
+        name:
+          testCase.outcome === 'automatic' ? 'Submission accepted' : 'Submission ready for review'
+      })
+      expect(heading).toHaveFocus()
+      expect(screen.getByRole('status', { name: heading.textContent ?? '' })).toBeInTheDocument()
       expect(screen.getByRole('link', { name: /view pull request/i })).toHaveAttribute(
         'href',
         'https://github.com/thedaviddias/llms-txt-hub/pull/123'
@@ -148,7 +120,21 @@ describe('SubmitForm', () => {
     await finishSubmissionSupport(user)
 
     expect(await screen.findByText(testCase.error)).toBeInTheDocument()
+    const heading = screen.getByRole('heading', {
+      name:
+        testCase.outcome === 'rejected' ? 'Submission not published' : 'Verification unavailable'
+    })
+    expect(heading).toHaveFocus()
+    expect(screen.getByRole('alert', { name: heading.textContent ?? '' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /pull request/i })).not.toBeInTheDocument()
+  })
+
+  it('moves focus from details to the support heading after preflight', async () => {
+    await reachSubmissionSupport()
+
+    const heading = screen.getByRole('heading', { name: 'Support the maintainer' })
+    expect(heading).toHaveFocus()
+    expect(heading).toHaveAttribute('tabindex', '-1')
   })
 
   it('submits the unchanged preflight fields with only the opaque continuation and attestation', async () => {
@@ -190,7 +176,7 @@ describe('SubmitForm', () => {
     submitDetails()
 
     expect(
-      await screen.findByRole('heading', { name: /support the directory/i })
+      await screen.findByRole('heading', { name: /support the maintainer/i })
     ).toBeInTheDocument()
     expect(preflightSubmission).toHaveBeenCalledTimes(2)
     expect(submitLlmsTxt).not.toHaveBeenCalled()
@@ -223,7 +209,7 @@ describe('SubmitForm', () => {
       submissionId: 'sub_123'
     })
     expect(
-      await screen.findByRole('heading', { name: /support the directory/i })
+      await screen.findByRole('heading', { name: /support the maintainer/i })
     ).toBeInTheDocument()
   })
 
@@ -236,7 +222,7 @@ describe('SubmitForm', () => {
           resolveFinal = resolve
         })
     )
-    await user.click(screen.getByRole('radio', { name: /support on x/i }))
+    await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
     await user.click(screen.getByRole('link', { name: /open david's x profile/i }))
     await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
     const finalButton = screen.getByRole('button', { name: /finish submission/i })

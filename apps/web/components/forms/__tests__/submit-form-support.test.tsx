@@ -2,6 +2,14 @@ import { SubmitFormSupport } from '@/components/forms/submit-form-support'
 import { render, screen, userEvent } from '@/test/test-utils'
 
 describe('SubmitFormSupport', () => {
+  it('focuses the exact support heading on mount', () => {
+    render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />)
+
+    const heading = screen.getByRole('heading', { name: 'Support the maintainer' })
+    expect(heading).toHaveFocus()
+    expect(heading).toHaveAttribute('tabindex', '-1')
+  })
+
   it('offers the exact X and LinkedIn profiles as mutually exclusive choices', async () => {
     const user = userEvent.setup()
     render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />)
@@ -21,13 +29,20 @@ describe('SubmitFormSupport', () => {
       ])
     )
 
-    const xChoice = screen.getByRole('radio', { name: /support on x/i })
-    const linkedInChoice = screen.getByRole('radio', { name: /support on linkedin/i })
+    const xChoice = screen.getByRole('radio', { name: 'Follow David on X' })
+    const linkedInChoice = screen.getByRole('radio', { name: 'Follow David on LinkedIn' })
+    const xCard = xChoice.closest('[data-support-card]')
+    const linkedInCard = linkedInChoice.closest('[data-support-card]')
+    expect(xCard).toHaveAttribute('data-state', 'unselected')
     await user.click(xChoice)
     expect(xChoice).toBeChecked()
+    expect(xCard).toHaveAttribute('data-state', 'selected')
+    expect(xCard).toHaveClass('border-primary', 'ring-2', 'bg-primary/5')
     await user.click(linkedInChoice)
     expect(linkedInChoice).toBeChecked()
     expect(xChoice).not.toBeChecked()
+    expect(xCard).toHaveAttribute('data-state', 'unselected')
+    expect(linkedInCard).toHaveAttribute('data-state', 'selected')
   })
 
   it('requires opening the selected profile before enabling the truthful attestation', async () => {
@@ -40,12 +55,12 @@ describe('SubmitFormSupport', () => {
     })
     expect(confirmation).toBeDisabled()
 
-    await user.click(screen.getByRole('radio', { name: /support on x/i }))
+    await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
     expect(confirmation).toBeDisabled()
     await user.click(screen.getByRole('link', { name: /open david's x profile/i }))
     expect(confirmation).toBeEnabled()
 
-    await user.click(screen.getByRole('radio', { name: /support on linkedin/i }))
+    await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
     expect(confirmation).toBeDisabled()
     expect(confirmation).not.toBeChecked()
   })
@@ -58,7 +73,7 @@ describe('SubmitFormSupport', () => {
     const submit = screen.getByRole('button', { name: /finish submission/i })
     expect(submit).toBeDisabled()
 
-    await user.click(screen.getByRole('radio', { name: /support on linkedin/i }))
+    await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
     await user.click(screen.getByRole('link', { name: /open david's linkedin profile/i }))
     expect(submit).toBeDisabled()
     await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
@@ -68,24 +83,33 @@ describe('SubmitFormSupport', () => {
     expect(onSubmit).toHaveBeenCalledWith({ followAttested: true, platform: 'linkedin' })
   })
 
-  it('can complete the support step using only the keyboard and accessible names', async () => {
+  it('can complete the support step in DOM order using only the keyboard', async () => {
     const user = userEvent.setup()
     const onSubmit = jest.fn()
     render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={onSubmit} />)
 
-    const xChoice = screen.getByRole('radio', { name: /support on x/i })
-    xChoice.focus()
+    const xChoice = screen.getByRole('radio', { name: 'Follow David on X' })
+    await user.tab()
+    expect(xChoice).toHaveFocus()
     await user.keyboard('[Space]')
     const profile = screen.getByRole('link', { name: /open david's x profile/i })
-    profile.focus()
+    await user.tab()
+    expect(profile).toHaveFocus()
     await user.keyboard('[Enter]')
     const confirmation = screen.getByRole('checkbox', {
       name: 'I follow David on this platform'
     })
-    confirmation.focus()
+    await user.tab()
+    await user.tab()
+    expect(confirmation).toHaveFocus()
     await user.keyboard('[Space]')
     const submit = screen.getByRole('button', { name: /finish submission/i })
-    submit.focus()
+    const [back] = screen.getAllByRole('button')
+    expect(back).toHaveTextContent('Back to details')
+    await user.tab()
+    expect(back).toHaveFocus()
+    await user.tab()
+    expect(submit).toHaveFocus()
     await user.keyboard('[Enter]')
 
     expect(onSubmit).toHaveBeenCalledWith({ followAttested: true, platform: 'x' })
