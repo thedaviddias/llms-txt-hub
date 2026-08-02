@@ -8,14 +8,57 @@ const INPUT = {
   website: 'https://example.com/#fragment'
 }
 
-const mdx = (website = 'https://sample.org/', llmsUrl = 'https://sample.org/llms.txt') =>
-  `---\nname: Other\nwebsite: ${website}\nllmsUrl: ${llmsUrl}\ncategory: developer-tools\npublishedAt: 2026-08-01\n---\nDescription.`
+const mdx = (
+  website = 'https://sample.org/',
+  llmsUrl = 'https://sample.org/llms.txt',
+  llmsFullUrl?: string
+) => `---
+name: Other
+website: ${website}
+llmsUrl: ${llmsUrl}
+${llmsFullUrl ? `llmsFullUrl: ${llmsFullUrl}\n` : ''}category: developer-tools
+publishedAt: 2026-08-01
+---
+Description.`
+
+interface PullRequestFixture {
+  body: string | null
+  headOwnerLogin: string
+  headRef: string
+  headRepoFullName: string
+  headSha: string
+  number: number
+}
+
+const pullRequest = (overrides: Partial<PullRequestFixture> = {}): PullRequestFixture => ({
+  body: '',
+  headOwnerLogin: 'thedaviddias',
+  headRef: 'contributor',
+  headRepoFullName: 'thedaviddias/llms-txt-hub',
+  headSha: 'a'.repeat(40),
+  number: 44,
+  ...overrides
+})
 
 const makeGitHub = () => ({
   getFileContent: jest.fn(),
   listOpenPullRequests: jest.fn(),
   listPullRequestFiles: jest.fn()
 })
+
+const configureOneMdx = (
+  github: ReturnType<typeof makeGitHub>,
+  content: string,
+  pr = pullRequest()
+) => {
+  github.listOpenPullRequests.mockResolvedValueOnce([pr]).mockResolvedValueOnce([])
+  github.listPullRequestFiles
+    .mockResolvedValueOnce([
+      { path: 'packages/content/data/websites/contributor.mdx', status: 'added' }
+    ])
+    .mockResolvedValueOnce([])
+  github.getFileContent.mockResolvedValue(content)
+}
 
 describe('submission duplicate protection', () => {
   it.each([
@@ -26,80 +69,187 @@ describe('submission duplicate protection', () => {
 
     await expect(
       checkSubmissionDuplicates(INPUT, {
-        getWebsites: () => catalogue,
+        getWebsitesStrict: () => ({ status: 'available', websites: catalogue }),
         github
       })
     ).resolves.toEqual({ source: 'catalogue', status: 'duplicate' })
     expect(github.listOpenPullRequests).not.toHaveBeenCalled()
   })
 
-  it('fails closed when catalogue duplicate status cannot be established', async () => {
+  it('fails closed when catalogue status is unavailable or malformed', async () => {
     await expect(
       checkSubmissionDuplicates(INPUT, {
-        getWebsites: () => [{ website: 'not a URL', llmsUrl: 'https://sample.org/llms.txt' }],
+        getWebsitesStrict: () => ({ status: 'unavailable' }),
+        github: makeGitHub()
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({
+          status: 'available',
+          websites: [{ website: 'not a URL', llmsUrl: 'https://sample.org/llms.txt' }]
+        }),
         github: makeGitHub()
       })
     ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
   })
 
-  it('reconciles an open PR with the exact same submission marker', async () => {
+  it('reconciles only a trusted deterministic PR with exact normalized frontmatter', async () => {
     const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue([
-      {
-        body: 'Submission\n<!-- llms-hub-submission:sub_123 -->',
-        headRef: 'submit/sub_123',
-        headSha: 'a'.repeat(40),
-        number: 42
-      }
-    ])
-
-    await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
-    ).resolves.toEqual({
-      branch: 'submit/sub_123',
-      headSha: 'a'.repeat(40),
-      prNumber: 42,
-      status: 'reconcile'
-    })
-    expect(github.listPullRequestFiles).not.toHaveBeenCalled()
-  })
-
-  it('reconciles the same ID on a full bounded PR page before returning unknown pagination', async () => {
-    const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue(
-      Array.from({ length: 100 }, (_, index) => ({
-        body: index === 99 ? '<!-- llms-hub-submission:sub_123 -->' : '',
-        headRef: index === 99 ? 'submit/sub_123' : `contributor-${index}`,
-        headSha: 'a'.repeat(40),
-        number: index + 1
-      }))
+    configureOneMdx(
+      github,
+      mdx('https://example.com', 'https://example.com/llms.txt'),
+      pullRequest({
+        body: '<!-- llms-hub-submission:sub_123 -->',
+        headRef: 'submit/sub_123'
+      })
     )
 
     await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
     ).resolves.toEqual({
       branch: 'submit/sub_123',
       headSha: 'a'.repeat(40),
-      prNumber: 100,
+      prNumber: 44,
       status: 'reconcile'
     })
   })
 
-  it('does not reconcile a marker that only contains the submission ID as a substring', async () => {
+  it.each([
+    ['fork', { headOwnerLogin: 'attacker', headRepoFullName: 'attacker/fork' }],
+    ['owner mismatch', { headOwnerLogin: 'attacker' }],
+    ['wrong branch', { headRef: 'attacker-branch' }],
+    ['substring marker', { body: '<!-- llms-hub-submission:sub_1234 -->' }]
+  ])('never reconciles an attacker-controlled %s candidate', async (_label, overrides) => {
     const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue([
-      {
-        body: '<!-- llms-hub-submission:sub_1234 -->',
-        headRef: 'submit/sub_1234',
-        headSha: 'a'.repeat(40),
-        number: 43
-      }
-    ])
-    github.listPullRequestFiles.mockResolvedValue([])
+    configureOneMdx(
+      github,
+      mdx(),
+      pullRequest({ body: '<!-- llms-hub-submission:sub_123 -->', ...overrides })
+    )
 
     await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
     ).resolves.toEqual({ status: 'unique' })
+  })
+
+  it('does not reconcile a trusted marker whose exact fields differ', async () => {
+    const github = makeGitHub()
+    configureOneMdx(
+      github,
+      mdx(),
+      pullRequest({ body: '<!-- llms-hub-submission:sub_123 -->', headRef: 'submit/sub_123' })
+    )
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+  })
+
+  it('requires optional llms-full frontmatter to match before reconciliation', async () => {
+    const github = makeGitHub()
+    configureOneMdx(
+      github,
+      mdx('https://example.com', 'https://example.com/llms.txt'),
+      pullRequest({ body: '<!-- llms-hub-submission:sub_123 -->', headRef: 'submit/sub_123' })
+    )
+
+    await expect(
+      checkSubmissionDuplicates(
+        { ...INPUT, llmsFullUrl: 'https://example.com/llms-full.txt' },
+        {
+          getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+          github
+        }
+      )
+    ).resolves.toEqual({ prNumber: 44, source: 'open_pr', status: 'duplicate' })
+  })
+
+  it('returns unknown for multiple exact marker candidates', async () => {
+    const github = makeGitHub()
+    github.listOpenPullRequests
+      .mockResolvedValueOnce(
+        Array.from({ length: 50 }, (_, index) =>
+          pullRequest({
+            body: index === 0 ? '<!-- llms-hub-submission:sub_123 -->' : '',
+            headRef: index === 0 ? 'submit/sub_123' : `contributor-${index}`,
+            number: index + 1
+          })
+        )
+      )
+      .mockResolvedValueOnce([
+        pullRequest({
+          body: '<!-- llms-hub-submission:sub_123 -->',
+          headRef: 'submit/sub_123',
+          number: 51
+        })
+      ])
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+  })
+
+  it('returns unknown when bounded PR pagination remains truncated', async () => {
+    const github = makeGitHub()
+    github.listOpenPullRequests.mockImplementation(async (_owner, _repo, page) =>
+      Array.from({ length: 50 }, (_, index) =>
+        pullRequest({ headRef: `page-${page}-${index}`, number: page * 100 + index })
+      )
+    )
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    expect(github.listOpenPullRequests).toHaveBeenCalledTimes(3)
+  })
+
+  it('finds one exact marker on a later complete page before reconciliation', async () => {
+    const github = makeGitHub()
+    github.listOpenPullRequests
+      .mockResolvedValueOnce(
+        Array.from({ length: 50 }, (_, index) =>
+          pullRequest({ headRef: `contributor-${index}`, number: index + 1 })
+        )
+      )
+      .mockResolvedValueOnce([
+        pullRequest({
+          body: '<!-- llms-hub-submission:sub_123 -->',
+          headRef: 'submit/sub_123',
+          number: 51
+        })
+      ])
+    github.listPullRequestFiles.mockImplementation(async (_owner, _repo, pullNumber, page) => {
+      if (pullNumber === 51 && page === 1) {
+        return [{ path: 'packages/content/data/websites/candidate.mdx', status: 'added' }]
+      }
+      return []
+    })
+    github.getFileContent.mockResolvedValue(
+      mdx('https://example.com', 'https://example.com/llms.txt')
+    )
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
+    ).resolves.toMatchObject({ prNumber: 51, status: 'reconcile' })
   })
 
   it.each([
@@ -107,23 +257,14 @@ describe('submission duplicate protection', () => {
     ['llms URL', mdx('https://sample.org', 'https://example.com/llms.txt')]
   ])('detects a normalized open-PR frontmatter duplicate by %s', async (_label, content) => {
     const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue([
-      { body: '', headRef: 'contributor', headSha: 'a'.repeat(40), number: 44 }
-    ])
-    github.listPullRequestFiles.mockResolvedValue([
-      { path: 'packages/content/data/websites/contributor.mdx', status: 'added' }
-    ])
-    github.getFileContent.mockResolvedValue(content)
+    configureOneMdx(github, content)
 
     await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
     ).resolves.toEqual({ prNumber: 44, source: 'open_pr', status: 'duplicate' })
-    expect(github.getFileContent).toHaveBeenCalledWith(
-      'thedaviddias',
-      'llms-txt-hub',
-      'packages/content/data/websites/contributor.mdx',
-      'a'.repeat(40)
-    )
   })
 
   it.each([
@@ -136,71 +277,45 @@ describe('submission duplicate protection', () => {
     ]
   ])('fails closed for %s in a website MDX added by an open PR', async (_label, content) => {
     const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue([
-      { body: '', headRef: 'contributor', headSha: 'a'.repeat(40), number: 44 }
-    ])
-    github.listPullRequestFiles.mockResolvedValue([
-      { path: 'packages/content/data/websites/contributor.mdx', status: 'added' }
-    ])
-    github.getFileContent.mockResolvedValue(content)
-
-    await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
-  })
-
-  it('returns unique only after bounded catalogue and open-PR checks complete', async () => {
-    const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue([
-      { body: null, headRef: 'contributor', headSha: 'a'.repeat(40), number: 44 }
-    ])
-    github.listPullRequestFiles.mockResolvedValue([
-      { path: 'packages/content/data/websites/contributor.mdx', status: 'added' },
-      { path: 'README.md', status: 'modified' }
-    ])
-    github.getFileContent.mockResolvedValue(mdx())
+    configureOneMdx(github, content)
 
     await expect(
       checkSubmissionDuplicates(INPUT, {
-        getWebsites: () => [
-          { website: 'https://catalogue.org', llmsUrl: 'https://catalogue.org/llms.txt' }
-        ],
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
+    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+  })
+
+  it('accepts Markdown horizontal rules after valid frontmatter', async () => {
+    const github = makeGitHub()
+    configureOneMdx(github, `${mdx()}\n\n---\n\nMore details.`)
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
     ).resolves.toEqual({ status: 'unique' })
   })
 
-  it('accepts Markdown horizontal rules after valid frontmatter', async () => {
-    const github = makeGitHub()
-    github.listOpenPullRequests.mockResolvedValue([
-      { body: '', headRef: 'contributor', headSha: 'a'.repeat(40), number: 44 }
-    ])
-    github.listPullRequestFiles.mockResolvedValue([
-      { path: 'packages/content/data/websites/contributor.mdx', status: 'added' }
-    ])
-    github.getFileContent.mockResolvedValue(`${mdx()}\n\n---\n\nMore details.`)
-
-    await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
-    ).resolves.toEqual({ status: 'unique' })
-  })
-
   it.each([
     ['GitHub request failure', () => Promise.reject(new Error('sensitive upstream error'))],
-    ['oversized PR body', () => Promise.resolve([{ body: 'x'.repeat(100_001), number: 44 }])],
+    ['oversized PR body', () => Promise.resolve([pullRequest({ body: 'x'.repeat(100_001) })])],
     [
-      'unbounded open PR result',
+      'oversized raw page',
       () =>
-        Promise.resolve(
-          Array.from({ length: 100 }, (_, index) => ({ body: '', number: index + 1 }))
-        )
+        Promise.resolve(Array.from({ length: 51 }, (_, index) => pullRequest({ number: index })))
     ]
   ])('fails closed on %s', async (_label, listOpenPullRequests) => {
     const github = makeGitHub()
     github.listOpenPullRequests.mockImplementation(listOpenPullRequests)
 
     await expect(
-      checkSubmissionDuplicates(INPUT, { getWebsites: () => [], github })
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github
+      })
     ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
   })
 })
