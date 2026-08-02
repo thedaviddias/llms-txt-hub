@@ -1,5 +1,8 @@
+import { AnalyticsHead } from '@thedaviddias/analytics/head'
 import { SubmitFormSupport } from '@/components/forms/submit-form-support'
 import { render, screen, userEvent } from '@/test/test-utils'
+
+jest.mock('@thedaviddias/auth/client', () => ({ useAuth: () => ({ user: null }) }))
 
 describe('SubmitFormSupport', () => {
   it('focuses the exact support heading on mount', () => {
@@ -63,6 +66,46 @@ describe('SubmitFormSupport', () => {
     await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
     expect(confirmation).toBeDisabled()
     expect(confirmation).not.toBeChecked()
+  })
+
+  it('keeps profile links usable without reaching automatic document-level tracking', async () => {
+    const user = userEvent.setup()
+    const originalEnvironment = process.env
+    process.env = { ...originalEnvironment, NODE_ENV: 'production' }
+    const automaticOutgoingTrack = jest.fn()
+    const outgoingLinkListener = (event: Event) => {
+      if (!(event.target instanceof Element)) return
+      const anchor = event.target.closest('a')
+      const href = anchor?.getAttribute('href')
+      if (href?.startsWith('http')) {
+        automaticOutgoingTrack({ href, text: anchor?.textContent })
+      }
+    }
+    document.addEventListener('click', outgoingLinkListener)
+
+    try {
+      render(
+        <>
+          <AnalyticsHead openPanelClientId="test-client" />
+          <SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />
+        </>
+      )
+      const initScript = [...document.querySelectorAll('script')].find(script =>
+        script.textContent?.includes("window.op('init'")
+      )
+      expect(initScript).toHaveTextContent('"trackOutgoingLinks":true')
+      await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
+      const profile = screen.getByRole('link', { name: /open david's x profile/i })
+
+      await user.click(profile)
+
+      expect(profile).toHaveAttribute('href', 'https://x.com/thedaviddias')
+      expect(profile).toHaveAttribute('target', '_blank')
+      expect(automaticOutgoingTrack).not.toHaveBeenCalled()
+    } finally {
+      document.removeEventListener('click', outgoingLinkListener)
+      process.env = originalEnvironment
+    }
   })
 
   it('submits only after one opened platform is selected and attested', async () => {

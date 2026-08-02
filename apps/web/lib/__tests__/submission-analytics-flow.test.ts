@@ -145,6 +145,7 @@ describe('trusted submission analytics lifecycle', () => {
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: true,
+        prCreated: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },
@@ -160,6 +161,7 @@ describe('trusted submission analytics lifecycle', () => {
       {
         analytics: {
           publicationAttempted: true,
+          prCreated: true,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },
@@ -197,6 +199,10 @@ describe('trusted submission analytics lifecycle', () => {
       source: 'support_step'
     })
     expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE, {
+      source: 'preflight'
+    })
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_REQUEST_DURATION, {
+      duration_bucket: 'under_1s',
       source: 'preflight'
     })
     expect(JSON.stringify(track.mock.calls)).not.toMatch(/opaque-token|sub_123/)
@@ -246,6 +252,7 @@ describe('trusted submission analytics lifecycle', () => {
           {
             analytics: {
               publicationAttempted,
+              prCreated: false,
               reasonCategory: 'publication',
               webRiskAvailable: true
             },
@@ -273,6 +280,62 @@ describe('trusted submission analytics lifecycle', () => {
   )
 
   it.each([
+    [true, 1],
+    [false, 0]
+  ] as const)('emits PR Created only when the server reports prCreated=%s', (prCreated, count) => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      view.result.current.finishFinal(
+        {
+          analytics: {
+            publicationAttempted: true,
+            prCreated,
+            reasonCategory: 'passed',
+            webRiskAvailable: true
+          },
+          outcome: 'automatic',
+          prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
+          success: true
+        },
+        'x',
+        Date.now()
+      )
+    })
+
+    expect(
+      track.mock.calls.filter(call => call[0] === ANALYTICS_EVENTS.SUBMISSION_PR_CREATED)
+    ).toHaveLength(count)
+    expect(JSON.stringify(track.mock.calls)).not.toContain('/pull/123')
+  })
+
+  it('uses unknown for client-thrown failures without claiming publication failure', () => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      view.result.current.failPreflight(Date.now())
+      view.result.current.failFinal('linkedin', Date.now())
+    })
+
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_OUTCOME, {
+      decision: 'retry_later',
+      reason_category: 'unknown',
+      source: 'preflight'
+    })
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FINAL_OUTCOME, {
+      decision: 'retry_later',
+      platform: 'linkedin',
+      pr_present: false,
+      reason_category: 'unknown',
+      source: 'final_submission'
+    })
+    expect(track).not.toHaveBeenCalledWith(
+      ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE,
+      expect.anything()
+    )
+  })
+
+  it.each([
     [true, ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE],
     [false, ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_UNAVAILABLE],
     [undefined, undefined]
@@ -282,8 +345,9 @@ describe('trusted submission analytics lifecycle', () => {
       const view = renderHook(() => useActualSubmissionAnalytics())
       const analytics: FinalSubmissionResult['analytics'] =
         webRiskAvailable === undefined
-          ? { publicationAttempted: false, reasonCategory: 'editorial' }
+          ? { prCreated: false, publicationAttempted: false, reasonCategory: 'editorial' }
           : {
+              prCreated: false,
               publicationAttempted: false,
               reasonCategory: 'editorial',
               webRiskAvailable
@@ -328,6 +392,7 @@ describe('trusted submission analytics lifecycle', () => {
       resolveFinal({
         analytics: {
           publicationAttempted: true,
+          prCreated: false,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },

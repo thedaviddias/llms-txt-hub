@@ -352,6 +352,7 @@ export async function publishSubmission(
         code: 'publication_unavailable',
         ok: false,
         publicationAttempted: false,
+        prCreated: false,
         recovery: 'fresh_preflight'
       }
     }
@@ -371,6 +372,7 @@ export async function publishSubmission(
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
+      prCreated: false,
       recovery: 'same_submission'
     }
   }
@@ -419,6 +421,7 @@ export async function publishSubmission(
     const existingPullRequests = await dependencies.github.listPullRequests(branch)
     if (existingPullRequests.length > 1) return unavailable()
     let pullRequest = existingPullRequests[0]
+    const prCreated = !pullRequest
     if (
       pullRequest &&
       (pullRequest.body.split(marker).length !== 2 || pullRequest.headSha !== headSha)
@@ -484,7 +487,7 @@ export async function publishSubmission(
     }
     logOutcome = outcome
     reasonCode = resultCode
-    return { ok: true, outcome, publicationAttempted: true, prUrl: pullRequest.url }
+    return { ok: true, outcome, publicationAttempted: true, prCreated, prUrl: pullRequest.url }
   } catch {
     return unavailable()
   } finally {

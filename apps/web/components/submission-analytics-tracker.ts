@@ -6,12 +6,12 @@ import { submissionAnalytics } from '@/lib/submission-analytics'
 
 type SupportPlatform = 'x' | 'linkedin'
 
-const trackDuration = (
+const trackRequestDuration = (
   startedAt: number,
   source: 'preflight' | 'final_submission',
   platform?: SupportPlatform
 ) => {
-  submissionAnalytics.assessmentDuration({
+  submissionAnalytics.requestDuration({
     durationBucket: submissionAnalytics.durationBucket(Date.now() - startedAt),
     platform,
     source
@@ -27,7 +27,7 @@ const trackPreflightResult = (result: PreflightResult, startedAt: number) => {
     reasonCategory: result.analytics.reasonCategory,
     source: 'preflight'
   })
-  trackDuration(startedAt, 'preflight')
+  trackRequestDuration(startedAt, 'preflight')
   if (result.analytics.webRiskAvailable === true) {
     submissionAnalytics.webRiskAvailable({ source: 'preflight' })
   } else if (result.analytics.webRiskAvailable === false) {
@@ -42,20 +42,20 @@ const trackPreflightResult = (result: PreflightResult, startedAt: number) => {
 const trackPreflightFailure = (startedAt: number) => {
   submissionAnalytics.preflightOutcome({
     decision: 'retry_later',
-    reasonCategory: 'publication',
+    reasonCategory: 'unknown',
     source: 'preflight'
   })
-  trackDuration(startedAt, 'preflight')
+  trackRequestDuration(startedAt, 'preflight')
 }
 
 /** Track a final submission failure without submitted fields or server error text. */
 const trackFinalFailure = (platform: SupportPlatform, startedAt: number) => {
-  trackDuration(startedAt, 'final_submission', platform)
+  trackRequestDuration(startedAt, 'final_submission', platform)
   const properties = {
     decision: 'retry_later',
     platform,
     prPresent: false,
-    reasonCategory: 'publication',
+    reasonCategory: 'unknown',
     source: 'final_submission'
   }
   submissionAnalytics.finalOutcome(properties)
@@ -66,7 +66,7 @@ const trackFinalResult = (
   platform: SupportPlatform,
   startedAt: number
 ) => {
-  trackDuration(startedAt, 'final_submission', platform)
+  trackRequestDuration(startedAt, 'final_submission', platform)
   submissionAnalytics.finalOutcome({
     decision: result.outcome,
     platform,
@@ -79,7 +79,7 @@ const trackFinalResult = (
   } else if (result.analytics.webRiskAvailable === false) {
     submissionAnalytics.webRiskUnavailable({ source: 'final_submission' })
   }
-  if (result.success) {
+  if (result.success && result.analytics.prCreated) {
     submissionAnalytics.prCreated({
       decision: result.outcome,
       platform,

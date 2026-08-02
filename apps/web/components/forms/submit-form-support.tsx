@@ -110,7 +110,8 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={choice.profileLabel}
-                  onClick={() => {
+                  onClick={event => {
+                    event.nativeEvent.stopImmediatePropagation()
                     if (selected) {
                       setProfileOpened(true)
                       submissionAnalytics.trackSubmissionProfileOpen({

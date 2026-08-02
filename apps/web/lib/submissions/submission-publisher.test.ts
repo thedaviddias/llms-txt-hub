@@ -104,6 +104,7 @@ describe('publishSubmission', () => {
       ok: true,
       outcome: 'automatic',
       publicationAttempted: true,
+      prCreated: true,
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
     })
     expect(state.persistBranch).toHaveBeenCalledWith(
@@ -205,7 +206,7 @@ describe('publishSubmission', () => {
           state
         }
       )
-    ).resolves.toMatchObject({ ok: true })
+    ).resolves.toMatchObject({ ok: true, prCreated: false })
     expect(github.createBranch).not.toHaveBeenCalled()
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
@@ -300,6 +301,7 @@ describe('publishSubmission', () => {
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: false,
+      prCreated: false,
       recovery: 'fresh_preflight'
     })
     expect(github.getDefaultBranch).not.toHaveBeenCalled()
@@ -339,6 +341,7 @@ describe('publishSubmission', () => {
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
+      prCreated: false,
       recovery: 'same_submission'
     })
     expect(state.markFailed).toHaveBeenCalledWith({
@@ -378,7 +381,7 @@ describe('publishSubmission', () => {
         { assessment, fields, mode: 'enabled', submissionId: 'sub_123' },
         { github, now: () => NOW, secret: SECRET, state }
       )
-    ).resolves.toMatchObject({ ok: true, outcome: 'automatic' })
+    ).resolves.toMatchObject({ ok: true, outcome: 'automatic', prCreated: false })
     expect(github.createBranch).not.toHaveBeenCalled()
     expect(github.createFile).not.toHaveBeenCalled()
     expect(github.createPullRequest).not.toHaveBeenCalled()
@@ -424,12 +427,14 @@ describe('publishSubmission', () => {
         ok: true,
         outcome: 'automatic',
         publicationAttempted: true,
+        prCreated: false,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       },
       {
         ok: true,
         outcome: 'automatic',
         publicationAttempted: true,
+        prCreated: false,
         prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/42'
       }
     ])

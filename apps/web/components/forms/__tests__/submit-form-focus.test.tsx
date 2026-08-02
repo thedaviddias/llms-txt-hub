@@ -27,6 +27,7 @@ describe('SubmitForm return focus', () => {
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: true,
+        prCreated: true,
         reasonCategory: 'passed',
         webRiskAvailable: true
       },

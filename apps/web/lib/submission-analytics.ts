@@ -101,8 +101,8 @@ export const submissionAnalytics = {
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_PR_CREATED, input),
   publishFailure: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_PUBLISH_FAILURE, input),
-  assessmentDuration: (input?: unknown) =>
-    trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_ASSESSMENT_DURATION, input),
+  requestDuration: (input?: unknown) =>
+    trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_REQUEST_DURATION, input),
   webRiskAvailable: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE, input),
   webRiskUnavailable: (input?: unknown) =>

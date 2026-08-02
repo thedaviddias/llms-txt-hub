@@ -78,13 +78,19 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
   let logReasonCode = 'publication_unavailable'
   let activeSubmission: { readonly fields: unknown; readonly submissionId: string } | undefined
   let publicationAttempted = false
+  let prCreated = false
   let webRiskAvailable: boolean | undefined
   const complete = (result: FinalSubmissionOutcome, reasonCode: string): FinalSubmissionResult => {
     logOutcome = result.outcome
     logReasonCode = reasonCode
     return {
       ...result,
-      analytics: finalAnalyticsMetadata(reasonCode, publicationAttempted, webRiskAvailable)
+      analytics: finalAnalyticsMetadata(
+        reasonCode,
+        publicationAttempted,
+        prCreated,
+        webRiskAvailable
+      )
     }
   }
   const finalize = async (
@@ -204,6 +210,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       submissionId: consumed.submissionId
     })
     publicationAttempted = publication.publicationAttempted
+    prCreated = publication.prCreated
     if (!publication.ok) {
       if (publication.recovery === 'fresh_preflight') {
         await finalize('retry_later', 'publication_unavailable')

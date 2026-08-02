@@ -139,6 +139,7 @@ describe('SubmitForm request concurrency', () => {
       resolveFinal({
         analytics: {
           publicationAttempted: true,
+          prCreated: false,
           reasonCategory: 'passed',
           webRiskAvailable: true
         },
