@@ -76,6 +76,19 @@ describe('buildClassifierContext', () => {
 })
 
 describe('parseSubmissionFrontmatter', () => {
+  const frontmatterWithLlmsFullUrl = (llmsFullUrlLine: string): string => `---
+name: 'Example'
+description: 'Example is a developer platform with API docs for AI agents.'
+website: 'https://example.com'
+llmsUrl: 'https://example.com/llms.txt'
+${llmsFullUrlLine}
+category: 'developer-tools'
+publishedAt: '2026-03-14'
+---
+
+# Example
+`
+
   it('extracts the required frontmatter fields from mdx content', () => {
     const result = parseSubmissionFrontmatter(`---
 name: 'Example'
@@ -99,6 +112,27 @@ publishedAt: '2026-03-14'
       publishedAt: '2026-03-14',
       website: 'https://example.com'
     })
+  })
+
+  it.each([
+    ['number', 'llmsFullUrl: 42'],
+    ['boolean', 'llmsFullUrl: true'],
+    ['array', "llmsFullUrl: ['https://example.com/llms-full.txt']"],
+    ['object', "llmsFullUrl: { url: 'https://example.com/llms-full.txt' }"]
+  ])('fails closed for a present non-string optional URL: %s', (_label, llmsFullUrlLine) => {
+    expect(() => parseSubmissionFrontmatter(frontmatterWithLlmsFullUrl(llmsFullUrlLine))).toThrow(
+      'Invalid optional frontmatter field "llmsFullUrl". Expected a string.'
+    )
+  })
+
+  it.each([
+    ['missing', ''],
+    ['null', 'llmsFullUrl: null'],
+    ['empty string', "llmsFullUrl: ''"]
+  ])('treats only an absent optional URL as absent: %s', (_label, llmsFullUrlLine) => {
+    expect(
+      parseSubmissionFrontmatter(frontmatterWithLlmsFullUrl(llmsFullUrlLine)).llmsFullUrl
+    ).toBeNull()
   })
 })
 

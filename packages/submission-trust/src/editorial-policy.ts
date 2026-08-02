@@ -1,4 +1,5 @@
 import { getDomainWithoutSuffix } from 'tldts'
+import { normalizeEditorialInputs } from './editorial-normalization.js'
 import { canonicalEditorialToken, regulatedEvidence } from './regulated-token-policies.js'
 import type { SubmissionFields } from './types.js'
 
@@ -214,29 +215,19 @@ const DESCRIPTION_STOP_WORDS = new Set([
   'provide',
   'provides'
 ])
-const MAX_EDITORIAL_TEXT_CHARACTERS = 1_100_000
-
-const normalizeText = (value: string, compactSeparators = false): string => {
-  const normalized = value
-    .slice(0, MAX_EDITORIAL_TEXT_CHARACTERS)
-    .normalize('NFKC')
-    .toLocaleLowerCase('en-US')
-    .replace(/\p{Cf}+/gu, '')
-  const canonicalized = compactSeparators
-    ? normalized.replace(/([\p{L}\p{N}])[\p{P}\p{S}]+(?=[\p{L}\p{N}])/gu, '$1')
-    : normalized
-  return canonicalized
-    .replace(/[\p{P}\p{S}]+/gu, ' ')
-    .replace(/\s+/gu, ' ')
-    .trim()
-}
+const MAX_BRAND_TOKENS = 16
+const MAX_DESCRIPTION_TOKENS = 128
+const MAX_KEYWORD_STUFFING_TOKENS = 256
 
 const hasPhrase = (text: string, phrase: string): boolean => ` ${text} `.includes(` ${phrase} `)
+
+const hasSecurityPhrase = (text: string, phrase: string): boolean =>
+  hasPhrase(text, phrase) || hasPhrase(text, phrase.replaceAll(' ', ''))
 
 const matchingEvidence = (text: string, policies: readonly PhrasePolicy[]): string[] => {
   const matches: string[] = []
   for (const policy of policies) {
-    if (policy.phrases.some(phrase => hasPhrase(text, phrase))) {
+    if (policy.phrases.some(phrase => hasSecurityPhrase(text, phrase))) {
       matches.push(policy.evidenceId)
     }
   }
@@ -244,17 +235,18 @@ const matchingEvidence = (text: string, policies: readonly PhrasePolicy[]): stri
 }
 
 const hasKeywordStuffing = (description: string): boolean => {
-  const tokens = description
-    .split(' ')
-    .filter(token => token.length >= 3 && !KEYWORD_STOP_WORDS.has(token))
-  if (tokens.length < 6) return false
-
   const counts = new Map<string, number>()
-  for (const token of tokens) {
+  let tokenCount = 0
+  for (const match of description.matchAll(/\S+/gu)) {
+    const token = match[0]
+    if (token.length < 3 || KEYWORD_STOP_WORDS.has(token)) continue
+    tokenCount += 1
     counts.set(token, (counts.get(token) ?? 0) + 1)
+    if (tokenCount === MAX_KEYWORD_STUFFING_TOKENS) break
   }
+  if (tokenCount < 6) return false
   for (const count of counts.values()) {
-    if (count >= 4 && count / tokens.length >= 0.25) return true
+    if (count >= 4 && count / tokenCount >= 0.25) return true
   }
   return false
 }
@@ -279,31 +271,56 @@ const descriptionEvidence = (description: string): string[] => {
   return matches
 }
 
-const meaningfulTokens = (text: string, excludedTokens: ReadonlySet<string>): string[] => [
-  ...new Set(
-    text
-      .split(' ')
-      .map(canonicalEditorialToken)
-      .filter(
-        token =>
-          token.length >= 3 && !DESCRIPTION_STOP_WORDS.has(token) && !excludedTokens.has(token)
-      )
-  )
-]
+const meaningfulTokens = (
+  text: string,
+  excludedTokens: ReadonlySet<string>,
+  stopWords: ReadonlySet<string>,
+  maximumTokens: number
+): string[] => {
+  const tokens: string[] = []
+  const seenTokens = new Set<string>()
+  for (const match of text.matchAll(/\S+/gu)) {
+    const token = canonicalEditorialToken(match[0])
+    if (
+      token.length < 3 ||
+      stopWords.has(token) ||
+      excludedTokens.has(token) ||
+      seenTokens.has(token)
+    ) {
+      continue
+    }
+    tokens.push(token)
+    seenTokens.add(token)
+    if (tokens.length === maximumTokens) break
+  }
+  return tokens
+}
 
 const descriptionMatchesInspectedContent = (
   description: string,
   inspectedText: string,
   name: string
 ): boolean => {
-  const nameTokens = new Set(name.split(' ').map(canonicalEditorialToken))
-  const descriptionTokens = meaningfulTokens(description, nameTokens)
+  const nameTokens = new Set(
+    meaningfulTokens(name, new Set<string>(), NAME_STOP_WORDS, MAX_BRAND_TOKENS)
+  )
+  const descriptionTokens = meaningfulTokens(
+    description,
+    nameTokens,
+    DESCRIPTION_STOP_WORDS,
+    MAX_DESCRIPTION_TOKENS
+  )
   if (descriptionTokens.length === 0) return false
-  const inspectedTokens = new Set(meaningfulTokens(inspectedText, new Set<string>()))
-  const overlapCount = descriptionTokens.filter(token => inspectedTokens.has(token)).length
+  const descriptionTokenSet = new Set(descriptionTokens)
+  const overlappingTokens = new Set<string>()
+  for (const match of inspectedText.matchAll(/\S+/gu)) {
+    const token = canonicalEditorialToken(match[0])
+    if (descriptionTokenSet.has(token)) overlappingTokens.add(token)
+    if (overlappingTokens.size === descriptionTokenSet.size) break
+  }
   const requiredOverlap =
     descriptionTokens.length === 1 ? 1 : Math.max(2, Math.ceil(descriptionTokens.length * 0.25))
-  return overlapCount >= requiredOverlap
+  return overlappingTokens.size >= requiredOverlap
 }
 
 const nameMatchesDomain = (name: string, website: string): boolean => {
@@ -317,13 +334,20 @@ const nameMatchesDomain = (name: string, website: string): boolean => {
     allowPrivateDomains: true,
     extractHostname: false
   })
-  const nameTokens = normalizeText(name)
-    .split(' ')
-    .filter(token => token.length >= 3 && !NAME_STOP_WORDS.has(token))
+  const nameTokens = meaningfulTokens(name, new Set<string>(), NAME_STOP_WORDS, MAX_BRAND_TOKENS)
   if (nameTokens.length === 0 || !ownerLabel) return false
   const compactBrand = nameTokens.join('')
-  return normalizeText(ownerLabel, true) === compactBrand
+  const normalizedOwnerLabel = normalizeEditorialInputs([ownerLabel], {
+    compactSeparators: true
+  })
+  return !normalizedOwnerLabel.overflow && normalizedOwnerLabel.text === compactBrand
 }
+
+const normalizedOverflowResult = (): EditorialPolicyResult => ({
+  decision: 'manual_review',
+  evidenceIds: ['editorial:limits:normalized-text-overflow'],
+  reasonCode: 'editorial_uncertainty'
+})
 
 const categoryEvidence = (
   categories: readonly EditorialCategoryDescriptor[],
@@ -345,27 +369,36 @@ const categoryEvidence = (
  * exposing the underlying pattern table or promoting any technical decision.
  */
 export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPolicyResult => {
-  const description = normalizeText(input.fields.description)
-  const name = normalizeText(input.fields.name)
-  const inspectedText = [input.homepageText, input.llmsText, input.llmsFullText ?? '']
-    .map(value => normalizeText(value))
-    .join(' ')
-  const combinedText = [name, description, inspectedText].join(' ')
-  const compactCombinedText = [
-    input.fields.name,
-    input.fields.description,
+  const normalizedDescription = normalizeEditorialInputs([input.fields.description])
+  const normalizedName = normalizeEditorialInputs([input.fields.name])
+  const normalizedInspectedText = normalizeEditorialInputs([
     input.homepageText,
     input.llmsText,
     input.llmsFullText ?? ''
-  ]
-    .map(value => normalizeText(value, true))
-    .join(' ')
-  const prohibitedEvidence = [
-    ...new Set([
-      ...matchingEvidence(combinedText, PROHIBITED_POLICIES),
-      ...matchingEvidence(compactCombinedText, PROHIBITED_POLICIES)
-    ])
-  ]
+  ])
+  if (
+    normalizedDescription.overflow ||
+    normalizedName.overflow ||
+    normalizedInspectedText.overflow
+  ) {
+    return normalizedOverflowResult()
+  }
+  const securityText = normalizeEditorialInputs(
+    [
+      input.fields.name,
+      input.fields.description,
+      input.homepageText,
+      input.llmsText,
+      input.llmsFullText ?? ''
+    ],
+    { securityMatch: true }
+  )
+  if (securityText.overflow) return normalizedOverflowResult()
+
+  const description = normalizedDescription.text
+  const name = normalizedName.text
+  const inspectedText = normalizedInspectedText.text
+  const prohibitedEvidence = matchingEvidence(securityText.text, PROHIBITED_POLICIES)
   if (prohibitedEvidence.length > 0) {
     return {
       decision: 'reject',
@@ -374,11 +407,14 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
     }
   }
 
-  const manualEvidence = [...regulatedEvidence(combinedText), ...descriptionEvidence(description)]
+  const manualEvidence = [
+    ...regulatedEvidence([name, description, inspectedText]),
+    ...descriptionEvidence(description)
+  ]
   if (!descriptionMatchesInspectedContent(description, inspectedText, name)) {
     manualEvidence.push('editorial:quality:description-content-mismatch')
   }
-  if (!nameMatchesDomain(input.fields.name, input.fields.website)) {
+  if (!nameMatchesDomain(name, input.fields.website)) {
     manualEvidence.push('editorial:identity:name-domain-mismatch')
   }
   const categoryConcern = categoryEvidence(input.categories, input.fields.category, inspectedText)
