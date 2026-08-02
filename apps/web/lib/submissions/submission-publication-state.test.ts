@@ -35,6 +35,7 @@ describe('submission publication state', () => {
 
     expect(mockEval.mock.calls[0]?.[0]).toContain('record.publicationAttempted = true')
     expect(mockEval.mock.calls[0]?.[0]).toContain("record.state = 'auto_publish_pending'")
+    expect(mockEval.mock.calls[0]?.[0]).toContain('record.finalAssessmentLeaseExpiresAt = nil')
     expect(mockEval.mock.calls[0]?.[2]).toEqual([
       'attempt',
       'submit/sub_123',
@@ -202,6 +203,7 @@ describe('submission publication state', () => {
 
     const invocation = mockEval.mock.calls[0]
     expect(invocation?.[0]).toContain('record.state = ARGV[2]')
+    expect(invocation?.[0]).toContain('record.finalAssessmentLeaseExpiresAt = nil')
     expect(invocation?.[0]).toContain('website == ARGV[1]')
     expect(invocation?.[0]).toContain("redis.call('DEL', KEYS[2])")
     expect(invocation?.[0]).toContain('llms == ARGV[1]')

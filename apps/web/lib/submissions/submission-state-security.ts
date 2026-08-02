@@ -7,6 +7,9 @@ import type { NormalizedSubmissionFields, SubmissionState } from './submission-s
 /** Shared 48-hour lifetime for records, locks, and continuations. */
 export const SUBMISSION_RECORD_TTL_SECONDS = 48 * 60 * 60
 
+/** Short renewable lease around duplicate checks and final trust assessment. */
+export const FINAL_ASSESSMENT_LEASE_SECONDS = 60
+
 /** Maximum accepted continuation length before any parsing or decoding. */
 export const MAX_CONTINUATION_CHARACTERS = 512
 
@@ -18,15 +21,24 @@ export const FINAL_ASSESSMENT_SCRIPT = `
 local raw = redis.call('GET', KEYS[1])
 if not raw then return 'missing' end
 local record = cjson.decode(raw)
-if record.userId ~= ARGV[1] or record.fieldsHash ~= ARGV[2] then return 'binding_mismatch' end
+if record.userId ~= ARGV[1] or record.fieldsHash ~= ARGV[2] or record.continuationHash ~= ARGV[4] then return 'binding_mismatch' end
 if record.expiresAt <= ARGV[3] then return 'expired' end
 local ttl = redis.call('PTTL', KEYS[1])
 if ttl <= 0 then return 'expired' end
 if record.state == 'support_required' then
   record.state = 'final_assessing'
+  record.finalAssessmentLeaseExpiresAt = ARGV[5]
   record.updatedAt = ARGV[3]
   redis.call('SET', KEYS[1], cjson.encode(record), 'PX', ttl)
   return 'transitioned'
+end
+if record.state == 'final_assessing' then
+  if not record.finalAssessmentLeaseExpiresAt then return 'state_mismatch' end
+  if record.finalAssessmentLeaseExpiresAt > ARGV[3] then return 'in_progress' end
+  record.finalAssessmentLeaseExpiresAt = ARGV[5]
+  record.updatedAt = ARGV[3]
+  redis.call('SET', KEYS[1], cjson.encode(record), 'PX', ttl)
+  return 'recovery:final_assessing'
 end
 local exactBranch = record.submissionId and record.branch == 'submit/' .. record.submissionId
 if exactBranch and record.state == 'auto_publish_pending' and record.resultCode == 'auto_publish' then return 'recovery:auto_publish_pending' end
@@ -40,10 +52,17 @@ return 'state_mismatch'
 export const ACQUIRE_SUBMISSION_LOCKS_SCRIPT = `
 local website = redis.call('GET', KEYS[1])
 local llms = redis.call('GET', KEYS[2])
-if (website and website ~= ARGV[1]) or (llms and llms ~= ARGV[1]) then return 'conflict' end
-redis.call('SET', KEYS[1], ARGV[1], 'EX', ARGV[2])
-redis.call('SET', KEYS[2], ARGV[1], 'EX', ARGV[2])
-return 'acquired'
+if not website and not llms then
+  redis.call('SET', KEYS[1], ARGV[1], 'EX', ARGV[2])
+  redis.call('SET', KEYS[2], ARGV[1], 'EX', ARGV[2])
+  return 'acquired'
+end
+if website == ARGV[1] and llms == ARGV[1] then
+  redis.call('SET', KEYS[1], ARGV[1], 'EX', ARGV[2])
+  redis.call('SET', KEYS[2], ARGV[1], 'EX', ARGV[2])
+  return 'acquired'
+end
+return 'conflict'
 `.trim()
 
 /** Atomic three-scope submission rate-limit script. */

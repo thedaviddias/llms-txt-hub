@@ -139,22 +139,44 @@ describe('submitLlmsTxt final coordinator', () => {
     )
   })
 
-  it('allows only one of two concurrent finals to pass exact-once consumption', async () => {
+  it('allows only one concurrent final to execute while the other safely reports busy', async () => {
     mockConsume
       .mockResolvedValueOnce({ mode: 'initial', ok: true, submissionId: 'sub_123' })
-      .mockResolvedValueOnce({ code: 'replayed', ok: false })
+      .mockResolvedValueOnce({ code: 'in_progress', ok: false })
 
     const results = await Promise.all([submitLlmsTxt(form()), submitLlmsTxt(form())])
 
     expect(results).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ outcome: 'automatic', success: true }),
-        expect.objectContaining({ outcome: 'rejected', success: false })
+        expect.objectContaining({ outcome: 'retry_later', success: false })
       ])
     )
     expect(mockLocks).toHaveBeenCalledTimes(1)
     expect(mockPublish).toHaveBeenCalledTimes(1)
+    expect(mockRecordOutcome).not.toHaveBeenCalled()
   })
+
+  it.each(['before locks', 'after locks', 'during duplicates', 'during assessment'])(
+    'resumes an expired exact-token lease after a crash %s',
+    async () => {
+      mockConsume.mockResolvedValue({
+        mode: 'recovery',
+        ok: true,
+        state: 'final_assessing',
+        submissionId: 'sub_123'
+      })
+
+      await expect(submitLlmsTxt(form())).resolves.toMatchObject({
+        outcome: 'automatic',
+        success: true
+      })
+      expect(mockLocks).toHaveBeenCalledTimes(1)
+      expect(mockDuplicates).toHaveBeenCalledTimes(1)
+      expect(mockAssess).toHaveBeenCalledTimes(1)
+      expect(mockPublish).toHaveBeenCalledTimes(1)
+    }
+  )
 
   it('never publishes from preflight evidence when the fresh assessment retries', async () => {
     mockAssess.mockResolvedValue({

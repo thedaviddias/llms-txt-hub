@@ -12,19 +12,21 @@ jest.mock('@thedaviddias/logging', () => ({
 
 const mockLoggerInfo = jest.mocked(logger.info)
 
-const parseMarkdownAst = (source: string): string => {
+const parseAndRenderMdx = (
+  source: string
+): { readonly ast: string; readonly renderedText: readonly string[] } => {
   const result = spawnSync(
     process.execPath,
     [
       '--input-type=module',
       '-e',
-      "import remarkParse from 'remark-parse'; import { unified } from 'unified'; process.stdout.write(JSON.stringify(unified().use(remarkParse).parse(process.env.SUBMISSION_MARKDOWN ?? '')))"
+      "import { evaluate } from '@mdx-js/mdx'; import { JSDOM } from 'jsdom'; import React from 'react'; import { renderToStaticMarkup } from 'react-dom/server'; import * as runtime from 'react/jsx-runtime'; import remarkMdx from 'remark-mdx'; import remarkParse from 'remark-parse'; import { unified } from 'unified'; const source = process.env.SUBMISSION_MARKDOWN ?? ''; const ast = unified().use(remarkParse).use(remarkMdx).parse(source); const module = await evaluate(source, { ...runtime }); const html = renderToStaticMarkup(React.createElement(module.default)); const document = new JSDOM(html).window.document; process.stdout.write(JSON.stringify({ ast, renderedText: [...document.body.children].map(node => node.textContent) }))"
     ],
     { encoding: 'utf8', env: { ...process.env, SUBMISSION_MARKDOWN: source } }
   )
   expect(result.status).toBe(0)
   expect(result.stderr).toBe('')
-  return result.stdout
+  return JSON.parse(result.stdout)
 }
 
 const SECRET = 's'.repeat(32)
@@ -247,7 +249,7 @@ describe('publishSubmission', () => {
     const unsafeFields = {
       ...fields,
       description:
-        'Acme (v2.0). ![tracker](https://evil.example/pixel)\n> quote\n- list\n| a | b |\n===\n<script src="https://evil.example/x.js"></script> {alert(1)} **bold** ```js',
+        'Acme (v2.0). ![tracker](https://evil.example/pixel)\n> quote\n- list\n| a | b |\n===\n<script src="https://evil.example/x.js"></script> {alert(1)} **bold** ```js &lt; &amp; &#123; \\path',
       name: 'Acme.Tools (R&D) [Deceptive](https://evil.example) <Widget value={alert(1)} /> `code`'
     }
 
@@ -263,14 +265,14 @@ describe('publishSubmission', () => {
     expect(parsed.data.name).toBe(unsafeFields.name)
     expect(parsed.data.description).toBe(unsafeFields.description)
 
-    const ast = parseMarkdownAst(parsed.content)
-    expect(ast).not.toMatch(
-      /"type":"(?:link|image|html|code|blockquote|list|table|mdxJsxFlowElement|mdxTextExpression)"/
-    )
+    const parsedMdx = parseAndRenderMdx(parsed.content)
+    const ast = JSON.stringify(parsedMdx.ast)
+    expect(ast).not.toMatch(/"type":"(?:link|image|html|code|blockquote|list|table|mdx[^"]*)"/)
     expect(ast).toContain('Acme.Tools (R&D)')
     expect(ast).toContain('Deceptive')
     expect(ast).toContain('tracker')
     expect(ast).toContain('Widget')
+    expect(parsedMdx.renderedText).toEqual([unsafeFields.name, unsafeFields.description])
     expect(parsed.content).not.toMatch(/(?<!\\)!\[/)
     expect(parsed.content).not.toMatch(/(?<!\\)\[Deceptive\]\(/)
     expect(parsed.content).not.toMatch(/(?<!\\)<(?:Widget|script)\b/)
