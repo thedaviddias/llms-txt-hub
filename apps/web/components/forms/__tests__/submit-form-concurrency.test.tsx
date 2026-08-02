@@ -48,6 +48,11 @@ describe('SubmitForm request concurrency', () => {
     await waitFor(() => {
       expect(screen.getByRole('group', { name: /website details/i })).toBeDisabled()
     })
+    expect(screen.getByRole('group', { name: /website details/i })).toHaveClass(
+      'min-w-0',
+      'space-y-8'
+    )
+    expect(screen.getByRole('group', { name: /website details/i })).not.toHaveClass('contents')
     expect(screen.getByRole('button', { name: /reset/i })).toBeDisabled()
     expect(name).toBeDisabled()
     await user.type(name, 'Changed')

@@ -171,7 +171,7 @@ export function SubmitFormStep2({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <fieldset aria-label="Website details" className="contents" disabled={isLoading}>
+        <fieldset aria-label="Website details" className="min-w-0 space-y-8" disabled={isLoading}>
           {fetchFailed && (
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
