@@ -420,12 +420,12 @@ describe('submitLlmsTxt final coordinator', () => {
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
-      prCreated: false,
+      prCreated: true,
       recovery: 'same_submission'
     })
 
     await expect(submitLlmsTxt(form())).resolves.toMatchObject({
-      analytics: { prCreated: false, publicationAttempted: true, reasonCategory: 'publication' },
+      analytics: { prCreated: true, publicationAttempted: true, reasonCategory: 'publication' },
       outcome: 'retry_later',
       success: false
     })

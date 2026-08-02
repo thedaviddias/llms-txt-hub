@@ -346,13 +346,14 @@ export async function publishSubmission(
     | undefined
   let logOutcome: 'automatic' | 'manual' | 'retry_later' = 'retry_later'
   let reasonCode = 'publication_unavailable'
+  let prCreated = false
   const unavailable = async (): Promise<SubmissionPublisherResult> => {
     if (!publicationStarted || !attempt) {
       return {
         code: 'publication_unavailable',
         ok: false,
         publicationAttempted: false,
-        prCreated: false,
+        prCreated,
         recovery: 'fresh_preflight'
       }
     }
@@ -372,7 +373,7 @@ export async function publishSubmission(
       code: 'publication_unavailable',
       ok: false,
       publicationAttempted: true,
-      prCreated: false,
+      prCreated,
       recovery: 'same_submission'
     }
   }
@@ -396,7 +397,6 @@ export async function publishSubmission(
     if (!(await dependencies.state.persistBranch(attempt))) {
       return unavailable()
     }
-
     const base = await dependencies.github.getDefaultBranch()
     let headSha = await dependencies.github.getBranchHead(branch)
     if (!headSha) {
@@ -421,7 +421,7 @@ export async function publishSubmission(
     const existingPullRequests = await dependencies.github.listPullRequests(branch)
     if (existingPullRequests.length > 1) return unavailable()
     let pullRequest = existingPullRequests[0]
-    const prCreated = !pullRequest
+    const creatingPullRequest = !pullRequest
     if (
       pullRequest &&
       (pullRequest.body.split(marker).length !== 2 || pullRequest.headSha !== headSha)
@@ -437,6 +437,7 @@ export async function publishSubmission(
     if (pullRequest.body.split(marker).length !== 2 || pullRequest.headSha !== headSha) {
       return unavailable()
     }
+    if (creatingPullRequest) prCreated = true
     if (
       !(await dependencies.state.persistGithub({
         branch,
@@ -447,7 +448,6 @@ export async function publishSubmission(
     ) {
       return unavailable()
     }
-
     if (outcome === 'manual') {
       await dependencies.github.addLabels(pullRequest.number, ['needs:manual-review'])
     } else {
