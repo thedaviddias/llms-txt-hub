@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@thedaviddias/design-system/button'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type SupportPlatform = 'x' | 'linkedin'
 
@@ -20,13 +20,13 @@ interface SubmitFormSupportProps {
 
 const SUPPORT_CHOICES: readonly SupportChoice[] = [
   {
-    label: 'Support on X',
+    label: 'Follow David on X',
     platform: 'x',
     profileLabel: "Open David's X profile",
     url: 'https://x.com/thedaviddias'
   },
   {
-    label: 'Support on LinkedIn',
+    label: 'Follow David on LinkedIn',
     platform: 'linkedin',
     profileLabel: "Open David's LinkedIn profile",
     url: 'https://www.linkedin.com/in/thedaviddias/'
@@ -34,12 +34,17 @@ const SUPPORT_CHOICES: readonly SupportChoice[] = [
 ]
 
 /**
- * Collects a submitter's optional social-support choice and truthful self-attestation.
+ * Collects the required social-support choice and truthful self-attestation.
  */
 export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSupportProps) {
+  const headingRef = useRef<HTMLHeadingElement>(null)
   const [platform, setPlatform] = useState<SupportPlatform>()
   const [profileOpened, setProfileOpened] = useState(false)
   const [followAttested, setFollowAttested] = useState(false)
+
+  useEffect(() => {
+    headingRef.current?.focus()
+  }, [])
 
   /** Select one platform and invalidate any prior profile-open confirmation. */
   const selectPlatform = (nextPlatform: SupportPlatform) => {
@@ -57,8 +62,8 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
   return (
     <section className="space-y-8" aria-labelledby="support-heading">
       <div className="space-y-3">
-        <h1 id="support-heading" className="text-3xl font-bold">
-          Support the directory
+        <h1 ref={headingRef} id="support-heading" tabIndex={-1} className="text-3xl font-bold">
+          Support the maintainer
         </h1>
         <p className="text-muted-foreground">
           Choose one profile to follow before finishing your submission. This is a self-attestation;
@@ -69,37 +74,46 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
       <fieldset className="space-y-4" disabled={isLoading}>
         <legend className="text-base font-semibold">Choose one platform</legend>
         <div className="grid gap-4 sm:grid-cols-2">
-          {SUPPORT_CHOICES.map(choice => (
-            <div
-              key={choice.platform}
-              className="space-y-3 rounded-lg border border-border bg-card p-4"
-            >
-              <label className="flex cursor-pointer items-center gap-3 font-medium">
-                <input
-                  type="radio"
-                  name="support-platform"
-                  value={choice.platform}
-                  checked={platform === choice.platform}
-                  readOnly
-                  onClick={() => selectPlatform(choice.platform)}
-                  className="h-4 w-4"
-                />
-                {choice.label}
-              </label>
-              <a
-                href={choice.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={choice.profileLabel}
-                onClick={() => {
-                  if (platform === choice.platform) setProfileOpened(true)
-                }}
-                className="inline-flex text-sm font-medium text-primary underline underline-offset-4"
+          {SUPPORT_CHOICES.map(choice => {
+            const selected = platform === choice.platform
+            return (
+              <div
+                key={choice.platform}
+                data-support-card=""
+                data-state={selected ? 'selected' : 'unselected'}
+                className={`space-y-3 rounded-lg border p-4 transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${
+                  selected
+                    ? 'border-primary bg-primary/5 ring-2 ring-primary/30'
+                    : 'border-border bg-card'
+                }`}
               >
-                Open profile in a new tab
-              </a>
-            </div>
-          ))}
+                <label className="flex cursor-pointer items-center gap-3 font-medium">
+                  <input
+                    type="radio"
+                    name="support-platform"
+                    value={choice.platform}
+                    checked={selected}
+                    readOnly
+                    onClick={() => selectPlatform(choice.platform)}
+                    className="h-4 w-4"
+                  />
+                  {choice.label}
+                </label>
+                <a
+                  href={choice.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={choice.profileLabel}
+                  onClick={() => {
+                    if (selected) setProfileOpened(true)
+                  }}
+                  className="inline-flex text-sm font-medium text-primary underline underline-offset-4"
+                >
+                  Open profile in a new tab
+                </a>
+              </div>
+            )
+          })}
         </div>
 
         <label className="flex items-start gap-3 rounded-lg border border-border p-4">
@@ -121,7 +135,7 @@ export function SubmitFormSupport({ isLoading, onBack, onSubmit }: SubmitFormSup
         </label>
       </fieldset>
 
-      <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+      <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
         <Button type="button" variant="outline" onClick={onBack} disabled={isLoading}>
           Back to details
         </Button>

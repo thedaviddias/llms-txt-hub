@@ -48,13 +48,13 @@ export async function reachSubmissionSupport() {
     submissionId: 'sub_123'
   })
   submitDetails()
-  await screen.findByRole('heading', { name: /support the directory/i })
+  await screen.findByRole('heading', { name: /support the maintainer/i })
   return user
 }
 
 /** Complete the X support choice and trigger final submission. */
 export async function finishSubmissionSupport(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('radio', { name: /support on x/i }))
+  await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
   await user.click(screen.getByRole('link', { name: /open david's x profile/i }))
   await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
   await user.click(screen.getByRole('button', { name: /finish submission/i }))

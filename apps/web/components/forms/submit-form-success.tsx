@@ -2,6 +2,7 @@
 
 import { Button } from '@thedaviddias/design-system/button'
 import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 
 type SubmissionResult =
   | { readonly outcome: 'automatic' | 'manual'; readonly prUrl: string }
@@ -34,12 +35,26 @@ const resultHeading = (outcome: SubmissionResult['outcome']): string => {
  * Displays the truthful final publication outcome and a PR link only after success.
  */
 export function SubmitFormSuccess({ result, onSubmitAnother }: SubmitFormSuccessProps) {
+  const headingRef = useRef<HTMLHeadingElement>(null)
   const successful = result.outcome === 'automatic' || result.outcome === 'manual'
 
+  useEffect(() => {
+    headingRef.current?.focus()
+  }, [])
+
   return (
-    <section className="space-y-8" aria-labelledby="submission-result-heading" aria-live="polite">
+    <section
+      className="space-y-8"
+      aria-labelledby="submission-result-heading"
+      role={successful ? 'status' : 'alert'}
+    >
       <div className="space-y-4">
-        <h1 id="submission-result-heading" className="text-2xl font-semibold">
+        <h1
+          ref={headingRef}
+          id="submission-result-heading"
+          tabIndex={-1}
+          className="text-2xl font-semibold"
+        >
           {resultHeading(result.outcome)}
         </h1>
         <p className="text-gray-600 dark:text-gray-400">{resultCopy(result)}</p>
@@ -68,9 +83,9 @@ export function SubmitFormSuccess({ result, onSubmitAnother }: SubmitFormSuccess
         <Button onClick={onSubmitAnother} variant="outline">
           Submit another
         </Button>
-        <Link href="/">
-          <Button variant="ghost">Back to home</Button>
-        </Link>
+        <Button asChild variant="ghost">
+          <Link href="/">Back to home</Link>
+        </Button>
       </div>
     </section>
   )
