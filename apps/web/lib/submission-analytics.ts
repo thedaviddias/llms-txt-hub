@@ -3,6 +3,7 @@ import {
   ANALYTICS_EVENTS,
   type SubmissionAnalyticsDecision,
   type SubmissionAnalyticsDurationBucket,
+  type SubmissionAnalyticsFieldName,
   type SubmissionAnalyticsPlatform,
   type SubmissionAnalyticsReasonCategory,
   type SubmissionAnalyticsSource,
@@ -13,9 +14,13 @@ interface SafeSubmissionAnalyticsProperties {
   attempt_id?: string
   decision?: SubmissionAnalyticsDecision
   duration_bucket?: SubmissionAnalyticsDurationBucket
+  field_name?: SubmissionAnalyticsFieldName
+  modified?: boolean
   platform?: SubmissionAnalyticsPlatform
   pr_present?: boolean
+  provided?: boolean
   reason_category?: SubmissionAnalyticsReasonCategory
+  required?: boolean
   source?: SubmissionAnalyticsSource
 }
 
@@ -34,6 +39,15 @@ const isSubmissionDecision = (value: unknown): value is SubmissionAnalyticsDecis
 
 const isDurationBucket = (value: unknown): value is SubmissionAnalyticsDurationBucket =>
   value === 'under_1s' || value === '1s_to_5s' || value === 'over_5s'
+
+const isFieldName = (value: unknown): value is SubmissionAnalyticsFieldName =>
+  value === 'website' ||
+  value === 'name' ||
+  value === 'description' ||
+  value === 'category' ||
+  value === 'llms_url' ||
+  value === 'llms_full_url' ||
+  value === 'additional_content'
 
 const isPlatform = (value: unknown): value is SubmissionAnalyticsPlatform =>
   value === 'x' || value === 'linkedin'
@@ -68,9 +82,13 @@ const safeSubmissionProperties = (input: unknown): SafeSubmissionAnalyticsProper
   }
   if (isSubmissionDecision(input.decision)) properties.decision = input.decision
   if (isDurationBucket(input.durationBucket)) properties.duration_bucket = input.durationBucket
+  if (isFieldName(input.fieldName)) properties.field_name = input.fieldName
+  if (typeof input.modified === 'boolean') properties.modified = input.modified
   if (isPlatform(input.platform)) properties.platform = input.platform
   if (typeof input.prPresent === 'boolean') properties.pr_present = input.prPresent
+  if (typeof input.provided === 'boolean') properties.provided = input.provided
   if (isReasonCategory(input.reasonCategory)) properties.reason_category = input.reasonCategory
+  if (typeof input.required === 'boolean') properties.required = input.required
   if (isSource(input.source)) properties.source = input.source
   return properties
 }
@@ -103,6 +121,10 @@ export const submissionAnalytics = {
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_PROFILE_OPEN, input),
   followAttest: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_FOLLOW_ATTEST, input),
+  fieldCompleted: (input?: unknown) =>
+    trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_FIELD_COMPLETED, input),
+  fieldState: (input?: unknown) =>
+    trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_FIELD_STATE, input),
   supportBack: (input?: unknown) =>
     trackSubmissionEvent(ANALYTICS_EVENTS.SUBMISSION_SUPPORT_BACK, input),
   finalStart: (input?: unknown) =>

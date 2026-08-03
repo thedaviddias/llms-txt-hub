@@ -55,6 +55,8 @@ export const ANALYTICS_EVENTS = {
   SUBMISSION_SUPPORT_PLATFORM_SELECT: 'Submission Support Platform Select',
   SUBMISSION_PROFILE_OPEN: 'Submission Profile Open',
   SUBMISSION_FOLLOW_ATTEST: 'Submission Follow Attest',
+  SUBMISSION_FIELD_COMPLETED: 'Submission Field Completed',
+  SUBMISSION_FIELD_STATE: 'Submission Field State',
   SUBMISSION_SUPPORT_BACK: 'Submission Support Back',
   SUBMISSION_FINAL_START: 'Submission Final Start',
   SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
@@ -133,6 +135,10 @@ interface EventProps {
 
   // Privacy-safe trusted submission properties
   platform?: SubmissionAnalyticsPlatform
+  field_name?: SubmissionAnalyticsFieldName
+  modified?: boolean
+  provided?: boolean
+  required?: boolean
   decision?: SubmissionAnalyticsDecision
   reason_category?: SubmissionAnalyticsReasonCategory
   duration_bucket?: SubmissionAnalyticsDurationBucket
@@ -142,6 +148,16 @@ interface EventProps {
 
 /** Aggregate platform values permitted in trusted-submission analytics. */
 export type SubmissionAnalyticsPlatform = 'x' | 'linkedin'
+
+/** Allowlisted form fields permitted in trusted-submission analytics. */
+export type SubmissionAnalyticsFieldName =
+  | 'website'
+  | 'name'
+  | 'description'
+  | 'category'
+  | 'llms_url'
+  | 'llms_full_url'
+  | 'additional_content'
 
 /** Aggregate lifecycle outcomes permitted in trusted-submission analytics. */
 export type SubmissionAnalyticsDecision =
