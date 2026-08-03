@@ -7,6 +7,11 @@ import { toast } from 'sonner'
 import { preflightSubmission } from '@/actions/preflight-submission'
 import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import { useAnalyticsEvents, useSubmissionAnalytics } from '@/components/analytics-tracker'
+import {
+  appendSubmissionFields,
+  type PreparedSubmission,
+  useSubmissionFieldTracking
+} from './submission-field-analytics'
 import { SubmitFormChrome } from './submit-form-chrome'
 import { type Step1Data, type Step2Data, step1Schema, step2Schema } from './submit-form-schemas'
 import { SubmitFormStep1 } from './submit-form-step1'
@@ -18,8 +23,6 @@ import type { SubmitUrlStatus } from './use-submit-url-check'
 
 type SubmitStep = 'website' | 'details' | 'support' | 'result'
 
-type PreparedSubmission = Step2Data & { readonly publishedAt: string }
-
 type Continuation = { readonly submissionId: string; readonly token: string }
 
 type SubmissionResult =
@@ -28,15 +31,6 @@ type SubmissionResult =
 
 const RETRY_MESSAGE =
   'We could not safely verify this site right now. Nothing was published. Please try again later.'
-
-/**
- * Append the normalized preflight snapshot to an action payload.
- */
-const appendSubmissionFields = (formData: FormData, values: PreparedSubmission) => {
-  for (const [key, value] of Object.entries(values)) {
-    if (value) formData.append(key, value)
-  }
-}
 
 /**
  * Main form component for submitting websites
@@ -85,6 +79,11 @@ export function SubmitForm() {
       category: ''
     }
   })
+  const fieldTracking = useSubmissionFieldTracking(
+    step2Form,
+    step === 'details',
+    submissionAnalytics
+  )
 
   const metadata = useSubmitFormMetadata(step2Form, () => {
     setFocusTarget('details')
@@ -129,6 +128,7 @@ export function SubmitForm() {
     const request = beginRequest()
     if (!request) return
     const startedAt = submissionAnalytics.startPreflight()
+    fieldTracking.capture(values)
     setIsLoading(true)
     trackFormStepComplete(2, 'submit-form', 'submit-page')
 
@@ -232,6 +232,7 @@ export function SubmitForm() {
     flowGeneration.current += 1
     setContinuation(undefined)
     setPreparedSubmission(undefined)
+    fieldTracking.reset()
     setFocusTarget('details')
     setStep('details')
   }
@@ -246,6 +247,7 @@ export function SubmitForm() {
     setContinuation(undefined)
     setPreparedSubmission(undefined)
     setResult(undefined)
+    fieldTracking.reset()
     setLlmsUrlStatus({ checking: false, accessible: null })
     setLlmsFullUrlStatus({ checking: false, accessible: null })
     metadata.reset()

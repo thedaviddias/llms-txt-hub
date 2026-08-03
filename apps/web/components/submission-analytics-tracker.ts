@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import type { PreflightResult } from '@/actions/preflight-submission'
 import type { FinalSubmissionResult } from '@/actions/submit-llms-xxt'
+import type { SubmissionFieldState } from '@/components/forms/submission-field-analytics'
 import { submissionAnalytics } from '@/lib/submission-analytics'
 
 type SupportPlatform = 'x' | 'linkedin'
@@ -129,14 +130,18 @@ const trackFinalResult = (
  */
 export function useSubmissionAnalytics() {
   const attemptId = useRef<string | undefined>(undefined)
+  /** Return the active attempt ID, creating it when field activity begins the attempt. */
+  const ensureAttemptId = () => {
+    attemptId.current ??= createSubmissionAttemptId()
+    return attemptId.current
+  }
 
   return {
     getAttemptId: () => attemptId.current,
     trackSubmissionPageView: () => submissionAnalytics.pageView({ source: 'submit_page' }),
     startPreflight: () => {
-      attemptId.current = createSubmissionAttemptId()
       submissionAnalytics.preflightStart({
-        attemptId: attemptId.current,
+        attemptId: ensureAttemptId(),
         source: 'submit_page'
       })
       return Date.now()
@@ -160,6 +165,21 @@ export function useSubmissionAnalytics() {
       submissionAnalytics.supportPlatformSelect(input),
     trackSubmissionProfileOpen: (input?: unknown) => submissionAnalytics.profileOpen(input),
     trackSubmissionFollowAttest: (input?: unknown) => submissionAnalytics.followAttest(input),
+    trackSubmissionFieldCompleted: (fieldState: SubmissionFieldState) =>
+      submissionAnalytics.fieldCompleted({
+        ...fieldState,
+        attemptId: ensureAttemptId(),
+        source: 'submit_page'
+      }),
+    trackSubmissionFieldState: (fieldState: SubmissionFieldState) =>
+      submissionAnalytics.fieldState({
+        ...fieldState,
+        attemptId: ensureAttemptId(),
+        source: 'submit_page'
+      }),
+    resetSubmissionAttempt: () => {
+      attemptId.current = undefined
+    },
     trackSubmissionSupportBack: (input?: unknown) => submissionAnalytics.supportBack(input)
   }
 }

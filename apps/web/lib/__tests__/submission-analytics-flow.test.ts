@@ -21,6 +21,9 @@ const mockFailFinal = jest.fn()
 const mockPlatformSelect = jest.fn()
 const mockProfileOpen = jest.fn()
 const mockFollowAttest = jest.fn()
+const mockFieldCompleted = jest.fn()
+const mockFieldState = jest.fn()
+const mockResetAttempt = jest.fn()
 const mockSupportBack = jest.fn()
 const mockPageView = jest.fn()
 const track = jest.fn()
@@ -42,10 +45,13 @@ jest.mock('@/components/analytics-tracker', () => ({
     finishFinal: mockFinishFinal,
     finishPreflight: mockFinishPreflight,
     getAttemptId: () => TEST_ATTEMPT_ID,
+    resetSubmissionAttempt: mockResetAttempt,
     startFinal: mockStartFinal,
     startPreflight: mockStartPreflight,
     trackSubmissionPageView: mockPageView,
     trackSubmissionFollowAttest: mockFollowAttest,
+    trackSubmissionFieldCompleted: mockFieldCompleted,
+    trackSubmissionFieldState: mockFieldState,
     trackSubmissionProfileOpen: mockProfileOpen,
     trackSubmissionSupportBack: mockSupportBack,
     trackSubmissionSupportPlatformSelect: mockPlatformSelect
@@ -80,6 +86,13 @@ describe('trusted submission analytics lifecycle', () => {
 
     expect(mockPageView).toHaveBeenCalledTimes(1)
     expect(mockStartPreflight).toHaveBeenCalledTimes(1)
+    expect(mockFieldState).toHaveBeenCalledTimes(7)
+    expect(mockFieldState).toHaveBeenCalledWith({
+      fieldName: 'llms_full_url',
+      modified: false,
+      provided: false,
+      required: false
+    })
     expect(mockFinishPreflight).toHaveBeenCalledWith(
       {
         analytics: { reasonCategory: 'passed', webRiskAvailable: true },
@@ -154,6 +167,23 @@ describe('trusted submission analytics lifecycle', () => {
       source: 'support_step'
     })
     expect(JSON.stringify(mockFollowAttest.mock.calls)).not.toMatch(/username|thedaviddias/)
+  })
+
+  it('tracks the first non-empty edit for each allowlisted field without its value', async () => {
+    const user = await reachSubmissionDetails()
+    const name = screen.getByRole('textbox', { name: /^name/i })
+
+    await user.clear(name)
+    await user.type(name, 'Changed project')
+
+    expect(mockFieldCompleted).toHaveBeenCalledTimes(1)
+    expect(mockFieldCompleted).toHaveBeenCalledWith({
+      fieldName: 'name',
+      modified: true,
+      provided: true,
+      required: true
+    })
+    expect(JSON.stringify(mockFieldCompleted.mock.calls)).not.toContain('Changed project')
   })
 
   it('tracks a current PR result using only aggregate publication facts', async () => {
@@ -264,6 +294,31 @@ describe('trusted submission analytics lifecycle', () => {
       source: 'final_submission'
     })
     expect(JSON.stringify(track.mock.calls)).not.toMatch(/opaque-token|sub_123/)
+  })
+
+  it('correlates field completion with the subsequent preflight attempt', () => {
+    const view = renderHook(() => useActualSubmissionAnalytics())
+
+    act(() => {
+      view.result.current.trackSubmissionFieldCompleted({
+        fieldName: 'category',
+        modified: true,
+        provided: true,
+        required: true
+      })
+      view.result.current.startPreflight()
+    })
+
+    const fieldEvent = track.mock.calls.find(
+      call => call[0] === ANALYTICS_EVENTS.SUBMISSION_FIELD_COMPLETED
+    )
+    const preflightEvent = track.mock.calls.find(
+      call => call[0] === ANALYTICS_EVENTS.SUBMISSION_PREFLIGHT_START
+    )
+    expect(fieldEvent?.[1]?.attempt_id).toMatch(
+      /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+    )
+    expect(preflightEvent?.[1]?.attempt_id).toBe(fieldEvent?.[1]?.attempt_id)
   })
 
   it.each([

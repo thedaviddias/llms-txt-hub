@@ -24,8 +24,10 @@ describe('submission analytics', () => {
       SUBMISSION_REQUEST_DURATION: 'Submission Request Duration',
       SUBMISSION_FINAL_OUTCOME: 'Submission Final Outcome',
       SUBMISSION_FOLLOW_ATTEST: 'Submission Follow Attest',
+      SUBMISSION_FIELD_COMPLETED: 'Submission Field Completed',
       SUBMISSION_SUPPORT_BACK: 'Submission Support Back',
       SUBMISSION_FINAL_START: 'Submission Final Start',
+      SUBMISSION_FIELD_STATE: 'Submission Field State',
       SUBMISSION_PREFLIGHT_OUTCOME: 'Submission Preflight Outcome',
       SUBMISSION_PREFLIGHT_START: 'Submission Preflight Start',
       SUBMISSION_PROFILE_OPEN: 'Submission Profile Open',
@@ -69,6 +71,27 @@ describe('submission analytics', () => {
     expect(JSON.stringify(track.mock.calls)).not.toMatch(
       /secret-api-key|opaque-token|private response|203\.0\.113\.1|signed-secret|private-user|private\.example|providerBody/
     )
+  })
+
+  it('tracks field state without forwarding submitted field contents', () => {
+    submissionAnalytics.fieldState({
+      attemptId: '123e4567-e89b-42d3-a456-426614174000',
+      category: 'secret-category',
+      fieldName: 'llms_full_url',
+      modified: true,
+      provided: false,
+      required: false,
+      url: 'https://private.example/llms-full.txt'
+    })
+
+    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_FIELD_STATE, {
+      attempt_id: '123e4567-e89b-42d3-a456-426614174000',
+      field_name: 'llms_full_url',
+      modified: true,
+      provided: false,
+      required: false
+    })
+    expect(JSON.stringify(track.mock.calls)).not.toMatch(/secret-category|private\.example/)
   })
 
   it('drops invalid values instead of forwarding arbitrary strings', () => {
