@@ -1,0 +1,23 @@
+---
+name: 'handsofflinks'
+description: 'A link pipeline that builds assets, publishes them through platform APIs, and reads the link attribute off the served HTML before a row may be recorded as live. No outreach email.'
+website: 'https://handsofflinks.com/'
+llmsUrl: 'https://handsofflinks.com/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-08-08'
+---
+
+# handsofflinks
+
+handsofflinks is a link-building pipeline whose framing is that the common factor in bad paid links is that somebody had to say yes to them; it calls its alternative "Counterparty-Zero Publishing". The described cycle runs weekly in four steps — research, build for real, publish through APIs, then verify and write it down — and outreach is explicitly not one of them. The site states that failures are shown at the same size as wins and that dead links stay on the chart.
+
+## About the llms.txt Implementation
+
+`llms.txt` indexes the home, refund, terms and privacy pages, documents the two open-source libraries published alongside the product, and records that the domain is fully open to crawlers with AI retrieval crawlers named explicitly in robots.txt.
+
+## Coverage
+
+- Product overview: the four-step cycle, the per-day link chart, and the channels that worked versus the ones that did not
+- `followability` — Rust library that parses a rel token list, a robots meta tag and any `X-Robots-Tag` headers, combines them most-restrictive-wins, and names which signal withheld the follow
+- `linkfollow` — the same resolution in D, with header beating meta beating rel, optional user-agent prefixes, and noindex reported separately from nofollow
