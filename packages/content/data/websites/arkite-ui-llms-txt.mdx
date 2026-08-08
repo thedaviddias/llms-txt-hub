@@ -1,0 +1,17 @@
+---
+name: 'Arkite UI'
+description: 'Production-ready React components for multi-tenant SaaS admin panels — Tailwind CSS v4 + Radix UI + TypeScript, with machine-readable docs generated from the type-checked API on every build.'
+website: 'https://daith.github.io/arkite-ui/'
+llmsUrl: 'https://daith.github.io/arkite-ui/llms.txt'
+llmsFullUrl: 'https://daith.github.io/arkite-ui/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-08-08'
+---
+
+# Arkite UI
+
+70 React components for multi-tenant SaaS back-offices — admin layouts with mobile bottom-nav support, data tables with a server-side mode and state hook, filter bars, stat dashboards, OTP inputs. Dogfooded by nine production SaaS products before every release.
+
+## About llms.txt Implementation
+
+Both files are regenerated on every build from the library's type-checked public-API snapshot and its machine-readable design spec, so they cannot drift from the code. `llms.txt` carries setup, design rules for generated code, core usage patterns, and the full export inventory; `llms-full.txt` adds the complete design-system spec and typed signatures for every export. Both also ship inside the npm package (`node_modules/@arkite-ui/core/llms-full.txt`) so coding agents can read them offline.
