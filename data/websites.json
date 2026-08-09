@@ -9222,6 +9222,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "ProofLines",
+    "domain": "https://prooflines.org",
+    "description": "Monad network intelligence: validator-program tracker, stake-geography and concentration analytics, live network feeds, and an x402 pay-per-call data endpoint for AI agents",
+    "llmsTxtUrl": "https://prooflines.org/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=prooflines.org&sz=128",
+    "publishedAt": "2026-08-09"
+  },
+  {
     "name": "Propertyfinder",
     "domain": "https://propertyfinder.bg/",
     "description": "Вашият експертен гид за имоти в чужбина. Анализи, ръководства и съвети за умна инвестиция в Дубай, Испания, Гърция и др. Създаден специално за български инвеститори.",
