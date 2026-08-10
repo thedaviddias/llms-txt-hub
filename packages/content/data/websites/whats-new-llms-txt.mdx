@@ -1,0 +1,26 @@
+---
+name: "What's New"
+description: 'One feed for every changelog: release notes and patch notes from open-source projects, games, operating systems and desktop apps, normalized into one shape.'
+website: 'https://whatsnew.fyi'
+llmsUrl: 'https://whatsnew.fyi/llms.txt'
+llmsFullUrl: 'https://whatsnew.fyi/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-08-10'
+---
+
+# What's New
+
+Every piece of software ships changes on its own schedule, in its own place: a GitHub release, a Steam patch note, a console firmware page, an IDE changelog nobody links to. What's New reads all of them, normalizes them into one shape, and gives each product a page and each release a permalink.
+
+## Key focus areas
+
+- Changelogs for over a thousand tracked products, polled continuously, every entry linking back to the vendor's own notes
+- A page per release with its own permalink, markdown export and RSS entry
+- Provenance labels carried into every export — hand-curated sample data, pre-releases, and publishers who shipped boilerplate instead of notes
+- A public MCP server at `/mcp`, listed in the official registry as `fyi.whatsnew/changelogs`, for agents that would rather call tools than read documents
+
+## About the llms.txt implementation
+
+`llms.txt` carries an index of the machine-readable views, the 60 newest releases, and the full catalog grouped by category. `llms-full.txt` adds a one-line summary of what changed in each release. Both are generated from the same database reads that render the site, so the documents cannot drift from the pages they describe.
+
+The hierarchy goes further down than the root. Append `/llms.txt` to any product URL for that product's changelog in markdown, or to any release permalink for a single release, which matches the v2 spec's rule that the most specific file wins for the pages under its path.
