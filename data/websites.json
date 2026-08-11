@@ -2014,6 +2014,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "c-capnproto",
+    "domain": "https://c-capnproto.rgoswami.me",
+    "description": "Pure C runtime and capnpc-c for Cap'n Proto.",
+    "llmsTxtUrl": "https://c-capnproto.rgoswami.me/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=c-capnproto.rgoswami.me&sz=128",
+    "publishedAt": "2026-08-11"
+  },
+  {
     "name": "CAF",
     "domain": "https://caf.io",
     "description": "CAF is a single platform that orchestrates all the essential technologies for your client onboarding flows, including identity validation, user management, risk assessment, and continuous monitoring.",
@@ -2078,6 +2087,24 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.capitaleventi.it&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "capnp-fortran",
+    "domain": "https://capnp-fortran.rgoswami.me",
+    "description": "Native modern-Fortran Cap'n Proto runtime, plugin, and RPC.",
+    "llmsTxtUrl": "https://capnp-fortran.rgoswami.me/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=capnp-fortran.rgoswami.me&sz=128",
+    "publishedAt": "2026-08-11"
+  },
+  {
+    "name": "capnp-janet",
+    "domain": "https://capnp-janet.rgoswami.me",
+    "description": "Native Cap'n Proto runtime for Janet and embed C API.",
+    "llmsTxtUrl": "https://capnp-janet.rgoswami.me/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=capnp-janet.rgoswami.me&sz=128",
+    "publishedAt": "2026-08-11"
   },
   {
     "name": "CaptivateRecipes",
@@ -2281,6 +2308,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=chakra-ui.com&sz=128",
     "publishedAt": "2025-03-20"
+  },
+  {
+    "name": "chemparseplot",
+    "domain": "https://chemparseplot.rgoswami.me",
+    "description": "Parsers and unit-aware plotters for computational chemistry outputs.",
+    "llmsTxtUrl": "https://chemparseplot.rgoswami.me/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=chemparseplot.rgoswami.me&sz=128",
+    "publishedAt": "2026-08-11"
   },
   {
     "name": "Chánh Đại",
@@ -9276,6 +9312,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "pychum",
+    "domain": "https://pychum.rgoswami.me",
+    "description": "Python input file generator for ORCA and eOn chemistry workflows.",
+    "llmsTxtUrl": "https://pychum.rgoswami.me/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=pychum.rgoswami.me&sz=128",
+    "publishedAt": "2026-08-11"
+  },
+  {
     "name": "Pydantic",
     "domain": "https://docs.pydantic.dev/latest/",
     "description": "Pydantic is the most widely used data validation library for Python.",
@@ -9717,6 +9762,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.requesty.ai&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "rgpycrumbs",
+    "domain": "https://rgpycrumbs.rgoswami.me",
+    "description": "Dispatcher-based analytical and visualization suite for chemical physics.",
+    "llmsTxtUrl": "https://rgpycrumbs.rgoswami.me/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=rgpycrumbs.rgoswami.me&sz=128",
+    "publishedAt": "2026-08-11"
   },
   {
     "name": "Réservez un taxi à Paris - Tarifs fixes",
