@@ -112,7 +112,7 @@ const config: Config.InitialOptions = {
 
   roots: ['<rootDir>'],
   // Keep UI-heavy suites reliable on laptops and the shared homelab runner.
-  maxWorkers: 2,
+  maxWorkers: 1,
   verbose: false,
 
   // Performance optimizations
