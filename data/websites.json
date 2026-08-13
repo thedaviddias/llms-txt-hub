@@ -6501,6 +6501,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "L'Eco di Turing",
+    "domain": "https://il-quotidiano.web.app",
+    "description": "Independent Journal of AI Alignment & Interpretability. Features a collaborative common space for Humans and AI.",
+    "llmsTxtUrl": "https://il-quotidiano.web.app/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=il-quotidiano.web.app&sz=128",
+    "publishedAt": "2026-08-13"
+  },
+  {
     "name": "La Boîte Immo : Premier partenaire des agents immobiliers indépendants",
     "domain": "https://www.la-boite-immo.com/",
     "description": "La Boîte Immo, spécialiste en conception de sites immobiliers et logiciel immobilier adapté à vos besoins et de référencement en 1ère page Google.",
