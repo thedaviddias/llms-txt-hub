@@ -1,8 +1,8 @@
 import { createHash } from 'node:crypto'
 import { NextResponse } from 'next/server'
 
-const OPENPANEL_API = 'https://api.openpanel.dev'
-const OPENPANEL_CDN = 'https://openpanel.dev'
+const OPENPANEL_API = 'https://stats.daviddias.digital/api'
+const OPENPANEL_CDN = 'https://stats.daviddias.digital'
 const SCRIPT_PATH = '/op1.js'
 
 /**
