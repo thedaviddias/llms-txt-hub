@@ -7,4 +7,5 @@ fi
 pnpm install --frozen-lockfile
 pnpm lint
 pnpm typecheck
+pnpm --filter web test
 pnpm test:repo
