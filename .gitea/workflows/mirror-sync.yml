@@ -14,14 +14,14 @@ jobs:
     steps:
       - name: Trigger mirror sync
         env:
-          GITEA_MIRROR_TOKEN: ${{ secrets.GITEA_MIRROR_TOKEN }}
+          MIRROR_SYNC_TOKEN: ${{ secrets.MIRROR_SYNC_TOKEN }}
         run: |
-          if [ -z "${GITEA_MIRROR_TOKEN}" ]; then
-            echo "GITEA_MIRROR_TOKEN secret not set; skipping (mirror syncs on its 10m interval)."
+          if [ -z "${MIRROR_SYNC_TOKEN}" ]; then
+            echo "MIRROR_SYNC_TOKEN secret not set; skipping (mirror syncs on its 10m interval)."
             exit 0
           fi
           curl -sf --max-time 30 -X POST \
-            -H "Authorization: token ${GITEA_MIRROR_TOKEN}" \
+            -H "Authorization: token ${MIRROR_SYNC_TOKEN}" \
             "https://gitea.lab.coolio.cloud/api/v1/repos/thedaviddias/llms-txt-hub/mirror-sync" \
             && echo "Mirror sync triggered." \
             || echo "Mirror sync request failed; periodic sync remains the fallback."
