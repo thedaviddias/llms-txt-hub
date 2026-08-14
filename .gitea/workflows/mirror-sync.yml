@@ -1,0 +1,27 @@
+name: Mirror Sync
+# Runs inside the lab where Gitea is reachable (it resolves to a private
+# address, so GitHub-side push hooks cannot trigger the sync). Polling the
+# mirror-sync API every 5 minutes halves the pull mirror's worst-case lag;
+# the resulting push event then starts Routed CI immediately.
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger mirror sync
+        env:
+          GITEA_MIRROR_TOKEN: ${{ secrets.GITEA_MIRROR_TOKEN }}
+        run: |
+          if [ -z "${GITEA_MIRROR_TOKEN}" ]; then
+            echo "GITEA_MIRROR_TOKEN secret not set; skipping (mirror syncs on its 10m interval)."
+            exit 0
+          fi
+          curl -sf --max-time 30 -X POST \
+            -H "Authorization: token ${GITEA_MIRROR_TOKEN}" \
+            "https://gitea.lab.coolio.cloud/api/v1/repos/thedaviddias/llms-txt-hub/mirror-sync" \
+            && echo "Mirror sync triggered." \
+            || echo "Mirror sync request failed; periodic sync remains the fallback."
