@@ -108,8 +108,19 @@ export const CACHE_TTL = {
   CSRF: 3600 // 1 hour
 } as const
 
+/** Extract safe diagnostic details from an unknown thrown value. */
+const describeError = (error: unknown): { name: string; message: string } =>
+  error instanceof Error
+    ? { name: error.name, message: error.message }
+    : { name: 'UnknownError', message: String(error) }
+
 /**
- * Get value from cache with error handling
+ * Get value from cache with error handling.
+ *
+ * Retries once on failure: each attempt goes through the signal factory, so
+ * the retry gets a fresh deadline. The Upstash client cannot retry aborted
+ * requests itself — with a signal factory it rethrows aborts immediately,
+ * bypassing its retry loop.
  */
 export async function get<T = string>(key: string): Promise<T | null> {
   const client = getRedisClient()
@@ -118,14 +129,17 @@ export async function get<T = string>(key: string): Promise<T | null> {
   }
 
   try {
-    const result: T | null = await client.get<T>(key)
-    return result
-  } catch (_error) {
-    logger.error('Redis GET operation failed', {
-      data: { status: 'unavailable' },
-      tags: { type: 'redis', operation: 'get' }
-    })
-    return null
+    return await client.get<T>(key)
+  } catch {
+    try {
+      return await client.get<T>(key)
+    } catch (error) {
+      logger.warn('Redis GET operation failed', {
+        data: { key, error: describeError(error) },
+        tags: { type: 'redis', operation: 'get' }
+      })
+      return null
+    }
   }
 }
 
@@ -146,12 +160,8 @@ export async function set(key: string, value: unknown, ttl?: number): Promise<bo
     }
     return true
   } catch (error) {
-    logger.error('Redis SET operation failed', {
-      data: {
-        key,
-        ttl,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+    logger.warn('Redis SET operation failed', {
+      data: { key, ttl, error: describeError(error) },
       tags: { type: 'redis', operation: 'set' }
     })
     return false
@@ -171,11 +181,8 @@ export async function del(key: string): Promise<boolean> {
     await client.del(key)
     return true
   } catch (error) {
-    logger.error('Redis DEL operation failed', {
-      data: {
-        key,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+    logger.warn('Redis DEL operation failed', {
+      data: { key, error: describeError(error) },
       tags: { type: 'redis', operation: 'del' }
     })
     return false
@@ -199,12 +206,8 @@ export async function incr(key: string, ttl?: number): Promise<number | null> {
     }
     return count
   } catch (error) {
-    logger.error('Redis INCR operation failed', {
-      data: {
-        key,
-        ttl,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+    logger.warn('Redis INCR operation failed', {
+      data: { key, ttl, error: describeError(error) },
       tags: { type: 'redis', operation: 'incr' }
     })
     return null
@@ -226,9 +229,9 @@ export async function setNx(key: string, value: unknown, ttl: number): Promise<b
   try {
     const result = await client.set(key, value, { ex: ttl, nx: true })
     return result === 'OK'
-  } catch (_error) {
-    logger.error('Redis SET NX operation failed', {
-      data: { status: 'unavailable' },
+  } catch (error) {
+    logger.warn('Redis SET NX operation failed', {
+      data: { key, error: describeError(error) },
       tags: { type: 'redis', operation: 'set_nx' }
     })
     return null
@@ -257,9 +260,9 @@ export async function evalRedis<T>(
 
   try {
     return await client.eval<string[], T>(script, [...keys], [...args])
-  } catch (_error) {
-    logger.error('Redis EVAL operation failed', {
-      data: { status: 'unavailable' },
+  } catch (error) {
+    logger.warn('Redis EVAL operation failed', {
+      data: { error: describeError(error) },
       tags: { type: 'redis', operation: 'eval' }
     })
     return null
