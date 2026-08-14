@@ -7,11 +7,13 @@ describe('telemetry', () => {
     vi.resetModules()
     vi.stubGlobal('__CLI_VERSION__', 'test-version')
     vi.stubGlobal('fetch', fetchMock)
+    vi.stubEnv('CI', 'true')
     fetchMock.mockClear()
   })
 
   afterEach(() => {
     vi.unstubAllGlobals()
+    vi.unstubAllEnvs()
   })
 
   it('marks payloads that contain corrected agent attribution', async () => {
@@ -27,7 +29,8 @@ describe('telemetry', () => {
           skills: 'turbo',
           agents: 'cursor',
           schemaVersion: 2,
-          version: 'test-version'
+          version: 'test-version',
+          ci: true
         })
       })
     )

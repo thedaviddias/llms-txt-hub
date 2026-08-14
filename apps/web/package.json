@@ -5,6 +5,7 @@
   "scripts": {
     "analyze": "ANALYZE=true pnpm build",
     "build": "NODE_NO_WARNINGS=1 next build",
+    "build:content": "node --input-type=module -e \"import { createBuilder } from '@content-collections/core'; const builder = await createBuilder('./content-collections.ts'); await builder.build();\"",
     "clean": "git clean -xdf .cache .turbo .next coverage node_modules",
     "dev": "portless llmstxt next dev",
     "lint": "biome check --write",
