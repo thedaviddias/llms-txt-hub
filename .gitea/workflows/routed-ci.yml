@@ -3,13 +3,13 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
   group: routed-production-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 jobs:
   validate-and-deploy:
     if: ${{ vars.BUILD_PROVIDER == 'gitea' || github.event_name == 'workflow_dispatch' }}
