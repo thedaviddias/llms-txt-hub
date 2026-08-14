@@ -27,6 +27,8 @@ function buildProxyHeaders(req: Request): Headers {
   headers.set('origin', origin)
   headers.set('User-Agent', req.headers.get('user-agent') ?? '')
   if (clientIp) headers.set('openpanel-client-ip', clientIp)
+  const referer = req.headers.get('referer')
+  if (referer) headers.set('referer', referer)
 
   return headers
 }
@@ -67,6 +69,12 @@ async function serveScript(req: Request) {
 
   try {
     const res = await fetch(scriptUrl, { next: { revalidate: 86400 } })
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: 'Upstream script fetch failed', status: res.status },
+        { status: 502, headers: { 'Cache-Control': 'no-store' } }
+      )
+    }
     const body = await res.text()
     const etag = `"${createHash('md5')
       .update(scriptUrl + body)
