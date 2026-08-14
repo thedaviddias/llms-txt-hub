@@ -14,6 +14,11 @@ interface LogOptions {
 // Lazy-loaded Sentry to avoid issues in environments where it's not available
 let Sentry: typeof import('@sentry/nextjs') | false | null = null
 
+/**
+ * Lazily import Sentry, caching the module (or its absence) after the first attempt.
+ *
+ * @returns The Sentry module, or `null` when it is not available
+ */
 async function getSentry() {
   if (Sentry === null) {
     try {
@@ -33,6 +38,11 @@ const LOG_LEVELS: Record<LogLevel, number> = {
   error: 3
 }
 
+/**
+ * Resolve the minimum log level for the current environment.
+ *
+ * @returns The lowest level that should be logged
+ */
 function getMinLogLevel(): LogLevel {
   // Check if we're in a browser environment
   if (typeof window !== 'undefined') {
@@ -41,9 +51,12 @@ function getMinLogLevel(): LogLevel {
   }
 
   // Server-side: use environment variable
-  return (keys().LOG_LEVEL ?? 'error') as LogLevel
+  return keys().LOG_LEVEL ?? 'error'
 }
 
+/**
+ * Level-filtered logger that writes to the console and reports errors to Sentry.
+ */
 class Logger {
   private formatMessage(message: string, options?: LogOptions): string {
     const parts: string[] = []
@@ -84,7 +97,7 @@ class Logger {
       return
     }
 
-    console.debug(this.formatMessage(message, { ...options, level: 'debug' }))
+    console.debug(this.formatMessage(message, { ...options, level: 'debug' })) // eslint-disable-line no-console
   }
 
   info(message: string, options?: Omit<LogOptions, 'level'>) {
@@ -92,7 +105,7 @@ class Logger {
       return
     }
 
-    console.info(this.formatMessage(message, { ...options, level: 'info' }))
+    console.info(this.formatMessage(message, { ...options, level: 'info' })) // eslint-disable-line no-console
   }
 
   warn(message: string, options?: Omit<LogOptions, 'level'>) {
@@ -100,7 +113,7 @@ class Logger {
       return
     }
 
-    console.warn(this.formatMessage(message, { ...options, level: 'warn' }))
+    console.warn(this.formatMessage(message, { ...options, level: 'warn' }), options?.data ?? '')
   }
 
   error(message: string | Error, options?: Omit<LogOptions, 'level'>) {

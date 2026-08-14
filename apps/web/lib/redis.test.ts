@@ -9,7 +9,7 @@ describe('Redis safety boundary', () => {
     jest.dontMock('@upstash/redis')
   })
 
-  it('uses a fresh bounded signal and disables retries for Redis operations', async () => {
+  it('retries GET once with fresh bounded signals and disables client retries', async () => {
     jest.useFakeTimers()
     process.env = {
       ...originalEnvironment,
@@ -45,11 +45,15 @@ describe('Redis safety boundary', () => {
     await jest.isolateModulesAsync(async () => {
       const redis = await import('./redis')
       const first = redis.get('opaque-key')
-      jest.advanceTimersByTime(1_500)
+      // GET retries once, so each call makes two attempts with fresh deadlines
+      await jest.advanceTimersByTimeAsync(1_500)
+      await jest.advanceTimersByTimeAsync(1_500)
       await expect(first).resolves.toBeNull()
+      expect(observedSignals).toHaveLength(2)
       const second = redis.get('opaque-key')
-      expect(observedSignals[1]?.aborted).toBe(false)
-      jest.advanceTimersByTime(1_500)
+      expect(observedSignals[2]?.aborted).toBe(false)
+      await jest.advanceTimersByTimeAsync(1_500)
+      await jest.advanceTimersByTimeAsync(1_500)
       await expect(second).resolves.toBeNull()
       await redis.setNx('opaque-key', 'value', 60)
       await redis.evalRedis('return 1', ['opaque-key'], [])
@@ -58,9 +62,10 @@ describe('Redis safety boundary', () => {
     expect(configuration.retry).toEqual({ retries: 0 })
     expect(typeof configuration.signal).toBe('function')
     if (typeof configuration.signal !== 'function') return
-    expect(observedSignals[0]).not.toBe(observedSignals[1])
-    expect(observedSignals[0]?.aborted).toBe(true)
-    expect(observedSignals[1]?.aborted).toBe(true)
+    expect(new Set(observedSignals).size).toBe(4)
+    for (const signal of observedSignals) {
+      expect(signal.aborted).toBe(true)
+    }
     jest.useRealTimers()
   })
 
