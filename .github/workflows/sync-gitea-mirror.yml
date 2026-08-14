@@ -1,0 +1,25 @@
+name: Sync Gitea Mirror
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Trigger Gitea mirror sync
+        env:
+          GITEA_MIRROR_TOKEN: ${{ secrets.GITEA_MIRROR_TOKEN }}
+        run: |
+          if [ -z "${GITEA_MIRROR_TOKEN}" ]; then
+            echo "GITEA_MIRROR_TOKEN secret not set; skipping mirror sync (Gitea will sync on its 10m interval)."
+            exit 0
+          fi
+          # Non-fatal: the mirror's periodic sync remains the fallback.
+          curl -sf -X POST \
+            -H "Authorization: token ${GITEA_MIRROR_TOKEN}" \
+            "https://gitea.lab.coolio.cloud/api/v1/repos/thedaviddias/llms-txt-hub/mirror-sync" \
+            && echo "Mirror sync triggered." \
+            || echo "::warning::Mirror sync request failed; falling back to periodic sync."
