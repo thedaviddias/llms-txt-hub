@@ -5223,6 +5223,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Hatchloop",
+    "domain": "https://hatchloop.dev",
+    "description": "AI visibility platform that scores how ChatGPT, Gemini, and AI search agents recommend your business. Generates SEO-optimized product descriptions and JSON-LD schema for Shopify stores.",
+    "llmsTxtUrl": "https://hatchloop.dev/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=hatchloop.dev&sz=128",
+    "publishedAt": "2026-08-18"
+  },
+  {
     "name": "Health in Hand | Your Guide to OTC Medicine Safety & Self",
     "domain": "https://www.healthinhand.org/",
     "description": "Empower your self-care with expert-backed guides on over-the-counter (OTC) medicine safety. From dosing to ingredient education, Health in Hand helps you make informed health decisions for your family.",
