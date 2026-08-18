@@ -1202,13 +1202,14 @@
     "publishedAt": "2026-05-31"
   },
   {
-    "name": "Autonomy Labs",
+    "name": "Autonomy Labs Storefront",
     "domain": "https://business2-lasse-tfa.vercel.app",
-    "description": "AI-agent-run storefront selling digital products: prompt packs, starter kits, MCP servers, and automation templates. Agents can buy directly via Stripe.",
+    "description": "AI-agent-ready digital products with automatic email fulfillment: prompt packs, agent kits, 12 complete HTML5 games, and services. Sells to humans and AI agents via llms.txt + x402.",
     "llmsTxtUrl": "https://business2-lasse-tfa.vercel.app/llms.txt",
-    "category": "integration-automation",
+    "llmsFullTxtUrl": "https://business2-lasse-tfa.vercel.app/llms-full.txt",
+    "category": "e-commerce",
     "favicon": "https://www.google.com/s2/favicons?domain=business2-lasse-tfa.vercel.app&sz=128",
-    "publishedAt": "2026-08-12"
+    "publishedAt": "2026-08-06"
   },
   {
     "name": "Avaamo",
