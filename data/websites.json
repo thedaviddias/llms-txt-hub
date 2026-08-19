@@ -4214,6 +4214,16 @@
     "publishedAt": "2026-02-04"
   },
   {
+    "name": "EveryPage",
+    "domain": "https://everypage.co",
+    "description": "Secure PDF sharing with page-by-page reader analytics - see who read your document, how far they got, and who came back",
+    "llmsTxtUrl": "https://everypage.co/llms.txt",
+    "llmsFullTxtUrl": "https://everypage.co/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=everypage.co&sz=128",
+    "publishedAt": "2026-08-19"
+  },
+  {
     "name": "Evolute Institute",
     "domain": "https://evolute-institute.com/",
     "description": "Experience our legal, medically supervised, and professional psilocybin retreats in the Netherlands. Designed for deep transformation, grounded in science.",
