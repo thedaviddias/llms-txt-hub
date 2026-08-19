@@ -1,0 +1,30 @@
+---
+name: 'Master CLI (mfn)'
+description: 'AI-agent-friendly CLI: 51 headless, JSON-first commands with a self-describing manifest, a built-in MCP server, and always-on security guardrails.'
+website: 'https://github.com/Master4Novice/master-cli'
+llmsUrl: 'https://raw.githubusercontent.com/Master4Novice/master-cli/master/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-06-11'
+---
+
+# Master CLI (mfn)
+
+Master CLI (`mfn`, npm: `@master4n/master-cli`) is a command-line toolkit designed
+for AI agents first: 51 headless commands that emit exactly one JSON object on
+stdout with stable exit codes, discoverable through a self-describing
+`mfn capabilities --json` manifest. The `llms.txt` ships inside the npm package
+itself, so agents get the full contract offline.
+
+## Key Focus Areas
+
+- Token savers: extract one JSON field, a line range, or a file outline instead of dumping whole files into context
+- Exact computation: BigInt math, semver, cron, timezones — verified answers instead of guesses
+- Built-in Model Context Protocol server (`mfn mcp`) for clients without shell access
+- Always-on security guardrails: sensitive-path refusal, secret redaction, reversible deletes — no bypass flags
+
+## About llms.txt Implementation
+
+The llms.txt documents the complete agent contract: zero-install `npx` usage,
+the `--json` output envelope, exit-code semantics, per-command flags and
+examples, and the security guardrails an agent can rely on.
