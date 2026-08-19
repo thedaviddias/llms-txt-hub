@@ -40,6 +40,7 @@ We organize projects into primary categories (🤖 **AI & ML**, 💻 **Developer
 ## LLM Tools and Resources
 
 A curated list of LLM-powered tools and resources with llms.txt implementation.
+- ![Hyperion AI Tools favicon](https://www.google.com/s2/favicons?domain=ai-tools-site-tan.vercel.app&size=128) **[Hyperion AI Tools](https://ai-tools-site-tan.vercel.app)** - 4 x402 micro-payment AI tools for AI agents: long-document token compression, Chinese BaZi (Four Pillars) chart, China A-share quotes, and a policy/subsidy/commodity radar. <sub>[llms.txt](https://ai-tools-site-tan.vercel.app/llms.txt)</sub>
 
 ### 🔍 agency services
 
