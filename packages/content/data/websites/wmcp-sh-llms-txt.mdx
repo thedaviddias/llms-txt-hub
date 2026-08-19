@@ -1,0 +1,17 @@
+---
+name: 'wmcp.sh'
+description: 'Turn any URL into agent-callable MCP tools. 5-tier adapter chain (Shopify, JSON-LD, OpenAPI, providers, LLM-fallback) — hosted at the edge on Cloudflare Workers.'
+website: 'https://wmcp.sh'
+llmsUrl: 'https://wmcp.sh/llms.txt'
+llmsFullUrl: 'https://wmcp.sh/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-05-28'
+---
+
+# wmcp.sh
+
+A hosted Cloudflare Worker that extracts agent-callable MCP tools from any URL — Shopify storefronts (~4M live), OpenAPI specs, JSON-LD-tagged pages, known provider APIs (Stripe, GitHub, Slack, Notion, Linear, Discord, Google, Airtable), or a Claude 3.5 Haiku fallback for unstructured pages.
+
+Returns a JSON tool list in the Claude tool_use / OpenAI function_call / MCP shape — any agent can invoke. Sub-50ms on cache hit.
+
+Open-source MIT at [github.com/New1Direction/webmcp-anything](https://github.com/New1Direction/webmcp-anything). Live API: `curl 'https://wmcp.sh/api/v1/tools?url=<any-url>'`. Free public tier; paid `/managed` with custom adapters + verified directory listings.
