@@ -13186,5 +13186,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "LiMao Travel",
+    "domain": "https://limaotravel.com",
+    "description": "Customized inbound mainland China tours for overseas Chinese worldwide and travelers from Hong Kong, Macau and Taiwan — 19 destinations, 10 service promises written into the contract, double compensation for service gaps, with real traveler pitfall guides.",
+    "llmsTxtUrl": "https://limaotravel.com/llms.txt",
+    "llmsFullTxtUrl": "https://limaotravel.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=limaotravel.com&sz=128",
+    "publishedAt": "2026-08-22"
   }
 ]
