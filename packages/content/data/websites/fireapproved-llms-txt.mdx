@@ -9,15 +9,15 @@ publishedAt: '2026-08-25'
 
 # FireApproved
 
-FireApproved is a static citation directory for wildfire-resistant construction and plant flammability: about 4,650 pages across materials, plants, states, and guides. Every status and claim links to the source document it came from, and the site issues no ratings of its own — the evidence is the product.
+FireApproved is a static citation directory for wildfire-resistant construction and plant flammability: about 7,200 pages across materials, plants, states, and guides. Every status and claim links to the source document it came from, and the site issues no ratings of its own — the evidence is the product.
 
 ## Key Focus Areas
 
 - Materials — listed and tested home-hardening products (OSFM Building Materials Listing, ICC-ES reports, ASTM test protocols) with listing IDs and source URLs
-- Plants — 2,123 plants carrying 5,008 flammability evidence rows, with classifications computed from the evidence by a published method
+- Plants — 3,801 plants carrying 26,878 flammability evidence rows, with classifications computed from the evidence by a published method
 - States and requirements — WUI code adoption status (for example ORSC R327) cited to the ordinance or the state list
 - Open data — CC BY 4.0 datasets, with a static JSON twin for every public entity
 
 ## About llms.txt Implementation
 
-FireApproved's llms.txt lists the canonical entry points (methodology, findings, plants, materials, states, requirements) as markdown links per the spec. Every public entity also publishes a static JSON twin at the same URL plus `.json`, so assistants can retrieve structured, sourced records directly.
+FireApproved's llms.txt lists the canonical entry points (methodology, findings, plants, materials, states, requirements) as markdown links per the spec. Every public entity also publishes a static JSON twin: the `.json` replaces the page's trailing slash, so `/plants/{id}/` is served as JSON at `/plants/{id}.json`. Assistants can retrieve structured, sourced records directly.
