@@ -7591,16 +7591,6 @@
     "publishedAt": "2024-12-01"
   },
   {
-    "name": "Mnemoverse",
-    "domain": "https://mnemoverse.com",
-    "description": "Persistent memory API for AI agents, shared across Claude Code, Cursor, VS Code and ChatGPT over MCP",
-    "llmsTxtUrl": "https://mnemoverse.com/docs/llms.txt",
-    "llmsFullTxtUrl": "https://mnemoverse.com/docs/llms-full.txt",
-    "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=mnemoverse.com&sz=128",
-    "publishedAt": "2026-08-25"
-  },
-  {
     "name": "Mobile Kitchen Rental Leader",
     "domain": "https://www.mobileculinaire.com/",
     "description": "Mobile Culinaire Is A Leading US Mobile Kitchen Rental Provider. Our Units Are Ready-To-Use, Commercial-Grade, And Built To Code. FAST QUOTE.",
