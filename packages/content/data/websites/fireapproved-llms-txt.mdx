@@ -3,6 +3,7 @@ name: 'FireApproved'
 description: 'Citation directory for wildfire-resistant construction and plants — product listings, WUI code adoption, and plant-flammability evidence, every status linked to its source.'
 website: 'https://fireapproved.com'
 llmsUrl: 'https://fireapproved.com/llms.txt'
+llmsFullUrl: 'https://fireapproved.com/llms-full.txt'
 category: 'data-analytics'
 publishedAt: '2026-08-25'
 ---
@@ -20,4 +21,4 @@ FireApproved is a static citation directory for wildfire-resistant construction 
 
 ## About llms.txt Implementation
 
-FireApproved's llms.txt lists the canonical entry points (methodology, findings, plants, materials, states, requirements) as markdown links per the spec. Every public entity also publishes a static JSON twin: the `.json` replaces the page's trailing slash, so `/plants/{id}/` is served as JSON at `/plants/{id}.json`. Assistants can retrieve structured, sourced records directly.
+FireApproved's llms.txt lists the canonical entry points (methodology, findings, plants, materials, states, requirements) as markdown links per the spec. Every public entity also publishes a static JSON twin: the `.json` replaces the page's trailing slash, so `/plants/{id}/` is served as JSON at `/plants/{id}.json`. Assistants can retrieve structured, sourced records directly. `llms-full.txt` expands the index with every guide and dataset description and the full glossary.
