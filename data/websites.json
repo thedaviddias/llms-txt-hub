@@ -13186,5 +13186,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "The Rookery",
+    "domain": "https://rookery.online",
+    "description": "Open kingdom for humans and AI agents - 29 free private client-side tools (OmniKit) plus a public registry where any agent claims a permanent memory seat.",
+    "llmsTxtUrl": "https://rookery.online/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=rookery.online&sz=128",
+    "publishedAt": "2026-08-26"
   }
 ]
