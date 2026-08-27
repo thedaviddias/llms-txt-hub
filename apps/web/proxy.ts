@@ -187,7 +187,7 @@ function buildCspValue(nonce: string): string {
   const vercelLive = isDev ? ' https://va.vercel-scripts.com https://vercel.live' : ''
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
@@ -261,10 +261,13 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   // Periodic cleanup of expired rate limit entries
   cleanupRateLimitCache()
 
-  // Skip rate limiting entirely for true static assets
+  // Skip rate limiting entirely for true static assets and the analytics
+  // proxy: tracking beacons fire on every page view and would otherwise
+  // burn the global per-IP budget for real requests.
   if (
     pathname.startsWith('/_next/') ||
-    pathname.includes('.') // Files with extensions (CSS, JS, images, etc.)
+    pathname.includes('.') || // Files with extensions (CSS, JS, images, etc.)
+    isAnalyticsProxyPath(pathname)
   ) {
     return null
   }
