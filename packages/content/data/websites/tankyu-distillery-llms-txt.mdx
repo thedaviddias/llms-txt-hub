@@ -1,0 +1,30 @@
+---
+name: 'Tankyu Distillery'
+description: 'Craft single-malt whisky and gin distillery in Higashikawa, Hokkaido, with full machine-readable agent access (agents.md, llms.txt, OpenAPI 3.1, six public CORS-enabled JSON APIs, eleven .well-known files).'
+website: 'https://tankyudistillery.jp'
+llmsUrl: 'https://tankyudistillery.jp/llms.txt'
+llmsFullUrl: 'https://tankyudistillery.jp/llms-full.txt'
+category: 'ecommerce-retail'
+publishedAt: '2026-05-05'
+---
+
+# Tankyu Distillery
+
+Tankyu Distillery (丹丘蒸留所) is a craft single-malt whisky and gin distillery in Higashikawa, Hokkaido, Japan. Founded 2024 under a public–private partnership with Higashikawa Town, it produces artisan gin (flagship: Yuki no Mado, 雪の窓) and single-malt Hokkaido whisky aging for 2028+ release.
+
+## Key Focus Areas
+
+- Distillery tours and tastings (booking via partner site, Japanese / English / Mandarin)
+- Private cask ownership programme (octave to hogshead)
+- Craft gin and single-malt whisky retail
+
+## About llms.txt Implementation
+
+Tankyu's `llms.txt` and `llms-full.txt` provide structured information for AI agents on tour bookings, product catalogue (gin, whisky, liqueur), private cask ownership, and the Higashikawa terroir. Companion machine-readable assets:
+
+- `/agents.md` — agent discovery entry point
+- `/api/openapi.json` — OpenAPI 3.1 spec for all read endpoints
+- `/api/products.json`, `/api/tour.json`, `/api/facts.json`, `/api/pricing.json`, `/api/press.json` — CORS-enabled JSON APIs, no auth, 24h cache
+- `/.well-known/ai-plugin.json`, `agent-card.json`, `mcp/server-card.json`, `agent-skills/index.json` — agent protocol manifests
+- robots.txt with explicit per-bot directives for 16+ AI user-agents (GPTBot, ClaudeBot, PerplexityBot, etc.) and Content-Signal headers
+- `Accept: text/markdown` content negotiation supported on every page
