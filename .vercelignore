@@ -1,3 +1,0 @@
-# Local Turborepo caches can contain multi-gigabyte archives and are never build inputs.
-.turbo
-**/.turbo
