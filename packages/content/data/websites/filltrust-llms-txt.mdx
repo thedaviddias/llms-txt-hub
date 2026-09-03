@@ -1,0 +1,14 @@
+---
+name: 'FillTrust'
+description: 'Answers vendor security questionnaires from your own SOC 2, ISO 27001 and policy documents, citing the passage behind every answer and leaving the cell blank when the documents do not support one.'
+website: 'https://www.filltrust.com'
+llmsUrl: 'https://www.filltrust.com/llms.txt'
+category: 'security-identity'
+publishedAt: '2026-09-03'
+---
+
+# FillTrust
+
+Answers vendor security questionnaires (CAIQ, SIG Lite, ISO 27001 Annex A, bespoke spreadsheets) from a company's own documentation. Every answer cites the passage it came from, and a question the documents do not support is left blank rather than filled with something plausible.
+
+The `llms.txt` maps the public corpus: a page per questionnaire question explaining what it is really asking, which document answers it and how it usually goes wrong, the same corpus over MCP at `/api/mcp`, and the company's own machine-readable security posture at `/trust/posture.json` and `/trust/oscal.json`.
