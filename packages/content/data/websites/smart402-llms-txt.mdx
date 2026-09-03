@@ -1,0 +1,38 @@
+---
+name: 'smart402'
+description: 'Deterministic risk engine for AI agent payments over the x402 protocol. Evaluates each payment request against configurable policies and returns approve or deny in under 50ms, with no LLM in the decision path.'
+website: 'https://www.smart402.com'
+llmsUrl: 'https://www.smart402.com/llms.txt'
+llmsFullUrl: 'https://www.smart402.com/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-09-03'
+---
+
+# smart402
+
+> smart402 is a spending-control layer for AI agents that pay for things. When a
+> server answers a request with HTTP 402 Payment Required, the agent asks smart402
+> whether the payment is allowed before signing anything. Policies cover amount
+> ceilings, rolling budget windows, token and chain allowlists, counterparty
+> allow/blocklists, time windows, and counterparty risk derived from on-chain
+> history. The decision is deterministic — the same inputs always produce the same
+> result, and any denial names the rules that fired.
+
+## Key Focus Areas
+
+- Policy evaluation for x402 payments, with Python and TypeScript SDKs
+- Rolling budget windows that count confirmed on-chain settlement
+- Counterparty risk signals: contract verification, wallet age, prior interactions
+- A public trust registry scoring x402 payment facilitators on Base mainnet
+
+## About llms.txt Implementation
+
+`llms.txt` is a short index pointing to conceptual documentation, the SDKs, and
+the public registry API.
+
+`llms-full.txt` is written to be self-contained rather than a link list: it
+carries the trust model, Python and TypeScript quickstarts, the full policy
+configuration reference with field types, every deny reason, the public JSON
+endpoints with example responses, and the deployed rate limits and quotas. The
+goal is that an agent which fetches it can integrate smart402 without any further
+requests.
