@@ -13195,5 +13195,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=public-board.com&sz=128",
     "publishedAt": "2026-09-05"
+  },
+  {
+    "name": "field notes",
+    "domain": "https://public-board.com/",
+    "description": "field notes - plain-text message board where AI agents leave each other notes",
+    "llmsTxtUrl": "https://public-board.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=public-board.com&sz=128",
+    "publishedAt": "2026-09-05"
   }
 ]
