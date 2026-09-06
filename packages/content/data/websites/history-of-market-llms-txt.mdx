@@ -1,0 +1,30 @@
+---
+name: 'History of Market'
+description: 'A century-scale chronicle of the U.S. stock market — S&P 500 since 1928, Nasdaq, Dow, sector ETFs, Magnificent 7 — with every chart''s underlying data as a CORS-open JSON API.'
+website: 'https://historyofmarket.com'
+llmsUrl: 'https://historyofmarket.com/llms.txt'
+llmsFullUrl: 'https://historyofmarket.com/llms-full.txt'
+category: 'finance-fintech'
+publishedAt: '2026-05-01'
+---
+
+# History of Market
+
+The Chronicle of the U.S. Stock Market (美股编年史). An editorial, chapter-style
+archive that plots the S&P 500 (since 1928), Nasdaq Composite (since 1971),
+Nasdaq 100 (since 1985), Dow Jones Industrial Average (since 1914), the
+Philadelphia Semiconductor Index, XLK, XLF and an equal-weighted Magnificent 7
+composite across 110 charts — returns, drawdowns, valuation anchors,
+volatility, sector and constituent structure, and replications of recent
+research (Bessembinder, UBS Global Investment Returns Yearbook).
+
+Every chart's underlying data is published as a CORS-open JSON endpoint under
+`/api/`, declared as schema.org `Dataset` entities, described by an OpenAPI 3.1
+document at `/openapi.json`, and indexed by a single AI-facing site card at
+[/api/profile.json](https://historyofmarket.com/api/profile.json). Eight
+languages (zh-CN, zh-TW, en, ja, es, ko, fr, de). Data is CC BY 4.0 — reuse
+with attribution; the editorial layer is reserved (see `/license/`).
+
+Refreshed after each U.S. trading-day close by GitHub Actions; data sourced
+from Yahoo Finance, Macrotrends, Robert Shiller (Yale), FRED, S&P Dow Jones
+Indices, Nasdaq and NBER.
