@@ -29,6 +29,8 @@ const OWNER = 'thedaviddias'
 const REPO = 'llms-txt-hub'
 const RETRY_MESSAGE =
   'We could not safely verify this site right now. Nothing was published. Please try again later.'
+const RATE_LIMIT_MESSAGE =
+  'This submission is temporarily rate-limited. Please wait before trying again.'
 const DUPLICATE_MESSAGE = 'This website or llms.txt URL already has an active directory entry.'
 
 type PreflightOutcome =
@@ -70,7 +72,7 @@ const rejected = (message: string, reasonCode: SubmissionReasonCode): PreflightO
 })
 
 const retryLater = (reasonCode: SubmissionReasonCode): PreflightOutcome => ({
-  message: RETRY_MESSAGE,
+  message: reasonCode === 'rate_limited' ? RATE_LIMIT_MESSAGE : RETRY_MESSAGE,
   reasonCode,
   status: 'retry_later'
 })

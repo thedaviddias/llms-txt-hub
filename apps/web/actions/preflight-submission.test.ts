@@ -241,6 +241,7 @@ describe('preflightSubmission', () => {
   it('fails closed before assessment when identity, CSRF, limits, or duplicates fail', async () => {
     mockRateLimits.mockResolvedValue({ code: 'rate_limited', ok: false, scope: 'domain' })
     await expect(preflightSubmission(form())).resolves.toMatchObject({
+      message: 'This submission is temporarily rate-limited. Please wait before trying again.',
       reasonCode: 'rate_limited',
       status: 'retry_later'
     })
