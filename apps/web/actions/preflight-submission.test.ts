@@ -30,6 +30,7 @@ jest.mock('@/lib/submissions/submission-state', () => ({
 }))
 
 const mockAuth = jest.mocked(auth)
+const mockLoggerError = jest.mocked(logger.error)
 const mockLoggerInfo = jest.mocked(logger.info)
 const mockHeaders = jest.mocked(headers)
 const mockCsrf = jest.mocked(getStoredCSRFToken)
@@ -87,6 +88,7 @@ const assessment = (decision: SubmissionDecision): SubmissionAssessment => {
 describe('preflightSubmission', () => {
   beforeEach(() => {
     process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET = 'local-test-secret-with-at-least-32-bytes'
+    mockLoggerError.mockClear()
     mockLoggerInfo.mockClear()
     mockAuth.mockResolvedValue({
       user: {
@@ -244,6 +246,24 @@ describe('preflightSubmission', () => {
     })
     expect(mockDuplicates).not.toHaveBeenCalled()
     expect(mockAssess).not.toHaveBeenCalled()
+  })
+
+  it('records only a safe stage when an infrastructure gate throws', async () => {
+    mockDuplicates.mockRejectedValueOnce(new Error('submitted URL must never be logged'))
+
+    await expect(preflightSubmission(form())).resolves.toMatchObject({
+      reasonCode: 'publication_unavailable',
+      status: 'retry_later'
+    })
+
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      'Submission preflight failed unexpectedly',
+      expect.objectContaining({
+        data: { errorType: 'Error', stage: 'duplicates' },
+        tags: { operation: 'preflight', type: 'submission' }
+      })
+    )
+    expect(JSON.stringify(mockLoggerError.mock.calls)).not.toContain('submitted URL')
   })
 
   it('returns duplicate rejection without assessing or publishing', async () => {
