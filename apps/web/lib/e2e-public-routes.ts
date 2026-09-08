@@ -4,6 +4,11 @@ interface PublicE2eBoundaryInput {
   isPublicRoute: boolean
 }
 
+interface PublicE2eModeInput {
+  enabled: boolean
+  isProduction: boolean
+}
+
 interface PublicE2eProxyInput<Request> {
   handle: (request: Request) => Promise<Response>
   isPublicRoute: (request: Request) => boolean
@@ -18,6 +23,16 @@ interface PublicE2eProxyInput<Request> {
  */
 export function canBypassClerkForPublicE2e(input: PublicE2eBoundaryInput): boolean {
   return input.enabled && !input.isProduction && input.isPublicRoute
+}
+
+/**
+ * Allow an empty public members fixture only in explicitly enabled non-production E2E.
+ *
+ * @param input - Explicit test mode and production status
+ * @returns Whether a missing external member source may resolve to an empty list
+ */
+export function canUseEmptyMembersForPublicE2e(input: PublicE2eModeInput): boolean {
+  return input.enabled && !input.isProduction
 }
 
 /**
