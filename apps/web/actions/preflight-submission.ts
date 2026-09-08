@@ -90,6 +90,13 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
   const complete = (result: PreflightOutcome, reasonCode: string): PreflightResult => {
     logOutcome = result.status
     logReasonCode = reasonCode
+    if (result.status === 'retry_later') {
+      logger.error('Submission preflight retryable failure', {
+        data: { reasonCode, stage },
+        fingerprint: ['submission-preflight', reasonCode, stage],
+        tags: { operation: 'preflight', type: 'submission' }
+      })
+    }
     return {
       ...result,
       analytics: preflightAnalyticsMetadata(reasonCode, webRiskAvailable)
