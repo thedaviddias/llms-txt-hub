@@ -2,11 +2,11 @@ import { createHash } from 'node:crypto'
 
 import type { Octokit } from '@octokit/rest'
 import { logger } from '@thedaviddias/logging'
+import { serializeSubmissionText } from '@thedaviddias/submission-trust/additional-content'
 import { createAssessmentAttestation } from '@thedaviddias/submission-trust/attestation'
 import type { SubmissionAssessment, SubmissionFields } from '@thedaviddias/submission-trust/types'
-import yaml from 'js-yaml'
 import type { SubmissionPublisherResult } from '@/lib/submissions/submission-publisher-result'
-import { serializeSubmissionMdxText } from './submission-plain-text'
+import { renderSubmissionMdx } from './submission-mdx'
 import {
   type SubmissionPublicationState,
   submissionPublicationState
@@ -15,7 +15,6 @@ import {
 const OWNER = 'thedaviddias'
 const REPO = 'llms-txt-hub'
 const REPOSITORY = `${OWNER}/${REPO}`
-const FILE_PREFIX = 'packages/content/data/websites/'
 const GITHUB_TIMEOUT_MS = 10_000
 const ATTESTATION_LIFETIME_MS = 10 * 60 * 1000
 const SHA1 = /^[a-f0-9]{40}$/
@@ -242,39 +241,6 @@ const defaults = (): SubmissionPublisherDependencies => ({
   secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? '',
   state: submissionPublicationState
 })
-const slugify = (name: string): string =>
-  name
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9 -]+/g, ' ')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-
-const renderMdx = (
-  fields: SubmissionFields
-): { readonly content: string; readonly path: string } | null => {
-  const slug = slugify(fields.name)
-  if (!slug) return null
-  const frontmatter = yaml.dump(
-    {
-      category: fields.category,
-      description: fields.description,
-      llmsFullUrl: fields.llmsFullUrl ?? '',
-      llmsUrl: fields.llmsUrl,
-      name: fields.name,
-      publishedAt: fields.publishedAt,
-      website: fields.website
-    },
-    { forceQuotes: true, indent: 2, lineWidth: -1, quotingType: "'", sortKeys: true }
-  )
-  return {
-    content: `---\n${frontmatter}---\n\n# ${serializeSubmissionMdxText(fields.name)}\n\n${serializeSubmissionMdxText(fields.description)}\n`,
-    path: `${FILE_PREFIX}${slug}-llms-txt.mdx`
-  }
-}
-
 const pullRequestBody = (
   fields: SubmissionFields,
   assessment: SubmissionAssessment,
@@ -288,7 +254,7 @@ const pullRequestBody = (
       : shadow
         ? 'would_auto_publish'
         : assessment.decision
-  return `<!-- llms-hub-submission:${submissionId} -->\n\nThis PR adds ${serializeSubmissionMdxText(fields.name)} to the llms.txt hub.\n\n**Assessment:** ${assessmentLabel}\n**Policy:** ${assessment.policyVersion}\n**Website:** ${fields.website}\n**llms.txt:** ${fields.llmsUrl}\n${fields.llmsFullUrl ? `**llms-full.txt:** ${fields.llmsFullUrl}\n` : ''}`
+  return `<!-- llms-hub-submission:${submissionId} -->\n\nThis PR adds ${serializeSubmissionText(fields.name)} to the llms.txt hub.\n\n**Assessment:** ${assessmentLabel}\n**Policy:** ${assessment.policyVersion}\n**Website:** ${fields.website}\n**llms.txt:** ${fields.llmsUrl}\n${fields.llmsFullUrl ? `**llms-full.txt:** ${fields.llmsFullUrl}\n` : ''}`
 }
 
 const webRiskCheckedAt = (assessment: SubmissionAssessment): string | null => {
@@ -386,7 +352,7 @@ export async function publishSubmission(
     ) {
       return unavailable()
     }
-    const rendered = renderMdx(input.fields)
+    const rendered = renderSubmissionMdx(input.fields)
     if (!rendered) return unavailable()
     const branch = `submit/${input.submissionId}`
     const resultCode = publicationResultCode(input.assessment, input.mode)

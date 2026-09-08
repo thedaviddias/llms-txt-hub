@@ -1,12 +1,16 @@
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
 import { type PreflightResult, preflightSubmission } from '@/actions/preflight-submission'
 import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import { fireEvent, screen, waitFor } from '@/test/test-utils'
 import {
-  finishSubmissionSupport,
+  prepareSubmission,
   reachSubmissionDetails,
-  reachSubmissionSupport,
   SUBMISSION_METADATA,
-  submitDetails
+  submitDetails,
+  submitPreparedDetails
 } from './submit-form-test-helpers'
 
 jest.mock('@/actions/preflight-submission', () => ({
@@ -20,6 +24,21 @@ jest.mock('@/actions/submit-llms-xxt', () => ({
 describe('SubmitForm', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    jest.mocked(preflightSubmission).mockReset()
+    jest
+      .mocked(submitLlmsTxt)
+      .mockReset()
+      .mockResolvedValue({
+        success: true,
+        outcome: 'manual',
+        prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
+        analytics: {
+          publicationAttempted: true,
+          prCreated: true,
+          prPresent: true,
+          reasonCategory: 'passed'
+        }
+      })
   })
 
   it.each([
@@ -75,7 +94,7 @@ describe('SubmitForm', () => {
   }>)(
     'shows truthful $outcome publication copy and a PR link only after success',
     async testCase => {
-      const user = await reachSubmissionSupport()
+      const user = await prepareSubmission()
       jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
         analytics: {
           publicationAttempted: true,
@@ -89,7 +108,7 @@ describe('SubmitForm', () => {
         success: true
       })
 
-      await finishSubmissionSupport(user)
+      await submitPreparedDetails(user)
 
       expect(await screen.findByText(testCase.copy)).toBeInTheDocument()
       const heading = screen.getByRole('heading', {
@@ -119,7 +138,7 @@ describe('SubmitForm', () => {
     error: string
     outcome: Extract<FinalSubmissionResult, { success: false }>['outcome']
   }>)('shows the final $outcome without a PR link', async testCase => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: false,
@@ -134,7 +153,7 @@ describe('SubmitForm', () => {
       success: false
     })
 
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
 
     expect(await screen.findByText(testCase.error)).toBeInTheDocument()
     const heading = screen.getByRole('heading', {
@@ -146,16 +165,13 @@ describe('SubmitForm', () => {
     expect(screen.queryByRole('link', { name: /pull request/i })).not.toBeInTheDocument()
   })
 
-  it('moves focus from details to the support heading after preflight', async () => {
-    await reachSubmissionSupport()
-
-    const heading = screen.getByRole('heading', { name: 'Support the maintainer' })
-    expect(heading).toHaveFocus()
-    expect(heading).toHaveAttribute('tabindex', '-1')
+  it('focuses the editable details before the combined submission', async () => {
+    await prepareSubmission()
+    expect(screen.getByLabelText(/^name/i)).toHaveFocus()
   })
 
   it('submits the unchanged preflight fields with only the opaque continuation and attestation', async () => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: true,
@@ -169,14 +185,14 @@ describe('SubmitForm', () => {
       success: true
     })
 
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
 
     const submitted = jest.mocked(submitLlmsTxt).mock.calls[0]?.[0]
     expect(submitted).toBeInstanceOf(FormData)
     expect(Object.fromEntries(submitted?.entries() ?? [])).toMatchObject({
       continuationToken: 'opaque-token',
       description: SUBMISSION_METADATA.description,
-      followAttested: 'true',
+      supportToken: 'support-receipt',
       llmsUrl: SUBMISSION_METADATA.llmsUrl,
       name: SUBMISSION_METADATA.name,
       supportPlatform: 'x',
@@ -187,8 +203,11 @@ describe('SubmitForm', () => {
   })
 
   it('invalidates the continuation when returning to change details and requires preflight again', async () => {
-    const user = await reachSubmissionSupport()
-    await user.click(screen.getByRole('button', { name: /back to details/i }))
+    const user = await prepareSubmission()
+    jest.mocked(submitLlmsTxt).mockRejectedValueOnce(new Error('Response lost'))
+    await submitPreparedDetails(user)
+    await screen.findByRole('button', { name: /retry submission/i })
+    await user.click(screen.getByRole('button', { name: /edit details/i }))
     await user.clear(screen.getByLabelText(/^name/i))
     await user.type(screen.getByLabelText(/^name/i), 'Changed Example')
     jest.mocked(preflightSubmission).mockResolvedValueOnce({
@@ -197,14 +216,13 @@ describe('SubmitForm', () => {
       status: 'support_required',
       submissionId: 'sub_456'
     })
-
     submitDetails()
-
-    expect(
-      await screen.findByRole('heading', { name: /support the maintainer/i })
-    ).toBeInTheDocument()
+    await screen.findByRole('link', { name: /view pull request/i })
     expect(preflightSubmission).toHaveBeenCalledTimes(2)
-    expect(submitLlmsTxt).not.toHaveBeenCalled()
+    expect(jest.mocked(submitLlmsTxt).mock.calls[1]?.[0].get('name')).toBe('Changed Example')
+    expect(jest.mocked(submitLlmsTxt).mock.calls[1]?.[0].get('continuationToken')).toBe(
+      'new-opaque-token'
+    )
   })
 
   it('prevents duplicate preflight submission while the request is in progress', async () => {
@@ -218,7 +236,7 @@ describe('SubmitForm', () => {
           resolvePreflight = resolve
         })
     )
-    const continueButton = screen.getByRole('button', { name: /continue to support/i })
+    const continueButton = screen.getByRole('button', { name: /submit listing/i })
     const detailsForm = continueButton.closest('form')
     if (!detailsForm) throw new Error('Details form was not rendered')
     fireEvent.submit(detailsForm)
@@ -235,12 +253,12 @@ describe('SubmitForm', () => {
       submissionId: 'sub_123'
     })
     expect(
-      await screen.findByRole('heading', { name: /support the maintainer/i })
+      await screen.findByRole('heading', { name: /submission ready for review/i })
     ).toBeInTheDocument()
   })
 
   it('prevents duplicate final submission while publication is in progress', async () => {
-    const user = await reachSubmissionSupport()
+    await prepareSubmission()
     let resolveFinal: ((value: Awaited<ReturnType<typeof submitLlmsTxt>>) => void) | undefined
     jest.mocked(submitLlmsTxt).mockImplementationOnce(
       () =>
@@ -248,14 +266,10 @@ describe('SubmitForm', () => {
           resolveFinal = resolve
         })
     )
-    await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
-    await user.click(screen.getByRole('link', { name: /open david's x profile/i }))
-    await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
-    const finalButton = screen.getByRole('button', { name: /finish submission/i })
-    await user.dblClick(finalButton)
-
-    expect(submitLlmsTxt).toHaveBeenCalledTimes(1)
-    expect(screen.getByRole('button', { name: /finishing/i })).toBeDisabled()
+    submitDetails()
+    submitDetails()
+    await waitFor(() => expect(submitLlmsTxt).toHaveBeenCalledTimes(1))
+    expect(screen.getByRole('button', { name: /submitting/i })).toBeDisabled()
     resolveFinal?.({
       analytics: {
         publicationAttempted: true,
@@ -287,7 +301,7 @@ describe('SubmitForm', () => {
       scenario: 'fresh preflight required'
     }
   ])('recovers safely when $scenario', async testCase => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: false,
@@ -300,7 +314,7 @@ describe('SubmitForm', () => {
       success: false
     })
 
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
 
     expect(await screen.findByText(testCase.error)).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /pull request/i })).not.toBeInTheDocument()

@@ -1,157 +1,67 @@
-/**
- * Happy path tests for project submission flow
- *
- * Tests the successful completion of the project submission workflow.
- */
+import {
+  configureSubmissionMocks,
+  renderRealSubmissionDetails,
+  submitRealListing
+} from '@/__tests__/utils/real-submission-helpers'
+import { preflightSubmission } from '@/actions/preflight-submission'
+import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
+import { screen, waitFor } from '@/test/test-utils'
 
-import { expectFormSubmission } from '@/__tests__/utils/form-test-helpers'
-import { TestSubmitProjectForm } from '@/__tests__/utils/test-components'
-import { fireEvent, render, screen, userEvent, waitFor } from '@/test/test-utils'
+jest.unmock('react-markdown')
 
-// Mock the API calls
-const mockCheckUrl = jest.fn()
-const mockFetchMetadata = jest.fn()
-const mockSubmitProject = jest.fn()
+jest.mock('@/actions/record-submission-support', () => ({ recordSubmissionSupport: jest.fn() }))
+jest.mock('@/actions/preflight-submission', () => ({ preflightSubmission: jest.fn() }))
+jest.mock('@/actions/submit-llms-xxt', () => ({ submitLlmsTxt: jest.fn() }))
 
-// Make mocks available globally for the test component
-;(global as any).mockCheckUrl = mockCheckUrl
-;(global as any).mockFetchMetadata = mockFetchMetadata
-;(global as any).mockSubmitProject = mockSubmitProject
+describe('production submission form integration', () => {
+  beforeEach(configureSubmissionMocks)
 
-describe('Submit Project Flow - Happy Path', () => {
-  let user: ReturnType<typeof userEvent.setup>
-
-  beforeEach(() => {
-    jest.clearAllMocks()
-
-    mockCheckUrl.mockResolvedValue({ valid: true, exists: false })
-    mockFetchMetadata.mockResolvedValue({
-      title: 'Fetched Title',
-      description: 'Fetched description from metadata'
-    })
-    mockSubmitProject.mockResolvedValue({ success: true, id: 'new-project-id' })
-
-    user = userEvent.setup()
+  it('preserves additional content tools and optional URL through the complete form payload', async () => {
+    const user = await renderRealSubmissionDetails()
+    await user.click(screen.getByRole('button', { name: /use template/i }))
+    const content = screen.getByLabelText(/additional content/i)
+    if (!(content instanceof HTMLTextAreaElement))
+      throw new Error('Additional content textarea missing')
+    expect(content.value).toContain('## Key Focus Areas')
+    await user.click(screen.getByRole('button', { name: /^preview$/i }))
+    expect(screen.getByRole('heading', { name: 'Key Focus Areas' })).toBeInTheDocument()
+    expect(screen.getByText('AI Integration').tagName).toBe('STRONG')
+    expect(screen.getByText('AI Integration').closest('li')).not.toBeNull()
+    await user.click(screen.getByRole('button', { name: /^edit$/i }))
+    await user.click(screen.getByRole('button', { name: /auto-generate/i }))
+    expect(screen.getByLabelText(/llms-full.txt url/i)).toHaveValue(
+      'https://example.com/llms-full.txt'
+    )
+    submitRealListing()
+    expect(await screen.findByRole('link', { name: /view pull request/i })).toHaveAttribute(
+      'href',
+      'https://github.com/thedaviddias/llms-txt-hub/pull/123'
+    )
+    const data = jest.mocked(submitLlmsTxt).mock.calls[0]?.[0]
+    expect(data?.get('mdxContent')).toContain('## Key Focus Areas')
+    expect(data?.get('llmsFullUrl')).toBe('https://example.com/llms-full.txt')
+    expect(data?.get('supportToken')).toBe('support-receipt')
+    expect(data?.has('followAttested')).toBe(false)
   })
 
-  it('completes full submission flow successfully', async () => {
-    render(<TestSubmitProjectForm />)
-
-    // Step 1: Enter URL and trigger metadata fetch
-    const urlInput = screen.getByTestId('url-input')
-    await user.type(urlInput, 'https://example.com')
-    await user.tab()
-
-    // Wait for API calls
-    await waitFor(() => {
-      expect(mockCheckUrl).toHaveBeenCalledWith('https://example.com')
-      expect(mockFetchMetadata).toHaveBeenCalledWith('https://example.com')
-    })
-
-    // Verify metadata populated the fields
-    await waitFor(() => {
-      expect(screen.getByTestId('title-input')).toHaveValue('Fetched Title')
-      expect(screen.getByTestId('description-input')).toHaveValue(
-        'Fetched description from metadata'
-      )
-    })
-
-    // Step 2: Select category and tags
-    await user.selectOptions(screen.getByTestId('category-select'), 'AI Tools')
-    fireEvent.click(screen.getByTestId('tag-ai'))
-    fireEvent.click(screen.getByTestId('tag-productivity'))
-
-    // Step 3: Submit form
-    await user.click(screen.getByTestId('submit-button'))
-
-    // Verify submission
-    await expectFormSubmission(mockSubmitProject, {
-      url: 'https://example.com',
-      title: 'Fetched Title',
-      description: 'Fetched description from metadata',
-      category: 'AI Tools',
-      tags: ['ai', 'productivity']
-    })
-
-    // Verify success message
-    expect(await screen.findByTestId('success-message')).toBeInTheDocument()
-    expect(screen.getByText('Project submitted successfully!')).toBeInTheDocument()
+  it('publishes edited autofill values and supports another submission', async () => {
+    const user = await renderRealSubmissionDetails()
+    await user.clear(screen.getByLabelText(/^name/i))
+    await user.type(screen.getByLabelText(/^name/i), 'Updated Platform')
+    submitRealListing()
+    await screen.findByRole('link', { name: /view pull request/i })
+    expect(jest.mocked(preflightSubmission).mock.calls[0]?.[0].get('name')).toBe('Updated Platform')
+    await user.click(screen.getByRole('button', { name: /submit another/i }))
+    expect(screen.getByLabelText(/website url/i)).toHaveValue('')
+    expect(screen.getByLabelText(/website url/i)).toHaveFocus()
   })
 
-  it('allows manual editing of auto-populated fields', async () => {
-    render(<TestSubmitProjectForm />)
-
-    // Enter URL and wait for metadata
-    await user.type(screen.getByTestId('url-input'), 'https://example.com')
-    await user.tab()
-
-    await waitFor(() => {
-      expect(screen.getByTestId('title-input')).toHaveValue('Fetched Title')
-    })
-
-    // Manually edit the title
-    const titleInput = screen.getByTestId('title-input')
-    await user.clear(titleInput)
-    await user.type(titleInput, 'Custom Title')
-
-    // Fill other required fields
-    const descriptionInput = screen.getByTestId('description-input')
-    await user.clear(descriptionInput)
-    await user.type(descriptionInput, 'Custom description')
-
-    // Select category
-    await user.selectOptions(screen.getByTestId('category-select'), 'Development')
-
-    // Select tags
-    fireEvent.click(screen.getByTestId('tag-development'))
-
-    await user.click(screen.getByTestId('submit-button'))
-
-    // Verify custom title was submitted
-    await expectFormSubmission(mockSubmitProject, {
-      title: 'Custom Title',
-      description: 'Custom description',
-      category: 'Development',
-      tags: ['development']
-    })
-  })
-
-  it('handles form completion with minimal valid data', async () => {
-    render(<TestSubmitProjectForm />)
-
-    // Fill URL first and wait for metadata
-    const urlInput = screen.getByTestId('url-input')
-    await user.type(urlInput, 'https://minimal.com')
-    await user.tab()
-
-    // Wait for metadata fetch to complete
-    await waitFor(() => {
-      expect(mockCheckUrl).toHaveBeenCalledWith('https://minimal.com')
-      expect(mockFetchMetadata).toHaveBeenCalledWith('https://minimal.com')
-    })
-
-    // Now override with minimal values
-    const titleInput = screen.getByTestId('title-input')
-    await user.clear(titleInput)
-    await user.type(titleInput, 'Min')
-
-    const descriptionInput = screen.getByTestId('description-input')
-    await user.clear(descriptionInput)
-    await user.type(descriptionInput, 'Min desc')
-
-    await user.selectOptions(screen.getByTestId('category-select'), 'Development')
-    fireEvent.click(screen.getByTestId('tag-development'))
-
-    await user.click(screen.getByTestId('submit-button'))
-
-    await expectFormSubmission(mockSubmitProject, {
-      url: 'https://minimal.com',
-      title: 'Min',
-      description: 'Min desc',
-      category: 'Development',
-      tags: ['development']
-    })
-
-    expect(await screen.findByTestId('success-message')).toBeInTheDocument()
+  it('submits successfully without optional content or full URL', async () => {
+    await renderRealSubmissionDetails()
+    submitRealListing()
+    await waitFor(() => expect(submitLlmsTxt).toHaveBeenCalledTimes(1))
+    const data = jest.mocked(submitLlmsTxt).mock.calls[0]?.[0]
+    expect(data?.has('mdxContent')).toBe(false)
+    expect(data?.has('llmsFullUrl')).toBe(false)
   })
 })

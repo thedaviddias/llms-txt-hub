@@ -26,7 +26,8 @@ interface MetadataResponse {
  */
 export function useSubmitFormMetadata(
   step2Form: UseFormReturn<Step2Data>,
-  onDetailsReady: () => void
+  onDetailsReady: () => void,
+  supportToken?: string
 ): SubmitFormMetadata {
   const [isLoading, setIsLoading] = useState(false)
   const [fetchFailed, setFetchFailed] = useState(false)
@@ -66,7 +67,7 @@ export function useSubmitFormMetadata(
     const controller = new AbortController()
     abortController.current = controller
     setIsLoading(true)
-    trackFormStepComplete(1, 'submit-form', 'submit-page')
+    trackFormStepComplete(2, 'submit-form', 'submit-page')
 
     try {
       const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
@@ -75,7 +76,7 @@ export function useSubmitFormMetadata(
       const response = await fetch('/api/fetch-metadata', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ website: data.website }),
+        body: JSON.stringify({ website: data.website, supportToken }),
         signal: controller.signal
       })
       if (!isCurrentRequest(requestId)) return

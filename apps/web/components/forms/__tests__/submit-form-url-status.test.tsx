@@ -1,3 +1,7 @@
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
 import { act, fireEvent, screen, waitFor } from '@/test/test-utils'
 import { reachSubmissionDetails, SUBMISSION_METADATA } from './submit-form-test-helpers'
 
@@ -107,7 +111,7 @@ describe('SubmitForm URL status generations', () => {
       target: { value: 'https://example.com' }
     })
     fireEvent.submit(screen.getByRole('button', { name: /get website details/i }).closest('form')!)
-    await screen.findByRole('button', { name: /continue to support/i })
+    await screen.findByRole('button', { name: /submit listing/i })
 
     await waitFor(() => {
       expect(screen.queryByTitle('URL is accessible')).not.toBeInTheDocument()

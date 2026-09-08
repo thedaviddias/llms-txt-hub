@@ -24,6 +24,7 @@ import {
   createSubmissionContinuation,
   enforceSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
+import { verifySupportReceipt } from '@/lib/submissions/submission-support'
 
 const OWNER = 'thedaviddias'
 const REPO = 'llms-txt-hub'
@@ -66,7 +67,7 @@ const retryLater = (reasonCode: SubmissionReasonCode): PreflightOutcome => ({
 })
 
 /**
- * Assess a complete Step 2 submission before exposing the social support step.
+ * Assess a complete submission after its required social entry step.
  *
  * This action never calls GitHub and never returns a continuation for rejected
  * or infrastructure-unknown submissions.
@@ -102,6 +103,16 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
     const parsed = parseSubmissionActionInput(formData)
     if (!parsed.ok) {
       return complete(rejected(parsed.message, 'required_resource_missing'), 'invalid_input')
+    }
+    if (!verifySupportReceipt(formData.get('supportToken'), session.user.id)) {
+      return complete(
+        {
+          message: 'Open LinkedIn or X again to continue your submission.',
+          reasonCode: 'publication_unavailable',
+          status: 'retry_later'
+        },
+        'invalid_input'
+      )
     }
     const sourceIp = submissionSourceIp(await headers())
     if (!sourceIp) return complete(retryLater('publication_unavailable'), 'source_ip_unavailable')

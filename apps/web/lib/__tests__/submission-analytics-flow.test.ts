@@ -1,11 +1,15 @@
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
 import { createElement } from 'react'
 import { preflightSubmission } from '@/actions/preflight-submission'
 import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import {
-  finishSubmissionSupport,
+  prepareSubmission,
   reachSubmissionDetails,
-  reachSubmissionSupport,
-  submitDetails
+  submitDetails,
+  submitPreparedDetails
 } from '@/components/forms/__tests__/submit-form-test-helpers'
 import { SubmitFormSupport } from '@/components/forms/submit-form-support'
 import { useSubmissionAnalytics as useActualSubmissionAnalytics } from '@/components/submission-analytics-tracker'
@@ -49,6 +53,7 @@ jest.mock('@/components/analytics-tracker', () => ({
     startFinal: mockStartFinal,
     startPreflight: mockStartPreflight,
     trackSubmissionPageView: mockPageView,
+    trackSubmissionSupportView: jest.fn(),
     trackSubmissionFollowAttest: mockFollowAttest,
     trackSubmissionFieldCompleted: mockFieldCompleted,
     trackSubmissionFieldState: mockFieldState,
@@ -82,7 +87,8 @@ describe('trusted submission analytics lifecycle', () => {
     })
 
     submitDetails()
-    await screen.findByRole('heading', { name: /support the maintainer/i })
+    submitDetails()
+    await screen.findByRole('heading', { name: /verification unavailable/i })
 
     expect(mockPageView).toHaveBeenCalledTimes(1)
     expect(mockStartPreflight).toHaveBeenCalledTimes(1)
@@ -135,17 +141,11 @@ describe('trusted submission analytics lifecycle', () => {
     const user = userEvent.setup()
     render(
       createElement(SubmitFormSupport, {
-        attemptId: TEST_ATTEMPT_ID,
-        isLoading: false,
-        onBack: jest.fn(),
-        onSubmit: jest.fn()
+        onContinue: jest.fn()
       })
     )
 
-    await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
-    await user.click(screen.getByRole('link', { name: /open david's linkedin profile/i }))
-    await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
-    await user.click(screen.getByRole('button', { name: /back to details/i }))
+    await user.click(screen.getByRole('link', { name: /follow or connect.*linkedin/i }))
 
     expect(mockPlatformSelect).toHaveBeenCalledWith({
       attemptId: TEST_ATTEMPT_ID,
@@ -157,16 +157,8 @@ describe('trusted submission analytics lifecycle', () => {
       platform: 'linkedin',
       source: 'support_step'
     })
-    expect(mockFollowAttest).toHaveBeenCalledWith({
-      attemptId: TEST_ATTEMPT_ID,
-      platform: 'linkedin',
-      source: 'support_step'
-    })
-    expect(mockSupportBack).toHaveBeenCalledWith({
-      attemptId: TEST_ATTEMPT_ID,
-      source: 'support_step'
-    })
-    expect(JSON.stringify(mockFollowAttest.mock.calls)).not.toMatch(/username|thedaviddias/)
+    expect(mockFollowAttest).not.toHaveBeenCalled()
+    expect(JSON.stringify(mockProfileOpen.mock.calls)).not.toMatch(/username|thedaviddias/)
   })
 
   it('tracks the first non-empty edit for each allowlisted field without its value', async () => {
@@ -187,7 +179,7 @@ describe('trusted submission analytics lifecycle', () => {
   })
 
   it('tracks a current PR result using only aggregate publication facts', async () => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: true,
@@ -201,7 +193,7 @@ describe('trusted submission analytics lifecycle', () => {
       success: true
     })
 
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
 
     expect(mockStartFinal).toHaveBeenCalledWith('x')
     expect(mockFinishFinal).toHaveBeenCalledWith(
@@ -243,7 +235,7 @@ describe('trusted submission analytics lifecycle', () => {
       reason_category: 'passed',
       source: 'preflight'
     })
-    expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_SUPPORT_VIEW, {
+    expect(track).not.toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_SUPPORT_VIEW, {
       source: 'support_step'
     })
     expect(track).toHaveBeenCalledWith(ANALYTICS_EVENTS.SUBMISSION_WEB_RISK_AVAILABLE, {
@@ -260,6 +252,7 @@ describe('trusted submission analytics lifecycle', () => {
     const view = renderHook(() => useActualSubmissionAnalytics())
 
     act(() => {
+      view.result.current.trackSubmissionSupportView()
       const startedAt = view.result.current.startPreflight()
       view.result.current.finishPreflight(
         {
@@ -585,14 +578,14 @@ describe('trusted submission analytics lifecycle', () => {
   )
 
   it('does not track a stale final response after unmount', async () => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     let resolveFinal: (result: Awaited<ReturnType<typeof submitLlmsTxt>>) => void = () => undefined
     const pending = new Promise<Awaited<ReturnType<typeof submitLlmsTxt>>>(resolve => {
       resolveFinal = resolve
     })
     jest.mocked(submitLlmsTxt).mockImplementationOnce(() => pending)
 
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
     cleanup()
     await act(async () => {
       resolveFinal({

@@ -1,7 +1,7 @@
 # Trusted Automatic Submissions and Social Reciprocity
 
 **Date:** 2026-08-01  
-**Status:** Approved for specification review
+**Status:** Implemented; updated September 8, 2026 (social entry and content preservation)
 
 ## Summary
 
@@ -47,17 +47,19 @@ A catalogue audit on 2026-08-01 found 2,551 source MDX entries. The existing val
 
 ### Submission sequence
 
-1. A signed-in user enters the website URL.
-2. The server performs a preflight trust assessment before asking for reciprocal support.
-3. If the submission is clearly ineligible, the user receives a safe, actionable rejection and is not asked to follow David.
-4. If the submission is eligible to continue, the form presents a **Support the maintainer** step with two choices:
-   - **Follow David on X**
-   - **Follow David on LinkedIn**
-5. The user selects one platform, opens the profile, and confirms **I follow David on this platform**. Existing followers can use the same confirmation.
-6. Final submission reruns every server-side trust check. The client-side preflight and confirmation are never trusted as publication evidence.
-7. The user sees one of three clear outcomes: published automatically after checks, queued for manual review, or rejected.
+1. A signed-in user sees **Follow or connect with David** before any form fields.
+2. Either **Follow David on X** or **Follow or connect on LinkedIn** opens the existing profile in a new tab. The authenticated, CSRF-protected action issues a signed platform receipt bound to that account for up to 48 hours.
+3. The receipt unlocks the website URL form. Existing followers or connections use the same profile links.
+4. Metadata fills the existing editable details, including all categories, optional `llms-full.txt`, and the Additional Content editor/template/preview. Metadata failure still permits manual entry.
+5. **Submit listing** performs preflight and final server reassessment without another social step. Both actions validate the support receipt; the final continuation remains bound to the exact canonical fields.
+6. Success retains the PR link and distinguishes automatic publication from maintainer review. Rejection or temporary failure offers **Edit details** without clearing user edits. A lost final response offers **Retry submission** using the original continuation for idempotent reconciliation.
+7. Starting another listing clears the form fields while retaining the support receipt for the current page session.
 
-The support step is an honest attestation, not a claim of API verification. The implementation must not say that the follow was verified. No X or LinkedIn username is collected.
+The product asks for a follow/connection through marketing copy, records profile interactions, and does not create a `followAttested` assertion. Social usernames are not collected. Public metadata GET access remains available; submission-specific metadata POST requires the support receipt.
+
+### Additional Content
+
+Optional content is bounded to 5,000 source and canonical characters. A parsed Markdown tree is sanitized and serialized into stable, MDX-safe content. Headings, emphasis, lists and code remain available; executable HTML/JSX/expressions/imports are inert. Safe HTTPS destinations retain useful fragments; content with unassessed destinations requires manual review. Canonical content participates in continuation hashing, editorial checks and exact-byte publication attestation. Empty content preserves the previous field hash format. Noncanonical PR bodies cannot enter automatic publication.
 
 ### Outcome language
 
@@ -211,7 +213,7 @@ For `reject`, no GitHub branch or PR is created. For `retry_later`, the user can
 
 ### Trusted auto-merge provenance
 
-Structural eligibility and an `automerge:candidate` label are not sufficient authorization to merge. An automatic PR must carry a signed assessment attestation produced by the web application after the PR number and head commit SHA exist.
+Structural eligibility and an `automerge:candidate` label are not sufficient authorization to merge. Web submissions carry a signed assessment attestation produced after the PR number and head commit SHA exist. The explicitly enabled trusted direct-PR path can instead issue an in-memory attestation after successful exact-head CI, current-base checks, canonical data-only content parsing, and a fresh complete assessment; it never writes that signature to the PR. See the [direct PR assessment runbook](../../runbooks/direct-pr-assessment.md) for its prerequisites and final revalidation contract.
 
 The publisher creates the PR without auto-merge authorization, then signs a canonical payload containing:
 
@@ -237,14 +239,14 @@ The auto-merge workflow checks out only the trusted base branch and must:
 5. wait for all required repository checks to pass;
 6. merge only if every condition still passes.
 
-A synchronize event, content edit, stale attestation, missing attestation, signature failure, changed URL, provider failure, or downgraded assessment removes auto-merge eligibility. Manually created PRs and manual-review submissions do not receive an `auto_publish` attestation and therefore cannot enter the automatic lane even when their file shape is valid.
+A synchronize event, content edit, stale attestation, signature failure, changed URL, provider failure, or downgraded assessment removes auto-merge eligibility. Web manual/shadow submissions and any PR with web provenance but no valid signature cannot fall back to the direct path. An unsigned direct PR with no such provenance may receive a fresh in-memory attestation only through the explicitly enabled trusted path. Existing manual-review labels remain vetoes.
 
 ### Idempotency across asynchronous publication
 
-The same submission ID spans preflight, support attestation, final assessment, GitHub publication, retries, and completion:
+The same submission ID spans preflight, final assessment, GitHub publication, retries, and completion. The account-bound support receipt is issued separately before preflight:
 
-- the support step receives an opaque, signed continuation token tied to the submission ID and field hash;
-- final submission atomically transitions that record from `support_required` to `final_assessing` and rejects changed fields or replayed tokens;
+- the entry step receives an account-bound profile receipt; after form review, preflight issues a separate opaque continuation tied to the submission ID and canonical field hash;
+- final submission atomically transitions that record from `support_required` (the retained internal state name) to `final_assessing` and rejects changed fields or replayed tokens;
 - a pending-domain lock prevents a second submission ID from publishing the same normalized website or llms URL;
 - before branch creation, the publisher records the deterministic branch name and checks for an existing PR marker containing the submission ID;
 - after creation, the record stores the PR number and head SHA before the signed attestation is issued;
@@ -359,7 +361,7 @@ Do not send submitted URLs or account identifiers to an external provider beyond
 
 ## Acceptance Criteria
 
-- Submitters who pass preflight must choose either X or LinkedIn and attest that they follow David before final submission.
+- Signed-in submitters must open either X or LinkedIn before the form is revealed; the server validates a signed account-bound profile receipt before preflight and final submission.
 - The product never claims a social follow was technically verified.
 - Required safety signals are all high-confidence passes before automatic publication.
 - Unknown or unavailable security signals never publish and never create a public PR containing an untrusted URL.

@@ -6,6 +6,7 @@ import { promisify } from 'node:util'
 import { assessPublicationFields } from '@thedaviddias/submission-trust/assessment'
 import {
   type AssessmentAttestationVerificationResult,
+  createAssessmentAttestation,
   verifyAssessmentAttestation
 } from '@thedaviddias/submission-trust/attestation'
 import {
@@ -13,6 +14,7 @@ import {
   WEB_RISK_FRESHNESS_MS
 } from '@thedaviddias/submission-trust/constants'
 import { createNetworkInspector } from '@thedaviddias/submission-trust/network-inspector'
+import { parseSubmissionBody } from '@thedaviddias/submission-trust/submission-body'
 import type {
   PublicationAssessmentDependencies,
   SubmissionAssessment,
@@ -21,7 +23,7 @@ import type {
 import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
 import { checkWebRiskUrl } from '@thedaviddias/submission-trust/web-risk'
 import { glob } from 'glob'
-import matter from 'gray-matter'
+import { JSON_SCHEMA, load as loadYaml } from 'js-yaml'
 import { categories } from '../apps/web/lib/categories.ts'
 import {
   classifyPullRequest,
@@ -165,6 +167,7 @@ export type ReviewConclusion =
   | 'unknown'
 
 interface DryRunOptions {
+  assessDirect: boolean
   concurrency: number
   dryRun: boolean
   json: boolean
@@ -268,6 +271,8 @@ interface GitHubCompareResponse {
 }
 
 export interface SubmissionFrontmatter {
+  bodyRequiresManualReview?: true
+  mdxContent?: string
   category: string
   description: string
   llmsFullUrl?: string | null
@@ -292,7 +297,21 @@ interface ModeratedSubmissionFile {
 
 interface ModerationResult extends GuidelineAssessment {
   attestation: AssessmentAttestationVerificationResult
+  ephemeralAttestation?: EphemeralAssessmentAttestation
   files: ModeratedSubmissionFile[]
+}
+
+interface EphemeralAssessmentAttestation {
+  block: string
+  originalBody: string
+}
+
+interface DirectAssessmentContext {
+  enabled: boolean
+  baseSnapshotStatus: TrustedBaseStatus
+  hasManualReviewLabel: boolean
+  requiredCheckStatus: ReviewConclusion
+  structurallyEligible: boolean
 }
 
 interface PullRequestReviewSnapshot {
@@ -346,6 +365,7 @@ interface MergeRevalidationContext {
   baseDuplicateStatus: DuplicateStatus
   baseSha: string
   duplicateFields: DuplicateCandidate
+  ephemeralAttestation?: EphemeralAssessmentAttestation
   file: ModeratedSubmissionFile
   freshAssessment: SubmissionAssessment
   headRepository: string
@@ -631,6 +651,7 @@ export function verifyMergeAttestation(
     }
     const content = new TextDecoder('utf-8', { fatal: true }).decode(input.addedMdxBytes)
     const frontmatter = parseSubmissionFrontmatter(content)
+    if (frontmatter.bodyRequiresManualReview) return invalidAttestation()
     const expected = {
       headSha: input.currentHeadSha,
       llmsUrl: frontmatter.llmsUrl,
@@ -652,6 +673,101 @@ export function verifyMergeAttestation(
   } catch {
     return invalidAttestation()
   }
+}
+
+const hasWebSubmissionProvenance = (body: string): boolean =>
+  body.length > 100_000 || /llms-hub-(?:submission|assessment)/i.test(body)
+
+/** Verify in-memory direct provenance or the existing web signature at the final PR read. */
+export function verifyFinalMergeAttestation(input: {
+  readonly ephemeralAttestation?: EphemeralAssessmentAttestation
+  readonly verification: MergeAttestationVerificationInput
+}): AssessmentAttestationVerificationResult {
+  const ephemeral = input.ephemeralAttestation
+  if (!ephemeral) return verifyMergeAttestation(input.verification)
+  if (
+    input.verification.body !== ephemeral.originalBody ||
+    hasWebSubmissionProvenance(input.verification.body)
+  ) {
+    return invalidAttestation()
+  }
+  return verifyMergeAttestation({ ...input.verification, body: ephemeral.block })
+}
+
+/** Check trusted prerequisites before any outbound direct-PR assessment or signing. */
+const directAssessmentBlockReason = (input: {
+  body: string
+  context?: DirectAssessmentContext
+  frontmatter: SubmissionFrontmatter
+  secret: string
+}): string | null => {
+  const context = input.context
+  if (!context?.enabled) return 'A valid signed exact-byte assessment is required.'
+  if (hasWebSubmissionProvenance(input.body)) {
+    return 'Web submission provenance requires a valid existing signed assessment.'
+  }
+  if (context.hasManualReviewLabel) return 'Publisher-owned manual review is required.'
+  if (!context.structurallyEligible) return 'The direct pull request is not structurally eligible.'
+  if (context.requiredCheckStatus !== 'success') {
+    return `Direct assessment requires successful PR Review for the exact head (${context.requiredCheckStatus}).`
+  }
+  if (context.baseSnapshotStatus !== 'current') {
+    return 'Direct assessment requires the current trusted base snapshot.'
+  }
+  if (input.secret.length > 4096 || Buffer.byteLength(input.secret, 'utf8') < 32) {
+    return 'The trusted assessment signing key is unavailable or invalid.'
+  }
+  if (input.frontmatter.bodyRequiresManualReview) {
+    return 'The submitted Markdown body requires maintainer review.'
+  }
+  return null
+}
+
+/** Mint a bounded, memory-only signature from fresh complete trusted provider evidence. */
+const createDirectAssessmentAttestation = (input: {
+  assessment: SubmissionAssessment
+  frontmatter: SubmissionFrontmatter
+  verification: MergeAttestationVerificationInput
+}): EphemeralAssessmentAttestation | undefined => {
+  const now = safeClock(input.verification.now)
+  if (
+    !now ||
+    !hasFreshSafeAssessmentEvidence(
+      input.assessment,
+      Boolean(input.frontmatter.llmsFullUrl),
+      now.getTime()
+    )
+  )
+    return undefined
+  const providerTimes = input.assessment.evidence.flatMap(entry =>
+    entry.check === 'resource' && typeof entry.details?.checkedAt === 'string'
+      ? [Date.parse(entry.details.checkedAt)]
+      : []
+  )
+  const oldestCheck = Math.min(...providerTimes)
+  if (!Number.isFinite(oldestCheck)) return undefined
+  const signed = createAssessmentAttestation(
+    {
+      decision: 'auto_publish',
+      expiresAt: new Date(
+        Math.min(now.getTime() + WEB_RISK_FRESHNESS_MS, oldestCheck + WEB_RISK_FRESHNESS_MS)
+      ).toISOString(),
+      headSha: input.verification.currentHeadSha,
+      issuedAt: now.toISOString(),
+      ...(input.frontmatter.llmsFullUrl ? { llmsFullUrl: input.frontmatter.llmsFullUrl } : {}),
+      llmsUrl: input.frontmatter.llmsUrl,
+      mdxContentSha256: createHash('sha256').update(input.verification.addedMdxBytes).digest('hex'),
+      mdxPath: input.verification.addedMdxPath,
+      policyVersion: SUBMISSION_POLICY_VERSION,
+      prNumber: input.verification.prNumber,
+      repository: input.verification.repository,
+      submissionId: `direct-pr-${input.verification.prNumber}-${input.verification.currentHeadSha}`,
+      webRiskCheckedAt: new Date(oldestCheck).toISOString(),
+      website: input.frontmatter.website
+    },
+    input.verification.secret
+  )
+  return signed.ok ? { block: signed.block, originalBody: input.verification.body } : undefined
 }
 
 /**
@@ -755,18 +871,33 @@ function pullRequestHasManualReviewVeto(details: GitHubPullRequestDetails): bool
   return details.labels.some(label => label?.name === 'needs:manual-review')
 }
 
-/**
- * Parse submission frontmatter from a PR-added MDX file.
- */
-export function parseSubmissionFrontmatter(content: string): SubmissionFrontmatter {
+/** Read bounded YAML data without dispatching any contributor-selected parser engine. */
+function parseUntrustedFrontmatter(content: string): {
+  data: Record<string, unknown>
+  content: string
+} {
   if (
     Buffer.byteLength(content, 'utf8') === 0 ||
     Buffer.byteLength(content, 'utf8') > MAX_MDX_BYTES
   ) {
     throw new Error('Submission MDX is empty or too large.')
   }
-  const parsed = matter(content)
-  const data = ensureRecord(parsed.data)
+  const header = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(content)
+  if (!header || typeof header[1] !== 'string') {
+    throw new Error('Submission frontmatter requires standard YAML delimiters.')
+  }
+  return {
+    content: content.slice(header[0].length),
+    data: ensureRecord(loadYaml(header[1], { schema: JSON_SCHEMA }))
+  }
+}
+
+/**
+ * Parse submission frontmatter from a PR-added MDX file.
+ */
+export function parseSubmissionFrontmatter(content: string): SubmissionFrontmatter {
+  const parsed = parseUntrustedFrontmatter(content)
+  const data = parsed.data
   const allowedKeys = new Set([
     'category',
     'description',
@@ -789,6 +920,9 @@ export function parseSubmissionFrontmatter(content: string): SubmissionFrontmatt
     website: readRequiredString(data, 'website')
   }
 
+  const body = parseSubmissionBody(parsed.content, frontmatter)
+  if (body.mdxContent) frontmatter.mdxContent = body.mdxContent
+  if (!body.canonical) frontmatter.bodyRequiresManualReview = true
   return frontmatter
 }
 
@@ -1024,6 +1158,7 @@ const assessSubmission = async (input: {
     category: input.frontmatter.category,
     description: input.frontmatter.description,
     llmsUrl: input.frontmatter.llmsUrl,
+    ...(input.frontmatter.mdxContent ? { mdxContent: input.frontmatter.mdxContent } : {}),
     name: input.frontmatter.name,
     publishedAt: input.frontmatter.publishedAt ?? '',
     website: input.frontmatter.website
@@ -1036,7 +1171,24 @@ const assessSubmission = async (input: {
     inspectResource: input.inspectResource ?? createReviewInspector().inspect
   }
   if (input.now) dependencies.now = input.now
-  return assessPublicationFields(fields, dependencies)
+  const assessment = await assessPublicationFields(fields, dependencies)
+  if (assessment.decision !== 'auto_publish' || !input.frontmatter.bodyRequiresManualReview)
+    return assessment
+  return {
+    ...assessment,
+    decision: 'manual_review',
+    reasonCode: 'editorial_uncertainty',
+    publicMessage: 'The submitted Markdown body requires maintainer review.',
+    evidence: [
+      ...assessment.evidence,
+      {
+        check: 'editorial',
+        decision: 'manual_review',
+        reasonCode: 'editorial_uncertainty',
+        details: { evidenceId: 'editorial:content:noncanonical-body' }
+      }
+    ]
+  }
 }
 
 const toGuidelineAssessment = (assessment: SubmissionAssessment): GuidelineAssessment => {
@@ -1117,13 +1269,7 @@ const normalizeDuplicateFields = (
 
 const parseDuplicateFields = (content: string): NormalizedDuplicateFields | null => {
   try {
-    if (
-      Buffer.byteLength(content, 'utf8') === 0 ||
-      Buffer.byteLength(content, 'utf8') > MAX_MDX_BYTES
-    ) {
-      return null
-    }
-    const data = ensureRecord(matter(content).data)
+    const { data } = parseUntrustedFrontmatter(content)
     const website = normalizeExistingDuplicateUrl(readRequiredString(data, 'website'))
     const llmsUrl = normalizeExistingDuplicateUrl(readRequiredString(data, 'llmsUrl'))
     if (!website && !llmsUrl) return null
@@ -1385,8 +1531,7 @@ async function buildDefaultOpenPullRequestDuplicateIndex(
 /**
  * CLI entrypoint for the local PR review dry-run.
  */
-async function main(): Promise<void> {
-  const args = process.argv.slice(2)
+export async function main(args = process.argv.slice(2)): Promise<void> {
   if (args[0] === '--derive-event-context') {
     await printAutomergeEventContext(args[1], args[2] ?? process.env.GITHUB_EVENT_NAME)
     return
@@ -1467,8 +1612,9 @@ async function printAutomergeEventContext(
 /**
  * Parse supported CLI flags for the local dry-run command.
  */
-function parseArgs(args: string[]): DryRunOptions {
+export function parseArgs(args: string[]): DryRunOptions {
   const options: DryRunOptions = {
+    assessDirect: false,
     concurrency: DEFAULT_CONCURRENCY,
     dryRun: false,
     json: false,
@@ -1489,6 +1635,11 @@ function parseArgs(args: string[]): DryRunOptions {
 
     if (arg === '--dry-run') {
       options.dryRun = true
+      continue
+    }
+
+    if (arg === '--assess-direct') {
+      options.assessDirect = true
       continue
     }
 
@@ -1625,10 +1776,19 @@ async function analyzePullRequest(
       mergeable: details.mergeable,
       state: details.state
     })
+    const trustedBaseSha = process.env.TRUSTED_BASE_SHA ?? ''
+    const baseSnapshotStatus = await fetchTrustedBaseStatus(repo, details, trustedBaseSha)
     const moderation = await moderatePullRequest({
       body: typeof details.body === 'string' ? details.body : '',
       classification,
       contentRepo: details.head.repo?.full_name ?? '',
+      directAssessment: {
+        enabled: options.assessDirect,
+        baseSnapshotStatus,
+        hasManualReviewLabel: pullRequestHasManualReviewVeto(details),
+        requiredCheckStatus: reviewStatus,
+        structurallyEligible: structuralDecision.structurallyEligible
+      },
       files,
       prNumber: details.number,
       repo,
@@ -1636,8 +1796,6 @@ async function analyzePullRequest(
       sha: details.head.sha
     })
     const moderatedFile = moderation.files.length === 1 ? moderation.files[0] : undefined
-    const trustedBaseSha = process.env.TRUSTED_BASE_SHA ?? ''
-    const baseSnapshotStatus = await fetchTrustedBaseStatus(repo, details, trustedBaseSha)
     const attestation = moderation.attestation
     const duplicateFields = moderatedFile
       ? normalizeDuplicateFields(moderatedFile.frontmatter)
@@ -1700,6 +1858,7 @@ async function analyzePullRequest(
               baseDuplicateStatus,
               baseSha,
               duplicateFields,
+              ephemeralAttestation: moderation.ephemeralAttestation,
               file: moderatedFile,
               freshAssessment: moderatedFile.assessment,
               headRepository: details.head.repo?.full_name ?? '',
@@ -1889,10 +2048,85 @@ async function syncAuthorizationFailureLabels(
   }
 }
 
+/** Revalidate exact signed bytes, PR provenance, mutable vetoes, and refreshed merge gates. */
+export function deriveRevalidatedMergeDecision(input: {
+  readonly authorization: MergeAuthorization
+  readonly headSha: string
+  readonly prNumber: number
+  readonly revalidation: MergeRevalidationContext
+  readonly repo: string
+  readonly secret: string
+  readonly now?: () => Date
+  readonly prepared: {
+    readonly baseSnapshotStatus: TrustedBaseStatus
+    readonly reviewStatus: ReviewConclusion
+    readonly manifest: ImmutablePullRequestManifest
+    readonly openPullRequestDuplicateStatus: DuplicateStatus
+  }
+  readonly latest: GitHubPullRequestDetails
+}): { authorization: MergeAuthorization; mergeAllowed: boolean } {
+  const revalidation = input.revalidation
+  const manifestMatches =
+    input.prepared.manifest.status === 'complete' &&
+    input.prepared.manifest.files.length === 1 &&
+    input.prepared.manifest.files[0]?.status === 'added' &&
+    input.prepared.manifest.files[0]?.filename === revalidation.file.path
+  const snapshotMatches =
+    input.latest.number === input.prNumber &&
+    input.latest.head.sha === input.headSha &&
+    input.latest.head.repo?.full_name === revalidation.headRepository &&
+    input.latest.base?.ref === 'main' &&
+    input.latest.base.repo?.full_name === input.repo &&
+    input.latest.base.sha === revalidation.baseSha
+  const latestAttestation =
+    manifestMatches && snapshotMatches
+      ? verifyFinalMergeAttestation({
+          ephemeralAttestation: revalidation.ephemeralAttestation,
+          verification: {
+            addedMdxBytes: revalidation.file.bytes,
+            addedMdxPath: revalidation.file.path,
+            body: typeof input.latest.body === 'string' ? input.latest.body : '',
+            currentHeadSha: input.latest.head.sha,
+            prNumber: input.latest.number,
+            repository: input.repo,
+            secret: input.secret,
+            now: input.now
+          }
+        })
+      : invalidAttestation()
+  const authorization = deriveMergeAuthorization({
+    attestation: latestAttestation,
+    now: input.now,
+    baseDuplicateStatus: revalidation.baseDuplicateStatus,
+    baseSnapshotStatus: input.prepared.baseSnapshotStatus,
+    freshAssessment: revalidation.freshAssessment,
+    hasManualReviewLabel: pullRequestHasManualReviewVeto(input.latest),
+    openPullRequestDuplicateStatus: input.prepared.openPullRequestDuplicateStatus,
+    requiredCheckStatus: input.prepared.reviewStatus
+  })
+  const exact = deriveExactHeadMergeDecision({
+    authorization,
+    baseSnapshotStatus: input.prepared.baseSnapshotStatus,
+    currentHeadSha: input.latest.head.sha,
+    expectedHeadSha: input.headSha,
+    requiredCheckStatus: input.prepared.reviewStatus
+  })
+  return {
+    authorization: exact,
+    mergeAllowed:
+      input.authorization.authorized &&
+      exact.authorized &&
+      snapshotMatches &&
+      input.latest.state === 'open' &&
+      !input.latest.draft &&
+      input.latest.mergeable === true
+  }
+}
+
 /**
  * Execute the planned merge action against GitHub.
  */
-async function executeMergeAction(input: {
+export async function executeMergeAction(input: {
   authorization: MergeAuthorization
   headSha: string
   mergePlan: MergeAction
@@ -1908,58 +2142,14 @@ async function executeMergeAction(input: {
     const revalidation = input.revalidation
     if (!revalidation) throw new Error('Missing trusted revalidation context.')
     const decision = await runFinalMergeSequence({
-      authorize: (prepared, latest) => {
-        const manifestMatches =
-          prepared.manifest.status === 'complete' &&
-          prepared.manifest.files.length === 1 &&
-          prepared.manifest.files[0]?.status === 'added' &&
-          prepared.manifest.files[0]?.filename === revalidation.file.path
-        const snapshotMatches =
-          latest.number === input.prNumber &&
-          latest.head.sha === input.headSha &&
-          latest.head.repo?.full_name === revalidation.headRepository &&
-          latest.base?.ref === 'main' &&
-          latest.base.repo?.full_name === input.repo &&
-          latest.base.sha === revalidation.baseSha
-        const latestAttestation =
-          manifestMatches && snapshotMatches
-            ? verifyMergeAttestation({
-                addedMdxBytes: revalidation.file.bytes,
-                addedMdxPath: revalidation.file.path,
-                body: typeof latest.body === 'string' ? latest.body : '',
-                currentHeadSha: latest.head.sha,
-                prNumber: latest.number,
-                repository: input.repo,
-                secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
-              })
-            : invalidAttestation()
-        const authorization = deriveMergeAuthorization({
-          attestation: latestAttestation,
-          baseDuplicateStatus: revalidation.baseDuplicateStatus,
-          baseSnapshotStatus: prepared.baseSnapshotStatus,
-          freshAssessment: revalidation.freshAssessment,
-          hasManualReviewLabel: pullRequestHasManualReviewVeto(latest),
-          openPullRequestDuplicateStatus: prepared.openPullRequestDuplicateStatus,
-          requiredCheckStatus: prepared.reviewStatus
-        })
-        const exact = deriveExactHeadMergeDecision({
-          authorization,
-          baseSnapshotStatus: prepared.baseSnapshotStatus,
-          currentHeadSha: latest.head.sha,
-          expectedHeadSha: input.headSha,
-          requiredCheckStatus: prepared.reviewStatus
-        })
-        return {
-          authorization: exact,
-          mergeAllowed:
-            input.authorization.authorized &&
-            exact.authorized &&
-            snapshotMatches &&
-            latest.state === 'open' &&
-            !latest.draft &&
-            latest.mergeable === true
-        }
-      },
+      authorize: (prepared, latest) =>
+        deriveRevalidatedMergeDecision({
+          ...input,
+          revalidation,
+          prepared,
+          latest,
+          secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+        }),
       fetchLatest: () => fetchFinalPullRequestDetails(input.repo, input.prNumber),
       isAuthorized: value => value.mergeAllowed,
       merge: async () => {
@@ -2233,16 +2423,24 @@ function normalizeConclusion(conclusion: string | null): ReviewConclusion {
 /**
  * Run guideline moderation for each added MDX file in a structurally safe PR.
  */
-async function moderatePullRequest(input: {
-  body: string
-  classification: PullRequestClassification
-  contentRepo: string
-  files: GitHubPullRequestFile[]
-  prNumber: number
-  repo: string
-  secret: string
-  sha: string
-}): Promise<ModerationResult> {
+export async function moderatePullRequest(
+  input: {
+    body: string
+    classification: PullRequestClassification
+    contentRepo: string
+    directAssessment?: DirectAssessmentContext
+    files: GitHubPullRequestFile[]
+    prNumber: number
+    repo: string
+    secret: string
+    sha: string
+  },
+  dependencies: {
+    assess?: typeof assessSubmission
+    fetchBytes?: typeof fetchRepositoryFileBytes
+    now?: () => Date
+  } = {}
+): Promise<ModerationResult> {
   if (input.classification.lane !== 'mdx-fast') {
     return {
       attestation: invalidAttestation(),
@@ -2279,35 +2477,80 @@ async function moderatePullRequest(input: {
 
   const file = mdxFiles[0]
   if (!file) throw new Error('Trusted MDX manifest is unavailable.')
-  const bytes = await fetchRepositoryFileBytes(input.contentRepo, file.filename, input.sha)
+  const bytes = await (dependencies.fetchBytes ?? fetchRepositoryFileBytes)(
+    input.contentRepo,
+    file.filename,
+    input.sha
+  )
   const fileContent = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
   const frontmatter = parseSubmissionFrontmatter(fileContent)
-  const attestation = verifyMergeAttestation({
+  const verification = {
     addedMdxBytes: bytes,
     addedMdxPath: file.filename,
     body: input.body,
     currentHeadSha: input.sha,
+    now: dependencies.now,
     prNumber: input.prNumber,
     repository: input.repo,
     secret: input.secret
+  }
+  let attestation = verifyMergeAttestation(verification)
+  const directBlockReason = directAssessmentBlockReason({
+    body: input.body,
+    context: input.directAssessment,
+    frontmatter,
+    secret: input.secret
   })
-  const fullAssessment = await runTrustedAssessmentGate(
-    { addedMdxCount: mdxFiles.length, attestationVerified: attestation.ok },
-    () => assessSubmission({ frontmatter })
-  )
+  /**
+   * Reassess the immutable submission fields with the trusted policy and network boundary.
+   */
+  const assess = () =>
+    (dependencies.assess ?? assessSubmission)({ frontmatter, now: dependencies.now })
+  const fullAssessment = attestation.ok
+    ? await runTrustedAssessmentGate(
+        { addedMdxCount: mdxFiles.length, attestationVerified: true },
+        assess
+      )
+    : directBlockReason === null
+      ? await assess()
+      : null
   if (!fullAssessment) {
     return {
       attestation,
       files: [],
-      guidelineReasons: ['A valid signed exact-byte assessment is required.'],
+      guidelineReasons: [directBlockReason ?? 'A valid signed exact-byte assessment is required.'],
       guidelineStatus: 'warn',
       policyEligible: false
     }
   }
   const assessment = toGuidelineAssessment(fullAssessment)
+  let ephemeralAttestation: EphemeralAssessmentAttestation | undefined
+  if (!attestation.ok) {
+    ephemeralAttestation = createDirectAssessmentAttestation({
+      assessment: fullAssessment,
+      frontmatter,
+      verification
+    })
+    if (ephemeralAttestation) {
+      attestation = verifyFinalMergeAttestation({ ephemeralAttestation, verification })
+    }
+    if (!attestation.ok) {
+      return {
+        attestation,
+        files: [],
+        guidelineReasons: assessment.policyEligible
+          ? ['Fresh complete provider evidence and a valid exact-byte signature are required.']
+          : assessment.guidelineReasons,
+        guidelineStatus:
+          assessment.guidelineStatus === 'pass' ? 'warn' : assessment.guidelineStatus,
+        policyEligible: false
+      }
+    }
+  }
 
   return {
     attestation,
+    ...(ephemeralAttestation ? { ephemeralAttestation } : {}),
     files: [{ assessment: fullAssessment, bytes, frontmatter, path: file.filename }],
     guidelineReasons: assessment.guidelineReasons,
     guidelineStatus: assessment.guidelineStatus,

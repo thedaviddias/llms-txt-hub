@@ -30,6 +30,7 @@ export interface SubmissionFields {
   description: string
   llmsFullUrl?: string
   llmsUrl: string
+  mdxContent?: string
   name: string
   publishedAt: string
   website: string
