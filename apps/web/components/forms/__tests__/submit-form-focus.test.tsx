@@ -1,5 +1,5 @@
 jest.mock('@/actions/record-submission-support', () => ({
-  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true })
 }))
 
 import { submitLlmsTxt } from '@/actions/submit-llms-xxt'

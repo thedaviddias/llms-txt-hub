@@ -6,9 +6,7 @@ jest.mock('@/actions/record-submission-support', () => ({ recordSubmissionSuppor
 
 describe('SubmitFormSupport entry gate', () => {
   beforeEach(() => {
-    jest
-      .mocked(recordSubmissionSupport)
-      .mockResolvedValue({ success: true, token: 'support-receipt' })
+    jest.mocked(recordSubmissionSupport).mockResolvedValue({ success: true })
   })
 
   it('focuses the marketing heading and offers both exact profile links in new tabs', () => {
@@ -39,9 +37,7 @@ describe('SubmitFormSupport entry gate', () => {
     render(<SubmitFormSupport onContinue={onContinue} />)
     expect(onContinue).not.toHaveBeenCalled()
     await user.click(screen.getByRole('link', { name: label }))
-    await waitFor(() =>
-      expect(onContinue).toHaveBeenCalledWith({ platform, token: 'support-receipt' })
-    )
+    await waitFor(() => expect(onContinue).toHaveBeenCalledWith({ platform }))
     const data = jest.mocked(recordSubmissionSupport).mock.calls[0]?.[0]
     expect(data?.get('supportPlatform')).toBe(platform)
     expect(data?.has('followAttested')).toBe(false)
@@ -58,8 +54,8 @@ describe('SubmitFormSupport entry gate', () => {
   })
 
   it('prevents duplicate receipt requests and ignores completion after unmount', async () => {
-    let complete: (result: { success: true; token: string }) => void = () => undefined
-    const pending = new Promise<{ success: true; token: string }>(resolve => {
+    let complete: (result: { success: true }) => void = () => undefined
+    const pending = new Promise<{ success: true }>(resolve => {
       complete = resolve
     })
     jest.mocked(recordSubmissionSupport).mockReturnValue(pending)
@@ -72,7 +68,7 @@ describe('SubmitFormSupport entry gate', () => {
     expect(onContinue).not.toHaveBeenCalled()
     view.unmount()
     await act(async () => {
-      complete({ success: true, token: 'late-receipt' })
+      complete({ success: true })
       await pending
     })
     expect(onContinue).not.toHaveBeenCalled()

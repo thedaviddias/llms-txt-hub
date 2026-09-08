@@ -4,13 +4,13 @@ import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import { getStoredCSRFToken } from '@/lib/csrf-protection'
 import { isValidSubmissionCsrf } from '@/lib/submissions/submission-action-input'
-import { createSupportReceipt } from '@/lib/submissions/submission-support'
 
-type SupportResult = { success: true; token: string } | { success: false; error: string }
+type SupportResult = { success: true } | { success: false; error: string }
 
 /**
 
- * Record an authenticated profile click before allowing the submission form to continue.
+ * Record an authenticated social choice before allowing the client form to continue.
+ * This acknowledgement is UX state and is never used as backend authorization.
 
  */
 export async function recordSubmissionSupport(formData: FormData): Promise<SupportResult> {
@@ -26,8 +26,7 @@ export async function recordSubmissionSupport(formData: FormData): Promise<Suppo
     if (platform !== 'x' && platform !== 'linkedin') {
       return { success: false, error: 'Choose LinkedIn or X to continue.' }
     }
-    const token = createSupportReceipt(platform, session.user.id)
-    if (token) return { success: true, token }
+    return { success: true }
   } catch {
     logger.error('Submission support unavailable', { tags: { operation: 'submission_support' } })
   }

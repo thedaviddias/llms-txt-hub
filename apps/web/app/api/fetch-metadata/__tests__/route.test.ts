@@ -9,10 +9,8 @@ import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import { GET, POST } from '@/app/api/fetch-metadata/route'
 import { getWebsites } from '@/lib/content-loader'
-import { verifySupportReceipt } from '@/lib/submissions/submission-support'
 
 jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
-jest.mock('@/lib/submissions/submission-support', () => ({ verifySupportReceipt: jest.fn() }))
 
 // Mock dependencies
 jest.mock('@/lib/content-loader')
@@ -48,8 +46,6 @@ describe('Fetch Metadata API Route', () => {
         user_metadata: { avatar_url: null, full_name: null, user_name: null }
       }
     })
-    jest.mocked(verifySupportReceipt).mockReturnValue('x')
-
     // Default mock implementations
     mockGetWebsites.mockReturnValue([])
 
@@ -77,16 +73,15 @@ describe('Fetch Metadata API Route', () => {
     })
   })
 
-  it('requires a profile-click receipt before fetching submission metadata', async () => {
-    jest.mocked(verifySupportReceipt).mockReturnValue(null)
+  it('does not treat the client social step as metadata authorization', async () => {
     const response = await POST(
       new Request('http://localhost/api/fetch-metadata', {
         method: 'POST',
         body: JSON.stringify({ website: 'https://example.com' })
       })
     )
-    expect(response.status).toBe(403)
-    expect(mockFetch).not.toHaveBeenCalled()
+    expect(response.status).toBe(200)
+    expect(mockFetch).toHaveBeenCalled()
   })
 
   it('requires an authenticated submitter for POST metadata requests', async () => {

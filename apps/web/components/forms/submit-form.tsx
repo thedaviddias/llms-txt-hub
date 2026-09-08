@@ -56,15 +56,11 @@ export function SubmitForm() {
     step === 'details' && !!support && !publication.result,
     publication.analytics
   )
-  const metadata = useSubmitFormMetadata(
-    step2Form,
-    () => {
-      setFocusTarget('details')
-      setStep('details')
-      trackFormStepStart(3, 'submit-form', 'submit-page')
-    },
-    support?.token
-  )
+  const metadata = useSubmitFormMetadata(step2Form, () => {
+    setFocusTarget('details')
+    setStep('details')
+    trackFormStepStart(3, 'submit-form', 'submit-page')
+  })
   useEffect(() => {
     trackPageView.current()
   }, [])

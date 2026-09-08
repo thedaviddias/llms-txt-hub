@@ -48,14 +48,14 @@ A catalogue audit on 2026-08-01 found 2,551 source MDX entries. The existing val
 ### Submission sequence
 
 1. A signed-in user sees **Follow or connect with David** before any form fields.
-2. Either **Follow David on X** or **Follow or connect on LinkedIn** opens the existing profile in a new tab. The authenticated, CSRF-protected action issues a signed platform receipt bound to that account for up to 48 hours.
-3. The receipt unlocks the website URL form. Existing followers or connections use the same profile links.
+2. Either **Follow David on X** or **Follow or connect on LinkedIn** opens the existing profile in a new tab. The authenticated, CSRF-protected action records the selected platform for the current client flow.
+3. The completed social step unlocks the website URL form. Existing followers or connections use the same profile links.
 4. Metadata fills the existing editable details, including all categories, optional `llms-full.txt`, and the Additional Content editor/template/preview. Metadata failure still permits manual entry.
-5. **Submit listing** performs preflight and final server reassessment without another social step. Both actions validate the support receipt; the final continuation remains bound to the exact canonical fields.
+5. **Submit listing** performs preflight and final server reassessment without another social step. The final continuation remains bound to the authenticated account and exact canonical fields; social choice is never treated as backend authorization.
 6. Success retains the PR link and distinguishes automatic publication from maintainer review. Rejection or temporary failure offers **Edit details** without clearing user edits. A lost final response offers **Retry submission** using the original continuation for idempotent reconciliation.
-7. Starting another listing clears the form fields while retaining the support receipt for the current page session.
+7. Starting another listing clears the form fields while retaining the completed social step for the current page session.
 
-The product asks for a follow/connection through marketing copy, records profile interactions, and does not create a `followAttested` assertion. Social usernames are not collected. Public metadata GET access remains available; submission-specific metadata POST requires the support receipt.
+The product asks for a follow/connection through marketing copy, records profile interactions, and does not create a `followAttested` assertion. Social usernames are not collected. The social click controls form visibility only; authenticated server operations enforce CSRF, rate limits, assessment, exact-field continuations, and publication policy independently.
 
 ### Additional Content
 
@@ -243,9 +243,9 @@ A synchronize event, content edit, stale attestation, signature failure, changed
 
 ### Idempotency across asynchronous publication
 
-The same submission ID spans preflight, final assessment, GitHub publication, retries, and completion. The account-bound support receipt is issued separately before preflight:
+The same submission ID spans preflight, final assessment, GitHub publication, retries, and completion. The social choice is retained separately for aggregate analytics and is not an authorization input:
 
-- the entry step receives an account-bound profile receipt; after form review, preflight issues a separate opaque continuation tied to the submission ID and canonical field hash;
+- after the client entry step and form review, preflight issues an opaque continuation tied to the authenticated account, submission ID, and canonical field hash;
 - final submission atomically transitions that record from `support_required` (the retained internal state name) to `final_assessing` and rejects changed fields or replayed tokens;
 - a pending-domain lock prevents a second submission ID from publishing the same normalized website or llms URL;
 - before branch creation, the publisher records the deterministic branch name and checks for an existing PR marker containing the submission ID;
