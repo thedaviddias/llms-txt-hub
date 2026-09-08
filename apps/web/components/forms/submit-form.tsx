@@ -3,15 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { preflightSubmission } from '@/actions/preflight-submission'
-import { type FinalSubmissionResult, submitLlmsTxt } from '@/actions/submit-llms-xxt'
-import { useAnalyticsEvents, useSubmissionAnalytics } from '@/components/analytics-tracker'
-import {
-  appendSubmissionFields,
-  type PreparedSubmission,
-  useSubmissionFieldTracking
-} from './submission-field-analytics'
+import { useAnalyticsEvents } from '@/components/analytics-tracker'
+import { useSubmissionFieldTracking } from './submission-field-analytics'
 import { SubmitFormChrome } from './submit-form-chrome'
 import { type Step1Data, type Step2Data, step1Schema, step2Schema } from './submit-form-schemas'
 import { SubmitFormStep1 } from './submit-form-step1'
@@ -19,33 +12,18 @@ import { SubmitFormStep2 } from './submit-form-step2'
 import { SubmitFormSuccess } from './submit-form-success'
 import { SubmitFormSupport } from './submit-form-support'
 import { useSubmitFormMetadata } from './use-submit-form-metadata'
+import { type SubmissionSupport, useSubmitPublication } from './use-submit-publication'
 import type { SubmitUrlStatus } from './use-submit-url-check'
 
-type SubmitStep = 'website' | 'details' | 'support' | 'result'
-
-type Continuation = { readonly submissionId: string; readonly token: string }
-
-type SubmissionResult =
-  | { readonly outcome: 'automatic' | 'manual'; readonly prUrl: string }
-  | { readonly message: string; readonly outcome: 'rejected' | 'retry_later' }
-
-const RETRY_MESSAGE =
-  'We could not safely verify this site right now. Nothing was published. Please try again later.'
-
 /**
- * Main form component for submitting websites
+
+ * Preserve the full submission form behind a required maintainer-profile entry step.
+
  */
 export function SubmitForm() {
-  const [step, setStep] = useState<SubmitStep>('website')
-  const [isLoading, setIsLoading] = useState(false)
+  const [step, setStep] = useState<'website' | 'details'>('website')
+  const [support, setSupport] = useState<SubmissionSupport>()
   const [focusTarget, setFocusTarget] = useState<'details' | 'website'>()
-  const [preparedSubmission, setPreparedSubmission] = useState<PreparedSubmission>()
-  const [continuation, setContinuation] = useState<Continuation>()
-  const [result, setResult] = useState<SubmissionResult>()
-  const activeRequest = useRef<number | undefined>(undefined)
-  const flowGeneration = useRef(0)
-  const requestGeneration = useRef(0)
-  const mounted = useRef(true)
   const [llmsUrlStatus, setLlmsUrlStatus] = useState<SubmitUrlStatus>({
     checking: false,
     accessible: null
@@ -54,19 +32,13 @@ export function SubmitForm() {
     checking: false,
     accessible: null
   })
-  const [websiteUrlStatus] = useState<SubmitUrlStatus>({ checking: false, accessible: null })
+  const publication = useSubmitPublication(support)
   const { trackFormStepStart, trackFormStepComplete } = useAnalyticsEvents()
-  const submissionAnalytics = useSubmissionAnalytics()
-  const trackInitialStep = useRef(trackFormStepStart)
-  const trackPageView = useRef(submissionAnalytics.trackSubmissionPageView)
-
+  const trackPageView = useRef(publication.analytics.trackSubmissionPageView)
   const step1Form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
-    defaultValues: {
-      website: ''
-    }
+    defaultValues: { website: '' }
   })
-
   const step2Form = useForm<Step2Data>({
     resolver: zodResolver(step2Schema),
     defaultValues: {
@@ -81,172 +53,40 @@ export function SubmitForm() {
   })
   const fieldTracking = useSubmissionFieldTracking(
     step2Form,
-    step === 'details',
-    submissionAnalytics
+    step === 'details' && !!support && !publication.result,
+    publication.analytics
   )
-
-  const metadata = useSubmitFormMetadata(step2Form, () => {
-    setFocusTarget('details')
-    setStep('details')
-    trackFormStepStart(2, 'submit-form', 'submit-page')
-  })
-
+  const metadata = useSubmitFormMetadata(
+    step2Form,
+    () => {
+      setFocusTarget('details')
+      setStep('details')
+      trackFormStepStart(3, 'submit-form', 'submit-page')
+    },
+    support?.token
+  )
   useEffect(() => {
-    mounted.current = true
     trackPageView.current()
-    trackInitialStep.current(1, 'submit-form', 'submit-page')
-    return () => {
-      mounted.current = false
-      flowGeneration.current += 1
-    }
   }, [])
 
-  /** Return whether a submission request still owns the active flow generation. */
-  const isCurrentRequest = (requestId: number, generation: number) =>
-    mounted.current && activeRequest.current === requestId && flowGeneration.current === generation
-
-  /** Claim the shared preflight/final request guard with a monotonic request ID. */
-  const beginRequest = () => {
-    if (activeRequest.current !== undefined) return
-    const requestId = requestGeneration.current + 1
-    requestGeneration.current = requestId
-    activeRequest.current = requestId
-    return { generation: flowGeneration.current, requestId }
-  }
-
-  /** Release only the exact request that currently owns the shared guard. */
-  const finishRequest = (requestId: number) => {
-    if (activeRequest.current !== requestId) return
-    activeRequest.current = undefined
-    if (mounted.current) setIsLoading(false)
-  }
-
   /**
-   * Submits the final form data
+
+   * Begin a new listing without making an existing supporter repeat the entry step.
+
    */
-  async function onSubmitStep2(values: Step2Data) {
-    const request = beginRequest()
-    if (!request) return
-    const startedAt = submissionAnalytics.startPreflight()
-    fieldTracking.capture(values)
-    setIsLoading(true)
-    trackFormStepComplete(2, 'submit-form', 'submit-page')
-
-    try {
-      const prepared = {
-        ...values,
-        name: values.name.trim(),
-        publishedAt: new Date().toISOString().split('T')[0] ?? ''
-      }
-      const formData = new FormData()
-      const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-      if (csrfMetaTag?.content) {
-        formData.append('_csrf', csrfMetaTag.content)
-      }
-      appendSubmissionFields(formData, prepared)
-
-      const preflightResult = await preflightSubmission(formData)
-      if (!isCurrentRequest(request.requestId, request.generation)) return
-      submissionAnalytics.finishPreflight(preflightResult, startedAt)
-      if (preflightResult.status === 'support_required') {
-        setPreparedSubmission(prepared)
-        setContinuation({
-          submissionId: preflightResult.submissionId,
-          token: preflightResult.continuationToken
-        })
-        setStep('support')
-        trackFormStepStart(3, 'submit-form', 'submit-page')
-      } else {
-        setResult({
-          message:
-            preflightResult.status === 'retry_later' ? RETRY_MESSAGE : preflightResult.message,
-          outcome: preflightResult.status
-        })
-        setStep('result')
-        trackFormStepStart(4, 'submit-form', 'submit-page')
-      }
-    } catch {
-      if (!isCurrentRequest(request.requestId, request.generation)) return
-      submissionAnalytics.failPreflight(startedAt)
-      toast.error(RETRY_MESSAGE)
-      setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
-      setStep('result')
-    } finally {
-      finishRequest(request.requestId)
-    }
-  }
-
-  /**
-   * Performs the final reassessment with the exact preflight fields and support attestation.
-   */
-  async function onSubmitSupport(support: { followAttested: true; platform: 'x' | 'linkedin' }) {
-    const request = beginRequest()
-    if (!request) return
-    const startedAt = submissionAnalytics.startFinal(support.platform)
-    setIsLoading(true)
-    trackFormStepComplete(3, 'submit-form', 'submit-page')
-
-    try {
-      if (!(preparedSubmission && continuation)) {
-        submissionAnalytics.failFinal(support.platform, startedAt)
-        setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
-        setStep('result')
-        return
-      }
-      const formData = new FormData()
-      const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')
-      if (csrfMetaTag?.content) formData.append('_csrf', csrfMetaTag.content)
-      appendSubmissionFields(formData, preparedSubmission)
-      formData.append('continuationToken', continuation.token)
-      formData.append('supportPlatform', support.platform)
-      formData.append('followAttested', String(support.followAttested))
-
-      const finalResult: FinalSubmissionResult = await submitLlmsTxt(formData)
-      if (!isCurrentRequest(request.requestId, request.generation)) return
-      submissionAnalytics.finishFinal(finalResult, support.platform, startedAt)
-      if (finalResult.success) {
-        toast.success('Your pull request has been created successfully!')
-        setResult({ outcome: finalResult.outcome, prUrl: finalResult.prUrl })
-      } else {
-        const message = finalResult.outcome === 'retry_later' ? RETRY_MESSAGE : finalResult.error
-        setResult({ message, outcome: finalResult.outcome })
-      }
-      setStep('result')
-      trackFormStepStart(4, 'submit-form', 'submit-page')
-    } catch {
-      if (!isCurrentRequest(request.requestId, request.generation)) return
-      submissionAnalytics.failFinal(support.platform, startedAt)
-      setResult({ message: RETRY_MESSAGE, outcome: 'retry_later' })
-      setStep('result')
-      toast.error(RETRY_MESSAGE)
-    } finally {
-      finishRequest(request.requestId)
-    }
-  }
-
-  /**
-   * Returns to editable details and discards the single-use continuation.
-   */
-  function handleBackToDetails() {
-    if (activeRequest.current !== undefined) return
-    flowGeneration.current += 1
-    setContinuation(undefined)
-    setPreparedSubmission(undefined)
-    fieldTracking.reset()
-    setFocusTarget('details')
-    setStep('details')
-  }
-
-  /**
-   * Resets the form to initial state
-   */
-  function handleReset() {
-    flowGeneration.current += 1
-    step2Form.reset()
-    step1Form.reset()
-    setContinuation(undefined)
-    setPreparedSubmission(undefined)
-    setResult(undefined)
+  const handleReset = () => {
+    if (publication.isLoading) return
+    publication.reset()
+    step1Form.reset({ website: '' })
+    step2Form.reset({
+      name: '',
+      description: '',
+      mdxContent: '',
+      website: '',
+      llmsUrl: '',
+      llmsFullUrl: null,
+      category: ''
+    })
     fieldTracking.reset()
     setLlmsUrlStatus({ checking: false, accessible: null })
     setLlmsFullUrlStatus({ checking: false, accessible: null })
@@ -254,13 +94,45 @@ export function SubmitForm() {
     setFocusTarget('website')
     setStep('website')
   }
+  /**
+   * Return to the existing draft and require fresh checks after any edit.
+   */
+  const handleEdit = () => {
+    if (publication.isLoading) return
+    publication.reset()
+    setFocusTarget('details')
+    setStep('details')
+  }
 
   return (
     <SubmitFormChrome
-      showIntro={step === 'website' || step === 'details'}
-      showGuidelines={step !== 'result'}
+      step={!support ? 'support' : publication.result ? 'result' : step}
+      showIntro={!!support && !publication.result}
+      showGuidelines={!!support && !publication.result}
     >
-      {step === 'website' ? (
+      {!support ? (
+        <SubmitFormSupport
+          analytics={publication.analytics}
+          onContinue={choice => {
+            setSupport(choice)
+            setFocusTarget(step)
+            trackFormStepComplete(1, 'submit-form', 'submit-page')
+            trackFormStepStart(step === 'website' ? 2 : 3, 'submit-form', 'submit-page')
+          }}
+        />
+      ) : publication.result ? (
+        <SubmitFormSuccess
+          result={publication.result}
+          onSubmitAnother={handleReset}
+          onEdit={handleEdit}
+          onRetry={publication.canRetry ? publication.retry : undefined}
+          isLoading={publication.isLoading}
+          onSupport={() => {
+            publication.reset()
+            setSupport(undefined)
+          }}
+        />
+      ) : step === 'website' ? (
         <SubmitFormStep1
           form={step1Form}
           onSubmit={metadata.onFetchMetadata}
@@ -268,13 +140,18 @@ export function SubmitForm() {
           shouldFocus={focusTarget === 'website'}
           onFocusComplete={() => setFocusTarget(undefined)}
         />
-      ) : step === 'details' ? (
+      ) : (
         <SubmitFormStep2
           form={step2Form}
-          onSubmit={onSubmitStep2}
-          isLoading={isLoading}
+          onSubmit={values =>
+            publication.submit(values, () => {
+              fieldTracking.capture(values)
+              trackFormStepComplete(3, 'submit-form', 'submit-page')
+            })
+          }
+          isLoading={publication.isLoading}
           fetchFailed={metadata.fetchFailed}
-          websiteUrlStatus={websiteUrlStatus}
+          websiteUrlStatus={{ checking: false, accessible: null }}
           llmsUrlStatus={llmsUrlStatus}
           llmsFullUrlStatus={llmsFullUrlStatus}
           setLlmsUrlStatus={setLlmsUrlStatus}
@@ -283,16 +160,6 @@ export function SubmitForm() {
           shouldFocus={focusTarget === 'details'}
           onFocusComplete={() => setFocusTarget(undefined)}
         />
-      ) : step === 'support' && continuation ? (
-        <SubmitFormSupport
-          attemptId={submissionAnalytics.getAttemptId()}
-          key={continuation.submissionId}
-          isLoading={isLoading}
-          onBack={handleBackToDetails}
-          onSubmit={onSubmitSupport}
-        />
-      ) : (
-        result && <SubmitFormSuccess result={result} onSubmitAnother={handleReset} />
       )}
     </SubmitFormChrome>
   )

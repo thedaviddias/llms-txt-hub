@@ -1,4 +1,5 @@
 import { getDomainWithoutSuffix } from 'tldts'
+import { MAX_ADDITIONAL_CONTENT_CHARACTERS, normalizeAdditionalContent } from '#additional-content'
 import { SUBMISSION_HOMEPAGE_MAX_BYTES, SUBMISSION_LLMS_MAX_BYTES } from '#constants'
 import { normalizeEditorialInputs } from '#editorial-normalization'
 import { canonicalEditorialToken, canonicalizeEditorialTokens } from '#editorial-token-aliases'
@@ -380,6 +381,11 @@ const categoryEvidence = (
  * exposing the underlying pattern table or promoting any technical decision.
  */
 export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPolicyResult => {
+  const additionalContent = normalizeAdditionalContent(input.fields.mdxContent)
+  if (!additionalContent) return normalizedOverflowResult()
+  const normalizedAdditional = normalizeEditorialInputs([additionalContent.markdown], {
+    maximumCharacters: MAX_ADDITIONAL_CONTENT_CHARACTERS
+  })
   const normalizedDescription = normalizeEditorialInputs([input.fields.description], {
     maximumCharacters: MAX_DESCRIPTION_CHARACTERS
   })
@@ -399,6 +405,7 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
     maximumCharacters: SUBMISSION_LLMS_MAX_BYTES
   })
   const normalizedInputs = [
+    normalizedAdditional,
     normalizedDescription,
     normalizedName,
     normalizedCategory,
@@ -410,6 +417,10 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
     return normalizedOverflowResult()
   }
   const securityInputs = [
+    normalizeEditorialInputs([additionalContent.markdown], {
+      maximumCharacters: MAX_ADDITIONAL_CONTENT_CHARACTERS,
+      securityMatch: true
+    }),
     normalizeEditorialInputs([input.fields.name, input.fields.description], {
       maximumCharacters: MAX_METADATA_SECURITY_CHARACTERS,
       securityMatch: true
@@ -452,7 +463,11 @@ export const assessEditorialPolicy = (input: EditorialPolicyInput): EditorialPol
   }
 
   const manualEvidence = [
-    ...regulatedEvidence([name, description, ...inspectedTexts]),
+    ...regulatedEvidence([name, description, normalizedAdditional.text, ...inspectedTexts]),
+    ...descriptionEvidence(normalizedAdditional.text),
+    ...(additionalContent.hasUnassessedDestinations
+      ? ['editorial:content:unassessed-destinations']
+      : []),
     ...descriptionEvidence(description)
   ]
   if (!descriptionMatchesInspectedContent(description, inspectedTexts, name)) {

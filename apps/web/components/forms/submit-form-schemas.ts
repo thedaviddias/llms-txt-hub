@@ -58,7 +58,11 @@ export const step2Schema = z.object({
     .refine(value => value.endsWith('.'), {
       message: 'Description should end with a period.'
     }),
-  mdxContent: z.string().optional().nullable(),
+  mdxContent: z
+    .string()
+    .max(5000, { message: 'Additional Content must be 5,000 characters or fewer.' })
+    .optional()
+    .nullable(),
   website: z
     .string()
     .url({
@@ -106,6 +110,7 @@ export type Step2Data = z.infer<typeof step2Schema>
  * Server-side validation schema for submitLlmsTxt action (FormData payload)
  */
 export const submitActionSchema = z.object({
+  mdxContent: step2Schema.shape.mdxContent,
   name: z
     .string()
     .min(2, { message: 'Name must be at least 2 characters.' })
@@ -154,7 +159,7 @@ export type SubmitActionData = z.infer<typeof submitActionSchema>
 /** Server-side schema for the support-gated final submission action. */
 export const finalSubmitActionSchema = submitActionSchema.extend({
   continuationToken: z.string().min(1).max(512),
-  followAttested: z.literal('true'),
+  supportToken: z.string().min(1).max(512),
   supportPlatform: z.enum(['x', 'linkedin'])
 })
 

@@ -998,6 +998,9 @@ importers:
 
   packages/submission-trust:
     dependencies:
+      mdast-util-to-markdown:
+        specifier: ^2.1.2
+        version: 2.1.2
       remark-parse:
         specifier: ^11.0.0
         version: 11.0.0

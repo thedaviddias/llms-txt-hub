@@ -8,12 +8,18 @@ interface SubmitFormChromeProps {
   children: ReactNode
   showGuidelines: boolean
   showIntro: boolean
+  step?: 'support' | 'website' | 'details' | 'result'
 }
 
 /**
  * Preserves the submission page introduction, account context, and guidelines around each step.
  */
-export function SubmitFormChrome({ children, showGuidelines, showIntro }: SubmitFormChromeProps) {
+export function SubmitFormChrome({
+  children,
+  showGuidelines,
+  showIntro,
+  step
+}: SubmitFormChromeProps) {
   const { user } = useAuth()
   const hasGitHubAuth =
     user && (user.user_metadata?.github_username || user.user_metadata?.user_name)
@@ -22,6 +28,28 @@ export function SubmitFormChrome({ children, showGuidelines, showIntro }: Submit
 
   return (
     <>
+      {step && (
+        <ol
+          aria-label="Submission progress"
+          className="grid grid-cols-2 gap-3 text-sm text-muted-foreground sm:flex sm:flex-wrap sm:gap-x-6"
+        >
+          {(['support', 'website', 'details', 'result'] as const).map((value, index) => (
+            <li
+              key={value}
+              aria-current={step === value ? 'step' : undefined}
+              className={step === value ? 'font-semibold text-foreground' : ''}
+            >
+              <span
+                className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full border"
+                aria-hidden="true"
+              >
+                {index + 1}
+              </span>
+              {['Support', 'Website', 'Review', 'Status'][index]}
+            </li>
+          ))}
+        </ol>
+      )}
       {showIntro && (
         <div className="space-y-6">
           <div className="space-y-4">

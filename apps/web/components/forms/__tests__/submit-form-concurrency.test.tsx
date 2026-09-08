@@ -1,13 +1,18 @@
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
 import { preflightSubmission } from '@/actions/preflight-submission'
 import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import { SubmitForm } from '@/components/forms/submit-form'
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@/test/test-utils'
 import {
-  finishSubmissionSupport,
+  prepareSubmission,
   reachSubmissionDetails,
-  reachSubmissionSupport,
   SUBMISSION_METADATA,
-  submitDetails
+  submitDetails,
+  submitPreparedDetails,
+  unlockSubmissionForm
 } from './submit-form-test-helpers'
 
 const mockTrackFormStepStart = jest.fn()
@@ -32,6 +37,7 @@ jest.mock('@/components/analytics-tracker', () => ({
     startFinal: jest.fn(() => 0),
     startPreflight: jest.fn(() => 0),
     trackSubmissionPageView: jest.fn(),
+    trackSubmissionSupportView: jest.fn(),
     trackSubmissionFollowAttest: jest.fn(),
     trackSubmissionFieldCompleted: jest.fn(),
     trackSubmissionFieldState: jest.fn(),
@@ -45,6 +51,17 @@ jest.mock('@/components/analytics-tracker', () => ({
 describe('SubmitForm request concurrency', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    jest.mocked(submitLlmsTxt).mockResolvedValue({
+      success: true,
+      outcome: 'manual',
+      prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
+      analytics: {
+        publicationAttempted: true,
+        prCreated: true,
+        prPresent: true,
+        reasonCategory: 'passed'
+      }
+    })
   })
 
   it('disables every details control and prevents reset or edits during preflight', async () => {
@@ -87,7 +104,7 @@ describe('SubmitForm request concurrency', () => {
       await preflightPromise
     })
     expect(
-      await screen.findByRole('heading', { name: /support the maintainer/i })
+      await screen.findByRole('heading', { name: /submission ready for review/i })
     ).toBeInTheDocument()
   })
 
@@ -99,11 +116,12 @@ describe('SubmitForm request concurrency', () => {
       })
     )
     const view = render(<SubmitForm />)
+    await unlockSubmissionForm()
     fireEvent.change(screen.getByLabelText(/website url/i), {
       target: { value: 'https://example.com' }
     })
     fireEvent.submit(screen.getByRole('button', { name: /get website details/i }).closest('form')!)
-    await screen.findByRole('button', { name: /continue to support/i })
+    await screen.findByRole('button', { name: /submit listing/i })
     let resolvePreflight: (result: Awaited<ReturnType<typeof preflightSubmission>>) => void = () =>
       undefined
     const preflightPromise = new Promise<Awaited<ReturnType<typeof preflightSubmission>>>(
@@ -113,7 +131,7 @@ describe('SubmitForm request concurrency', () => {
     )
     jest.mocked(preflightSubmission).mockImplementationOnce(() => preflightPromise)
     submitDetails()
-    await screen.findByRole('button', { name: /checking/i })
+    await screen.findByRole('button', { name: /submitting/i })
     view.unmount()
 
     await act(async () => {
@@ -125,20 +143,20 @@ describe('SubmitForm request concurrency', () => {
       })
       await preflightPromise
     })
-    expect(mockTrackFormStepStart).not.toHaveBeenCalledWith(3, 'submit-form', 'submit-page')
+    expect(mockTrackFormStepStart).not.toHaveBeenCalledWith(4, 'submit-form', 'submit-page')
   })
 
   it('ignores a final completion after unmount and keeps support navigation locked', async () => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     let resolveFinal: (result: Awaited<ReturnType<typeof submitLlmsTxt>>) => void = () => undefined
     const finalPromise = new Promise<Awaited<ReturnType<typeof submitLlmsTxt>>>(resolve => {
       resolveFinal = resolve
     })
     jest.mocked(submitLlmsTxt).mockImplementationOnce(() => finalPromise)
 
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
     await waitFor(() => expect(submitLlmsTxt).toHaveBeenCalledTimes(1))
-    expect(screen.getByRole('button', { name: /back to details/i })).toBeDisabled()
+    expect(screen.getByRole('button', { name: /reset/i })).toBeDisabled()
     cleanup()
 
     await act(async () => {

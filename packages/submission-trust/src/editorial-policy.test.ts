@@ -46,6 +46,30 @@ const assess = (
   })
 
 describe('assessEditorialPolicy', () => {
+  it('assesses prohibited and promotional text in additional content', () => {
+    expect(assess({ mdxContent: '## Offers\n\nBuy backlinks and a phishing kit.' }).decision).toBe(
+      'reject'
+    )
+    expect(
+      assess({ mdxContent: '## Features\n\nThe best, ultimate API documentation.' }).decision
+    ).toBe('manual_review')
+  })
+
+  it('keeps unassessed additional-content destinations in manual review', () => {
+    expect(assess({ mdxContent: '[Guide](https:unassessed.com/docs)' }).decision).toBe(
+      'manual_review'
+    )
+    expect(assess({ mdxContent: '[Guide](https://unassessed.com/guide)' }).decision).toBe(
+      'manual_review'
+    )
+    expect(assess({ mdxContent: 'Read https://unassessed.com/guide' }).decision).toBe(
+      'manual_review'
+    )
+    expect(
+      assess({ mdxContent: '## Features\n\n- **Developer** API documentation' }).decision
+    ).toBe('auto_publish')
+  })
+
   it('passes a high-confidence description, identity, and category match', () => {
     expect(assess()).toEqual({
       decision: 'auto_publish',

@@ -1,160 +1,107 @@
-import { AnalyticsHead } from '@thedaviddias/analytics/head'
+import { recordSubmissionSupport } from '@/actions/record-submission-support'
 import { SubmitFormSupport } from '@/components/forms/submit-form-support'
-import { render, screen, userEvent } from '@/test/test-utils'
+import { act, render, screen, userEvent, waitFor } from '@/test/test-utils'
 
-jest.mock('@thedaviddias/auth/client', () => ({ useAuth: () => ({ user: null }) }))
+jest.mock('@/actions/record-submission-support', () => ({ recordSubmissionSupport: jest.fn() }))
 
-describe('SubmitFormSupport', () => {
-  it('focuses the exact support heading on mount', () => {
-    render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />)
-
-    const heading = screen.getByRole('heading', { name: 'Support the maintainer' })
-    expect(heading).toHaveFocus()
-    expect(heading).toHaveAttribute('tabindex', '-1')
+describe('SubmitFormSupport entry gate', () => {
+  beforeEach(() => {
+    jest
+      .mocked(recordSubmissionSupport)
+      .mockResolvedValue({ success: true, token: 'support-receipt' })
   })
 
-  it('offers the exact X and LinkedIn profiles as mutually exclusive choices', async () => {
-    const user = userEvent.setup()
-    render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />)
-
-    expect(screen.getByRole('link', { name: /open david's x profile/i })).toHaveAttribute(
+  it('focuses the marketing heading and offers both exact profile links in new tabs', () => {
+    render(<SubmitFormSupport onContinue={jest.fn()} />)
+    expect(screen.getByRole('heading', { name: 'Follow or connect with David' })).toHaveFocus()
+    expect(screen.getByRole('link', { name: /follow david on x/i })).toHaveAttribute(
       'href',
       'https://x.com/thedaviddias'
     )
-    expect(screen.getByRole('link', { name: /open david's linkedin profile/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /follow or connect.*linkedin/i })).toHaveAttribute(
       'href',
       'https://www.linkedin.com/in/thedaviddias/'
     )
-    expect(screen.getAllByRole('link')).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ target: '_blank' }),
-        expect.objectContaining({ target: '_blank' })
-      ])
+    for (const link of screen.getAllByRole('link')) {
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    }
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
+    expect(screen.queryByText(/not verified|self-attestation/i)).not.toBeInTheDocument()
+  })
+
+  it.each([
+    { label: /follow david on x/i, platform: 'x' },
+    { label: /follow or connect.*linkedin/i, platform: 'linkedin' }
+  ])('opens the form after a $platform receipt', async ({ label, platform }) => {
+    const user = userEvent.setup()
+    const onContinue = jest.fn()
+    render(<SubmitFormSupport onContinue={onContinue} />)
+    expect(onContinue).not.toHaveBeenCalled()
+    await user.click(screen.getByRole('link', { name: label }))
+    await waitFor(() =>
+      expect(onContinue).toHaveBeenCalledWith({ platform, token: 'support-receipt' })
     )
-
-    const xChoice = screen.getByRole('radio', { name: 'Follow David on X' })
-    const linkedInChoice = screen.getByRole('radio', { name: 'Follow David on LinkedIn' })
-    const xCard = xChoice.closest('[data-support-card]')
-    const linkedInCard = linkedInChoice.closest('[data-support-card]')
-    expect(xCard).toHaveAttribute('data-state', 'unselected')
-    await user.click(xChoice)
-    expect(xChoice).toBeChecked()
-    expect(xCard).toHaveAttribute('data-state', 'selected')
-    expect(xCard).toHaveClass('border-primary', 'ring-2', 'bg-primary/5')
-    await user.click(linkedInChoice)
-    expect(linkedInChoice).toBeChecked()
-    expect(xChoice).not.toBeChecked()
-    expect(xCard).toHaveAttribute('data-state', 'unselected')
-    expect(linkedInCard).toHaveAttribute('data-state', 'selected')
+    const data = jest.mocked(recordSubmissionSupport).mock.calls[0]?.[0]
+    expect(data?.get('supportPlatform')).toBe(platform)
+    expect(data?.has('followAttested')).toBe(false)
   })
 
-  it('requires opening the selected profile before enabling the truthful attestation', async () => {
+  it('allows keyboard-only visitors to open the first profile and continue', async () => {
     const user = userEvent.setup()
-    render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />)
+    const onContinue = jest.fn()
+    render(<SubmitFormSupport onContinue={onContinue} />)
+    await user.tab()
+    expect(screen.getByRole('link', { name: /linkedin/i })).toHaveFocus()
+    await user.keyboard('{Enter}')
+    await waitFor(() => expect(onContinue).toHaveBeenCalledTimes(1))
+  })
 
-    expect(screen.queryByText(/verified/i)).not.toBeInTheDocument()
-    const confirmation = screen.getByRole('checkbox', {
-      name: 'I follow David on this platform'
+  it('prevents duplicate receipt requests and ignores completion after unmount', async () => {
+    let complete: (result: { success: true; token: string }) => void = () => undefined
+    const pending = new Promise<{ success: true; token: string }>(resolve => {
+      complete = resolve
     })
-    expect(confirmation).toBeDisabled()
-
-    await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
-    expect(confirmation).toBeDisabled()
-    await user.click(screen.getByRole('link', { name: /open david's x profile/i }))
-    expect(confirmation).toBeEnabled()
-
-    await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
-    expect(confirmation).toBeDisabled()
-    expect(confirmation).not.toBeChecked()
+    jest.mocked(recordSubmissionSupport).mockReturnValue(pending)
+    const user = userEvent.setup()
+    const onContinue = jest.fn()
+    const view = render(<SubmitFormSupport onContinue={onContinue} />)
+    await user.click(screen.getByRole('link', { name: /linkedin/i }))
+    await user.click(screen.getByRole('link', { name: /follow david on x/i }))
+    expect(recordSubmissionSupport).toHaveBeenCalledTimes(1)
+    expect(onContinue).not.toHaveBeenCalled()
+    view.unmount()
+    await act(async () => {
+      complete({ success: true, token: 'late-receipt' })
+      await pending
+    })
+    expect(onContinue).not.toHaveBeenCalled()
   })
 
-  it('keeps profile links usable without reaching automatic document-level tracking', async () => {
+  it('shows actionable errors without unlocking and allows another attempt', async () => {
+    jest
+      .mocked(recordSubmissionSupport)
+      .mockResolvedValueOnce({ success: false, error: 'Refresh the page and try again.' })
     const user = userEvent.setup()
-    const originalEnvironment = process.env
-    process.env = { ...originalEnvironment, NODE_ENV: 'production' }
-    const automaticOutgoingTrack = jest.fn()
-    const outgoingLinkListener = (event: Event) => {
-      if (!(event.target instanceof Element)) return
-      const anchor = event.target.closest('a')
-      const href = anchor?.getAttribute('href')
-      if (href?.startsWith('http')) {
-        automaticOutgoingTrack({ href, text: anchor?.textContent })
-      }
-    }
-    document.addEventListener('click', outgoingLinkListener)
+    const onContinue = jest.fn()
+    render(<SubmitFormSupport onContinue={onContinue} />)
+    await user.click(screen.getByRole('link', { name: /linkedin/i }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Refresh the page and try again.')
+    expect(onContinue).not.toHaveBeenCalled()
+    await user.click(screen.getByRole('link', { name: /linkedin/i }))
+    await waitFor(() => expect(onContinue).toHaveBeenCalledTimes(1))
+  })
 
+  it('keeps profile clicks out of automatic document-level tracking', async () => {
+    const trackDocumentClick = jest.fn()
+    document.addEventListener('click', trackDocumentClick)
     try {
-      render(
-        <>
-          <AnalyticsHead openPanelClientId="test-client" />
-          <SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={jest.fn()} />
-        </>
-      )
-      const initScript = [...document.querySelectorAll('script')].find(script =>
-        script.textContent?.includes("window.op('init'")
-      )
-      expect(initScript).toHaveTextContent('"trackOutgoingLinks":true')
-      await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
-      const profile = screen.getByRole('link', { name: /open david's x profile/i })
-
-      await user.click(profile)
-
-      expect(profile).toHaveAttribute('href', 'https://x.com/thedaviddias')
-      expect(profile).toHaveAttribute('target', '_blank')
-      expect(automaticOutgoingTrack).not.toHaveBeenCalled()
+      const user = userEvent.setup()
+      render(<SubmitFormSupport onContinue={jest.fn()} />)
+      await user.click(screen.getByRole('link', { name: /linkedin/i }))
+      expect(trackDocumentClick).not.toHaveBeenCalled()
     } finally {
-      document.removeEventListener('click', outgoingLinkListener)
-      process.env = originalEnvironment
+      document.removeEventListener('click', trackDocumentClick)
     }
-  })
-
-  it('submits only after one opened platform is selected and attested', async () => {
-    const user = userEvent.setup()
-    const onSubmit = jest.fn()
-    render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={onSubmit} />)
-
-    const submit = screen.getByRole('button', { name: /finish submission/i })
-    expect(submit).toBeDisabled()
-
-    await user.click(screen.getByRole('radio', { name: 'Follow David on LinkedIn' }))
-    await user.click(screen.getByRole('link', { name: /open david's linkedin profile/i }))
-    expect(submit).toBeDisabled()
-    await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
-    expect(submit).toBeEnabled()
-    await user.click(submit)
-
-    expect(onSubmit).toHaveBeenCalledWith({ followAttested: true, platform: 'linkedin' })
-  })
-
-  it('can complete the support step in DOM order using only the keyboard', async () => {
-    const user = userEvent.setup()
-    const onSubmit = jest.fn()
-    render(<SubmitFormSupport isLoading={false} onBack={jest.fn()} onSubmit={onSubmit} />)
-
-    const xChoice = screen.getByRole('radio', { name: 'Follow David on X' })
-    await user.tab()
-    expect(xChoice).toHaveFocus()
-    await user.keyboard('[Space]')
-    const profile = screen.getByRole('link', { name: /open david's x profile/i })
-    await user.tab()
-    expect(profile).toHaveFocus()
-    await user.keyboard('[Enter]')
-    const confirmation = screen.getByRole('checkbox', {
-      name: 'I follow David on this platform'
-    })
-    await user.tab()
-    await user.tab()
-    expect(confirmation).toHaveFocus()
-    await user.keyboard('[Space]')
-    const submit = screen.getByRole('button', { name: /finish submission/i })
-    const [back] = screen.getAllByRole('button')
-    expect(back).toHaveTextContent('Back to details')
-    await user.tab()
-    expect(back).toHaveFocus()
-    await user.tab()
-    expect(submit).toHaveFocus()
-    await user.keyboard('[Enter]')
-
-    expect(onSubmit).toHaveBeenCalledWith({ followAttested: true, platform: 'x' })
   })
 })
