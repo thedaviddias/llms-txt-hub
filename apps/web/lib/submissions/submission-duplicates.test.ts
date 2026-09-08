@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { checkSubmissionDuplicates } from './submission-duplicates'
 
 const INPUT = {
@@ -65,6 +67,39 @@ const configureOneMdx = (
 }
 
 describe('submission duplicate protection', () => {
+  it('checks a unique submission against the real generated catalogue and 235 open PRs', async () => {
+    const source = readFileSync(
+      resolve(process.cwd(), '.content-collections/generated/allWebsites.js'),
+      'utf8'
+    )
+    const websites = JSON.parse(source.replace(/^\s*export default\s*/, '').replace(/;\s*$/, ''))
+    const github = makeGitHub()
+    github.listOpenPullRequests.mockImplementation(async (_owner, _repo, page) =>
+      Array.from({ length: Math.min(50, Math.max(0, 235 - (page - 1) * 50)) }, (_, index) =>
+        pullRequest({ number: (page - 1) * 50 + index + 1 })
+      )
+    )
+    github.listPullRequestFiles.mockResolvedValue([])
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({ status: 'available', websites }),
+        github
+      })
+    ).resolves.toEqual({ status: 'review_required' })
+    expect(github.listPullRequestFiles).not.toHaveBeenCalled()
+  })
+
+  it('detects an HTTPS submission matching a legacy HTTP catalogue URL', async () => {
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        getWebsitesStrict: () => ({
+          status: 'available',
+          websites: [{ website: 'http://example.com', llmsUrl: 'http://example.com/llms.txt' }]
+        }),
+        github: makeGitHub()
+      })
+    ).resolves.toEqual({ source: 'catalogue', status: 'duplicate' })
+  })
   it.each([
     ['website', [{ website: 'https://example.com', llmsUrl: 'https://different.org/llms.txt' }]],
     ['llms URL', [{ website: 'https://different.org', llmsUrl: 'https://example.com/llms.txt' }]]
@@ -158,7 +193,7 @@ describe('submission duplicate protection', () => {
         getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
   })
 
   it('requires optional llms-full frontmatter to match before reconciliation', async () => {
@@ -205,7 +240,7 @@ describe('submission duplicate protection', () => {
         getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
   })
 
   it('returns unknown when bounded PR pagination remains truncated', async () => {
@@ -221,7 +256,7 @@ describe('submission duplicate protection', () => {
         getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
     expect(github.listOpenPullRequests).toHaveBeenCalledTimes(3)
   })
 
@@ -290,7 +325,7 @@ describe('submission duplicate protection', () => {
         getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
   })
 
   it('accepts Markdown horizontal rules after valid frontmatter', async () => {
@@ -318,7 +353,7 @@ describe('submission duplicate protection', () => {
         github,
         requestBudget: 4
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
     expect(github.listPullRequestFiles.mock.calls.length).toBeLessThanOrEqual(3)
   })
 
@@ -338,7 +373,7 @@ describe('submission duplicate protection', () => {
         getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
     expect(Date.now() - startedAt).toBeLessThan(500)
   })
 
@@ -381,6 +416,6 @@ describe('submission duplicate protection', () => {
         getWebsitesStrict: () => ({ status: 'available', websites: [] }),
         github
       })
-    ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+    ).resolves.toEqual({ status: 'review_required' })
   })
 })
