@@ -91,6 +91,11 @@ jobs:
         run: pnpm --filter e2e exec playwright install --with-deps
 
       - name: Run Playwright tests
+        env:
+          # Clerk publishable keys are public browser configuration. Keep the
+          # secret key out of pull-request jobs.
+          E2E_PUBLIC_ROUTES: '1'
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
         run: pnpm test:e2e
 
       - name: Upload test results

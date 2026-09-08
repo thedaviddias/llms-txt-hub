@@ -64,25 +64,13 @@ test.describe('Basic Page Load Tests', () => {
     expect(hasSearch).toBeTruthy()
   })
 
-  test('404 page handles non-existent routes', async ({ page }) => {
+  test('unknown protected route stays closed in public E2E mode', async ({ page }) => {
     const response = await page.goto('/this-page-does-not-exist-12345', {
       waitUntil: 'domcontentloaded'
     })
 
-    // In dev mode, Next.js might return 200 with 404 page content
-    const status = response?.status()
-    expect(status === 404 || status === 200).toBeTruthy()
-
-    // When status is 200, verify the 404 UI is actually shown
-    if (status === 200) {
-      // Check for 404-specific content
-      const has404Text = await page.locator('text=/404/').first().isVisible()
-      const hasNotFoundHeading = await page.locator('h1:has-text("Page Not Found")').isVisible()
-      const hasNotFoundClass = await page.locator('.not-found').isVisible()
-
-      // At least one of these 404 indicators must be present
-      expect(has404Text || hasNotFoundHeading || hasNotFoundClass).toBeTruthy()
-    }
+    expect(response?.status()).toBe(401)
+    await expect(page.getByText('{"error":"Unauthorized"}')).toBeVisible()
   })
 })
 

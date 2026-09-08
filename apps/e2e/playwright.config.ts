@@ -83,9 +83,9 @@ export default defineConfig({
       SENTRY_ORG: process.env.SENTRY_ORG || 'dummy_org',
       SENTRY_PROJECT: process.env.SENTRY_PROJECT || 'dummy_project',
       LOG_LEVEL: process.env.LOG_LEVEL || 'error',
-      // Clerk test keys (if needed for auth testing)
+      E2E_PUBLIC_ROUTES: '1',
+      // Public smoke tests need Clerk's browser configuration, but never its secret.
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || '',
-      CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || '',
       // Faster builds
       NEXT_TELEMETRY_DISABLED: '1'
     }
