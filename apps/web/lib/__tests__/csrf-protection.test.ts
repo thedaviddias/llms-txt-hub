@@ -46,6 +46,7 @@ require('@/lib/server-crypto').hashSensitiveData = mockHashSensitiveData
 describe('csrf-protection', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockCookies.get.mockReturnValue(undefined)
   })
 
   describe('generateCSRFToken', () => {
@@ -64,6 +65,17 @@ describe('csrf-protection', () => {
   })
 
   describe('createCSRFToken', () => {
+    it('reuses an unexpired token instead of rotating the shared cookie', async () => {
+      const tokenData = {
+        token: 'existing-token-123',
+        expiresAt: Date.now() + 60000
+      }
+      mockCookies.get.mockReturnValue({ value: JSON.stringify(tokenData) })
+
+      await expect(createCSRFToken()).resolves.toBe(tokenData.token)
+      expect(mockCookies.set).not.toHaveBeenCalled()
+    })
+
     it('should create and store a CSRF token', async () => {
       const token = await createCSRFToken()
 
