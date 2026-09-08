@@ -217,7 +217,6 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('X-Download-Options', 'noopen')
   response.headers.set('X-Permitted-Cross-Domain-Policies', 'none')
 
-  // HSTS header for production
   if (process.env.NODE_ENV === 'production') {
     response.headers.set(
       'Strict-Transport-Security',
@@ -372,7 +371,13 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   return null
 }
 
-/** Apply shared request security after resolving the optional authenticated user. */
+/**
+ * Apply shared request security after resolving the optional authenticated user.
+ *
+ * @param resolveUserId - Resolves the authenticated user ID when the route requires it
+ * @param req - Incoming Next.js request
+ * @returns A secured redirect, error, or forwarded response
+ */
 async function handleRequest(resolveUserId: () => Promise<string | null>, req: NextRequest) {
   const pathname = req.nextUrl.pathname
 
@@ -448,14 +453,12 @@ async function handleRequest(resolveUserId: () => Promise<string | null>, req: N
     const userId = await resolveUserId()
 
     if (!userId) {
-      // For API routes, return 401 instead of redirecting
       if (req.nextUrl.pathname.startsWith('/api/')) {
         const response = NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         response.headers.set('Content-Security-Policy', cspValue)
         return addSecurityHeaders(response)
       }
 
-      // For web routes, redirect to custom login page
       const loginUrl = new URL('/login', req.url)
       const response = NextResponse.redirect(loginUrl)
       response.headers.set('Content-Security-Policy', cspValue)
@@ -490,9 +493,7 @@ export default publicE2eProxy ??
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest|json)).*)',
-    // Always run for API routes
     '/(api|trpc)(.*)'
   ]
 }
