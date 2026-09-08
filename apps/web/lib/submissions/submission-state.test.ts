@@ -27,6 +27,32 @@ const makeRedis = () => ({
 })
 
 describe('submission state', () => {
+  it('keeps hashes stable when an accepted destination contains nested HTML entities', () => {
+    const normalized = normalizeSubmissionFields({
+      ...FIELDS,
+      mdxContent: '[Guide](https://example.com/?q=&amp;amp;amp;amp;)'
+    })
+    expect(normalized).not.toBeNull()
+    const restored = normalizeSubmissionFields(normalized)
+    expect(restored).toEqual(normalized)
+    expect(hashSubmissionFields(restored!)).toBe(hashSubmissionFields(normalized!))
+  })
+
+  it('preserves normalized additional Markdown and binds it into the field hash', () => {
+    const plain = normalizeSubmissionFields(FIELDS)
+    const additional = normalizeSubmissionFields({
+      ...FIELDS,
+      mdxContent: '\r\n## Details\r\n\r\n- **Useful** API documentation\r\n'
+    })
+    expect(additional?.mdxContent).toBe('## Details\n\n- **Useful** API documentation')
+    expect(hashSubmissionFields(additional!)).not.toBe(hashSubmissionFields(plain!))
+    expect(hashSubmissionFields(normalizeSubmissionFields({ ...FIELDS, mdxContent: '' })!)).toBe(
+      hashSubmissionFields(plain!)
+    )
+    expect(normalizeSubmissionFields({ ...FIELDS, mdxContent: 'a'.repeat(5001) })).toBeNull()
+    expect(normalizeSubmissionFields({ ...FIELDS, mdxContent: {} })).toBeNull()
+  })
+
   it.each([
     ['draft', 'preflight_rejected'],
     ['draft', 'support_required'],
@@ -198,6 +224,10 @@ describe('submission state', () => {
     [
       'changed fields',
       { fields: { ...FIELDS, name: 'Changed' }, tokenSuffix: '', userId: 'user_123' }
+    ],
+    [
+      'changed additional content',
+      { fields: { ...FIELDS, mdxContent: '## New content' }, tokenSuffix: '', userId: 'user_123' }
     ],
     ['changed account', { fields: FIELDS, tokenSuffix: '', userId: 'user_other' }],
     ['tampered token', { fields: FIELDS, tokenSuffix: 'x', userId: 'user_123' }]

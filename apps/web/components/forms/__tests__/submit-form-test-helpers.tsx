@@ -1,8 +1,27 @@
 import { preflightSubmission } from '@/actions/preflight-submission'
 import { SubmitForm } from '@/components/forms/submit-form'
-import { fireEvent, render, screen, userEvent } from '@/test/test-utils'
+import { fireEvent, render, screen, userEvent, waitFor } from '@/test/test-utils'
 
-/** Stable valid metadata used by submission form transition tests. */
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
+/**
+
+ * Open the initial gate through the same profile action as the real UI.
+
+ */
+export async function unlockSubmissionForm(user = userEvent.setup()) {
+  await user.click(screen.getByRole('link', { name: /follow david on x/i }))
+  await screen.findByLabelText(/website url/i)
+  return user
+}
+
+/**
+
+ * Stable valid metadata used by submission form transition tests.
+
+ */
 export const SUBMISSION_METADATA = {
   category: 'developer-tools',
   description:
@@ -24,39 +43,51 @@ export async function reachSubmissionDetails() {
     })
   )
   render(<SubmitForm />)
+  await unlockSubmissionForm(user)
   await user.type(screen.getByLabelText(/website url/i), 'https://example.com')
   const metadataForm = screen.getByRole('button', { name: /get website details/i }).closest('form')
   if (!metadataForm) throw new Error('Metadata form was not rendered')
   fireEvent.submit(metadataForm)
-  await screen.findByRole('button', { name: /continue to support/i })
+  await screen.findByRole('button', { name: /submit listing/i })
   return user
 }
 
-/** Submit the currently rendered details form. */
+/**
+
+ * Submit the currently rendered details form.
+
+ */
 export function submitDetails() {
-  const detailsForm = screen.getByRole('button', { name: /continue to support/i }).closest('form')
+  const detailsForm = screen.getByRole('button', { name: /submit listing/i }).closest('form')
   if (!detailsForm) throw new Error('Details form was not rendered')
   fireEvent.submit(detailsForm)
 }
 
-/** Advance through a successful preflight into the support step. */
-export async function reachSubmissionSupport() {
+/**
+
+ * Prepare a successful preflight response for the complete submission action.
+
+ */
+export async function prepareSubmission() {
   const user = await reachSubmissionDetails()
-  jest.mocked(preflightSubmission).mockResolvedValueOnce({
-    analytics: { reasonCategory: 'passed', webRiskAvailable: true },
-    continuationToken: 'opaque-token',
-    status: 'support_required',
-    submissionId: 'sub_123'
-  })
-  submitDetails()
-  await screen.findByRole('heading', { name: /support the maintainer/i })
+  jest
+    .mocked(preflightSubmission)
+    .mockReset()
+    .mockResolvedValue({
+      analytics: { reasonCategory: 'passed', webRiskAvailable: true },
+      continuationToken: 'opaque-token',
+      status: 'support_required',
+      submissionId: 'sub_123'
+    })
   return user
 }
 
-/** Complete the X support choice and trigger final submission. */
-export async function finishSubmissionSupport(user: ReturnType<typeof userEvent.setup>) {
-  await user.click(screen.getByRole('radio', { name: 'Follow David on X' }))
-  await user.click(screen.getByRole('link', { name: /open david's x profile/i }))
-  await user.click(screen.getByRole('checkbox', { name: 'I follow David on this platform' }))
-  await user.click(screen.getByRole('button', { name: /finish submission/i }))
+/**
+
+ * Submit the prepared details through preflight and final publication.
+
+ */
+export async function submitPreparedDetails(_user: ReturnType<typeof userEvent.setup>) {
+  submitDetails()
+  await waitFor(() => expect(preflightSubmission).toHaveBeenCalled())
 }

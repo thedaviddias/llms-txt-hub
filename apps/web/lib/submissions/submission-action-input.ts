@@ -1,4 +1,5 @@
 import { timingSafeEqual } from 'node:crypto'
+import { normalizeAdditionalContent } from '@thedaviddias/submission-trust/additional-content'
 import { finalSubmitActionSchema, submitActionSchema } from '@/components/forms/submit-form-schemas'
 import { stripHtml } from '@/lib/security-utils-helpers'
 import type { NormalizedSubmissionFields } from './submission-state'
@@ -12,7 +13,7 @@ type ParsedFinalSubmissionInput = ParsedSubmissionInput &
   (
     | {
         readonly continuationToken: string
-        readonly followAttested: true
+        readonly supportToken: string
         readonly ok: true
         readonly supportPlatform: 'linkedin' | 'x'
       }
@@ -41,6 +42,7 @@ const rawFields = (formData: FormData) => ({
   description: formData.get('description'),
   llmsFullUrl: formData.get('llmsFullUrl') ?? '',
   llmsUrl: formData.get('llmsUrl'),
+  mdxContent: formData.get('mdxContent') ?? '',
   name: formData.get('name'),
   publishedAt: formData.get('publishedAt'),
   website: formData.get('website')
@@ -51,9 +53,18 @@ const normalizedFields = (value: unknown): ParsedSubmissionInput => {
   if (!parsed.success) {
     return { message: parsed.error.errors[0]?.message ?? 'Invalid submission details.', ok: false }
   }
+  const additionalContent = normalizeAdditionalContent(parsed.data.mdxContent)
+  if (!additionalContent) {
+    return {
+      message:
+        'Additional Content must use Markdown with public HTTPS links and contain no more than 5,000 characters.',
+      ok: false
+    }
+  }
   const sanitized = submitActionSchema.safeParse({
     ...parsed.data,
     description: sanitizeText(parsed.data.description),
+    mdxContent: additionalContent.markdown,
     name: sanitizeText(parsed.data.name)
   })
   if (!sanitized.success) {
@@ -88,7 +99,7 @@ export function parseFinalSubmissionActionInput(formData: FormData): ParsedFinal
   const parsed = finalSubmitActionSchema.safeParse({
     ...rawFields(formData),
     continuationToken: formData.get('continuationToken'),
-    followAttested: formData.get('followAttested'),
+    supportToken: formData.get('supportToken'),
     supportPlatform: formData.get('supportPlatform')
   })
   if (!parsed.success) {
@@ -102,7 +113,7 @@ export function parseFinalSubmissionActionInput(formData: FormData): ParsedFinal
   return {
     continuationToken: parsed.data.continuationToken,
     fields: normalized.fields,
-    followAttested: true,
+    supportToken: parsed.data.supportToken,
     ok: true,
     supportPlatform: parsed.data.supportPlatform
   }

@@ -1,9 +1,13 @@
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
 import { submitLlmsTxt } from '@/actions/submit-llms-xxt'
 import { screen } from '@/test/test-utils'
 import {
-  finishSubmissionSupport,
+  prepareSubmission,
   reachSubmissionDetails,
-  reachSubmissionSupport
+  submitPreparedDetails
 } from './submit-form-test-helpers'
 
 jest.mock('@/actions/preflight-submission', () => ({ preflightSubmission: jest.fn() }))
@@ -20,16 +24,18 @@ describe('SubmitForm return focus', () => {
     expect(screen.getByLabelText(/^name/i)).toHaveFocus()
   })
 
-  it('focuses the first details field after returning from support', async () => {
-    const user = await reachSubmissionSupport()
+  it('focuses the first details field after returning from a failed submission', async () => {
+    const user = await prepareSubmission()
 
-    await user.click(screen.getByRole('button', { name: /back to details/i }))
+    jest.mocked(submitLlmsTxt).mockRejectedValueOnce(new Error('Response lost'))
+    await submitPreparedDetails(user)
+    await user.click(await screen.findByRole('button', { name: /edit details/i }))
 
     expect(screen.getByLabelText(/^name/i)).toHaveFocus()
   })
 
   it('focuses the website field after submitting another website', async () => {
-    const user = await reachSubmissionSupport()
+    const user = await prepareSubmission()
     jest.mocked(submitLlmsTxt).mockResolvedValueOnce({
       analytics: {
         publicationAttempted: true,
@@ -42,7 +48,7 @@ describe('SubmitForm return focus', () => {
       prUrl: 'https://github.com/thedaviddias/llms-txt-hub/pull/123',
       success: true
     })
-    await finishSubmissionSupport(user)
+    await submitPreparedDetails(user)
     await screen.findByRole('heading', { name: /submission ready for review/i })
 
     await user.click(screen.getByRole('button', { name: /submit another/i }))

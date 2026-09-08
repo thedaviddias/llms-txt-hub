@@ -1,9 +1,14 @@
+jest.mock('@/actions/record-submission-support', () => ({
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+}))
+
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { SubmitForm } from '@/components/forms/submit-form'
 import type { Step2Data } from '@/components/forms/submit-form-schemas'
 import { useSubmitFormMetadata } from '@/components/forms/use-submit-form-metadata'
 import { act, fireEvent, render, renderHook, screen, waitFor } from '@/test/test-utils'
+import { unlockSubmissionForm } from './submit-form-test-helpers'
 
 jest.mock('@/actions/preflight-submission', () => ({ preflightSubmission: jest.fn() }))
 jest.mock('@/actions/submit-llms-xxt', () => ({ submitLlmsTxt: jest.fn() }))
@@ -15,7 +20,7 @@ describe('SubmitForm metadata', () => {
 
   it('renders the initial form', () => {
     render(<SubmitForm />)
-    expect(screen.getByText('Submit your llms.txt')).toBeInTheDocument()
+    expect(screen.getByText('Follow or connect with David')).toBeInTheDocument()
   })
 
   it('shows the metadata API error message when fetching website details fails', async () => {
@@ -31,6 +36,7 @@ describe('SubmitForm metadata', () => {
       )
     )
     render(<SubmitForm />)
+    await unlockSubmissionForm()
 
     fireEvent.change(screen.getByLabelText(/website url/i), {
       target: { value: 'https://example.com' }
@@ -51,6 +57,7 @@ describe('SubmitForm metadata', () => {
     })
     global.fetch = jest.fn(() => responsePromise)
     render(<SubmitForm />)
+    await unlockSubmissionForm()
     fireEvent.change(screen.getByLabelText(/website url/i), {
       target: { value: 'https://example.com' }
     })
@@ -74,7 +81,7 @@ describe('SubmitForm metadata', () => {
       )
       await responsePromise
     })
-    expect(await screen.findByRole('button', { name: /continue to support/i })).toBeInTheDocument()
+    expect(await screen.findByRole('button', { name: /submit listing/i })).toBeInTheDocument()
   })
 
   it('ignores a metadata response that resolves after unmount', async () => {
@@ -84,6 +91,7 @@ describe('SubmitForm metadata', () => {
     })
     global.fetch = jest.fn(() => responsePromise)
     const view = render(<SubmitForm />)
+    await unlockSubmissionForm()
     fireEvent.change(screen.getByLabelText(/website url/i), {
       target: { value: 'https://example.com' }
     })

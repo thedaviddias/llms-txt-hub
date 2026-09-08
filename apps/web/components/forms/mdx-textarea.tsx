@@ -1,11 +1,11 @@
 'use client'
 
 import { Textarea } from '@thedaviddias/design-system/textarea'
-import { useState } from 'react'
+import { type ComponentProps, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { CharacterCounter } from '@/components/ui/character-counter'
 
-interface MDXTextareaProps {
+interface MDXTextareaProps extends Omit<ComponentProps<'textarea'>, 'value' | 'onChange'> {
   value: string
   onChange: (value: string) => void
   placeholder?: string
@@ -14,7 +14,7 @@ interface MDXTextareaProps {
 /**
  * MDX textarea component with live preview
  */
-export function MDXTextarea({ value, onChange, placeholder }: MDXTextareaProps) {
+export function MDXTextarea({ value, onChange, placeholder, ...inputProps }: MDXTextareaProps) {
   const [activeTab, setActiveTab] = useState<'edit' | 'preview'>('edit')
 
   const templateContent = `## Key Focus Areas
@@ -78,6 +78,7 @@ Our llms.txt file provides comprehensive documentation about our platform's AI-r
         {activeTab === 'edit' ? (
           <div className="space-y-2">
             <Textarea
+              {...inputProps}
               value={value}
               onChange={e => onChange(e.target.value)}
               placeholder={

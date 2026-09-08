@@ -1,6 +1,7 @@
 import { isIP } from 'node:net'
 
 import { getDomain } from 'tldts'
+import { areUrlsInSameSiteFamily as compareSiteFamilies } from '#site-family'
 
 const RESTRICTED_HOSTNAMES = new Set([
   'alt',
@@ -296,5 +297,5 @@ export const areUrlsInSameSiteFamily = (left: string, right: string): boolean =>
     return false
   }
 
-  return leftResult.registrableDomain === rightResult.registrableDomain
+  return compareSiteFamilies(leftResult.normalizedUrl, rightResult.normalizedUrl)
 }

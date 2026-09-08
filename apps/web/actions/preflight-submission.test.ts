@@ -10,6 +10,7 @@ import {
   createSubmissionContinuation,
   enforceSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
+import { createSupportReceipt } from '@/lib/submissions/submission-support'
 import { preflightSubmission } from './preflight-submission'
 
 jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
@@ -51,7 +52,12 @@ const fields = {
 
 const form = (overrides: Record<string, string> = {}) => {
   const value = new FormData()
-  for (const [key, entry] of Object.entries({ ...fields, _csrf: 'csrf-token', ...overrides })) {
+  for (const [key, entry] of Object.entries({
+    ...fields,
+    _csrf: 'csrf-token',
+    supportToken: createSupportReceipt('x', 'user_123') ?? '',
+    ...overrides
+  })) {
     value.set(key, entry)
   }
   return value
@@ -82,6 +88,7 @@ const assessment = (decision: SubmissionDecision): SubmissionAssessment => {
 
 describe('preflightSubmission', () => {
   beforeEach(() => {
+    process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET = 'local-test-secret-with-at-least-32-bytes'
     mockLoggerInfo.mockClear()
     mockAuth.mockResolvedValue({
       user: {
@@ -104,7 +111,17 @@ describe('preflightSubmission', () => {
     })
   })
 
-  it('normalizes every Step 2 field and performs all gates before support', async () => {
+  it.each(['', 'tampered.receipt'])(
+    'requires a valid profile-click receipt before network assessment',
+    async supportToken => {
+      const result = await preflightSubmission(form({ supportToken }))
+      expect(result.status).not.toBe('support_required')
+      expect(mockAssess).not.toHaveBeenCalled()
+      expect(mockContinuation).not.toHaveBeenCalled()
+    }
+  )
+
+  it('normalizes every Step 2 field and performs all gates after support', async () => {
     const result = await preflightSubmission(form())
 
     expect(result).toMatchObject({

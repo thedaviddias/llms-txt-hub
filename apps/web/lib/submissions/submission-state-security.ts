@@ -1,5 +1,7 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto'
 
+import { normalizeAdditionalContent } from '@thedaviddias/submission-trust/additional-content'
+
 import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
 
 import type { NormalizedSubmissionFields, SubmissionState } from './submission-state'
@@ -131,7 +133,8 @@ export const submissionStateSecurity = {
           fields.llmsUrl,
           fields.llmsFullUrl ?? '',
           fields.category,
-          fields.publishedAt
+          fields.publishedAt,
+          ...(fields.mdxContent ? [fields.mdxContent] : [])
         ])
       )
       .digest('hex')
@@ -168,6 +171,8 @@ export const submissionStateSecurity = {
       return null
     }
 
+    const additionalContent = normalizeAdditionalContent(input.mdxContent)
+    if (!additionalContent) return null
     const website = validateSubmissionUrl(input.website)
     const llmsUrl = validateSubmissionUrl(input.llmsUrl)
     const fullValue = typeof input.llmsFullUrl === 'string' ? input.llmsFullUrl.trim() : ''
@@ -190,6 +195,7 @@ export const submissionStateSecurity = {
     ) {
       return null
     }
+    if (additionalContent.markdown) normalized.mdxContent = additionalContent.markdown
     if (llmsFullUrl?.ok) normalized.llmsFullUrl = llmsFullUrl.normalizedUrl
     return normalized
   },
