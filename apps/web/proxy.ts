@@ -3,11 +3,9 @@ import { logger } from '@thedaviddias/logging'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { isAnalyticsProxyPath } from '@/lib/analytics-proxy'
+import { createPublicE2eProxy } from '@/lib/e2e-public-routes'
 import { validateCSRFToken } from '@/lib/middleware-csrf'
 
-// Edge Runtime compatible implementations
-
-// Define public routes that don't require authentication
 const isPublicRoute = createRouteMatcher([
   '/',
   '/login(.*)',
@@ -374,10 +372,10 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   return null
 }
 
-export default clerkMiddleware(async (auth, req) => {
+/** Apply shared request security after resolving the optional authenticated user. */
+async function handleRequest(resolveUserId: () => Promise<string | null>, req: NextRequest) {
   const pathname = req.nextUrl.pathname
 
-  // Debug endpoints must never be reachable in production.
   if (pathname.startsWith('/api/debug/') && process.env.NODE_ENV === 'production') {
     return new Response(null, { status: 404 })
   }
@@ -398,13 +396,11 @@ export default clerkMiddleware(async (auth, req) => {
     })
   }
 
-  // Apply rate limiting (Edge Runtime compatible)
   const rateLimitResponse = await applyRateLimit(req)
   if (rateLimitResponse) {
     return rateLimitResponse
   }
 
-  // Enhanced CSRF protection for API routes (Edge Runtime compatible)
   if (req.nextUrl.pathname.startsWith('/api/')) {
     // Skip CSRF for webhook endpoints, auth endpoints, and GET requests
     if (
@@ -445,14 +441,11 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // Generate a nonce early so every response path can use it.
   const nonce = generateNonce()
   const cspValue = buildCspValue(nonce)
 
-  // Check if route is protected
   if (!isPublicRoute(req)) {
-    // Check if user is authenticated
-    const { userId } = await auth()
+    const userId = await resolveUserId()
 
     if (!userId) {
       // For API routes, return 401 instead of redirecting
@@ -482,11 +475,18 @@ export default clerkMiddleware(async (auth, req) => {
     request: { headers: requestHeaders }
   })
 
-  // Set the same CSP on the response so the browser enforces it.
   response.headers.set('Content-Security-Policy', cspValue)
   response.headers.set('X-Nonce', nonce)
   return addSecurityHeaders(response)
+}
+
+const publicE2eProxy = createPublicE2eProxy({
+  handle: (req: NextRequest) => handleRequest(async () => null, req),
+  isPublicRoute,
+  unauthorized: () => NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 })
+export default publicE2eProxy ??
+  clerkMiddleware((auth, req) => handleRequest(async () => (await auth()).userId, req))
 
 export const config = {
   matcher: [
