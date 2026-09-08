@@ -10,7 +10,6 @@ import {
   acquireSubmissionLocks,
   consumeSubmissionContinuation
 } from '@/lib/submissions/submission-state'
-import { createSupportReceipt } from '@/lib/submissions/submission-support'
 import { submitLlmsTxt } from './submit-llms-xxt'
 
 jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
@@ -51,11 +50,6 @@ const form = (overrides: Record<string, string> = {}) => {
     continuationToken: 'opaque.continuation.signature',
     description:
       'A useful developer platform with clear public documentation for teams building software.',
-    supportToken:
-      createSupportReceipt(
-        overrides.supportPlatform === 'linkedin' ? 'linkedin' : 'x',
-        'user_123'
-      ) ?? '',
     llmsFullUrl: '',
     llmsUrl: 'https://example.com/llms.txt',
     name: 'Example Platform',
@@ -144,7 +138,6 @@ describe('submitLlmsTxt final coordinator', () => {
   it.each([
     ['missing platform', { supportPlatform: '' }],
     ['invalid platform', { supportPlatform: 'threads' }],
-    ['missing click receipt', { supportToken: '' }],
     ['missing continuation', { continuationToken: '' }]
   ])('rejects %s before consuming state', async (_label, overrides) => {
     const result = await submitLlmsTxt(form(overrides))
@@ -194,6 +187,14 @@ describe('submitLlmsTxt final coordinator', () => {
       expect(mockPublish).not.toHaveBeenCalled()
     }
   )
+
+  it('does not treat a client-declared social acknowledgement as final authorization', async () => {
+    await expect(submitLlmsTxt(form({ supportToken: 'tampered.receipt' }))).resolves.toMatchObject({
+      outcome: 'automatic',
+      success: true
+    })
+    expect(mockConsume).toHaveBeenCalledTimes(1)
+  })
 
   it('atomically consumes unchanged fields, then reruns duplicates and assessment', async () => {
     await expect(submitLlmsTxt(form())).resolves.toEqual({

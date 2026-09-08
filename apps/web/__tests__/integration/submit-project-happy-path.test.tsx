@@ -40,7 +40,7 @@ describe('production submission form integration', () => {
     const data = jest.mocked(submitLlmsTxt).mock.calls[0]?.[0]
     expect(data?.get('mdxContent')).toContain('## Key Focus Areas')
     expect(data?.get('llmsFullUrl')).toBe('https://example.com/llms-full.txt')
-    expect(data?.get('supportToken')).toBe('support-receipt')
+    expect(data?.has('supportToken')).toBe(false)
     expect(data?.has('followAttested')).toBe(false)
   })
 

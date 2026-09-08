@@ -1,5 +1,5 @@
 jest.mock('@/actions/record-submission-support', () => ({
-  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true })
 }))
 
 import { type PreflightResult, preflightSubmission } from '@/actions/preflight-submission'
@@ -192,7 +192,6 @@ describe('SubmitForm', () => {
     expect(Object.fromEntries(submitted?.entries() ?? [])).toMatchObject({
       continuationToken: 'opaque-token',
       description: SUBMISSION_METADATA.description,
-      supportToken: 'support-receipt',
       llmsUrl: SUBMISSION_METADATA.llmsUrl,
       name: SUBMISSION_METADATA.name,
       supportPlatform: 'x',

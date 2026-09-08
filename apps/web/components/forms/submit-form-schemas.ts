@@ -159,7 +159,6 @@ export type SubmitActionData = z.infer<typeof submitActionSchema>
 /** Server-side schema for the support-gated final submission action. */
 export const finalSubmitActionSchema = submitActionSchema.extend({
   continuationToken: z.string().min(1).max(512),
-  supportToken: z.string().min(1).max(512),
   supportPlatform: z.enum(['x', 'linkedin'])
 })
 

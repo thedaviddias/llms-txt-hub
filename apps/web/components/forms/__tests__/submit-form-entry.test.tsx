@@ -31,9 +31,7 @@ const submitListing = () => {
 
 describe('real SubmitForm entry and recovery', () => {
   beforeEach(() => {
-    jest
-      .mocked(recordSubmissionSupport)
-      .mockResolvedValue({ success: true, token: 'support-receipt' })
+    jest.mocked(recordSubmissionSupport).mockResolvedValue({ success: true })
     jest.mocked(preflightSubmission).mockResolvedValue({
       status: 'support_required',
       continuationToken: 'publication-token',
@@ -59,7 +57,7 @@ describe('real SubmitForm entry and recovery', () => {
   })
 
   it('hides all form fields until either profile click has completed', async () => {
-    let complete: (value: { success: true; token: string }) => void = () => undefined
+    let complete: (value: { success: true }) => void = () => undefined
     jest.mocked(recordSubmissionSupport).mockImplementationOnce(
       () =>
         new Promise(resolve => {
@@ -75,11 +73,11 @@ describe('real SubmitForm entry and recovery', () => {
     expect(profile).toHaveAttribute('href', 'https://www.linkedin.com/in/thedaviddias/')
     await user.click(profile)
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
-    await act(async () => complete({ success: true, token: 'support-receipt' }))
+    await act(async () => complete({ success: true }))
     expect(await screen.findByLabelText(/website url/i)).toHaveFocus()
   })
 
-  it('retains existing editing tools and submits the receipt without inventing a follow attestation', async () => {
+  it('retains existing editing tools without inventing a follow attestation', async () => {
     await enterDetails()
     expect(screen.getByLabelText(/additional content/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /use template/i })).toBeInTheDocument()
@@ -87,7 +85,7 @@ describe('real SubmitForm entry and recovery', () => {
     submitListing()
     expect(await screen.findByRole('link', { name: /view pull request/i })).toBeInTheDocument()
     const fields = jest.mocked(submitLlmsTxt).mock.calls[0]?.[0]
-    expect(fields?.get('supportToken')).toBe('support-receipt')
+    expect(fields?.has('supportToken')).toBe(false)
     expect(fields?.get('continuationToken')).toBe('publication-token')
     expect(fields?.has('followAttested')).toBe(false)
     expect(recordSubmissionSupport).toHaveBeenCalledTimes(1)

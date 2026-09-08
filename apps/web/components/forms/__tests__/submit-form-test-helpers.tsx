@@ -3,7 +3,7 @@ import { SubmitForm } from '@/components/forms/submit-form'
 import { fireEvent, render, screen, userEvent, waitFor } from '@/test/test-utils'
 
 jest.mock('@/actions/record-submission-support', () => ({
-  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true, token: 'support-receipt' })
+  recordSubmissionSupport: jest.fn().mockResolvedValue({ success: true })
 }))
 
 /**

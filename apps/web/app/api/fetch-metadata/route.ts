@@ -5,7 +5,6 @@ import { NextResponse } from 'next/server'
 import normalizeUrl from 'normalize-url'
 import { getWebsites, type WebsiteMetadata } from '@/lib/content-loader'
 import { stripHtml } from '@/lib/security-utils-helpers'
-import { verifySupportReceipt } from '@/lib/submissions/submission-support'
 import { validatePublicHttpUrl } from '@/lib/url-safety'
 
 /**
@@ -259,7 +258,7 @@ export async function GET(request: Request) {
  */
 export async function POST(request: Request) {
   try {
-    let body: { website?: unknown; supportToken?: unknown }
+    let body: { website?: unknown }
     try {
       body = await request.json()
     } catch {
@@ -280,13 +279,6 @@ export async function POST(request: Request) {
     if (!session?.user?.id) {
       return NextResponse.json({ error: 'Please sign in to submit your website.' }, { status: 401 })
     }
-    if (!verifySupportReceipt(body.supportToken, session.user.id)) {
-      return NextResponse.json(
-        { error: 'Open LinkedIn or X again to continue your submission.' },
-        { status: 403 }
-      )
-    }
-
     const metadata = await fetchMetadata(validation.url.toString())
     return NextResponse.json(metadata)
   } catch (error) {

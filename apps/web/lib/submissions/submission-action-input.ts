@@ -13,7 +13,6 @@ type ParsedFinalSubmissionInput = ParsedSubmissionInput &
   (
     | {
         readonly continuationToken: string
-        readonly supportToken: string
         readonly ok: true
         readonly supportPlatform: 'linkedin' | 'x'
       }
@@ -99,7 +98,6 @@ export function parseFinalSubmissionActionInput(formData: FormData): ParsedFinal
   const parsed = finalSubmitActionSchema.safeParse({
     ...rawFields(formData),
     continuationToken: formData.get('continuationToken'),
-    supportToken: formData.get('supportToken'),
     supportPlatform: formData.get('supportPlatform')
   })
   if (!parsed.success) {
@@ -113,7 +111,6 @@ export function parseFinalSubmissionActionInput(formData: FormData): ParsedFinal
   return {
     continuationToken: parsed.data.continuationToken,
     fields: normalized.fields,
-    supportToken: parsed.data.supportToken,
     ok: true,
     supportPlatform: parsed.data.supportPlatform
   }

@@ -10,7 +10,6 @@ import {
   createSubmissionContinuation,
   enforceSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
-import { createSupportReceipt } from '@/lib/submissions/submission-support'
 import { preflightSubmission } from './preflight-submission'
 
 jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
@@ -55,7 +54,6 @@ const form = (overrides: Record<string, string> = {}) => {
   for (const [key, entry] of Object.entries({
     ...fields,
     _csrf: 'csrf-token',
-    supportToken: createSupportReceipt('x', 'user_123') ?? '',
     ...overrides
   })) {
     value.set(key, entry)
@@ -111,15 +109,13 @@ describe('preflightSubmission', () => {
     })
   })
 
-  it.each(['', 'tampered.receipt'])(
-    'requires a valid profile-click receipt before network assessment',
-    async supportToken => {
-      const result = await preflightSubmission(form({ supportToken }))
-      expect(result.status).not.toBe('support_required')
-      expect(mockAssess).not.toHaveBeenCalled()
-      expect(mockContinuation).not.toHaveBeenCalled()
-    }
-  )
+  it('does not treat a client-declared social acknowledgement as backend authorization', async () => {
+    const result = await preflightSubmission(form({ supportToken: 'tampered.receipt' }))
+
+    expect(result.status).toBe('support_required')
+    expect(mockAssess).toHaveBeenCalledTimes(1)
+    expect(mockContinuation).toHaveBeenCalledTimes(1)
+  })
 
   it('normalizes every Step 2 field and performs all gates after support', async () => {
     const result = await preflightSubmission(form())

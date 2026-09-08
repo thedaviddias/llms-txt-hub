@@ -26,7 +26,6 @@ import {
   acquireSubmissionLocks,
   consumeSubmissionContinuation
 } from '@/lib/submissions/submission-state'
-import { verifySupportReceipt } from '@/lib/submissions/submission-support'
 
 const OWNER = 'thedaviddias'
 const REPO = 'llms-txt-hub'
@@ -54,15 +53,28 @@ export type FinalSubmissionResult = FinalSubmissionOutcome & {
   readonly analytics: SubmissionFinalAnalytics
 }
 
-const retryLater = (
-  error = RETRY_MESSAGE,
+interface RetryLaterInput {
+  error?: string
   recovery?: 'same_submission'
-): Extract<FinalSubmissionOutcome, { success: false }> => ({
-  error,
-  outcome: 'retry_later',
-  success: false,
-  ...(recovery ? { recovery } : {})
-})
+}
+
+/**
+ * Build a client-safe retry result with optional same-submission recovery.
+ *
+ * @param input - Optional safe message and recovery mode
+ * @returns A retry-later final submission outcome
+ */
+function retryLater({
+  error = RETRY_MESSAGE,
+  recovery
+}: RetryLaterInput = {}): Extract<FinalSubmissionOutcome, { success: false }> {
+  return {
+    error,
+    outcome: 'retry_later',
+    success: false,
+    ...(recovery ? { recovery } : {})
+  }
+}
 
 const rejected = (error: string): Extract<FinalSubmissionOutcome, { success: false }> => ({
   error,
@@ -138,13 +150,6 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     }
     const parsed = parseFinalSubmissionActionInput(formData)
     if (!parsed.ok) return complete(rejected(parsed.message), 'invalid_input')
-    if (verifySupportReceipt(parsed.supportToken, session.user.id) !== parsed.supportPlatform) {
-      return complete(
-        rejected('Open LinkedIn or X again to continue your submission.'),
-        'invalid_input'
-      )
-    }
-
     const consumed = await consumeSubmissionContinuation({
       continuationToken: parsed.continuationToken,
       fields: parsed.fields,
@@ -159,7 +164,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
           : retryLater()
       return complete(
         consumed.code === 'in_progress' || consumed.code === 'publication_unavailable'
-          ? retryLater(RECOVERY_MESSAGE, 'same_submission')
+          ? retryLater({ error: RECOVERY_MESSAGE, recovery: 'same_submission' })
           : result,
         consumed.code
       )
@@ -218,7 +223,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     if (assessment.decision === 'retry_later') {
       const updated = await finalize('retry_later', assessment.reasonCode)
       return complete(
-        retryLater(updated ? assessment.publicMessage : undefined),
+        retryLater({ error: updated ? assessment.publicMessage : undefined }),
         updated ? assessment.reasonCode : 'publication_unavailable'
       )
     }
@@ -238,7 +243,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       }
       return complete(
         publication.recovery === 'same_submission'
-          ? retryLater(RECOVERY_MESSAGE, 'same_submission')
+          ? retryLater({ error: RECOVERY_MESSAGE, recovery: 'same_submission' })
           : retryLater(),
         'publication_unavailable'
       )
@@ -264,7 +269,9 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       ? await finalize('retry_later', 'publication_unavailable')
       : false
     return complete(
-      finalized ? retryLater() : retryLater(RECOVERY_MESSAGE, 'same_submission'),
+      finalized
+        ? retryLater()
+        : retryLater({ error: RECOVERY_MESSAGE, recovery: 'same_submission' }),
       'publication_unavailable'
     )
   } finally {
