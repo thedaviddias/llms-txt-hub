@@ -288,6 +288,23 @@ describe('preflightSubmission', () => {
     expect(JSON.stringify(mockLoggerError.mock.calls)).not.toContain('submitted URL')
   })
 
+  it('continues safe submissions when pending duplicate inspection needs manual review', async () => {
+    mockDuplicates.mockResolvedValue({ status: 'review_required' })
+    await expect(preflightSubmission(form())).resolves.toMatchObject({ status: 'support_required' })
+    expect(mockAssess).toHaveBeenCalled()
+    expect(mockContinuation).toHaveBeenCalled()
+  })
+
+  it.each(['reject', 'retry_later'] as const)(
+    'does not bypass %s assessment for manual duplicate review',
+    async decision => {
+      mockDuplicates.mockResolvedValue({ status: 'review_required' })
+      mockAssess.mockResolvedValue(assessment(decision))
+      await preflightSubmission(form())
+      expect(mockContinuation).not.toHaveBeenCalled()
+    }
+  )
+
   it('returns duplicate rejection without assessing or publishing', async () => {
     mockDuplicates.mockResolvedValue({ source: 'catalogue', status: 'duplicate' })
 

@@ -231,7 +231,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     const publication = await publishSubmission({
       assessment,
       fields: parsed.fields,
-      mode: publicationMode(),
+      mode: duplicate.status === 'review_required' ? 'disabled' : publicationMode(),
       submissionId: consumed.submissionId
     })
     publicationAttempted = publication.publicationAttempted

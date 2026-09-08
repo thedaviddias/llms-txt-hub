@@ -105,6 +105,29 @@ describe('submitLlmsTxt final coordinator', () => {
     mockRecordOutcome.mockResolvedValue(true)
   })
 
+  it('forces manual publication when pending-PR inspection is incomplete', async () => {
+    process.env.SUBMISSION_AUTOPUBLISH_MODE = 'enabled'
+    mockDuplicates.mockResolvedValue({ status: 'review_required' })
+    await submitLlmsTxt(form())
+    expect(mockAssess).toHaveBeenCalled()
+    expect(mockPublish).toHaveBeenCalledWith(expect.objectContaining({ mode: 'disabled' }))
+    delete process.env.SUBMISSION_AUTOPUBLISH_MODE
+  })
+
+  it.each(['reject', 'retry_later'] as const)(
+    'preserves %s safety assessment during manual duplicate review',
+    async decision => {
+      mockDuplicates.mockResolvedValue({ status: 'review_required' })
+      mockAssess.mockResolvedValue(
+        decision === 'reject'
+          ? { ...autoAssessment, decision, reasonCode: 'prohibited_content' }
+          : { ...autoAssessment, decision, reasonCode: 'reputation_unknown' }
+      )
+      await submitLlmsTxt(form())
+      expect(mockPublish).not.toHaveBeenCalled()
+    }
+  )
+
   it('keeps publication uncertainty explicit while offering safe reconciliation', async () => {
     mockPublish.mockResolvedValueOnce({
       ok: false,
