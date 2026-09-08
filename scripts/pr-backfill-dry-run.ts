@@ -717,6 +717,16 @@ const directAssessmentBlockReason = (input: {
   if (input.secret.length > 4096 || Buffer.byteLength(input.secret, 'utf8') < 32) {
     return 'The trusted assessment signing key is unavailable or invalid.'
   }
+  const publishedAt = input.frontmatter.publishedAt
+  const publicationTime = publishedAt ? Date.parse(`${publishedAt}T00:00:00.000Z`) : Number.NaN
+  if (
+    !publishedAt ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ||
+    !Number.isFinite(publicationTime) ||
+    new Date(publicationTime).toISOString().slice(0, 10) !== publishedAt
+  ) {
+    return 'Direct assessment requires a valid YYYY-MM-DD publishedAt date in the submitted file.'
+  }
   if (input.frontmatter.bodyRequiresManualReview) {
     return 'The submitted Markdown body requires maintainer review.'
   }

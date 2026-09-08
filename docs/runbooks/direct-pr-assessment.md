@@ -28,6 +28,8 @@ assessment requests:
 - The trusted `PR Review` workflow has succeeded for the exact PR, head, and base.
 - The checked-out trusted base matches both the current `main` and the PR base.
 - `SUBMISSION_ASSESSMENT_SIGNING_SECRET` is available and valid.
+- The immutable MDX file includes a valid calendar date in `publishedAt` using
+  `YYYY-MM-DD`. Dates added only to a CI working copy cannot satisfy this check.
 - The MDX body is empty or follows the shared canonical submission body format.
   Unrecognized body content and executable MDX require maintainer review.
 
