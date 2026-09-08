@@ -18,6 +18,7 @@ const MAX_RAW_BASE64_CHARACTERS = 150_000
 const GITHUB_TIMEOUT_MS = 5_000
 const DUPLICATE_INSPECTION_DEADLINE_MS = 8_000
 const DUPLICATE_INSPECTION_REQUEST_BUDGET = 450
+const DUPLICATE_INSPECTION_CONCURRENCY = 20
 const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
 
 interface OpenPullRequest {
@@ -30,21 +31,17 @@ interface OpenPullRequest {
   readonly headSha: string
   readonly number: number
 }
-
 interface PullRequestFile {
   readonly path: string
   readonly status: string
 }
-
 interface CatalogueWebsite {
   readonly llmsUrl: string
   readonly website: string
 }
-
 type DuplicateCatalogueResult =
   | { readonly status: 'available'; readonly websites: readonly CatalogueWebsite[] }
   | { readonly status: 'unavailable' }
-
 interface DuplicateGitHubOperations {
   readonly getFileContent: (
     owner: string,
@@ -67,7 +64,6 @@ interface DuplicateGitHubOperations {
     signal: AbortSignal
   ) => Promise<readonly PullRequestFile[]>
 }
-
 interface DuplicateDependencies {
   readonly deadlineMs?: number
   readonly getWebsitesStrict: () => DuplicateCatalogueResult
@@ -75,13 +71,15 @@ interface DuplicateDependencies {
   readonly now?: () => number
   readonly requestBudget?: number
 }
-
 interface NormalizedDuplicateFields {
   readonly llmsFullUrl?: string
   readonly llmsUrl: string
   readonly website: string
 }
-
+interface InspectedPullRequest {
+  readonly pullRequest: OpenPullRequest
+  readonly websiteFiles: readonly PullRequestFile[]
+}
 /** Fail-closed result of catalogue and open-PR duplicate inspection. */
 export type SubmissionDuplicateResult =
   | { readonly status: 'unique' }
@@ -368,25 +366,51 @@ const inspectOpenPullRequests = async (
     candidate.baseRepoFullName.toLowerCase() === expectedRepository &&
     candidate.baseRef === input.expectedBaseRef
 
+  const inspectedPullRequests: InspectedPullRequest[] = []
   let examinedFileCount = 0
-  let exactCandidate = false
-  for (const pullRequest of pullRequests) {
-    const files = await collectPages(page =>
-      budget.request(signal =>
-        github.listPullRequestFiles(input.owner, input.repo, pullRequest.number, page, signal)
-      )
+  for (let offset = 0; offset < pullRequests.length; offset += DUPLICATE_INSPECTION_CONCURRENCY) {
+    const batch = pullRequests.slice(offset, offset + DUPLICATE_INSPECTION_CONCURRENCY)
+    const batchResults = await Promise.all(
+      batch.map(async pullRequest => ({
+        files: await collectPages(page =>
+          budget.request(signal =>
+            github.listPullRequestFiles(input.owner, input.repo, pullRequest.number, page, signal)
+          )
+        ),
+        pullRequest
+      }))
     )
-    if (!files) return retryLater()
-    examinedFileCount += files.length
-    if (examinedFileCount > MAX_AGGREGATE_PULL_REQUEST_FILES) return retryLater()
-    const websiteFiles = files.filter(isWebsiteMdx)
-    if (pullRequest === candidate && trustedCandidate && websiteFiles.length > 1) {
-      return retryLater()
+    for (const { files, pullRequest } of batchResults) {
+      if (!files) return retryLater()
+      examinedFileCount += files.length
+      if (examinedFileCount > MAX_AGGREGATE_PULL_REQUEST_FILES) return retryLater()
+      inspectedPullRequests.push({ pullRequest, websiteFiles: files.filter(isWebsiteMdx) })
     }
-    for (const file of websiteFiles) {
-      const content = await budget.request(signal =>
-        github.getFileContent(input.owner, input.repo, file.path, pullRequest.headSha, signal)
-      )
+  }
+
+  const trustedCandidateFiles = inspectedPullRequests.find(
+    ({ pullRequest }) => pullRequest === candidate && trustedCandidate
+  )
+  if (trustedCandidateFiles && trustedCandidateFiles.websiteFiles.length > 1) {
+    return retryLater()
+  }
+
+  const websiteFiles = inspectedPullRequests.flatMap(({ pullRequest, websiteFiles: files }) =>
+    files.map(file => ({ file, pullRequest }))
+  )
+  let exactCandidate = false
+  for (let offset = 0; offset < websiteFiles.length; offset += DUPLICATE_INSPECTION_CONCURRENCY) {
+    const batch = websiteFiles.slice(offset, offset + DUPLICATE_INSPECTION_CONCURRENCY)
+    const contentResults = await Promise.all(
+      batch.map(async ({ file, pullRequest }) => ({
+        content: await budget.request(signal =>
+          github.getFileContent(input.owner, input.repo, file.path, pullRequest.headSha, signal)
+        ),
+        file,
+        pullRequest
+      }))
+    )
+    for (const { content, pullRequest } of contentResults) {
       const frontmatter = parseFrontmatterUrls(content)
       if (!frontmatter) return retryLater()
       const exact =
