@@ -112,6 +112,22 @@ const verification = () => ({
 })
 
 describe('opt-in direct PR assessment', () => {
+  it.each([undefined, '', 'September 8, 2026', '2026-2-8', '2026-02-30', '2026-13-01'])(
+    'rejects an absent or invalid persisted publication date: %s',
+    async publishedAt => {
+      const fileContent = content.replace(
+        "publishedAt: '2026-09-08'\n",
+        publishedAt === undefined ? '' : `publishedAt: '${publishedAt}'\n`
+      )
+      const deps = dependencies(assessment(), new TextEncoder().encode(fileContent))
+      const result = await moderatePullRequest(input(), deps)
+
+      expect(deps.assess).not.toHaveBeenCalled()
+      expect(result.attestation.ok).toBe(false)
+      expect(result.ephemeralAttestation).toBeUndefined()
+    }
+  )
+
   it('accepts a canonical generated body as well as a frontmatter-only entry', async () => {
     const canonical = `${content}\n# Example\n\nExample is a developer platform with API documentation for AI agents\\.\n`
     const result = await moderatePullRequest(
