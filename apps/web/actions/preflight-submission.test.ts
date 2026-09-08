@@ -248,6 +248,23 @@ describe('preflightSubmission', () => {
     expect(mockAssess).not.toHaveBeenCalled()
   })
 
+  it('records a safe reason and stage for expected retry outcomes', async () => {
+    mockRateLimits.mockResolvedValue({ code: 'publication_unavailable', ok: false } as never)
+
+    await expect(preflightSubmission(form())).resolves.toMatchObject({
+      reasonCode: 'publication_unavailable',
+      status: 'retry_later'
+    })
+
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      'Submission preflight retryable failure',
+      expect.objectContaining({
+        data: { reasonCode: 'publication_unavailable', stage: 'rate_limit' },
+        tags: { operation: 'preflight', type: 'submission' }
+      })
+    )
+  })
+
   it('records only a safe stage when an infrastructure gate throws', async () => {
     mockDuplicates.mockRejectedValueOnce(new Error('submitted URL must never be logged'))
 
