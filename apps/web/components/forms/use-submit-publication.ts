@@ -17,7 +17,6 @@ import type { Step2Data } from './submit-form-schemas'
  */
 export interface SubmissionSupport {
   platform: SupportPlatform
-  token: string
 }
 type SubmissionResult =
   | { outcome: 'automatic' | 'manual'; prUrl: string }
@@ -77,12 +76,11 @@ export function useSubmitPublication(support: SubmissionSupport | undefined) {
     if (mounted.current) setIsLoading(false)
   }
   /**
-   * Bind the field snapshot to its CSRF token and support receipt.
+   * Bind the field snapshot to its CSRF token and selected social platform.
    */
   const payload = (fields: PreparedSubmission) => {
     const form = new FormData()
     form.set('_csrf', getCSRFTokenForClient())
-    form.set('supportToken', support?.token ?? '')
     form.set('supportPlatform', support?.platform ?? '')
     appendSubmissionFields(form, fields)
     return form

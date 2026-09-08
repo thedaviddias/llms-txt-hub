@@ -26,8 +26,7 @@ interface MetadataResponse {
  */
 export function useSubmitFormMetadata(
   step2Form: UseFormReturn<Step2Data>,
-  onDetailsReady: () => void,
-  supportToken?: string
+  onDetailsReady: () => void
 ): SubmitFormMetadata {
   const [isLoading, setIsLoading] = useState(false)
   const [fetchFailed, setFetchFailed] = useState(false)
@@ -76,7 +75,7 @@ export function useSubmitFormMetadata(
       const response = await fetch('/api/fetch-metadata', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ website: data.website, supportToken }),
+        body: JSON.stringify({ website: data.website }),
         signal: controller.signal
       })
       if (!isCurrentRequest(requestId)) return

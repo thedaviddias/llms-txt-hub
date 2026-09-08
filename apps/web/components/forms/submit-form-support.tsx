@@ -24,16 +24,32 @@ const PROFILES = [
   }
 ] satisfies ReadonlyArray<{ platform: SupportPlatform; label: string; detail: string; url: string }>
 
+interface SubmitFormSupportProps {
+  /** Shared submission analytics lifecycle, when already created by the parent form. */
+  analytics?: ReturnType<typeof useSubmissionAnalytics>
+  /** Continues the client flow after an allowlisted profile opens. */
+  onContinue: (support: SubmissionSupport) => void
+}
+
+interface OpenProfileInput {
+  event: MouseEvent<HTMLAnchorElement>
+  platform: SupportPlatform
+}
+
 /**
- * Invite a profile visit and unlock the form only after its server receipt is issued.
+ * Invite a profile visit and unlock the form after its server acknowledgement.
+ *
+ * @param props - Social entry-step configuration
+ * @param props.analytics - Optional shared submission analytics lifecycle
+ * @param props.onContinue - Continues the client flow with the selected platform
+ * @returns The branded LinkedIn and X entry step
+ * @example
+ * <SubmitFormSupport onContinue={setSupport} />
  */
 export function SubmitFormSupport({
   onContinue,
   analytics: sharedAnalytics
-}: {
-  onContinue: (support: SubmissionSupport) => void
-  analytics?: ReturnType<typeof useSubmissionAnalytics>
-}) {
+}: SubmitFormSupportProps) {
   const heading = useRef<HTMLHeadingElement>(null)
   const busy = useRef(false)
   const mounted = useRef(true)
@@ -53,8 +69,11 @@ export function SubmitFormSupport({
 
   /**
    * Keep native new-tab navigation while recording only the chosen platform.
+   *
+   * @param input - Native click event and selected platform
+   * @returns A promise that settles after the acknowledgement request
    */
-  const openProfile = async (event: MouseEvent<HTMLAnchorElement>, platform: SupportPlatform) => {
+  async function openProfile({ event, platform }: OpenProfileInput): Promise<void> {
     event.nativeEvent.stopImmediatePropagation()
     if (busy.current) {
       event.preventDefault()
@@ -72,7 +91,7 @@ export function SubmitFormSupport({
     try {
       const response = await recordSubmissionSupport(form)
       if (!mounted.current) return
-      if (response.success) onContinue({ platform, token: response.token })
+      if (response.success) onContinue({ platform })
       else setError(response.error)
     } catch {
       if (mounted.current) setError('We could not open the submission form. Please try again.')
@@ -107,10 +126,10 @@ export function SubmitFormSupport({
             rel="noopener noreferrer"
             aria-disabled={isLoading}
             onClick={event => {
-              void openProfile(event, profile.platform)
+              void openProfile({ event, platform: profile.platform })
             }}
             onAuxClick={event => {
-              if (event.button === 1) void openProfile(event, profile.platform)
+              if (event.button === 1) void openProfile({ event, platform: profile.platform })
             }}
             className={`group flex items-center gap-4 rounded-xl border p-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
               profile.platform === 'linkedin'

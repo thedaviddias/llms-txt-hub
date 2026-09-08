@@ -16,10 +16,7 @@ export const validSubmissionMetadata = {
 
 /** Configure external boundaries while keeping the complete production form mounted. */
 export function configureSubmissionMocks() {
-  jest
-    .mocked(recordSubmissionSupport)
-    .mockReset()
-    .mockResolvedValue({ success: true, token: 'support-receipt' })
+  jest.mocked(recordSubmissionSupport).mockReset().mockResolvedValue({ success: true })
   jest
     .mocked(preflightSubmission)
     .mockReset()
