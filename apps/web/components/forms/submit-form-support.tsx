@@ -1,5 +1,7 @@
 'use client'
 
+import { SiX } from '@icons-pack/react-simple-icons'
+import { Linkedin } from 'lucide-react'
 import { type MouseEvent, useEffect, useRef, useState } from 'react'
 import { recordSubmissionSupport } from '@/actions/record-submission-support'
 import { useSubmissionAnalytics } from '@/components/analytics-tracker'
@@ -23,9 +25,7 @@ const PROFILES = [
 ] satisfies ReadonlyArray<{ platform: SupportPlatform; label: string; detail: string; url: string }>
 
 /**
-
  * Invite a profile visit and unlock the form only after its server receipt is issued.
-
  */
 export function SubmitFormSupport({
   onContinue,
@@ -52,9 +52,7 @@ export function SubmitFormSupport({
   }, [])
 
   /**
-
    * Keep native new-tab navigation while recording only the chosen platform.
-
    */
   const openProfile = async (event: MouseEvent<HTMLAnchorElement>, platform: SupportPlatform) => {
     event.nativeEvent.stopImmediatePropagation()
@@ -114,12 +112,34 @@ export function SubmitFormSupport({
             onAuxClick={event => {
               if (event.button === 1) void openProfile(event, profile.platform)
             }}
-            className="rounded-lg border bg-card p-5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className={`group flex items-center gap-4 rounded-xl border p-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+              profile.platform === 'linkedin'
+                ? 'border-blue-200 bg-blue-50/70 hover:border-[#0A66C2] hover:bg-blue-100/70 focus-visible:ring-[#0A66C2] dark:border-blue-900 dark:bg-blue-950/30 dark:hover:border-blue-500 dark:hover:bg-blue-950/60'
+                : 'border-zinc-200 bg-zinc-50 hover:border-zinc-400 hover:bg-zinc-100 focus-visible:ring-zinc-700 dark:border-zinc-700 dark:bg-zinc-900/60 dark:hover:border-zinc-500 dark:hover:bg-zinc-800'
+            }`}
           >
-            <span className="block font-semibold">
-              {profile.label} <span aria-hidden="true">↗</span>
+            <span
+              aria-hidden="true"
+              className={`flex size-12 shrink-0 items-center justify-center rounded-lg ${
+                profile.platform === 'linkedin'
+                  ? 'bg-[#0A66C2] text-white'
+                  : 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950'
+              }`}
+            >
+              {profile.platform === 'linkedin' ? (
+                <Linkedin className="size-6" aria-hidden="true" />
+              ) : (
+                <SiX className="size-6" aria-hidden="true" />
+              )}
             </span>
-            <span className="mt-1 block text-sm text-muted-foreground">{profile.detail}</span>
+            <span className="min-w-0">
+              <span
+                className={`block font-semibold ${profile.platform === 'linkedin' ? 'text-[#0A66C2] dark:text-blue-200' : 'text-foreground'}`}
+              >
+                {profile.label} <span aria-hidden="true">↗</span>
+              </span>
+              <span className="mt-1 block text-sm text-muted-foreground">{profile.detail}</span>
+            </span>
           </a>
         ))}
       </div>
