@@ -10,8 +10,14 @@ interface InputOptions {
   platform?: string
 }
 
-/** Build one social acknowledgement form payload. */
-function input({ platform = 'x', csrf = 'csrf-token' }: InputOptions = {}) {
+/**
+ * Build one social acknowledgement form payload.
+ *
+ * @param options - Optional platform and CSRF overrides
+ * @returns The server-action form payload
+ */
+function input(options: InputOptions = {}): FormData {
+  const { platform = 'x', csrf = 'csrf-token' } = options
   const form = new FormData()
   form.set('supportPlatform', platform)
   form.set('_csrf', csrf)
