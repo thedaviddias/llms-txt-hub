@@ -13,7 +13,7 @@
     "commit": "cz",
     "dev": "cross-env FORCE_COLOR=1 turbo dev --parallel",
     "format": "biome check --write .",
-    "generate-search-index": "node scripts/search-index-generator.js",
+    "generate-search-index": "node scripts/search-index-generator.cjs",
     "generate-llms-chatbot-index": "node scripts/llms-chatbot-index-generator.js",
     "generate-websites": "tsx scripts/generate-websites.ts",
     "generate:llms": "pnpm --filter generator start",

@@ -1,5 +1,14 @@
 [
   {
+    "name": "_done",
+    "domain": "https://underscoredone.com/",
+    "description": "Underscore Done (_done) is a suite of pay-per-call utility APIs built for AI agents. No API keys, no subscriptions - agents pay per request with USDC via x402.",
+    "llmsTxtUrl": "https://underscoredone.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=underscoredone.com&sz=128",
+    "publishedAt": "2026-07-16"
+  },
+  {
     "name": ".agent",
     "domain": "https://www.agentdomain.xyz",
     "description": "agentdomain.xyz - Information and resources",
@@ -53,6 +62,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=docs.yotown.com&sz=128",
     "publishedAt": "2026-03-31"
+  },
+  {
+    "name": "400860 Radar x402 API",
+    "domain": "https://api.400860.xyz/",
+    "description": "x402-native paid API tools for AI-agent payment safety, spend firewall, seller checkout repair, market intel, and paid MCP launch readiness.",
+    "llmsTxtUrl": "https://api.400860.xyz/llms.txt",
+    "llmsFullTxtUrl": "https://api.400860.xyz/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=api.400860.xyz&sz=128",
+    "publishedAt": "2026-06-28"
   },
   {
     "name": "911 Cell Phone Repair OKC",
@@ -151,6 +170,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "admintoolkit.io",
+    "domain": "https://admintoolkit.io/",
+    "description": "Browser-based, read-only infrastructure diagnostics for DNS, email authentication, TLS, HTTP headers, certificates, subnets, and agent-readiness checks.",
+    "llmsTxtUrl": "https://admintoolkit.io/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=admintoolkit.io&sz=128",
+    "publishedAt": "2026-07-20"
+  },
+  {
     "name": "AdSights",
     "domain": "https://www.adsights.ai/",
     "description": "Revolutionize your ad creation and management with AdSights. Our AI-powered platform provides data-driven creative insights to optimize advertising strategies.",
@@ -216,6 +244,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Agent Signal Hub",
+    "domain": "https://agent.tokenpatch.com",
+    "description": "Machine-first, invitation-only intelligence exchange node where AI agents submit sourced signals, validate evidence, and consume governed digests.",
+    "llmsTxtUrl": "https://agent.tokenpatch.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=agent.tokenpatch.com&sz=128",
+    "publishedAt": "2026-07-21"
+  },
+  {
     "name": "agent.ai",
     "domain": "https://agent.ai",
     "description": "agent.ai is a marketplace and professional network for discovering, building, and activating AI agents for real-world workflows.",
@@ -223,6 +260,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=agent.ai&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "AgentFix",
+    "domain": "https://agentfix.pro",
+    "description": "AgentFix scans your site against 33 AI-agent-readiness signals (llms.txt, robots.txt, structured data, agent cards, GEO tap-targets).",
+    "llmsTxtUrl": "https://agentfix.pro/llms.txt",
+    "llmsFullTxtUrl": "https://agentfix.pro/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=agentfix.pro&sz=128",
+    "publishedAt": "2026-07-06"
   },
   {
     "name": "Agentic AI Applications",
@@ -269,6 +316,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=agentql.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "AgentsCamp",
+    "domain": "https://agentscamp.com",
+    "description": "A curated hub for everything AI — agents, skills, guides, tools, and commands for building with AI coding agents",
+    "llmsTxtUrl": "https://agentscamp.com/llms.txt",
+    "llmsFullTxtUrl": "https://agentscamp.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=agentscamp.com&sz=128",
+    "publishedAt": "2026-06-16"
   },
   {
     "name": "Agentuity",
@@ -363,6 +420,16 @@
     "publishedAt": "2026-05-06"
   },
   {
+    "name": "AI Image Generator | Pixparkle",
+    "domain": "https://pixparkle.com/",
+    "description": "Pixparkle is a chat-based AI image generator: describe, refine, export pro-quality visuals. For creators, brands, and e-commerce. Free to start.",
+    "llmsTxtUrl": "https://pixparkle.com/llms.txt",
+    "llmsFullTxtUrl": "https://pixparkle.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=pixparkle.com&sz=128",
+    "publishedAt": "2026-06-08"
+  },
+  {
     "name": "AI Plant Doctor",
     "domain": "https://theaiplantdoctor.com/",
     "description": "Free AI plant doctor app: snap a photo to identify 10,000+ plant species and diagnose diseases, pests & deficiencies instantly. Treatment plans, care reminders & plant journal.",
@@ -380,6 +447,25 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.aipredictstock.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "AI Product Index",
+    "domain": "http://percall.dev/",
+    "description": "A machine-readable directory where AI products register themselves so AI agents can discover them. Autonomous registration, free listings, JSON, schema.org.",
+    "llmsTxtUrl": "http://percall.dev/llms.txt",
+    "llmsFullTxtUrl": "http://percall.dev/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=percall.dev&sz=128",
+    "publishedAt": "2026-08-02"
+  },
+  {
+    "name": "AI Router",
+    "domain": "https://ai-router.dev/",
+    "description": "OpenAI-compatible API relay for developer and coding-agent workflows with personal API keys, usage visibility, and authenticated model discovery.",
+    "llmsTxtUrl": "https://ai-router.dev/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=ai-router.dev&sz=128",
+    "publishedAt": "2026-07-21"
   },
   {
     "name": "AI SDK",
@@ -437,6 +523,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "AI Tools Insider",
+    "domain": "https://aitoolsinsiderhq.com",
+    "description": "Independent, hands-on reviews and comparisons of AI tools for freelancers and small businesses. No vendor deals, no fluff, only tools we would use ourselves.",
+    "llmsTxtUrl": "https://aitoolsinsiderhq.com/llms.txt",
+    "llmsFullTxtUrl": "https://aitoolsinsiderhq.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=aitoolsinsiderhq.com&sz=128",
+    "publishedAt": "2026-07-04"
+  },
+  {
     "name": "AI Video Agent for Marketing",
     "domain": "https://synthesys.io",
     "description": "Create AI video ads, UGC & commercials in minutes. Trusted by Coca-Cola & Yahoo. 10X faster, 90%+ cheaper than traditional production.",
@@ -445,6 +541,24 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=synthesys.io&sz=128",
     "publishedAt": "2026-05-07"
+  },
+  {
+    "name": "AI Visibility Check",
+    "domain": "https://alexander-k-eliot.github.io/ai-visibility-check-free/",
+    "description": "Free, no-signup browser tool that checks whether GPTBot, ClaudeBot, PerplexityBot and other AI crawlers can actually read a site — llms.txt, robots.txt AI-crawler policy, structured data, and no-JS legibility, scored out of 100.",
+    "llmsTxtUrl": "https://alexander-k-eliot.github.io/ai-visibility-check-free/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=alexander-k-eliot.github.io/ai-visibility-check-free&sz=128",
+    "publishedAt": "2026-07-25"
+  },
+  {
+    "name": "AI Visibility Report",
+    "domain": "https://scan.asishsingh.in",
+    "description": "Free scanner that checks any website for AI agent readiness and gives a plain English report card.",
+    "llmsTxtUrl": "https://scan.asishsingh.in/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=scan.asishsingh.in&sz=128",
+    "publishedAt": "2026-07-12"
   },
   {
     "name": "AI-First Mindset",
@@ -512,6 +626,15 @@
     "publishedAt": "2026-04-05"
   },
   {
+    "name": "AI/RAG llms.txt Monitor",
+    "domain": "https://cekuu35.github.io/llms-txt-generator/",
+    "description": "Pay-per-result Apify Actor that generates review-ready llms.txt files, site manifests, and page-change reports across repeat runs.",
+    "llmsTxtUrl": "https://cekuu35.github.io/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=cekuu35.github.io/llms-txt-generator&sz=128",
+    "publishedAt": "2026-07-25"
+  },
+  {
     "name": "aiapi",
     "domain": "https://aiapi-main-b378d28.zuplo.site/pricing",
     "description": "Pay-per-request API providing compliance data for AI agents. Access logistics, real estate, healthcare, and finance data.",
@@ -520,6 +643,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=aiapi-main-b378d28.zuplo.site/pricing&sz=128",
     "publishedAt": "2026-05-20"
+  },
+  {
+    "name": "AIChangeHair Hairstyle AI",
+    "domain": "https://aichangehair.com/",
+    "description": "AIChangeHair previews hair colors, hairstyles, and AI hair reports from one portrait.",
+    "llmsTxtUrl": "https://aichangehair.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=aichangehair.com&sz=128",
+    "publishedAt": "2026-07-27"
   },
   {
     "name": "AiCryptoCore",
@@ -548,6 +680,25 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=aalonso.dev&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "AIﾉアカリ☆",
+    "domain": "https://ai-akari.ai/one-minute/en",
+    "description": "A free, no-signup 60-second public-good experience and API/MCP that AI assistants can offer as one small action during a difficult moment.",
+    "llmsTxtUrl": "https://ai-akari.ai/llms.txt",
+    "llmsFullTxtUrl": "https://ai-akari.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=ai-akari.ai/one-minute/en&sz=128",
+    "publishedAt": "2026-07-16"
+  },
+  {
+    "name": "AI全书",
+    "domain": "https://aibook.ren/",
+    "description": "Chinese AI learning knowledge base covering LLMs, RAG, AI agents, MCP, AI coding, prompt engineering, and practical AI workflows.",
+    "llmsTxtUrl": "https://aibook.ren/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=aibook.ren&sz=128",
+    "publishedAt": "2026-06-29"
   },
   {
     "name": "Akka Documentation",
@@ -809,6 +960,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Ansvar Systems",
+    "domain": "https://ansvar.eu",
+    "description": "Cited legal answers for AI agents: an MCP gateway serving European and US laws, regulations, and standards with paragraph-level citations.",
+    "llmsTxtUrl": "https://ansvar.eu/llms.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=ansvar.eu&sz=128",
+    "publishedAt": "2026-07-23"
+  },
+  {
     "name": "Answer.AI",
     "domain": "https://answer.ai",
     "description": "AI-powered answering and automation platform",
@@ -816,6 +976,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=answer.ai&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "AnswerLens",
+    "domain": "https://app.sfdj.net/",
+    "description": "AnswerLens audits the public evidence layer of B2B SaaS websites across pricing, docs, proof, comparison pages, buyer questions, freshness, and llms.txt.",
+    "llmsTxtUrl": "https://app.sfdj.net/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=app.sfdj.net&sz=128",
+    "publishedAt": "2026-07-04"
   },
   {
     "name": "Ant Design",
@@ -919,6 +1088,16 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "App-Compose",
+    "domain": "https://app-compose.dev/",
+    "description": "Lightweight IoC for the front-end. Compose apps you can control and trust.",
+    "llmsTxtUrl": "https://app-compose.dev/llms.txt",
+    "llmsFullTxtUrl": "https://app-compose.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=app-compose.dev&sz=128",
+    "publishedAt": "2026-06-07"
+  },
+  {
     "name": "Appio: Mobile Features for Your Web App",
     "domain": "https://appio.so/",
     "description": "Appio helps businesses add widgets and notifications to their products, without building or maintaining mobile apps, hiring developers, or dealing with app stores.",
@@ -991,6 +1170,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=argil.ai&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "Ariadne Loop",
+    "domain": "https://zhangzeyu99-web.github.io/ariadne-loop/",
+    "description": "Ariadne Loop is a local-first Loop Engineering workbench for turning rough coding-agent context into verifiable specs, agent packets, verifier gates, stop rules, rollback rules, and JSON reports.",
+    "llmsTxtUrl": "https://zhangzeyu99-web.github.io/ariadne-loop/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=zhangzeyu99-web.github.io/ariadne-loop&sz=128",
+    "publishedAt": "2026-06-11"
   },
   {
     "name": "Arias Sanguinetti Wang & Team, LLP",
@@ -1520,6 +1708,15 @@
     "publishedAt": "2025-02-27"
   },
   {
+    "name": "Better Dating Photos",
+    "domain": "https://betterdatingphotos.com/",
+    "description": "Better Dating Photos is an AI dating photo generator that turns one selfie into natural, app-ready profile photos for Tinder, Bumble, Hinge, and more.",
+    "llmsTxtUrl": "https://betterdatingphotos.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=betterdatingphotos.com&sz=128",
+    "publishedAt": "2026-06-30"
+  },
+  {
     "name": "BettingTop10 Canada",
     "domain": "https://www.bettingtop10.ca/",
     "description": "Compare the best betting sites in Canada, handpicked and tested by BettingTop10 experts. Get exclusive bonuses and daily picks for online sports betting.",
@@ -1575,6 +1772,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=bika.ai&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Bike4Mind",
+    "domain": "https://bike4mind.com",
+    "description": "Open-core AI workbench — 60+ models behind one interface, autonomous agents, RAG, voice, and in-browser code; run hosted or deploy in your own AWS.",
+    "llmsTxtUrl": "https://bike4mind.com/llms.txt",
+    "llmsFullTxtUrl": "https://bike4mind.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=bike4mind.com&sz=128",
+    "publishedAt": "2026-07-09"
   },
   {
     "name": "binguru.net",
@@ -2116,6 +2323,16 @@
     "publishedAt": "2025-10-15"
   },
   {
+    "name": "career-ops",
+    "domain": "https://career-ops.org",
+    "description": "Open-source AI job search command center that runs inside AI coding CLIs: evaluate offers against your CV, generate tailored ATS-ready PDF resumes, scan 150+ company career portals, and track applications locally. MIT licensed, local-first, human-in-the-loop.",
+    "llmsTxtUrl": "https://career-ops.org/llms.txt",
+    "llmsFullTxtUrl": "https://career-ops.org/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=career-ops.org&sz=128",
+    "publishedAt": "2026-07-22"
+  },
+  {
     "name": "CareInn Talent",
     "domain": "https://careinn-talent.com/",
     "description": "Conéctate con oportunidades de trabajo de enfermeria en Austria para profesionales. Descubre cómo podemos ayudarte en todo el proceso. ¡Tu nueva vida en Europa comienza aquí!",
@@ -2252,6 +2469,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.valenciaadicciones.es&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Cerulea",
+    "domain": "https://cerulea.io",
+    "description": "No-code blockchain platform. Deploy public or private blockchain networks with governance, validators, and APIs, without writing any code.",
+    "llmsTxtUrl": "https://cerulea.io/llms.txt",
+    "llmsFullTxtUrl": "https://cerulea.io/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=cerulea.io&sz=128",
+    "publishedAt": "2026-07-12"
   },
   {
     "name": "Chainspect",
@@ -2411,6 +2638,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.chiletrabajos.cl&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Chinng Lab AI-Agent Portal",
+    "domain": "https://portal.chinng-lab-srv.dev",
+    "description": "AI-agent-first content hub serving news, CVE advisories, and Japanese/US government documents metadata-first over MCP and REST, plus an Agent-Readiness directory scoring how well other sites expose agent surfaces.",
+    "llmsTxtUrl": "https://portal.chinng-lab-srv.dev/llms.txt",
+    "llmsFullTxtUrl": "https://portal.chinng-lab-srv.dev/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=portal.chinng-lab-srv.dev&sz=128",
+    "publishedAt": "2026-07-25"
   },
   {
     "name": "Chirp Wireless",
@@ -2578,6 +2815,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=cleverhack.com/2026&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "ClipTrend AI Video Tool",
+    "domain": "https://cliptrend.ai/",
+    "description": "ClipTrend turns images, prompts, and creative ideas into short AI video clips for creators and marketers.",
+    "llmsTxtUrl": "https://cliptrend.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=cliptrend.ai&sz=128",
+    "publishedAt": "2026-07-27"
   },
   {
     "name": "Clixi – Rides Made for the Mountains.",
@@ -2757,6 +3003,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=cog.run&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Cog Depot",
+    "domain": "https://cogdepot.com",
+    "description": "Anonymous agent-to-agent marketplace where AI agents post capabilities, negotiate service deals over an API, and settle in BTC/stablecoins.",
+    "llmsTxtUrl": "https://cogdepot.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=cogdepot.com&sz=128",
+    "publishedAt": "2026-07-26"
   },
   {
     "name": "Cohere",
@@ -3195,6 +3450,35 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Crypto APIs",
+    "domain": "https://cryptoapis.io",
+    "description": "Blockchain infrastructure suite — unified APIs for blockchain data, transactions, wallets, events, AML screening, and market data across 20+ chains.",
+    "llmsTxtUrl": "https://cryptoapis.io/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=cryptoapis.io&sz=128",
+    "publishedAt": "2026-05-20"
+  },
+  {
+    "name": "Crypto APIs Developers",
+    "domain": "https://developers.cryptoapis.io",
+    "description": "Developer reference for the Crypto APIs blockchain platform — endpoint inventory, FAQ-style worked examples, MCP server pointer, and explicit guardrails directing AI agents to the current API surface.",
+    "llmsTxtUrl": "https://developers.cryptoapis.io/llms.txt",
+    "llmsFullTxtUrl": "https://developers.cryptoapis.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=developers.cryptoapis.io&sz=128",
+    "publishedAt": "2026-06-01"
+  },
+  {
+    "name": "Crypto APIs REST",
+    "domain": "https://cryptoapis.io",
+    "description": "Production REST API host for the Crypto APIs blockchain platform — agent-facing entry point served at the API base URL, with product inventory, conventions, MCP server pointer, and deprecation guardrails.",
+    "llmsTxtUrl": "https://rest.cryptoapis.io/llms.txt",
+    "llmsFullTxtUrl": "https://rest.cryptoapis.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=cryptoapis.io&sz=128",
+    "publishedAt": "2026-06-02"
+  },
+  {
     "name": "Crypto Prices, Charts and Cryptocurrency Market Cap",
     "domain": "https://coincodex.com/",
     "description": "Live cryptocurrency prices and charts of top cryptocurrencies by crypto market cap. Complete cryptocurrency market overview including Bitcoin and 47398 altcoins.",
@@ -3221,6 +3505,15 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=www.cubacollectibles.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "CueFrame",
+    "domain": "https://cueframe.ai",
+    "description": "The video editing API. Your agent or code writes the edit — clips, captions, brand — and CueFrame renders the finished video, the same way every time.",
+    "llmsTxtUrl": "https://cueframe.ai/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=cueframe.ai&sz=128",
+    "publishedAt": "2026-07-31"
   },
   {
     "name": "Curling IO",
@@ -3760,6 +4053,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "DNACORE",
+    "domain": "https://dnacore.ai",
+    "description": "Open-protocol directory of AI-native websites. Verifies llms.txt and agents.json compliance, issues trust badges, and makes verified sites queryable by AI agents and IDE assistants.",
+    "llmsTxtUrl": "https://dnacore.ai/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=dnacore.ai&sz=128",
+    "publishedAt": "2026-06-08"
+  },
+  {
     "name": "dns0.eu",
     "domain": "https://dns0.eu",
     "description": "A free, sovereign and GDPR-compliant recursive DNS resolver with a strong focus on security to protect the citizens and organizations of the European Union.",
@@ -3767,6 +4069,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=dns0.eu&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Do Not Act",
+    "domain": "https://donotact.com",
+    "description": "Do Not Act is Dispute & Resolution Intelligence for prediction-market agents.",
+    "llmsTxtUrl": "https://donotact.com/llms.txt",
+    "llmsFullTxtUrl": "https://donotact.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=donotact.com&sz=128",
+    "publishedAt": "2026-06-16"
   },
   {
     "name": "DocETL",
@@ -4130,6 +4442,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "EPY Host",
+    "domain": "https://www.epyhost.com/",
+    "description": "Top-notch Dedicated Server Hosting Services, designed to provide fast performance, unmatched reliability, and exceptional customer support.",
+    "llmsTxtUrl": "https://www.epyhost.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.epyhost.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.epyhost.com&sz=128",
+    "publishedAt": "2026-07-28"
+  },
+  {
     "name": "Equipment",
     "domain": "https://equipment-python.vercel.app",
     "description": "Equipment is a python framework to create python applications that can be integrated to other popular tools.",
@@ -4186,6 +4508,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "EU Vetted | EU and privacy",
+    "domain": "https://euvetted.com",
+    "description": "EU and privacy-first alternatives to US SaaS: verified hosting, sub-processors, CLOUD Act exposure, and EUCS / C5 / SecNumCloud references.",
+    "llmsTxtUrl": "https://euvetted.com/llms.txt",
+    "llmsFullTxtUrl": "https://euvetted.com/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=euvetted.com&sz=128",
+    "publishedAt": "2026-07-29"
+  },
+  {
     "name": "Euskadi Data",
     "domain": "https://euskadi.alfredollanos.es/",
     "description": "Euskadi Data provides AI-readable documentation through llms.txt.",
@@ -4239,6 +4571,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=evryt.online&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Expert AI Development Company",
+    "domain": "https://tech.us",
+    "description": "Silicon Valley's trusted AI Development Company & software partner since 2000. 1,500+ projects delivered on time, on budget. Get your free consultation today.",
+    "llmsTxtUrl": "https://tech.us/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=tech.us&sz=128",
+    "publishedAt": "2026-06-17"
   },
   {
     "name": "Expo Documentation",
@@ -4382,6 +4723,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=serp.co&sz=128",
     "publishedAt": "2026-03-23"
+  },
+  {
+    "name": "FinOps LLM",
+    "domain": "https://finopsllm.com/",
+    "description": "FinOps research for LLM spend: cost attribution, chargeback/showback, token budgets, anomaly detection, and model pricing guides across providers. Free AI cost audit.",
+    "llmsTxtUrl": "https://finopsllm.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=finopsllm.com&sz=128",
+    "publishedAt": "2026-07-19"
   },
   {
     "name": "Finotor",
@@ -4851,6 +5201,43 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Geomelon",
+    "domain": "https://geomelon.dev/",
+    "description": "A read-only geographic data API covering cities, countries, regions, and languages — with multilingual name support.",
+    "llmsTxtUrl": "https://geomelon.dev/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=geomelon.dev&sz=128",
+    "publishedAt": "2026-07-14"
+  },
+  {
+    "name": "GeoPromptTracker",
+    "domain": "https://geoprompttracker.com/",
+    "description": "Free micro-tools for Generative Engine Optimization (GEO/AEO): llms.txt generators, AI crawler checkers, schema generators, and AI-readiness audits.",
+    "llmsTxtUrl": "https://geoprompttracker.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=geoprompttracker.com&sz=128",
+    "publishedAt": "2026-07-17"
+  },
+  {
+    "name": "GeoSuite",
+    "domain": "https://trygeosuite.it",
+    "description": "AI visibility platform that measures and improves how brands appear in answers from ChatGPT, Gemini, Claude and Perplexity, pairing recurring audits with an operational action layer.",
+    "llmsTxtUrl": "https://trygeosuite.it/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=trygeosuite.it&sz=128",
+    "publishedAt": "2026-06-23"
+  },
+  {
+    "name": "GEO知识库",
+    "domain": "https://geoz.com.cn",
+    "description": "使用GEO生成式引擎相关优化方法记录对 AI 搜索引擎行为的追踪、实测与思考，并记录我们做了什么和收集整理了什么.",
+    "llmsTxtUrl": "https://geoz.com.cn/llms.txt",
+    "llmsFullTxtUrl": "https://geoz.com.cn/llms-full.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=geoz.com.cn&sz=128",
+    "publishedAt": "2026-06-29"
+  },
+  {
     "name": "Getinbox",
     "domain": "https://www.getinbox.co",
     "description": "Search for verified professional email addresses. Enter a prospect''s name and company to find their email instantly. Start for free, no card required!",
@@ -4867,6 +5254,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=digitaliser.getmarked.ai&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "getpeppr",
+    "domain": "https://getpeppr.dev",
+    "description": "Developer-first Peppol e-invoicing. Send invoices as JSON via a TypeScript SDK or REST API — getpeppr handles UBL/BIS 3.0 generation, validation, and Peppol network delivery.",
+    "llmsTxtUrl": "https://getpeppr.dev/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=getpeppr.dev&sz=128",
+    "publishedAt": "2026-07-24"
   },
   {
     "name": "Gi Bianco Tattoo Porto | Fineline & Delicate",
@@ -5036,6 +5432,15 @@
     "publishedAt": "2026-05-14"
   },
   {
+    "name": "Graceful Boundaries",
+    "domain": "https://gracefulboundaries.dev",
+    "description": "Open spec for how services communicate operational limits to humans and agents: limits discovery, structured refusals, conformance levels.",
+    "llmsTxtUrl": "https://gracefulboundaries.dev/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=gracefulboundaries.dev&sz=128",
+    "publishedAt": "2026-06-10"
+  },
+  {
     "name": "Gradio",
     "domain": "https://www.gradio.app",
     "description": "Build & Share Delightful Machine Learning Apps",
@@ -5197,7 +5602,8 @@
     "name": "Harper: One Runtime for Apps, Agents, and Data",
     "domain": "https://www.harper.fast/",
     "description": "Scalable performance for production apps, AI agents, streaming, and APIs in one in-process runtime. ~1ms data retrieval and up to 85% fewer LLM calls at scale.",
-    "llmsTxtUrl": "https://www.harper.fast/llms.txt",
+    "llmsTxtUrl": "https://docs.harperdb.io/llms.txt",
+    "llmsFullTxtUrl": "https://docs.harperdb.io/llms-full.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.harper.fast&sz=128",
     "publishedAt": "2026-05-31"
@@ -5302,15 +5708,6 @@
     "llmsTxtUrl": "https://hellodarwin.com/llms.txt",
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=hellodarwin.com&sz=128",
-    "publishedAt": "2026-05-31"
-  },
-  {
-    "name": "Help AI Find You",
-    "domain": "https://llmstxt.studio/",
-    "description": "AI is recommending businesses in your industry right now. We show you who it picks, why, and how to make sure you",
-    "llmsTxtUrl": "https://llmstxt.studio/llms.txt",
-    "category": "ai-ml",
-    "favicon": "https://www.google.com/s2/favicons?domain=llmstxt.studio&sz=128",
     "publishedAt": "2026-05-31"
   },
   {
@@ -5713,6 +6110,16 @@
     "publishedAt": "2026-03-07"
   },
   {
+    "name": "iDatam",
+    "domain": "https://www.idatam.com/",
+    "description": "Dedicated server hosting with a 100% uptime guarantee for the network and immediate access.",
+    "llmsTxtUrl": "https://www.idatam.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.idatam.com/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.idatam.com&sz=128",
+    "publishedAt": "2026-07-28"
+  },
+  {
     "name": "IdealPostcodes",
     "domain": "https://ideal-postcodes.co.uk/",
     "description": "Capture and verify customer addresses using the most comprehensive datasets on the market. Say goodbye to address errors and improve business efficiency today",
@@ -5785,6 +6192,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Immersive Commons",
+    "domain": "https://www.immersivecommons.com",
+    "description": "Agent-native API for Floor 10 of Frontier Tower SF — one bearer token, three transports (REST, MCP, A2A), 138 tools.",
+    "llmsTxtUrl": "https://www.immersivecommons.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.immersivecommons.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.immersivecommons.com&sz=128",
+    "publishedAt": "2026-07-20"
+  },
+  {
     "name": "Immobilienkredit24",
     "domain": "https://www.immobilienkredit24.de/",
     "description": "Vergleiche über 450 Banken mit Immobilienkredit24.de. Unabhängig, persönlich & strategisch zum passenden Immobilienkredit.",
@@ -5820,6 +6237,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=infera.org&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "InfiniVerde Ltd",
+    "domain": "https://infiniverde.com",
+    "description": "Closed-source quantitative research across 30+ UK and European built environment markets.",
+    "llmsTxtUrl": "https://infiniverde.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=infiniverde.com&sz=128",
+    "publishedAt": "2026-04-28"
   },
   {
     "name": "Infisical",
@@ -5859,6 +6285,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=in.fosprout.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "InfraNode",
+    "domain": "https://infranode.dev",
+    "description": "Free unified REST API for German city infrastructure data (weather, air quality, water levels, EV chargers, live public transport, demographics) from 35+ official sources",
+    "llmsTxtUrl": "https://infranode.dev/llms.txt",
+    "llmsFullTxtUrl": "https://infranode.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=infranode.dev&sz=128",
+    "publishedAt": "2026-06-13"
   },
   {
     "name": "Ingenimax - Developer Tools for Cloud",
@@ -5991,6 +6427,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "intelica-intel-api",
+    "domain": "https://api.intelica.dev",
+    "description": "Competitive intelligence API for autonomous AI agents. Pay-per-call via x402 with USDC. 10 analysis modes, MCP server, 8 languages.",
+    "llmsTxtUrl": "https://api.intelica.dev/llms.txt",
+    "llmsFullTxtUrl": "https://api.intelica.dev/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=api.intelica.dev&sz=128",
+    "publishedAt": "2026-06-11"
+  },
+  {
     "name": "Intelligems",
     "domain": "https://intelligems.io",
     "description": "Intelligems simplifies profit optimization for e-commerce businesses, enabling effortless testing of prices, discounts, and shipping rates to maximize margins.",
@@ -6108,6 +6554,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=irev.com&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "iSimplifyMe",
+    "domain": "https://isimplifyme.com",
+    "description": "AI orchestration infrastructure and answer-engine optimization for regulated and mid-market enterprises — production AI on AWS Bedrock, publisher of The AEO Standard.",
+    "llmsTxtUrl": "https://isimplifyme.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=isimplifyme.com&sz=128",
+    "publishedAt": "2026-07-25"
   },
   {
     "name": "Island Router",
@@ -6624,6 +7079,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Latchshot",
+    "domain": "https://latchshot.fly.dev",
+    "description": "Guarded screenshot and PDF rendering API for public web pages, with a recurring Free plan, OpenAPI contract, and hosted MCP endpoint.",
+    "llmsTxtUrl": "https://latchshot.fly.dev/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=latchshot.fly.dev&sz=128",
+    "publishedAt": "2026-07-19"
+  },
+  {
     "name": "Latest Free Southern African Press Releases - MyPressportal",
     "domain": "https://pressportal.co.za/",
     "description": "Below is the breakdown of the categories where you can find industry related press releases. For more articles click on a category.If you are looking...",
@@ -6631,6 +7095,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=pressportal.co.za&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Launch your app to app stores",
+    "domain": "https://launch.dev/",
+    "description": "Launch anything to the App Store, all from your browser.",
+    "llmsTxtUrl": "https://launch.dev/llms.txt",
+    "llmsFullTxtUrl": "https://launch.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=launch.dev&sz=128",
+    "publishedAt": "2026-07-06"
   },
   {
     "name": "LaunchFast",
@@ -6885,6 +7359,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Live Tennis API",
+    "domain": "https://livetennisapi.com",
+    "description": "Real-time tennis scores, players, fixtures and model win-probability for ATP, WTA, Challenger and ITF, over REST and WebSocket.",
+    "llmsTxtUrl": "https://livetennisapi.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=livetennisapi.com&sz=128",
+    "publishedAt": "2026-07-21"
+  },
+  {
     "name": "Liveblocks",
     "domain": "https://liveblocks.io",
     "description": "The best products for the AI era aren’t solo experiences—they’re collaborative, like Notion and Figma. Liveblocks provides ready‑made features that make your app multiplayer, engaging, and AI‑ready.",
@@ -6914,6 +7397,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "LiveFaceSwap AI",
+    "domain": "https://livefaceswap.ai",
+    "description": "LiveFaceSwap AI provides real-time browser face swap, try-on, and restyle previews, plus Windows 11 virtual-camera output through its desktop app.",
+    "llmsTxtUrl": "https://livefaceswap.ai/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=livefaceswap.ai&sz=128",
+    "publishedAt": "2026-07-31"
+  },
+  {
     "name": "LiveKit",
     "domain": "https://livekit.com/",
     "description": "An open source framework and developer platform for building, testing, deploying, scaling, and observing agents in production.",
@@ -6933,6 +7425,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "LLM CFO",
+    "domain": "https://llmcfo.com/",
+    "description": "CFO-focused research on AI spend governance: LLM pricing changes, vendor concentration risk, budgeting frameworks, and cost optimization for finance teams.",
+    "llmsTxtUrl": "https://llmcfo.com/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmcfo.com&sz=128",
+    "publishedAt": "2026-07-19"
+  },
+  {
     "name": "LLM Gateway",
     "domain": "https://llmgateway.io",
     "description": "Route, manage, and analyze your LLM requests across multiple providers with a unified API interface. Access OpenAI, Anthropic and 25+ providers through one API.",
@@ -6941,6 +7442,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=llmgateway.io&sz=128",
     "publishedAt": "2026-04-03"
+  },
+  {
+    "name": "LLM Latency Tracker",
+    "domain": "https://llmlatency.dev",
+    "description": "Independent, provider-neutral latency & uptime for ~45 AI inference APIs, measured from 4 regions. Free, open data (CC-BY-4.0) with a JSON API and an MCP server.",
+    "llmsTxtUrl": "https://llmlatency.dev/llms.txt",
+    "llmsFullTxtUrl": "https://llmlatency.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmlatency.dev&sz=128",
+    "publishedAt": "2026-07-23"
   },
   {
     "name": "LLM Summon",
@@ -6970,6 +7481,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=llmgenerator.com&sz=128",
     "publishedAt": "2026-03-20"
+  },
+  {
+    "name": "LLMGraph",
+    "domain": "https://llmgraph.ai",
+    "description": "No-code visual builder for LLM workflows. Build RAG chatbots and AI agents on a drag-and-drop canvas or by describing them in chat, then deploy each workflow to a REST API and an embeddable chat widget in one click. 14-day free trial.",
+    "llmsTxtUrl": "https://llmgraph.ai/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmgraph.ai&sz=128",
+    "publishedAt": "2026-07-11"
   },
   {
     "name": "LLMS Central",
@@ -7018,6 +7538,35 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "LLMs.txt Generator",
+    "domain": "https://llmstxtgenerator.de",
+    "description": "Free tool to generate llms.txt and llms-full.txt files, with a GEO audit, schema scoring and AI-crawler checks to make websites visible to ChatGPT, Claude and Perplexity.",
+    "llmsTxtUrl": "https://llmstxtgenerator.de/llms.txt",
+    "llmsFullTxtUrl": "https://llmstxtgenerator.de/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmstxtgenerator.de&sz=128",
+    "publishedAt": "2026-07-04"
+  },
+  {
+    "name": "LLMs.txt Generator",
+    "domain": "https://llmstxtgenerator.svcpool.com",
+    "description": "AI-powered service that automatically crawls your website, clusters pages by semantic similarity, and generates a hierarchical llms.txt file optimized for LLMs. Supports multiple AI models, no registration required for the free tier.",
+    "llmsTxtUrl": "https://llmstxtgenerator.svcpool.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmstxtgenerator.svcpool.com&sz=128",
+    "publishedAt": "2026-06-01"
+  },
+  {
+    "name": "llms.txt Validator",
+    "domain": "https://llms-txt-validator.dev",
+    "description": "Free validator that checks your llms.txt against the spec, fetches every linked URL, and scores it 0-100 with fixes.",
+    "llmsTxtUrl": "https://llms-txt-validator.dev/llms.txt",
+    "llmsFullTxtUrl": "https://llms-txt-validator.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=llms-txt-validator.dev&sz=128",
+    "publishedAt": "2026-07-26"
+  },
+  {
     "name": "llmshub.de",
     "domain": "https://llmshub.de/",
     "description": "German-language platform for llms.txt, LLM visibility and AI crawler control. Free tools, guides and glossary.",
@@ -7026,6 +7575,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=llmshub.de&sz=128",
     "publishedAt": "2026-04-05"
+  },
+  {
+    "name": "llmstxt.studio",
+    "domain": "https://llmstxt.studio",
+    "description": "Platform for creating and managing llms.txt files with an intelligent form builder and AI-driven insights",
+    "llmsTxtUrl": "https://llmstxt.studio/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=llmstxt.studio&sz=128",
+    "publishedAt": "2026-03-22"
   },
   {
     "name": "LLMVO",
@@ -7168,6 +7726,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=macgence.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Madhda Inc",
+    "domain": "https://madhda.com/",
+    "description": "Certified Microsoft Solutions Partner specializing in Dynamics 365 Business Central. We deliver expert ERP implementation, upgrades.",
+    "llmsTxtUrl": "https://madhda.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=madhda.com&sz=128",
+    "publishedAt": "2026-06-02"
   },
   {
     "name": "Magis5 Hub",
@@ -7458,6 +8025,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "MermaidEditor",
+    "domain": "https://mermaideditor.lol",
+    "description": "Free online Mermaid.js editor with live preview, templates, tutorials, and PNG/SVG export. No signup required.",
+    "llmsTxtUrl": "https://mermaideditor.lol/llms.txt",
+    "llmsFullTxtUrl": "https://mermaideditor.lol/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=mermaideditor.lol&sz=128",
+    "publishedAt": "2026-07-23"
+  },
+  {
     "name": "Metabase",
     "domain": "https://www.metabase.com",
     "description": "Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own.",
@@ -7474,6 +8051,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=michael-hansmeyer.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Micra.js Documentation",
+    "domain": "https://denisfl.github.io/micra.js/",
+    "description": "Micra.js is a ~5 KB reactive UI library for server-rendered pages: reactive `state` via a shallow `Proxy`, declarative `data-*` and a cross-component event bus.",
+    "llmsTxtUrl": "https://denisfl.github.io/micra.js/llms.txt",
+    "llmsFullTxtUrl": "https://denisfl.github.io/micra.js/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=denisfl.github.io/micra.js&sz=128",
+    "publishedAt": "2026-06-08"
   },
   {
     "name": "Micro1",
@@ -7591,6 +8178,16 @@
     "publishedAt": "2024-12-01"
   },
   {
+    "name": "MixTranslate",
+    "domain": "https://mixtranslate.com",
+    "description": "MixTranslate is a free AI translation tool that helps you translate text into 150+ languages and compare results from GPT, Gemini, and 20+ leading AI models.",
+    "llmsTxtUrl": "https://mixtranslate.com/llms.txt",
+    "llmsFullTxtUrl": "https://mixtranslate.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=mixtranslate.com&sz=128",
+    "publishedAt": "2026-07-21"
+  },
+  {
     "name": "Mobile Kitchen Rental Leader",
     "domain": "https://www.mobileculinaire.com/",
     "description": "Mobile Culinaire Is A Leading US Mobile Kitchen Rental Provider. Our Units Are Ready-To-Use, Commercial-Grade, And Built To Code. FAST QUOTE.",
@@ -7702,6 +8299,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.morphic-solutions.com&sz=128",
     "publishedAt": "2025-06-22"
+  },
+  {
+    "name": "Morse Coder",
+    "domain": "https://morse-coder.com/",
+    "description": "Morse Coder is a browser-based Morse code workspace for translating text, decoding images and audio, playing signals, and studying reference sheets.",
+    "llmsTxtUrl": "https://morse-coder.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=morse-coder.com&sz=128",
+    "publishedAt": "2026-07-14"
   },
   {
     "name": "Most Recommended Books",
@@ -7925,6 +8531,15 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "Negbit",
+    "domain": "https://negbit.com",
+    "description": "Marketplace where AI agents buy OKF knowledge bundles over x402 (HTTP 402). Machine-readable catalog, USDC on Base, sealed + signed downloads.",
+    "llmsTxtUrl": "https://negbit.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=negbit.com&sz=128",
+    "publishedAt": "2026-07-08"
+  },
+  {
     "name": "Nemoya | Agence Webflow",
     "domain": "https://www.nemoya.fr/",
     "description": "Nemoya, agence Webflow spécialisée en création de sites sur mesure, SEO, webapps et Google Ads. Plus de 40 entreprises accompagnées. Devis sous 24h.",
@@ -8068,6 +8683,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=nh-ai-meetup.com&sz=128",
     "publishedAt": "2026-02-12"
+  },
+  {
+    "name": "Nika",
+    "domain": "https://nika.sh",
+    "description": "Workflow language and runner for AI jobs: one plain-text .nika.yaml DAG per job, statically checked before any token is spent, executed by a single Rust binary with hash-chained run traces. Local-first (Ollama, zero keys), MCP on both sides.",
+    "llmsTxtUrl": "https://docs.nika.sh/llms.txt",
+    "llmsFullTxtUrl": "https://docs.nika.sh/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=nika.sh&sz=128",
+    "publishedAt": "2026-07-11"
   },
   {
     "name": "Nile Postgres",
@@ -8459,6 +9084,15 @@
     "publishedAt": "2025-07-11"
   },
   {
+    "name": "Ophis",
+    "domain": "https://docs.ophis.fi",
+    "description": "Intent-based DEX aggregator with a natural-language layer and a keyless MCP server for AI agents. Non-custodial, gasless, and MEV-protected, with surplus returned to the trader.",
+    "llmsTxtUrl": "https://docs.ophis.fi/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=docs.ophis.fi&sz=128",
+    "publishedAt": "2026-06-18"
+  },
+  {
     "name": "Opik by Comet",
     "domain": "https://www.comet.com/",
     "description": "Comet provides an end-to-end model evaluation platform for AI developers, with best-in-class LLM evaluations, experiment tracking, and production monitoring.",
@@ -8518,6 +9152,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "otwarteAPI.pl",
+    "domain": "https://otwarteapi.pl",
+    "description": "Directory of Polish and EU public government APIs (VAT registry, company registers, statistics, weather data) for humans and AI agents, publishing an ai-catalog.json (ARD) manifest.",
+    "llmsTxtUrl": "https://otwarteapi.pl/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=otwarteapi.pl&sz=128",
+    "publishedAt": "2026-07-19"
+  },
+  {
     "name": "outwrite.ai",
     "domain": "https://outwrite.ai/",
     "description": "Get your brand recommended by ChatGPT, Perplexity, and Claude. Create AEO-optimized content and track your AI visibility in one platform.",
@@ -8535,6 +9178,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=agentskills.io&sz=128",
     "publishedAt": "2026-03-11"
+  },
+  {
+    "name": "Ownkube",
+    "domain": "https://ownkube.io",
+    "description": "A Heroku in your cloud. The developer experience you love, running on your own AWS or GCP account, with AI-powered operations from day one.",
+    "llmsTxtUrl": "https://ownkube.io/llms.txt",
+    "llmsFullTxtUrl": "https://ownkube.io/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=ownkube.io&sz=128",
+    "publishedAt": "2026-04-25"
   },
   {
     "name": "Oxla",
@@ -8723,6 +9376,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Perpensum",
+    "domain": "https://perpensum.org",
+    "description": "Open definition of agent-directed manipulation: what counts as web page text placed to steer a machine reader, with a conformance suite and a reference implementation.",
+    "llmsTxtUrl": "https://perpensum.org/llms.txt",
+    "llmsFullTxtUrl": "https://perpensum.org/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=perpensum.org&sz=128",
+    "publishedAt": "2026-07-31"
+  },
+  {
     "name": "Perplexity",
     "domain": "https://perplexity.ai",
     "description": "AI-powered search and discovery platform",
@@ -8807,6 +9470,15 @@
     "publishedAt": "2025-08-02"
   },
   {
+    "name": "Pilot Protocol",
+    "domain": "https://pilotprotocol.network",
+    "description": "Open-source overlay network giving AI agents a permanent virtual address, encrypted UDP tunnels, NAT traversal, and a built-in trust model, plus an app store of installable agent capabilities",
+    "llmsTxtUrl": "https://pilotprotocol.network/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=pilotprotocol.network&sz=128",
+    "publishedAt": "2026-07-05"
+  },
+  {
     "name": "Pinata",
     "domain": "https://docs.pinata.cloud",
     "description": "Simple API platform for IPFS storage and decentralized file management",
@@ -8825,6 +9497,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=pinecone.io&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Pipe2.ai",
+    "domain": "https://pipe2.ai",
+    "description": "One-click AI pipelines for video, image, audio, and text — runnable from the web, a CLI, SDKs, or an MCP server.",
+    "llmsTxtUrl": "https://pipe2.ai/llms.txt",
+    "llmsFullTxtUrl": "https://pipe2.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=pipe2.ai&sz=128",
+    "publishedAt": "2026-07-31"
   },
   {
     "name": "Piramyd",
@@ -8863,6 +9545,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=pixeltable.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "PixelVault",
+    "domain": "https://pixelvault.dev",
+    "description": "Agent-first image hosting for developers. One API call to register, one to upload. Free to start.",
+    "llmsTxtUrl": "https://pixelvault.dev/llms.txt",
+    "llmsFullTxtUrl": "https://pixelvault.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=pixelvault.dev&sz=128",
+    "publishedAt": "2026-06-23"
   },
   {
     "name": "Plaid",
@@ -9086,6 +9778,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Presspeech",
+    "domain": "https://rcourtman.github.io/presspeech/",
+    "description": "Free, native, local push-to-talk dictation app for Apple Silicon Macs targeting ~100ms key-release-to-paste latency with zero telemetry.",
+    "llmsTxtUrl": "https://rcourtman.github.io/presspeech/llms.txt",
+    "llmsFullTxtUrl": "https://rcourtman.github.io/presspeech/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=rcourtman.github.io/presspeech&sz=128",
+    "publishedAt": "2026-05-25"
+  },
+  {
     "name": "Prettier",
     "domain": "https://prettier.io/",
     "description": "Prettier is an opinionated code formatter.",
@@ -9229,6 +9931,25 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=propertyfinder.bg&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "ProWebLook",
+    "domain": "https://proweblook.com",
+    "description": "API toolkit for phone check, passive WhatsApp check, email validator, and IP geo API.",
+    "llmsTxtUrl": "https://proweblook.com/llms.txt",
+    "llmsFullTxtUrl": "https://proweblook.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=proweblook.com&sz=128",
+    "publishedAt": "2026-06-07"
+  },
+  {
+    "name": "ProxyLLM",
+    "domain": "https://proxyllm.ai/",
+    "description": "OpenAI-compatible LLM gateway that routes workloads across flat-fee ChatGPT/Codex subscription lanes, Claude Code bridges, and metered API keys with fallback, budgets, and logs. Agents can sign up autonomously via email OTP (see /auth.md).",
+    "llmsTxtUrl": "https://proxyllm.ai/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=proxyllm.ai&sz=128",
+    "publishedAt": "2026-07-15"
   },
   {
     "name": "Pub Nummer 4 Plauen - Fassbier 🍺 Sofa",
@@ -9501,6 +10222,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=rcponline.pl&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "react-mediadrop",
+    "domain": "https://www.mediadrop.dev",
+    "description": "A hooks-first, headless file uploader for React - drag-and-drop, validation, and a pluggable upload queue with progress, retry, and cancel support.",
+    "llmsTxtUrl": "https://www.mediadrop.dev/docs/llms.txt",
+    "llmsFullTxtUrl": "https://www.mediadrop.dev/docs/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.mediadrop.dev&sz=128",
+    "publishedAt": "2026-07-20"
   },
   {
     "name": "Readwise",
@@ -9857,6 +10588,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "RouterPlex",
+    "domain": "https://routerplex.com",
+    "description": "One OpenAI- and Anthropic-compatible API key for 37 AI models at vendor list prices, with prepaid balances and hard per-key spend budgets.",
+    "llmsTxtUrl": "https://routerplex.com/llms.txt",
+    "llmsFullTxtUrl": "https://routerplex.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=routerplex.com&sz=128",
+    "publishedAt": "2026-07-26"
+  },
+  {
     "name": "Rsbuild",
     "domain": "https://rsbuild.dev",
     "description": "Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.",
@@ -9952,6 +10693,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.skkunathamgroup.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "SaaSDossier",
+    "domain": "https://saasdossier.com",
+    "description": "SaaSDossier records vendor-published SaaS security evidence across 55 fields, with source links, hash seals, and buyer-ready follow-up questions.",
+    "llmsTxtUrl": "https://saasdossier.com/llms.txt",
+    "llmsFullTxtUrl": "https://saasdossier.com/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=saasdossier.com&sz=128",
+    "publishedAt": "2026-07-20"
   },
   {
     "name": "Saber Renewable Energy",
@@ -10054,6 +10805,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=santiago.xn--soora-pta.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Santos Automation",
+    "domain": "https://www.santosautomation.com",
+    "description": "Website intelligence API for AI agents: 11 pay-per-call tools via x402 micropayments (USDC on Base) — audits, extraction, feeds, link maps, summaries, screenshots.",
+    "llmsTxtUrl": "https://www.santosautomation.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.santosautomation.com&sz=128",
+    "publishedAt": "2026-07-26"
   },
   {
     "name": "Sardine",
@@ -10170,6 +10930,15 @@
     "publishedAt": "2025-02-24"
   },
   {
+    "name": "ScreenshotRender",
+    "domain": "https://www.screenshotrender.com/",
+    "description": "Render pixel-perfect screenshots of any URL. Handles Cloudflare, cookie banners, and JavaScript so you don't have to.",
+    "llmsTxtUrl": "https://www.screenshotrender.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.screenshotrender.com&sz=128",
+    "publishedAt": "2026-06-25"
+  },
+  {
     "name": "Sealos",
     "domain": "https://sealos.io",
     "description": "Sealos simplifies development with one-click DevBox, scalable Kubernetes and easy app deployment - faster, simpler workflows for developers.",
@@ -10283,6 +11052,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "SEO Tips and Guides",
+    "domain": "https://pocketseo.ai",
+    "description": "Browse 130+ curated SEO tips from real practitioners — organized by category, difficulty, and impact. Practical advice you can implement today.",
+    "llmsTxtUrl": "https://pocketseo.ai/llms.txt",
+    "llmsFullTxtUrl": "https://pocketseo.ai/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=pocketseo.ai&sz=128",
+    "publishedAt": "2026-07-03"
+  },
+  {
     "name": "SEO2LLM",
     "domain": "https://www.seo2llm.com/",
     "description": "Stop losing traffic to AI. SEO2LLM shows how ChatGPT, Gemini & Perplexity see your brand and gives you a clear plan to win in AI-driven search.",
@@ -10318,6 +11097,16 @@
     "category": "security-identity",
     "favicon": "https://www.google.com/s2/favicons?domain=gouasmi.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "sf-llms-context",
+    "domain": "https://github.com/sf-llms-context/sf-llms-context",
+    "description": "Curated Salesforce knowledge base for AI coding agents — stops LLMs from generating deprecated Apex, LWC, SOQL, and Flow patterns. Verified against Summer '26 (API v67.0).",
+    "llmsTxtUrl": "https://sf-llms-context.github.io/llms.txt",
+    "llmsFullTxtUrl": "https://sf-llms-context.github.io/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=github.com/sf-llms-context/sf-llms-context&sz=128",
+    "publishedAt": "2026-06-01"
   },
   {
     "name": "SGNL.ai",
@@ -10385,6 +11174,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=signalpm.online&sz=128",
     "publishedAt": "2026-02-24"
+  },
+  {
+    "name": "Signaturegen",
+    "domain": "https://signaturegen.app",
+    "description": "Free AI signature generator that turns your name into a downloadable handwritten or typed signature image (SVG or PNG). No account, commercial use.",
+    "llmsTxtUrl": "https://signaturegen.app/llms.txt",
+    "llmsFullTxtUrl": "https://signaturegen.app/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=signaturegen.app&sz=128",
+    "publishedAt": "2026-06-04"
   },
   {
     "name": "Signet",
@@ -10603,6 +11402,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "smry",
+    "domain": "https://smry.ai/",
+    "description": "AI-powered article reader with clean reader mode, summaries, text-to-speech, highlights, annotations, article chat, YouTube transcripts, and exports.",
+    "llmsTxtUrl": "https://smry.ai/llms.txt",
+    "llmsFullTxtUrl": "https://smry.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=smry.ai&sz=128",
+    "publishedAt": "2026-07-18"
+  },
+  {
     "name": "Snøkam",
     "domain": "https://www.snokam.no/",
     "description": "Hos Snøkam er vi opptatt av å forvandle teknologiske utfordringer til elegante løsninger. Våre konsulenter er spesialister innen fullstack-utvikling, data engineering og AI, og vi har et øye for detaljene som utgjør en stor forskjell.",
@@ -10741,6 +11550,24 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Sports AI Hub",
+    "domain": "https://sports-ai-hub.pages.dev/",
+    "description": "Open-source sports AI tools hub for builders working on sports analysis, prediction, training, scouting, media, operations, and fan-experience products.",
+    "llmsTxtUrl": "https://sports-ai-hub.pages.dev/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=sports-ai-hub.pages.dev&sz=128",
+    "publishedAt": "2026-06-27"
+  },
+  {
+    "name": "SpryTools",
+    "domain": "https://sprytools.com",
+    "description": "Free privacy-friendly browser utilities plus a self-serve REST API hub of 30+ developer tools, also available as an MCP server.",
+    "llmsTxtUrl": "https://sprytools.com/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=sprytools.com&sz=128",
+    "publishedAt": "2026-06-29"
+  },
+  {
     "name": "SR22 Texas",
     "domain": "https://www.sr22texas.org/",
     "description": "Learn what an SR-22 is in Texas, who needs it, how the filing works, and what compliance requires. Clear, accurate information on Texas SR-22 requirements.",
@@ -10776,6 +11603,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=starwind.dev&sz=128",
     "publishedAt": "2025-08-26"
+  },
+  {
+    "name": "Stasht",
+    "domain": "https://stasht.app",
+    "description": "AI-powered app for saving social media and web content into searchable maps, calendars, reminders, and collections.",
+    "llmsTxtUrl": "https://stasht.app/llms.txt",
+    "llmsFullTxtUrl": "https://stasht.app/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=stasht.app&sz=128",
+    "publishedAt": "2026-06-28"
   },
   {
     "name": "State In Url",
@@ -10833,6 +11670,16 @@
     "publishedAt": "2025-08-05"
   },
   {
+    "name": "Steven Doan Website",
+    "domain": "https://doancongtuan.com/",
+    "description": "doancongtuan.com shares practical WordPress, VPS, Astro, hosting, web performance, and affiliate publishing lessons by Steven Doan.",
+    "llmsTxtUrl": "https://doancongtuan.com/llms.txt",
+    "llmsFullTxtUrl": "https://doancongtuan.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=doancongtuan.com&sz=128",
+    "publishedAt": "2026-06-15"
+  },
+  {
     "name": "Stock trading & investment app",
     "domain": "https://freetrade.io",
     "description": "Invest commission-free with Freetrade. Trade thousands of UK, US, and European stocks and ETFs easily, on desktop or mobile.",
@@ -10850,6 +11697,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=stoltrunning.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "StorePilot",
+    "domain": "https://storepilot.link",
+    "description": "Generate App Store screenshots, ASO description, and keywords from a one-line app description in minutes. Free to try, no design skills required.",
+    "llmsTxtUrl": "https://storepilot.link/llms.txt",
+    "llmsFullTxtUrl": "https://storepilot.link/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=storepilot.link&sz=128",
+    "publishedAt": "2026-07-02"
   },
   {
     "name": "StoryNexus",
@@ -11048,6 +11905,16 @@
     "publishedAt": "2026-02-22"
   },
   {
+    "name": "Tabula",
+    "domain": "https://www.tabula360.com",
+    "description": "Shared memory for your AIs. Save a fact once and ChatGPT, Claude, Mistral, Grok, and Perplexity can all recall it. View, edit, export, or delete everything.",
+    "llmsTxtUrl": "https://www.tabula360.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.tabula360.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.tabula360.com&sz=128",
+    "publishedAt": "2026-07-16"
+  },
+  {
     "name": "Taiga UI",
     "domain": "https://taiga-ui.dev/",
     "description": "A powerful set of open source components for Angular",
@@ -11132,6 +11999,26 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.tavus.io&sz=128",
     "publishedAt": "2025-02-24"
+  },
+  {
+    "name": "TCG API",
+    "domain": "https://tcgapi.dev",
+    "description": "> Daily-updated pricing API for 89+ trading card games (Pokémon, Magic: The Gathering, Yu-Gi-Oh!, Lorcana, Flesh and Blood, One Piece, Riftbound, and more) sourced from TCGPlayer. Free tier 100 requests/day, paid tiers $9.99–$99.99/mo, plus x402 pay-per-request in USDC on Base or Solana.",
+    "llmsTxtUrl": "https://tcgapi.dev/llms.txt",
+    "llmsFullTxtUrl": "https://tcgapi.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=tcgapi.dev&sz=128",
+    "publishedAt": "2026-04-28"
+  },
+  {
+    "name": "team.management",
+    "domain": "https://team.management",
+    "description": "Your AI says it's done — and a more capable model only says it more convincingly. team.management is an open-source protocol engine for Claude Code that puts your AI on rails it can't leave: it blocks the shortcuts, shows the work, and hands you the proof. Free, and it runs on the subscription you already pay for.",
+    "llmsTxtUrl": "https://team.management/llms.txt",
+    "llmsFullTxtUrl": "https://team.management/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=team.management&sz=128",
+    "publishedAt": "2026-07-21"
   },
   {
     "name": "Tech Mart Bangladesh",
@@ -11227,6 +12114,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=terminal49.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Test-proxy-recorder",
+    "domain": "https://test-proxy-recorder.dev/",
+    "description": "VCR-style record & replay for Playwright. Capture real API responses once, replay them deterministically on CI without backend or manual mocks.",
+    "llmsTxtUrl": "https://test-proxy-recorder.dev/llms.txt",
+    "llmsFullTxtUrl": "https://test-proxy-recorder.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=test-proxy-recorder.dev&sz=128",
+    "publishedAt": "2026-07-21"
   },
   {
     "name": "THAI SPA",
@@ -11487,6 +12384,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "TmpState",
+    "domain": "https://tmpstate.dev",
+    "description": "Tokenless temporary JSON database for AI agents and prototypes.",
+    "llmsTxtUrl": "https://tmpstate.dev/llms.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=tmpstate.dev&sz=128",
+    "publishedAt": "2026-07-04"
+  },
+  {
     "name": "Today's Crossword",
     "domain": "https://crossword-daily.com/",
     "description": "Solve today's free crossword puzzle at Crossword Daily. New themed puzzles every day with interactive solving tools, progress saving, and a full archive.",
@@ -11513,6 +12419,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.mtechzilla.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "TopAIStacks",
+    "domain": "https://topaistacks.com",
+    "description": "Find, compare, and build better AI tool stacks. Curated AI tools, verified pricing, workflow stack guides, and practical decision pages.",
+    "llmsTxtUrl": "https://topaistacks.com/llms.txt",
+    "llmsFullTxtUrl": "https://topaistacks.com/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=topaistacks.com&sz=128",
+    "publishedAt": "2026-06-16"
   },
   {
     "name": "TorahApp",
@@ -11629,6 +12545,15 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "Tree Ring Memory",
+    "domain": "https://terminallylazy.github.io/Tree-Ring-Memory/",
+    "description": "Framework-agnostic local-first memory lifecycle layer for AI agents.",
+    "llmsTxtUrl": "https://terminallylazy.github.io/Tree-Ring-Memory/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=terminallylazy.github.io/Tree-Ring-Memory&sz=128",
+    "publishedAt": "2026-07-07"
+  },
+  {
     "name": "Trendy Leather Jackets",
     "domain": "https://trendyleatherjackets.com/",
     "description": "Discover our premium collection of genuine leather jackets. Biker, bomber, aviator, varsity, suede, shearling, trench coats & more for men & women. Free worldwide shipping. Shop Now!",
@@ -11684,6 +12609,16 @@
     "publishedAt": "2025-08-26"
   },
   {
+    "name": "TrustBoost PII Sanitizer",
+    "domain": "https://api.trustboost.dev",
+    "description": "TrustBoost sanitizes PII from text before it reaches LLMs. Blockchain-verified, x402 native, 8 languages, EU AI Act compliant.",
+    "llmsTxtUrl": "https://api.trustboost.dev/llms.txt",
+    "llmsFullTxtUrl": "https://api.trustboost.dev/llms-full.txt",
+    "category": "security-identity",
+    "favicon": "https://www.google.com/s2/favicons?domain=api.trustboost.dev&sz=128",
+    "publishedAt": "2026-06-11"
+  },
+  {
     "name": "TryOpenClaw.ai",
     "domain": "https://www.tryopenclaw.ai",
     "description": "Managed hosting platform for OpenClaw, the open-source AI assistant that connects to WhatsApp, Telegram, Discord, Slack, and iMessage.",
@@ -11691,6 +12626,16 @@
     "category": "infrastructure-cloud",
     "favicon": "https://www.google.com/s2/favicons?domain=www.tryopenclaw.ai&sz=128",
     "publishedAt": "2026-03-01"
+  },
+  {
+    "name": "Tura",
+    "domain": "https://turaai.net/",
+    "description": "Open-source coding agent for turning intent into verified repository changes with persistent execution state and auditable benchmark evidence.",
+    "llmsTxtUrl": "https://turaai.net/llms.txt",
+    "llmsFullTxtUrl": "https://turaai.net/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=turaai.net&sz=128",
+    "publishedAt": "2026-07-16"
   },
   {
     "name": "Turbo",
@@ -11756,6 +12701,16 @@
     "category": "data-analytics",
     "favicon": "https://www.google.com/s2/favicons?domain=www.tycorunenergy.com&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "U-Ultra/Unity",
+    "domain": "https://www.iamuu.com",
+    "description": "Process images and PDFs online. Free, fast, and secure. No downloads needed.",
+    "llmsTxtUrl": "https://www.iamuu.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.iamuu.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.iamuu.com&sz=128",
+    "publishedAt": "2026-07-05"
   },
   {
     "name": "U.S. Language Services",
@@ -11954,6 +12909,16 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=uxpatterns.dev/en&sz=128",
     "publishedAt": "2025-02-26"
+  },
+  {
+    "name": "Vaaya",
+    "domain": "https://vaaya.ai",
+    "description": "The agent payment system: one MCP server that lets any agent call paid APIs — image/video gen, product demos, web search & scraping, deep/market research, lead enrichment, GTM, sandboxes, browser automation, email — pay-per-call, no API keys.",
+    "llmsTxtUrl": "https://vaaya.ai/llms.txt",
+    "llmsFullTxtUrl": "https://vaaya.ai/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=vaaya.ai&sz=128",
+    "publishedAt": "2026-07-07"
   },
   {
     "name": "VALD",
@@ -12172,6 +13137,25 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "VibeKit.bot",
+    "domain": "https://vibekit.bot",
+    "description": "VibeKit gives every app its own persistent AI coding agent that builds, hosts, and keeps improving the app over time — database and a live domain included — driven from your phone, Telegram, or CLI.",
+    "llmsTxtUrl": "https://vibekit.bot/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=vibekit.bot&sz=128",
+    "publishedAt": "2026-06-28"
+  },
+  {
+    "name": "VibeRaven",
+    "domain": "https://viberaven.dev/",
+    "description": "Production-readiness gate for AI-built apps. VibeRaven gives coding agents a launch checklist, prioritized gaps, agent tasklists, and deploy verification before auth, billing, database, RLS, env vars, webhooks, monitoring, or tests.",
+    "llmsTxtUrl": "https://viberaven.dev/llms.txt",
+    "llmsFullTxtUrl": "https://viberaven.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=viberaven.dev&sz=128",
+    "publishedAt": "2026-06-10"
+  },
+  {
     "name": "Vibetuner",
     "domain": "https://vibetuner.alltuner.com/",
     "description": "Production-ready FastAPI + MongoDB + HTMX project scaffolding.",
@@ -12190,6 +13174,15 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=www.visioforge.com&sz=128",
     "publishedAt": "2025-05-30"
+  },
+  {
+    "name": "Video Upscaler",
+    "domain": "https://videoupscaler.video",
+    "description": "Online AI video upscaler and enhancer for improving blurry or low-resolution footage and exporting supported clips to HD, 2K, or 4K.",
+    "llmsTxtUrl": "https://videoupscaler.video/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=videoupscaler.video&sz=128",
+    "publishedAt": "2026-07-23"
   },
   {
     "name": "videosdk.live",
@@ -12220,6 +13213,26 @@
     "category": "developer-tools",
     "favicon": "https://www.google.com/s2/favicons?domain=viem.sh&sz=128",
     "publishedAt": "2025-03-01"
+  },
+  {
+    "name": "VinoScan",
+    "domain": "https://vinoscan-app.web.app",
+    "description": "Brazilian AI wine app — photograph a bottle label and AI identifies the wine with tasting notes, food pairings, price range and where to buy in Brazil. Android, iOS and web (PWA)",
+    "llmsTxtUrl": "https://vinoscan-app.web.app/llms.txt",
+    "llmsFullTxtUrl": "https://vinoscan-app.web.app/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=vinoscan-app.web.app&sz=128",
+    "publishedAt": "2026-06-15"
+  },
+  {
+    "name": "Virality Predictor",
+    "domain": "http://viralitypredictor.net/",
+    "description": "Stop guessing your content performance. Use the Virality Predictor for AI video analysis and optimize your video engagement score before you publish.",
+    "llmsTxtUrl": "http://viralitypredictor.net/llms.txt",
+    "llmsFullTxtUrl": "http://viralitypredictor.net/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=viralitypredictor.net&sz=128",
+    "publishedAt": "2026-06-08"
   },
   {
     "name": "Virgin Atlantic Careers",
@@ -12267,6 +13280,15 @@
     "category": "security-identity",
     "favicon": "https://www.google.com/s2/favicons?domain=www.vittoriocitro.it&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Vivify",
+    "domain": "https://vivify.video/",
+    "description": "Vivify is an AI creative workspace for generating and editing images, then turning prompts and reference visuals into polished short videos.",
+    "llmsTxtUrl": "https://vivify.video/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=vivify.video&sz=128",
+    "publishedAt": "2026-07-14"
   },
   {
     "name": "VoiceScriber",
@@ -12549,6 +13571,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.webshare.io&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "WebsiteReady",
+    "domain": "https://websiteready.org/",
+    "description": "Free pre-launch website audit for indie makers and AI tool sites, with launch-readiness checks for SEO basics, crawlability, sitemap, robots.txt, analytics signals, security headers, and AI search readiness.",
+    "llmsTxtUrl": "https://websiteready.org/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=websiteready.org&sz=128",
+    "publishedAt": "2026-06-11"
   },
   {
     "name": "Wedding Shop - Wedding Guest Dresses - Pakistani Bridal Gowns",
@@ -12904,6 +13935,16 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=xprice.ro&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Xquik",
+    "domain": "https://xquik.com",
+    "description": "X automation platform with REST API, webhooks, MCP, and public SDKs.",
+    "llmsTxtUrl": "https://xquik.com/llms.txt",
+    "llmsFullTxtUrl": "https://xquik.com/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=xquik.com&sz=128",
+    "publishedAt": "2026-06-23"
   },
   {
     "name": "YAMLResume",
