@@ -342,6 +342,28 @@ describe('submission duplicate protection', () => {
     expect(Date.now() - startedAt).toBeLessThan(500)
   })
 
+  it('inspects a large open-PR set within the shared deadline', async () => {
+    const github = makeGitHub()
+    github.listOpenPullRequests
+      .mockResolvedValueOnce(
+        Array.from({ length: 25 }, (_, index) => pullRequest({ number: index + 1 }))
+      )
+      .mockResolvedValueOnce([])
+    github.listPullRequestFiles.mockImplementation(async () => {
+      await new Promise(resolve => setTimeout(resolve, 100))
+      return []
+    })
+
+    await expect(
+      checkSubmissionDuplicates(INPUT, {
+        deadlineMs: 500,
+        getWebsitesStrict: () => ({ status: 'available', websites: [] }),
+        github,
+        requestBudget: 100
+      })
+    ).resolves.toEqual({ status: 'unique' })
+  })
+
   it.each([
     ['GitHub request failure', () => Promise.reject(new Error('sensitive upstream error'))],
     ['oversized PR body', () => Promise.resolve([pullRequest({ body: 'x'.repeat(100_001) })])],
