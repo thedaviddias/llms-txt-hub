@@ -8,7 +8,8 @@ import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import {
   createSubmissionContinuation,
-  enforceSubmissionRateLimits
+  enforceSubmissionRateLimits,
+  releaseSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
 import { preflightSubmission } from './preflight-submission'
 
@@ -25,6 +26,7 @@ jest.mock('@/lib/submissions/submission-duplicates', () => ({
 jest.mock('@/lib/submissions/submission-state', () => ({
   createSubmissionContinuation: jest.fn(),
   enforceSubmissionRateLimits: jest.fn(),
+  releaseSubmissionRateLimits: jest.fn(),
   normalizeSubmissionFields: jest.requireActual('@/lib/submissions/submission-state')
     .normalizeSubmissionFields
 }))
@@ -38,6 +40,7 @@ const mockAssess = jest.mocked(assessSubmission)
 const mockDuplicates = jest.mocked(checkSubmissionDuplicates)
 const mockContinuation = jest.mocked(createSubmissionContinuation)
 const mockRateLimits = jest.mocked(enforceSubmissionRateLimits)
+const mockReleaseRateLimits = jest.mocked(releaseSubmissionRateLimits)
 
 const fields = {
   category: 'developer-tools',
@@ -102,6 +105,7 @@ describe('preflightSubmission', () => {
     )
     mockCsrf.mockResolvedValue({ expiresAt: Date.now() + 60_000, token: 'csrf-token' })
     mockRateLimits.mockResolvedValue({ ok: true })
+    mockReleaseRateLimits.mockResolvedValue({ ok: true })
     mockDuplicates.mockResolvedValue({ status: 'unique' })
     mockAssess.mockResolvedValue(assessment('auto_publish'))
     mockContinuation.mockResolvedValue({
@@ -293,6 +297,7 @@ describe('preflightSubmission', () => {
     })
     expect(mockAssess).not.toHaveBeenCalled()
     expect(mockContinuation).not.toHaveBeenCalled()
+    expect(mockReleaseRateLimits).toHaveBeenCalledTimes(1)
   })
 
   it('reports an editorial rejection after a completed Web Risk check', async () => {

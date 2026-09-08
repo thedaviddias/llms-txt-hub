@@ -11,6 +11,7 @@ import {
   FINAL_ASSESSMENT_LEASE_SECONDS,
   FINAL_ASSESSMENT_SCRIPT,
   MAX_CONTINUATION_CHARACTERS,
+  RELEASE_SUBMISSION_RATE_LIMIT_SCRIPT,
   SUBMISSION_ID_PATTERN,
   SUBMISSION_RATE_LIMIT_SCRIPT,
   SUBMISSION_RECORD_TTL_SECONDS,
@@ -416,11 +417,47 @@ export async function enforceSubmissionRateLimits(
       `submission-rate:source:${submissionStateSecurity.hashIp(sourceIp, dependencies.secret)}`,
       `submission-rate:domain:${submissionStateSecurity.hashString(registrableDomain)}`
     ],
-    ['5', '20', '3', '3600', '3600', '86400']
+    ['5', '20', '5', '3600', '3600', '86400']
   )
   if (result === 'allowed') return { ok: true }
   if (result === 'account' || result === 'source_ip' || result === 'domain') {
     return { code: 'rate_limited', ok: false, scope: result }
   }
   return { code: 'publication_unavailable', ok: false }
+}
+
+/** Release one charged submission attempt after a rejection or transient failure. */
+export async function releaseSubmissionRateLimits(
+  input: {
+    readonly sourceIp: string
+    readonly userId: string
+    readonly website: string
+  },
+  dependencies: Pick<StateDependencies, 'redis' | 'secret'> = {
+    redis: DEFAULT_REDIS,
+    secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+  }
+): Promise<{ readonly ok: boolean }> {
+  const sourceIp = canonicalizeSourceIp(input.sourceIp)
+  const website = validateSubmissionUrl(input.website)
+  const registrableDomain = website.ok ? website.registrableDomain : null
+  if (
+    !input.userId ||
+    input.userId.length > 256 ||
+    !sourceIp ||
+    !registrableDomain ||
+    !submissionStateSecurity.isSecretValid(dependencies.secret)
+  ) {
+    return { ok: false }
+  }
+  const result = await dependencies.redis.eval<string>(
+    RELEASE_SUBMISSION_RATE_LIMIT_SCRIPT,
+    [
+      `submission-rate:account:${submissionStateSecurity.hashString(input.userId)}`,
+      `submission-rate:source:${submissionStateSecurity.hashIp(sourceIp, dependencies.secret)}`,
+      `submission-rate:domain:${submissionStateSecurity.hashString(registrableDomain)}`
+    ],
+    []
+  )
+  return { ok: result === 'released' }
 }
