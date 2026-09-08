@@ -5,7 +5,8 @@ import {
   enforceSubmissionRateLimits,
   hashSubmissionFields,
   isAllowedSubmissionTransition,
-  normalizeSubmissionFields
+  normalizeSubmissionFields,
+  releaseSubmissionRateLimits
 } from './submission-state'
 
 const SECRET = 's'.repeat(32)
@@ -443,9 +444,25 @@ describe('submission state', () => {
     expect(result).toEqual({ ok: true })
     const invocation = JSON.stringify(redis.eval.mock.calls[0])
     expect(invocation).not.toContain(sourceIp)
-    expect(invocation).toContain('5')
-    expect(invocation).toContain('20')
-    expect(invocation).toContain('3')
+    expect(redis.eval.mock.calls[0]?.[2]).toEqual(['5', '20', '5', '3600', '3600', '86400'])
+  })
+
+  it('releases one charged attempt without changing rate-limit key TTLs', async () => {
+    const redis = makeRedis()
+    redis.eval.mockResolvedValue('released')
+
+    await expect(
+      releaseSubmissionRateLimits(
+        {
+          sourceIp: '203.0.113.24',
+          userId: 'user_123',
+          website: 'https://example.com'
+        },
+        { redis, secret: SECRET }
+      )
+    ).resolves.toEqual({ ok: true })
+    expect(redis.eval.mock.calls[0]?.[0]).toContain("redis.call('DECR', KEYS[index])")
+    expect(redis.eval.mock.calls[0]?.[2]).toEqual([])
   })
 
   it.each([

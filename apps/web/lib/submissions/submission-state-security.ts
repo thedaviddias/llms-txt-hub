@@ -84,6 +84,15 @@ if domainNext == 1 then redis.call('EXPIRE', KEYS[3], ARGV[6]) end
 return 'allowed'
 `.trim()
 
+/** Release one previously charged submission attempt without changing key TTLs. */
+export const RELEASE_SUBMISSION_RATE_LIMIT_SCRIPT = `
+for index = 1, 3 do
+  local current = tonumber(redis.call('GET', KEYS[index]) or '0')
+  if current > 0 then redis.call('DECR', KEYS[index]) end
+end
+return 'released'
+`.trim()
+
 const MINIMUM_SECRET_BYTES = 32
 const TOKEN_PART = /^[A-Za-z0-9_-]+$/
 const STATE_TRANSITIONS: Readonly<Record<SubmissionState, readonly SubmissionState[]>> = {

@@ -22,7 +22,8 @@ import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import {
   createSubmissionContinuation,
-  enforceSubmissionRateLimits
+  enforceSubmissionRateLimits,
+  releaseSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
 
 const OWNER = 'thedaviddias'
@@ -88,6 +89,9 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
   let logOutcome: PreflightResult['status'] = 'retry_later'
   let logReasonCode = 'publication_unavailable'
   let stage: PreflightStage = 'auth'
+  let rateLimitInput:
+    | { readonly sourceIp: string; readonly userId: string; readonly website: string }
+    | undefined
   let webRiskAvailable: boolean | undefined
   const complete = (result: PreflightOutcome, reasonCode: string): PreflightResult => {
     logOutcome = result.status
@@ -143,6 +147,11 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
           : retryLater('publication_unavailable')
       return complete(result, rateLimit.code)
     }
+    rateLimitInput = {
+      sourceIp,
+      userId: session.user.id,
+      website: parsed.fields.website
+    }
 
     const submissionId = `sub_${randomUUID().replace(/-/g, '')}`
     stage = 'duplicates'
@@ -156,9 +165,17 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       website: parsed.fields.website
     })
     if (duplicate.status === 'retry_later') {
+      if (rateLimitInput) {
+        await releaseSubmissionRateLimits(rateLimitInput).catch(() => undefined)
+        rateLimitInput = undefined
+      }
       return complete(retryLater(duplicate.reasonCode), duplicate.reasonCode)
     }
     if (duplicate.status === 'duplicate' || duplicate.status === 'reconcile') {
+      if (rateLimitInput) {
+        await releaseSubmissionRateLimits(rateLimitInput).catch(() => undefined)
+        rateLimitInput = undefined
+      }
       return complete(rejected(DUPLICATE_MESSAGE, 'duplicate'), 'duplicate')
     }
 
@@ -172,6 +189,10 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       )
     }
     if (assessment.decision === 'retry_later') {
+      if (rateLimitInput) {
+        await releaseSubmissionRateLimits(rateLimitInput).catch(() => undefined)
+        rateLimitInput = undefined
+      }
       return complete(retryLater(assessment.reasonCode), assessment.reasonCode)
     }
 
@@ -182,8 +203,13 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       userId: session.user.id
     })
     if (!continuation.ok) {
+      if (rateLimitInput) {
+        await releaseSubmissionRateLimits(rateLimitInput).catch(() => undefined)
+        rateLimitInput = undefined
+      }
       return complete(retryLater('publication_unavailable'), 'publication_unavailable')
     }
+    rateLimitInput = undefined
     return complete(
       {
         continuationToken: continuation.continuationToken,
@@ -193,6 +219,10 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       assessment.reasonCode
     )
   } catch (error) {
+    if (rateLimitInput) {
+      await releaseSubmissionRateLimits(rateLimitInput).catch(() => undefined)
+      rateLimitInput = undefined
+    }
     logger.error('Submission preflight failed unexpectedly', {
       data: {
         errorType: error instanceof Error ? error.name : 'UnknownError',
