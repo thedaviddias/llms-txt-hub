@@ -48,6 +48,16 @@ type PreflightOutcome =
       readonly status: 'retry_later'
     }
 
+type PreflightStage =
+  | 'assessment'
+  | 'auth'
+  | 'continuation'
+  | 'csrf'
+  | 'duplicates'
+  | 'input'
+  | 'rate_limit'
+  | 'source_ip'
+
 /** Client-safe result of the security and editorial preflight. */
 export type PreflightResult = PreflightOutcome & {
   readonly analytics: SubmissionPreflightAnalytics
@@ -75,6 +85,7 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
   const startedAt = Date.now()
   let logOutcome: PreflightResult['status'] = 'retry_later'
   let logReasonCode = 'publication_unavailable'
+  let stage: PreflightStage = 'auth'
   let webRiskAvailable: boolean | undefined
   const complete = (result: PreflightOutcome, reasonCode: string): PreflightResult => {
     logOutcome = result.status
@@ -85,10 +96,12 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
     }
   }
   try {
+    stage = 'auth'
     const session = await auth()
     if (!session?.user?.id) {
       return complete(retryLater('publication_unavailable'), 'authentication_required')
     }
+    stage = 'csrf'
     const storedCsrf = await getStoredCSRFToken()
     if (!isValidSubmissionCsrf(formData.get('_csrf'), storedCsrf?.token)) {
       return complete(
@@ -99,13 +112,16 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
         'csrf_invalid'
       )
     }
+    stage = 'input'
     const parsed = parseSubmissionActionInput(formData)
     if (!parsed.ok) {
       return complete(rejected(parsed.message, 'required_resource_missing'), 'invalid_input')
     }
+    stage = 'source_ip'
     const sourceIp = submissionSourceIp(await headers())
     if (!sourceIp) return complete(retryLater('publication_unavailable'), 'source_ip_unavailable')
 
+    stage = 'rate_limit'
     const rateLimit = await enforceSubmissionRateLimits({
       sourceIp,
       userId: session.user.id,
@@ -120,6 +136,7 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
     }
 
     const submissionId = `sub_${randomUUID().replace(/-/g, '')}`
+    stage = 'duplicates'
     const duplicate = await checkSubmissionDuplicates({
       expectedBaseRef: 'main',
       llmsFullUrl: parsed.fields.llmsFullUrl,
@@ -136,6 +153,7 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       return complete(rejected(DUPLICATE_MESSAGE, 'duplicate'), 'duplicate')
     }
 
+    stage = 'assessment'
     const assessment = await assessSubmission(parsed.fields)
     webRiskAvailable = assessmentWebRiskAvailable(assessment)
     if (assessment.decision === 'reject') {
@@ -148,6 +166,7 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       return complete(retryLater(assessment.reasonCode), assessment.reasonCode)
     }
 
+    stage = 'continuation'
     const continuation = await createSubmissionContinuation({
       fields: parsed.fields,
       submissionId,
@@ -164,14 +183,22 @@ export async function preflightSubmission(formData: FormData): Promise<Preflight
       },
       assessment.reasonCode
     )
-  } catch {
+  } catch (error) {
+    logger.error('Submission preflight failed unexpectedly', {
+      data: {
+        errorType: error instanceof Error ? error.name : 'UnknownError',
+        stage
+      },
+      tags: { operation: 'preflight', type: 'submission' }
+    })
     return complete(retryLater('publication_unavailable'), 'publication_unavailable')
   } finally {
     logger.info('Submission preflight completed', {
       data: {
         durationMs: Date.now() - startedAt,
         outcome: logOutcome,
-        reasonCode: logReasonCode
+        reasonCode: logReasonCode,
+        stage
       },
       tags: { operation: 'preflight', type: 'submission' }
     })
