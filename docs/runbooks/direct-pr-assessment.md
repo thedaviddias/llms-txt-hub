@@ -1,5 +1,56 @@
 # Trusted assessment of direct GitHub submissions
 
+## Review queue
+
+Use these repository filters to focus on PRs that need a maintainer decision:
+
+| View | Filter | Review action |
+| --- | --- | --- |
+| LLMS: Manual review | `repo:thedaviddias/llms-txt-hub is:pr is:open label:"needs:manual-review" sort:created-asc` | Read the decision card and resolve the stated blocker. A rerun preserves the manual veto. |
+| LLMS: Standard review | `repo:thedaviddias/llms-txt-hub is:pr is:open label:"lane:standard" sort:created-asc` | Review code, modified content, and mixed changes using the diff and checks. |
+| LLMS: Blocked | `repo:thedaviddias/llms-txt-hub is:pr is:open label:"status:blocked" sort:created-asc` | Identify missing prerequisites or content problems before spending time on approval. |
+
+In the [GitHub PR dashboard](https://github.com/pulls), create a view for each
+query and save it under the name above. These are personal GitHub preferences;
+committing this runbook does not create them. Labels can overlap and can be
+missing on older PRs, so periodically check the full open PR list too.
+
+Direct queue links also work without saved views:
+[Manual review](https://github.com/thedaviddias/llms-txt-hub/pulls?q=is%3Apr+is%3Aopen+label%3A%22needs%3Amanual-review%22+sort%3Acreated-asc),
+[Standard review](https://github.com/thedaviddias/llms-txt-hub/pulls?q=is%3Apr+is%3Aopen+label%3A%22lane%3Astandard%22+sort%3Acreated-asc),
+[Blocked](https://github.com/thedaviddias/llms-txt-hub/pulls?q=is%3Apr+is%3Aopen+label%3A%22status%3Ablocked%22+sort%3Acreated-asc).
+
+## Submission review card
+
+After analysis, the trusted scanner builds a card containing the assessed head
+SHA, actual merge outcome and reason, CI and guideline status, both duplicate
+results, and parsed new-entry fields with website/resource links. The card uses
+the existing assessment evidence; it does not relax any merge gate or fetch
+additional contributor resources. Missing duplicate evidence explicitly means
+not evaluated or unavailable, never unique. Modified and mixed changes link to
+the diff rather than presenting new-entry fields.
+
+Non-dry-run execution in GitHub Actions upserts one `github-actions[bot]` comment
+marked `<!-- pr-review-decision-card -->`. The separate structural intake comment
+remains managed by PR Intake. The publisher paginates comments, updates the
+oldest matching bot-owned card, leaves contributor comments untouched, and skips
+identical content. It refreshes the PR head immediately before writing and skips
+outdated heads. Comment failures produce a generic diagnostic without changing
+the merge outcome. The card is a snapshot: subsequent pushes or check changes
+can invalidate it. A scan that fails before producing evidence still uses the
+existing failure labels and logs; it cannot publish a new card.
+
+Contributor text is bounded and escaped, credential-bearing and non-HTTP links
+are suppressed, and raw MDX bodies and assessment signatures are excluded.
+Parsed fields can be displayed when policy assessment is blocked, but are never
+used as substitute authorization evidence.
+
+`pnpm review:dry-run -- --pr 123 --json` includes the Markdown in each analyzed
+PR's `reviewCard` field and performs no comment writes, even inside Actions.
+Once these changes reach `main`, subsequent trusted workflow runs publish cards.
+Do not run the non-dry-run scanner merely to preview cards: it also applies
+labels and may merge eligible PRs.
+
 The trusted `Auto-merge MDX Entry PRs` workflow enables `--assess-direct` in its
 validation step. This permits a direct GitHub submission to receive an in-memory
 assessment signature after the same full submission policy used by the web form

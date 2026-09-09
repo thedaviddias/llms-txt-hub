@@ -452,7 +452,9 @@ describe('direct PR final revalidation', () => {
 })
 
 describe('direct PR command wiring', () => {
-  it('runs the opted-in dry-run CLI through real assessment and only read-only GitHub commands', async () => {
+  it.each([true, false])('wires review cards through the scanner (dry-run: %s)', async dryRun => {
+    runtime.exec.mockClear()
+    runtime.inspect.mockClear()
     const existingBytes = Buffer.from(content.replaceAll('example.com', 'already-listed.dev'))
     runtime.glob.mockResolvedValue(['packages/content/data/websites/already-listed.mdx'])
     runtime.stat.mockResolvedValue({ size: existingBytes.byteLength })
@@ -488,12 +490,14 @@ describe('direct PR command wiring', () => {
       draft: false,
       mergeable: true,
       state: 'open',
-      labels: [],
+      labels: dryRun ? [] : [{ name: 'needs:manual-review' }],
       head: { ref: 'add-example', sha: headSha, repo: { full_name: 'contributor/llms-txt-hub' } },
       base: { ref: 'main', sha: baseSha, repo: { full_name: repo } }
     }
     runtime.exec.mockImplementation(async (command, args) => {
-      if (command !== 'gh' || args.some(arg => ['--method', '-f', '-F', '--input'].includes(arg))) {
+      if (command !== 'gh') throw new Error('Unexpected executable')
+      if (args.some(arg => ['--method', '-f', '-F', '--input'].includes(arg))) {
+        if (!dryRun && args[0] === 'api') return { stdout: '{}' }
         throw new Error('Mutation or non-GitHub command attempted')
       }
       if (args.join(' ') === 'auth status') return { stdout: '' }
@@ -528,22 +532,63 @@ describe('direct PR command wiring', () => {
           ]
         }
       else if (endpoint === `repos/${repo}/branches/main`) result = { commit: { sha: baseSha } }
-      else if (endpoint.startsWith(`repos/${repo}/issues/42/labels?`)) result = []
+      else if (endpoint.startsWith(`repos/${repo}/issues/42/labels?`)) result = details.labels
+      else if (endpoint.startsWith(`repos/${repo}/labels?`)) result = []
+      else if (endpoint.startsWith(`repos/${repo}/issues/42/comments?`))
+        result = endpoint.includes('page=1&')
+          ? Array.from({ length: 100 }, (_, id) => ({
+              id,
+              body: 'Ordinary comment',
+              user: { login: 'contributor', type: 'User' }
+            }))
+          : [
+              {
+                id: 201,
+                body: '<!-- pr-review-decision-card -->\nOld card',
+                user: { login: 'github-actions[bot]', type: 'Bot' }
+              }
+            ]
       else throw new Error(`Unexpected GitHub endpoint: ${endpoint}`)
       return { stdout: JSON.stringify(result) }
     })
     vi.stubEnv('TRUSTED_BASE_SHA', baseSha)
     vi.stubEnv('SUBMISSION_ASSESSMENT_SIGNING_SECRET', secret)
+    vi.stubEnv('GITHUB_ACTIONS', 'true')
     const output = vi.spyOn(process.stdout, 'write').mockReturnValue(true)
     try {
-      await main(['--dry-run', '--assess-direct', '--pr', '42', '--json'])
+      await main([...(dryRun ? ['--dry-run'] : []), '--assess-direct', '--pr', '42', '--json'])
       const result = JSON.parse(String(output.mock.calls.at(-1)?.[0]))
+      if (!dryRun) {
+        expect(result.pullRequests[0].mergeAction.status).toBe('skipped')
+        expect(result.pullRequests[0].reviewCard).toContain('https://example.com/llms.txt')
+        expect(result.pullRequests[0].reviewCard).toContain('Not evaluated / unavailable')
+        expect(runtime.inspect).not.toHaveBeenCalled()
+        expect(
+          runtime.exec.mock.calls.some(([, args]) => args[0] === 'pr' && args.includes('merge'))
+        ).toBe(false)
+        const writes = runtime.exec.mock.calls.filter(([, args]) =>
+          args[1]?.includes('/issues/comments/')
+        )
+        expect(writes).toHaveLength(1)
+        expect(writes[0]?.[1]).toEqual([
+          'api',
+          `repos/${repo}/issues/comments/201`,
+          '--method',
+          'PATCH',
+          '-f',
+          `body=${result.pullRequests[0].reviewCard}`
+        ])
+        return
+      }
       expect(result.pullRequests[0]).toMatchObject({
         policyEligible: true,
         reviewStatus: 'success',
         mergeAction: { mode: 'dry-run', status: 'planned' },
         labelSync: { mode: 'dry-run', added: expect.arrayContaining(['automerge:candidate']) }
       })
+      expect(result.pullRequests[0].reviewCard).toContain('## Submission review')
+      expect(result.pullRequests[0].reviewCard).toContain('No duplicate found')
+      expect(result.pullRequests[0].reviewCard).toContain('https://example.com/llms.txt')
       expect(runtime.inspect.mock.calls.map(([url]) => url).sort()).toEqual([
         'https://example.com',
         'https://example.com/llms.txt'
