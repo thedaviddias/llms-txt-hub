@@ -25,6 +25,7 @@ import { checkWebRiskUrl } from '@thedaviddias/submission-trust/web-risk'
 import { glob } from 'glob'
 import { JSON_SCHEMA, load as loadYaml } from 'js-yaml'
 import { categories } from '../apps/web/lib/categories.ts'
+import { buildReviewCard, publishReviewCard, type ReviewCardComment } from './pr-review-card.ts'
 import {
   classifyPullRequest,
   type PullRequestClassification,
@@ -296,6 +297,7 @@ interface ModeratedSubmissionFile {
 }
 
 interface ModerationResult extends GuidelineAssessment {
+  reviewSubmission?: SubmissionFrontmatter
   attestation: AssessmentAttestationVerificationResult
   ephemeralAttestation?: EphemeralAssessmentAttestation
   files: ModeratedSubmissionFile[]
@@ -315,6 +317,7 @@ interface DirectAssessmentContext {
 }
 
 interface PullRequestReviewSnapshot {
+  reviewCard?: string
   classification: PullRequestClassification
   guidelineReasons: string[]
   guidelineStatus: GuidelineStatus
@@ -1878,7 +1881,25 @@ async function analyzePullRequest(
       repo
     })
 
+    const reviewCard = buildReviewCard({
+      repo,
+      number: details.number,
+      headSha: details.head.sha,
+      classification,
+      guidelineStatus: moderation.guidelineStatus,
+      guidelineReasons: moderation.guidelineReasons,
+      reviewStatus,
+      baseDuplicateStatus,
+      openPullRequestDuplicateStatus,
+      mergeAction,
+      submission: moderation.reviewSubmission
+    })
+    if (!options.dryRun && process.env.GITHUB_ACTIONS === 'true') {
+      await syncReviewCard(repo, details.number, details.head.sha, reviewCard)
+    }
+
     return {
+      reviewCard,
       classification,
       guidelineReasons: moderation.guidelineReasons,
       guidelineStatus: moderation.guidelineStatus,
@@ -2526,6 +2547,7 @@ export async function moderatePullRequest(
       : null
   if (!fullAssessment) {
     return {
+      reviewSubmission: frontmatter,
       attestation,
       files: [],
       guidelineReasons: [directBlockReason ?? 'A valid signed exact-byte assessment is required.'],
@@ -2546,6 +2568,7 @@ export async function moderatePullRequest(
     }
     if (!attestation.ok) {
       return {
+        reviewSubmission: frontmatter,
         attestation,
         files: [],
         guidelineReasons: assessment.policyEligible
@@ -2559,6 +2582,7 @@ export async function moderatePullRequest(
   }
 
   return {
+    reviewSubmission: frontmatter,
     attestation,
     ...(ephemeralAttestation ? { ephemeralAttestation } : {}),
     files: [{ assessment: fullAssessment, bytes, frontmatter, path: file.filename }],
@@ -2566,6 +2590,30 @@ export async function moderatePullRequest(
     guidelineStatus: assessment.guidelineStatus,
     policyEligible: assessment.policyEligible
   }
+}
+
+/**
+ * Publish display evidence separately from authorization and keep reporting failures nonfatal.
+ */
+async function syncReviewCard(
+  repo: string,
+  number: number,
+  headSha: string,
+  body: string
+): Promise<void> {
+  const result = await publishReviewCard(
+    { repo, number, headSha, body },
+    {
+      listComments: () =>
+        paginateGhApi<ReviewCardComment>(`repos/${repo}/issues/${number}/comments`),
+      getHead: async () => (await fetchPullRequestDetails(repo, number)).head.sha,
+      write: async (endpoint, method, card) => {
+        await execGh(['api', endpoint, '--method', method, '-f', `body=${card}`])
+      }
+    }
+  )
+  if (result === 'failed')
+    process.stderr.write(`PR #${number}: review card could not be published.\n`)
 }
 
 /**
