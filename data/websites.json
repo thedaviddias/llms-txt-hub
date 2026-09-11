@@ -14227,5 +14227,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "C位 · cc8.cc",
+    "domain": "https://www.cc8.cc",
+    "description": "Public pay-to-rank product leaderboard — rank is your bid, ¥1 entry, and every amount on the board resets to ¥1 at 00:00 Beijing time daily. Bilingual (zh/en) with self-contained Markdown mirrors for every category board.",
+    "llmsTxtUrl": "https://www.cc8.cc/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=www.cc8.cc&sz=128",
+    "publishedAt": "2026-08-26"
   }
 ]
