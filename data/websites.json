@@ -10477,6 +10477,16 @@
     "publishedAt": "2025-12-15"
   },
   {
+    "name": "RevenueCat",
+    "domain": "https://revenuecat.com/docs",
+    "description": "The world's best apps use RevenueCat to power purchases, manage customer data, and grow revenue on iOS, Android, and the web.",
+    "llmsTxtUrl": "https://revenuecat.com/docs/llms.txt",
+    "llmsFullTxtUrl": "https://www.revenuecat.com/docs/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=revenuecat.com/docs&sz=128",
+    "publishedAt": "2026-09-11"
+  },
+  {
     "name": "REVOLT",
     "domain": "https://www.revolt.tv/",
     "description": "REVOLT.tv is the unapologetic, authoritative voice of Hip Hop culture covering rap and R&#x26;B music, social justice news, and urban entertainment.",

@@ -1816,17 +1816,6 @@
   },
   {
     "name": "Analog",
-    "description": "Analog is a fullstack meta-framework for building applications and websites with Angular.",
-    "url": "/analog-llms-txt",
-    "content": "# Analog\n\nAnalog is a fullstack meta-framework for building applications and websites with Angular.",
-    "category": "developer-tools",
-    "slug": "analog-llms-txt",
-    "website": "https://analogjs.org",
-    "llmsUrl": "https://analogjs.org/llms.txt",
-    "llmsFullUrl": "https://analogjs.org/llms-full.txt"
-  },
-  {
-    "name": "Analog",
     "description": "Analog is an omni-chain interoperability protocol suite consisting of the Timechain (a sovereign blockchain), developer toolkits, & a unified API—all designed to simplify access to Web3 data while breaking down the barriers to cross-chain communication.",
     "url": "/analog-2-llms-txt",
     "content": "# Analog\n\nIf you need additional information, you can query the documentation dynamically by asking a question.\n\n## Key Focus Areas\n\n- Analog Docs\n- Documentation\n- Agent Instructions: Querying This Documentation\n\n## About llms.txt Implementation\n\nAnalog provides an `llms.txt` file with AI-readable information about its documentation, product, or website content. A full `llms-full.txt` resource is also available for deeper context.",
@@ -1835,6 +1824,17 @@
     "website": "https://www.analog.one/",
     "llmsUrl": "https://docs.analog.one/documentation/llms.txt",
     "llmsFullUrl": "https://docs.analog.one/documentation/llms-full.txt"
+  },
+  {
+    "name": "Analog",
+    "description": "Analog is a fullstack meta-framework for building applications and websites with Angular.",
+    "url": "/analog-llms-txt",
+    "content": "# Analog\n\nAnalog is a fullstack meta-framework for building applications and websites with Angular.",
+    "category": "developer-tools",
+    "slug": "analog-llms-txt",
+    "website": "https://analogjs.org",
+    "llmsUrl": "https://analogjs.org/llms.txt",
+    "llmsFullUrl": "https://analogjs.org/llms-full.txt"
   },
   {
     "name": "Anchor",
@@ -3532,17 +3532,6 @@
   },
   {
     "name": "Betmaster",
-    "description": "> A leading UK-licensed online casino and sportsbook offering slots, live games, blackjack, and secure betting experiences.",
-    "url": "/betmaster-llms-txt",
-    "content": "# Betmaster\n\n> A leading UK-licensed online casino and sportsbook offering slots, live games, blackjack, and secure betting experiences.\n\n## Key Focus Areas\n\n- Betmaster.co.uk\n- Home\n- Sports & Esports\n\n## About llms.txt Implementation\n\nBetmaster provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
-    "category": "marketing-sales",
-    "slug": "betmaster-llms-txt",
-    "website": "https://betmaster.co.uk/blocked/",
-    "llmsUrl": "https://betmaster.co.uk/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "Betmaster",
     "description": "> A leading Ireland-licensed online casino and sportsbook offering slots, live dealer games, blackjack, and secure betting experiences.",
     "url": "/betmaster-2-llms-txt",
     "content": "# Betmaster\n\n> A leading Ireland-licensed online casino and sportsbook offering slots, live dealer games, blackjack, and secure betting experiences.\n\n## Key Focus Areas\n\n- Betmaster.ie\n- Home Page\n- Casino Categories\n\n## About llms.txt Implementation\n\nBetmaster provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
@@ -3550,6 +3539,17 @@
     "slug": "betmaster-2-llms-txt",
     "website": "https://betmaster.ie/blocked/",
     "llmsUrl": "https://betmaster.ie/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Betmaster",
+    "description": "> A leading UK-licensed online casino and sportsbook offering slots, live games, blackjack, and secure betting experiences.",
+    "url": "/betmaster-llms-txt",
+    "content": "# Betmaster\n\n> A leading UK-licensed online casino and sportsbook offering slots, live games, blackjack, and secure betting experiences.\n\n## Key Focus Areas\n\n- Betmaster.co.uk\n- Home\n- Sports & Esports\n\n## About llms.txt Implementation\n\nBetmaster provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
+    "category": "marketing-sales",
+    "slug": "betmaster-llms-txt",
+    "website": "https://betmaster.co.uk/blocked/",
+    "llmsUrl": "https://betmaster.co.uk/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -5897,17 +5897,6 @@
   },
   {
     "name": "Cloud Studio IoT",
-    "description": "Monitor, automate, and grow your operation from a single IoT solution without the complexity.",
-    "url": "/cloudstudioiot-llms-txt",
-    "content": "# Cloud Studio IoT\n\nMonitor, automate, and grow your operation from a single IoT solution without the complexity.",
-    "category": "infrastructure-cloud",
-    "slug": "cloudstudioiot-llms-txt",
-    "website": "https://www.cloudstudioiot.com",
-    "llmsUrl": "https://www.cloudstudioiot.com/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "Cloud Studio IoT",
     "description": "Full-stack IoT solutions provider: CS Gear platform, CS Link connectivity & CS Sense devices. 250K+ devices, 30+ verticals, cloud or on-premise.",
     "url": "/cloud-studio-iot-llms-txt",
     "content": "# Cloud Studio IoT\n\nFull-stack IoT solutions provider: CS Gear platform, CS Link connectivity & CS Sense devices. 250K+ devices, 30+ verticals, cloud or on-premise.",
@@ -5916,6 +5905,17 @@
     "website": "https://cloudstudioiot.com/",
     "llmsUrl": "https://cloudstudioiot.com/llms.txt",
     "llmsFullUrl": "https://cloudstudioiot.com/llms-full.txt"
+  },
+  {
+    "name": "Cloud Studio IoT",
+    "description": "Monitor, automate, and grow your operation from a single IoT solution without the complexity.",
+    "url": "/cloudstudioiot-llms-txt",
+    "content": "# Cloud Studio IoT\n\nMonitor, automate, and grow your operation from a single IoT solution without the complexity.",
+    "category": "infrastructure-cloud",
+    "slug": "cloudstudioiot-llms-txt",
+    "website": "https://www.cloudstudioiot.com",
+    "llmsUrl": "https://www.cloudstudioiot.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "cloud-latitude-GCN2026-raffle",
@@ -11969,24 +11969,35 @@
   },
   {
     "name": "Home",
-    "description": "Documentation for SAP Cloud Application Programming Model",
-    "url": "/home-6-llms-txt",
-    "content": "# Home\n\n> Build enterprise-grade cloud applications with maximized productivity, fueled by proven best practices, served out of the box.\n\n## Key Focus Areas\n\n- SAP Cloud Application Programming Model\n- Docs\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content. A full `llms-full.txt` resource is also available for deeper context.",
-    "category": "ai-ml",
-    "slug": "home-6-llms-txt",
-    "website": "https://cap.cloud.sap/docs/",
-    "llmsUrl": "https://cap.cloud.sap/docs/llms.txt",
-    "llmsFullUrl": "https://cap.cloud.sap/docs/llms-full.txt"
+    "description": "Mondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
+    "url": "/home-1-llms-txt",
+    "content": "# Home\n\nMondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
+    "category": "automation-workflow",
+    "slug": "home-1-llms-txt",
+    "website": "https://mondorobot.com",
+    "llmsUrl": "https://mondorobot.com/llms.txt",
+    "llmsFullUrl": "https://mondorobot.com/llms-full.txt"
   },
   {
     "name": "Home",
-    "description": "CE-certified electric motors from IE2 to IE5. Three & single-phase options for OEMs, integrators, and industrial buyers worldwide.",
-    "url": "/home-5-llms-txt",
-    "content": "# Home\n\nCE-certified electric motors from IE2 to IE5. Three & single-phase options for OEMs, integrators, and industrial buyers worldwide.\n\n## Key Focus Areas\n\n- llms.txt for KEMATROS\n- COMPANY OVERVIEW\n- WEBSITE\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
+    "description": "ControlPlane offers a hardened, enterprise-grade distribution and support services for the CNCF-graduated Flux project.",
+    "url": "/home-2-llms-txt",
+    "content": "# Home\n\nControlPlane offers a hardened, enterprise-grade distribution for the CNCF-graduated Flux project including 24/7 support, security patches, and expert guidance for production deployments.\n\n## Key Focus Areas\n\n- Flux CD Enterprise by ControlPlane\n- Flux Operator Overview\n- Flux Operator Documentation\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
     "category": "business-operations",
-    "slug": "home-5-llms-txt",
-    "website": "https://www.kematros.com/",
-    "llmsUrl": "https://www.kematros.com/llms.txt",
+    "slug": "home-2-llms-txt",
+    "website": "https://fluxcd.control-plane.io/",
+    "llmsUrl": "https://fluxcd.control-plane.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
+    "name": "Home",
+    "description": "An interactive learning resource for systems thinking and engineering in a world of abundant intelligence. Learn how to analyze and design effective systems through hands-on models and step-by-step tutorials.",
+    "url": "/home-3-llms-txt",
+    "content": "# Home\n\nIntroduction to Systems Thinking and System Dynamics\n\n## Key Focus Areas\n\n- Introduction\n- Introduction to Systems Thinking and System Dynamics\n- TL;DR\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
+    "category": "ai-ml",
+    "slug": "home-3-llms-txt",
+    "website": "https://teachyourselfsystems.com/",
+    "llmsUrl": "https://teachyourselfsystems.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
@@ -12002,36 +12013,25 @@
   },
   {
     "name": "Home",
-    "description": "An interactive learning resource for systems thinking and engineering in a world of abundant intelligence. Learn how to analyze and design effective systems through hands-on models and step-by-step tutorials.",
-    "url": "/home-3-llms-txt",
-    "content": "# Home\n\nIntroduction to Systems Thinking and System Dynamics\n\n## Key Focus Areas\n\n- Introduction\n- Introduction to Systems Thinking and System Dynamics\n- TL;DR\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
-    "category": "ai-ml",
-    "slug": "home-3-llms-txt",
-    "website": "https://teachyourselfsystems.com/",
-    "llmsUrl": "https://teachyourselfsystems.com/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "Home",
-    "description": "ControlPlane offers a hardened, enterprise-grade distribution and support services for the CNCF-graduated Flux project.",
-    "url": "/home-2-llms-txt",
-    "content": "# Home\n\nControlPlane offers a hardened, enterprise-grade distribution for the CNCF-graduated Flux project including 24/7 support, security patches, and expert guidance for production deployments.\n\n## Key Focus Areas\n\n- Flux CD Enterprise by ControlPlane\n- Flux Operator Overview\n- Flux Operator Documentation\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
+    "description": "CE-certified electric motors from IE2 to IE5. Three & single-phase options for OEMs, integrators, and industrial buyers worldwide.",
+    "url": "/home-5-llms-txt",
+    "content": "# Home\n\nCE-certified electric motors from IE2 to IE5. Three & single-phase options for OEMs, integrators, and industrial buyers worldwide.\n\n## Key Focus Areas\n\n- llms.txt for KEMATROS\n- COMPANY OVERVIEW\n- WEBSITE\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content.",
     "category": "business-operations",
-    "slug": "home-2-llms-txt",
-    "website": "https://fluxcd.control-plane.io/",
-    "llmsUrl": "https://fluxcd.control-plane.io/llms.txt",
+    "slug": "home-5-llms-txt",
+    "website": "https://www.kematros.com/",
+    "llmsUrl": "https://www.kematros.com/llms.txt",
     "llmsFullUrl": ""
   },
   {
     "name": "Home",
-    "description": "Mondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
-    "url": "/home-1-llms-txt",
-    "content": "# Home\n\nMondo Robot is a digital product design & innovation agency. We create meaningful native apps, websites and experiences.",
-    "category": "automation-workflow",
-    "slug": "home-1-llms-txt",
-    "website": "https://mondorobot.com",
-    "llmsUrl": "https://mondorobot.com/llms.txt",
-    "llmsFullUrl": "https://mondorobot.com/llms-full.txt"
+    "description": "Documentation for SAP Cloud Application Programming Model",
+    "url": "/home-6-llms-txt",
+    "content": "# Home\n\n> Build enterprise-grade cloud applications with maximized productivity, fueled by proven best practices, served out of the box.\n\n## Key Focus Areas\n\n- SAP Cloud Application Programming Model\n- Docs\n\n## About llms.txt Implementation\n\nHome provides an `llms.txt` file with AI-readable information about its documentation, product, or website content. A full `llms-full.txt` resource is also available for deeper context.",
+    "category": "ai-ml",
+    "slug": "home-6-llms-txt",
+    "website": "https://cap.cloud.sap/docs/",
+    "llmsUrl": "https://cap.cloud.sap/docs/llms.txt",
+    "llmsFullUrl": "https://cap.cloud.sap/docs/llms-full.txt"
   },
   {
     "name": "HOME",
@@ -15632,17 +15632,6 @@
   },
   {
     "name": "llms.txt",
-    "description": "Documentation standard for LLM-powered applications",
-    "url": "/llmstxt-llms-txt",
-    "content": "# llms.txt\n\nllms.txt defines a standard for documenting LLM-powered applications and their capabilities.\n\n## Key Focus Areas\n\n- Documentation Standards\n- LLM Integration\n- Best Practices\n\n## About llms.txt Implementation\n\nThe llms.txt documentation outlines the standard format and implementation guidelines for LLM documentation.",
-    "category": "ai-ml",
-    "slug": "llmstxt-llms-txt",
-    "website": "https://llmstxt.org",
-    "llmsUrl": "https://llmstxt.org/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "llms.txt",
     "description": "Optimization (AIO, AEO) for LLM or AI models like chat gbt, gemnai, perplexity, google overview, cloud ai. Show the url same.",
     "url": "/llms-txt-llms-txt",
     "content": "# llms.txt\n\nOptimization (AIO, AEO) for LLM or AI models like chat gbt, gemnai, perplexity, google overview, cloud ai. Show the url same.",
@@ -15651,6 +15640,17 @@
     "website": "https://itdbay.com/",
     "llmsUrl": "https://itdbay.com/llms.txt",
     "llmsFullUrl": "https://itdbay.com/llms-full.txt"
+  },
+  {
+    "name": "llms.txt",
+    "description": "Documentation standard for LLM-powered applications",
+    "url": "/llmstxt-llms-txt",
+    "content": "# llms.txt\n\nllms.txt defines a standard for documenting LLM-powered applications and their capabilities.\n\n## Key Focus Areas\n\n- Documentation Standards\n- LLM Integration\n- Best Practices\n\n## About llms.txt Implementation\n\nThe llms.txt documentation outlines the standard format and implementation guidelines for LLM documentation.",
+    "category": "ai-ml",
+    "slug": "llmstxt-llms-txt",
+    "website": "https://llmstxt.org",
+    "llmsUrl": "https://llmstxt.org/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "llms.txt directory",
@@ -15676,17 +15676,6 @@
   },
   {
     "name": "LLMs.txt Generator",
-    "description": "AI-powered service that automatically crawls your website, clusters pages by semantic similarity, and generates a hierarchical llms.txt file optimized for LLMs. Supports multiple AI models, no registration required for the free tier.",
-    "url": "/llmstxtgenerator-svcpool-llms-txt",
-    "content": "# LLMs.txt Generator\n\nAI-powered service that automatically crawls your website, clusters pages by semantic similarity, and generates a hierarchical llms.txt file optimized for LLMs. Supports multiple AI models, no registration required for the free tier.",
-    "category": "developer-tools",
-    "slug": "llmstxtgenerator-svcpool-llms-txt",
-    "website": "https://llmstxtgenerator.svcpool.com",
-    "llmsUrl": "https://llmstxtgenerator.svcpool.com/llms.txt",
-    "llmsFullUrl": ""
-  },
-  {
-    "name": "LLMs.txt Generator",
     "description": "Free tool to generate llms.txt and llms-full.txt files, with a GEO audit, schema scoring and AI-crawler checks to make websites visible to ChatGPT, Claude and Perplexity.",
     "url": "/llmstxt-generator-llms-txt",
     "content": "# LLMs.txt Generator\n\nFree online generator for llms.txt and llms-full.txt files. It analyses a website or online shop and produces AI-optimised files that help assistants like ChatGPT, Claude and Perplexity discover and cite the site's content.\n\nAlongside the generator, the platform offers a set of free GEO (Generative Engine Optimization) tools: a robots.txt AI-crawler check, a Schema.org score, an AI visibility check and a GEO audit. The core generator and tools are free to use and require no signup; the interface is available in German and English.",
@@ -15695,6 +15684,17 @@
     "website": "https://llmstxtgenerator.de",
     "llmsUrl": "https://llmstxtgenerator.de/llms.txt",
     "llmsFullUrl": "https://llmstxtgenerator.de/llms-full.txt"
+  },
+  {
+    "name": "LLMs.txt Generator",
+    "description": "AI-powered service that automatically crawls your website, clusters pages by semantic similarity, and generates a hierarchical llms.txt file optimized for LLMs. Supports multiple AI models, no registration required for the free tier.",
+    "url": "/llmstxtgenerator-svcpool-llms-txt",
+    "content": "# LLMs.txt Generator\n\nAI-powered service that automatically crawls your website, clusters pages by semantic similarity, and generates a hierarchical llms.txt file optimized for LLMs. Supports multiple AI models, no registration required for the free tier.",
+    "category": "developer-tools",
+    "slug": "llmstxtgenerator-svcpool-llms-txt",
+    "website": "https://llmstxtgenerator.svcpool.com",
+    "llmsUrl": "https://llmstxtgenerator.svcpool.com/llms.txt",
+    "llmsFullUrl": ""
   },
   {
     "name": "llms.txt Validator",
@@ -21514,6 +21514,17 @@
     "website": "https://api.reve.com/",
     "llmsUrl": "https://api.reve.com/llms.txt",
     "llmsFullUrl": ""
+  },
+  {
+    "name": "RevenueCat",
+    "description": "The world's best apps use RevenueCat to power purchases, manage customer data, and grow revenue on iOS, Android, and the web.",
+    "url": "/revenuecat-llms-txt",
+    "content": "# RevenueCat\n\nThe world's best apps use RevenueCat to power purchases, manage customer data, and grow revenue on iOS, Android, and the web.",
+    "category": "developer-tools",
+    "slug": "revenuecat-llms-txt",
+    "website": "https://revenuecat.com/docs",
+    "llmsUrl": "https://revenuecat.com/docs/llms.txt",
+    "llmsFullUrl": "https://www.revenuecat.com/docs/llms-full.txt"
   },
   {
     "name": "REVOLT",
