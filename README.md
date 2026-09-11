@@ -35,6 +35,7 @@ We organize projects into primary categories (🤖 **AI & ML**, 💻 **Developer
 | ⚡ **Raycast Extension**  | Search and explore llms.txt files directly in Raycast           | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
 | ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI            | [LLMs.txt Generator](https://llmstxtgenerator.co/)                                                            |
 | 🛠 **llmstxt-cli**        | Install llms.txt docs as skills into 35+ AI coding agents       | [npm](https://www.npmjs.com/package/llmstxt-cli) · [README](packages/cli/README.md)                           |
+| 🤖 **agent-readiness-cli**| Score any URL 0-100 for AI agent readiness (canonical, llms.txt, schema, hreflang, etc).          | [GitHub](https://github.com/sspoisk/agent-readiness-cli) · [PyPI](https://pypi.org/project/agent-readiness-cli/)                                |
 
 <!-- LLMS-LIST:START - Do not remove or modify this section -->
 ## LLM Tools and Resources
