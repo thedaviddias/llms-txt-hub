@@ -1,0 +1,23 @@
+---
+name: 'Greenlit Books'
+description: 'Publisher of practical books on working with AI: verification, agent reliability, containment, and governance. Full catalog served as llms.txt, llms-full.txt, per-book markdown, and a public JSON API.'
+website: 'https://greenlitbooks.com'
+llmsUrl: 'https://greenlitbooks.com/llms.txt'
+llmsFullUrl: 'https://greenlitbooks.com/llms-full.txt'
+category: 'content-media'
+publishedAt: '2026-08-24'
+---
+
+# Greenlit Books
+
+> Greenlit Books publishes practical books on working with AI, held to one standard: every claim is something you can check. The catalog spans operators running AI at work, engineers building agents, and leaders governing it.
+
+## Key Focus Areas
+
+- AI verification and agent reliability
+- Agentic coding workflows (Claude Code, Codex)
+- AI containment, oversight, and governance for operators and leaders
+
+## About llms.txt Implementation
+
+Greenlit Books serves a hand-curated `llms.txt` site map and a full-catalog `llms-full.txt`. Every book page has a plain-markdown twin at `/book/{slug}.md`, every book's chapter one is free at `/book/{slug}/read` with its own markdown twin, and each book's named concept has a question-shaped answer page at `/concepts/{slug}.md`. A versioned JSON API at `https://greenlitbooks.com/api/v1` (OpenAPI 3.1 at `/api/v1/openapi.json`, docs at `/developers`) provides structured book, series, and concept records plus ranked catalog search over plain HTTP GET.
