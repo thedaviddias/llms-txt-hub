@@ -1,0 +1,15 @@
+---
+name: 'Liquid Agent'
+description: 'Agent-native tokenized-stock index on Base. Mint your own on-chain ERC-4626 vault of Coinbase tokenized NVDA, META, AAPL and GOOGL, buy from $1, rebalance, and exit any block. Reads are free; writes return unsigned calldata the agent signs.'
+website: 'https://api.liquidagent.ai'
+llmsUrl: 'https://api.liquidagent.ai/llms.txt'
+llmsFullUrl: ''
+category: 'finance-fintech'
+publishedAt: '2026-08-31'
+---
+
+# Liquid Agent
+
+Liquid Agent is an agent-native tokenized-stock index on Base. An AI agent (or a person) mints its own ERC-4626 vault holding a band-rebalanced basket of Coinbase's tokenized NVDA, META, AAPL and GOOGL, buys from $1, sets custom weights, rebalances, and exits in-kind or to USDC any block. NAV is self-priced by a pool TWAP with a circuit breaker, so there is no external oracle, and there is no project token in the live index. Reads are free and need no key; every write returns an unsigned transaction the agent signs and broadcasts with its own wallet and gas, so the server holds no keys.
+
+The `llms.txt` documents the full lifecycle (discover, create a vault, buy, rebalance, exit) plus the OpenAPI spec, an x402 discovery manifest, an A2A agent card, and an on-chain ERC-8004 identity.
