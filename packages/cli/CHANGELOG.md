@@ -1,5 +1,11 @@
 # llmstxt-cli
 
+## 0.4.2
+
+### Patch Changes
+
+- [`7dd1212`](https://github.com/thedaviddias/llms-txt-hub/commit/7dd12125c4815842178e9006a9d9f5a0477e3ccb) Thanks [@thedaviddias](https://github.com/thedaviddias)! - Send selected installation targets with versioned telemetry so per-agent install counts remain accurate.
+
 ## 0.4.1
 
 ### Patch Changes
