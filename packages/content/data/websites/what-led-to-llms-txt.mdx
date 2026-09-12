@@ -1,0 +1,25 @@
+---
+name: 'What Led To'
+description: 'Living, source-backed timelines of long-running events in tech, the US economy and gaming — every dated entry carries the page it came from and a verbatim quote.'
+website: 'https://whatledto.com'
+llmsUrl: 'https://whatledto.com/llms.txt'
+llmsFullUrl: 'https://whatledto.com/llms-full.txt'
+category: 'content-media'
+publishedAt: '2026-09-12'
+---
+
+# What Led To
+
+What Led To keeps 27 living timelines of stories that unfold over years: chip export controls, the Fed's rate path, Social Security's COLA, student loan rules, tariff litigation, console launches. One page per event, one dated entry per fact. A research pass records each fact with the page it came from and a verbatim quote; a second, independent pass re-opens every cited page and rejects what it cannot confirm; an editor reviews what remains before it publishes. Entries are never silently edited — every change is listed on the page.
+
+## Key Focus Areas
+
+- Dated entries with the source page and the verbatim quote that supports each one
+- Explanatory relations between entries (causes, responds_to, contradicts) that the dates alone do not show
+- Scheduled dates worth watching, each with why it matters and its source
+- Open questions the sources have not settled
+- A per-timeline changelog, so a diff of the list is a diff of what the site knew
+
+## About llms.txt Implementation
+
+`/llms.txt` indexes every timeline with its topic and last update; `/llms-full.txt` is all of them in full as plain-text Markdown. Each timeline is also served on its own as Markdown at its page URL plus `.md` and as JSON at plus `.json`, with the fields documented at `/data`, and the pages answer content negotiation on `Accept: text/markdown` and `Accept: application/json`. The same data is available to agents as a remote MCP server at `https://whatledto.com/mcp` (`com.whatledto/whatledto` in the official MCP registry). Reuse terms ask for a link back to the entry a quote came from.
