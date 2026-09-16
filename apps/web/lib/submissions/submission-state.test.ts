@@ -5,7 +5,8 @@ import {
   enforceSubmissionRateLimits,
   hashSubmissionFields,
   isAllowedSubmissionTransition,
-  normalizeSubmissionFields
+  normalizeSubmissionFields,
+  releaseSubmissionRateLimits
 } from './submission-state'
 
 const SECRET = 's'.repeat(32)
@@ -27,6 +28,32 @@ const makeRedis = () => ({
 })
 
 describe('submission state', () => {
+  it('keeps hashes stable when an accepted destination contains nested HTML entities', () => {
+    const normalized = normalizeSubmissionFields({
+      ...FIELDS,
+      mdxContent: '[Guide](https://example.com/?q=&amp;amp;amp;amp;)'
+    })
+    expect(normalized).not.toBeNull()
+    const restored = normalizeSubmissionFields(normalized)
+    expect(restored).toEqual(normalized)
+    expect(hashSubmissionFields(restored!)).toBe(hashSubmissionFields(normalized!))
+  })
+
+  it('preserves normalized additional Markdown and binds it into the field hash', () => {
+    const plain = normalizeSubmissionFields(FIELDS)
+    const additional = normalizeSubmissionFields({
+      ...FIELDS,
+      mdxContent: '\r\n## Details\r\n\r\n- **Useful** API documentation\r\n'
+    })
+    expect(additional?.mdxContent).toBe('## Details\n\n- **Useful** API documentation')
+    expect(hashSubmissionFields(additional!)).not.toBe(hashSubmissionFields(plain!))
+    expect(hashSubmissionFields(normalizeSubmissionFields({ ...FIELDS, mdxContent: '' })!)).toBe(
+      hashSubmissionFields(plain!)
+    )
+    expect(normalizeSubmissionFields({ ...FIELDS, mdxContent: 'a'.repeat(5001) })).toBeNull()
+    expect(normalizeSubmissionFields({ ...FIELDS, mdxContent: {} })).toBeNull()
+  })
+
   it.each([
     ['draft', 'preflight_rejected'],
     ['draft', 'support_required'],
@@ -198,6 +225,10 @@ describe('submission state', () => {
     [
       'changed fields',
       { fields: { ...FIELDS, name: 'Changed' }, tokenSuffix: '', userId: 'user_123' }
+    ],
+    [
+      'changed additional content',
+      { fields: { ...FIELDS, mdxContent: '## New content' }, tokenSuffix: '', userId: 'user_123' }
     ],
     ['changed account', { fields: FIELDS, tokenSuffix: '', userId: 'user_other' }],
     ['tampered token', { fields: FIELDS, tokenSuffix: 'x', userId: 'user_123' }]
@@ -413,9 +444,25 @@ describe('submission state', () => {
     expect(result).toEqual({ ok: true })
     const invocation = JSON.stringify(redis.eval.mock.calls[0])
     expect(invocation).not.toContain(sourceIp)
-    expect(invocation).toContain('5')
-    expect(invocation).toContain('20')
-    expect(invocation).toContain('3')
+    expect(redis.eval.mock.calls[0]?.[2]).toEqual(['5', '20', '5', '3600', '3600', '86400'])
+  })
+
+  it('releases one charged attempt without changing rate-limit key TTLs', async () => {
+    const redis = makeRedis()
+    redis.eval.mockResolvedValue('released')
+
+    await expect(
+      releaseSubmissionRateLimits(
+        {
+          sourceIp: '203.0.113.24',
+          userId: 'user_123',
+          website: 'https://example.com'
+        },
+        { redis, secret: SECRET }
+      )
+    ).resolves.toEqual({ ok: true })
+    expect(redis.eval.mock.calls[0]?.[0]).toContain("redis.call('DECR', KEYS[index])")
+    expect(redis.eval.mock.calls[0]?.[2]).toEqual([])
   })
 
   it.each([

@@ -11,6 +11,10 @@ type SubmissionResult =
 interface SubmitFormSuccessProps {
   result: SubmissionResult
   onSubmitAnother: () => void
+  onEdit?: () => void
+  onRetry?: () => void
+  onSupport?: () => void
+  isLoading?: boolean
 }
 
 const AUTOMATIC_COPY =
@@ -34,18 +38,26 @@ const resultHeading = (outcome: SubmissionResult['outcome']): string => {
 /**
  * Displays the truthful final publication outcome and a PR link only after success.
  */
-export function SubmitFormSuccess({ result, onSubmitAnother }: SubmitFormSuccessProps) {
+export function SubmitFormSuccess({
+  result,
+  onSubmitAnother,
+  onEdit,
+  onRetry,
+  onSupport,
+  isLoading = false
+}: SubmitFormSuccessProps) {
   const headingRef = useRef<HTMLHeadingElement>(null)
   const successful = result.outcome === 'automatic' || result.outcome === 'manual'
 
   useEffect(() => {
     headingRef.current?.focus()
-  }, [])
+  }, [result])
 
   return (
     <section
       className="space-y-8"
       aria-labelledby="submission-result-heading"
+      aria-busy={isLoading}
       role={successful ? 'status' : 'alert'}
     >
       <div className="space-y-4">
@@ -53,7 +65,7 @@ export function SubmitFormSuccess({ result, onSubmitAnother }: SubmitFormSuccess
           ref={headingRef}
           id="submission-result-heading"
           tabIndex={-1}
-          className="text-2xl font-semibold"
+          className="text-2xl font-semibold focus:outline-none"
         >
           {resultHeading(result.outcome)}
         </h1>
@@ -80,9 +92,25 @@ export function SubmitFormSuccess({ result, onSubmitAnother }: SubmitFormSuccess
       )}
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Button onClick={onSubmitAnother} variant="outline">
-          Submit another
-        </Button>
+        {!successful && onRetry && (
+          <Button onClick={onRetry} disabled={isLoading}>
+            {isLoading ? 'Retrying...' : 'Retry submission'}
+          </Button>
+        )}
+        {!successful && onEdit ? (
+          <Button onClick={onEdit} variant="outline" disabled={isLoading}>
+            Edit details
+          </Button>
+        ) : (
+          <Button onClick={onSubmitAnother} variant="outline" disabled={isLoading}>
+            Submit another
+          </Button>
+        )}
+        {!successful && onSupport && (
+          <Button onClick={onSupport} variant="ghost" disabled={isLoading}>
+            Open a profile again
+          </Button>
+        )}
         <Button asChild variant="ghost">
           <Link href="/">Back to home</Link>
         </Button>

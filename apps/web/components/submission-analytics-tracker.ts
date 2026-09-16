@@ -54,9 +54,6 @@ const trackPreflightResult = (result: PreflightResult, startedAt: number, attemp
   } else if (result.analytics.webRiskAvailable === false) {
     submissionAnalytics.webRiskUnavailable({ attemptId, source: 'preflight' })
   }
-  if (result.status === 'support_required') {
-    submissionAnalytics.supportView({ attemptId, source: 'support_step' })
-  }
 }
 
 /** Track a client-side preflight failure without forwarding the thrown value. */
@@ -139,6 +136,8 @@ export function useSubmissionAnalytics() {
   return {
     getAttemptId: () => attemptId.current,
     trackSubmissionPageView: () => submissionAnalytics.pageView({ source: 'submit_page' }),
+    trackSubmissionSupportView: () =>
+      submissionAnalytics.supportView({ attemptId: ensureAttemptId(), source: 'support_step' }),
     startPreflight: () => {
       submissionAnalytics.preflightStart({
         attemptId: ensureAttemptId(),
