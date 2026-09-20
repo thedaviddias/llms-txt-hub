@@ -14237,5 +14237,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Zovo MCP Servers",
+    "domain": "https://mcp.zovo.one/",
+    "description": "46 production-grade MCP servers for office work - invoicing, expenses, leave, onboarding and more. Local + hosted, free tier plus one-time Pro licenses.",
+    "llmsTxtUrl": "https://mcp.zovo.one/llms.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=mcp.zovo.one&sz=128",
+    "publishedAt": "2026-09-20"
   }
 ]
