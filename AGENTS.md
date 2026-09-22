@@ -25,4 +25,3 @@
 - Every internal package that imports from `next` must declare it in both peerDependencies and devDependencies; manypkg's postinstall enforces that peerDependencies have matching devDependencies, and violating this causes infinite install loops
 - Server-side fetch calls (GitHub API, metadata fetching) should use AbortController with timeouts to prevent hanging in serverless
 - The @openpanel/nextjs OpenPanelComponent has zero CSP nonce support; it was replaced with a custom server component rendering raw `<script>` tags with nonce (same pattern as json-ld.tsx); the /api/op/ proxy route handler is inlined rather than importing from @openpanel/nextjs/server, which fails on Vercel as a transitive dependency
-- Typefully integration is available for social media posts via the typefully skill; the user's social set ID is 290319 with X, LinkedIn, and Threads connected

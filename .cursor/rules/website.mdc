@@ -4,7 +4,7 @@ globs: apps/web/**
 alwaysApply: true
 ---
 Instructions:
-- Follow Next.js 15 App Router best practices
+- Follow the installed Next.js App Router version in the pnpm workspace catalog
 - Use React Server Components by default
 - Implement type-safe server actions using next-safe-action
 - Follow mobile-first responsive design with Tailwind CSS 4
