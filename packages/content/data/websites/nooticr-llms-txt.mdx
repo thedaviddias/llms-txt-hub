@@ -1,0 +1,28 @@
+---
+name: 'Nooticr'
+description: 'Social listening over MCP — reads posts, transcripts, video frames and comment sections across ten networks and hands the material to the model that asked.'
+website: 'https://nooticr.com'
+llmsUrl: 'https://nooticr.com/llms.txt'
+llmsFullUrl: ''
+category: 'data-analytics'
+publishedAt: '2026-09-22'
+---
+
+# Nooticr
+
+Nooticr is an MCP (Model Context Protocol) server that reads social media for an AI assistant. Point Claude, Claude Code, Cursor or any MCP client at it and ask a question in plain words; it fetches the posts, the words actually spoken in the video, frames sampled across the video, and the comment sections, then hands that material to the model that asked. It does not score, rank or summarise on its own — the reading is done by the calling model, not by Nooticr.
+
+## Key Focus Areas
+
+- Posts — facts, media, and the creator's own recent median for context
+- Transcripts — the words actually spoken, where the platform supplies a caption track
+- Frames — images sampled across a video, returned so a model can look at them
+- Comments — the comment section, with the themes the platform clusters it into
+- Creators — found by craft rather than by name, with lookalikes and the typed links out of their bio
+- Brand mention sweeps across ten networks, including mentions only ever said out loud and never typed
+
+Ten networks are covered: TikTok, Instagram, YouTube, X, Reddit, LinkedIn, Douyin, Xiaohongshu, Weibo and Bilibili.
+
+## About llms.txt Implementation
+
+Nooticr's llms.txt documents the product as a connectable surface rather than as a page to read: how to connect (hosted `https://mcp.nooticr.com/mcp`, or `npx -y @nooticr/mcp` over stdio), what the server reads, what it does with what it reads, and how per-fetch pricing works — so an assistant can answer setup and capability questions without crawling the marketing site. Key public routes are enumerated with their purpose, and a closing section records the earlier publishing product so a model does not present retired features as current.
