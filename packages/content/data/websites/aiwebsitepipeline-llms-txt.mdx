@@ -1,0 +1,23 @@
+---
+name: 'AI Website Pipeline'
+description: 'An agentic pipeline that turns one keyword into a small static utility site, running on your own machine, with layer contracts and machine-evaluable gates that can halt a build.'
+website: 'https://aiwebsitepipeline.com/'
+llmsUrl: 'https://aiwebsitepipeline.com/llms.txt'
+llmsFullUrl: ''
+category: 'ai-ml'
+publishedAt: '2026-08-08'
+---
+
+# AI Website Pipeline
+
+AI Website Pipeline is an automated agentic pipeline that takes a single keyword and produces a small static utility site. It runs locally on the operator's own machine rather than as a hosted service. Its stated argument is that nothing between the keyword and the deploy can tell you no, and that the missing part is a machine that says no — so the pipeline is built around layer contracts and machine-evaluable gates, including a demonstration gate that deliberately fails rather than assume absent flags are clean.
+
+## About the llms.txt Implementation
+
+`llms.txt` indexes the home page, the method and niche-score pages, an essay on domain availability, the FAQ, order lookup and terms. It also documents the open-source libraries published alongside the product, and notes that the whole domain is open to crawlers except `/dl/`, which holds delivered product archives.
+
+## Coverage
+
+- Documented subjects: RDAP, keyword difficulty distribution, keyword maps, information gain, Search Console coverage, IndexNow, GEO sprint stages and JSON Schema
+- `gate-contract` — Rust library for fail-closed gate contracts, where a blocking gate halts the run both when it fails and when it cannot be evaluated, and a `Known<T>` type propagates `Unknown` instead of decaying to a default
+- `indexnowkit` — D library that builds and validates IndexNow submissions against the published protocol constraints
