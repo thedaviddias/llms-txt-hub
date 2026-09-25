@@ -1,0 +1,24 @@
+---
+name: 'EditalMD'
+description: 'Brazilian public procurement (PNCP) notices as Markdown with provenance, proposal and challenge deadlines, qualification requirements, alerts and watches — API and MCP'
+website: 'https://editalmd.com/'
+llmsUrl: 'https://editalmd.com/llms.txt'
+llmsFullUrl: 'https://editalmd.com/llms-full.txt'
+category: 'data-analytics'
+priority: 'medium'
+publishedAt: '2026-09-05'
+---
+
+# EditalMD
+
+Brazilian public procurement (PNCP) notices as Markdown with provenance, proposal and challenge deadlines, qualification requirements, alerts and watches — API and MCP.
+
+## Key Focus Areas
+
+- PNCP notices in Markdown
+- Deadline alerts and watches
+- MCP server for agents
+
+## About llms.txt Implementation
+
+EditalMD serves `llms.txt` and `llms-full.txt` at the site root, generated from the same API catalog that feeds `/api/`, `openapi.json` and the MCP server at `https://editalmd.com/mcp`, so the three always describe the same routes, prices and limits.
