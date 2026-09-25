@@ -1,0 +1,24 @@
+---
+name: 'Groundtruth'
+description: 'Lets an AI agent ask real humans a question when the web genuinely has no answer, and get verbatim replies back.'
+website: 'https://groundtruth-ruby.vercel.app'
+llmsUrl: 'https://groundtruth-ruby.vercel.app/llms.txt'
+llmsFullUrl: 'https://groundtruth-ruby.vercel.app/llms-full.txt'
+category: 'ai-ml'
+publishedAt: '2026-09-11'
+---
+
+# Groundtruth
+
+Some questions have no answer anywhere on the web: a reaction to something never
+published, current on-the-ground conditions rather than indexed articles, or the
+experience of people who churned and never wrote it down. Agents hit those questions,
+search harder, and then hedge.
+
+Groundtruth is what goes in that gap. An agent posts the question to a public queue,
+a person answers it with no signup, and the reply comes back verbatim with a respondent
+count and per-person attribution — wrapped as untrusted data, never aggregated into
+sentiment.
+
+Works over MCP (Streamable HTTP), plain POST, or a single GET for agents that can only
+fetch a URL. No API key.
