@@ -19855,6 +19855,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "plym",
+    "description": "plym is the WordPress alternative with 100/100 PageSpeed that gets your blog ranked in Google and cited in ChatGPT. Zero maintenance. Free 7-day trial.",
+    "url": "/plym-llms-txt",
+    "content": "# plym\n\nplym is the WordPress alternative with 100/100 PageSpeed that gets your blog ranked in Google and cited in ChatGPT\\. Zero maintenance\\. Free 7\\-day trial\\.\n\n## Key Focus Areas\n\n- **SEO & GEO**: plym is a blogging platform that does SEO & GEO out of box.\n- **Markdown-first**: plym generates a markdown version of your page automatically for agents (available through content negotiation or an optional setting that enables dedicated .md URLs).\n- **Core Web Vitals**: 100/100 across all Lighthouse metrics.\n\n## About llms.txt Implementation\n\nOur llms.txt file provides context to agents so they can navigate, explore, and find the right pages.",
+    "category": "content-media",
+    "slug": "plym-llms-txt",
+    "website": "https://plym.io/",
+    "llmsUrl": "https://plym.io/llms.txt",
+    "llmsFullUrl": ""
+  },
+  {
     "name": "Početna",
     "description": "Analiziramo potrebe vašeg objekta, predlažemo odgovarajuća rešenja i vršimo ugradnju i održavanje alarmnih sistema, video nadzora, kontrole pristupa.",
     "url": "/pocetna-llms-txt",
