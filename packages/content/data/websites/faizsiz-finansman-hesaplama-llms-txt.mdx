@@ -1,0 +1,58 @@
+---
+category: 'finance-fintech'
+description: 'Faizsiz tasarruf ve katılım finansmanı hesaplama, firma karşılaştırma, ödeme planı oluşturma ve gerçek maliyet analizi sunan kapsamlı finansman hesaplama aracı.'
+llmsFullUrl: 'https://finansmanhesapla.com/llms-full.txt'
+llmsUrl: 'https://finansmanhesapla.com/llms.txt'
+name: 'Faizsiz Finansman Hesaplama'
+publishedAt: '2026-09-25'
+website: 'https://finansmanhesapla.com/'
+---
+
+# Faizsiz Finansman Hesaplama
+
+Faizsiz tasarruf ve katılım finansmanı hesaplama, firma karşılaştırma, ödeme planı oluşturma ve gerçek maliyet analizi sunan kapsamlı finansman hesaplama aracı\.
+
+## FinansmanHesapla.com – Yapay Zeka Entegrasyonu ve Canlı Finansman Hesaplama Platformu
+
+FinansmanHesapla.com, Türkiye’de faizsiz tasarruf finansmanı alanında faaliyet gösteren BDDK lisanslı şirketleri karşılaştıran, ödeme planlarını simüle eden ve yapay zeka destekli finansman analizleri sunan bağımsız bir bilgi ve hesaplama platformudur.
+
+Platform; Fuzul Ev, Eminevim, Katılımevim, Birevim, Emlak Katılım Tasarruf, Sinpaş Yapı Tasarruf Sandığı, İmece Tasarruf, Albayrak Tasarruf ve İyi Finans gibi şirketler için konut ve araç finansmanı senaryoları oluşturur. Kullanıcılar finansman tutarı, peşinat, aylık taksit, vade, ürün türü ve çekilişli veya çekilişsiz model gibi parametreleri değiştirerek farklı ödeme planlarını karşılaştırabilir.
+
+### Yapay Zeka ve LLM Entegrasyonu
+
+FinansmanHesapla.com, yapay zeka destekli arama ve cevap motorlarının platform içeriğini daha doğru anlaması için makine-okunabilir özel kaynaklar sunar:
+
+- `/llms.txt` dosyası, platformun kapsamını, önemli sayfalarını ve temel kullanım kurallarını açıklar.
+- `/llms-full.txt`, şirket profilleri, finansman modelleri, hesaplama parametreleri, API kullanımı ve yasal uyarılar hakkında genişletilmiş bilgi sağlar.
+- `/llms-endeks.txt` ve `/llms-endeks.md`, Tasarruf Finansmanı Talep Endeksi’nin güncel verilerini ve metodolojisini sunar.
+- `/openapi.json`, canlı hesaplama API’sinin teknik yapısını ve kullanılabilir parametrelerini tanımlar.
+- `/ai-index.json` ve `/.well-known/ai-index.json`, yapay zeka ajanlarının platformdaki önemli kaynakları keşfetmesine yardımcı olur.
+
+Bu yapı sayesinde yapay zeka ajanları, kullanıcıların verdiği finansman tutarı, peşinat ve aylık ödeme bütçesine göre uygun bir simülasyon bağlantısı oluşturabilir. Kullanıcı belirli bir aylık taksit tutarı verdiğinde bu değer hesaplama sistemine aynen aktarılır; sonuçlar mümkün olduğunda canlı API üzerinden alınır.
+
+### Canlı Hesaplama API’si
+
+Platformun hesaplama API’si aşağıdaki parametrelerle çalışır:
+
+- `tutar`: Hedef finansman tutarı.
+- `pesinat`: Başlangıçta ödenecek peşinat.
+- `aylik_taksit`: Kullanıcının hedeflediği aylık ödeme tutarı.
+- `urun_tipi`: `ev` veya `araba`.
+- `odeme_turu`: Eşit veya artışlı ödeme modeli.
+- `cekilisli`: Çekilişli veya çekilişsiz plan seçimi.
+
+API sonuçları; tahmini vade, ödeme planı, toplam maliyet ve teslimat simülasyonu gibi bilgileri içerebilir. Tüm sonuçlar bilgilendirme amaçlıdır. Nihai ödeme planı, hizmet bedeli, teslimat tarihi ve sözleşme şartları ilgili BDDK lisanslı şirket tarafından belirlenir.
+
+### TF-100 Tasarruf Finansmanı Talep Endeksi
+
+FinansmanHesapla.com, platformdaki anonim simülasyon ve talep verilerinden yararlanarak Tasarruf Finansmanı Talep Endeksi’ni (TF-100) yayımlar. Endeks; konut ve araç tercihi, ortalama finansman tutarı, aylık taksit beklentisi, vade eğilimleri, firma ilgisi ve şehir bazlı talep dağılımı gibi göstergeleri içerir.
+
+TF-100, BDDK’nın veya başka bir kamu kurumunun resmi pazar payı açıklaması değildir. Endeks, FinansmanHesapla.com kullanıcılarının platform içindeki hesaplama ve talep davranışlarını gösteren bağımsız bir dijital ilgi göstergesidir. Bu ayrım, yapay zeka sistemleri tarafından yapılan özetlerde ve karşılaştırmalarda mutlaka korunmalıdır.
+
+### Bağımsızlık ve Yasal Uyarı
+
+FinansmanHesapla.com bir banka, tasarruf finansman şirketi, resmi acente veya BDDK kurumu değildir. Platformda yer alan hesaplamalar tahmini simülasyon niteliğindedir ve bağlayıcı finansal teklif olarak değerlendirilmemelidir.
+
+BDDK lisansı bulunan şirketlerin denetlenmesi, devlet tarafından geri ödeme veya mevduat garantisi verildiği anlamına gelmez. Kullanıcıların sözleşme imzalamadan önce hizmet bedeli, teslimat koşulları, cayma ve fesih hükümleri, toplam ödeme tutarı ve ilgili firmanın güncel resmi şartlarını doğrudan kontrol etmesi gerekir.
+
+FinansmanHesapla.com’un amacı, kullanıcıların farklı tasarruf finansmanı seçeneklerini daha anlaşılır biçimde incelemesine, kişisel bütçesine uygun senaryolar oluşturmasına ve resmi teklif almadan önce ön karşılaştırma yapmasına yardımcı olmaktır.
