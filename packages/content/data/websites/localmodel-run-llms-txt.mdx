@@ -1,0 +1,22 @@
+---
+name: 'localmodel.run'
+description: 'Free API and site that tells you whether a device can run a given local AI model, and how much memory it needs, across 153 models and 40 devices.'
+website: 'https://localmodel.run'
+llmsUrl: 'https://localmodel.run/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-07-10'
+---
+
+# localmodel.run
+
+localmodel.run is a free, no-auth reference for local AI model hardware fit. It covers 153 models (text, image, video, audio) across 40 devices, with every memory figure sourced against vendor specs, Ollama, and HuggingFace GGUF repos.
+
+## Key Focus Areas
+
+- Device fit checks - will a given model run on a given Mac, PC, or phone, and at what quantization
+- OpenAPI 3.1 spec at /api/openapi.json for programmatic access, CORS-open
+- Sourced data - every model and device entry cites its source, no estimated numbers
+
+## About llms.txt Implementation
+
+localmodel.run publishes llms.txt listing all 153 models with sizes and context lengths, so agents can answer "can I run X locally" without scraping the site.
