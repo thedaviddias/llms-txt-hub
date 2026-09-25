@@ -7,9 +7,8 @@
 - When adding new exports to an internal package, add an explicit exports map to its package.json (follow the shorthand pattern used by other packages like @thedaviddias/utils)
 - When a new import would push layout.tsx over the 15-import limit, re-export from an existing imported module instead of adding a separate import line
 - Pre-commit hooks enforce JSDoc on all exported functions/components, no barrel files, no as-casts, biome formatting, conventional commits, and sorted package.json
-- The check-file-complexity hook flags analytics.ts (pre-existing, ~84 cognitive complexity); this is known and not blocking
-- GPG commit signing via 1Password can fail in automated contexts; use --no-gpg-sign as a workaround when needed
-- Skip LEFTHOOK_EXCLUDE=check-file-complexity for commits touching analytics.ts since its complexity is pre-existing
+- Keep the check-file-complexity hook enabled, including for analytics.ts. If it blocks a commit, inspect the actual finding and fix the scoped issue or report the blocker; pre-existing complexity is not permission to bypass hooks.
+- If GPG commit signing fails in an automated context, repair the configured signing environment or report the blocker; do not disable signing to complete the commit.
 - Always check package documentation for existing types before creating custom type declarations; internal packages should be self-contained and export their own types to consumers
 - Always verify the full production build passes before committing dependency or config changes; Vercel's strict pnpm resolution catches phantom dependency issues that local hoisting hides
 
@@ -26,4 +25,3 @@
 - Every internal package that imports from `next` must declare it in both peerDependencies and devDependencies; manypkg's postinstall enforces that peerDependencies have matching devDependencies, and violating this causes infinite install loops
 - Server-side fetch calls (GitHub API, metadata fetching) should use AbortController with timeouts to prevent hanging in serverless
 - The @openpanel/nextjs OpenPanelComponent has zero CSP nonce support; it was replaced with a custom server component rendering raw `<script>` tags with nonce (same pattern as json-ld.tsx); the /api/op/ proxy route handler is inlined rather than importing from @openpanel/nextjs/server, which fails on Vercel as a transitive dependency
-- Typefully integration is available for social media posts via the typefully skill; the user's social set ID is 290319 with X, LinkedIn, and Threads connected
