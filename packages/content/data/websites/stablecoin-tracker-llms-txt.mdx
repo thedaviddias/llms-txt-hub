@@ -1,0 +1,43 @@
+---
+category: 'business-operations'
+description: 'See where stablecoins are used, how international corridor volume moves, and which countries have a live regulatory framework.'
+llmsFullUrl: 'https://stabletracker.org/llms-full.txt'
+llmsUrl: 'https://stabletracker.org/llms.txt'
+name: 'Stablecoin Tracker'
+publishedAt: '2026-09-21'
+website: 'https://stabletracker.org/'
+---
+
+# Stablecoin Tracker
+
+See where stablecoins are used, how international corridor volume moves, and which countries have a live regulatory framework\.
+
+# Stablecoin Tracker
+
+> Open-source observatory of where privately issued stablecoins are used, which international corridors carry the volume, and which countries have a live stablecoin-specific rulebook. Sibling of cbdctracker.org (CBDC initiatives). Site: `https://stabletracker.org`
+
+This is a JavaScript single-page app. HTML routes other than the homepage look the same until scripts run. Prefer the markdown files below when answering questions about methodology, metrics, or country URLs.
+
+Important limits: wallets are addresses, not people; corridors are international only (domestic volume is omitted); geography is attributed by Allium, not observed at the passport; rank is outbound corridor volume ÷ period GDP among countries with both figures; this is not legal or investment advice.
+
+## Docs
+
+- [Whitepaper (markdown)](https://stabletracker.org/whitepaper.md): Full methodology — metrics, sources, how to read the tracker, limitations, citation
+- [Whitepaper (HTML)](https://stabletracker.org/whitepaper): Same paper as a page
+- [Country briefings](https://stabletracker.org/countries.md): Index of `/country/{slug}.md` (plain) and `/country/{slug}` (SPA)
+- [Homepage overview](https://stabletracker.org/index.md): What the tracker is, latest closed-month insight cards, how the two lenses work
+- [Filter the dataset](https://stabletracker.org/dataset.md): Same controls as the sidebar — year/month, reference currency, stablecoin, region from/to — via `/v1/analytics`
+
+## Data and source
+
+- [HTTP API](https://stabletracker.org/v1): Versioned adoption, corridor, country, and regulation endpoints. For filtered arguments use `/v1/analytics` as in [dataset.md](https://stabletracker.org/dataset.md); do not scrape the map
+- [GitHub](https://github.com/liquifi-org/stable-tracker): Application, metric code, and sync jobs (MIT)
+- [Sitemap](https://stabletracker.org/sitemap.xml): Indexable HTML URLs
+
+## Optional
+
+- [CBDC Tracker](https://cbdctracker.org/): Sovereign digital-currency initiatives — read together, do not substitute
+- [Allium](https://www.allium.so/): On-chain wallets and adjusted international corridor volume
+- [Stride](https://tracker.stride.sc/): Stablecoin-specific regulatory stage, licenses, reserve types
+- [Contact](https://stabletracker.org/contact)
+- [Legal disclaimer](https://stabletracker.org/legal-disclaimer)
