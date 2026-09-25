@@ -1,0 +1,24 @@
+---
+name: 'SmartCrunch'
+description: 'One number, every day: how much is left to eat. An iPhone calorie tracker whose daily budget is derived from your own logged weeks — what you ate against where your weight actually went — instead of a formula over height, weight and age.'
+website: 'https://smartcrunch.org'
+llmsUrl: 'https://smartcrunch.org/llms.txt'
+category: 'other'
+publishedAt: '2026-09-08'
+---
+
+# SmartCrunch
+
+SmartCrunch is an iPhone calorie tracker built around a single goal weight. It sets one number a day — how much is left to eat — and derives the maintenance figure behind it from the user's own history: average intake against the energy in their weight trend, recomputed as weeks accumulate.
+
+## Key Focus Areas
+
+- Adaptive calorie budget — maintenance learned from logged intake and weight trend, not fixed once from height, weight, age and an activity multiplier
+- Published method — every threshold, formula and constant documented at /methodology, with the site's other pages linking to its anchors rather than restating numbers
+- Stated uncertainty — below the data thresholds the app names the fallback estimate it used instead of printing a personalised number; totals carry the entry count they were computed from, and unknown values are shown as unknown rather than zero
+- Open Food Facts — barcode scanning and packaged-food search run against the open database
+- Local diary — no account, no sign-up, no server holding the food log
+
+## About llms.txt Implementation
+
+SmartCrunch's llms.txt states the product surface an assistant is likely to be asked about: what is free versus paid, the five sources tried for the maintenance figure and the order they are tried in, the interface languages, and the platform requirement. It points at /methodology as the single canonical source for every threshold, so an assistant can quote the published method rather than reconstruct it — the site deliberately keeps one copy of each number and links to it from everywhere else.
