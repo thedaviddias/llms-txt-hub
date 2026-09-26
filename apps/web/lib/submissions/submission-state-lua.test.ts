@@ -4,6 +4,7 @@ import { runInNewContext } from 'node:vm'
 import {
   ACQUIRE_SUBMISSION_LOCKS_SCRIPT,
   FINAL_ASSESSMENT_SCRIPT,
+  RELEASE_SUBMISSION_RATE_LIMIT_SCRIPT,
   SUBMISSION_RATE_LIMIT_SCRIPT
 } from './submission-state-security'
 
@@ -25,6 +26,11 @@ redis = {
     if command == 'PTTL' then return ttl[args[1]] or -1 end
     if command == 'INCR' then
       local nextValue = tonumber(store[args[1]] or '0') + 1
+      store[args[1]] = tostring(nextValue)
+      return nextValue
+    end
+    if command == 'DECR' then
+      local nextValue = tonumber(store[args[1]] or '0') - 1
       store[args[1]] = tostring(nextValue)
       return nextValue
     end
@@ -83,6 +89,16 @@ elseif scenario == 'locks' then
   store.llms = nil
   assert(run({'website', 'llms'}, {'sub_123', '172800'}) == 'conflict')
   assert(store.website == 'sub_123' and store.llms == nil)
+elseif scenario == 'release' then
+  store.account = '2'
+  store.source = '1'
+  store.domain = '0'
+  ttl.account = 3600000
+  ttl.source = 3600000
+  ttl.domain = 86400000
+  assert(run({'account', 'source', 'domain'}, {}) == 'released')
+  assert(store.account == '1' and store.source == '0' and store.domain == '0')
+  assert(ttl.account == 3600000 and ttl.source == 3600000 and ttl.domain == 86400000)
 elseif scenario == 'cas' then
   local record = {
     state = 'support_required',
@@ -181,6 +197,7 @@ describe('submission Redis Lua contracts', () => {
   const runtimeTest = isLuaUnavailable ? it.skip : it
   runtimeTest.each([
     ['rate limits', SUBMISSION_RATE_LIMIT_SCRIPT, 'rate'],
+    ['rate-limit release', RELEASE_SUBMISSION_RATE_LIMIT_SCRIPT, 'release'],
     ['dual locks', ACQUIRE_SUBMISSION_LOCKS_SCRIPT, 'locks'],
     ['concurrent continuation CAS serialization', FINAL_ASSESSMENT_SCRIPT, 'cas'],
     ['exact bound recovery', FINAL_ASSESSMENT_SCRIPT, 'recovery']

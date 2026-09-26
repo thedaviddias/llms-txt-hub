@@ -66,7 +66,7 @@ export function useSubmitFormMetadata(
     const controller = new AbortController()
     abortController.current = controller
     setIsLoading(true)
-    trackFormStepComplete(1, 'submit-form', 'submit-page')
+    trackFormStepComplete(2, 'submit-form', 'submit-page')
 
     try {
       const csrfMetaTag = document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')

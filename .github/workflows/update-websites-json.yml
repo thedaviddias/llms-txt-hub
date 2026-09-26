@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - "packages/content/data/websites/**"
+      - "scripts/generate-websites.ts"
+      - "scripts/search-index-generator.cjs"
 
 concurrency:
   group: update-websites-json-${{ github.ref }}
@@ -17,38 +19,46 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-actions[bot]'
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
 
     steps:
-      - name: Checkout
+      - name: Checkout latest main
         uses: actions/checkout@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          # The main ruleset requires pull requests and only repository admins can
+          # bypass it, so pushes use an admin PAT instead of GITHUB_TOKEN.
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Install dependencies
         uses: ./.github/actions/install
 
-      - name: Generate websites.json
+      - name: Generate websites.json and search index
         run: |
           pnpm generate-websites
+          pnpm generate-search-index
 
-      - name: Check for changes
-        id: git-check
+      - name: Commit and push generated files
         run: |
-          git diff --quiet data/websites.json || echo "changes=true" >> $GITHUB_OUTPUT
+          files="data/websites.json apps/web/public/search/search-index.json"
+          if git diff --quiet -- $files; then
+            echo "Generated files are already up to date."
+            exit 0
+          fi
 
-      - name: Create Pull Request
-        if: steps.git-check.outputs.changes == 'true'
-        uses: peter-evans/create-pull-request@v8
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: update websites.json [skip ci]"
-          title: "chore: update websites.json"
-          body: |
-            This PR updates `data/websites.json` based on the current state of website entries.
-          branch: update-websites-json
-          base: main
-          delete-branch: true
-          committer: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
-          author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add $files
+          # [skip ci] keeps this commit from triggering Routed CI; the site builds its own index
+          git commit -m "chore: update websites.json [skip ci]"
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Push attempt $attempt failed; rebasing onto the latest main."
+            git pull --rebase origin main
+          done
+
+          echo "::error::Could not push generated files to main. Check that PAT_TOKEN belongs to a repository admin with contents write access."
+          exit 1

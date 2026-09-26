@@ -1,5 +1,7 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto'
 
+import { normalizeAdditionalContent } from '@thedaviddias/submission-trust/additional-content'
+
 import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
 
 import type { NormalizedSubmissionFields, SubmissionState } from './submission-state'
@@ -82,6 +84,15 @@ if domainNext == 1 then redis.call('EXPIRE', KEYS[3], ARGV[6]) end
 return 'allowed'
 `.trim()
 
+/** Release one previously charged submission attempt without changing key TTLs. */
+export const RELEASE_SUBMISSION_RATE_LIMIT_SCRIPT = `
+for index = 1, 3 do
+  local current = tonumber(redis.call('GET', KEYS[index]) or '0')
+  if current > 0 then redis.call('DECR', KEYS[index]) end
+end
+return 'released'
+`.trim()
+
 const MINIMUM_SECRET_BYTES = 32
 const TOKEN_PART = /^[A-Za-z0-9_-]+$/
 const STATE_TRANSITIONS: Readonly<Record<SubmissionState, readonly SubmissionState[]>> = {
@@ -131,7 +142,8 @@ export const submissionStateSecurity = {
           fields.llmsUrl,
           fields.llmsFullUrl ?? '',
           fields.category,
-          fields.publishedAt
+          fields.publishedAt,
+          ...(fields.mdxContent ? [fields.mdxContent] : [])
         ])
       )
       .digest('hex')
@@ -168,6 +180,8 @@ export const submissionStateSecurity = {
       return null
     }
 
+    const additionalContent = normalizeAdditionalContent(input.mdxContent)
+    if (!additionalContent) return null
     const website = validateSubmissionUrl(input.website)
     const llmsUrl = validateSubmissionUrl(input.llmsUrl)
     const fullValue = typeof input.llmsFullUrl === 'string' ? input.llmsFullUrl.trim() : ''
@@ -190,6 +204,7 @@ export const submissionStateSecurity = {
     ) {
       return null
     }
+    if (additionalContent.markdown) normalized.mdxContent = additionalContent.markdown
     if (llmsFullUrl?.ok) normalized.llmsFullUrl = llmsFullUrl.normalizedUrl
     return normalized
   },

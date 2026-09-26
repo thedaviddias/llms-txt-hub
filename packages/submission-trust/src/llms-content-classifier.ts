@@ -99,7 +99,10 @@ const inspectMarkdown = (body: string): MarkdownEvidence | undefined => {
     while (nodes.length > 0) {
       const node = nodes.pop()
       if (!node || ++examinedNodes > SUBMISSION_LLMS_MAX_BYTES) return undefined
-      if (node.type === 'html') return undefined
+      if (node.type === 'html') {
+        if (/^<!--(?:(?!-->)[\s\S])*-->\s*$/.test(node.value)) continue
+        return undefined
+      }
       if ((node.type === 'link' || node.type === 'definition') && /^https?:\/\//i.test(node.url)) {
         evidence.hasAbsoluteLink = true
       }

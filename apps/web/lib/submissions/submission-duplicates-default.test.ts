@@ -78,7 +78,7 @@ describe('default catalogue availability boundary', () => {
           submissionId: 'sub_123',
           website: 'https://example.com/'
         })
-      ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+      ).resolves.toEqual({ status: 'review_required' })
     })
   })
 
@@ -130,7 +130,7 @@ describe('default catalogue availability boundary', () => {
           submissionId: 'sub_123',
           website: 'https://example.com/'
         })
-      ).resolves.toEqual({ reasonCode: 'publication_unavailable', status: 'retry_later' })
+      ).resolves.toEqual({ status: 'review_required' })
       expect(getContent).toHaveBeenCalledTimes(1)
     })
   })
