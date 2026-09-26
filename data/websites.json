@@ -1,5 +1,15 @@
 [
   {
+    "name": "AgentAddress",
+    "domain": "https://agentaddress.dev/",
+    "description": "Persistent webhooks, HTTP callback queues, and an email inbox for AI agents. Gives ephemeral agent runs a durable return path — a public write-only HTTPS inbox, a public email address, and a private ordered event queue that a future run polls with a one-time read token. No server or account required.",
+    "llmsTxtUrl": "https://agentaddress.dev/llms.txt",
+    "llmsFullTxtUrl": "https://agentaddress.dev/llms-full.txt",
+    "category": "developer-tools",
+    "favicon": "https://www.google.com/s2/favicons?domain=agentaddress.dev&sz=128",
+    "publishedAt": "2026-09-26"
+  },
+  {
     "name": "_done",
     "domain": "https://underscoredone.com/",
     "description": "Underscore Done (_done) is a suite of pay-per-call utility APIs built for AI agents. No API keys, no subscriptions - agents pay per request with USDC via x402.",
