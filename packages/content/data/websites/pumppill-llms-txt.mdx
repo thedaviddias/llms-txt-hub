@@ -1,0 +1,23 @@
+---
+name: 'PumpPill'
+description: 'Token safety reads, deployer and wallet records, and forward-measured outcomes for Robinhood Chain and Solana contracts.'
+website: 'https://www.pumppill.org'
+llmsUrl: 'https://www.pumppill.org/llms.txt'
+llmsFullUrl: 'https://www.pumppill.org/llms-full.txt'
+category: 'finance-fintech'
+publishedAt: '2026-09-28'
+---
+
+# PumpPill
+
+PumpPill indexes Robinhood Chain \(an Arbitrum Orbit L2, chain ID 4663\) and Solana\. It reads a token contract and reports what is wrong with it, and keeps a record of what happened to tokens after they launched\.
+
+## Key Focus Areas
+
+- **Token safety reads**: holder concentration, bundled-launch detection, deployer history and whether a token can still be sold.
+- **Measured outcomes**: counts measured forward from the market cap at the moment each token was logged, with losers in the denominator.
+- **Agent access**: a read-only MCP server at `https://api.pumppill.org/mcp`, listed in the official MCP Registry as `org.pumppill/token-safety`.
+
+## About llms.txt Implementation
+
+The llms.txt file lists quotable figures with their method and limits, points assistants to the live JSON that carries its own timestamp, and explains how to cite PumpPill. llms-full.txt carries the longer reference.
