@@ -1,3 +1,4 @@
+import { logger } from '@thedaviddias/logging'
 import { assessPublicationFields } from '@thedaviddias/submission-trust/assessment'
 import { createNetworkInspector } from '@thedaviddias/submission-trust/network-inspector'
 import type { SubmissionAssessment, SubmissionFields } from '@thedaviddias/submission-trust/types'
@@ -15,8 +16,27 @@ export async function assessSubmission(fields: SubmissionFields): Promise<Submis
   const inspector = createNetworkInspector({
     checkReputation: url => checkWebRiskUrl(url, { apiKey: process.env.GOOGLE_WEB_RISK_API_KEY })
   })
-  return assessPublicationFields(fields, {
+  const assessment = await assessPublicationFields(fields, {
     categories,
     inspectResource: (url, options) => inspector.inspect(url, options)
   })
+  if (assessment.decision === 'reject' || assessment.decision === 'retry_later') {
+    logger.warn('Submission resource assessment failed', {
+      data: {
+        decision: assessment.decision,
+        reasonCode: assessment.reasonCode,
+        resources: assessment.evidence.slice(0, 12).map(entry => ({
+          resource: entry.resource,
+          reasonCode: entry.reasonCode,
+          decision: entry.decision,
+          statusCode: entry.details?.statusCode,
+          contentType: entry.details?.contentType,
+          byteCount: entry.details?.byteCount,
+          evidenceId: entry.details?.evidenceId
+        }))
+      },
+      tags: { type: 'submission', operation: 'assessment' }
+    })
+  }
+  return assessment
 }

@@ -1,11 +1,11 @@
 const fs = require('node:fs')
 const path = require('node:path')
-const glob = require('glob')
 const matter = require('gray-matter')
 
-// Use the correct content directory
-const contentDir = 'packages/content/data/websites'
-const outputPath = 'apps/web/public/search/search-index.json'
+// Resolve from the repo root so this works from the root build and the apps/web build
+const repoRoot = path.join(__dirname, '..')
+const contentDir = path.join(repoRoot, 'packages/content/data/websites')
+const outputPath = path.join(repoRoot, 'apps/web/public/search/search-index.json')
 
 // Check if directory exists
 if (!fs.existsSync(contentDir)) {
@@ -13,9 +13,12 @@ if (!fs.existsSync(contentDir)) {
   process.exit(1)
 }
 
-// Get all markdown files
-const files = glob.sync(`${contentDir}/**/*.{md,mdx}`)
-console.log(`Found ${files.length} content files in ${contentDir}`)
+// Get all markdown files (the websites directory is flat)
+const files = fs
+  .readdirSync(contentDir)
+  .filter(file => /\.mdx?$/.test(file))
+  .map(file => path.join(contentDir, file))
+console.log(`Found ${files.length} content files in ${path.relative(repoRoot, contentDir)}`)
 
 if (files.length === 0) {
   console.error('No markdown files found in content directory')
@@ -54,7 +57,8 @@ const searchIndex = files
     }
   })
   .filter(Boolean)
-  .sort((a, b) => a.name.localeCompare(b.name))
+  // Tie-break on slug so the output doesn't depend on filesystem order
+  .sort((a, b) => a.name.localeCompare(b.name) || a.slug.localeCompare(b.slug))
 
 // Ensure the output directory exists
 const outputDir = path.dirname(outputPath)

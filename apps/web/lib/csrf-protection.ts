@@ -25,6 +25,9 @@ export function generateCSRFToken(): string {
  * Create and store a CSRF token in cookies
  */
 export async function createCSRFToken(): Promise<string> {
+  const existing = await getStoredCSRFToken()
+  if (existing) return existing.token
+
   const token = generateCSRFToken()
   const expiresAt = Date.now() + TOKEN_EXPIRY
 

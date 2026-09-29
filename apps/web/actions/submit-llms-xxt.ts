@@ -31,6 +31,7 @@ const OWNER = 'thedaviddias'
 const REPO = 'llms-txt-hub'
 const RETRY_MESSAGE =
   'We could not safely complete this submission right now. Nothing was published. Please try again later.'
+const RECOVERY_MESSAGE = 'Your submission may already be in progress. Retry to check its status.'
 
 type FinalSubmissionOutcome =
   | {
@@ -44,6 +45,7 @@ type FinalSubmissionOutcome =
       readonly outcome: 'rejected' | 'retry_later'
       readonly prUrl?: undefined
       readonly success: false
+      readonly recovery?: 'same_submission'
     }
 
 /** Client-safe final submission result. */
@@ -51,13 +53,30 @@ export type FinalSubmissionResult = FinalSubmissionOutcome & {
   readonly analytics: SubmissionFinalAnalytics
 }
 
-const retryLater = (error = RETRY_MESSAGE): FinalSubmissionOutcome => ({
-  error,
-  outcome: 'retry_later',
-  success: false
-})
+interface RetryLaterInput {
+  error?: string
+  recovery?: 'same_submission'
+}
 
-const rejected = (error: string): FinalSubmissionOutcome => ({
+/**
+ * Build a client-safe retry result with optional same-submission recovery.
+ *
+ * @param input - Optional safe message and recovery mode
+ * @returns A retry-later final submission outcome
+ */
+function retryLater({
+  error = RETRY_MESSAGE,
+  recovery
+}: RetryLaterInput = {}): Extract<FinalSubmissionOutcome, { success: false }> {
+  return {
+    error,
+    outcome: 'retry_later',
+    success: false,
+    ...(recovery ? { recovery } : {})
+  }
+}
+
+const rejected = (error: string): Extract<FinalSubmissionOutcome, { success: false }> => ({
   error,
   outcome: 'rejected',
   success: false
@@ -131,7 +150,6 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     }
     const parsed = parseFinalSubmissionActionInput(formData)
     if (!parsed.ok) return complete(rejected(parsed.message), 'invalid_input')
-
     const consumed = await consumeSubmissionContinuation({
       continuationToken: parsed.continuationToken,
       fields: parsed.fields,
@@ -144,7 +162,12 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
         consumed.code === 'replayed'
           ? rejected('This submission confirmation is invalid or has expired. Start again.')
           : retryLater()
-      return complete(result, consumed.code)
+      return complete(
+        consumed.code === 'in_progress' || consumed.code === 'publication_unavailable'
+          ? retryLater({ error: RECOVERY_MESSAGE, recovery: 'same_submission' })
+          : result,
+        consumed.code
+      )
     }
     activeSubmission = { fields: parsed.fields, submissionId: consumed.submissionId }
 
@@ -200,7 +223,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     if (assessment.decision === 'retry_later') {
       const updated = await finalize('retry_later', assessment.reasonCode)
       return complete(
-        retryLater(updated ? assessment.publicMessage : undefined),
+        retryLater({ error: updated ? assessment.publicMessage : undefined }),
         updated ? assessment.reasonCode : 'publication_unavailable'
       )
     }
@@ -208,7 +231,7 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
     const publication = await publishSubmission({
       assessment,
       fields: parsed.fields,
-      mode: publicationMode(),
+      mode: duplicate.status === 'review_required' ? 'disabled' : publicationMode(),
       submissionId: consumed.submissionId
     })
     publicationAttempted = publication.publicationAttempted
@@ -218,7 +241,12 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       if (publication.recovery === 'fresh_preflight') {
         await finalize('retry_later', 'publication_unavailable')
       }
-      return complete(retryLater(), 'publication_unavailable')
+      return complete(
+        publication.recovery === 'same_submission'
+          ? retryLater({ error: RECOVERY_MESSAGE, recovery: 'same_submission' })
+          : retryLater(),
+        'publication_unavailable'
+      )
     }
     try {
       revalidatePath('/')
@@ -237,8 +265,15 @@ export async function submitLlmsTxt(formData: FormData): Promise<FinalSubmission
       assessment.reasonCode
     )
   } catch {
-    if (activeSubmission) await finalize('retry_later', 'publication_unavailable')
-    return complete(retryLater(), 'publication_unavailable')
+    const finalized = activeSubmission
+      ? await finalize('retry_later', 'publication_unavailable')
+      : false
+    return complete(
+      finalized
+        ? retryLater()
+        : retryLater({ error: RECOVERY_MESSAGE, recovery: 'same_submission' }),
+      'publication_unavailable'
+    )
   } finally {
     logger.info('Final submission completed', {
       data: {

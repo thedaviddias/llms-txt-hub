@@ -50,7 +50,6 @@ const form = (overrides: Record<string, string> = {}) => {
     continuationToken: 'opaque.continuation.signature',
     description:
       'A useful developer platform with clear public documentation for teams building software.',
-    followAttested: 'true',
     llmsFullUrl: '',
     llmsUrl: 'https://example.com/llms.txt',
     name: 'Example Platform',
@@ -81,6 +80,7 @@ const autoAssessment = {
 
 describe('submitLlmsTxt final coordinator', () => {
   beforeEach(() => {
+    process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET = 'local-test-secret-with-at-least-32-bytes'
     mockLoggerInfo.mockClear()
     mockAuth.mockResolvedValue({
       user: {
@@ -105,10 +105,62 @@ describe('submitLlmsTxt final coordinator', () => {
     mockRecordOutcome.mockResolvedValue(true)
   })
 
+  it('forces manual publication when pending-PR inspection is incomplete', async () => {
+    process.env.SUBMISSION_AUTOPUBLISH_MODE = 'enabled'
+    mockDuplicates.mockResolvedValue({ status: 'review_required' })
+    await submitLlmsTxt(form())
+    expect(mockAssess).toHaveBeenCalled()
+    expect(mockPublish).toHaveBeenCalledWith(expect.objectContaining({ mode: 'disabled' }))
+    delete process.env.SUBMISSION_AUTOPUBLISH_MODE
+  })
+
+  it.each(['reject', 'retry_later'] as const)(
+    'preserves %s safety assessment during manual duplicate review',
+    async decision => {
+      mockDuplicates.mockResolvedValue({ status: 'review_required' })
+      mockAssess.mockResolvedValue(
+        decision === 'reject'
+          ? { ...autoAssessment, decision, reasonCode: 'prohibited_content' }
+          : { ...autoAssessment, decision, reasonCode: 'reputation_unknown' }
+      )
+      await submitLlmsTxt(form())
+      expect(mockPublish).not.toHaveBeenCalled()
+    }
+  )
+
+  it('keeps publication uncertainty explicit while offering safe reconciliation', async () => {
+    mockPublish.mockResolvedValueOnce({
+      ok: false,
+      code: 'publication_unavailable',
+      publicationAttempted: true,
+      prCreated: false,
+      prPresent: true,
+      recovery: 'same_submission'
+    })
+    const result = await submitLlmsTxt(form())
+    expect(result).toMatchObject({ success: false, recovery: 'same_submission' })
+    expect(result.error).not.toContain('Nothing was published')
+  })
+
+  it.each(['unavailable', 'exception'])(
+    'preserves exact-continuation retry when state is %s',
+    async failure => {
+      if (failure === 'exception') mockConsume.mockRejectedValueOnce(new Error('Redis unavailable'))
+      else mockConsume.mockResolvedValueOnce({ ok: false, code: 'publication_unavailable' })
+      const result = await submitLlmsTxt(form())
+      expect(result).toMatchObject({
+        success: false,
+        outcome: 'retry_later',
+        recovery: 'same_submission'
+      })
+      expect(result.error).not.toContain('Nothing was published')
+      expect(mockPublish).not.toHaveBeenCalled()
+    }
+  )
+
   it.each([
     ['missing platform', { supportPlatform: '' }],
     ['invalid platform', { supportPlatform: 'threads' }],
-    ['missing attestation', { followAttested: 'false' }],
     ['missing continuation', { continuationToken: '' }]
   ])('rejects %s before consuming state', async (_label, overrides) => {
     const result = await submitLlmsTxt(form(overrides))
@@ -158,6 +210,14 @@ describe('submitLlmsTxt final coordinator', () => {
       expect(mockPublish).not.toHaveBeenCalled()
     }
   )
+
+  it('does not treat a client-declared social acknowledgement as final authorization', async () => {
+    await expect(submitLlmsTxt(form({ supportToken: 'tampered.receipt' }))).resolves.toMatchObject({
+      outcome: 'automatic',
+      success: true
+    })
+    expect(mockConsume).toHaveBeenCalledTimes(1)
+  })
 
   it('atomically consumes unchanged fields, then reruns duplicates and assessment', async () => {
     await expect(submitLlmsTxt(form())).resolves.toEqual({

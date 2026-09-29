@@ -4,10 +4,13 @@
  * Tests metadata extraction, URL validation, duplicate detection, and sanitization.
  */
 
+import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import { GET, POST } from '@/app/api/fetch-metadata/route'
 import { getWebsites } from '@/lib/content-loader'
+
+jest.mock('@thedaviddias/auth', () => ({ auth: jest.fn() }))
 
 // Mock dependencies
 jest.mock('@/lib/content-loader')
@@ -36,7 +39,13 @@ describe('Fetch Metadata API Route', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-
+    jest.mocked(auth).mockResolvedValue({
+      user: {
+        id: 'user_123',
+        email: 'test@example.com',
+        user_metadata: { avatar_url: null, full_name: null, user_name: null }
+      }
+    })
     // Default mock implementations
     mockGetWebsites.mockReturnValue([])
 
@@ -62,6 +71,29 @@ describe('Fetch Metadata API Route', () => {
         text: () => Promise.resolve('<html><title>Test Title</title></html>')
       } as Response)
     })
+  })
+
+  it('does not treat the client social step as metadata authorization', async () => {
+    const response = await POST(
+      new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+    )
+    expect(response.status).toBe(200)
+    expect(mockFetch).toHaveBeenCalled()
+  })
+
+  it('requires an authenticated submitter for POST metadata requests', async () => {
+    jest.mocked(auth).mockResolvedValue(null)
+    const response = await POST(
+      new Request('http://localhost/api/fetch-metadata', {
+        method: 'POST',
+        body: JSON.stringify({ website: 'https://example.com' })
+      })
+    )
+    expect(response.status).toBe(401)
+    expect(mockFetch).not.toHaveBeenCalled()
   })
 
   describe('GET Request', () => {

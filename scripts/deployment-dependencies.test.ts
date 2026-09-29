@@ -19,6 +19,15 @@ function readJson<T>(path: string): T {
 }
 
 describe('production deployment dependencies', () => {
+  it('provides public Clerk configuration to browser CI without exposing its secret', () => {
+    const workflow = readFileSync('.github/workflows/pr-review.yml', 'utf8')
+
+    const publicKeyExpression = '$' + '{{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}'
+    expect(workflow).toContain(`NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${publicKeyExpression}`)
+    expect(workflow).toContain("E2E_PUBLIC_ROUTES: '1'")
+    expect(workflow).not.toContain('CLERK_SECRET_KEY: ${{')
+  })
+
   it.each([
     {
       dependencies: ['@clerk/backend', '@sentry/nextjs', 'tailwind-merge'],

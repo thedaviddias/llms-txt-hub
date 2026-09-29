@@ -2,9 +2,11 @@ import { spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 
 import { logger } from '@thedaviddias/logging'
+import { parseSubmissionBody } from '@thedaviddias/submission-trust/submission-body'
 import matter from 'gray-matter'
-
+import { parseSubmissionActionInput } from './submission-action-input'
 import { publishSubmission } from './submission-publisher'
+import { hashSubmissionFields, normalizeSubmissionFields } from './submission-state'
 
 jest.mock('@thedaviddias/logging', () => ({
   logger: { error: jest.fn(), info: jest.fn(), warn: jest.fn() }
@@ -14,18 +16,18 @@ const mockLoggerInfo = jest.mocked(logger.info)
 
 const parseAndRenderMdx = (
   source: string
-): { readonly ast: string; readonly renderedText: readonly string[] } => {
+): { readonly ast: string; readonly html: string; readonly renderedText: readonly string[] } => {
   const result = spawnSync(
     process.execPath,
     [
       '--input-type=module',
       '-e',
-      "import { evaluate } from '@mdx-js/mdx'; import { JSDOM } from 'jsdom'; import React from 'react'; import { renderToStaticMarkup } from 'react-dom/server'; import * as runtime from 'react/jsx-runtime'; import remarkMdx from 'remark-mdx'; import remarkParse from 'remark-parse'; import { unified } from 'unified'; const source = process.env.SUBMISSION_MARKDOWN ?? ''; const ast = unified().use(remarkParse).use(remarkMdx).parse(source); const module = await evaluate(source, { ...runtime }); const html = renderToStaticMarkup(React.createElement(module.default)); const document = new JSDOM(html).window.document; process.stdout.write(JSON.stringify({ ast, renderedText: [...document.body.children].map(node => node.textContent) }))"
+      "import { evaluate } from '@mdx-js/mdx'; import { JSDOM } from 'jsdom'; import React from 'react'; import { renderToStaticMarkup } from 'react-dom/server'; import * as runtime from 'react/jsx-runtime'; import remarkMdx from 'remark-mdx'; import remarkGfm from 'remark-gfm'; import remarkParse from 'remark-parse'; import { unified } from 'unified'; const source = process.env.SUBMISSION_MARKDOWN ?? ''; const ast = unified().use(remarkParse).use(remarkGfm).use(remarkMdx).parse(source); const module = await evaluate(source, { ...runtime, remarkPlugins: [remarkGfm] }); const html = renderToStaticMarkup(React.createElement(module.default)); const document = new JSDOM(html).window.document; process.stdout.write(JSON.stringify({ ast, html, renderedText: [...document.body.children].map(node => node.textContent) }))"
     ],
     { encoding: 'utf8', env: { ...process.env, SUBMISSION_MARKDOWN: source } }
   )
-  expect(result.status).toBe(0)
   expect(result.stderr).toBe('')
+  expect(result.status).toBe(0)
   return JSON.parse(result.stdout)
 }
 
@@ -89,6 +91,142 @@ const makeState = () => ({
 })
 
 describe('publishSubmission', () => {
+  it('round-trips entity-looking destinations through action state and publication without changing the hash or href', async () => {
+    const payload = new FormData()
+    for (const [key, value] of Object.entries(fields)) payload.set(key, value)
+    payload.set('mdxContent', '[Guide](https://example.com/?q=&amp;amp;amp;amp;)')
+    const parsed = parseSubmissionActionInput(payload)
+    expect(parsed.ok).toBe(true)
+    if (!parsed.ok) return
+    const stored = normalizeSubmissionFields(parsed.fields)
+    expect(stored).toEqual(parsed.fields)
+    const github = makeGithub()
+    await publishSubmission(
+      { assessment: manualAssessment, fields: stored!, mode: 'enabled', submissionId: 'sub_123' },
+      { github, now: () => NOW, secret: SECRET, state: makeState() }
+    )
+    const body = matter(github.createFile.mock.calls[0]?.[0].content).content
+    const recovered = parseSubmissionBody(body, parsed.fields)
+    expect(recovered).toEqual({ canonical: true, mdxContent: parsed.fields.mdxContent })
+    const restored = normalizeSubmissionFields({
+      ...parsed.fields,
+      mdxContent: recovered.mdxContent
+    })
+    expect(hashSubmissionFields(restored!)).toBe(hashSubmissionFields(parsed.fields))
+    const rendered = parseAndRenderMdx(body)
+    expect(JSON.stringify(rendered.ast)).toContain('"url":"https://example.com/?q=&amp;amp;amp;"')
+  })
+
+  it.each([
+    ['**b**__d__', '<strong>bd</strong>'],
+    ['`x`https://example.com', '<code>xhttps://example.com</code>'],
+    ['[Guide](https:unassessed.com/docs)', 'href="https://unassessed.com/docs"'],
+    [
+      '[Guide](https://example.com/docs#getting-started)',
+      'href="https://example.com/docs#getting-started"'
+    ],
+    [
+      '[Guide](https://example.com/docs#/guides/{api})',
+      'href="https://example.com/docs#/guides/%7Bapi%7D"'
+    ]
+  ])(
+    'keeps safe canonical Markdown and its production GFM semantics through publication: %s',
+    async (mdxContent, html) => {
+      const normalized = normalizeSubmissionFields({ ...fields, mdxContent })
+      expect(normalized).not.toBeNull()
+      const github = makeGithub()
+      await publishSubmission(
+        {
+          assessment: manualAssessment,
+          fields: normalized!,
+          mode: 'enabled',
+          submissionId: 'sub_123'
+        },
+        { github, now: () => NOW, secret: SECRET, state: makeState() }
+      )
+      const body = matter(github.createFile.mock.calls[0]?.[0].content).content
+      const recovered = parseSubmissionBody(body, normalized!)
+      expect(recovered).toEqual({ canonical: true, mdxContent: normalized?.mdxContent })
+      expect(hashSubmissionFields(normalizeSubmissionFields(normalized)!)).toBe(
+        hashSubmissionFields(normalized!)
+      )
+      const rendered = parseAndRenderMdx(body)
+      expect(rendered.html).toContain(html)
+      expect(JSON.stringify(rendered.ast)).not.toMatch(
+        /mdx(?:jsEsm|FlowExpression|TextExpression|Jsx)/
+      )
+    }
+  )
+
+  it('preserves submitted additional Markdown through action parsing and MDX publication', async () => {
+    const payload = new FormData()
+    for (const [key, value] of Object.entries(fields)) payload.set(key, value)
+    payload.set(
+      'mdxContent',
+      '## Details\n\n- **Useful** API documentation\n- `const value = { safe: true }`'
+    )
+    const parsed = parseSubmissionActionInput(payload)
+    expect(parsed.ok).toBe(true)
+    if (!parsed.ok) return
+    const github = makeGithub()
+    await publishSubmission(
+      { assessment, fields: parsed.fields, mode: 'enabled', submissionId: 'sub_123' },
+      { github, now: () => NOW, secret: SECRET, state: makeState() }
+    )
+    const body = matter(github.createFile.mock.calls[0]?.[0].content).content
+    expect(body).toContain('## Details\n\n- **Useful** API documentation')
+    const rendered = parseAndRenderMdx(body)
+    expect(JSON.stringify(rendered.ast)).not.toMatch(
+      /mdx(?:jsEsm|FlowExpression|TextExpression|Jsx)/
+    )
+    expect(rendered.renderedText).toContain('Details')
+    expect(rendered.renderedText.join(' ')).toContain('const value = { safe: true }')
+  })
+
+  it.each([
+    '<script>globalThis.additionalContentExecuted = true</script>',
+    '<Widget onClick={() => alert(1)} />',
+    '{process.env.SECRET}',
+    'import Something from "untrusted"\n\nexport const value = { danger: true }',
+    '```jsx\nexport const value = <Widget>{process.env.SECRET}</Widget>\n```'
+  ])(
+    'publishes potentially executable additional syntax only as inert Markdown: %s',
+    async mdxContent => {
+      const github = makeGithub()
+      await publishSubmission(
+        { assessment, fields: { ...fields, mdxContent }, mode: 'enabled', submissionId: 'sub_123' },
+        { github, now: () => NOW, secret: SECRET, state: makeState() }
+      )
+      const rendered = parseAndRenderMdx(
+        matter(github.createFile.mock.calls[0]?.[0].content).content
+      )
+      expect(JSON.stringify(rendered.ast)).not.toMatch(
+        /mdx(?:jsEsm|FlowExpression|TextExpression|Jsx)/
+      )
+      expect(rendered.renderedText.length).toBeGreaterThan(2)
+    }
+  )
+
+  it('refuses unsafe links and oversized content before any publication mutation', async () => {
+    for (const mdxContent of ['[Bad](javascript:alert(1))', 'a'.repeat(5001)]) {
+      const github = makeGithub()
+      const state = makeState()
+      await expect(
+        publishSubmission(
+          {
+            assessment,
+            fields: { ...fields, mdxContent },
+            mode: 'enabled',
+            submissionId: 'sub_123'
+          },
+          { github, now: () => NOW, secret: SECRET, state }
+        )
+      ).resolves.toMatchObject({ ok: false, publicationAttempted: false })
+      expect(github.createBranch).not.toHaveBeenCalled()
+      expect(state.beginAttempt).not.toHaveBeenCalled()
+    }
+  })
+
   beforeEach(() => mockLoggerInfo.mockClear())
 
   it('creates a deterministic focused branch/file/PR and persists PR facts before signing', async () => {
@@ -270,7 +408,7 @@ describe('publishSubmission', () => {
 
     const parsedMdx = parseAndRenderMdx(parsed.content)
     const ast = JSON.stringify(parsedMdx.ast)
-    expect(ast).not.toMatch(/"type":"(?:link|image|html|code|blockquote|list|table|mdx[^"]*)"/)
+    expect(ast).not.toMatch(/"type":"(?:link|image|html|blockquote|list|table|mdx[^"]*)"/)
     expect(ast).toContain('Acme.Tools (R&D)')
     expect(ast).toContain('Deceptive')
     expect(ast).toContain('tracker')

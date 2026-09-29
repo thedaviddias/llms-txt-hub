@@ -120,6 +120,8 @@ publishedAt: '2026-03-14'
 ---
 
 # Example
+
+Example is a developer platform with API docs for AI agents\\.
 `)
 
     expect(result).toEqual({
@@ -153,6 +155,121 @@ publishedAt: '2026-03-14'
       parseSubmissionFrontmatter(frontmatterWithLlmsFullUrl(llmsFullUrlLine)).llmsFullUrl
     ).toBeNull()
   })
+})
+
+describe('untrusted frontmatter remains data', () => {
+  const path = 'packages/content/data/websites/example.mdx'
+  const fields = {
+    name: 'Example',
+    description: 'Example provides API documentation for developers.',
+    website: 'https://example.com/',
+    llmsUrl: 'https://example.com/llms.txt',
+    category: 'developer-tools',
+    publishedAt: '2026-09-08'
+  }
+  const canary = 'llmsFrontmatterExecutionCanary'
+  const malicious = (selector: string, reader: string): string => {
+    const effect = `Reflect.set(globalThis, '${canary}', '${reader}')`
+    if (selector.startsWith('!!')) {
+      return `---\n${Object.entries(fields)
+        .map(([key, value]) => `${key}: '${value}'`)
+        .join('\n')}\nextra: ${selector} 'function () { ${effect} }'\n---\n`
+    }
+    return `---${selector}\n(() => { ${effect}; return ${JSON.stringify(fields)} })()\n---\n`
+  }
+  const attacks = ['javascript', 'js', '!!js/function', '!!js/regexp', '!!js/undefined']
+
+  it.each(attacks)('rejects candidate %s frontmatter without executing its canary', selector => {
+    vi.stubGlobal(canary, false)
+    try {
+      let rejected = false
+      try {
+        parseSubmissionFrontmatter(malicious(selector, 'candidate'))
+      } catch {
+        rejected = true
+      }
+      expect(Reflect.get(globalThis, canary)).toBe(false)
+      expect(rejected).toBe(true)
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
+
+  it.each(attacks)(
+    'rejects duplicate-index %s frontmatter without executing its canary',
+    async selector => {
+      vi.stubGlobal(canary, false)
+      try {
+        const result = await buildOpenPullRequestDuplicateIndex(
+          [
+            {
+              baseSha: 'b'.repeat(40),
+              headRepository: 'contributor/llms-txt-hub',
+              headSha: 'c'.repeat(40),
+              number: 43
+            }
+          ],
+          {
+            getFileContent: async () => malicious(selector, 'open-index'),
+            loadImmutableManifest: async () => ({
+              files: [{ path, status: 'added' }],
+              status: 'complete'
+            })
+          }
+        )
+        expect(Reflect.get(globalThis, canary)).toBe(false)
+        expect(result.status).toBe('unavailable')
+      } finally {
+        vi.unstubAllGlobals()
+      }
+    }
+  )
+
+  it.each(attacks)(
+    'rejects trusted-base %s frontmatter without executing its canary',
+    async selector => {
+      const bytes = new TextEncoder().encode(malicious(selector, 'base-index'))
+      vi.stubGlobal(canary, false)
+      try {
+        const result = await inspectTrustedBaseDuplicate(fields, {
+          listFiles: async () => ({ complete: true, paths: [path] }),
+          now: () => 0,
+          readFile: async () => bytes,
+          statFile: async () => ({ size: bytes.byteLength })
+        })
+        expect(Reflect.get(globalThis, canary)).toBe(false)
+        expect(result).toBe('unavailable')
+      } finally {
+        vi.unstubAllGlobals()
+      }
+    }
+  )
+
+  const yaml = Object.entries(fields)
+    .map(([key, value]) => `${key}: '${value}'`)
+    .join('\n')
+  it.each([
+    ['language selector', `---yaml\n${yaml}\n---\n`],
+    ['opening delimiter suffix', `----\n${yaml}\n---\n`],
+    ['closing delimiter suffix', `---\n${yaml}\n----\n`],
+    ['alternate closing delimiter', `---\n${yaml}\n...\n`],
+    ['missing closing delimiter', `---\n${yaml}\n`],
+    ['indented opening delimiter', ` ---\n${yaml}\n---\n`]
+  ])('rejects nonstandard %s', (_label, content) => {
+    expect(() => parseSubmissionFrontmatter(content)).toThrow()
+  })
+
+  it.each(['\n', '\r\n'])(
+    'accepts ordinary YAML and an unquoted date with %j line endings',
+    newline => {
+      const content =
+        `---\n${yaml.replace("publishedAt: '2026-09-08'", 'publishedAt: 2026-09-08')}\n---\n`.replaceAll(
+          '\n',
+          newline
+        )
+      expect(parseSubmissionFrontmatter(content)).toMatchObject(fields)
+    }
+  )
 })
 
 describe('assessSubmissionGuidelines', () => {
@@ -200,6 +317,38 @@ describe('assessSubmissionGuidelines', () => {
           ? `# Example\n\n${`${text} `.repeat(3)}https://example.com/about`
           : `<html><body>${`${text} `.repeat(3)}</body></html>`
       })
+
+  it.each([
+    ['## Details\n\nDeveloper API documentation', 'pass'],
+    ['[Guide](https://unassessed.com/docs)', 'warn'],
+    ['Buy backlinks and a phishing kit\\.', 'fail'],
+    ['{process.env.SECRET}', 'warn']
+  ])('reassesses the submitted body as well as frontmatter: %s', async (body, status) => {
+    const frontmatter = parseSubmissionFrontmatter(`---
+category: 'developer-tools'
+description: 'Example is a developer platform with API documentation for AI agents.'
+llmsFullUrl: ''
+llmsUrl: 'https://example.com/llms.txt'
+name: 'Example'
+publishedAt: '2026-08-01'
+website: 'https://example.com'
+---
+
+# Example
+
+Example is a developer platform with API documentation for AI agents\\.
+
+${body}
+`)
+    expect(frontmatter.mdxContent).toBe(body)
+    const result = await assessSubmissionGuidelines({
+      frontmatter,
+      inspectResource,
+      now: () => new Date(checkedAt)
+    })
+    expect(result.guidelineStatus).toBe(status)
+    expect(result.policyEligible).toBe(status === 'pass')
+  })
 
   it('passes a structurally safe tool submission with matching signals', async () => {
     const result = await assessSubmissionGuidelines({
@@ -1152,7 +1301,7 @@ website: 'https://example.com'
 
 # Example
 
-Example is a developer platform with API documentation for AI agents.
+Example is a developer platform with API documentation for AI agents\\.
 `
 
   const freshAssessment = (
@@ -1249,6 +1398,22 @@ Example is a developer platform with API documentation for AI agents.
       }
     } satisfies typeof result
   }
+
+  it('refuses signed executable MDX even when the signature covers the exact bytes', () => {
+    const mdxContent = `${content}\n{process.env.SECRET}\n`
+    expect(
+      verifyMergeAttestation({
+        addedMdxBytes: new TextEncoder().encode(mdxContent),
+        addedMdxPath: path,
+        body: signedBody({ mdxContent }),
+        currentHeadSha: headSha,
+        now: () => now,
+        prNumber,
+        repository,
+        secret
+      }).ok
+    ).toBe(false)
+  })
 
   it('verifies a signature bound to the exact repository, PR, head, path, bytes, and fields', () => {
     expect(verified()).toMatchObject({ ok: true })

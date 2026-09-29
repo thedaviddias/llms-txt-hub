@@ -1,194 +1,180 @@
 'use client'
 
-import { Button } from '@thedaviddias/design-system/button'
-import { useEffect, useRef, useState } from 'react'
+import { SiX } from '@icons-pack/react-simple-icons'
+import { Linkedin } from 'lucide-react'
+import { type MouseEvent, useEffect, useRef, useState } from 'react'
+import { recordSubmissionSupport } from '@/actions/record-submission-support'
 import { useSubmissionAnalytics } from '@/components/analytics-tracker'
+import { getCSRFTokenForClient } from '@/lib/csrf-client'
+import type { SupportPlatform } from '@/lib/submissions/submission-support'
+import type { SubmissionSupport } from './use-submit-publication'
 
-type SupportPlatform = 'x' | 'linkedin'
-
-interface SupportChoice {
-  label: string
-  platform: SupportPlatform
-  profileLabel: string
-  url: string
-}
-
-interface SubmitFormSupportProps {
-  attemptId?: string
-  isLoading: boolean
-  onBack: () => void
-  onSubmit: (support: { followAttested: true; platform: SupportPlatform }) => void
-}
-
-const SUPPORT_CHOICES: readonly SupportChoice[] = [
+const PROFILES = [
   {
-    label: 'Follow David on X',
-    platform: 'x',
-    profileLabel: "Open David's X profile",
-    url: 'https://x.com/thedaviddias'
+    platform: 'linkedin',
+    label: 'Follow or connect on LinkedIn',
+    detail: 'David Dias',
+    url: 'https://www.linkedin.com/in/thedaviddias/'
   },
   {
-    label: 'Follow David on LinkedIn',
-    platform: 'linkedin',
-    profileLabel: "Open David's LinkedIn profile",
-    url: 'https://www.linkedin.com/in/thedaviddias/'
+    platform: 'x',
+    label: 'Follow David on X',
+    detail: '@thedaviddias',
+    url: 'https://x.com/thedaviddias'
   }
-]
+] satisfies ReadonlyArray<{ platform: SupportPlatform; label: string; detail: string; url: string }>
+
+interface SubmitFormSupportProps {
+  /** Shared submission analytics lifecycle, when already created by the parent form. */
+  analytics?: ReturnType<typeof useSubmissionAnalytics>
+  /** Continues the client flow after an allowlisted profile opens. */
+  onContinue: (support: SubmissionSupport) => void
+}
+
+interface OpenProfileInput {
+  event: MouseEvent<HTMLAnchorElement>
+  platform: SupportPlatform
+}
 
 /**
- * Collects the required social-support choice and truthful self-attestation.
+ * Invite a profile visit and unlock the form after its server acknowledgement.
+ *
+ * @param props - Social entry-step configuration
+ * @param props.analytics - Optional shared submission analytics lifecycle
+ * @param props.onContinue - Continues the client flow with the selected platform
+ * @returns The branded LinkedIn and X entry step
+ * @example
+ * <SubmitFormSupport onContinue={setSupport} />
  */
 export function SubmitFormSupport({
-  attemptId,
-  isLoading,
-  onBack,
-  onSubmit
+  onContinue,
+  analytics: sharedAnalytics
 }: SubmitFormSupportProps) {
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const [platform, setPlatform] = useState<SupportPlatform>()
-  const [profileOpened, setProfileOpened] = useState(false)
-  const [followAttested, setFollowAttested] = useState(false)
-  const submissionAnalytics = useSubmissionAnalytics()
-
+  const heading = useRef<HTMLHeadingElement>(null)
+  const busy = useRef(false)
+  const mounted = useRef(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string>()
+  const localAnalytics = useSubmissionAnalytics()
+  const analytics = sharedAnalytics ?? localAnalytics
+  const trackView = useRef(analytics.trackSubmissionSupportView)
   useEffect(() => {
-    headingRef.current?.focus()
+    mounted.current = true
+    heading.current?.focus()
+    trackView.current()
+    return () => {
+      mounted.current = false
+    }
   }, [])
 
-  /** Select one platform and invalidate any prior profile-open confirmation. */
-  const selectPlatform = (nextPlatform: SupportPlatform) => {
-    setPlatform(nextPlatform)
-    setProfileOpened(false)
-    setFollowAttested(false)
-    submissionAnalytics.trackSubmissionSupportPlatformSelect({
-      attemptId,
-      platform: nextPlatform,
-      source: 'support_step'
-    })
-  }
-
-  /** Submit only a complete, locally consistent support attestation. */
-  const submitSupport = () => {
-    if (!(platform && profileOpened && followAttested) || isLoading) return
-    onSubmit({ followAttested: true, platform })
+  /**
+   * Keep native new-tab navigation while recording only the chosen platform.
+   *
+   * @param input - Native click event and selected platform
+   * @returns A promise that settles after the acknowledgement request
+   */
+  async function openProfile({ event, platform }: OpenProfileInput): Promise<void> {
+    event.nativeEvent.stopImmediatePropagation()
+    if (busy.current) {
+      event.preventDefault()
+      return
+    }
+    busy.current = true
+    setIsLoading(true)
+    setError(undefined)
+    const properties = { attemptId: analytics.getAttemptId(), platform, source: 'support_step' }
+    analytics.trackSubmissionSupportPlatformSelect(properties)
+    analytics.trackSubmissionProfileOpen(properties)
+    const form = new FormData()
+    form.set('_csrf', getCSRFTokenForClient())
+    form.set('supportPlatform', platform)
+    try {
+      const response = await recordSubmissionSupport(form)
+      if (!mounted.current) return
+      if (response.success) onContinue({ platform })
+      else setError(response.error)
+    } catch {
+      if (mounted.current) setError('We could not open the submission form. Please try again.')
+    } finally {
+      busy.current = false
+      if (mounted.current) setIsLoading(false)
+    }
   }
 
   return (
-    <section className="space-y-8" aria-labelledby="support-heading">
+    <section aria-labelledby="support-heading" className="space-y-6" aria-busy={isLoading}>
       <div className="space-y-3">
-        <h1 ref={headingRef} id="support-heading" tabIndex={-1} className="text-3xl font-bold">
-          Support the maintainer
+        <h1
+          ref={heading}
+          id="support-heading"
+          tabIndex={-1}
+          className="text-3xl font-bold focus:outline-none"
+        >
+          Follow or connect with David
         </h1>
         <p className="text-muted-foreground">
-          Choose one profile to follow before finishing your submission. This is a self-attestation;
-          we do not ask for your username or verify your account.
+          Stay connected with the creator of llms.txt Hub. Follow David on X, or follow or connect
+          with him on LinkedIn, then submit your website.
         </p>
       </div>
-
-      <fieldset className="space-y-4" disabled={isLoading}>
-        <legend className="text-base font-semibold">Choose one platform</legend>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {SUPPORT_CHOICES.map(choice => {
-            const selected = platform === choice.platform
-            return (
-              <div
-                key={choice.platform}
-                data-support-card=""
-                data-state={selected ? 'selected' : 'unselected'}
-                className={`space-y-3 rounded-lg border p-4 transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${
-                  selected
-                    ? 'border-primary bg-primary/5 ring-2 ring-primary/30'
-                    : 'border-border bg-card'
-                }`}
-              >
-                <label className="flex cursor-pointer items-center gap-3 font-medium">
-                  <input
-                    type="radio"
-                    name="support-platform"
-                    value={choice.platform}
-                    checked={selected}
-                    readOnly
-                    onClick={() => selectPlatform(choice.platform)}
-                    className="h-4 w-4"
-                  />
-                  {choice.label}
-                </label>
-                <a
-                  href={choice.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={choice.profileLabel}
-                  onClick={event => {
-                    event.nativeEvent.stopImmediatePropagation()
-                    if (selected) {
-                      setProfileOpened(true)
-                      submissionAnalytics.trackSubmissionProfileOpen({
-                        attemptId,
-                        platform: choice.platform,
-                        source: 'support_step'
-                      })
-                    }
-                  }}
-                  className="inline-flex text-sm font-medium text-primary underline underline-offset-4"
-                >
-                  Open profile in a new tab
-                </a>
-              </div>
-            )
-          })}
-        </div>
-
-        <label className="flex items-start gap-3 rounded-lg border border-border p-4">
-          <input
-            type="checkbox"
-            aria-label="I follow David on this platform"
-            checked={followAttested}
-            readOnly
-            disabled={!platform || !profileOpened || isLoading}
-            onClick={() => {
-              const nextFollowAttested = !followAttested
-              setFollowAttested(nextFollowAttested)
-              if (nextFollowAttested && platform) {
-                submissionAnalytics.trackSubmissionFollowAttest({
-                  attemptId,
-                  platform,
-                  source: 'support_step'
-                })
-              }
+      <div className="grid gap-4 sm:grid-cols-2">
+        {PROFILES.map(profile => (
+          <a
+            key={profile.platform}
+            href={profile.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-disabled={isLoading}
+            onClick={event => {
+              void openProfile({ event, platform: profile.platform })
             }}
-            className="mt-0.5 h-4 w-4"
-          />
-          <span>
-            <span className="block font-medium">I follow David on this platform</span>
-            <span className="block text-sm text-muted-foreground">
-              Please confirm only after opening the selected profile.
+            onAuxClick={event => {
+              if (event.button === 1) void openProfile({ event, platform: profile.platform })
+            }}
+            className={`group flex items-center gap-4 rounded-xl border p-5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+              profile.platform === 'linkedin'
+                ? 'border-blue-200 bg-blue-50/70 hover:border-[#0A66C2] hover:bg-blue-100/70 focus-visible:ring-[#0A66C2] dark:border-blue-900 dark:bg-blue-950/30 dark:hover:border-blue-500 dark:hover:bg-blue-950/60'
+                : 'border-zinc-200 bg-zinc-50 hover:border-zinc-400 hover:bg-zinc-100 focus-visible:ring-zinc-700 dark:border-zinc-700 dark:bg-zinc-900/60 dark:hover:border-zinc-500 dark:hover:bg-zinc-800'
+            }`}
+          >
+            <span
+              aria-hidden="true"
+              className={`flex size-12 shrink-0 items-center justify-center rounded-lg ${
+                profile.platform === 'linkedin'
+                  ? 'bg-[#0A66C2] text-white'
+                  : 'bg-zinc-950 text-white dark:bg-white dark:text-zinc-950'
+              }`}
+            >
+              {profile.platform === 'linkedin' ? (
+                <Linkedin className="size-6" aria-hidden="true" />
+              ) : (
+                <SiX className="size-6" aria-hidden="true" />
+              )}
             </span>
-          </span>
-        </label>
-      </fieldset>
-
-      <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => {
-            submissionAnalytics.trackSubmissionSupportBack({
-              attemptId,
-              source: 'support_step'
-            })
-            onBack()
-          }}
-          disabled={isLoading}
-        >
-          Back to details
-        </Button>
-        <Button
-          type="button"
-          onClick={submitSupport}
-          disabled={!platform || !profileOpened || !followAttested || isLoading}
-        >
-          {isLoading ? 'Finishing...' : 'Finish submission'}
-        </Button>
+            <span className="min-w-0">
+              <span
+                className={`block font-semibold ${profile.platform === 'linkedin' ? 'text-[#0A66C2] dark:text-blue-200' : 'text-foreground'}`}
+              >
+                {profile.label} <span aria-hidden="true">↗</span>
+              </span>
+              <span className="mt-1 block text-sm text-muted-foreground">{profile.detail}</span>
+            </span>
+          </a>
+        ))}
       </div>
+      <p className="text-sm text-muted-foreground">
+        Already following or connected? Open either profile to continue.
+      </p>
+      <p className="border-t pt-4 text-sm text-muted-foreground" role="status">
+        {isLoading
+          ? 'Opening your submission form…'
+          : 'Your form appears after you click a profile.'}
+      </p>
+      {error && (
+        <p role="alert" className="text-sm text-destructive">
+          {error}
+        </p>
+      )}
     </section>
   )
 }

@@ -8,7 +8,8 @@ import { assessSubmission } from '@/lib/submissions/submission-assessment'
 import { checkSubmissionDuplicates } from '@/lib/submissions/submission-duplicates'
 import {
   createSubmissionContinuation,
-  enforceSubmissionRateLimits
+  enforceSubmissionRateLimits,
+  releaseSubmissionRateLimits
 } from '@/lib/submissions/submission-state'
 import { preflightSubmission } from './preflight-submission'
 
@@ -25,11 +26,13 @@ jest.mock('@/lib/submissions/submission-duplicates', () => ({
 jest.mock('@/lib/submissions/submission-state', () => ({
   createSubmissionContinuation: jest.fn(),
   enforceSubmissionRateLimits: jest.fn(),
+  releaseSubmissionRateLimits: jest.fn(),
   normalizeSubmissionFields: jest.requireActual('@/lib/submissions/submission-state')
     .normalizeSubmissionFields
 }))
 
 const mockAuth = jest.mocked(auth)
+const mockLoggerError = jest.mocked(logger.error)
 const mockLoggerInfo = jest.mocked(logger.info)
 const mockHeaders = jest.mocked(headers)
 const mockCsrf = jest.mocked(getStoredCSRFToken)
@@ -37,6 +40,7 @@ const mockAssess = jest.mocked(assessSubmission)
 const mockDuplicates = jest.mocked(checkSubmissionDuplicates)
 const mockContinuation = jest.mocked(createSubmissionContinuation)
 const mockRateLimits = jest.mocked(enforceSubmissionRateLimits)
+const mockReleaseRateLimits = jest.mocked(releaseSubmissionRateLimits)
 
 const fields = {
   category: 'developer-tools',
@@ -51,7 +55,11 @@ const fields = {
 
 const form = (overrides: Record<string, string> = {}) => {
   const value = new FormData()
-  for (const [key, entry] of Object.entries({ ...fields, _csrf: 'csrf-token', ...overrides })) {
+  for (const [key, entry] of Object.entries({
+    ...fields,
+    _csrf: 'csrf-token',
+    ...overrides
+  })) {
     value.set(key, entry)
   }
   return value
@@ -82,6 +90,8 @@ const assessment = (decision: SubmissionDecision): SubmissionAssessment => {
 
 describe('preflightSubmission', () => {
   beforeEach(() => {
+    process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET = 'local-test-secret-with-at-least-32-bytes'
+    mockLoggerError.mockClear()
     mockLoggerInfo.mockClear()
     mockAuth.mockResolvedValue({
       user: {
@@ -95,6 +105,7 @@ describe('preflightSubmission', () => {
     )
     mockCsrf.mockResolvedValue({ expiresAt: Date.now() + 60_000, token: 'csrf-token' })
     mockRateLimits.mockResolvedValue({ ok: true })
+    mockReleaseRateLimits.mockResolvedValue({ ok: true })
     mockDuplicates.mockResolvedValue({ status: 'unique' })
     mockAssess.mockResolvedValue(assessment('auto_publish'))
     mockContinuation.mockResolvedValue({
@@ -104,7 +115,15 @@ describe('preflightSubmission', () => {
     })
   })
 
-  it('normalizes every Step 2 field and performs all gates before support', async () => {
+  it('does not treat a client-declared social acknowledgement as backend authorization', async () => {
+    const result = await preflightSubmission(form({ supportToken: 'tampered.receipt' }))
+
+    expect(result.status).toBe('support_required')
+    expect(mockAssess).toHaveBeenCalledTimes(1)
+    expect(mockContinuation).toHaveBeenCalledTimes(1)
+  })
+
+  it('normalizes every Step 2 field and performs all gates after support', async () => {
     const result = await preflightSubmission(form())
 
     expect(result).toMatchObject({
@@ -226,12 +245,65 @@ describe('preflightSubmission', () => {
   it('fails closed before assessment when identity, CSRF, limits, or duplicates fail', async () => {
     mockRateLimits.mockResolvedValue({ code: 'rate_limited', ok: false, scope: 'domain' })
     await expect(preflightSubmission(form())).resolves.toMatchObject({
+      message: 'This submission is temporarily rate-limited. Please wait before trying again.',
       reasonCode: 'rate_limited',
       status: 'retry_later'
     })
     expect(mockDuplicates).not.toHaveBeenCalled()
     expect(mockAssess).not.toHaveBeenCalled()
   })
+
+  it('records a safe reason and stage for expected retry outcomes', async () => {
+    mockRateLimits.mockResolvedValue({ code: 'publication_unavailable', ok: false } as never)
+
+    await expect(preflightSubmission(form())).resolves.toMatchObject({
+      reasonCode: 'publication_unavailable',
+      status: 'retry_later'
+    })
+
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      'Submission preflight retryable failure',
+      expect.objectContaining({
+        data: { reasonCode: 'publication_unavailable', stage: 'rate_limit' },
+        tags: { operation: 'preflight', type: 'submission' }
+      })
+    )
+  })
+
+  it('records only a safe stage when an infrastructure gate throws', async () => {
+    mockDuplicates.mockRejectedValueOnce(new Error('submitted URL must never be logged'))
+
+    await expect(preflightSubmission(form())).resolves.toMatchObject({
+      reasonCode: 'publication_unavailable',
+      status: 'retry_later'
+    })
+
+    expect(mockLoggerError).toHaveBeenCalledWith(
+      'Submission preflight failed unexpectedly',
+      expect.objectContaining({
+        data: { errorType: 'Error', stage: 'duplicates' },
+        tags: { operation: 'preflight', type: 'submission' }
+      })
+    )
+    expect(JSON.stringify(mockLoggerError.mock.calls)).not.toContain('submitted URL')
+  })
+
+  it('continues safe submissions when pending duplicate inspection needs manual review', async () => {
+    mockDuplicates.mockResolvedValue({ status: 'review_required' })
+    await expect(preflightSubmission(form())).resolves.toMatchObject({ status: 'support_required' })
+    expect(mockAssess).toHaveBeenCalled()
+    expect(mockContinuation).toHaveBeenCalled()
+  })
+
+  it.each(['reject', 'retry_later'] as const)(
+    'does not bypass %s assessment for manual duplicate review',
+    async decision => {
+      mockDuplicates.mockResolvedValue({ status: 'review_required' })
+      mockAssess.mockResolvedValue(assessment(decision))
+      await preflightSubmission(form())
+      expect(mockContinuation).not.toHaveBeenCalled()
+    }
+  )
 
   it('returns duplicate rejection without assessing or publishing', async () => {
     mockDuplicates.mockResolvedValue({ source: 'catalogue', status: 'duplicate' })
@@ -242,6 +314,7 @@ describe('preflightSubmission', () => {
     })
     expect(mockAssess).not.toHaveBeenCalled()
     expect(mockContinuation).not.toHaveBeenCalled()
+    expect(mockReleaseRateLimits).toHaveBeenCalledTimes(1)
   })
 
   it('reports an editorial rejection after a completed Web Risk check', async () => {

@@ -69,9 +69,9 @@ jobs:
           TRUSTED_BASE_SHA: ${{ steps.base.outputs.sha }}
         run: |
           if [ -n "$PR_NUMBER" ]; then
-            pnpm exec tsx scripts/pr-backfill-dry-run.ts --pr "$PR_NUMBER"
+            pnpm exec tsx scripts/pr-backfill-dry-run.ts --assess-direct --pr "$PR_NUMBER"
           elif [ "$SCAN_ALL" = 'true' ]; then
-            pnpm exec tsx scripts/pr-backfill-dry-run.ts --concurrency 4
+            pnpm exec tsx scripts/pr-backfill-dry-run.ts --assess-direct --concurrency 4
           else
             exit 1
           fi

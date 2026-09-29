@@ -95,7 +95,6 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     'lucide-react': require.resolve('lucide-react'),
-    'react-markdown': '<rootDir>/__mocks__/react-markdown.tsx',
     nuqs: '<rootDir>/__mocks__/nuqs.ts',
     '@t3-oss/env-nextjs': '<rootDir>/__mocks__/@t3-oss/env-nextjs.ts',
     '@thedaviddias/rate-limiting': '<rootDir>/__mocks__/@thedaviddias/rate-limiting.ts',
@@ -127,11 +126,22 @@ const config: Config.InitialOptions = {
   },
 
   transformIgnorePatterns: [
-    'node_modules/(?!(@thedaviddias|lucide-react|next-themes|sonner|@octokit|@t3-oss|@hookform|@radix-ui|@clerk|cheerio|normalize-url|react-markdown|remark.*|rehype.*|unified|bail|is-plain-obj|trough|vfile|nuqs)/)'
+    'node_modules/(?!(@thedaviddias|lucide-react|next-themes|sonner|@octokit|@t3-oss|@hookform|@radix-ui|@clerk|cheerio|normalize-url|react-markdown|remark[^/]*|rehype[^/]*|unified|bail|is-plain-obj|trough|vfile[^/]*|nuqs|hast-util[^/]*|estree-util[^/]*|property-information|space-separated-tokens|comma-separated-tokens|html-url-attributes|parse-entities|stringify-entities|character-reference-invalid|@ungap/structured-clone|mdast-util[^/]*|micromark[^/]*|unist-util[^/]*|decode-named-character-reference|character-entities[^/]*|devlop|trim-lines|ccount|longest-streak|zwitch|escape-string-regexp|is-alphabetical|is-alphanumerical|is-decimal|is-hexadecimal|is-whitespace-character|is-word-character)/)'
   ],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname']
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-export default createJestConfig(config)
+export default async () => {
+  const resolved = await createJestConfig(config)()
+  // Next appends a node_modules exclusion that overrides our ESM allowlist.
+  // Transform the real Markdown parser used by submission normalization in Jest.
+  return {
+    ...resolved,
+    transformIgnorePatterns: [
+      ...(config.transformIgnorePatterns ?? []),
+      '^.+\\.module\\.(css|sass|scss)$'
+    ]
+  }
+}

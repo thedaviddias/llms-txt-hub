@@ -2,6 +2,11 @@
  * Utility functions for the submit form
  */
 
+import { areUrlsInSameSiteFamily } from '@thedaviddias/submission-trust/site-family'
+import { fetchWithCSRF } from '@/lib/csrf-client'
+
+const URL_CHECK_ERROR = 'Unable to check this URL. Please try again.'
+
 /**
  * Normalizes a domain by removing protocol, www prefix, and handling edge cases
  */
@@ -33,12 +38,10 @@ export function normalizeDomain(url: string): string {
 }
 
 /**
- * Checks if two URLs belong to the same domain
+ * Checks if two URLs belong to the same registrable site family
  */
 export function isSameDomain(url1: string, url2: string): boolean {
-  const domain1 = normalizeDomain(url1)
-  const domain2 = normalizeDomain(url2)
-  return domain1 === domain2 && domain1 !== ''
+  return areUrlsInSameSiteFamily(url1, url2)
 }
 
 /**
@@ -78,7 +81,7 @@ export async function checkUrl(url: string, signal?: AbortSignal) {
   }
 
   try {
-    const response = await fetch('/api/check-url', {
+    const response = await fetchWithCSRF('/api/check-url', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -87,17 +90,24 @@ export async function checkUrl(url: string, signal?: AbortSignal) {
       signal
     })
 
-    const result = await response.json()
+    const result: unknown = await response.json()
+    if (typeof result !== 'object' || result === null) {
+      return { checking: false, accessible: false, error: URL_CHECK_ERROR }
+    }
+
+    const accessible = response.ok && 'accessible' in result && result.accessible === true
+    const error =
+      'error' in result && typeof result.error === 'string' ? result.error.trim() : undefined
     return {
       checking: false,
-      accessible: result.accessible,
-      error: result.error
+      accessible,
+      error: error || (accessible ? undefined : URL_CHECK_ERROR)
     }
   } catch (_error) {
     return {
       checking: false,
       accessible: false,
-      error: 'Failed to check URL'
+      error: URL_CHECK_ERROR
     }
   }
 }

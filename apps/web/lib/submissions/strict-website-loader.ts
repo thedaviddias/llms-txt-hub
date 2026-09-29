@@ -11,10 +11,14 @@ export type StrictWebsitesResult =
  * @returns Validated websites or an unavailable result
  */
 export function getWebsitesStrict(): StrictWebsitesResult {
-  if (!websiteCollectionSource.available) return { status: 'unavailable' }
-
   try {
     const websites = websiteCollectionSource.read()
+    // Some production bundlers preserve the generated collection but lose the
+    // module-level availability flag. A populated, validated read is still
+    // trustworthy; only an empty read with a false flag is unavailable.
+    if (!websiteCollectionSource.available && websites.length === 0) {
+      return { status: 'unavailable' }
+    }
     const valid = websites.every(
       website =>
         typeof website.website === 'string' &&

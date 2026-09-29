@@ -32,11 +32,23 @@ function generateSlugFromUser(user: any): string {
 }
 
 /**
- * Main header component with navigation, search, and user actions
+ * Keep server and first-client auth markup identical until hydration completes.
  *
- * @returns JSX.Element - Header component
+ * @param hasMounted - Whether the client mount effect has completed
+ * @param isLoaded - Whether Clerk has resolved authentication state
+ * @returns Whether the header should render its stable auth placeholder
+ */
+export function shouldShowAuthPlaceholder(hasMounted: boolean, isLoaded: boolean): boolean {
+  return !hasMounted || !isLoaded
+}
+
+/**
+ * Main header component with navigation, search, and user actions.
+ *
+ * @returns The responsive site header
  */
 export function Header() {
+  const [hasMounted, setHasMounted] = useState(false)
   const [showMobileSearch, setShowMobileSearch] = useState(false)
   const [showMobileDrawer, setShowMobileDrawer] = useState(false)
   const [showAutocomplete, setShowAutocomplete] = useState(false)
@@ -44,6 +56,10 @@ export function Header() {
   const { searchQuery, setSearchQuery, handleSearch } = useSearch()
   const { user, isLoaded, signOut } = useAuth()
   const { trackSearch } = useAnalyticsEvents()
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   const userSlug = user ? generateSlugFromUser(user) : ''
   const isProfilePrivate = Boolean(user?.publicMetadata?.isProfilePrivate)
@@ -194,7 +210,7 @@ export function Header() {
               <GithubStars mobileCompact={true} />
             </div>
 
-            {!isLoaded ? (
+            {shouldShowAuthPlaceholder(hasMounted, isLoaded) ? (
               <div className="h-9 w-9 sm:w-[88px]" />
             ) : user ? (
               <UserDropdownMenu

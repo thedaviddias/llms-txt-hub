@@ -5,6 +5,7 @@
 import { createClerkClient } from '@clerk/backend'
 import { logger } from '@thedaviddias/logging'
 import { revalidateTag, unstable_cache } from 'next/cache'
+import { canUseEmptyMembersForPublicE2e } from '@/lib/e2e-public-routes'
 import SafeRedis, { CACHE_KEYS } from '@/lib/redis'
 import { hashSensitiveData } from '@/lib/server-crypto'
 
@@ -133,6 +134,14 @@ export async function invalidateMembersCache(): Promise<void> {
  */
 async function fetchMembersFromClerk(): Promise<Member[]> {
   if (!process.env.CLERK_SECRET_KEY) {
+    if (
+      canUseEmptyMembersForPublicE2e({
+        enabled: process.env.E2E_PUBLIC_ROUTES === '1',
+        isProduction: process.env.NODE_ENV === 'production'
+      })
+    ) {
+      return []
+    }
     throw new Error('CLERK_SECRET_KEY not configured')
   }
 
