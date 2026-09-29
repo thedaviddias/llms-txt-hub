@@ -1,0 +1,12 @@
+---
+name: 'OrcaReplay'
+description: 'Records a coding-agent run below the harness and replays it offline from the recorded bytes, with no model called.'
+website: 'https://github.com/Continuum-AI-Corp/OrcaReplay'
+llmsUrl: 'https://raw.githubusercontent.com/Continuum-AI-Corp/OrcaReplay/main/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-09-30'
+---
+
+# OrcaReplay
+
+OrcaReplay records a coding-agent run below the harness and replays it offline from the recorded bytes, with no model called. One npm package named orcareplay puts one command named orca on the PATH; the agent itself runs unmodified while a base-URL proxy captures the request and response bytes exchanged with the model, alongside shell, MCP and filesystem capture layers. A recorded run can be re-executed with no network and no tokens spent, or forked at a chosen step onto a different model so that the model is the only variable in a comparison. Apache-2.0 for the code, CC BY 4.0 for the trace-format spec, Node 20+.
