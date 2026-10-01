@@ -1,0 +1,25 @@
+---
+name: 'SnapForge'
+description: 'Screenshot, OpenGraph-image and PDF API for developers: send a URL or raw HTML and get back a real PNG, JPEG, WebP or PDF over one HTTP call.'
+website: 'https://snapforge-hq.netlify.app/'
+llmsUrl: 'https://snapforge-hq.netlify.app/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-10-01'
+---
+
+# SnapForge
+
+SnapForge turns a URL — or a raw HTML string — into a real image (PNG, JPEG, WebP) or a PDF through a single authenticated HTTP call, with no headless browser for you to run and no SDK to install.
+
+## Key Focus Areas
+
+- **Screenshots**: capture a full page or a fixed viewport of any public URL, in PNG/JPEG/WebP, at custom dimensions, with optional dark mode and device scale.
+- **OpenGraph images**: deterministic 1200x630 social cards from a title, subtitle and brand, in dark or light themes.
+- **PDF rendering**: print any public page to PDF (A4 or Letter, portrait or landscape) for invoices, reports and receipts.
+- **Raw HTML to image**: render an arbitrary HTML string to an image, so you can bring your own template.
+- **Built for production**: API-key auth, per-key monthly quotas, a content-addressed render cache, a bounded render queue with 429 backpressure, and an SSRF guard that rejects loopback, private, link-local and cloud-metadata hosts by default.
+
+## About llms.txt Implementation
+
+SnapForge's llms.txt gives agents the API surface in plain language: the base URL, the `X-API-Key` auth header, every endpoint with its key parameters, response headers, and JSON error shape. It links to the machine-readable OpenAPI 3.1 spec at `/openapi.json` and the interactive docs, so an agent can discover and call the API without scraping HTML.
