@@ -1,0 +1,26 @@
+---
+name: 'stateofpixel'
+description: 'Catch UI regressions before they merge. Visual regression testing for GitHub pull requests: your CI takes the screenshots, a person approves each change.'
+website: 'https://stateofpixel.com/'
+llmsUrl: 'https://stateofpixel.com/llms.txt'
+llmsFullUrl: 'https://stateofpixel.com/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-10-03'
+---
+
+# stateofpixel
+
+> Catch UI regressions before they merge. Visual regression testing for GitHub pull requests.
+
+stateofpixel compares the screenshots your CI takes with the last approved ones and sets a check on the pull request until someone approves the changes. It is open source under the MIT license.
+
+## Key Focus Areas
+
+- **Playwright, Storybook or any PNGs**: a Playwright reporter, one command for a built Storybook, or any folder of PNG files from another test runner.
+- **GitHub checks and review**: each pull request gets a check that links to a review page, where a person approves or rejects each changed snapshot.
+- **CI**: GitHub Actions signs in with OIDC and needs no secret. Other CI uses a project token. Runs can be sharded into one build and one check.
+- **Self-hosting**: runs on a Netlify site of your own, with your own GitHub App.
+
+## About llms.txt Implementation
+
+The llms.txt links every docs page as markdown, grouped into Get started, Capture, Run in CI, Review, Guides, Manage and Reference, plus comparison pages. Each page is also on the site as HTML at the same address without `.md`. The llms-full.txt has every docs page in one file.
