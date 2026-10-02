@@ -1,0 +1,25 @@
+---
+category: 'developer-tools'
+description: 'Bulk YouTube transcripts for whole channels and playlists, plus a REST API and MCP server that give AI agents transcripts, YouTube search and upload alerts.'
+llmsFullUrl: ''
+llmsUrl: 'https://bulktranscripts.co/llms.txt'
+name: 'BulkTranscripts'
+publishedAt: '2026-10-02'
+website: 'https://bulktranscripts.co/'
+---
+
+# BulkTranscripts
+
+Bulk YouTube transcripts for whole channels and playlists, plus a REST API and MCP server that give AI agents transcripts, YouTube search and upload alerts\.
+
+## Key Features
+
+- **Whole channels and playlists**: one job fetches every available transcript and exports TXT, Markdown, SRT, VTT, CSV, JSON or one combined AI-ready file for ChatGPT, Claude and NotebookLM.
+- **REST API**: transcripts, YouTube search, search inside a channel, channel and playlist listings, and background bulk jobs. [API docs](https://bulktranscripts.co/docs) and [OpenAPI spec](https://bulktranscripts.co/openapi.json).
+- **MCP server**: hosted at `https://bulktranscripts.co/mcp` with Google sign-in, for Claude, ChatGPT, Cursor and VS Code. [MCP guide](https://bulktranscripts.co/youtube-mcp-server).
+- **Agent skill**: a SKILL.md that teaches Claude Code, Codex and other agents the whole API. [Skill on GitHub](https://github.com/pratie/youtube-transcript-skill).
+- **Upload monitoring**: the latest-uploads endpoint is free to poll, so agents only spend credits on new videos.
+
+## About llms.txt Implementation
+
+Our llms.txt lists the app, the API and MCP docs, every endpoint with its credit cost, and the per-channel and per-format guides. llms-full.txt joins the docs, MCP, API and integration pages so an agent can load them in one request.
