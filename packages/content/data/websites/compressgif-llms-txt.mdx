@@ -1,0 +1,27 @@
+---
+name: 'CompressGIF'
+description: 'GIF compression in the browser, with a REST API and remote MCP server for automated workflows.'
+website: 'https://compressgif.net'
+llmsUrl: 'https://compressgif.net/llms.txt'
+llmsFullUrl: ''
+category: 'content-media'
+priority: 'medium'
+publishedAt: '2026-10-03'
+---
+
+# CompressGIF
+
+CompressGIF reduces animated GIF file sizes in the browser and provides a REST API and remote MCP server for automated compression.
+
+## GIF compression
+
+The browser tool processes files locally. The REST API accepts uploaded GIFs or HTTPS GIF URLs, creates asynchronous compression jobs, and supports target-size settings. Cloud API and MCP requests process GIFs on the server and share the account's cloud credits.
+
+## MCP integration
+
+The remote endpoint at `https://compressgif.net/api/mcp` uses Streamable HTTP and API key authentication. Its three tools start a GIF compression job, retrieve a job's result, and check credit usage.
+
+## Documentation
+
+- [REST API and MCP setup](https://compressgif.net/docs)
+- [llms.txt](https://compressgif.net/llms.txt)
