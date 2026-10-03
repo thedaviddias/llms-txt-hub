@@ -1,0 +1,19 @@
+---
+name: 'humanlike-browser'
+description: 'AI skill: pass Cloudflare Turnstile / "Verify you are human" checks with human-like Playwright input — irregular mouse motion, no teleporting, move-before-click, natural typing. opencode / Claude Code / Cursor compatible. For your own legitimate automation.'
+website: 'https://everest-an.github.io/humanlike-browser-skill'
+llmsUrl: 'https://everest-an.github.io/humanlike-browser-skill/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-10-03'
+---
+
+# humanlike-browser
+
+A ready-to-use AI skill that encodes the input behavior human-verification widgets actually score, so Cloudflare Turnstile / "Verify you are human" checks and bot-flagged forms pass.
+
+- **No teleporting** — always glide the cursor (`page.mouse.move(x, y, { steps })`) before clicking.
+- **Irregular motion** — random steps + pixel jitter; move → pause → click.
+- **Natural typing** with per-character delays; randomized timing.
+- Reusable Playwright helpers: `humanMove`, `humanClick`, `humanType`, `idleMoves`.
+- **Scope & ethics**: for your own legitimate actions (your own forms/site, QA). Not for bypassing protections to scrape or abuse. Prefer official APIs.
+- MIT. https://github.com/everest-an/humanlike-browser-skill
