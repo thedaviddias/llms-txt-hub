@@ -1,0 +1,23 @@
+---
+name: 'Azurade AI'
+description: 'One account for over 30 image and video models (Veo 3.1, Nano Banana Pro, Seedance), paid per generation from one credit balance. Credits never expire.'
+website: 'https://azurade.com/'
+llmsUrl: 'https://azurade.com/llms.txt'
+llmsFullUrl: ''
+category: 'ai-ml'
+publishedAt: '2026-10-02'
+---
+
+# Azurade AI
+
+Azurade AI is one account for over 30 image and video models, Veo 3.1, Nano Banana Pro and Seedance among them, paid per generation from one credit balance. The credits don't expire.
+
+## Key Focus Areas
+
+- **Image and video generation**: every model bills from the same balance, credits never reset, and failed generations are refunded automatically.
+- **Agent access**: a REST API under `/api/v2` (OpenAPI document at `/api/v2/openapi.json`) and a hosted MCP server at `https://azurade.com/mcp` that signs people in with OAuth.
+- **Free tools**: a photo editor plus 32 browser tools for compression, format conversion, trimming and PDF work.
+
+## About llms.txt Implementation
+
+The llms.txt lists the main product pages and walks an agent through the API (list the models, estimate the cost, create a generation, poll it) with links to the OpenAPI document, the MCP server and the agent skill file. Every page also has a markdown twin, served on `Accept: text/markdown` or at the `.md` URL.
