@@ -7447,6 +7447,17 @@
     "llmsFullUrl": ""
   },
   {
+    "name": "DataOrigin",
+    "description": "Trade show prospecting platform for B2B sales teams",
+    "url": "/dataorigin-llms-txt",
+    "content": "# DataOrigin\n\nDataOrigin is a trade show prospecting platform for B2B sales teams. It indexes trade shows across Europe, extracts and enriches exhibitor and attendee data, and ranks every company by fit with your Ideal Customer Profile so sales teams arrive at each event with a prioritized list of prospects.\n\n## Key Focus Areas\n\n- Trade Show and Event Intelligence\n- ICP-based Lead Scoring\n- Company Data Enrichment\n- B2B Sales Prospecting\n\n## About llms.txt Implementation\n\nDataOrigin's llms.txt describes when to use the platform, how it works, and links the markdown version of every core page, solution page, blog article, glossary term and sector page in English and Spanish. The llms-full.txt contains the full markdown content of all those pages.",
+    "category": "marketing-sales",
+    "slug": "dataorigin-llms-txt",
+    "website": "https://dataorigin.es",
+    "llmsUrl": "https://dataorigin.es/llms.txt",
+    "llmsFullUrl": "https://dataorigin.es/llms-full.txt"
+  },
+  {
     "name": "DataRemote",
     "description": "Transform aging copper lines with DataRemote POTS replacement and cellular failover—fax, fire panel, alarm, elevator and voice with full E-911 support.",
     "url": "/dataremote-llms-txt",
