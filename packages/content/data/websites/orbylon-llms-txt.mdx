@@ -1,0 +1,25 @@
+---
+name: 'Orbylon'
+description: 'Agent-commerce infrastructure: a domain-bound cryptographic identity for a business, a machine-readable storefront, verifiable documents, and payment endpoints.'
+website: 'https://orbylon.com'
+llmsUrl: 'https://orbylon.com/llms.txt'
+llmsFullUrl: 'https://orbylon.com/llms-full.txt'
+category: 'security-identity'
+publishedAt: '2026-09-14'
+---
+
+# Orbylon
+
+Orbylon makes a business legible, verifiable and payable to AI agents. A business proves it controls its domain once. From then on Orbylon binds an Ed25519 key to that domain, publishes a machine-readable catalogue at the prices the business set, signs documents anyone can check without trusting Orbylon, and exposes payment endpoints that settle directly to the business's own wallet. Orbylon never custodies funds.
+
+## Key Focus Areas
+
+- Domain-bound identity: an Ed25519 public key any agent can look up and check against the domain it belongs to
+- Readiness scan: sixteen checks on whether an agent can find, trust and pay a business, with the evidence behind each result
+- Machine-readable storefront: the catalogue a verified business publishes, at the prices it set
+- Verifiable documents: signatures that check out without trusting the issuer
+- Remote MCP server at https://orbylon.com/api/mcp, with no authentication needed to read
+
+## About llms.txt Implementation
+
+Orbylon serves llms.txt and llms-full.txt alongside a remote MCP server at /api/mcp. The llms.txt names the endpoints an agent needs: the public key lookup, the offerings catalogue and the readiness scan. llms-full.txt carries the full protocol surface, including request and response shapes, so an assistant can answer questions about verifying and paying a business without guessing.
