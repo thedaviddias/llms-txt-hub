@@ -31,6 +31,9 @@ jobs:
       - name: Run repository policy tests
         run: pnpm test:repo
 
+      - name: Verify generated-file publication boundary
+        run: python3 scripts/test-generated-publication.py
+
       - name: Run type check
         run: pnpm typecheck
 
