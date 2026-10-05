@@ -1,0 +1,37 @@
+---
+name: 'Qwen Cloud'
+description: "Qwen Cloud offers OpenAI-, Anthropic-, and DashScope-compatible APIs for Qwen text, vision, image, video, and speech models with pay-as-you-go and Token Plan."
+website: 'https://www.qwencloud.com'
+llmsUrl: 'https://docs.qwencloud.com/llms.txt'
+llmsFullUrl: ''
+category: 'ai-ml'
+publishedAt: '2026-07-13'
+---
+
+# Qwen Cloud
+
+Qwen Cloud is Alibaba's international model-as-a-service (MaaS) platform, providing API access to the Qwen family of large language and multimodal models plus selected third-party models (DeepSeek, GLM, Kimi).
+
+## Key Focus Areas
+
+- Text generation (Qwen-Max, Qwen-Plus, Qwen-Turbo, Qwen-Long, Qwen-MT, Qwen-Character)
+- Visual understanding (Qwen-VL, OCR, video analysis)
+- Image generation and editing (Wan 2.1 / 2.5 / 2.6 / 2.7)
+- Video generation (text-to-video, image-to-video, reference-to-video, editing)
+- Speech (realtime ASR, file transcription, streaming TTS, voice cloning, speech-to-speech)
+- Embeddings and reranking
+- Third-party models: DeepSeek, GLM, Kimi
+- Token Plan (team subscription) and Coding Plan (per-seat AI coding subscription)
+
+## Core Features
+
+- OpenAI-, Anthropic-, and DashScope-compatible endpoints — most existing SDKs work with a base-URL swap
+- Function calling, structured output, and partial (prefix continuation) mode
+- Pay-as-you-go billing plus prepaid Token Plan / Coding Plan subscriptions
+- Built-in tools: web search, code interpreter, multimodal generation
+
+## About llms.txt Implementation
+
+The root index at `https://docs.qwencloud.com/llms.txt` lists every documentation page as a Markdown source URL (each entry appends `.md` to the human URL — e.g. `text-to-image.md`), grouped by product surface: Token Plan, Coding Plan, Getting Started, Models (text / vision / image / video / speech), API Reference. Agents can fetch any entry directly for the raw Markdown source, no HTML scraping required.
+
+For the China-region site (千问云), see the separate entry: `platform.qianwenai.com`.
