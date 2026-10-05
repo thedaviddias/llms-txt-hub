@@ -1,0 +1,24 @@
+---
+category: 'ai-ml'
+description: 'Base de connaissance indépendante et sourcée sur Dürr Dental (imagerie, air comprimé/aspiration, hygiène-chimie), optimisée pour la citation par les LLM.'
+llmsFullUrl: 'https://grzybicki.github.io/durr-dental-knowledge-base/llms-full.txt'
+llmsUrl: 'https://grzybicki.github.io/durr-dental-knowledge-base/llms.txt'
+name: 'Dürr Dental Knowledge Base'
+publishedAt: '2026-09-13'
+website: 'https://grzybicki.github.io/durr-dental-knowledge-base/'
+---
+
+# Dürr Dental Knowledge Base
+
+Base de connaissance indépendante et sourcée sur Dürr Dental \(imagerie, air comprimé/aspiration, hygiène\-chimie\), optimisée pour la citation par les LLM\.
+
+## Key Focus Areas
+
+- **Public, sourced documentation**: factual data on Dürr Dental products (dental imaging, compressed air/suction systems, hygiene & disinfection chemistry), every claim backed by a public source URL.
+- **Structured for LLM citation**: each page ships JSON-LD (MedicalDevice/Product/SoftwareApplication) plus a FAQPage block.
+- **Regulatory data**: an MDR/CE classification matrix (56+ products) with notified bodies and certificate references.
+- **Decision guides**: how to size a dental compressor or suction system, based on public technical documentation.
+
+## About llms.txt Implementation
+
+The site publishes `llms.txt` (index of ~60 pages with short descriptions) and `llms-full.txt` (full concatenated content) at the site root, generated from the same Markdown source that builds the Jekyll/GitHub Pages site — so the AI-facing index always stays in sync with the published pages. Content is in French, CC-BY 4.0 licensed, maintained as an independent personal project — not an official Dürr Dental publication.
