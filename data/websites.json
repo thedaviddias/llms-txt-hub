@@ -14237,5 +14237,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "HeatPulse",
+    "domain": "https://heatpulse.cc/",
+    "description": "HeatPulse is a read-only AI-news knowledge gateway for agents and humans — heat-ranked editorial event summaries, daily digests, live LLM arena leaderboards, an intent router, and bulk JSONL datasets.",
+    "llmsTxtUrl": "https://heatpulse.cc/llms.txt",
+    "llmsFullTxtUrl": "https://heatpulse.cc/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=heatpulse.cc&sz=128",
+    "publishedAt": "2026-09-27"
   }
 ]
