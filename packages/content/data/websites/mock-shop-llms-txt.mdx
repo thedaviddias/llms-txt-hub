@@ -1,0 +1,15 @@
+---
+name: 'mock.shop'
+description: "Shopify's public, auth-free Storefront GraphQL API backed by 100+ fictional stores, for building and testing storefronts and agents without a Shopify store or access token."
+website: 'https://mock.shop'
+llmsUrl: 'https://mock.shop/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-09-10'
+---
+
+# mock.shop
+
+mock.shop is Shopify's public Storefront GraphQL API backed by more than 100 fictional stores, each on its own host with its own catalog. It needs no store, no app, and no access token, so a developer or a coding agent can build a storefront against realistic products, collections, and carts, then switch to a real Shopify store by changing the domain and adding the store's Storefront API access token.
+
+The root `llms.txt` is the store directory: one line per store with its name, what it sells, its categories, and its API URL. Every store also serves its own `llms.txt` at `https://<store>.mock.shop/llms.txt` with that store's categories, collections, and product counts, and every API response carries a `Link` header pointing back to it.
