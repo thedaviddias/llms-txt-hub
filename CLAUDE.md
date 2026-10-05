@@ -1,8 +1,5 @@
-<!-- llmstxt:start -->
-## Installed Documentation (llmstxt)
+@AGENTS.md
 
-When working with these technologies, read the corresponding skill for detailed reference:
+## Technology References
 
-- Stripe: .agents/skills/stripe/SKILL.md
-- AI SDK: .agents/skills/ai-sdk/SKILL.md
-<!-- llmstxt:end -->
+- For Stripe or AI SDK work, check the versions declared by the affected package and use matching official documentation. The checkout does not currently contain local documentation skills for them; do not install skills automatically.
