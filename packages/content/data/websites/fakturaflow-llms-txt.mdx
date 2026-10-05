@@ -1,0 +1,27 @@
+---
+name: 'FakturaFlow'
+description: "KSeF cockpit for Polish accounting firms and finance teams — turns PDF, Excel, CSV and XML invoices into validated FA(3) XML and files them to Poland's national e-invoicing system in bulk."
+website: 'https://fakturaflow.pl'
+llmsUrl: 'https://fakturaflow.pl/llms.txt'
+llmsFullUrl: 'https://fakturaflow.pl/llms-full.txt'
+category: 'finance-fintech'
+publishedAt: '2026-08-19'
+---
+
+# FakturaFlow
+
+FakturaFlow files Polish structured invoices (FA(3)) into KSeF, the national e-invoicing system run by Poland's Ministry of Finance. It is built for accounting firms handling many client companies, and for businesses running their own billing system: invoices arrive as CSV, Excel, PDF or XML, are converted and validated against the FA(3) schema, then submitted in KSeF batch sessions. UPO receipts are collected automatically.
+
+## Key Focus Areas
+
+- FA(3) conversion — PDF, Excel, CSV and XML invoices into the Polish structured invoice schema
+- Schema validation — required fields and structure checked before submission
+- Bulk filing — KSeF batch sessions with client-side encryption, up to 100 invoices per session
+- UPO collection — official receipts fetched automatically, individually or as a ZIP
+- Free browser tools — an FA(3) validator and a PDF-to-XML converter that run entirely client-side, with no account and no upload
+
+## About llms.txt Implementation
+
+`llms.txt` lists the free tools, the KSeF knowledge base and the product pages. `llms-full.txt` adds supported input formats, plan pricing, a KSeF FAQ covering the phased 2026–2027 rollout, error code 450 and UPO, plus an explicit section on what the product does **not** do — there is no public API, and it is not an accounting package.
+
+Content is in Polish because KSeF is a Polish regulatory system and the audience is Polish accountants and finance teams. The files therefore document pages and tools rather than API endpoints.
