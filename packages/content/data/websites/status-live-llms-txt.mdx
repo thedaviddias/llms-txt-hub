@@ -1,0 +1,24 @@
+---
+name: 'status.live'
+description: 'Live status of the physical world, read from the source: ski lifts, theme park rides, national parks and surf, for people and AI assistants.'
+website: 'https://status.live'
+llmsUrl: 'https://status.live/llms.txt'
+llmsFullUrl: ''
+category: 'data-analytics'
+publishedAt: '2026-10-05'
+---
+
+# status.live
+
+status.live reports what is open and running right now, read from each operator's own source: ski lift status at 260+ resorts from their lift boards, theme park ride status and wait times at 140 parks, US and Canadian national park alerts, closures and campgrounds, and surf spots with the nearest NOAA buoy reading, tides and swell forecast. Every page is also plain text for curl, and each category has an MCP endpoint for AI assistants.
+
+## Key Focus Areas
+
+- Live ski lift status
+- Theme park ride status and wait times
+- National park alerts, closures and campgrounds
+- Surf buoy readings, tides and swell forecasts
+
+## About llms.txt Implementation
+
+The llms.txt lists every category with its overview, list and per-place page URLs, the MCP endpoints and their tools, and what each status value means (reported, none listed, source error), so agents can answer from the right page and never treat unknown as closed.
