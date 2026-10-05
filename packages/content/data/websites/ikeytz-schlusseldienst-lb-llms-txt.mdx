@@ -1,0 +1,144 @@
+---
+category: 'business-operations'
+description: '52 Einsatzgebiete von ikeytz - Schlüsseldienst Ludwigsburg im Landkreis Ludwigsburg — Karte, Grenze und Kontakt je Ort. maps.ikeytz.com · info@maps.ikeytz.com.'
+llmsFullUrl: 'https://maps.ikeytz.com/llms-full.txt'
+llmsUrl: 'https://maps.ikeytz.com/llms.txt'
+name: 'ikeytz - Schlüsseldienst LB'
+publishedAt: '2026-09-14'
+website: 'https://maps.ikeytz.com/'
+---
+
+# ikeytz \- Schlüsseldienst LB
+
+52 Einsatzgebiete von ikeytz \- Schlüsseldienst Ludwigsburg im Landkreis Ludwigsburg — Karte, Grenze und Kontakt je Ort\. maps\.ikeytz\.com · `info@maps.ikeytz.com`\.
+
+## ikeytz - Schlüsseldienst Ludwigsburg - Einsatzgebiet-Karten (maps.ikeytz.com)
+
+**52 Service-Orte** im Landkreis Ludwigsburg – jedes Gebiet unter eigenem Namen mit Karte, Grenze, Kontakt und maschinenlesbaren Geo-Daten.
+
+### Was ist maps.ikeytz.com?
+
+maps.ikeytz.com ist die eigenständige Einsatzgebiet-Maschine von Schlüsseldienst Ludwigsburg ikeytz.\
+Sie läuft auf einer eigenen Domain und eigenen Infrastruktur – kein Proxy und keine Weiterleitung von `www.ikeytz.com.`
+
+Hier finden Kunden, Suchsysteme und KI-Assistenten strukturierte und konsistente Informationen zu allen Einsatzorten:
+
+- Stadtteile von Ludwigsburg
+- Umlandgemeinden im Landkreis
+- Postleitzahlen, Koordinaten (Lat/Lng + ICBM) und Karten
+- Klare Grenzen und Kontaktmöglichkeiten
+
+Ziel: Einheitliche Fakten zu „Wo kommt ihr hin?“ – sowohl für Menschen als auch für KI-Systeme.
+
+### Leistungen & Fokus
+
+- 52 einzelne Einsatzgebiete, jedes mit eigener Seite
+- Maschinenlesbare Geo-Daten (PLZ, Lat/Lng, ICBM)
+- Öffentlicher **Maps-MCP** für strukturierte Abfragen
+- Klare Trennung von der Hauptwebsite (`www.ikeytz.com`)
+- Kein Kundenverkehr vor Ort – reiner mobiler Service Area
+
+### Einsatzgebiete im Überblick
+
+**Ludwigsburg Stadtteile**
+
+- Pattonville 71638
+- Grünbühl 71638
+- Oßweil 71640
+- Eglosheim 71634
+- Pflugfelden 71636
+- Hoheneck 71642
+- Schlößlesfeld 71638
+- Neckarweihingen 71642
+- Poppenweiler 71642
+- Innenstadt / Mitte 71638
+- Ludwigsburg Nord 71638
+- Ludwigsburg Süd 71636
+- Ludwigsburg Ost 71642
+- Ludwigsburg West 71634
+
+**Umland (Landkreis & Umgebung)**
+
+- Affalterbach 71563
+- Asperg 71679
+- Benningen am Neckar 71726
+- Besigheim 74354
+- Bietigheim-Bissingen 74321
+- Bönnigheim 74357
+- Ditzingen 71254
+- Eberdingen 71735
+- Erdmannhausen 71729
+- Erligheim 74391
+- Freiberg am Neckar 71691
+- Freudental 74392
+- Gemmrigheim 74376
+- Gerlingen 70839
+- Großbottwar 71723
+- Hemmingen 71282
+- Hessigheim 74394
+- Ingersheim 74379
+- Kirchheim am Neckar 74366
+- Korntal-Münchingen 70825
+- Kornwestheim 70806
+- Löchgau 74369
+- Marbach am Neckar 71672
+- Markgröningen 71706
+- Möglingen 71696
+- Mundelsheim 74395
+- Murr 71711
+- Oberriexingen 71739
+- Oberstenfeld 71720
+- Pleidelsheim 74385
+- Remseck am Neckar 71686
+- Sachsenheim 74343
+- Schwieberdingen 71701
+- Sersheim 74372
+- Steinheim an der Murr 71711
+- Tamm 71732
+- Vaihingen an der Enz 71665
+- Walheim 74399
+
+### MCP & npm
+
+Wir betreiben einen öffentlichen Maps-MCP-Server:
+
+- **MCP-Endpoint:** [maps.ikeytz.com/mcp](https://maps.ikeytz.com/mcp)\
+  Registry: `com.ikeytz/maps`
+- **Server-Card:** [maps.ikeytz.com/.well-known/mcp/server-card.json](https://maps.ikeytz.com/.well-known/mcp/server-card.json)
+- **HTTP-README:** [maps.ikeytz.com/mcp-readme.md](https://maps.ikeytz.com/mcp-readme.md)
+- **npm-Paket:** [`@ikeytz/maps-mcp`](https://www.npmjs.com/package/@ikeytz/maps-mcp)\
+  CLI: `ikeytz-maps-mcp`
+
+Der Maps-MCP ermöglicht strukturierte Abfragen zu Einsatzorten, PLZ, Koordinaten, Grenzen und weiteren Geo-Informationen – öffentlich, ohne Login und ohne API-Key. Er ist bewusst read-only und dient der verlässlichen Auskunft.
+
+### Technische Besonderheiten
+
+- Eigene `llms.txt` und `llms-full.txt`
+- Maschinenlesbare Orte- und Geo-Dateien (`llms-orte-geo.txt`)
+- Agent Skills Discovery unter `/.well-known/agent-skills/`
+- Klare AI-Content-Policy (Training verboten, Attribution erforderlich)
+- Vollständig getrennt von der Website-Maschine (`www.ikeytz.com`)
+- Eigene Registry-Einträge und Discovery-Dateien
+
+### Warum eine eigene Maschine?
+
+Viele Anbieter mischen Website und Geo-Daten auf einer Domain. ikeytz trennt bewusst:
+
+- **`www.ikeytz.com`** = Leistungen, Preise, Kontakt, Website-MCP
+- **maps.ikeytz.com** = Einsatzgebiete, Karten, Geo-Daten, Maps-MCP
+
+So bleiben die Verantwortlichkeiten klar und die Datenquellen für Menschen und Maschinen eindeutig.
+
+### Kontakt
+
+- Handy: 0155 67688091
+- Festnetz: 07141 6964912
+- Fax: 07141 6964913
+- E-Mail: `info@maps.ikeytz.com`
+- Website: [maps.ikeytz.com](https://maps.ikeytz.com/)
+- Schwesterseite: [ikeytz.com](https://www.ikeytz.com/)
+- Büro: Adalbert-Stifter-Str. 14, 71638 Ludwigsburg (kein Kundenverkehr)
+
+### Kurz
+
+52 Einsatzgebiete · eigene MCP-Maschine · npm-Paket `@ikeytz/maps-mcp` · maschinenlesbare Geo-Daten – damit Fakten zu Einsatzort und Erreichbarkeit überall konsistent bleiben.
