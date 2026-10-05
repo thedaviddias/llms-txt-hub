@@ -1,0 +1,24 @@
+---
+name: 'HookPulse'
+description: 'Dead man''s switch for cron jobs, webhooks and pipelines: a check-in URL per monitor, an alert when it goes silent, JSON miss payloads, MCP server and API'
+website: 'https://hookpulse.net/'
+llmsUrl: 'https://hookpulse.net/llms.txt'
+llmsFullUrl: 'https://hookpulse.net/llms-full.txt'
+category: 'automation-workflow'
+priority: 'medium'
+publishedAt: '2026-09-05'
+---
+
+# HookPulse
+
+Dead man's switch for cron jobs, webhooks and pipelines: a check-in URL per monitor, an alert when it goes silent, JSON miss payloads, MCP server and API.
+
+## Key Focus Areas
+
+- Cron and webhook monitoring
+- Alert webhooks and e-mail
+- MCP server for agents
+
+## About llms.txt Implementation
+
+HookPulse serves `llms.txt` and `llms-full.txt` at the site root, generated from the same API catalog that feeds `/api/`, `openapi.json` and the MCP server at `https://hookpulse.net/mcp`, so the three always describe the same routes, prices and limits.

@@ -1,0 +1,24 @@
+---
+name: 'PontoFato'
+description: 'Brazilian postal codes (CEP) with IBGE coordinates from the 2022 Census address base, the companies registered at the same place and a radius view by activity'
+website: 'https://pontofato.com/'
+llmsUrl: 'https://pontofato.com/llms.txt'
+llmsFullUrl: 'https://pontofato.com/llms-full.txt'
+category: 'data-analytics'
+priority: 'medium'
+publishedAt: '2026-09-05'
+---
+
+# PontoFato
+
+Brazilian postal codes (CEP) with IBGE coordinates from the 2022 Census address base, the companies registered at the same place and a radius view by activity.
+
+## Key Focus Areas
+
+- CEP with latitude and longitude
+- Companies by postal code
+- MCP server for agents
+
+## About llms.txt Implementation
+
+PontoFato serves `llms.txt` and `llms-full.txt` at the site root, generated from the same API catalog that feeds `/api/`, `openapi.json` and the MCP server at `https://pontofato.com/mcp`, so the three always describe the same routes, prices and limits.

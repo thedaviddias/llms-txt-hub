@@ -1,0 +1,24 @@
+---
+name: 'Grade TV'
+description: 'Public TV channels and radio stations from the iptv-org catalog with measured health, folders with stable M3U/JSON/XSPF playlist URLs, a browser player, API and MCP'
+website: 'https://gradetv.net/'
+llmsUrl: 'https://gradetv.net/llms.txt'
+llmsFullUrl: 'https://gradetv.net/llms-full.txt'
+category: 'developer-tools'
+priority: 'medium'
+publishedAt: '2026-09-05'
+---
+
+# Grade TV
+
+Public TV channels and radio stations from the iptv-org catalog with measured health, folders with stable M3U/JSON/XSPF playlist URLs, a browser player, API and MCP.
+
+## Key Focus Areas
+
+- Channel catalog API
+- Playlists for VLC
+- MCP server for agents
+
+## About llms.txt Implementation
+
+Grade TV serves `llms.txt` and `llms-full.txt` at the site root, generated from the same API catalog that feeds `/api/`, `openapi.json` and the MCP server at `https://gradetv.net/mcp`, so the three always describe the same routes, prices and limits.
