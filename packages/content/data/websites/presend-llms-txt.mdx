@@ -1,0 +1,33 @@
+---
+category: 'security-identity'
+description: 'Free security, verification and developer-utility API — 40 endpoints, no signup, no API key required. Includes an MCP server for AI agents.'
+llmsFullUrl: ''
+llmsUrl: 'https://presend.pages.dev/llms.txt'
+name: 'Presend'
+publishedAt: '2026-09-13'
+website: 'https://presend.pages.dev/'
+---
+
+# Presend
+
+Free security, verification and developer\-utility API — 40 endpoints, no signup, no API key required\. Includes an MCP server for AI agents\.
+
+## What is Presend?
+
+Presend started as a set of free, privacy-first browser tools (EXIF removal, PDF compression, file hashing, and more — all running entirely client-side, nothing uploaded). It has since grown into a broader platform:
+
+- **A free 40-endpoint REST API** — no signup, no API key required for most endpoints
+- **An MCP (Model Context Protocol) server** exposing 33 tools for AI agents
+- **The original 48 browser-based tools**, still free and client-side
+
+## What makes it different
+
+Most free API directories gate useful features behind signup forms or aggressive rate limits. Presend's most distinctive endpoint is **`maintainer-change-check`**: it flags an npm package whose publisher changed after a long period of dormancy — the exact pattern behind real supply-chain attacks like `event-stream`, `ua-parser-js`, and `colors.js`. Combined with OSV.dev-backed vulnerability checks (8 ecosystems) and typosquat detection, it's a small but genuinely useful supply-chain security toolkit.
+
+## For AI agent builders
+
+The MCP server (`https://presend.pages.dev/mcp`) works out of the box with LangChain, CrewAI, LlamaIndex, OpenAI's Agents SDK, and Google's ADK — verified with real tool calls against each. No dedicated integration package needed for any of them, since MCP itself is the integration layer.
+
+## Everything else
+
+WHOIS/DNS lookups, GitHub repo health checks, JWT decode/verify, password breach checks, email/phone validation, and a handful of everyday utilities (UUID generation, Base64, timestamps). Full OpenAPI 3.0 spec at `/openapi.json`.
