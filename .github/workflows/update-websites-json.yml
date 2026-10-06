@@ -9,26 +9,25 @@ on:
       - "packages/content/data/websites/**"
       - "scripts/generate-websites.ts"
       - "scripts/search-index-generator.cjs"
+      - ".github/workflows/update-websites-json.yml"
 
 concurrency:
   group: update-websites-json-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  update-websites-json:
+  generate:
     runs-on: ubuntu-latest
     if: github.actor != 'github-actions[bot]'
     permissions:
       contents: read
 
     steps:
-      - name: Checkout latest main
-        uses: actions/checkout@v6
+      - name: Checkout generation source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          ref: main
-          # The main ruleset requires pull requests and only repository admins can
-          # bypass it, so pushes use an admin PAT instead of GITHUB_TOKEN.
-          token: ${{ secrets.PAT_TOKEN }}
+          ref: ${{ github.sha }}
+          persist-credentials: false
 
       - name: Install dependencies
         uses: ./.github/actions/install
@@ -38,27 +37,123 @@ jobs:
           pnpm generate-websites
           pnpm generate-search-index
 
-      - name: Commit and push generated files
+      - name: Upload generated data only
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: generated-websites
+          path: |
+            data/websites.json
+            apps/web/public/search/search-index.json
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: generate
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+    steps:
+      # A fresh runner, no checkout, no dependency installation, and no repository
+      # code. Artifacts cross this boundary as data, never executable scripts.
+      - name: Download generated data
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: generated-websites
+          path: ${{ runner.temp }}/generated-websites
+
+      - name: Validate and publish the two generated files
+        env:
+          PUBLICATION_TOKEN: ${{ secrets.PAT_TOKEN }}
+          SOURCE_SHA: ${{ github.sha }}
+          TARGET_REPOSITORY: ${{ github.repository }}
+          ARTIFACT_ROOT: ${{ runner.temp }}/generated-websites
+        # Isolated Python ignores the working directory, PYTHONPATH, and user
+        # site packages. Only this inline, reviewed code receives the PAT.
         run: |
-          files="data/websites.json apps/web/public/search/search-index.json"
-          if git diff --quiet -- $files; then
-            echo "Generated files are already up to date."
-            exit 0
-          fi
+          python3 -I - <<'PY'
+          import json
+          import os
+          import stat
+          import urllib.error
+          import urllib.request
+          from pathlib import Path
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add $files
-          # [skip ci] keeps this commit from triggering Routed CI; the site builds its own index
-          git commit -m "chore: update websites.json [skip ci]"
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, req, fp, code, msg, headers, newurl):
+                  raise ValueError("GitHub API redirects are not permitted")
 
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-            echo "Push attempt $attempt failed; rebasing onto the latest main."
-            git pull --rebase origin main
-          done
+          def reject_constant(value):
+              raise ValueError("Nonstandard JSON constants are not permitted")
 
-          echo "::error::Could not push generated files to main. Check that PAT_TOKEN belongs to a repository admin with contents write access."
-          exit 1
+          def publish():
+              root = Path(os.environ["ARTIFACT_ROOT"])
+              paths = ("data/websites.json", "apps/web/public/search/search-index.json")
+              directories = {"data", "apps", "apps/web", "apps/web/public", "apps/web/public/search"}
+              if root.is_symlink() or not root.is_dir():
+                  raise ValueError("Missing or unsafe artifact directory")
+              for entry in root.rglob("*"):
+                  relative = entry.relative_to(root).as_posix()
+                  mode = entry.lstat().st_mode
+                  if stat.S_ISDIR(mode) and relative in directories:
+                      continue
+                  if not stat.S_ISREG(mode) or relative not in paths:
+                      raise ValueError("Unexpected artifact path or file type")
+
+              entries = []
+              for path in paths:
+                  file = root / path
+                  if not file.is_file() or file.stat().st_size > 32 * 1024 * 1024:
+                      raise ValueError("Missing or oversized generated file")
+                  content = file.read_text(encoding="utf-8")
+                  value = json.loads(content, parse_constant=reject_constant)
+                  if not isinstance(value, list) or any(not isinstance(row, dict) for row in value):
+                      raise ValueError("Generated JSON must be an array of objects")
+                  entries.append({"path": path, "mode": "100644", "type": "blob", "content": content})
+
+              token = os.environ["PUBLICATION_TOKEN"]
+              if not token:
+                  raise ValueError("PAT_TOKEN must be configured for publication")
+              endpoint = "https://api.github.com/repos/" + os.environ["TARGET_REPOSITORY"]
+              opener = urllib.request.build_opener(NoRedirect())
+
+              def api(method, path, data=None):
+                  request = urllib.request.Request(
+                      endpoint + path,
+                      data=json.dumps(data).encode("utf-8") if data is not None else None,
+                      method=method,
+                      headers={"Authorization": "Bearer " + token,
+                               "Accept": "application/vnd.github+json",
+                               "Content-Type": "application/json",
+                               "X-GitHub-Api-Version": "2022-11-28"},
+                  )
+                  with opener.open(request, timeout=30) as response:
+                      return json.load(response)
+
+              source = os.environ["SOURCE_SHA"]
+              head = api("GET", "/git/ref/heads/main")["object"]["sha"]
+              if head != source:
+                  raise ValueError("Main advanced after generation; rerun on the latest main")
+              base = api("GET", "/git/commits/" + source)["tree"]["sha"]
+              tree = api("POST", "/git/trees", {"base_tree": base, "tree": entries})["sha"]
+              if tree == base:
+                  print("Generated files are already up to date.")
+                  return
+              commit = api("POST", "/git/commits", {
+                  "message": "chore: update websites.json [skip ci]",
+                  "tree": tree,
+                  "parents": [source],
+                  "author": {"name": "github-actions[bot]",
+                             "email": "github-actions[bot]@users.noreply.github.com"},
+              })["sha"]
+              # Never rebase stale output or overwrite concurrent source changes.
+              api("PATCH", "/git/refs/heads/main", {"sha": commit, "force": False})
+              print("Published the two generated files.")
+
+          try:
+              publish()
+          except urllib.error.HTTPError as error:
+              raise SystemExit(f"GitHub publication failed (HTTP {error.code}); check PAT_TOKEN access and rerun on latest main.")
+          except (ValueError, OSError, KeyError) as error:
+              raise SystemExit(str(error))
+          PY
