@@ -1,6 +1,6 @@
 ---
 name: 'Ownkube'
-description: 'A Heroku in your cloud. The developer experience you love, running on your own AWS or GCP account, with AI-powered operations from day one.'
+description: 'A cloud for personal software. Tell your coding agent to deploy a repo and it ships the web app to a live HTTPS URL, with workers, jobs, managed Postgres and Valkey alongside it.'
 website: 'https://ownkube.io'
 llmsUrl: 'https://ownkube.io/llms.txt'
 llmsFullUrl: 'https://ownkube.io/llms-full.txt'
@@ -10,19 +10,19 @@ publishedAt: '2026-04-25'
 
 # Ownkube
 
-Ownkube is a developer platform that gives teams a Heroku-style experience on their own AWS or GCP account. It combines one-click deploys, ephemeral preview environments on a Cloudflare-backed domain, and AI-powered operations that detect errors, explain crashes in plain English, and surface cost optimizations.
+Ownkube is a cloud for personal software. One prompt to production: tell your coding agent to deploy a repo, and it ships the web app to a live HTTPS URL, along with any workers, scheduled jobs, managed Postgres databases, or Valkey caches it needs.
 
 ## Key Focus Areas
 
-- One-click app, database, and worker deploys
-- Ephemeral per-PR preview environments on a Cloudflare subdomain
-- AI-powered error detection, root cause analysis, and cost optimization
-- k3s mode for indie developers and small teams ($10/month flat)
-- EKS mode for scaling teams (usage-based: $10/vCPU + $5/GB RAM)
-- Cloudflare edge protections (DDoS, bot, scrape) included
-- Compatible with AWS Activate and GCP for Startups credits
-- Zero vendor lock-in: vanilla infrastructure, disconnect anytime
+- Deploy from any coding agent through the hosted MCP server (Claude Code, Cursor, Codex, GitHub Copilot, Windsurf, Zed)
+- Web apps, workers, scheduled jobs, managed Postgres and Valkey caches
+- Every app gets its own HTTPS hostname
+- Logs, metrics and health checks for every deployment
+- One-click open-source apps from the Marketplace
+- Prepaid wallet from a $5 top-up, billed per minute, and unused credit never expires
+- The okctl CLI for deploys, logs and connection details from the terminal
+- The same app can move to your own AWS account with no rewrite
 
 ## About llms.txt Implementation
 
-Ownkube publishes both `llms.txt` (concise index of pages and docs) and `llms-full.txt` (full content of the marketing site and blog), generated from the Astro content collection at build time and served from the same origin as the public site.
+Ownkube publishes both `llms.txt` (concise index of pages, docs and agent runbooks) and `llms-full.txt` (full content of the marketing site and blog), generated at build time and served from the same origin as the public site. Markdown versions of key pages (`/index.md`, `/pricing.md`, `/prompt.md`) are linked from the index so agents can read them directly.
