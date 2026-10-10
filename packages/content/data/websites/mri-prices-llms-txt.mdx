@@ -1,0 +1,23 @@
+---
+name: 'MRIPrices'
+description: 'Cash-pay MRI prices at 5,419 US hospitals, read from the price files hospitals must publish. Compare real prices by state and city before you book a scan.'
+website: 'https://mriprices.fyi'
+llmsUrl: 'https://mriprices.fyi/llms.txt'
+llmsFullUrl: ''
+category: 'data-analytics'
+publishedAt: '2026-10-10'
+---
+
+# MRIPrices
+
+Cash-pay MRI prices at 5,419 US hospitals, read from the price files hospitals must publish. Compare real prices by state and city before you book a scan.
+
+## What MRIPrices offers
+
+- **5,400+ hospitals**: state and city pages listing cash-pay MRI prices read from hospitals' mandated machine-readable price files.
+- **Price transparency data**: real negotiated and cash prices rather than estimates.
+- **MCP server and public API**: read-only tools (`search_listings`, `get_listing`, `list_places`, `list_categories`, `get_stats`, `list_sources`) at `https://mriprices.fyi/mcp` for AI assistants.
+
+## About the llms.txt
+
+The llms.txt describes the price-file data provenance, URL structure (state → city → hospital), and how AI assistants should use the MCP tools to answer MRI-price questions.
