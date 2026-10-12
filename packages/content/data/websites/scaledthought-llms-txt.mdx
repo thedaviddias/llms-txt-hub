@@ -1,0 +1,23 @@
+---
+name: 'ScaledThought'
+description: 'OpenAI-compatible API for open-weight models that coding agents set up themselves'
+website: 'https://scaledthought.com/go/org-llmshub'
+llmsUrl: 'https://scaledthought.com/llms.txt'
+category: 'ai-ml'
+publishedAt: '2026-10-12'
+---
+
+# ScaledThought
+
+ScaledThought is an OpenAI-compatible API for open-weight models, built for coding agents. An agent creates the account and API key itself with one command (`npx -y scaledthought@latest init`), and usage is prepaid: the agent asks its human to approve a top-up, with no subscription. Prompts and completions are not stored or logged. The US region is live; Canada is coming soon.
+
+## Key Focus Areas
+
+- OpenAI-compatible inference for open-weight models
+- Agent-run signup, API keys and per-key budgets
+- Prepaid credits approved by a human
+- Hosted MCP server for account, keys, budgets and usage
+
+## About llms.txt Implementation
+
+ScaledThought's llms.txt is the setup protocol an agent follows: the exact commands to create an account, save the key, get a top-up approved, list the live models and make a first call, with what to do when each step fails.
