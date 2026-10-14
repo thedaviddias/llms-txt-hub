@@ -1,0 +1,24 @@
+---
+category: 'security-identity'
+description: 'EU age verification with the Digital Identity Wallet: a yes or no on age, no name or document. API, webhooks and a read only MCP server for stats.'
+llmsFullUrl: ''
+llmsUrl: 'https://tessio.eu/llms.txt'
+name: 'Tessio'
+publishedAt: '2026-10-14'
+website: 'https://tessio.eu/'
+---
+
+# Tessio
+
+EU age verification with the Digital Identity Wallet: a yes or no on age, no name or document\. API, webhooks and a read only MCP server for stats\.
+
+## Key Focus Areas
+
+- **API Documentation**: start an age check against `https://api.tessio.eu` and get the result over a webhook. A full API reference (`https://tessio.eu/docs/api/`) and the OpenAPI description the API itself serves (`https://api.tessio.eu/v1/openapi.json`).
+- **AI Integration**: a read only MCP server at `https://api.tessio.eu/mcp` that lets an assistant read age check stats: pass rate, the funnel, refusal reasons and breakdowns. It is listed in the official MCP Registry as eu.tessio/stats.
+- **Developer Tools**: Tessio.Verifier, the open source .NET verifier underneath (Apache-2.0), and Tessio.Labs, free validators for SD-JWT VC, mdoc, eIDAS signatures and EU trusted lists.
+- **Data Processing**: a check asks the EU Digital Identity Wallet for one claim, such as being over 18, and gets a yes or no. No name, date of birth or document reaches us or the site.
+
+## About llms.txt Implementation
+
+Our llms.txt is generated with the site, so its links always match the published pages. It groups them for developers, the product, regulation (UK Online Safety Act, EU Digital Services Act, the EUDI Wallet), a glossary of wallet and credential terms and use cases. Each regulation and glossary entry carries a short answer, so a model can cite it without fetching the page.
