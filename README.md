@@ -33,7 +33,7 @@ We organize projects into primary categories (🤖 **AI & ML**, 💻 **Developer
 | 💻 **VS Code Extension**  | Search and explore llms.txt files directly in VS Code           | [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=TheDavidDias.vscode-llms-txt)       |
 | 🧠 **MCP Explorer**       | Explore and analyze llms.txt files using Model Context Protocol | [GitHub](https://github.com/thedaviddias/mcp-llms-txt-explorer)                                               |
 | ⚡ **Raycast Extension**  | Search and explore llms.txt files directly in Raycast           | [Raycast Store](https://www.raycast.com/thedaviddias/llms-txt)                                                |
-| ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI            | [LLMs.txt Generator](https://llmstxtgenerator.co/)                                                            |
+| ⚡ **LLMs.txt Generator** | Generate llms.txt from sitemap, crawled pages and AI            | [LLMs.txt Generator](https://llmstxtgenerator.org/)                                                            |
 | 🛠 **llmstxt-cli**        | Install llms.txt docs as skills into 35+ AI coding agents       | [npm](https://www.npmjs.com/package/llmstxt-cli) · [README](packages/cli/README.md)                           |
 
 <!-- LLMS-LIST:START - Do not remove or modify this section -->
