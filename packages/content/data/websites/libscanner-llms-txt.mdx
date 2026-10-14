@@ -1,0 +1,23 @@
+---
+name: 'libscanner'
+description: 'C++20 libraries for DataMatrix: dmr reads GS1 and Chestny ZNAK codes from industrial camera frames, dmgen generates ECC 200 symbols. C ABI, Python packages and CLI for Windows and Linux.'
+website: 'https://libscanner.com/en'
+llmsUrl: 'https://libscanner.com/llms.txt'
+llmsFullUrl: 'https://libscanner.com/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-10-14'
+---
+
+# libscanner
+
+libscanner makes two libraries for industrial DataMatrix marking: dmr reads GS1 DataMatrix codes from conveyor camera frames, and dmgen generates DataMatrix ECC 200 symbols as PNG or JPEG.
+
+## Key Focus Areas
+
+- **dmr (reader)**: reads codes at around 2 pixels per module, every candidate verified by Reed-Solomon error correction; GS1 and Chestny ZNAK (Russian product marking) codes.
+- **dmgen (generator)**: all 24 square sizes, six encodation schemes, GS1 and Chestny ZNAK validation, self-check by reading every symbol back.
+- **Interfaces**: C++20 API, flat C ABI, Python packages on PyPI (libscanner-dmr, libscanner-dmgen) and a command-line tool for Windows and Linux (x86-64, ARM64, ARMv7).
+
+## About llms.txt Implementation
+
+llms.txt indexes a Markdown version of every documentation page in English and Russian; each HTML page also links its Markdown version via `<link rel="alternate" type="text/markdown">`. llms-full.txt is the complete API reference in one file: public headers, the C ABI, settings, result fields, licensing and command-line options. Public headers and examples: https://github.com/libscanner
