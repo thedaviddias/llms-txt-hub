@@ -1,6 +1,6 @@
 ---
 name: 'send21'
-description: 'Non-custodial crypto pay links, payment requests and payment drafts for humans and AI agents, priced in crypto or 165 fiat currencies. REST API and MCP server; the payer signs from their own wallet.'
+description: 'Non-custodial crypto pay links, payment requests and payment drafts for humans and AI agents, priced in crypto or 161 fiat currencies. REST API and MCP server; the payer signs from their own wallet.'
 website: 'https://send21.io'
 llmsUrl: 'https://send21.io/llms.txt'
 llmsFullUrl: 'https://send21.io/llms-full.txt'
@@ -14,7 +14,7 @@ send21 creates pay links, payment requests and payment drafts for BTC (on-chain 
 
 ## Key Features
 
-- **Pay links in any currency**: price in crypto or 165 fiat currencies with a locked rate
+- **Pay links in any currency**: price in crypto or 161 fiat currencies with a locked rate
 - **Built for AI agents**: REST API with scoped keys and an MCP server at https://send21.io/mcp
-- **Signed webhooks**: draft.confirmed and other events with HMAC signatures
+- **Signed webhooks**: draft.confirmed and other events, signed with a timestamped HMAC (X-Send21-Signature-V2) against replays
 - **Non-custodial**: no key can move funds
