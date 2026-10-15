@@ -1,0 +1,24 @@
+---
+name: 'EyalSec'
+description: 'es-python runs your Python app unchanged and follows untrusted input to the SQL query, shell command or file path that uses it. Report each flow, or stop it.'
+website: 'https://eyalsec.com'
+llmsUrl: 'https://eyalsec.com/llms.txt'
+llmsFullUrl: 'https://eyalsec.com/llms-full.txt'
+category: 'security-identity'
+publishedAt: '2026-10-15'
+---
+
+# EyalSec
+
+Run your existing Django, Flask or FastAPI app on EyalSec, a secure Python: `es-python` instead of `python`, with no code changes. It follows untrusted data from requests, files and the environment to the operation that uses it: a SQL query, a shell command, deserialization, a file path. Each event shows where the data came in and which line used it. Report the flow, or raise an error at that line to stop it.
+
+## Key features
+
+- Runs existing Python code unchanged, on Python 3.9 to 3.14, on Linux x86_64 and aarch64
+- Reports when untrusted data reaches a SQL query, a shell command, code evaluation, deserialization, a file path, a dynamic import or an outbound URL
+- Two modes per machine: Report records the flow, Report and Raise also stops the operation with an error at that line
+- Web dashboard with rules, severity, triage labels and notes, and a JSON API with CSV and JSON export
+
+## About llms.txt Implementation
+
+EyalSec's llms.txt summarizes what es-python does and its two modes, and links the main pages of the site and the user guide. The llms-full.txt adds the long form, including how it works, the glossary and the FAQ.
