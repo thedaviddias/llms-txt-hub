@@ -1,0 +1,36 @@
+---
+category: 'developer-tools'
+description: 'NuvoUI: readable utility classes, apply() for any value, design tokens with light, dark and high-contrast themes. SCSS in, plain CSS out.'
+llmsFullUrl: ''
+llmsUrl: 'https://nuvoui.io/llms.txt'
+name: 'NuvoUI: readable utility'
+publishedAt: '2026-10-17'
+website: 'https://nuvoui.io/'
+---
+
+# NuvoUI: readable utility
+
+NuvoUI: readable utility classes, apply\(\) for any value, design tokens with light, dark and high\-contrast themes\. SCSS in, plain CSS out\.
+
+## Key Focus Areas
+
+- **AI Integration**: A single guide that teaches AI assistants to write correct NuvoUI 2.x code: syntax rules, every mixin, configuration and anti-patterns.
+- **API Documentation**: Every utility class, every SCSS mixin, the token() and get-color() functions, and all configuration maps with their defaults.
+- **Developer Tools**: SCSS framework for Dart Sass. Works with Vite, Astro, Vue, Svelte and CSS modules. No JavaScript runtime.
+- **Data Processing**: Not applicable. NuvoUI compiles at build time and emits plain CSS.
+
+## About llms.txt Implementation
+
+llms-full.txt is the single source of truth for NuvoUI 2.x, kept in the core repository and published with every release. It includes an anti-hallucination table that maps common mistakes, like Tailwind-style names, removed v1 APIs and invented mixins, to the correct v2 syntax, so an assistant gets it right the first time.
+
+## Features
+
+- Readable utility classes: `flex between x-center`, `p-4@md`, `hover:bg-brand`.
+- `@include apply()`: every utility is also a mixin, with state and breakpoint modifiers and custom values.
+- Design tokens as `--nu-*` CSS custom properties, with light, dark, inverse and high-contrast themes.
+- Compile-time validation: typos and invalid values fail the build with a clear message.
+- RTL-ready logical utilities.
+
+## Getting Started
+
+npm install @nuvoui/core, then `@use "@nuvoui/core" as *;` in your SCSS. Use the prebuilt CSS for classes only, or `@nuvoui/core/mixins` in component styles for mixins with zero CSS output. Full guide: `https://nuvoui.io/llms-full.txt`
