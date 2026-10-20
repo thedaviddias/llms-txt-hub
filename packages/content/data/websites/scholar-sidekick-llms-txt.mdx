@@ -1,0 +1,50 @@
+---
+category: 'other'
+description: 'Paste a DOI, PMID, ISBN, or arXiv ID and get a clean citation in Vancouver, APA, IEEE, or any of 10,000+ styles. Export to BibTeX, RIS, EndNote, and more.'
+llmsFullUrl: 'https://scholar-sidekick.com/llms-full.txt'
+llmsUrl: 'https://scholar-sidekick.com/llms.txt'
+name: 'Scholar Sidekick'
+publishedAt: '2026-10-20'
+website: 'https://scholar-sidekick.com/'
+---
+
+# Scholar Sidekick
+
+Paste a DOI, PMID, ISBN, or arXiv ID and get a clean citation in Vancouver, APA, IEEE, or any of 10,000\+ styles\. Export to BibTeX, RIS, EndNote, and more\.
+
+## Key Focus Areas
+
+- **AI Integration**: Catches fabricated citations from AI tools. The main pattern is a real, resolvable DOI paired with an invented title, which a plain DOI lookup misses. Available as an MCP server, an OpenAI Apps SDK app, an A2A agent card, and agent skills.
+- **API Documentation**: A REST API for resolving, formatting, exporting, verifying, and auditing citations, with an OpenAPI 3.1 spec, documented error codes, and published rate limits.
+- **Developer Tools**: A CLI (`scholar-sidekick-cli` on npm), a Python client (`scholar-sidekick` on PyPI), a VS Code extension that lints `.bib` files, plugins for Obsidian and Zotero, a browser extension, and a Gemini CLI extension.
+- **Data Processing**: Detects identifiers, normalizes them, and resolves them against registries such as Crossref and PubMed. Then it formats or exports the record. Output is deterministic at a fixed `transform_version`.
+
+## About llms.txt Implementation
+
+Scholar Sidekick's llms.txt follows the llmstxt.org format. It has an H1, a blockquote summary, link lists under H2 sections, and an Optional section. It also includes the most important reference material inline: when to use each endpoint, the supported identifiers, the request shapes, the export formats, and the rate limits. An agent can make a correct first call without opening another page.
+
+Companion files:
+
+- `llms-full.txt`: all site pages in one file, kept under 200,000 characters
+- Scoped files for the REST API (`/docs/llms.txt`), the MCP server (`/mcp/llms.txt`), and the web tools (`/tools/llms.txt`)
+- A Markdown mirror (`.md`) for each documentation page
+- `llms-install.md`: install steps an agent can follow
+
+## Features
+
+- **Citation verification**: `POST /api/verify` compares a claimed title, authors, and year against the record that the identifier resolves to. It returns `matched`, `mismatch`, `ambiguous`, or `not_found`, with a diff for each field.
+- **Bibliography audit**: `POST /api/audit` checks a whole BibTeX, RIS, or CSL-JSON bibliography for fabrication and retraction in one call (up to 25 entries per call).
+- **Retraction and open-access checks**: Retraction, correction, and expression-of-concern status from Crossref and Retraction Watch. The best legal open-access copy from Unpaywall.
+- **Formatting and export**: Vancouver, APA, AMA, IEEE, CSE, and 10,000+ CSL styles. Export to BibTeX, RIS, EndNote XML, RefWorks, NBIB/MEDLINE, RDF, CSL-JSON, and CSV.
+- **Identifiers**: DOI, shortDOI, PMID, PMCID, ISBN, ISSN, arXiv ID, NASA ADS bibcode, and WHO IRIS URL.
+
+## Getting Started
+
+No sign-up or API key is necessary for the free tier.
+
+- **REST**: `curl -X POST https://scholar-sidekick.com/api/format -H "Content-Type: application/json" -d '{"text":"10.1038/nphys1170","style":"apa"}'`
+- **MCP**: Add the Scholar Sidekick MCP server to Claude, Cursor, or another MCP client. Setup: `https://scholar-sidekick.com/mcp`
+- **CLI**: `npm i -g scholar-sidekick-cli`, then run `scholar`
+- **Python**: `pip install scholar-sidekick`
+
+For higher rate limits, create a free `ssk_` API key at `https://scholar-sidekick.com/account.` Full documentation: `https://scholar-sidekick.com/docs`
