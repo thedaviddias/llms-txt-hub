@@ -1,0 +1,37 @@
+---
+category: 'developer-tools'
+description: 'Score any website against the Vercel Agent Readability Spec and llmstxt.org standard. Get actionable fixes to make your site AI-agent friendly.'
+llmsFullUrl: 'https://agent-ready.dev/llms-full.txt'
+llmsUrl: 'https://agent-ready.dev/llms.txt'
+name: 'Agent Ready'
+publishedAt: '2026-10-20'
+website: 'https://agent-ready.dev/'
+---
+
+# Agent Ready
+
+Score any website against the Vercel Agent Readability Spec and llmstxt\.org standard\. Get actionable fixes to make your site AI\-agent friendly\.
+
+## Key Focus Areas
+
+- **llms.txt Validation**: Checks a site's llms.txt against the llmstxt.org specification
+- **Link Checking**: Fetches every linked URL and reports broken links
+- **llms.txt Generation**: Builds a spec-conformant llms.txt from a site's pages
+- **Agent Readability**: Scores the whole site for how well AI agents can find, parse and use it
+
+## About llms.txt Implementation
+
+Agent Ready's own llms.txt is a curated index of its tools, guides, API docs and agent-protocol manifests. It follows the llmstxt.org structure: an H1 title, a blockquote summary, free prose above the first H2, link-only H2 sections, and an Optional section for secondary material. A companion llms-full.txt carries the full scoring methodology and every check definition. Each page is also available as Markdown, at its .md URL or through an Accept: text/markdown request.
+
+## Features
+
+- **[llms.txt checker](https://agent-ready.dev/llms-txt-checker)**: 10 checks covering file access, H1 title, blockquote summary, H2 file-list sections, link format, linked URLs, Optional section, Content-Type, and llms-full.txt, with a 0–100 llms.txt score and a fix for each failure
+- **[llms.txt generator](https://agent-ready.dev/llms-txt-generator)**: drafts a spec-conformant llms.txt you can edit and publish
+- **Full agent-readability audit**: 72 checks against the Vercel Agent Readability Spec, llmstxt.org and agent-protocol specs (MCP, A2A, agents.json, NLWeb), plus a separate WCAG 2.2 accessibility sub-score
+- **Every surface**: web app, REST API, MCP server, CLI (agent-ready-scanner on npm) and an app in ChatGPT
+
+## Getting Started
+
+Paste a URL into the [llms.txt checker](https://agent-ready.dev/llms-txt-checker).
+No sign-up is needed for a scan. Developers can use the REST API or the MCP
+server; setup is in the [developer docs](https://agent-ready.dev/docs).
