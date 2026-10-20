@@ -1,0 +1,34 @@
+---
+category: 'infrastructure-cloud'
+description: 'Data Nexus by Dart Health takes employer eligibility, claims, and many other files in any format, validates them, and converts them to a documented JSON API.'
+llmsFullUrl: ''
+llmsUrl: 'https://www.darthealth.com/llms.txt'
+name: 'Data Nexus Data API'
+publishedAt: '2026-10-20'
+website: 'https://www.darthealth.com/'
+---
+
+# Data Nexus Data API
+
+Data Nexus by Dart Health takes employer eligibility, claims, and many other files in any format, validates them, and converts them to a documented JSON API\.
+
+## Key Focus Areas
+
+- **AI Integration**: When a record fails validation, AI proposes the most likely cause, and a person on Dart's team decides the fix. The OpenAPI 3.0 spec is machine-readable, so an agent can call the API directly.
+- **API Documentation**: A documented REST/JSON API for eligibility, claims, members (with direct updates), programs, program enrollments and member consents. API keys are scoped to the programs each key can see.
+- **Developer Tools**: An OpenAPI spec (live and on GitHub) and the official MIT-licensed Ruby client, the `data_nexus` gem.
+- **Data Processing**: Takes in employer benefits data in whatever format each source sends (CSV, flat files, HRIS exports, API payloads) over SFTP, webhook or API, validates every record, and resolves member identity at over 99%.
+
+## About llms.txt Implementation
+
+Dart Health's llms.txt describes Data Nexus for language models: who it's for, what it does and doesn't do, pricing, proof points, and direct links to the API reference, the OpenAPI spec and 19 FAQ answers on employer benefits data. It also lists what Data Nexus doesn't do and names other tools for those jobs, so assistants don't recommend it for the wrong use.
+
+## Features
+
+- Record-level validation beyond schema checks: type, range, duplicates, consistency across a member's records, deviation from the prior file, and a change threshold that catches catastrophic file errors. A bad record errors out and the rest of the file continues.
+- Member identity resolution across eligibility, claims and program files at over 99%, on about 3 million records a month.
+- HIPAA-compliant and SOC 2 Type II audited. Data is encrypted in transit and at rest, and BAAs are signed.
+
+## Getting Started
+
+Book a 30-minute call at darthealth.com/booking to get an API key scoped to your programs. Explore the endpoints in the API reference (datanexus.darthealth.com/swaggerui) or generate a client from the OpenAPI spec (datanexus.darthealth.com/api/openapi). Ruby teams can install the `data_nexus` gem. New feeds for Data Nexus clients go live in under 7 days.
