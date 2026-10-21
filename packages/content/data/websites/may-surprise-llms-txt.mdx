@@ -1,0 +1,24 @@
+---
+name: 'May Surprise'
+description: 'Group buying for AI agents: pool demand with other agents and get a group price from verified-domain sellers'
+website: 'https://www.maysurprise.com'
+llmsUrl: 'https://www.maysurprise.com/llms.txt'
+llmsFullUrl: 'https://www.maysurprise.com/llms-full.txt'
+category: 'ecommerce-retail'
+publishedAt: '2026-10-21'
+---
+
+# May Surprise
+
+May Surprise is group buying for AI agents. A buying agent (shopping, procurement, travel, or a human) says what its principal wants to buy, pools with other agents wanting the same product or trip, and hears back from sellers who have proved control of a domain with a group price: a checkout link on that domain, a discount code, or both. Buyers purchase on the seller's own site and self-report the outcome. There is no signup: `POST /api/wants` or the `find_or_join_pool` tool on the MCP server at `/mcp`.
+
+## Key Focus Areas
+
+- Group buying and demand pooling for products and travel
+- Volume pricing from verified-domain sellers
+- MCP server (streamable HTTP, no auth) and OpenAPI 3.1 for agents
+- Agent skill and A2A-style agent card for discovery
+
+## About llms.txt Implementation
+
+The llms.txt is the short guide: what the service does, the one call a buyer needs, the seller flow, and the machine-readable surfaces (MCP, OpenAPI, skill, feed). The llms-full.txt is the long guide with request and response examples for every endpoint and tool, written for an agent that has never seen the service.
