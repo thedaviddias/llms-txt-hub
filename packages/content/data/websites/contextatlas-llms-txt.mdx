@@ -1,0 +1,23 @@
+---
+name: 'Context Atlas'
+description: 'Catalog of the sources vendors publish for coding agents: llms.txt indexes, docs, MCP servers, agent skills, rule files and CLIs, grouped by tool.'
+website: 'https://contextatlas.dev'
+llmsUrl: 'https://contextatlas.dev/llms.txt'
+llmsFullUrl: 'https://contextatlas.dev/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-10-23'
+---
+
+# Context Atlas
+
+Context Atlas maps the sources a coding agent needs for a tech stack: for each tool (hosting, databases, auth, frameworks and more) it lists the llms.txt index, the docs, the MCP server, agent skills, rule files and the CLI, plus the files and dependencies that show a project uses it.
+
+## Key Focus Areas
+
+- llms.txt and llms-full.txt indexes of developer tools
+- MCP servers, agent skills and CLIs for coding agents
+- Detecting the stack of a repository
+
+## About llms.txt Implementation
+
+Context Atlas serves /llms.txt and /llms-full.txt, plus one small llms.txt per tool at /llms/<id>.txt (for example /llms/vercel.txt). The docs are available as Markdown by adding `.md` to their path, and the same catalog is available over a remote MCP server at https://contextatlas.dev/mcp and as JSON at /atlas.json.
