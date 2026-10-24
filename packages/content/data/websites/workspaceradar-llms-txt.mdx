@@ -1,0 +1,24 @@
+---
+name: 'WorkspaceRadar'
+description: 'Finds the Google Workspace licences nobody uses, judged by Reports API activity, and shows what each costs in euros'
+website: 'https://workspaceradar.com'
+llmsUrl: 'https://workspaceradar.com/llms.txt'
+llmsFullUrl: 'https://workspaceradar.com/llms-full.txt'
+category: 'business-operations'
+publishedAt: '2026-10-24'
+---
+
+# WorkspaceRadar
+
+WorkspaceRadar is a read-only web app for Google Workspace admins. It reads Admin SDK Reports API activity (sign-ins, Gmail, Drive and Chat over 90 days) rather than last sign-in, joins it to each account's licence and Google's EUR list price, and shows which seats are idle and what they cost, split into savings realisable this month (Flexible plan) and at renewal (annual commitment). It also flags suspended accounts holding a licence, paid but unassigned seats, shared mailboxes on full seats and unused Gemini add-ons. Hosted in the EU; no card, no email sign-up.
+
+## Key Focus Areas
+
+- Unused and idle Google Workspace licences, judged by activity rather than last login
+- Google Workspace pricing in euros (Business Starter, Standard, Plus; annual and Flexible)
+- Google Workspace licence management: assigning, removing and reducing licences
+- Open data: Google's EUR list prices and Licensing API SKU ids (CC BY 4.0)
+
+## About llms.txt Implementation
+
+The llms.txt is a fact sheet: what one scan finds, the permissions the app asks for, that it is read-only, and links to every guide in English and German plus the legal pages. The llms-full.txt contains the full text of all guides and the support page.
