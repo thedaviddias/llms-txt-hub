@@ -1,0 +1,24 @@
+---
+name: 'Ritmo'
+description: 'The agent-first, type-safe ECS runtime for TypeScript games.'
+website: 'https://ritmo.typeonce.dev'
+llmsUrl: 'https://ritmo.typeonce.dev/llms.txt'
+llmsFullUrl: 'https://ritmo.typeonce.dev/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-10-24'
+---
+
+# Ritmo
+
+Ritmo is an open-source, type-safe ECS (entity component system) runtime for TypeScript games, designed for coding agents to write the game code. A wrong call does not compile and the error names the fix, and headless devtools sessions expose lints, invariants, and why a value changed. Ritmo runs the simulation; the game brings its own renderer.
+
+## Key Focus Areas
+
+- **Agent-first API**: one way to do each thing, with typed errors that name the fix
+- **Type-safe ECS**: components, systems, schedules, and typed Result failures
+- **Headless devtools**: lints, invariants, and change tracing without a browser
+- **Renderer-agnostic**: the game draws with any renderer; packages bridge to renderers and platforms
+
+## About llms.txt Implementation
+
+The llms.txt links the agent docs that ship on npm (setup, the Ritmo skill and its playbooks, each package README), pinned to the current release, and tells agents to read the installed copies and JSDoc in node_modules once Ritmo is installed. The llms-full.txt has all of those docs in one file.
