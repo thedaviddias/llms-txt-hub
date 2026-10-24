@@ -1,0 +1,38 @@
+---
+category: 'developer-tools'
+description: 'Chrome''s WebRTC engine (libwebrtc M152) with the W3C browser API, in Python and asyncio. pip install wrtc.'
+llmsFullUrl: ''
+llmsUrl: 'https://wrtc.marshal.dev/llms.txt'
+name: 'Python WebRTC'
+publishedAt: '2026-10-24'
+website: 'https://wrtc.marshal.dev/'
+---
+
+# Python WebRTC
+
+Chrome's WebRTC engine \(libwebrtc M152\) with the W3C browser API, in Python and asyncio\. pip install wrtc\.
+
+## What it is
+
+Python WebRTC binds **libwebrtc M152**, the WebRTC engine inside Chrome, and exposes it through the W3C browser
+APIs in asyncio: `RTCPeerConnection`, data channels, tracks, WebCodecs frames, encoded transforms and stats.
+Install it with `pip install wrtc` and import it as `webrtc`.
+
+## What the llms.txt covers
+
+- **Start**: the quickstart, and migrating from aiortc by changing one import
+- **Guides**: connections, data channels, events, media, H.264 and field trials
+- **API reference**: every interface, dictionary, enum and exception, generated from the docstrings
+- **Examples**: runnable programs from the repository
+
+## For agents
+
+- [llms-full.txt](https://wrtc.marshal.dev/llms-full.txt) holds the whole documentation in one file
+- Every page has a Markdown copy: add `.md` to its URL, like `https://wrtc.marshal.dev/quickstart.md`
+- The names are the browser's in snake\_case (`create_offer`), and the camelCase originals (`createOffer`) work too
+
+## Links
+
+- Docs: `https://wrtc.marshal.dev`
+- GitHub: `https://github.com/MarshalX/python-webrtc`
+- PyPI: `https://pypi.org/project/wrtc/`
