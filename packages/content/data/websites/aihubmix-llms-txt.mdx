@@ -1,0 +1,50 @@
+---
+category: 'developer-tools'
+description: 'Unified AI model gateway: 700+ models from OpenAI, Anthropic, Google and open source behind one API key, speaking OpenAI, Anthropic and Gemini protocols.'
+llmsFullUrl: ''
+llmsUrl: 'https://aihubmix.com/llms.txt'
+name: 'AIHubMix'
+publishedAt: '2026-10-27'
+website: 'https://aihubmix.com/'
+---
+
+# AIHubMix
+
+Unified AI model gateway: 700\+ models from OpenAI, Anthropic, Google and open source behind one API key, speaking OpenAI, Anthropic and Gemini protocols\.
+
+## What AIHubMix is
+
+AIHubMix is a unified gateway for hosted AI models, operated by AIHubMix, LLC (Delaware, USA). One API key and one base URL reach 700+ models from OpenAI, Anthropic, Google and leading open-source providers. The gateway serves four wire protocols — OpenAI Chat Completions, OpenAI Responses, Anthropic Messages and Google Gemini — so an existing SDK changes only its base URL and key. Text, image, video, 3D, speech, embeddings, rerank and moderation share the same key.
+
+## What this llms.txt covers
+
+- `https://aihubmix.com/llms.txt` — site index for models and agents: positioning, when to use it (and when not to), developer resources, onboarding, and the machine-readable endpoints.
+- `https://aihubmix.com/llms-full.txt` — one-fetch concatenation (~1.5 MB) of every verified per-model integration guide (396 models at the time of writing): endpoints, verified capabilities, pricing and a runnable example per model.
+- `https://aihubmix.com/agents.md` — agent onboarding: auth, endpoints, error handling and an end-to-end verification step.
+- `https://aihubmix.com/model/<model-id>/llms.txt` — the per-model form, generated for any published model.
+- `https://docs.aihubmix.com/llms.txt` — documentation index in Markdown.
+
+## Key focus areas
+
+- **Model access without vendor lock-in** — switching vendor is a model-id change, not a rewrite.
+- **Protocol compatibility** — four wire formats side by side, with per-model capability checks.
+- **Runtime model choice** — per-key model mapping with failover, plus `model: auto` routing under a cost / quality / latency strategy.
+- **Structured output that survives real traffic** — malformed JSON from an upstream model is repaired at the gateway, not in the caller's retry loop.
+- **Media on the same key** — image, video, 3D, TTS, STT, realtime transcription, embeddings, rerank and moderation, with an async task protocol for long-running jobs.
+
+## Machine-readable data, no auth required
+
+- `GET https://aihubmix.com/api/v1/models` — full catalog with capabilities and pricing.
+- `GET https://aihubmix.com/api/v1/models?type=llm&sort_by=order` — the LLM subset.
+- Per-model parameter schemas and prices are public on each model page.
+
+## Getting started
+
+1. Create an API key in the console: `https://console.aihubmix.com`
+2. Read `agents.md` for auth and endpoints, then take a real model id from the live catalog rather than from memory.
+3. Free models need no credit card. Paid usage is billed per 1M tokens at the routed model's price; there is no subscription.
+4. Docs: `https://docs.aihubmix.com` — API reference, error codes and versioning: `https://aihubmix.com/developers`
+
+## For crawlers
+
+`robots.txt` allows all paths except `/v1/` (API endpoints). Per-locale sitemaps are published from `https://aihubmix.com/sitemap.xml`.
