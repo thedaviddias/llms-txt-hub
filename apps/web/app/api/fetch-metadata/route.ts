@@ -1,3 +1,4 @@
+import { auth } from '@thedaviddias/auth'
 import { logger } from '@thedaviddias/logging'
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
@@ -274,6 +275,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: validation.error }, { status: 400 })
     }
 
+    const session = await auth()
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: 'Please sign in to submit your website.' }, { status: 401 })
+    }
     const metadata = await fetchMetadata(validation.url.toString())
     return NextResponse.json(metadata)
   } catch (error) {

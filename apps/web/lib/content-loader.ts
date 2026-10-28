@@ -4,13 +4,17 @@ let allLegals: any[] = []
 let allResources: any[] = []
 let allWebsites: any[] = []
 let allDocs: any[] = []
+let websitesCollectionAvailable = false
 
 try {
   const collections = require('@/.content-collections/generated')
   allGuides = collections.allGuides || []
   allLegals = collections.allLegals || []
   allResources = collections.allResources || []
-  allWebsites = collections.allWebsites || []
+  if (Array.isArray(collections.allWebsites)) {
+    allWebsites = collections.allWebsites
+    websitesCollectionAvailable = true
+  }
   allDocs = collections.allDocs || []
 } catch {
   // Fallback for CI/build environments where content-collections hasn't been generated yet
@@ -189,6 +193,12 @@ export function getWebsites(): WebsiteMetadata[] {
     return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   })
 }
+
+/** Internal availability signal used by strict, security-sensitive catalogue readers. */
+export const websiteCollectionSource = Object.freeze({
+  available: websitesCollectionAvailable,
+  read: getWebsites
+})
 
 /**
  * Get a website by slug

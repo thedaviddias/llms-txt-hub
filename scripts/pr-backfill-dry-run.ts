@@ -1,8 +1,31 @@
 import { execFile } from 'node:child_process'
+import { createHash } from 'node:crypto'
+import { readFile, stat } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
-import matter from 'gray-matter'
+import { assessPublicationFields } from '@thedaviddias/submission-trust/assessment'
+import {
+  type AssessmentAttestationVerificationResult,
+  createAssessmentAttestation,
+  verifyAssessmentAttestation
+} from '@thedaviddias/submission-trust/attestation'
+import {
+  SUBMISSION_POLICY_VERSION,
+  WEB_RISK_FRESHNESS_MS
+} from '@thedaviddias/submission-trust/constants'
+import { createNetworkInspector } from '@thedaviddias/submission-trust/network-inspector'
+import { parseSubmissionBody } from '@thedaviddias/submission-trust/submission-body'
+import type {
+  PublicationAssessmentDependencies,
+  SubmissionAssessment,
+  SubmissionFields
+} from '@thedaviddias/submission-trust/types'
+import { validateSubmissionUrl } from '@thedaviddias/submission-trust/url-policy'
+import { checkWebRiskUrl } from '@thedaviddias/submission-trust/web-risk'
+import { glob } from 'glob'
+import { JSON_SCHEMA, load as loadYaml } from 'js-yaml'
 import { categories } from '../apps/web/lib/categories.ts'
+import { buildReviewCard, publishReviewCard, type ReviewCardComment } from './pr-review-card.ts'
 import {
   classifyPullRequest,
   type PullRequestClassification,
@@ -15,10 +38,21 @@ const execFileAsync = promisify(execFile)
 
 const DEFAULT_REPO = 'thedaviddias/llms-txt-hub'
 const DEFAULT_CONCURRENCY = 8
-const FETCH_TIMEOUT_MS = 8_000
-const MAX_FETCH_TEXT_LENGTH = 20_000
 const PAGE_SIZE = 100
 const PR_REVIEW_WORKFLOW_NAME = 'PR Review'
+const MAX_MDX_BYTES = 100_000
+const MAX_BASE_MDX_FILES = 5000
+const MAX_BASE_MDX_AGGREGATE_BYTES = 256 * 1024 * 1024
+const BASE_SCAN_DEADLINE_MS = 20_000
+const WEBSITE_PATH_PREFIX = 'packages/content/data/websites/'
+const MAX_OPEN_PULL_REQUESTS = 300
+const MAX_OPEN_PULL_REQUEST_FILES = 300
+const MAX_COMPARE_FILES = 300
+const MAX_COMPARE_COMMITS = 250
+const MAX_GH_RESPONSE_BYTES = 2 * 1024 * 1024
+const GH_EXEC_TIMEOUT_MS = 20_000
+const PAGINATION_DEADLINE_MS = 20_000
+const MAX_PAGINATION_ITEMS = 500
 const EXACT_MANAGED_LABELS = [
   'area:content',
   'automerge:candidate',
@@ -45,9 +79,19 @@ const COLUMN_WIDTHS = {
   title: 52
 } as const
 
-const SUSPICIOUS_FAIL_TERMS = ['casino', 'gambling', 'malware', 'porn', 'viagra']
+const editorialCategories = categories.map(category => ({
+  description: category.description,
+  name: category.name,
+  slug: category.slug
+}))
 
-const categoryBySlug = new Map(categories.map(category => [category.slug, category]))
+/**
+ * Create the hardened inspector used by trusted PR moderation.
+ */
+const createReviewInspector = () =>
+  createNetworkInspector({
+    checkReputation: url => checkWebRiskUrl(url, { apiKey: process.env.GOOGLE_WEB_RISK_API_KEY })
+  })
 const managedLabelSet = new Set<string>(EXACT_MANAGED_LABELS)
 
 const LABEL_DEFINITIONS = [
@@ -110,7 +154,8 @@ const LABEL_DEFINITIONS = [
 ] as const
 
 type GuidelineStatus = 'pass' | 'warn' | 'fail' | 'skipped'
-type ReviewConclusion =
+/** Normalized conclusion of the required PR Review workflow. */
+export type ReviewConclusion =
   | 'success'
   | 'failure'
   | 'cancelled'
@@ -123,10 +168,12 @@ type ReviewConclusion =
   | 'unknown'
 
 interface DryRunOptions {
+  assessDirect: boolean
   concurrency: number
   dryRun: boolean
   json: boolean
   limit?: number
+  openPullRequestDuplicateIndex?: OpenPullRequestDuplicateIndex
   pullRequestNumber?: number
   repo: string
 }
@@ -146,14 +193,28 @@ interface GitHubPullRequestCommit {
 }
 
 interface GitHubPullRequestDetails {
+  base?: {
+    ref?: string
+    repo?: {
+      full_name?: string
+    } | null
+    sha?: string
+  }
+  body?: string | null
   draft: boolean
   head: {
     ref: string
+    repo?: {
+      full_name?: string
+    } | null
     sha: string
     user?: {
       login?: string
     }
   }
+  labels?: {
+    name: string
+  }[]
   mergeable: boolean | null
   number: number
   state: string
@@ -173,21 +234,46 @@ interface GitHubPullRequestFile {
 }
 
 interface GitHubPullRequestListItem {
+  base?: {
+    sha?: string
+  }
+  head?: {
+    repo?: {
+      full_name?: string
+    } | null
+    sha: string
+  }
   number: number
 }
 
 interface GitHubWorkflowRun {
   conclusion: string | null
   created_at: string
-  name: string
+  head_sha?: string
+  pull_requests?: {
+    base?: { ref?: string; sha?: string }
+    number?: number
+  }[]
   status: string
+  workflow_id?: number
 }
 
 interface GitHubWorkflowRunsResponse {
   workflow_runs: GitHubWorkflowRun[]
 }
 
+interface GitHubCompareResponse {
+  ahead_by?: number
+  base_commit?: { sha?: string }
+  commits?: { sha?: string }[]
+  files?: GitHubPullRequestFile[]
+  status?: string
+  total_commits?: number
+}
+
 export interface SubmissionFrontmatter {
+  bodyRequiresManualReview?: true
+  mdxContent?: string
   category: string
   description: string
   llmsFullUrl?: string | null
@@ -197,22 +283,41 @@ export interface SubmissionFrontmatter {
   website: string
 }
 
-interface UrlInspection {
-  contentType: string | null
-  error?: string
-  ok: boolean
-  status?: number
-  text: string
-  url: string
-}
-
 interface GuidelineAssessment {
   guidelineReasons: string[]
   guidelineStatus: GuidelineStatus
   policyEligible: boolean
 }
 
+interface ModeratedSubmissionFile {
+  assessment: SubmissionAssessment
+  bytes: Uint8Array
+  frontmatter: SubmissionFrontmatter
+  path: string
+}
+
+interface ModerationResult extends GuidelineAssessment {
+  reviewSubmission?: SubmissionFrontmatter
+  attestation: AssessmentAttestationVerificationResult
+  ephemeralAttestation?: EphemeralAssessmentAttestation
+  files: ModeratedSubmissionFile[]
+}
+
+interface EphemeralAssessmentAttestation {
+  block: string
+  originalBody: string
+}
+
+interface DirectAssessmentContext {
+  enabled: boolean
+  baseSnapshotStatus: TrustedBaseStatus
+  hasManualReviewLabel: boolean
+  requiredCheckStatus: ReviewConclusion
+  structurallyEligible: boolean
+}
+
 interface PullRequestReviewSnapshot {
+  reviewCard?: string
   classification: PullRequestClassification
   guidelineReasons: string[]
   guidelineStatus: GuidelineStatus
@@ -259,6 +364,493 @@ interface MergeAction {
   status: 'failed' | 'merged' | 'planned' | 'skipped'
 }
 
+interface MergeRevalidationContext {
+  baseDuplicateStatus: DuplicateStatus
+  baseSha: string
+  duplicateFields: DuplicateCandidate
+  ephemeralAttestation?: EphemeralAssessmentAttestation
+  file: ModeratedSubmissionFile
+  freshAssessment: SubmissionAssessment
+  headRepository: string
+  trustedBaseSha: string
+}
+
+type DuplicateStatus = 'unique' | 'duplicate' | 'unavailable'
+type TrustedBaseStatus = 'current' | 'moved' | 'unavailable'
+type AuthorizationDisposition = 'manual_review' | 'wait'
+
+/** A fail-closed decision produced from all trusted merge gates. */
+export type MergeAuthorization =
+  | { readonly authorized: true; readonly reason: 'Signed exact-head assessment passed.' }
+  | {
+      readonly authorized: false
+      readonly disposition: AuthorizationDisposition
+      readonly reason: string
+    }
+
+/** Inputs required to verify the PR-body attestation against exact GitHub bytes. */
+export interface MergeAttestationVerificationInput {
+  readonly addedMdxBytes: Uint8Array
+  readonly addedMdxPath: string
+  readonly body: string
+  readonly currentHeadSha: string
+  readonly now?: () => Date
+  readonly prNumber: number
+  readonly repository: string
+  readonly secret: string
+}
+
+/** Inputs that cannot be trusted from labels or PR-authored content alone. */
+export interface MergeAuthorizationInput {
+  readonly attestation: AssessmentAttestationVerificationResult
+  readonly baseDuplicateStatus: DuplicateStatus
+  readonly baseSnapshotStatus: TrustedBaseStatus
+  readonly freshAssessment: SubmissionAssessment
+  readonly hasManualReviewLabel: boolean
+  readonly now?: () => Date
+  readonly openPullRequestDuplicateStatus: DuplicateStatus
+  readonly requiredCheckStatus: ReviewConclusion
+}
+
+/** Trusted workflow event context derived from a bounded GitHub event payload. */
+export type AutomergeEventContext =
+  | { readonly mode: 'single'; readonly prNumber: number }
+  | { readonly mode: 'scan_all' }
+  | { readonly mode: 'skip' }
+
+/** A complete file manifest derived from immutable Git object SHAs. */
+export type ImmutablePullRequestManifest =
+  | { readonly files: GitHubPullRequestFile[]; readonly status: 'complete' }
+  | { readonly status: 'unavailable' }
+
+/** Validate a bounded compare response against exact immutable base and head SHAs. */
+export function deriveImmutablePullRequestManifest(
+  response: GitHubCompareResponse,
+  expected: { readonly baseSha: string; readonly headSha: string }
+): ImmutablePullRequestManifest {
+  const commits = response.commits
+  const files = response.files
+  if (
+    !/^[a-f0-9]{40}$/.test(expected.baseSha) ||
+    !/^[a-f0-9]{40}$/.test(expected.headSha) ||
+    response.base_commit?.sha !== expected.baseSha ||
+    response.status !== 'ahead' ||
+    !Number.isSafeInteger(response.ahead_by) ||
+    !Number.isSafeInteger(response.total_commits) ||
+    typeof response.ahead_by !== 'number' ||
+    typeof response.total_commits !== 'number' ||
+    response.ahead_by <= 0 ||
+    response.ahead_by !== response.total_commits ||
+    response.total_commits > MAX_COMPARE_COMMITS ||
+    !Array.isArray(commits) ||
+    commits.length !== response.total_commits ||
+    commits.at(-1)?.sha !== expected.headSha ||
+    !Array.isArray(files) ||
+    files.length === 0 ||
+    files.length >= MAX_COMPARE_FILES ||
+    files.some(
+      file =>
+        typeof file?.filename !== 'string' ||
+        file.filename.length === 0 ||
+        file.filename.length > 1024 ||
+        typeof file.status !== 'string'
+    )
+  ) {
+    return { status: 'unavailable' }
+  }
+  return { files, status: 'complete' }
+}
+
+/** Run outbound assessment only after the exact structural and signature gates pass. */
+export async function runTrustedAssessmentGate<T>(
+  input: { readonly addedMdxCount: number; readonly attestationVerified: boolean },
+  assess: () => Promise<T>
+): Promise<T | null> {
+  if (input.addedMdxCount !== 1 || !input.attestationVerified) return null
+  return assess()
+}
+
+/** Enforce expensive refresh, final mutable read, pure authorization, then merge ordering. */
+export async function runFinalMergeSequence<TPrepared, TLatest, TDecision>(input: {
+  readonly authorize: (prepared: TPrepared, latest: TLatest) => TDecision
+  readonly fetchLatest: () => Promise<TLatest>
+  readonly isAuthorized: (decision: TDecision) => boolean
+  readonly merge: (decision: TDecision) => Promise<void>
+  readonly onDenied: (decision: TDecision) => Promise<void>
+  readonly prepareExpensive: () => Promise<TPrepared>
+}): Promise<TDecision> {
+  const prepared = await input.prepareExpensive()
+  const latest = await input.fetchLatest()
+  const decision = input.authorize(prepared, latest)
+  if (input.isAuthorized(decision)) await input.merge(decision)
+  else await input.onDenied(decision)
+  return decision
+}
+
+/** Select a required check only when its immutable workflow and PR scope match exactly. */
+export function selectTrustedReviewConclusion(
+  runs: readonly GitHubWorkflowRun[],
+  expected: {
+    readonly baseRef: 'main'
+    readonly baseSha: string
+    readonly headSha: string
+    readonly prNumber: number
+    readonly workflowId: number
+  }
+): ReviewConclusion {
+  const matching = runs
+    .filter(run => {
+      if (run.workflow_id !== expected.workflowId || run.head_sha !== expected.headSha) return false
+      return run.pull_requests?.some(
+        pullRequest =>
+          pullRequest.number === expected.prNumber &&
+          pullRequest.base?.ref === expected.baseRef &&
+          pullRequest.base.sha === expected.baseSha
+      )
+    })
+    .sort((left, right) => right.created_at.localeCompare(left.created_at))[0]
+  if (!matching) return 'missing'
+  return matching.status === 'completed' ? normalizeConclusion(matching.conclusion) : 'in_progress'
+}
+
+const invalidAttestation = (): AssessmentAttestationVerificationResult => ({
+  code: 'invalid_expectation',
+  ok: false
+})
+
+const unavailableAssessment = (): SubmissionAssessment => ({
+  checkedAt: new Date(0).toISOString(),
+  decision: 'retry_later',
+  evidence: [],
+  policyVersion: SUBMISSION_POLICY_VERSION,
+  publicMessage: 'Trusted reassessment is unavailable.',
+  reasonCode: 'publication_unavailable'
+})
+
+const isUnknownRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+
+const readEventPrNumber = (value: unknown): number | null =>
+  typeof value === 'number' && Number.isSafeInteger(value) && value > 0 ? value : null
+
+/** Derive a safe processing scope from a trusted GitHub Actions event payload. */
+export function deriveAutomergeEventContext(
+  eventName: string,
+  payload: unknown
+): AutomergeEventContext {
+  if (!isUnknownRecord(payload)) return { mode: 'skip' }
+  if (eventName === 'pull_request_target') {
+    const pullRequest = payload.pull_request
+    const prNumber = isUnknownRecord(pullRequest) ? readEventPrNumber(pullRequest.number) : null
+    return prNumber ? { mode: 'single', prNumber } : { mode: 'skip' }
+  }
+  if (eventName === 'workflow_run') {
+    const workflowRun = payload.workflow_run
+    if (!isUnknownRecord(workflowRun) || workflowRun.name !== PR_REVIEW_WORKFLOW_NAME) {
+      return { mode: 'skip' }
+    }
+    const pullRequests = workflowRun.pull_requests
+    if (!Array.isArray(pullRequests) || pullRequests.length !== 1) return { mode: 'skip' }
+    const pullRequest = pullRequests[0]
+    const prNumber = isUnknownRecord(pullRequest) ? readEventPrNumber(pullRequest.number) : null
+    return prNumber ? { mode: 'single', prNumber } : { mode: 'skip' }
+  }
+  if (eventName === 'workflow_dispatch') {
+    const inputs = payload.inputs
+    if (!isUnknownRecord(inputs) || typeof inputs.pr_number !== 'string') return { mode: 'skip' }
+    const value = inputs.pr_number.trim()
+    if (value === '') return { mode: 'scan_all' }
+    if (!/^[1-9][0-9]*$/.test(value)) return { mode: 'skip' }
+    const prNumber = Number(value)
+    return readEventPrNumber(prNumber) ? { mode: 'single', prNumber } : { mode: 'skip' }
+  }
+  return { mode: 'skip' }
+}
+
+/** Prove that the checked-out base is the exact current base used by the pull request. */
+export function deriveTrustedBaseStatus(input: {
+  readonly checkedOutSha: string
+  readonly currentBaseSha: string
+  readonly pullRequestBaseSha: string
+}): TrustedBaseStatus {
+  const shas = [input.checkedOutSha, input.currentBaseSha, input.pullRequestBaseSha]
+  if (!shas.every(sha => /^[a-f0-9]{40}$/.test(sha))) return 'unavailable'
+  return shas.every(sha => sha === input.checkedOutSha) ? 'current' : 'moved'
+}
+
+const manualReviewAuthorization = (reason: string): MergeAuthorization => ({
+  authorized: false,
+  disposition: 'manual_review',
+  reason
+})
+
+const waitAuthorization = (reason: string): MergeAuthorization => ({
+  authorized: false,
+  disposition: 'wait',
+  reason
+})
+
+/** Read a caller-provided clock without allowing exceptions or invalid dates to authorize. */
+const safeClock = (clock: (() => Date) | undefined): Date | null => {
+  try {
+    const value = clock?.() ?? new Date()
+    return value instanceof Date && Number.isFinite(value.getTime()) ? value : null
+  } catch {
+    return null
+  }
+}
+
+const isFreshTimestamp = (value: string, nowMs: number): boolean => {
+  const timestamp = Date.parse(value)
+  return (
+    Number.isFinite(timestamp) && timestamp <= nowMs && nowMs - timestamp < WEB_RISK_FRESHNESS_MS
+  )
+}
+
+const hasFreshSafeAssessmentEvidence = (
+  assessment: SubmissionAssessment,
+  includesOptionalResource: boolean,
+  nowMs: number
+): boolean => {
+  if (
+    assessment.decision !== 'auto_publish' ||
+    assessment.reasonCode !== 'passed' ||
+    assessment.policyVersion !== SUBMISSION_POLICY_VERSION ||
+    !isFreshTimestamp(assessment.checkedAt, nowMs)
+  ) {
+    return false
+  }
+
+  const requiredResources: readonly ('homepage' | 'llms' | 'llms_full')[] = includesOptionalResource
+    ? ['homepage', 'llms', 'llms_full']
+    : ['homepage', 'llms']
+  return requiredResources.every(resource =>
+    assessment.evidence.some(
+      entry =>
+        entry.check === 'resource' &&
+        entry.resource === resource &&
+        entry.decision === 'auto_publish' &&
+        entry.reasonCode === 'passed' &&
+        entry.details?.providerStatus === 'safe' &&
+        typeof entry.details.checkedAt === 'string' &&
+        isFreshTimestamp(entry.details.checkedAt, nowMs)
+    )
+  )
+}
+
+/**
+ * Verify a signed assessment against the exact current PR head and MDX bytes.
+ */
+export function verifyMergeAttestation(
+  input: MergeAttestationVerificationInput
+): AssessmentAttestationVerificationResult {
+  try {
+    if (
+      !(input.addedMdxBytes instanceof Uint8Array) ||
+      input.addedMdxBytes.byteLength === 0 ||
+      input.addedMdxBytes.byteLength > MAX_MDX_BYTES
+    ) {
+      return invalidAttestation()
+    }
+    const content = new TextDecoder('utf-8', { fatal: true }).decode(input.addedMdxBytes)
+    const frontmatter = parseSubmissionFrontmatter(content)
+    if (frontmatter.bodyRequiresManualReview) return invalidAttestation()
+    const expected = {
+      headSha: input.currentHeadSha,
+      llmsUrl: frontmatter.llmsUrl,
+      mdxContentSha256: createHash('sha256').update(input.addedMdxBytes).digest('hex'),
+      mdxPath: input.addedMdxPath,
+      policyVersion: SUBMISSION_POLICY_VERSION,
+      prNumber: input.prNumber,
+      repository: input.repository,
+      website: frontmatter.website
+    }
+    return verifyAssessmentAttestation({
+      body: input.body,
+      expected: frontmatter.llmsFullUrl
+        ? { ...expected, llmsFullUrl: frontmatter.llmsFullUrl }
+        : expected,
+      now: input.now,
+      secret: input.secret
+    })
+  } catch {
+    return invalidAttestation()
+  }
+}
+
+const hasWebSubmissionProvenance = (body: string): boolean =>
+  body.length > 100_000 || /llms-hub-(?:submission|assessment)/i.test(body)
+
+/** Verify in-memory direct provenance or the existing web signature at the final PR read. */
+export function verifyFinalMergeAttestation(input: {
+  readonly ephemeralAttestation?: EphemeralAssessmentAttestation
+  readonly verification: MergeAttestationVerificationInput
+}): AssessmentAttestationVerificationResult {
+  const ephemeral = input.ephemeralAttestation
+  if (!ephemeral) return verifyMergeAttestation(input.verification)
+  if (
+    input.verification.body !== ephemeral.originalBody ||
+    hasWebSubmissionProvenance(input.verification.body)
+  ) {
+    return invalidAttestation()
+  }
+  return verifyMergeAttestation({ ...input.verification, body: ephemeral.block })
+}
+
+/** Check trusted prerequisites before any outbound direct-PR assessment or signing. */
+const directAssessmentBlockReason = (input: {
+  body: string
+  context?: DirectAssessmentContext
+  frontmatter: SubmissionFrontmatter
+  secret: string
+}): string | null => {
+  const context = input.context
+  if (!context?.enabled) return 'A valid signed exact-byte assessment is required.'
+  if (hasWebSubmissionProvenance(input.body)) {
+    return 'Web submission provenance requires a valid existing signed assessment.'
+  }
+  if (context.hasManualReviewLabel) return 'Publisher-owned manual review is required.'
+  if (!context.structurallyEligible) return 'The direct pull request is not structurally eligible.'
+  if (context.requiredCheckStatus !== 'success') {
+    return `Direct assessment requires successful PR Review for the exact head (${context.requiredCheckStatus}).`
+  }
+  if (context.baseSnapshotStatus !== 'current') {
+    return 'Direct assessment requires the current trusted base snapshot.'
+  }
+  if (input.secret.length > 4096 || Buffer.byteLength(input.secret, 'utf8') < 32) {
+    return 'The trusted assessment signing key is unavailable or invalid.'
+  }
+  const publishedAt = input.frontmatter.publishedAt
+  const publicationTime = publishedAt ? Date.parse(`${publishedAt}T00:00:00.000Z`) : Number.NaN
+  if (
+    !publishedAt ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(publishedAt) ||
+    !Number.isFinite(publicationTime) ||
+    new Date(publicationTime).toISOString().slice(0, 10) !== publishedAt
+  ) {
+    return 'Direct assessment requires a valid YYYY-MM-DD publishedAt date in the submitted file.'
+  }
+  if (input.frontmatter.bodyRequiresManualReview) {
+    return 'The submitted Markdown body requires maintainer review.'
+  }
+  return null
+}
+
+/** Mint a bounded, memory-only signature from fresh complete trusted provider evidence. */
+const createDirectAssessmentAttestation = (input: {
+  assessment: SubmissionAssessment
+  frontmatter: SubmissionFrontmatter
+  verification: MergeAttestationVerificationInput
+}): EphemeralAssessmentAttestation | undefined => {
+  const now = safeClock(input.verification.now)
+  if (
+    !now ||
+    !hasFreshSafeAssessmentEvidence(
+      input.assessment,
+      Boolean(input.frontmatter.llmsFullUrl),
+      now.getTime()
+    )
+  )
+    return undefined
+  const providerTimes = input.assessment.evidence.flatMap(entry =>
+    entry.check === 'resource' && typeof entry.details?.checkedAt === 'string'
+      ? [Date.parse(entry.details.checkedAt)]
+      : []
+  )
+  const oldestCheck = Math.min(...providerTimes)
+  if (!Number.isFinite(oldestCheck)) return undefined
+  const signed = createAssessmentAttestation(
+    {
+      decision: 'auto_publish',
+      expiresAt: new Date(
+        Math.min(now.getTime() + WEB_RISK_FRESHNESS_MS, oldestCheck + WEB_RISK_FRESHNESS_MS)
+      ).toISOString(),
+      headSha: input.verification.currentHeadSha,
+      issuedAt: now.toISOString(),
+      ...(input.frontmatter.llmsFullUrl ? { llmsFullUrl: input.frontmatter.llmsFullUrl } : {}),
+      llmsUrl: input.frontmatter.llmsUrl,
+      mdxContentSha256: createHash('sha256').update(input.verification.addedMdxBytes).digest('hex'),
+      mdxPath: input.verification.addedMdxPath,
+      policyVersion: SUBMISSION_POLICY_VERSION,
+      prNumber: input.verification.prNumber,
+      repository: input.verification.repository,
+      submissionId: `direct-pr-${input.verification.prNumber}-${input.verification.currentHeadSha}`,
+      webRiskCheckedAt: new Date(oldestCheck).toISOString(),
+      website: input.frontmatter.website
+    },
+    input.verification.secret
+  )
+  return signed.ok ? { block: signed.block, originalBody: input.verification.body } : undefined
+}
+
+/**
+ * Derive merge authorization only from verified provenance and fresh trusted evidence.
+ */
+export function deriveMergeAuthorization(input: MergeAuthorizationInput): MergeAuthorization {
+  if (input.hasManualReviewLabel) {
+    return manualReviewAuthorization('Publisher-owned manual review is required.')
+  }
+  if (input.requiredCheckStatus === 'missing' || input.requiredCheckStatus === 'in_progress') {
+    return waitAuthorization('PR Review is still pending for the exact head.')
+  }
+  if (input.baseSnapshotStatus !== 'current') {
+    return waitAuthorization('The trusted base snapshot is no longer current.')
+  }
+  const now = safeClock(input.now)
+  if (!now) return manualReviewAuthorization('Trusted assessment clock is unavailable.')
+  if (!input.attestation.ok) {
+    return manualReviewAuthorization('A valid signed assessment is required.')
+  }
+
+  const payload = input.attestation.payload
+  const nowMs = now.getTime()
+  if (
+    payload.decision !== 'auto_publish' ||
+    payload.policyVersion !== SUBMISSION_POLICY_VERSION ||
+    !isFreshTimestamp(payload.webRiskCheckedAt, nowMs) ||
+    nowMs < Date.parse(payload.issuedAt) ||
+    nowMs >= Date.parse(payload.expiresAt)
+  ) {
+    return manualReviewAuthorization('The signed assessment is no longer fresh.')
+  }
+  if (input.baseDuplicateStatus !== 'unique' || input.openPullRequestDuplicateStatus !== 'unique') {
+    return manualReviewAuthorization('Unique publication could not be confirmed.')
+  }
+  if (!hasFreshSafeAssessmentEvidence(input.freshAssessment, Boolean(payload.llmsFullUrl), nowMs)) {
+    return manualReviewAuthorization('Fresh trusted reassessment did not authorize publication.')
+  }
+  if (input.requiredCheckStatus !== 'success') {
+    return manualReviewAuthorization('PR Review did not succeed for the exact head.')
+  }
+  return { authorized: true, reason: 'Signed exact-head assessment passed.' }
+}
+
+/**
+ * Reconfirm the exact head and required check after authorization and immediately before merge.
+ */
+export function deriveExactHeadMergeDecision(input: {
+  readonly authorization: MergeAuthorization
+  readonly baseSnapshotStatus: TrustedBaseStatus
+  readonly currentHeadSha: string
+  readonly expectedHeadSha: string
+  readonly requiredCheckStatus: ReviewConclusion
+}): MergeAuthorization {
+  if (!input.authorization.authorized) return input.authorization
+  if (input.baseSnapshotStatus !== 'current') {
+    return waitAuthorization('The trusted base moved before merge.')
+  }
+  if (input.currentHeadSha !== input.expectedHeadSha) {
+    return waitAuthorization('The pull request head changed before merge.')
+  }
+  if (input.requiredCheckStatus === 'missing' || input.requiredCheckStatus === 'in_progress') {
+    return waitAuthorization('PR Review is still pending before merge.')
+  }
+  if (input.requiredCheckStatus !== 'success') {
+    return manualReviewAuthorization('PR Review changed before merge.')
+  }
+  return input.authorization
+}
+
 /**
  * Build the classifier input from GitHub pull request API payloads.
  */
@@ -286,12 +878,51 @@ export function buildClassifierContext(input: {
   }
 }
 
+/** Treat unavailable label state or an explicit manual label as a publisher-owned veto. */
+function pullRequestHasManualReviewVeto(details: GitHubPullRequestDetails): boolean {
+  if (!Array.isArray(details.labels)) return true
+  return details.labels.some(label => label?.name === 'needs:manual-review')
+}
+
+/** Read bounded YAML data without dispatching any contributor-selected parser engine. */
+function parseUntrustedFrontmatter(content: string): {
+  data: Record<string, unknown>
+  content: string
+} {
+  if (
+    Buffer.byteLength(content, 'utf8') === 0 ||
+    Buffer.byteLength(content, 'utf8') > MAX_MDX_BYTES
+  ) {
+    throw new Error('Submission MDX is empty or too large.')
+  }
+  const header = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/.exec(content)
+  if (!header || typeof header[1] !== 'string') {
+    throw new Error('Submission frontmatter requires standard YAML delimiters.')
+  }
+  return {
+    content: content.slice(header[0].length),
+    data: ensureRecord(loadYaml(header[1], { schema: JSON_SCHEMA }))
+  }
+}
+
 /**
  * Parse submission frontmatter from a PR-added MDX file.
  */
 export function parseSubmissionFrontmatter(content: string): SubmissionFrontmatter {
-  const parsed = matter(content)
-  const data = ensureRecord(parsed.data)
+  const parsed = parseUntrustedFrontmatter(content)
+  const data = parsed.data
+  const allowedKeys = new Set([
+    'category',
+    'description',
+    'llmsFullUrl',
+    'llmsUrl',
+    'name',
+    'publishedAt',
+    'website'
+  ])
+  if (Object.keys(data).some(key => !allowedKeys.has(key))) {
+    throw new Error('Submission frontmatter contains an unsupported field.')
+  }
   const frontmatter: SubmissionFrontmatter = {
     category: readRequiredString(data, 'category'),
     description: readRequiredString(data, 'description'),
@@ -302,6 +933,9 @@ export function parseSubmissionFrontmatter(content: string): SubmissionFrontmatt
     website: readRequiredString(data, 'website')
   }
 
+  const body = parseSubmissionBody(parsed.content, frontmatter)
+  if (body.mdxContent) frontmatter.mdxContent = body.mdxContent
+  if (!body.canonical) frontmatter.bodyRequiresManualReview = true
   return frontmatter
 }
 
@@ -401,6 +1035,7 @@ export function deriveWouldMergeDecision(input: {
  * Determine whether the local operator should attempt a merge.
  */
 export function deriveMergeAction(input: {
+  authorization?: MergeAuthorization
   desiredLabels: string[]
   dryRun: boolean
   wouldMerge: boolean
@@ -427,11 +1062,22 @@ export function deriveMergeAction(input: {
     }
   }
 
+  if (input.authorization?.authorized) {
+    return {
+      attempted: !input.dryRun,
+      mode: input.dryRun ? 'dry-run' : 'applied',
+      reason: input.authorization.reason,
+      status: 'planned'
+    }
+  }
+
   return {
-    attempted: true,
+    attempted: false,
     mode: input.dryRun ? 'dry-run' : 'applied',
-    reason: input.dryRun ? 'Would merge now.' : 'Merge queued.',
-    status: input.dryRun ? 'planned' : 'skipped'
+    reason:
+      input.authorization?.reason ??
+      'Automatic merge is disabled until signed attestation verification is available.',
+    status: 'skipped'
   }
 }
 
@@ -461,6 +1107,26 @@ export function deriveManagedLabels(snapshot: {
   return [...labels].sort()
 }
 
+/** Apply the authorization outcome to policy labels without trusting existing labels. */
+export function deriveAuthorizationManagedLabels(input: {
+  readonly authorization: MergeAuthorization
+  readonly policyLabels: readonly string[]
+}): string[] {
+  const labels = new Set(input.policyLabels)
+  if (input.authorization.authorized) {
+    labels.add('automerge:candidate')
+    labels.delete('needs:manual-review')
+  } else {
+    labels.delete('automerge:candidate')
+    if (input.authorization.disposition === 'manual_review') {
+      labels.add('needs:manual-review')
+    } else {
+      labels.delete('needs:manual-review')
+    }
+  }
+  return [...labels].sort()
+}
+
 /**
  * Calculate the add/remove delta between current and desired managed labels.
  */
@@ -469,7 +1135,12 @@ export function calculateManagedLabelSync(
   desiredLabels: string[]
 ): LabelSyncPlan {
   const currentManaged = currentLabels.filter(label => isManagedLabel(label)).sort()
-  const desired = [...new Set(desiredLabels)].sort()
+  const desiredSet = new Set(desiredLabels)
+  if (currentLabels.includes('needs:manual-review')) {
+    desiredSet.add('needs:manual-review')
+    desiredSet.delete('automerge:candidate')
+  }
+  const desired = [...desiredSet].sort()
   const added = desired.filter(label => !currentManaged.includes(label))
   const removed = currentManaged.filter(label => !desired.includes(label))
 
@@ -481,104 +1152,404 @@ export function calculateManagedLabelSync(
 }
 
 /**
- * Assess a submission against moderation and guideline heuristics.
+ * Assess a submission with the shared fail-closed publication policy.
  */
-export function assessSubmissionGuidelines(input: {
+export async function assessSubmissionGuidelines(input: {
   frontmatter: SubmissionFrontmatter
-  homepageInspection: UrlInspection
-  llmsFullInspection?: UrlInspection | null
-  llmsInspection: UrlInspection
-}): GuidelineAssessment {
-  const reasons: string[] = []
-  let guidelineStatus: GuidelineStatus = 'pass'
+  inspectResource?: PublicationAssessmentDependencies['inspectResource']
+  now?: () => Date
+}): Promise<GuidelineAssessment> {
+  return toGuidelineAssessment(await assessSubmission(input))
+}
 
-  if (!categoryBySlug.has(input.frontmatter.category)) {
-    addGuidelineReason(reasons, 'Invalid category slug in frontmatter.', 'fail')
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
+const assessSubmission = async (input: {
+  frontmatter: SubmissionFrontmatter
+  inspectResource?: PublicationAssessmentDependencies['inspectResource']
+  now?: () => Date
+}): Promise<SubmissionAssessment> => {
+  const fields: SubmissionFields = {
+    category: input.frontmatter.category,
+    description: input.frontmatter.description,
+    llmsUrl: input.frontmatter.llmsUrl,
+    ...(input.frontmatter.mdxContent ? { mdxContent: input.frontmatter.mdxContent } : {}),
+    name: input.frontmatter.name,
+    publishedAt: input.frontmatter.publishedAt ?? '',
+    website: input.frontmatter.website
   }
-
-  if (!sameWebsiteFamily(input.frontmatter.website, input.frontmatter.llmsUrl)) {
-    addGuidelineReason(
-      reasons,
-      'Website URL and llms.txt URL do not appear to belong to the same site.',
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
+  if (input.frontmatter.llmsFullUrl) {
+    fields.llmsFullUrl = input.frontmatter.llmsFullUrl
   }
-
-  if (!input.homepageInspection.ok) {
-    addGuidelineReason(
-      reasons,
-      `Website homepage could not be inspected (${input.homepageInspection.error ?? `HTTP ${input.homepageInspection.status ?? 'unknown'}`}).`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
+  const dependencies: PublicationAssessmentDependencies = {
+    categories: editorialCategories,
+    inspectResource: input.inspectResource ?? createReviewInspector().inspect
   }
-
-  if (!input.llmsInspection.ok) {
-    addGuidelineReason(
-      reasons,
-      `llms.txt is not accessible (${input.llmsInspection.error ?? `HTTP ${input.llmsInspection.status ?? 'unknown'}`}).`,
-      'fail'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-  } else {
-    if (looksLikeHtmlResponse(input.llmsInspection)) {
-      addGuidelineReason(
-        reasons,
-        'llms.txt URL appears to return HTML instead of plain text.',
-        'fail'
-      )
-      guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-    }
-
-    if (input.llmsInspection.text.trim().length < 80) {
-      addGuidelineReason(reasons, 'llms.txt content is unusually short.', 'warn')
-      guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
-    }
+  if (input.now) dependencies.now = input.now
+  const assessment = await assessPublicationFields(fields, dependencies)
+  if (assessment.decision !== 'auto_publish' || !input.frontmatter.bodyRequiresManualReview)
+    return assessment
+  return {
+    ...assessment,
+    decision: 'manual_review',
+    reasonCode: 'editorial_uncertainty',
+    publicMessage: 'The submitted Markdown body requires maintainer review.',
+    evidence: [
+      ...assessment.evidence,
+      {
+        check: 'editorial',
+        decision: 'manual_review',
+        reasonCode: 'editorial_uncertainty',
+        details: { evidenceId: 'editorial:content:noncanonical-body' }
+      }
+    ]
   }
+}
 
-  if (input.frontmatter.llmsFullUrl && input.llmsFullInspection && !input.llmsFullInspection.ok) {
-    addGuidelineReason(
-      reasons,
-      `llms-full.txt could not be inspected (${input.llmsFullInspection.error ?? `HTTP ${input.llmsFullInspection.status ?? 'unknown'}`}).`,
-      'warn'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'warn')
-  }
-
-  const combinedText = normalizeText(
-    [
-      input.frontmatter.name,
-      input.frontmatter.description,
-      input.homepageInspection.text,
-      input.llmsInspection.text,
-      input.llmsFullInspection?.text ?? ''
-    ].join(' ')
-  )
-
-  const failTerm = findMatchedTerm(combinedText, SUSPICIOUS_FAIL_TERMS)
-  if (failTerm) {
-    addGuidelineReason(
-      reasons,
-      `Content contains suspicious term "${failTerm}" and requires manual review.`,
-      'fail'
-    )
-    guidelineStatus = mergeGuidelineStatus(guidelineStatus, 'fail')
-  }
+const toGuidelineAssessment = (assessment: SubmissionAssessment): GuidelineAssessment => {
+  const guidelineStatus: GuidelineStatus =
+    assessment.decision === 'auto_publish'
+      ? 'pass'
+      : assessment.decision === 'reject'
+        ? 'fail'
+        : 'warn'
 
   return {
-    guidelineReasons: reasons.length > 0 ? reasons : ['No guideline concerns detected.'],
+    guidelineReasons:
+      assessment.decision === 'auto_publish'
+        ? ['No guideline concerns detected.']
+        : [assessment.publicMessage],
     guidelineStatus,
-    policyEligible: guidelineStatus === 'pass'
+    policyEligible: assessment.decision === 'auto_publish'
   }
+}
+
+interface NormalizedDuplicateFields {
+  readonly llmsUrl?: string
+  readonly website?: string
+}
+
+interface DuplicateCandidate {
+  readonly llmsUrl: string
+  readonly website: string
+}
+
+/** Injectable local-base seams used to enforce complete bounded duplicate scans. */
+export interface TrustedBaseInspectionDependencies {
+  readonly listFiles: () => Promise<{ complete: boolean; paths: string[] }>
+  readonly now: () => number
+  readonly readFile: (path: string) => Promise<Uint8Array>
+  readonly statFile: (path: string) => Promise<{ size: number }>
+}
+
+/** A normalized open pull request head used by duplicate inspection. */
+export interface OpenPullRequestSnapshot {
+  readonly baseSha: string
+  readonly headRepository: string
+  readonly headSha: string
+  readonly number: number
+}
+
+/** A normalized open pull request file used by duplicate inspection. */
+export interface OpenPullRequestFileSnapshot {
+  readonly path: string
+  readonly status: string
+}
+
+/** Injectable GitHub seams used for bounded open-PR duplicate inspection. */
+export interface OpenPullRequestInspectionDependencies {
+  readonly getFileContent: (repo: string, path: string, sha: string) => Promise<string>
+  readonly listOpenPullRequests: (page: number) => Promise<OpenPullRequestSnapshot[]>
+  readonly loadImmutableManifest: (
+    pullRequest: OpenPullRequestSnapshot
+  ) => Promise<
+    | { readonly files: OpenPullRequestFileSnapshot[]; readonly status: 'complete' }
+    | { readonly status: 'unavailable' }
+  >
+}
+
+/** A reusable duplicate index built once from immutable open-PR manifests. */
+export type OpenPullRequestDuplicateIndex =
+  | { readonly ownersByUrl: Map<string, Set<number>>; readonly status: 'complete' }
+  | { readonly status: 'unavailable' }
+
+const normalizeDuplicateFields = (
+  frontmatter: SubmissionFrontmatter
+): DuplicateCandidate | null => {
+  const website = validateSubmissionUrl(frontmatter.website)
+  const llmsUrl = validateSubmissionUrl(frontmatter.llmsUrl)
+  if (!website.ok || !llmsUrl.ok) return null
+  return { llmsUrl: llmsUrl.normalizedUrl, website: website.normalizedUrl }
+}
+
+const parseDuplicateFields = (content: string): NormalizedDuplicateFields | null => {
+  try {
+    const { data } = parseUntrustedFrontmatter(content)
+    const website = normalizeExistingDuplicateUrl(readRequiredString(data, 'website'))
+    const llmsUrl = normalizeExistingDuplicateUrl(readRequiredString(data, 'llmsUrl'))
+    if (!website && !llmsUrl) return null
+    return {
+      ...(llmsUrl ? { llmsUrl } : {}),
+      ...(website ? { website } : {})
+    }
+  } catch {
+    return null
+  }
+}
+
+const normalizeExistingDuplicateUrl = (value: string): string | null => {
+  const direct = validateSubmissionUrl(value)
+  if (direct.ok) return direct.normalizedUrl
+  try {
+    const url = new URL(value)
+    if (url.protocol !== 'http:') return null
+    url.protocol = 'https:'
+    const upgraded = validateSubmissionUrl(url.toString())
+    return upgraded.ok ? upgraded.normalizedUrl : null
+  } catch {
+    return null
+  }
+}
+
+const isDuplicate = (
+  candidate: NormalizedDuplicateFields,
+  existing: NormalizedDuplicateFields
+): boolean =>
+  Boolean(
+    (candidate.website && existing.website && candidate.website === existing.website) ||
+      (candidate.llmsUrl && existing.llmsUrl && candidate.llmsUrl === existing.llmsUrl)
+  )
+
+const defaultTrustedBaseDependencies: TrustedBaseInspectionDependencies = {
+  listFiles: async () => ({
+    complete: true,
+    paths: await glob(`${WEBSITE_PATH_PREFIX}**/*.mdx`, { nodir: true })
+  }),
+  now: () => Date.now(),
+  readFile: async path => readFile(path),
+  statFile: async path => stat(path)
+}
+
+/** Inspect the proven trusted base with file, byte, completeness, and time bounds. */
+export async function inspectTrustedBaseDuplicate(
+  candidate: DuplicateCandidate,
+  dependencies: TrustedBaseInspectionDependencies = defaultTrustedBaseDependencies
+): Promise<DuplicateStatus> {
+  try {
+    const startedAt = dependencies.now()
+    const withinDeadline = (): boolean => {
+      const elapsed = dependencies.now() - startedAt
+      return Number.isFinite(elapsed) && elapsed >= 0 && elapsed <= BASE_SCAN_DEADLINE_MS
+    }
+    const listing = await dependencies.listFiles()
+    if (
+      !withinDeadline() ||
+      !listing.complete ||
+      listing.paths.length === 0 ||
+      listing.paths.length > MAX_BASE_MDX_FILES ||
+      new Set(listing.paths).size !== listing.paths.length ||
+      listing.paths.some(path => !path.startsWith(WEBSITE_PATH_PREFIX) || !path.endsWith('.mdx'))
+    ) {
+      return 'unavailable'
+    }
+    let aggregateBytes = 0
+    const sizes = new Map<string, number>()
+    for (const path of listing.paths) {
+      if (!withinDeadline()) return 'unavailable'
+      const metadata = await dependencies.statFile(path)
+      if (
+        !withinDeadline() ||
+        !Number.isSafeInteger(metadata.size) ||
+        metadata.size <= 0 ||
+        metadata.size > MAX_MDX_BYTES
+      ) {
+        return 'unavailable'
+      }
+      aggregateBytes += metadata.size
+      if (aggregateBytes > MAX_BASE_MDX_AGGREGATE_BYTES) return 'unavailable'
+      sizes.set(path, metadata.size)
+    }
+    for (const path of listing.paths) {
+      if (!withinDeadline()) return 'unavailable'
+      const bytes = await dependencies.readFile(path)
+      if (
+        !withinDeadline() ||
+        !(bytes instanceof Uint8Array) ||
+        bytes.byteLength !== sizes.get(path)
+      ) {
+        return 'unavailable'
+      }
+      const content = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+      const normalized = parseDuplicateFields(content)
+      if (!normalized) return 'unavailable'
+      if (isDuplicate(candidate, normalized)) return 'duplicate'
+    }
+    return 'unique'
+  } catch {
+    return 'unavailable'
+  }
+}
+
+const isOpenPullRequestWebsiteFile = (file: OpenPullRequestFileSnapshot): boolean =>
+  (file.status === 'added' || file.status === 'modified' || file.status === 'renamed') &&
+  file.path.startsWith(WEBSITE_PATH_PREFIX) &&
+  file.path.endsWith('.mdx')
+
+const collectBoundedPages = async <T>(
+  loader: (page: number) => Promise<T[]>,
+  maxItems: number
+): Promise<T[] | null> => {
+  const items: T[] = []
+  const startedAt = Date.now()
+  for (let page = 1; ; page += 1) {
+    if (Date.now() - startedAt > PAGINATION_DEADLINE_MS) return null
+    const batch = await loader(page)
+    if (
+      !Array.isArray(batch) ||
+      batch.length > PAGE_SIZE ||
+      items.length + batch.length > maxItems
+    ) {
+      return null
+    }
+    items.push(...batch)
+    if (batch.length < PAGE_SIZE) return items
+  }
+}
+
+const defaultOpenPullRequestDependencies = (
+  repo: string
+): OpenPullRequestInspectionDependencies => ({
+  getFileContent: fetchRepositoryFileContent,
+  listOpenPullRequests: async page => {
+    const values = await ghApiJson<GitHubPullRequestListItem[]>([
+      `repos/${repo}/pulls?state=open&page=${page}&per_page=${PAGE_SIZE}`
+    ])
+    return values.map(value => ({
+      baseSha: value.base?.sha ?? '',
+      headRepository: value.head?.repo?.full_name ?? '',
+      headSha: value.head?.sha ?? '',
+      number: value.number
+    }))
+  },
+  loadImmutableManifest: async pullRequest => {
+    const manifest = await fetchImmutablePullRequestManifest(
+      repo,
+      pullRequest.baseSha,
+      pullRequest.headSha
+    )
+    return manifest.status === 'complete'
+      ? {
+          files: manifest.files.map(file => ({ path: file.filename, status: file.status })),
+          status: 'complete'
+        }
+      : manifest
+  }
+})
+
+/** Build one bounded immutable duplicate index for all candidates in a run. */
+export async function buildOpenPullRequestDuplicateIndex(
+  pullRequests: readonly OpenPullRequestSnapshot[],
+  dependencies: Pick<
+    OpenPullRequestInspectionDependencies,
+    'getFileContent' | 'loadImmutableManifest'
+  >
+): Promise<OpenPullRequestDuplicateIndex> {
+  if (pullRequests.length > MAX_OPEN_PULL_REQUESTS) return { status: 'unavailable' }
+  const ownersByUrl = new Map<string, Set<number>>()
+  let fileCount = 0
+  try {
+    for (const pullRequest of pullRequests) {
+      if (
+        !Number.isSafeInteger(pullRequest.number) ||
+        pullRequest.number <= 0 ||
+        !/^[a-f0-9]{40}$/.test(pullRequest.baseSha) ||
+        !/^[a-f0-9]{40}$/.test(pullRequest.headSha) ||
+        !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(pullRequest.headRepository)
+      ) {
+        return { status: 'unavailable' }
+      }
+      const manifest = await dependencies.loadImmutableManifest(pullRequest)
+      if (manifest.status !== 'complete') return { status: 'unavailable' }
+      fileCount += manifest.files.length
+      if (fileCount > MAX_OPEN_PULL_REQUEST_FILES) return { status: 'unavailable' }
+      for (const file of manifest.files) {
+        if (!isOpenPullRequestWebsiteFile(file)) continue
+        const content = await dependencies.getFileContent(
+          pullRequest.headRepository,
+          file.path,
+          pullRequest.headSha
+        )
+        const normalized = parseDuplicateFields(content)
+        if (!normalized) return { status: 'unavailable' }
+        for (const value of [normalized.website, normalized.llmsUrl]) {
+          if (!value) continue
+          const owners = ownersByUrl.get(value) ?? new Set<number>()
+          owners.add(pullRequest.number)
+          ownersByUrl.set(value, owners)
+        }
+      }
+    }
+    return { ownersByUrl, status: 'complete' }
+  } catch {
+    return { status: 'unavailable' }
+  }
+}
+
+/** Look up one candidate without rebuilding the immutable open-PR index. */
+export function lookupOpenPullRequestDuplicate(
+  index: OpenPullRequestDuplicateIndex,
+  input: { readonly candidate: DuplicateCandidate; readonly currentPrNumber: number }
+): DuplicateStatus {
+  if (index.status !== 'complete') return 'unavailable'
+  for (const value of [input.candidate.website, input.candidate.llmsUrl]) {
+    const owners = index.ownersByUrl.get(value)
+    if (owners && [...owners].some(number => number !== input.currentPrNumber)) return 'duplicate'
+  }
+  return 'unique'
+}
+
+/** Inspect all bounded open PR heads, including forks, for duplicate entries. */
+export async function inspectOpenPullRequestDuplicates(
+  input: {
+    candidate: DuplicateCandidate
+    currentPrNumber: number
+  },
+  dependencies: OpenPullRequestInspectionDependencies
+): Promise<DuplicateStatus> {
+  try {
+    const pullRequests = await collectBoundedPages(
+      dependencies.listOpenPullRequests,
+      MAX_OPEN_PULL_REQUESTS
+    )
+    if (!pullRequests) return 'unavailable'
+    const index = await buildOpenPullRequestDuplicateIndex(pullRequests, dependencies)
+    return lookupOpenPullRequestDuplicate(index, input)
+  } catch {
+    return 'unavailable'
+  }
+}
+
+/** Build the default immutable open-PR index once for an entire command run. */
+async function buildDefaultOpenPullRequestDuplicateIndex(
+  repo: string
+): Promise<OpenPullRequestDuplicateIndex> {
+  const dependencies = defaultOpenPullRequestDependencies(repo)
+  const pullRequests = await collectBoundedPages(
+    dependencies.listOpenPullRequests,
+    MAX_OPEN_PULL_REQUESTS
+  )
+  return pullRequests
+    ? buildOpenPullRequestDuplicateIndex(pullRequests, dependencies)
+    : { status: 'unavailable' }
 }
 
 /**
  * CLI entrypoint for the local PR review dry-run.
  */
-async function main(): Promise<void> {
-  const options = parseArgs(process.argv.slice(2))
+export async function main(args = process.argv.slice(2)): Promise<void> {
+  if (args[0] === '--derive-event-context') {
+    await printAutomergeEventContext(args[1], args[2] ?? process.env.GITHUB_EVENT_NAME)
+    return
+  }
+  const options = parseArgs(args)
 
   await ensureGitHubAuth()
 
@@ -587,6 +1558,9 @@ async function main(): Promise<void> {
   }
 
   const openPullRequests = await fetchOpenPullRequests(options)
+  options.openPullRequestDuplicateIndex = await buildDefaultOpenPullRequestDuplicateIndex(
+    options.repo
+  )
   const total = openPullRequests.length
 
   if (!options.json) {
@@ -625,11 +1599,35 @@ async function main(): Promise<void> {
   printSummary(summarizeSnapshots(snapshots))
 }
 
+/** Read a bounded event payload and print GitHub step outputs. */
+async function printAutomergeEventContext(
+  eventPath: string | undefined,
+  eventName: string | undefined
+): Promise<void> {
+  if (!eventPath || !eventName) throw new Error('Missing GitHub event context.')
+  const metadata = await stat(eventPath)
+  if (!metadata.isFile() || metadata.size <= 0 || metadata.size > 1024 * 1024) {
+    throw new Error('GitHub event payload is unavailable or too large.')
+  }
+  const payload: unknown = JSON.parse(await readFile(eventPath, 'utf8'))
+  const context = deriveAutomergeEventContext(eventName, payload)
+  const outputs =
+    context.mode === 'single'
+      ? { prNumber: String(context.prNumber), scanAll: 'false', shouldProcess: 'true' }
+      : context.mode === 'scan_all'
+        ? { prNumber: '', scanAll: 'true', shouldProcess: 'true' }
+        : { prNumber: '', scanAll: 'false', shouldProcess: 'false' }
+  process.stdout.write(
+    `pr_number=${outputs.prNumber}\nscan_all=${outputs.scanAll}\nshould_process=${outputs.shouldProcess}\n`
+  )
+}
+
 /**
  * Parse supported CLI flags for the local dry-run command.
  */
-function parseArgs(args: string[]): DryRunOptions {
+export function parseArgs(args: string[]): DryRunOptions {
   const options: DryRunOptions = {
+    assessDirect: false,
     concurrency: DEFAULT_CONCURRENCY,
     dryRun: false,
     json: false,
@@ -650,6 +1648,11 @@ function parseArgs(args: string[]): DryRunOptions {
 
     if (arg === '--dry-run') {
       options.dryRun = true
+      continue
+    }
+
+    if (arg === '--assess-direct') {
+      options.assessDirect = true
       continue
     }
 
@@ -766,42 +1769,84 @@ async function analyzePullRequest(
 ): Promise<PullRequestReviewSnapshot> {
   try {
     const details = await fetchPullRequestDetails(repo, pullRequestNumber)
-    const files = await paginateGhApi<GitHubPullRequestFile>(
-      `repos/${repo}/pulls/${pullRequestNumber}/files`
-    )
-    const commits = await paginateGhApi<GitHubPullRequestCommit>(
-      `repos/${repo}/pulls/${pullRequestNumber}/commits`
-    )
+    const baseSha = details.base?.sha ?? ''
+    const manifest =
+      details.base?.ref === 'main' && details.base.repo?.full_name === repo
+        ? await fetchImmutablePullRequestManifest(repo, baseSha, details.head.sha)
+        : ({ status: 'unavailable' } satisfies ImmutablePullRequestManifest)
+    const files = manifest.status === 'complete' ? manifest.files : []
+    const commits: GitHubPullRequestCommit[] = []
     const classifierContext = buildClassifierContext({
       commits,
       details,
       files
     })
     const classification = classifyPullRequest(classifierContext)
-    const reviewStatus = await fetchReviewStatus(repo, details.head.sha)
+    const reviewStatus = await fetchReviewStatus(repo, details)
     const structuralDecision = deriveStructuralDecision({
       classification,
       isDraft: details.draft,
       mergeable: details.mergeable,
       state: details.state
     })
+    const trustedBaseSha = process.env.TRUSTED_BASE_SHA ?? ''
+    const baseSnapshotStatus = await fetchTrustedBaseStatus(repo, details, trustedBaseSha)
     const moderation = await moderatePullRequest({
+      body: typeof details.body === 'string' ? details.body : '',
       classification,
+      contentRepo: details.head.repo?.full_name ?? '',
+      directAssessment: {
+        enabled: options.assessDirect,
+        baseSnapshotStatus,
+        hasManualReviewLabel: pullRequestHasManualReviewVeto(details),
+        requiredCheckStatus: reviewStatus,
+        structurallyEligible: structuralDecision.structurallyEligible
+      },
       files,
+      prNumber: details.number,
       repo,
+      secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? '',
       sha: details.head.sha
+    })
+    const moderatedFile = moderation.files.length === 1 ? moderation.files[0] : undefined
+    const attestation = moderation.attestation
+    const duplicateFields = moderatedFile
+      ? normalizeDuplicateFields(moderatedFile.frontmatter)
+      : null
+    const [baseDuplicateStatus, openPullRequestDuplicateStatus] = duplicateFields
+      ? await Promise.all([
+          baseSnapshotStatus === 'current'
+            ? inspectTrustedBaseDuplicate(duplicateFields)
+            : Promise.resolve<DuplicateStatus>('unavailable'),
+          Promise.resolve(
+            lookupOpenPullRequestDuplicate(
+              options.openPullRequestDuplicateIndex ?? { status: 'unavailable' },
+              { candidate: duplicateFields, currentPrNumber: details.number }
+            )
+          )
+        ])
+      : (['unavailable', 'unavailable'] satisfies [DuplicateStatus, DuplicateStatus])
+    const authorization = deriveMergeAuthorization({
+      attestation,
+      baseDuplicateStatus,
+      baseSnapshotStatus,
+      freshAssessment: moderatedFile?.assessment ?? unavailableAssessment(),
+      hasManualReviewLabel: pullRequestHasManualReviewVeto(details),
+      openPullRequestDuplicateStatus,
+      requiredCheckStatus: reviewStatus
     })
     const decision = deriveWouldMergeDecision({
       guidelineReasons: moderation.guidelineReasons,
       guidelineStatus: moderation.guidelineStatus,
       structuralDecision
     })
-    const desiredLabels = deriveManagedLabels({
+    const policyLabels = deriveManagedLabels({
       classification,
       guidelineStatus: moderation.guidelineStatus,
       policyEligible: decision.policyEligible,
       structurallyEligible: structuralDecision.structurallyEligible
     })
+    const desiredLabels = deriveAuthorizationManagedLabels({ authorization, policyLabels })
     const labelSync = await syncManagedLabels({
       desiredLabels,
       dryRun: options.dryRun,
@@ -809,19 +1854,52 @@ async function analyzePullRequest(
       repo
     })
     const mergePlan = deriveMergeAction({
-      desiredLabels,
+      authorization,
+      desiredLabels: labelSync.desired,
       dryRun: options.dryRun,
       wouldMerge: decision.wouldMerge,
       wouldMergeReason: decision.reason
     })
     const mergeAction = await executeMergeAction({
+      authorization,
       headSha: details.head.sha,
       mergePlan,
       prNumber: details.number,
+      revalidation:
+        moderatedFile && duplicateFields
+          ? {
+              baseDuplicateStatus,
+              baseSha,
+              duplicateFields,
+              ephemeralAttestation: moderation.ephemeralAttestation,
+              file: moderatedFile,
+              freshAssessment: moderatedFile.assessment,
+              headRepository: details.head.repo?.full_name ?? '',
+              trustedBaseSha
+            }
+          : undefined,
       repo
     })
 
+    const reviewCard = buildReviewCard({
+      repo,
+      number: details.number,
+      headSha: details.head.sha,
+      classification,
+      guidelineStatus: moderation.guidelineStatus,
+      guidelineReasons: moderation.guidelineReasons,
+      reviewStatus,
+      baseDuplicateStatus,
+      openPullRequestDuplicateStatus,
+      mergeAction,
+      submission: moderation.reviewSubmission
+    })
+    if (!options.dryRun && process.env.GITHUB_ACTIONS === 'true') {
+      await syncReviewCard(repo, details.number, details.head.sha, reviewCard)
+    }
+
     return {
+      reviewCard,
       classification,
       guidelineReasons: moderation.guidelineReasons,
       guidelineStatus: moderation.guidelineStatus,
@@ -835,8 +1913,11 @@ async function analyzePullRequest(
       wouldMerge: decision.wouldMerge,
       wouldMergeReason: decision.reason
     }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
+  } catch {
+    const message = 'Trusted merge authorization is unavailable.'
+    if (!options.dryRun) {
+      await syncAuthorizationFailureLabels(repo, pullRequestNumber).catch(() => undefined)
+    }
 
     return {
       classification: {
@@ -969,12 +2050,119 @@ async function syncManagedLabels(input: {
 }
 
 /**
+ * Apply only the fail-closed authorization labels while preserving all other labels.
+ */
+async function syncAuthorizationFailureLabels(
+  repo: string,
+  prNumber: number,
+  disposition: AuthorizationDisposition = 'manual_review'
+): Promise<void> {
+  const labels = await paginateGhApi<{ name: string }>(`repos/${repo}/issues/${prNumber}/labels`)
+  const names = labels.map(label => label.name)
+  if (names.includes('automerge:candidate')) {
+    await execGh([
+      'api',
+      `repos/${repo}/issues/${prNumber}/labels/automerge%3Acandidate`,
+      '--method',
+      'DELETE'
+    ])
+  }
+  if (disposition === 'manual_review' && !names.includes('needs:manual-review')) {
+    await execGh([
+      'api',
+      `repos/${repo}/issues/${prNumber}/labels`,
+      '--method',
+      'POST',
+      '-f',
+      'labels[]=needs:manual-review'
+    ])
+  }
+}
+
+/** Revalidate exact signed bytes, PR provenance, mutable vetoes, and refreshed merge gates. */
+export function deriveRevalidatedMergeDecision(input: {
+  readonly authorization: MergeAuthorization
+  readonly headSha: string
+  readonly prNumber: number
+  readonly revalidation: MergeRevalidationContext
+  readonly repo: string
+  readonly secret: string
+  readonly now?: () => Date
+  readonly prepared: {
+    readonly baseSnapshotStatus: TrustedBaseStatus
+    readonly reviewStatus: ReviewConclusion
+    readonly manifest: ImmutablePullRequestManifest
+    readonly openPullRequestDuplicateStatus: DuplicateStatus
+  }
+  readonly latest: GitHubPullRequestDetails
+}): { authorization: MergeAuthorization; mergeAllowed: boolean } {
+  const revalidation = input.revalidation
+  const manifestMatches =
+    input.prepared.manifest.status === 'complete' &&
+    input.prepared.manifest.files.length === 1 &&
+    input.prepared.manifest.files[0]?.status === 'added' &&
+    input.prepared.manifest.files[0]?.filename === revalidation.file.path
+  const snapshotMatches =
+    input.latest.number === input.prNumber &&
+    input.latest.head.sha === input.headSha &&
+    input.latest.head.repo?.full_name === revalidation.headRepository &&
+    input.latest.base?.ref === 'main' &&
+    input.latest.base.repo?.full_name === input.repo &&
+    input.latest.base.sha === revalidation.baseSha
+  const latestAttestation =
+    manifestMatches && snapshotMatches
+      ? verifyFinalMergeAttestation({
+          ephemeralAttestation: revalidation.ephemeralAttestation,
+          verification: {
+            addedMdxBytes: revalidation.file.bytes,
+            addedMdxPath: revalidation.file.path,
+            body: typeof input.latest.body === 'string' ? input.latest.body : '',
+            currentHeadSha: input.latest.head.sha,
+            prNumber: input.latest.number,
+            repository: input.repo,
+            secret: input.secret,
+            now: input.now
+          }
+        })
+      : invalidAttestation()
+  const authorization = deriveMergeAuthorization({
+    attestation: latestAttestation,
+    now: input.now,
+    baseDuplicateStatus: revalidation.baseDuplicateStatus,
+    baseSnapshotStatus: input.prepared.baseSnapshotStatus,
+    freshAssessment: revalidation.freshAssessment,
+    hasManualReviewLabel: pullRequestHasManualReviewVeto(input.latest),
+    openPullRequestDuplicateStatus: input.prepared.openPullRequestDuplicateStatus,
+    requiredCheckStatus: input.prepared.reviewStatus
+  })
+  const exact = deriveExactHeadMergeDecision({
+    authorization,
+    baseSnapshotStatus: input.prepared.baseSnapshotStatus,
+    currentHeadSha: input.latest.head.sha,
+    expectedHeadSha: input.headSha,
+    requiredCheckStatus: input.prepared.reviewStatus
+  })
+  return {
+    authorization: exact,
+    mergeAllowed:
+      input.authorization.authorized &&
+      exact.authorized &&
+      snapshotMatches &&
+      input.latest.state === 'open' &&
+      !input.latest.draft &&
+      input.latest.mergeable === true
+  }
+}
+
+/**
  * Execute the planned merge action against GitHub.
  */
-async function executeMergeAction(input: {
+export async function executeMergeAction(input: {
+  authorization: MergeAuthorization
   headSha: string
   mergePlan: MergeAction
   prNumber: number
+  revalidation?: MergeRevalidationContext
   repo: string
 }): Promise<MergeAction> {
   if (!input.mergePlan.attempted || input.mergePlan.mode === 'dry-run') {
@@ -982,16 +2170,74 @@ async function executeMergeAction(input: {
   }
 
   try {
-    await execGh([
-      'api',
-      `repos/${input.repo}/pulls/${input.prNumber}/merge`,
-      '--method',
-      'PUT',
-      '-f',
-      `sha=${input.headSha}`,
-      '-f',
-      'merge_method=squash'
-    ])
+    const revalidation = input.revalidation
+    if (!revalidation) throw new Error('Missing trusted revalidation context.')
+    const decision = await runFinalMergeSequence({
+      authorize: (prepared, latest) =>
+        deriveRevalidatedMergeDecision({
+          ...input,
+          revalidation,
+          prepared,
+          latest,
+          secret: process.env.SUBMISSION_ASSESSMENT_SIGNING_SECRET ?? ''
+        }),
+      fetchLatest: () => fetchFinalPullRequestDetails(input.repo, input.prNumber),
+      isAuthorized: value => value.mergeAllowed,
+      merge: async () => {
+        await execGh([
+          'api',
+          `repos/${input.repo}/pulls/${input.prNumber}/merge`,
+          '--method',
+          'PUT',
+          '-f',
+          `sha=${input.headSha}`,
+          '-f',
+          'merge_method=squash'
+        ])
+      },
+      onDenied: async value => {
+        await syncAuthorizationFailureLabels(
+          input.repo,
+          input.prNumber,
+          value.authorization.authorized ? 'manual_review' : value.authorization.disposition
+        )
+      },
+      prepareExpensive: async () => {
+        const [baseSnapshotStatus, reviewStatus, manifest, openIndex] = await Promise.all([
+          fetchCurrentBaseStatusForSnapshot(
+            input.repo,
+            revalidation.baseSha,
+            revalidation.trustedBaseSha
+          ),
+          fetchReviewStatusForSnapshot(input.repo, {
+            baseSha: revalidation.baseSha,
+            headSha: input.headSha,
+            prNumber: input.prNumber
+          }),
+          fetchImmutablePullRequestManifest(input.repo, revalidation.baseSha, input.headSha),
+          buildDefaultOpenPullRequestDuplicateIndex(input.repo)
+        ])
+        return {
+          baseSnapshotStatus,
+          manifest,
+          openPullRequestDuplicateStatus: lookupOpenPullRequestDuplicate(openIndex, {
+            candidate: revalidation.duplicateFields,
+            currentPrNumber: input.prNumber
+          }),
+          reviewStatus
+        }
+      }
+    })
+    if (!decision.mergeAllowed) {
+      return {
+        attempted: false,
+        mode: 'applied',
+        reason: decision.authorization.authorized
+          ? 'Pull request state changed before merge.'
+          : decision.authorization.reason,
+        status: 'skipped'
+      }
+    }
 
     return {
       attempted: true,
@@ -999,13 +2245,13 @@ async function executeMergeAction(input: {
       reason: 'Merged successfully.',
       status: 'merged'
     }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
+  } catch {
+    await syncAuthorizationFailureLabels(input.repo, input.prNumber).catch(() => undefined)
 
     return {
       attempted: true,
       mode: 'applied',
-      reason: `Merge failed: ${message}`,
+      reason: 'Trusted merge failed closed.',
       status: 'failed'
     }
   }
@@ -1021,8 +2267,12 @@ async function fetchOpenPullRequests(options: DryRunOptions): Promise<GitHubPull
 
   const pullRequests: GitHubPullRequestListItem[] = []
   let page = 1
+  const startedAt = Date.now()
 
   while (true) {
+    if (Date.now() - startedAt > PAGINATION_DEADLINE_MS) {
+      throw new Error('Open pull request pagination exceeded its deadline.')
+    }
     const batch = await ghApiJson<GitHubPullRequestListItem[]>([
       `repos/${options.repo}/pulls?state=open&page=${page}&per_page=${PAGE_SIZE}`
     ])
@@ -1032,6 +2282,9 @@ async function fetchOpenPullRequests(options: DryRunOptions): Promise<GitHubPull
     }
 
     pullRequests.push(...batch)
+    if (pullRequests.length > MAX_OPEN_PULL_REQUESTS) {
+      throw new Error('Open pull request scan exceeded its item budget.')
+    }
 
     if ((options.limit && pullRequests.length >= options.limit) || batch.length < PAGE_SIZE) {
       break
@@ -1064,27 +2317,118 @@ async function fetchPullRequestDetails(
   return details
 }
 
+/** Fetch exactly one final mutable PR snapshot without retries or follow-up reads. */
+async function fetchFinalPullRequestDetails(
+  repo: string,
+  pullRequestNumber: number
+): Promise<GitHubPullRequestDetails> {
+  return ghApiJson<GitHubPullRequestDetails>([`repos/${repo}/pulls/${pullRequestNumber}`])
+}
+
+/** Fetch a bounded immutable changed-file manifest for exact Git object SHAs. */
+async function fetchImmutablePullRequestManifest(
+  repo: string,
+  baseSha: string,
+  headSha: string
+): Promise<ImmutablePullRequestManifest> {
+  if (!/^[a-f0-9]{40}$/.test(baseSha) || !/^[a-f0-9]{40}$/.test(headSha)) {
+    return { status: 'unavailable' }
+  }
+  try {
+    const response = await ghApiJson<GitHubCompareResponse>([
+      `repos/${repo}/compare/${baseSha}...${headSha}`
+    ])
+    return deriveImmutablePullRequestManifest(response, { baseSha, headSha })
+  } catch {
+    return { status: 'unavailable' }
+  }
+}
+
+/** Fetch and compare the live base branch to the trusted checkout and PR base snapshot. */
+async function fetchTrustedBaseStatus(
+  repo: string,
+  details: GitHubPullRequestDetails,
+  checkedOutSha: string
+): Promise<TrustedBaseStatus> {
+  const baseRef = details.base?.ref
+  const pullRequestBaseSha = details.base?.sha
+  const baseRepository = details.base?.repo?.full_name
+  if (baseRef !== 'main' || typeof pullRequestBaseSha !== 'string' || baseRepository !== repo) {
+    return 'unavailable'
+  }
+  return fetchCurrentBaseStatusForSnapshot(repo, pullRequestBaseSha, checkedOutSha)
+}
+
+/** Compare live canonical main to one immutable PR base and trusted checkout SHA. */
+async function fetchCurrentBaseStatusForSnapshot(
+  repo: string,
+  pullRequestBaseSha: string,
+  checkedOutSha: string
+): Promise<TrustedBaseStatus> {
+  try {
+    const branch = await ghApiJson<{ commit?: { sha?: string } }>([`repos/${repo}/branches/main`])
+    return deriveTrustedBaseStatus({
+      checkedOutSha,
+      currentBaseSha: branch.commit?.sha ?? '',
+      pullRequestBaseSha
+    })
+  } catch {
+    return 'unavailable'
+  }
+}
+
 /**
  * Fetch the latest PR Review workflow conclusion for a head SHA.
  */
-async function fetchReviewStatus(repo: string, headSha: string): Promise<ReviewConclusion> {
-  const workflowRuns = await ghApiJson<GitHubWorkflowRunsResponse>([
-    `repos/${repo}/actions/runs?head_sha=${headSha}&event=pull_request&per_page=100`
-  ])
-
-  const latestReviewRun = workflowRuns.workflow_runs
-    .filter(run => run.name === PR_REVIEW_WORKFLOW_NAME)
-    .sort((left, right) => right.created_at.localeCompare(left.created_at))[0]
-
-  if (!latestReviewRun) {
+async function fetchReviewStatus(
+  repo: string,
+  details: GitHubPullRequestDetails
+): Promise<ReviewConclusion> {
+  if (
+    details.base?.ref !== 'main' ||
+    details.base.repo?.full_name !== repo ||
+    !/^[a-f0-9]{40}$/.test(details.base.sha ?? '') ||
+    !/^[a-f0-9]{40}$/.test(details.head.sha)
+  ) {
     return 'missing'
   }
+  return fetchReviewStatusForSnapshot(repo, {
+    baseSha: details.base.sha ?? '',
+    headSha: details.head.sha,
+    prNumber: details.number
+  })
+}
 
-  if (latestReviewRun.status !== 'completed') {
-    return 'in_progress'
+/** Fetch the trusted check for one immutable PR/base/head snapshot. */
+async function fetchReviewStatusForSnapshot(
+  repo: string,
+  snapshot: { readonly baseSha: string; readonly headSha: string; readonly prNumber: number }
+): Promise<ReviewConclusion> {
+  try {
+    const workflow = await ghApiJson<{ id?: number; path?: string }>([
+      `repos/${repo}/actions/workflows/pr-review.yml`
+    ])
+    if (
+      !Number.isSafeInteger(workflow.id) ||
+      typeof workflow.id !== 'number' ||
+      workflow.id <= 0 ||
+      workflow.path !== '.github/workflows/pr-review.yml'
+    ) {
+      return 'missing'
+    }
+    const workflowRuns = await ghApiJson<GitHubWorkflowRunsResponse>([
+      `repos/${repo}/actions/workflows/${workflow.id}/runs?head_sha=${snapshot.headSha}&event=pull_request&per_page=100`
+    ])
+    return selectTrustedReviewConclusion(workflowRuns.workflow_runs, {
+      baseRef: 'main',
+      baseSha: snapshot.baseSha,
+      headSha: snapshot.headSha,
+      prNumber: snapshot.prNumber,
+      workflowId: workflow.id
+    })
+  } catch {
+    return 'missing'
   }
-
-  return normalizeConclusion(latestReviewRun.conclusion)
 }
 
 /**
@@ -1110,16 +2454,40 @@ function normalizeConclusion(conclusion: string | null): ReviewConclusion {
 /**
  * Run guideline moderation for each added MDX file in a structurally safe PR.
  */
-async function moderatePullRequest(input: {
-  classification: PullRequestClassification
-  files: GitHubPullRequestFile[]
-  repo: string
-  sha: string
-}): Promise<GuidelineAssessment> {
+export async function moderatePullRequest(
+  input: {
+    body: string
+    classification: PullRequestClassification
+    contentRepo: string
+    directAssessment?: DirectAssessmentContext
+    files: GitHubPullRequestFile[]
+    prNumber: number
+    repo: string
+    secret: string
+    sha: string
+  },
+  dependencies: {
+    assess?: typeof assessSubmission
+    fetchBytes?: typeof fetchRepositoryFileBytes
+    now?: () => Date
+  } = {}
+): Promise<ModerationResult> {
   if (input.classification.lane !== 'mdx-fast') {
     return {
+      attestation: invalidAttestation(),
+      files: [],
       guidelineReasons: ['Guideline checks skipped because the PR is not structurally eligible.'],
       guidelineStatus: 'skipped',
+      policyEligible: false
+    }
+  }
+
+  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(input.contentRepo)) {
+    return {
+      attestation: invalidAttestation(),
+      files: [],
+      guidelineReasons: ['The immutable pull request head repository is unavailable.'],
+      guidelineStatus: 'warn',
       policyEligible: false
     }
   }
@@ -1128,44 +2496,124 @@ async function moderatePullRequest(input: {
     return file.status === 'added' && file.filename.endsWith('.mdx')
   })
 
-  if (mdxFiles.length === 0) {
+  if (mdxFiles.length !== 1 || input.files.length !== 1) {
     return {
-      guidelineReasons: ['No added MDX files were available for guideline review.'],
+      attestation: invalidAttestation(),
+      files: [],
+      guidelineReasons: ['Exactly one added MDX file is required for trusted publication.'],
       guidelineStatus: 'warn',
       policyEligible: false
     }
   }
 
-  let mergedStatus: GuidelineStatus = 'pass'
-  const mergedReasons = new Set<string>()
-
-  for (const file of mdxFiles) {
-    const fileContent = await fetchRepositoryFileContent(input.repo, file.filename, input.sha)
-    const frontmatter = parseSubmissionFrontmatter(fileContent)
-    const [homepageInspection, llmsInspection, llmsFullInspection] = await Promise.all([
-      inspectUrl(frontmatter.website, 'html'),
-      inspectUrl(frontmatter.llmsUrl, 'text'),
-      frontmatter.llmsFullUrl ? inspectUrl(frontmatter.llmsFullUrl, 'text') : Promise.resolve(null)
-    ])
-    const assessment = assessSubmissionGuidelines({
+  const file = mdxFiles[0]
+  if (!file) throw new Error('Trusted MDX manifest is unavailable.')
+  const bytes = await (dependencies.fetchBytes ?? fetchRepositoryFileBytes)(
+    input.contentRepo,
+    file.filename,
+    input.sha
+  )
+  const fileContent = new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+  const frontmatter = parseSubmissionFrontmatter(fileContent)
+  const verification = {
+    addedMdxBytes: bytes,
+    addedMdxPath: file.filename,
+    body: input.body,
+    currentHeadSha: input.sha,
+    now: dependencies.now,
+    prNumber: input.prNumber,
+    repository: input.repo,
+    secret: input.secret
+  }
+  let attestation = verifyMergeAttestation(verification)
+  const directBlockReason = directAssessmentBlockReason({
+    body: input.body,
+    context: input.directAssessment,
+    frontmatter,
+    secret: input.secret
+  })
+  /**
+   * Reassess the immutable submission fields with the trusted policy and network boundary.
+   */
+  const assess = () =>
+    (dependencies.assess ?? assessSubmission)({ frontmatter, now: dependencies.now })
+  const fullAssessment = attestation.ok
+    ? await runTrustedAssessmentGate(
+        { addedMdxCount: mdxFiles.length, attestationVerified: true },
+        assess
+      )
+    : directBlockReason === null
+      ? await assess()
+      : null
+  if (!fullAssessment) {
+    return {
+      reviewSubmission: frontmatter,
+      attestation,
+      files: [],
+      guidelineReasons: [directBlockReason ?? 'A valid signed exact-byte assessment is required.'],
+      guidelineStatus: 'warn',
+      policyEligible: false
+    }
+  }
+  const assessment = toGuidelineAssessment(fullAssessment)
+  let ephemeralAttestation: EphemeralAssessmentAttestation | undefined
+  if (!attestation.ok) {
+    ephemeralAttestation = createDirectAssessmentAttestation({
+      assessment: fullAssessment,
       frontmatter,
-      homepageInspection,
-      llmsFullInspection,
-      llmsInspection
+      verification
     })
-
-    mergedStatus = mergeGuidelineStatus(mergedStatus, assessment.guidelineStatus)
-    for (const reason of assessment.guidelineReasons) {
-      mergedReasons.add(reason)
+    if (ephemeralAttestation) {
+      attestation = verifyFinalMergeAttestation({ ephemeralAttestation, verification })
+    }
+    if (!attestation.ok) {
+      return {
+        reviewSubmission: frontmatter,
+        attestation,
+        files: [],
+        guidelineReasons: assessment.policyEligible
+          ? ['Fresh complete provider evidence and a valid exact-byte signature are required.']
+          : assessment.guidelineReasons,
+        guidelineStatus:
+          assessment.guidelineStatus === 'pass' ? 'warn' : assessment.guidelineStatus,
+        policyEligible: false
+      }
     }
   }
 
   return {
-    guidelineReasons:
-      mergedReasons.size > 0 ? [...mergedReasons] : ['No guideline concerns detected.'],
-    guidelineStatus: mergedStatus,
-    policyEligible: mergedStatus === 'pass'
+    reviewSubmission: frontmatter,
+    attestation,
+    ...(ephemeralAttestation ? { ephemeralAttestation } : {}),
+    files: [{ assessment: fullAssessment, bytes, frontmatter, path: file.filename }],
+    guidelineReasons: assessment.guidelineReasons,
+    guidelineStatus: assessment.guidelineStatus,
+    policyEligible: assessment.policyEligible
   }
+}
+
+/**
+ * Publish display evidence separately from authorization and keep reporting failures nonfatal.
+ */
+async function syncReviewCard(
+  repo: string,
+  number: number,
+  headSha: string,
+  body: string
+): Promise<void> {
+  const result = await publishReviewCard(
+    { repo, number, headSha, body },
+    {
+      listComments: () =>
+        paginateGhApi<ReviewCardComment>(`repos/${repo}/issues/${number}/comments`),
+      getHead: async () => (await fetchPullRequestDetails(repo, number)).head.sha,
+      write: async (endpoint, method, card) => {
+        await execGh(['api', endpoint, '--method', method, '-f', `body=${card}`])
+      }
+    }
+  )
+  if (result === 'failed')
+    process.stderr.write(`PR #${number}: review card could not be published.\n`)
 }
 
 /**
@@ -1176,56 +2624,41 @@ async function fetchRepositoryFileContent(
   path: string,
   ref: string
 ): Promise<string> {
+  const bytes = await fetchRepositoryFileBytes(repo, path, ref)
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+}
+
+/**
+ * Fetch exact bounded repository file bytes for a PR head SHA.
+ */
+async function fetchRepositoryFileBytes(
+  repo: string,
+  path: string,
+  ref: string
+): Promise<Uint8Array> {
   const response = await ghApiJson<GitHubContentResponse>([
     `repos/${repo}/contents/${encodePathForGitHub(path)}?ref=${encodeURIComponent(ref)}`
   ])
 
-  if (response.encoding !== 'base64') {
-    throw new Error(`Unsupported content encoding for ${path}: ${response.encoding}`)
+  if (
+    response.encoding !== 'base64' ||
+    typeof response.content !== 'string' ||
+    response.content.length > 150_000
+  ) {
+    throw new Error('Unsupported GitHub content response.')
   }
-
-  return Buffer.from(response.content.replace(/\n/g, ''), 'base64').toString('utf8')
-}
-
-/**
- * Fetch a URL with a timeout and return a bounded text snapshot for moderation heuristics.
- */
-async function inspectUrl(url: string, expectedKind: 'html' | 'text'): Promise<UrlInspection> {
-  const controller = new AbortController()
-  const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS)
-
-  try {
-    const response = await fetch(url, {
-      headers:
-        expectedKind === 'html'
-          ? { Accept: 'text/html,application/xhtml+xml' }
-          : { Accept: 'text/plain,text/markdown,text/*,*/*;q=0.1' },
-      redirect: 'follow',
-      signal: controller.signal
-    })
-    const contentType = response.headers.get('content-type')
-    const text = truncate(await response.text(), MAX_FETCH_TEXT_LENGTH)
-
-    return {
-      contentType,
-      ok: response.ok,
-      status: response.status,
-      text,
-      url
-    }
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-
-    return {
-      contentType: null,
-      error: message,
-      ok: false,
-      text: '',
-      url
-    }
-  } finally {
-    clearTimeout(timeout)
+  const encoded = response.content.replace(/\s/g, '')
+  if (
+    encoded.length > Math.ceil((MAX_MDX_BYTES * 4) / 3) + 4 ||
+    !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded)
+  ) {
+    throw new Error('Malformed GitHub content response.')
   }
+  const bytes = Buffer.from(encoded, 'base64')
+  if (bytes.byteLength === 0 || bytes.byteLength > MAX_MDX_BYTES) {
+    throw new Error('GitHub content response is empty or too large.')
+  }
+  return bytes
 }
 
 /**
@@ -1234,14 +2667,21 @@ async function inspectUrl(url: string, expectedKind: 'html' | 'text'): Promise<U
 async function paginateGhApi<T>(endpoint: string): Promise<T[]> {
   const items: T[] = []
   let page = 1
+  const startedAt = Date.now()
 
   while (true) {
+    if (Date.now() - startedAt > PAGINATION_DEADLINE_MS) {
+      throw new Error('GitHub pagination exceeded its deadline.')
+    }
     const separator = endpoint.includes('?') ? '&' : '?'
     const batch = await ghApiJson<T[]>([
       `${endpoint}${separator}page=${page}&per_page=${PAGE_SIZE}`
     ])
 
     items.push(...batch)
+    if (items.length > MAX_PAGINATION_ITEMS) {
+      throw new Error('GitHub pagination exceeded its item budget.')
+    }
 
     if (batch.length < PAGE_SIZE) {
       return items
@@ -1266,7 +2706,9 @@ async function ghApiJson<T>(args: string[]): Promise<T> {
 async function execGh(args: string[]): Promise<{ stdout: string }> {
   try {
     const result = await execFileAsync('gh', args, {
-      maxBuffer: 10 * 1024 * 1024
+      killSignal: 'SIGKILL',
+      maxBuffer: MAX_GH_RESPONSE_BYTES,
+      timeout: GH_EXEC_TIMEOUT_MS
     })
 
     return {
@@ -1410,8 +2852,12 @@ function printSummary(summary: DryRunSummary): void {
 function readOptionalString(data: Record<string, unknown>, key: string): string | null {
   const value = data[key]
 
-  if (typeof value !== 'string') {
+  if (value === undefined || value === null) {
     return null
+  }
+
+  if (typeof value !== 'string') {
+    throw new Error(`Invalid optional frontmatter field "${key}". Expected a string.`)
   }
 
   const trimmed = value.trim()
@@ -1429,20 +2875,6 @@ function readRequiredString(data: Record<string, unknown>, key: string): string 
   }
 
   return value
-}
-
-/**
- * Return the highest-severity guideline status between two states.
- */
-function mergeGuidelineStatus(current: GuidelineStatus, next: GuidelineStatus): GuidelineStatus {
-  const priority: Record<GuidelineStatus, number> = {
-    fail: 3,
-    pass: 0,
-    skipped: -1,
-    warn: 2
-  }
-
-  return priority[next] > priority[current] ? next : current
 }
 
 /**
@@ -1467,58 +2899,6 @@ function formatLabelSync(result: LabelSyncResult): string {
   }
 
   return result.mode === 'dry-run' ? `plan ${combined}` : `applied ${combined}`
-}
-
-/**
- * Append a unique guideline reason.
- */
-function addGuidelineReason(
-  reasons: string[],
-  reason: string,
-  _severity: Extract<GuidelineStatus, 'warn' | 'fail'>
-): void {
-  if (!reasons.includes(reason)) {
-    reasons.push(reason)
-  }
-}
-
-/**
- * Return true when the fetched llms.txt payload appears to be HTML.
- */
-function looksLikeHtmlResponse(result: UrlInspection): boolean {
-  const contentType = result.contentType?.toLowerCase() ?? ''
-  return contentType.includes('text/html') || /<html[\s>]/i.test(result.text)
-}
-
-/**
- * Return the first matched moderation term, if any.
- */
-function findMatchedTerm(text: string, terms: string[]): string | null {
-  return terms.find(term => text.includes(term)) ?? null
-}
-
-/**
- * Normalize free text for heuristic matching.
- */
-function normalizeText(value: string): string {
-  return value.toLowerCase().replace(/\s+/g, ' ').trim()
-}
-
-/**
- * Return true when the website and llms URLs appear to belong to the same site family.
- */
-function sameWebsiteFamily(website: string, llmsUrl: string): boolean {
-  try {
-    const websiteHost = new URL(website).hostname.toLowerCase()
-    const llmsHost = new URL(llmsUrl).hostname.toLowerCase()
-    return (
-      websiteHost === llmsHost ||
-      websiteHost.endsWith(`.${llmsHost}`) ||
-      llmsHost.endsWith(`.${websiteHost}`)
-    )
-  } catch {
-    return false
-  }
 }
 
 /**
@@ -1569,7 +2949,7 @@ function sleep(milliseconds: number): Promise<void> {
  */
 function ensureRecord(value: unknown): Record<string, unknown> {
   if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-    return value
+    return Object.fromEntries(Object.entries(value))
   }
 
   throw new Error('Frontmatter payload is not an object.')

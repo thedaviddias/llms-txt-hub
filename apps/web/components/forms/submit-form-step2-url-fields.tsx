@@ -43,6 +43,8 @@ interface UrlFieldsProps {
   validateDomains: () => void
   checkLlmsUrl: (url: string) => void
   checkLlmsFullUrl: (url: string) => void
+  invalidateLlmsUrl: () => void
+  invalidateLlmsFullUrl: () => void
 }
 
 /**
@@ -57,7 +59,9 @@ export function UrlFields({
   setLlmsFullUrlStatus,
   validateDomains,
   checkLlmsUrl,
-  checkLlmsFullUrl
+  checkLlmsFullUrl,
+  invalidateLlmsUrl,
+  invalidateLlmsFullUrl
 }: UrlFieldsProps) {
   return (
     <>
@@ -69,30 +73,30 @@ export function UrlFields({
             <FormLabel>
               Website URL <span className="text-red-500">*</span>
             </FormLabel>
-            <FormControl>
-              <div className="relative">
+            <div className="relative">
+              <FormControl>
                 <Input className="px-4 py-2 rounded-lg" {...field} />
-                {/* Status Indicator */}
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  {websiteUrlStatus.checking && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500" />
-                  )}
-                  {!websiteUrlStatus.checking && websiteUrlStatus.accessible === true && (
-                    <div className="text-green-500" title="Website is accessible">
-                      <CheckIcon />
-                    </div>
-                  )}
-                  {!websiteUrlStatus.checking && websiteUrlStatus.accessible === false && (
-                    <div
-                      className="text-red-500"
-                      title={websiteUrlStatus.error || 'Website is not accessible'}
-                    >
-                      <XIcon />
-                    </div>
-                  )}
-                </div>
+              </FormControl>
+              {/* Status Indicator */}
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                {websiteUrlStatus.checking && (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500" />
+                )}
+                {!websiteUrlStatus.checking && websiteUrlStatus.accessible === true && (
+                  <div className="text-green-500" title="Website is accessible">
+                    <CheckIcon />
+                  </div>
+                )}
+                {!websiteUrlStatus.checking && websiteUrlStatus.accessible === false && (
+                  <div
+                    className="text-red-500"
+                    title={websiteUrlStatus.error || 'Website is not accessible'}
+                  >
+                    <XIcon />
+                  </div>
+                )}
               </div>
-            </FormControl>
+            </div>
             {websiteUrlStatus.accessible === false && websiteUrlStatus.error && (
               <p className="text-xs text-amber-600 dark:text-amber-400">
                 ⚠️ {websiteUrlStatus.error} - The website may still be valid for submission.
@@ -111,46 +115,53 @@ export function UrlFields({
             <FormLabel>
               llms.txt URL <span className="text-red-500">*</span>
             </FormLabel>
-            <FormControl>
-              <div className="relative">
+            <div className="relative">
+              <FormControl>
                 <Input
                   placeholder="https://example.com/llms.txt"
                   className="px-4 py-2 rounded-lg"
                   {...field}
                   onChange={e => {
+                    const nextUrl = e.target.value
                     field.onChange(e)
+                    invalidateLlmsUrl()
                     // Validate domain and check URL accessibility when it changes
                     setTimeout(() => {
                       validateDomains()
-                      if (e.target.value) {
-                        checkLlmsUrl(e.target.value)
+                      if (form.getValues('llmsUrl') !== nextUrl) return
+                      if (nextUrl) {
+                        checkLlmsUrl(nextUrl)
                       } else {
                         setLlmsUrlStatus({ checking: false, accessible: null })
                       }
                     }, 100) // Small delay to ensure form state is updated
                   }}
                 />
-                {/* Status Indicator */}
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  {llmsUrlStatus.checking && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500" />
-                  )}
-                  {!llmsUrlStatus.checking && llmsUrlStatus.accessible === true && (
-                    <div className="text-green-500" title="URL is accessible">
-                      <CheckIcon />
-                    </div>
-                  )}
-                  {!llmsUrlStatus.checking && llmsUrlStatus.accessible === false && (
-                    <div
-                      className="text-red-500"
-                      title={llmsUrlStatus.error || 'URL is not accessible'}
-                    >
-                      <XIcon />
-                    </div>
-                  )}
-                </div>
+              </FormControl>
+              {/* Status Indicator */}
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                {llmsUrlStatus.checking && (
+                  <div
+                    aria-label="Checking llms.txt URL"
+                    className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"
+                    role="status"
+                  />
+                )}
+                {!llmsUrlStatus.checking && llmsUrlStatus.accessible === true && (
+                  <div className="text-green-500" title="URL is accessible">
+                    <CheckIcon />
+                  </div>
+                )}
+                {!llmsUrlStatus.checking && llmsUrlStatus.accessible === false && (
+                  <div
+                    className="text-red-500"
+                    title={llmsUrlStatus.error || 'URL is not accessible'}
+                  >
+                    <XIcon />
+                  </div>
+                )}
               </div>
-            </FormControl>
+            </div>
             {/* URL accessibility warning (non-blocking) */}
             {llmsUrlStatus.accessible === false && llmsUrlStatus.error && (
               <p className="text-xs text-amber-600 dark:text-amber-400">
@@ -177,7 +188,9 @@ export function UrlFields({
                     if (websiteUrl) {
                       const autoUrl = generateLlmsFullUrl(websiteUrl)
                       field.onChange(autoUrl)
+                      invalidateLlmsFullUrl()
                       setTimeout(() => {
+                        if (form.getValues('llmsFullUrl') !== autoUrl) return
                         validateDomains()
                         checkLlmsFullUrl(autoUrl)
                       }, 100)
@@ -189,49 +202,56 @@ export function UrlFields({
                 </button>
               )}
             </div>
-            <FormControl>
-              <div className="relative">
+            <div className="relative">
+              <FormControl>
                 <Input
                   placeholder="https://example.com/llms-full.txt"
                   className="px-4 py-2 rounded-lg"
                   {...field}
                   value={field.value ?? ''}
                   onChange={e => {
+                    const nextUrl = e.target.value
                     field.onChange(e)
+                    invalidateLlmsFullUrl()
                     // Validate domain and check URL accessibility when it changes
                     setTimeout(() => {
                       validateDomains()
-                      if (e.target.value) {
-                        checkLlmsFullUrl(e.target.value)
+                      if (form.getValues('llmsFullUrl') !== nextUrl) return
+                      if (nextUrl) {
+                        checkLlmsFullUrl(nextUrl)
                       } else {
                         setLlmsFullUrlStatus({ checking: false, accessible: null })
                       }
                     }, 100) // Small delay to ensure form state is updated
                   }}
                 />
-                {/* Status Indicator */}
-                <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                  {llmsFullUrlStatus.checking && (
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500" />
-                  )}
-                  {!llmsFullUrlStatus.checking && llmsFullUrlStatus.accessible === true && (
-                    <div className="text-green-500" title="URL is accessible">
-                      <CheckIcon />
+              </FormControl>
+              {/* Status Indicator */}
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                {llmsFullUrlStatus.checking && (
+                  <div
+                    aria-label="Checking llms-full.txt URL"
+                    className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"
+                    role="status"
+                  />
+                )}
+                {!llmsFullUrlStatus.checking && llmsFullUrlStatus.accessible === true && (
+                  <div className="text-green-500" title="URL is accessible">
+                    <CheckIcon />
+                  </div>
+                )}
+                {!llmsFullUrlStatus.checking &&
+                  llmsFullUrlStatus.accessible === false &&
+                  field.value && (
+                    <div
+                      className="text-red-500"
+                      title={llmsFullUrlStatus.error || 'URL is not accessible'}
+                    >
+                      <XIcon />
                     </div>
                   )}
-                  {!llmsFullUrlStatus.checking &&
-                    llmsFullUrlStatus.accessible === false &&
-                    field.value && (
-                      <div
-                        className="text-red-500"
-                        title={llmsFullUrlStatus.error || 'URL is not accessible'}
-                      >
-                        <XIcon />
-                      </div>
-                    )}
-                </div>
               </div>
-            </FormControl>
+            </div>
             {/* URL accessibility warning (non-blocking) */}
             {llmsFullUrlStatus.accessible === false && llmsFullUrlStatus.error && field.value && (
               <p className="text-xs text-amber-600 dark:text-amber-400">

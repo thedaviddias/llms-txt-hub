@@ -3,11 +3,9 @@ import { logger } from '@thedaviddias/logging'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { isAnalyticsProxyPath } from '@/lib/analytics-proxy'
+import { createPublicE2eProxy } from '@/lib/e2e-public-routes'
 import { validateCSRFToken } from '@/lib/middleware-csrf'
 
-// Edge Runtime compatible implementations
-
-// Define public routes that don't require authentication
 const isPublicRoute = createRouteMatcher([
   '/',
   '/login(.*)',
@@ -187,7 +185,7 @@ function buildCspValue(nonce: string): string {
   const vercelLive = isDev ? ' https://va.vercel-scripts.com https://vercel.live' : ''
   const cspDirectives = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://openpanel.dev https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
+    `script-src 'self' 'nonce-${nonce}'${isDev ? " 'unsafe-eval'" : ''} https://*.clerk.accounts.dev https://*.clerk.com https://clerk.llmstxthub.com${vercelLive} https://challenges.cloudflare.com https://*.cloudflare.com`,
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https: blob:",
@@ -219,7 +217,6 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('X-Download-Options', 'noopen')
   response.headers.set('X-Permitted-Cross-Domain-Policies', 'none')
 
-  // HSTS header for production
   if (process.env.NODE_ENV === 'production') {
     response.headers.set(
       'Strict-Transport-Security',
@@ -261,10 +258,13 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   // Periodic cleanup of expired rate limit entries
   cleanupRateLimitCache()
 
-  // Skip rate limiting entirely for true static assets
+  // Skip rate limiting entirely for true static assets and the analytics
+  // proxy: tracking beacons fire on every page view and would otherwise
+  // burn the global per-IP budget for real requests.
   if (
     pathname.startsWith('/_next/') ||
-    pathname.includes('.') // Files with extensions (CSS, JS, images, etc.)
+    pathname.includes('.') || // Files with extensions (CSS, JS, images, etc.)
+    isAnalyticsProxyPath(pathname)
   ) {
     return null
   }
@@ -371,10 +371,16 @@ async function applyRateLimit(req: NextRequest): Promise<Response | null> {
   return null
 }
 
-export default clerkMiddleware(async (auth, req) => {
+/**
+ * Apply shared request security after resolving the optional authenticated user.
+ *
+ * @param resolveUserId - Resolves the authenticated user ID when the route requires it
+ * @param req - Incoming Next.js request
+ * @returns A secured redirect, error, or forwarded response
+ */
+async function handleRequest(resolveUserId: () => Promise<string | null>, req: NextRequest) {
   const pathname = req.nextUrl.pathname
 
-  // Debug endpoints must never be reachable in production.
   if (pathname.startsWith('/api/debug/') && process.env.NODE_ENV === 'production') {
     return new Response(null, { status: 404 })
   }
@@ -395,13 +401,11 @@ export default clerkMiddleware(async (auth, req) => {
     })
   }
 
-  // Apply rate limiting (Edge Runtime compatible)
   const rateLimitResponse = await applyRateLimit(req)
   if (rateLimitResponse) {
     return rateLimitResponse
   }
 
-  // Enhanced CSRF protection for API routes (Edge Runtime compatible)
   if (req.nextUrl.pathname.startsWith('/api/')) {
     // Skip CSRF for webhook endpoints, auth endpoints, and GET requests
     if (
@@ -442,24 +446,19 @@ export default clerkMiddleware(async (auth, req) => {
     }
   }
 
-  // Generate a nonce early so every response path can use it.
   const nonce = generateNonce()
   const cspValue = buildCspValue(nonce)
 
-  // Check if route is protected
   if (!isPublicRoute(req)) {
-    // Check if user is authenticated
-    const { userId } = await auth()
+    const userId = await resolveUserId()
 
     if (!userId) {
-      // For API routes, return 401 instead of redirecting
       if (req.nextUrl.pathname.startsWith('/api/')) {
         const response = NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
         response.headers.set('Content-Security-Policy', cspValue)
         return addSecurityHeaders(response)
       }
 
-      // For web routes, redirect to custom login page
       const loginUrl = new URL('/login', req.url)
       const response = NextResponse.redirect(loginUrl)
       response.headers.set('Content-Security-Policy', cspValue)
@@ -479,17 +478,22 @@ export default clerkMiddleware(async (auth, req) => {
     request: { headers: requestHeaders }
   })
 
-  // Set the same CSP on the response so the browser enforces it.
   response.headers.set('Content-Security-Policy', cspValue)
   response.headers.set('X-Nonce', nonce)
   return addSecurityHeaders(response)
+}
+
+const publicE2eProxy = createPublicE2eProxy({
+  handle: (req: NextRequest) => handleRequest(async () => null, req),
+  isPublicRoute,
+  unauthorized: () => NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 })
+export default publicE2eProxy ??
+  clerkMiddleware((auth, req) => handleRequest(async () => (await auth()).userId, req))
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest|json)).*)',
-    // Always run for API routes
     '/(api|trpc)(.*)'
   ]
 }

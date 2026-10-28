@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 import { analytics } from '@/lib/analytics'
 
+export { useSubmissionAnalytics } from './submission-analytics-tracker'
+
 /**
  * Client-side analytics tracker that listens for clicks on elements with data-analytics attributes
  * This maintains SSR/SEO while adding analytics tracking

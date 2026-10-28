@@ -17,13 +17,34 @@ const missingEnvVars = Object.entries(requiredEnvVars)
   .filter(([_, value]) => !value)
   .map(([key, _]) => key)
 
-// Only log in development, not during build
+const REDIS_OPERATION_TIMEOUT_MS = 1_500
+let redisUnavailableLogged = false
+
+/** Create a fresh deadline signal for one Upstash HTTP operation. */
+const createRedisOperationSignal = (): AbortSignal => {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), REDIS_OPERATION_TIMEOUT_MS)
+  if (typeof timeout === 'object') timeout.unref()
+  return controller.signal
+}
+
+/** Report one safe production diagnostic when Redis cannot initialize. */
+const reportRedisUnavailable = (reason: 'initialization_failed' | 'missing_configuration') => {
+  if (redisUnavailableLogged || process.env.NODE_ENV !== 'production') return
+  redisUnavailableLogged = true
+  logger.error('Redis unavailable', {
+    data: { reason, status: 'unavailable' },
+    tags: { operation: 'initialize', type: 'redis' }
+  })
+}
+
 if (missingEnvVars.length > 0 && process.env.NODE_ENV === 'development') {
   logger.warn('Redis environment variables not configured', {
     data: { missingVars: missingEnvVars },
     tags: { type: 'redis', status: 'disabled' }
   })
 }
+if (missingEnvVars.length > 0) reportRedisUnavailable('missing_configuration')
 
 // Initialize Redis client with lazy loading
 let redis: Redis | null = null
@@ -45,12 +66,13 @@ function getRedisClient(): Redis | null {
         url: requiredEnvVars.KV_REST_API_URL,
         token: requiredEnvVars.KV_REST_API_TOKEN,
         // Keep automatic serialization for convenience
-        automaticDeserialization: true
-        // Note: Request timeout handled per-operation via AbortController if needed
+        automaticDeserialization: true,
+        retry: { retries: 0 },
+        signal: createRedisOperationSignal
       })
     } catch (_error) {
-      // Silently fail - Redis is optional
       redis = null
+      reportRedisUnavailable('initialization_failed')
     }
   }
 
@@ -86,8 +108,19 @@ export const CACHE_TTL = {
   CSRF: 3600 // 1 hour
 } as const
 
+/** Extract safe diagnostic details from an unknown thrown value. */
+const describeError = (error: unknown): { name: string; message: string } =>
+  error instanceof Error
+    ? { name: error.name, message: error.message }
+    : { name: 'UnknownError', message: String(error) }
+
 /**
- * Get value from cache with error handling
+ * Get value from cache with error handling.
+ *
+ * Retries once on failure: each attempt goes through the signal factory, so
+ * the retry gets a fresh deadline. The Upstash client cannot retry aborted
+ * requests itself — with a signal factory it rethrows aborts immediately,
+ * bypassing its retry loop.
  */
 export async function get<T = string>(key: string): Promise<T | null> {
   const client = getRedisClient()
@@ -96,17 +129,17 @@ export async function get<T = string>(key: string): Promise<T | null> {
   }
 
   try {
-    const result: T | null = await client.get<T>(key)
-    return result
-  } catch (error) {
-    logger.error('Redis GET operation failed', {
-      data: {
-        key,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
-      tags: { type: 'redis', operation: 'get' }
-    })
-    return null
+    return await client.get<T>(key)
+  } catch {
+    try {
+      return await client.get<T>(key)
+    } catch (error) {
+      logger.warn('Redis GET operation failed', {
+        data: { key, error: describeError(error) },
+        tags: { type: 'redis', operation: 'get' }
+      })
+      return null
+    }
   }
 }
 
@@ -127,12 +160,8 @@ export async function set(key: string, value: unknown, ttl?: number): Promise<bo
     }
     return true
   } catch (error) {
-    logger.error('Redis SET operation failed', {
-      data: {
-        key,
-        ttl,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+    logger.warn('Redis SET operation failed', {
+      data: { key, ttl, error: describeError(error) },
       tags: { type: 'redis', operation: 'set' }
     })
     return false
@@ -152,11 +181,8 @@ export async function del(key: string): Promise<boolean> {
     await client.del(key)
     return true
   } catch (error) {
-    logger.error('Redis DEL operation failed', {
-      data: {
-        key,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+    logger.warn('Redis DEL operation failed', {
+      data: { key, error: describeError(error) },
       tags: { type: 'redis', operation: 'del' }
     })
     return false
@@ -180,13 +206,64 @@ export async function incr(key: string, ttl?: number): Promise<number | null> {
     }
     return count
   } catch (error) {
-    logger.error('Redis INCR operation failed', {
-      data: {
-        key,
-        ttl,
-        error: error instanceof Error ? error.message : 'Unknown error'
-      },
+    logger.warn('Redis INCR operation failed', {
+      data: { key, ttl, error: describeError(error) },
       tags: { type: 'redis', operation: 'incr' }
+    })
+    return null
+  }
+}
+
+/**
+ * Atomically set a value only when the key does not already exist.
+ *
+ * @param key - Redis key
+ * @param value - Serializable value
+ * @param ttl - Required expiry in seconds
+ * @returns `true` when acquired, `false` when already present, or `null` when Redis is unavailable
+ */
+export async function setNx(key: string, value: unknown, ttl: number): Promise<boolean | null> {
+  const client = getRedisClient()
+  if (!client) return null
+
+  try {
+    const result = await client.set(key, value, { ex: ttl, nx: true })
+    return result === 'OK'
+  } catch (error) {
+    logger.warn('Redis SET NX operation failed', {
+      data: { key, error: describeError(error) },
+      tags: { type: 'redis', operation: 'set_nx' }
+    })
+    return null
+  }
+}
+
+/**
+ * Execute a bounded, caller-owned Lua script without exposing raw Redis errors.
+ *
+ * Callers must use fixed scripts and bounded keys/arguments. A `null` result is
+ * reserved for Redis unavailability; scripts used by publication state must
+ * return an explicit non-null value for every application outcome.
+ *
+ * @param script - Fixed Lua source owned by the application
+ * @param keys - Bounded Redis keys supplied to the script
+ * @param args - Bounded string arguments supplied to the script
+ * @returns Script response, or `null` when Redis is unavailable
+ */
+export async function evalRedis<T>(
+  script: string,
+  keys: readonly string[],
+  args: readonly string[]
+): Promise<T | null> {
+  const client = getRedisClient()
+  if (!client) return null
+
+  try {
+    return await client.eval<string[], T>(script, [...keys], [...args])
+  } catch (error) {
+    logger.warn('Redis EVAL operation failed', {
+      data: { error: describeError(error) },
+      tags: { type: 'redis', operation: 'eval' }
     })
     return null
   }
@@ -216,6 +293,8 @@ export const SafeRedis = {
   set,
   del,
   incr,
+  setNx,
+  eval: evalRedis,
   isAvailable,
   getRawClient
 }

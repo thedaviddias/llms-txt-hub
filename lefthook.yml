@@ -96,7 +96,7 @@ pre-push:
   commands:
     # Run tests
     test-all:
-      run: turbo test --filter=web
+      run: cd apps/web && node --input-type=module -e 'import { createBuilder } from "@content-collections/core"; const builder = await createBuilder("content-collections.ts"); await builder.build();' && cd ../.. && turbo test --filter=web
 
 # Commit message validation
 commit-msg:
