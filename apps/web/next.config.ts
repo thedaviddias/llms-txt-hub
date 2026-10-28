@@ -94,7 +94,7 @@ let nextConfig: NextConfig = {
       {
         // LambdaTest rebranded to TestMu AI
         source: '/websites/lambdatest-llms-txt',
-        destination: '/websites/testmuai-llms-txt',
+        destination: '/websites/testmu-ai-llms-txt',
         permanent: true
       },
       {
