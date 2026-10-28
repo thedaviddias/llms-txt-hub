@@ -3581,15 +3581,6 @@
     "category": "automation-workflow"
   },
   {
-    "slug": "lambdatest",
-    "webSlug": "lambdatest-llms-txt",
-    "name": "LambdaTest",
-    "domain": "https://www.lambdatest.com",
-    "description": "Power your software testing with AI and cloud. Test intelligently, deploy and scale faster with LambdaTest unified testing platform.",
-    "llmsTxtUrl": "https://www.lambdatest.com/llms.txt",
-    "category": "developer-tools"
-  },
-  {
     "slug": "langchain-javascript-docs",
     "webSlug": "langchain-javascript-docs-llms-txt",
     "name": "LangChain (JavaScript docs)",
@@ -6035,6 +6026,16 @@
     "llmsTxtUrl": "https://tensorzero.com/llms.txt",
     "llmsFullTxtUrl": "https://tensorzero.com/llms-full.txt",
     "category": "ai-ml"
+  },
+  {
+    "slug": "testmu-ai",
+    "webSlug": "testmu-ai-llms-txt",
+    "name": "TestMu AI (Formerly LambdaTest)",
+    "domain": "https://www.testmuai.com",
+    "description": "Full stack agentic AI quality engineering platform for testing web and mobile apps",
+    "llmsTxtUrl": "https://www.testmuai.com/llms.txt",
+    "llmsFullTxtUrl": "https://www.testmuai.com/llms-full.txt",
+    "category": "developer-tools"
   },
   {
     "slug": "the-ai-engineers-handbook",
