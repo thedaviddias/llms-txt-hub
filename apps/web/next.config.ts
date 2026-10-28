@@ -92,6 +92,12 @@ let nextConfig: NextConfig = {
         permanent: true
       },
       {
+        // LambdaTest rebranded to TestMu AI
+        source: '/websites/lambdatest-llms-txt',
+        destination: '/websites/testmuai-llms-txt',
+        permanent: true
+      },
+      {
         // Redirect old website URLs to new ones with -llms-txt suffix
         source: '/websites/:slug((?!.*-llms-txt).*)',
         destination: '/websites/:slug-llms-txt',
