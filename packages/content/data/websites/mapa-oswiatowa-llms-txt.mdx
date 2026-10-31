@@ -1,0 +1,47 @@
+---
+category: 'data-analytics'
+description: 'Polish-language map of ~59,000 nurseries, preschools, schools and universities in Poland, built from public registries. Free REST API, no key needed.'
+llmsFullUrl: ''
+llmsUrl: 'https://mapaoswiatowa.pl/llms.txt'
+name: 'Mapa Oświatowa'
+publishedAt: '2026-10-31'
+website: 'https://mapaoswiatowa.pl/'
+---
+
+# Mapa Oświatowa
+
+Polish\-language map of \~59,000 nurseries, preschools, schools and universities in Poland, built from public registries\. Free REST API, no key needed\.
+
+## About
+
+Mapa Oświatowa is a Polish-language map of every registered educational institution in Poland: about 59,000 nurseries, preschools, schools and universities. Every institution has its own page, and so does every locality, county (powiat), municipality (gmina) and voivodeship. The records come from public registries: RSPO, the nursery register (MRPiPS), RAD-on, SIO (Ministry of Education), GUS and OpenStreetMap.
+
+## Public API
+
+- **Free, no key, no signup**: GET only, JSON, `Access-Control-Allow-Origin: *`
+- **Base URL**: `https://api.mapaoswiatowa.pl`, 120 requests per minute per IP
+- **OpenAPI 3.1**: `https://mapaoswiatowa.pl/openapi.json`
+- **Discovery**: an RFC 9727 catalog at `/.well-known/api-catalog`
+- **Docs (in Polish)**: `https://mapaoswiatowa.pl/dla-deweloperow`
+
+Try it:
+
+```
+https://api.mapaoswiatowa.pl/api/locations/search?q=Warszawa
+https://api.mapaoswiatowa.pl/api/institutions?type=PRESCHOOL&voivodeship=mazowieckie&limit=5
+```
+
+## About the llms.txt
+
+The file is written in Polish and generated from the code, so its lists of institution types, closed vocabularies and endpoints match what the API accepts. Beyond the endpoints and parameters, it carries the interpretation rules a machine-readable spec cannot express:
+
+- **NULL is not zero**: a missing value means "not reported", never "none"
+- **Dates come from `GET /api/data-sources`**, which separates when a source was imported from the year the source describes
+- **A school complex (zespół) is never summed with its member schools**
+- **Exam results and admission thresholds are not rankings**, and results for fewer than 10 test takers are withheld
+
+The homepage and the institution, locality and blog pages also answer `Accept: text/markdown` with a Markdown version.
+
+## Licences
+
+The data is reused under its sources' licences: CC BY 4.0 (the SIO register, PRNG, GUS BDL), CC0 (selected SIO datasets) and ODbL 1.0 (OpenStreetMap). Cite Mapa Oświatowa when you present data pulled from the API.
