@@ -8035,15 +8035,6 @@
     "publishedAt": "2026-07-23"
   },
   {
-    "name": "Mestre Prático",
-    "domain": "https://mestrepratico.com.br/",
-    "description": "Brazilian real-economy data platform delivering deterministic, hallucination-free sovereign government data (ANP fuel prices, CMED medication maximum pricing, SEFAZ tax and grocery basket data) to AI agents.",
-    "llmsTxtUrl": "https://mestrepratico.com.br/llms.txt",
-    "category": "data-analytics",
-    "favicon": "https://www.google.com/s2/favicons?domain=mestrepratico.com.br&sz=128",
-    "publishedAt": "2026-10-31"
-  },
-  {
     "name": "Metabase",
     "domain": "https://www.metabase.com",
     "description": "Metabase is an open-source business intelligence platform. You can use Metabase to ask questions about your data, or embed Metabase in your app to let your customers explore their data on their own.",
