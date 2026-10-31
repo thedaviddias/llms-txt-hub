@@ -1,0 +1,24 @@
+---
+name: 'Signbee'
+description: 'Document signing API, MCP server, and Agent Skill for AI agents and humans — send Markdown or PDF agreements for two-party e-signing with SHA-256 tamper-evident certificates.'
+website: 'https://signb.ee'
+llmsUrl: 'https://signb.ee/llms.txt'
+llmsFullUrl: 'https://signb.ee/llms-full.txt'
+category: 'developer-tools'
+publishedAt: '2026-10-31'
+---
+
+# Signbee
+
+Signbee is an AI-native document signing platform built for both autonomous AI agents and human teams. Agents can draft Markdown or upload PDFs and trigger a complete two-party e-signature workflow in a single REST API call or MCP tool invocation, producing a tamper-evident signed PDF with a two-pass SHA-256 cryptographic certificate.
+
+## Key Features
+
+- **Zero-Setup REST API**: Send documents via `POST https://signb.ee/api/v1/send` using keyless email OTP verification or authenticated `sb_live_*` API keys
+- **Model Context Protocol (MCP) Server**: Official [`signbee-mcp`](https://github.com/signbee/mcp) server for Claude Desktop, Cursor, Windsurf, and MCP clients
+- **Agent Skill & Cursor Plugin**: Portable [`signbee/skill`](https://github.com/signbee/skill) (`npx skills add signbee/skill --skill signbee -g`) and [`signbee/cursor-plugin`](https://github.com/signbee/cursor-plugin)
+- **SHA-256 Cryptographic Certificates**: Two-pass tamper-evident SHA-256 hash verification appended to every completed PDF
+
+## About llms.txt Implementation
+
+Signbee's [`llms.txt`](https://signb.ee/llms.txt) and [`llms-full.txt`](https://signb.ee/llms-full.txt) provide AI coding assistants and runtime agents with complete endpoint schemas, authentication modes (keyless OTP vs. Bearer API keys), MCP server configuration, Agent Skill installation instructions, and webhook payload formats.
