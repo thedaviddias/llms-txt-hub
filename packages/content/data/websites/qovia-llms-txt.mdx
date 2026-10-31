@@ -1,0 +1,24 @@
+---
+name: 'Qovia'
+description: 'Public web data API and remote MCP server for AI agents and developers: posts, comments and creator data from 20+ platforms, including Douyin, Xiaohongshu, Weibo, Bilibili, TikTok and YouTube, as structured JSON.'
+website: 'https://qovia.ai'
+llmsUrl: 'https://qovia.ai/llms.txt'
+category: 'developer-tools'
+priority: 'medium'
+publishedAt: '2026-10-31'
+---
+
+# Qovia
+
+Qovia is a public web data API and remote MCP server for AI agents and developers. It returns posts, comments, creator profiles, hot lists and search results from Chinese and global platforms. Every endpoint returns the same response envelope, and posts, notes and videos from different platforms share one record shape.
+
+## Key Features
+
+- **100+ endpoints across 20+ platforms**: Douyin, Xiaohongshu (RedNote), Weibo, Bilibili, Kuaishou, Zhihu, WeChat, Toutiao, Taobao and JD.com reviews, TikTok, YouTube, Instagram, X, Reddit and more
+- **Remote MCP server**: Streamable HTTP at `https://api.qovia.ai/mcp`, with discovery tools that work without a key
+- **Cross-platform Chinese search**: one query across several Chinese platforms, filtered by date, platform and sentiment
+- **Prepaid billing**: calls are billed only when they return data, and new accounts get 50 trial calls
+
+## About llms.txt Implementation
+
+Qovia's llms.txt describes the base URL, authentication, response envelope, error format and MCP server, then lists every endpoint grouped by platform with its method, path, required parameters and a one-line description. The OpenAPI 3.1 spec is at https://qovia.ai/openapi.json.
