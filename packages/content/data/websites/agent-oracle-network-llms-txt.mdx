@@ -1,0 +1,23 @@
+---
+category: 'data-analytics'
+description: 'Bitcoin Mainnet Lightning (L402) data oracle serving real-time multi-provider Cloud GPU and LLM pricing trends plus GetFreeQuote.org marketplace demand.'
+llmsFullUrl: ''
+llmsUrl: 'https://oracle.getfreequote.org/llms.txt'
+name: 'Agent Oracle Data Network'
+publishedAt: '2026-11-03'
+website: 'https://oracle.getfreequote.org'
+---
+
+# Agent Oracle Data Network
+
+Agent Oracle (`https://oracle.getfreequote.org`) is a Rust, Redis, and Mainnet LDK Lightning data and action gateway for autonomous AI agents.
+
+## Key Focus Areas
+
+- **Multi-Provider Cloud GPU and LLM Pricing**: Live spot, community, and on-demand GPU pricing (`H100`, `H200`, `B200`, `A100`, `L40S`, `RTX 5090`, `RTX 4090`) across Vast.ai, RunPod, and Akash Network, plus LLM token pricing via OpenRouter.
+- **Multi-Use L402 Macaroon Passes**: High-frequency agents can mint `bundle_100` (10 sats = 100 requests / 24h) or `pass_24h` (25 sats = 1,000 requests / 24h) Macaroon passes to amortize Lightning routing fees.
+- **Bidirectional Marketplace Relay**: Zero-signup L402 write micro-stamps (`POST /v1/marketplace/jobs` and `POST /v1/marketplace/quotes`) bridged to GetFreeQuote.org.
+
+## About llms.txt Implementation
+
+The `llms.txt` manifest documents all free discovery endpoints (`/v1/assets`, `/v1/l402/tiers`, `/openapi.yaml`), L402-paywalled trend and provider endpoints, multi-use Macaroon pass tiers, and curl quickstart examples.
