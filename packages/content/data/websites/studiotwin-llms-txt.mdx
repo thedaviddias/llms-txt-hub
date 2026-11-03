@@ -1,0 +1,29 @@
+---
+category: 'ai-ml'
+description: 'All-in-one AI toolkit for game and virtual production: generate 3D models, character animation, PBR materials, HDRIs and sound effects from any AI agent.'
+llmsFullUrl: ''
+llmsUrl: 'https://www.studiotwin.ai/llms.txt'
+name: 'StudioTwin'
+publishedAt: '2026-11-03'
+website: 'https://www.studiotwin.ai/'
+---
+
+# StudioTwin
+
+All\-in\-one AI toolkit for game and virtual production: generate 3D models, character animation, PBR materials, HDRIs and sound effects from any AI agent\.
+
+## Key Focus Areas
+
+- **Asset generation toolkits**: 3D models (Image to 3D Mesh, retopology, auto-rigging), character animation (text to motion, motion editing, stitching and trajectory control), PBR materials (Text to Material and Image to Material), HDRI environments and sound effects, each using curated models for the task
+- **Agent access over MCP**: Claude Code, Cursor, Codex and other MCP clients connect to Remote MCP (`https://api.studiotwin.ai/mcp`), can use every toolkit, and can download the generated files directly into the project.
+- **Unreal Engine plugin**: Direct integration inside Unreal Engine, with UI controls and builds for Unreal Engine 5.6, 5.7 and 5.8. StudioTwin also extends Unreal Engine's own MCP server, exposing the tools to any agent.
+- **Blender integration**: the StudioTwin Blender addon imports generated assets directly in a Blender project for refinement.
+- **ConceptLab**: a workspace for developing a character or object concept image, iterate and maintain version history, and pass the best version to StudioTwin's 3D tools.
+
+## About llms.txt Implementation
+
+StudioTwin's llms.txt gives language models a summary of the product, each toolkit and its tools with links to the docs, the three surfaces (Unreal Engine, Blender and Remote MCP) with their requirements, and the pricing. A separate [pricing.md](https://www.studiotwin.ai/pricing.md) lists the plans, the free tier and example credit costs per tool, so an agent can estimate what a generation costs before it runs.
+
+## Get Started
+
+Starting is free and every account gets 100 credits a month, no credit card required. Agents set up with one command: `npx skills add realtwin/studiotwin-mcp-skill`. Generated assets can be used in commercial projects with no additional licensing fees.
