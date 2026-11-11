@@ -2900,6 +2900,16 @@
     "publishedAt": "2026-05-31"
   },
   {
+    "name": "CloudGPU",
+    "domain": "https://cloudgpu.app/",
+    "description": "CloudGPU offers per-minute GPU rental and an OpenAI-compatible model API. The llms.txt file points assistants at the public docs for the model API, MCP server, and GPU jobs.",
+    "llmsTxtUrl": "https://cloudgpu.app/llms.txt",
+    "llmsFullTxtUrl": "https://cloudgpu.app/llms-full.txt",
+    "category": "infrastructure-cloud",
+    "favicon": "https://www.google.com/s2/favicons?domain=cloudgpu.app&sz=128",
+    "publishedAt": "2026-11-11"
+  },
+  {
     "name": "Clouve",
     "domain": "https://www.clouve.com",
     "description": "Clouve connects businesses with enterprise-ready applications while empowering developers to monetize their solutions through our secure platform.",
