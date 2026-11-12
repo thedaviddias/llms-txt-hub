@@ -6032,7 +6032,7 @@
     "webSlug": "testmu-ai-llms-txt",
     "name": "TestMu AI (Formerly LambdaTest)",
     "domain": "https://www.testmuai.com",
-    "description": "Full stack agentic AI quality engineering platform for testing web and mobile apps",
+    "description": "Agentic AI Quality Engineering platform for testing web and mobile apps and AI agents",
     "llmsTxtUrl": "https://www.testmuai.com/llms.txt",
     "llmsFullTxtUrl": "https://www.testmuai.com/llms-full.txt",
     "category": "developer-tools"
