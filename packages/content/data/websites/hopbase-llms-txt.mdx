@@ -1,0 +1,23 @@
+---
+category: 'ai-ml'
+description: 'Hosted AI API gateway with OpenAI-compatible and Anthropic Messages-compatible endpoints for GPT, Claude, Gemini, Grok, DeepSeek, GLM, Kimi, Qwen and Doubao models.'
+llmsFullUrl: 'https://hop-base.com/llms-full.txt'
+llmsUrl: 'https://hop-base.com/llms.txt'
+name: 'HopBase'
+publishedAt: '2026-11-12'
+website: 'https://hop-base.com/'
+---
+
+# HopBase
+
+HopBase is a hosted AI API gateway with OpenAI\-compatible and Anthropic Messages\-compatible endpoints for GPT, Claude, Gemini, Grok, DeepSeek, GLM, Kimi, Qwen and Doubao models\.
+
+## Key Focus Areas
+
+- **One base URL**: `https://api.hop-base.com/v1` for Chat Completions and the Responses API, and `https://api.hop-base.com` for the Anthropic Messages API.
+- **Key-scoped model discovery**: `GET /v1/models` returns exactly the model IDs the calling API key can use.
+- **Remote MCP server**: `https://api.hop-base.com/mcp` exposes read-only tools for balance, key info, models, usage, model limits and docs search.
+
+## About llms.txt Implementation
+
+The root llms.txt is written as an integration contract for coding agents: base URLs, authentication, API key scope, the error response format, and per-model-family sections for chat, image, video and speech models. Per-language docs indexes are published at `/en/`, `/zh-cn/`, `/zh-tw/`, `/es/` and `/ja/llms.txt`, each with a matching llms-full.txt; the root llms-full.txt serves the English full text.
