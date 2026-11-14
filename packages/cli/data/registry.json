@@ -5509,6 +5509,16 @@
     "category": "automation-workflow"
   },
   {
+    "slug": "seenlens",
+    "webSlug": "seenlens-llms-txt",
+    "name": "SeenLens",
+    "domain": "https://seenlens.com/",
+    "description": "Scanner for AI crawler access, structure and agent readiness.",
+    "llmsTxtUrl": "https://seenlens.com/llms.txt",
+    "llmsFullTxtUrl": "https://seenlens.com/llms-full.txt",
+    "category": "developer-tools"
+  },
+  {
     "slug": "sekhlopk",
     "webSlug": "sekhlo-pk-llms-txt",
     "name": "Sekhlo.pk",
