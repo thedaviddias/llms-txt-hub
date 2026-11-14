@@ -1,0 +1,45 @@
+---
+category: 'developer-tools'
+description: 'Compare flights, hotels, car rental, and real estate across every provider, with the price data behind each result. Dashboard, copilot, or API.'
+llmsFullUrl: ''
+llmsUrl: 'https://www.ktemia.com/llms.txt'
+name: 'Ktemia'
+publishedAt: '2026-11-14'
+website: 'https://www.ktemia.com/'
+---
+
+# Ktemia
+
+Compare flights, hotels, car rental, and real estate across every provider, with the price data behind each result\. Dashboard, copilot, or API\.
+
+## Key Focus Areas
+
+- **Travel search API**: One API for flights, hotels and car rentals. Each result names the seller, the price and a booking link; the traveller books on the seller's site.
+- **API Documentation**: Every endpoint, parameter and captured example is documented at [ktemia.com/docs/api](https://www.ktemia.com/docs/api/), with Markdown versions of each page (append `.md`).
+- **AI agents**: Agent skills for Claude Code, Codex and Cursor, an [AGENTS.md](https://www.ktemia.com/AGENTS.md) file, and an [OpenAPI 3.1 spec](https://www.ktemia.com/openapi.json).
+- **Price comparison data**: Airlines, booking sites and rental companies side by side, so a person can see every seller's price for the same trip.
+
+## About llms.txt Implementation
+
+Ktemia publishes three LLM entry points:
+
+- [/llms.txt](https://www.ktemia.com/llms.txt): the site index (product, use cases, every docs page, blog and legal).
+- [/docs/api/llms.txt](https://www.ktemia.com/docs/api/llms.txt): the full API introduction plus a link to every reference page.
+- Markdown docs: every docs URL also works with `.md` (for example `/docs/api/flights/search.md`), so agents can fetch clean text without HTML.
+
+The docs are also indexed on [Context7](https://context7.com/websites/ktemia_api) and rated **A (86)** on Postman's [AI-Ready API Score](https://www.postman.com/ai/ai-ready-apis/company/ktemia).
+
+## Features
+
+- **Flights**: airport and airline lookup, one-way, round trip and multi-city (2–6 legs), every seller's fare with a booking link.
+- **Hotels**: location lookup, every booking site's price per hotel, and guest reviews.
+- **Car rentals**: pickup locations, rental companies and booking sites per car, filterable by agency.
+- **One flow for every vertical**: a search returns a token, results page with `nextToken`, details expand one result into every seller's price.
+- **Agent-friendly errors**: one error envelope with stable codes, plus rate-limit and quota headers on every response.
+
+## Getting Started
+
+1. Get a free API key at [app.ktemia.com](https://app.ktemia.com/) (100 requests a month).
+2. Send it as the `X-API-Key` header from a server.
+3. Follow [Getting started](https://www.ktemia.com/docs/getting-started/), or fork the public [Postman collection](https://www.postman.com/ktemia-411711/ktemia-api/overview).
+4. Using Claude Code? Run `/plugin marketplace add Ktemiaa/ktemia-skills`, then `/plugin install ktemia@ktemia`.
