@@ -14237,5 +14237,14 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "No Stairs Please",
+    "domain": "https://nostairsplease.com/",
+    "description": "Independent live music venue directory covering 22,500+ venues across the US and Canada with booking contacts, load-in/stairs notes, capacity, and an MCP server.",
+    "llmsTxtUrl": "https://nostairsplease.com/llms.txt",
+    "category": "data-analytics",
+    "favicon": "https://www.google.com/s2/favicons?domain=nostairsplease.com&sz=128",
+    "publishedAt": "2026-11-15"
   }
 ]
