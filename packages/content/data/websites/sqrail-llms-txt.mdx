@@ -1,0 +1,24 @@
+---
+name: 'sqrail'
+description: 'Bounded, read-only SQL-on-files CLI for coding agents over local CSV, TSV, JSON, and Parquet files.'
+website: 'https://sqrail.yhay81.com'
+llmsUrl: 'https://sqrail.yhay81.com/llms.txt'
+llmsFullUrl: ''
+category: 'developer-tools'
+publishedAt: '2026-11-15'
+---
+
+# sqrail
+
+sqrail is an MIT-licensed single-binary C++20 CLI built around embedded DuckDB v2.0.0 that exposes a narrow, deterministic SQL execution boundary over local CSV, TSV, JSON, JSONL, and Parquet files for coding agents and shell pipelines.
+
+## Key Focus Areas
+
+- **Explicit File Capability**: SQL queries can read only local paths explicitly bound with `-t name=path`; external access and extension loading are disabled and locked.
+- **Read-Only and Non-Destructive**: Accepts a single `SELECT`, `VALUES`, or `WITH` query per invocation and commits `-o` output files atomically without overwriting existing files.
+- **Enforced Resource Budgets**: Enforces `--memory`, `--threads`, `--timeout`, `--max-rows`, `--max-output-bytes`, `--max-input-files`, `--max-sql-bytes`, and isolated `--spill` limits.
+- **195-Word CLI Contract and Agent Skill**: Emits pure streaming JSONL on stdout while keeping stderr empty on normal success (emitting one versioned JSON object on stderr only on failure or when `--stats` is requested), paired with an installable `SKILL.md` for coding agents.
+
+## About llms.txt Implementation
+
+The `llms.txt` index links both human-readable documentation pages and raw Markdown sources (`SKILL.md`, `install-agent.md`, `help.txt`, CLI contract, recipes, agent integration guide, reproducible baselines, and security boundary notes) so coding agents can inspect or install sqrail with minimal token overhead.
