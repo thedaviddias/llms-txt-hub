@@ -17,7 +17,7 @@ sqrail is an MIT-licensed single-binary C++20 CLI built around embedded DuckDB v
 - **Explicit File Capability**: SQL queries can read only local paths explicitly bound with `-t name=path`; external access and extension loading are disabled and locked.
 - **Read-Only and Non-Destructive**: Accepts a single `SELECT`, `VALUES`, or `WITH` query per invocation and commits `-o` output files atomically without overwriting existing files.
 - **Enforced Resource Budgets**: Enforces `--memory`, `--threads`, `--timeout`, `--max-rows`, `--max-output-bytes`, `--max-input-files`, `--max-sql-bytes`, and isolated `--spill` limits.
-- **195-Word CLI Contract and Agent Skill**: Emits pure streaming JSONL on stdout and one versioned JSON diagnostic on stderr, paired with an installable `SKILL.md` for coding agents.
+- **195-Word CLI Contract and Agent Skill**: Emits pure streaming JSONL on stdout while keeping stderr empty on normal success (emitting one versioned JSON object on stderr only on failure or when `--stats` is requested), paired with an installable `SKILL.md` for coding agents.
 
 ## About llms.txt Implementation
 
