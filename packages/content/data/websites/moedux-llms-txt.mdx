@@ -1,0 +1,27 @@
+---
+name: 'Moedux'
+description: 'Personal finance platform from Brazil that turns transactions, bills and spending estimates into a readable diagnosis and a next action. Publishes OpenAPI 3.1, an official CLI and an SKILL.md for AI agents.'
+website: 'https://www.moedux.com/'
+llmsUrl: 'https://www.moedux.com/llms.txt'
+llmsFullUrl: 'https://www.moedux.com/llms-full.txt'
+category: 'finance-fintech'
+priority: 'medium'
+publishedAt: '2026-11-20'
+---
+
+# Moedux
+
+Moedux is a Brazilian personal finance app (em português) for organizing Entradas, Saídas, Economia and Gasto Diário. It turns a user's transactions, recurring bills and spending estimates into a readable diagnosis and a concrete next action.
+
+## AI-readable surface
+
+- [llms.txt](https://www.moedux.com/llms.txt) — short index of the public surface, including the API and agent instructions.
+- [llms-full.txt](https://www.moedux.com/llms-full.txt) — full catalog of every public URL, including calculators, guides, comparativos and planilhas.
+- [OpenAPI 3.1 contract](https://www.moedux.com/openapi.json?utm_source=github&utm_medium=directory&utm_campaign=llmstxt-hub) — machine-readable endpoints, request/response schemas and least-privilege permissions.
+- [Developer documentation](https://www.moedux.com/developers?utm_source=github&utm_medium=directory&utm_campaign=llmstxt-hub) — API keys, permissions and CLI installation.
+- [SKILL.md for agents](https://www.moedux.com/static/cli/SKILL.md?utm_source=github&utm_medium=directory&utm_campaign=llmstxt-hub) — safe usage instructions for the official `moedux-cli`.
+- [Practical guides](https://www.moedux.com/guias?utm_source=github&utm_medium=directory&utm_campaign=llmstxt-hub) — free content on emergency funds, budgeting and financial organization.
+
+## About the llms.txt implementation
+
+The `llms.txt` and `llms-full.txt` files are generated from the same canonical URL catalog that builds the sitemap, so agents can discover every public page without scraping. The OpenAPI document is generated from the Go API code rather than hand-written, and every operation carries an `x-permission` value so an agent can request the least-privileged API key.
