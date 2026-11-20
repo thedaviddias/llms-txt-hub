@@ -1,0 +1,24 @@
+---
+name: 'DataXAPI'
+description: 'Pay-per-call market data API and remote MCP server: Douyin, Xiaohongshu (RedNote), WeChat, TikTok, X, YouTube and more.'
+website: 'https://dataxapi.com'
+llmsUrl: 'https://dataxapi.com/llms.txt'
+llmsFullUrl: 'https://dataxapi.com/llms-full.txt'
+category: 'data-analytics'
+publishedAt: '2026-11-20'
+---
+
+# DataXAPI
+
+DataXAPI is a pay-per-call market data API and hosted MCP server for AI agents and developers. One key and one response shape cover public posts, comments, creators, ads, shop products and search trends on Douyin, Xiaohongshu (RedNote), WeChat Official Accounts, Channels and Search, Kuaishou, Bilibili, Weibo, Zhihu, TikTok, X, YouTube, Instagram, Reddit and the Meta and Google ad libraries.
+
+## Key Focus Areas
+
+- Market and social data API: every endpoint shares one set of parameter names, one envelope and one error structure
+- Remote MCP server for Claude, ChatGPT, Cursor and Codex
+- Chinese platforms, including Douyin's trend index and creator rate data
+- A price for every endpoint before the call, in a public price list
+
+## About llms.txt Implementation
+
+DataXAPI's llms.txt explains how to call the API (authentication, paging, idempotency keys, price caps and when to retry an error), gives rules for agents, lists common tasks with their cost caps and installable skills, and links a Markdown file per platform that lists its endpoints with parameters and prices. The llms-full.txt lists every endpoint one line each. A Chinese llms.txt is at /zh/llms.txt, every public page has a .md version, /agents.md gives coding agents the setup steps, and /openapi.json and /prices.json are published alongside.
