@@ -14237,5 +14237,15 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "Orbid",
+    "domain": "https://orbid.dev",
+    "description": "AI-native law firm for cross-border business. Fixed-fee Matter Packs scoped before work starts, reviewed by licensed local counsel across Thailand, Germany, ASEAN, and the US, with bilingual legal guides in 5 languages.",
+    "llmsTxtUrl": "https://orbid.dev/llms.txt",
+    "llmsFullTxtUrl": "https://orbid.dev/llms-full.txt",
+    "category": "ai-ml",
+    "favicon": "https://www.google.com/s2/favicons?domain=orbid.dev&sz=128",
+    "publishedAt": "2026-11-24"
   }
 ]
