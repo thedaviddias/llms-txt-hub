@@ -14237,5 +14237,23 @@
     "category": "ai-ml",
     "favicon": "https://www.google.com/s2/favicons?domain=www.xugj520.cn&sz=128",
     "publishedAt": "2026-05-31"
+  },
+  {
+    "name": "APUMIA AI Fund",
+    "domain": "https://apumiaaifund.github.io/",
+    "description": "Deterministic Zero-Float verification engines, Z3/Rust AI guardrails, post-quantum readiness scanners, and self-hosted compliance kits.",
+    "llmsTxtUrl": "https://apumiaaifund.github.io/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://google.comapumiaaifund.github.io&sz=128",
+    "publishedAt": "2026-11-24"
+  },
+  {
+    "name": "Notary AI",
+    "domain": "https://apumia.space/",
+    "description": "Zero-PII tamper-evident cryptographic audit ledger and WORM proof registry for autonomous AI agents on Cloudflare Workers + D1.",
+    "llmsTxtUrl": "https://apumia.space/llms.txt",
+    "category": "ai-ml",
+    "favicon": "https://google.comapumia.space&sz=128",
+    "publishedAt": "2026-11-24"
   }
 ]
