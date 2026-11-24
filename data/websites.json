@@ -14244,7 +14244,7 @@
     "description": "Deterministic Zero-Float verification engines, Z3/Rust AI guardrails, post-quantum readiness scanners, and self-hosted compliance kits.",
     "llmsTxtUrl": "https://apumiaaifund.github.io/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://google.comapumiaaifund.github.io&sz=128",
+    "favicon": "https://google.com",
     "publishedAt": "2026-11-24"
   },
   {
@@ -14253,7 +14253,7 @@
     "description": "Zero-PII tamper-evident cryptographic audit ledger and WORM proof registry for autonomous AI agents on Cloudflare Workers + D1.",
     "llmsTxtUrl": "https://apumia.space/llms.txt",
     "category": "ai-ml",
-    "favicon": "https://google.comapumia.space&sz=128",
+    "favicon": "https://google.com",
     "publishedAt": "2026-11-24"
   }
 ]
