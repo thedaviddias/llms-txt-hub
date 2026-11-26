@@ -1,0 +1,24 @@
+---
+category: 'developer-tools'
+description: 'Developer tool and REST API for technical SEO and AI-readiness audits, with 59 page checks, 18 multi-page crawl checks, a free llms.txt checker, and Markdown alternates.'
+llmsFullUrl: 'https://crawlwise.dev/llms-full.txt'
+llmsUrl: 'https://crawlwise.dev/llms.txt'
+name: 'CrawlWise'
+publishedAt: '2026-11-26'
+website: 'https://crawlwise.dev/'
+---
+
+# CrawlWise
+
+CrawlWise is a developer tool and no-key REST API for auditing public websites across technical SEO, rendering, and AI-agent readiness signals.
+
+## Key Features
+
+- Single-page and 3-page deep audits comparing raw HTML against Chromium-rendered output across 59 checks
+- Multi-page site audits for broken links, redirect chains, duplicate titles, thin content, and orphan pages
+- Free online [llms.txt checker](https://crawlwise.dev/tools/llms-txt-checker), WebMCP checker, and MCP discovery checker
+- Programmatic REST API documented at `/openapi.yaml`
+
+## About llms.txt Implementation
+
+CrawlWise serves `/llms.txt` and `/llms-full.txt` alongside `.md` versions of every public page, advertised via HTTP `Link` headers and content negotiation.
