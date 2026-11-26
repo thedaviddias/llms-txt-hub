@@ -1,0 +1,23 @@
+---
+category: 'developer-tools'
+description: 'Browser-native video meetings with per-mic speaker-attributed transcripts, remote MCP server, and zero-auth booking setup API for AI coding agents.'
+llmsFullUrl: ''
+llmsUrl: 'https://meetful.com/llms.txt'
+name: 'Meetful'
+publishedAt: '2026-11-26'
+website: 'https://meetful.com/'
+---
+
+# Meetful
+
+Browser-native video meetings with per-mic speaker-attributed transcripts, a remote Streamable HTTP MCP server, and a zero-auth booking setup API for AI coding agents.
+
+## Key Focus Areas
+
+- **Zero-Auth Agent Booking Setup**: Coding agents can create a live `meetful.com/<handle>` booking page and embeddable room in one `POST /api/setup/booking` call (`/add-booking.md`).
+- **Remote MCP Server**: Connect Claude, Cursor, ChatGPT, Codex, or VS Code to `https://meetful.com/mcp` (`/.well-known/mcp.json`) for live speaker-attributed transcripts, notes, and mid-call task handoffs.
+- **Per-Microphone Attribution**: Every participant's browser transcribes its own microphone separately so transcripts and summaries never guess who spoke.
+
+## About llms.txt Implementation
+
+The `llms.txt` index maps Meetful's agent API, OpenAPI 3.1 spec (`/openapi.json`), MCP auto-discovery (`/.well-known/mcp.json`), zero-auth booking setup guide (`/add-booking.md`), and downloadable agent skills.
