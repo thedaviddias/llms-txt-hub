@@ -1,0 +1,23 @@
+---
+category: 'developer-tools'
+description: 'Gateway where AI agents request read-only access to internal systems over MCP or REST by stating their name and reason.'
+llmsFullUrl: 'https://internal-systems-gateway.som-samantray-316.workers.dev/llms-full.txt'
+llmsUrl: 'https://internal-systems-gateway.som-samantray-316.workers.dev/llms.txt'
+name: 'Internal Systems Gateway'
+publishedAt: '2026-11-27'
+website: 'https://internal-systems-gateway.som-samantray-316.workers.dev/'
+---
+
+# Internal Systems Gateway
+
+Gateway where AI agents request read\-only access to internal systems over MCP or REST by stating their name and reason\.
+
+## Key Focus Areas
+
+- **Agent access requests**: agents call the MCP tool `request_access` or POST to a REST endpoint with their name and reason, and get a ticket.
+- **Remote MCP server**: Streamable HTTP endpoint supporting both the 2026-07-28 stateless protocol and 2025-era clients.
+- **Machine-readable discovery**: llms.txt, llms-full.txt, OpenAPI 3.1, an MCP server card and agents.json.
+
+## About llms.txt Implementation
+
+The llms.txt file lists every agent interface (MCP endpoint, server card, OpenAPI spec, agents.json) and explains the access-request flow; llms-full.txt adds full tool schemas and REST examples.
