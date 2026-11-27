@@ -1,0 +1,23 @@
+---
+name: 'AgentReady WebSec Auditor API'
+description: 'Browserless domain AI-readiness and OWASP web security auditor checking llms.txt, 12 AI crawler robots.txt rules, TLS certificates, HTTP security headers, and SPF/DMARC DNS.'
+website: 'https://agentready-websec-x402-api.vercel.app'
+llmsUrl: 'https://agentready-websec-x402-api.vercel.app/llms.txt'
+category: 'developer-tools'
+publishedAt: '2026-11-27'
+---
+
+# AgentReady WebSec Auditor API
+
+AgentReady WebSec Auditor ([Zluowa/domain-ai-sec-auditor](https://github.com/Zluowa/domain-ai-sec-auditor)) is a zero-dependency Node.js 24 bulk CLI, Apify PPE Actor, and x402 v2 Base Mainnet API for auditing AI Search/GEO readiness and OWASP web security posture.
+
+## Key Focus Areas
+
+- `/llms.txt` & `/llms-full.txt` Detection with SPA Soft-404 Filtering
+- RFC 9309 `robots.txt` Access Matrix for 12 Major AI Crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.)
+- OWASP HTTP Security Headers (HSTS, CSP, COOP, CORS) with Smart WAF Degradation
+- TLS Certificate Health, DNS SPF/DMARC/CAA, and SSRF IP-Pinning
+
+## About llms.txt Implementation
+
+The `/llms.txt` endpoint documents Base Mainnet x402 v2 pricing (`$0.005 USDC` per domain audit, with non-settlement on SSRF-blocked or unreachable domains), `/api/health`, `/.well-known/x402`, `/openapi.json`, `POST /api/v1/audit-domain`, and an example JSON request.
